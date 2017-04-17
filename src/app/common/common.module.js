@@ -5,8 +5,6 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.common', [
-      
-  ]);
+  angular.module('BlurAdmin.common',[]);
 
 })();
