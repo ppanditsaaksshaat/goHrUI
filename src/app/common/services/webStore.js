@@ -80,7 +80,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     }
     var _getServiceBase = function () {
 
-        var serviceBase = _getValue('serviceBase');
+        var serviceBase ='http://web200.com/api/'; _getValue('serviceBase');
         if (serviceBase == null) {
             var host = $location.host();
             var absUrl = $location.absUrl().replace('#/', '');

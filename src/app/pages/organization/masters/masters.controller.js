@@ -5,11 +5,11 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.components.mail')
-      .controller('MailTabCtrl', MailTabCtrl);
+  angular.module('BlurAdmin.pages.organization.masters')
+      .controller('OrgMastersController', OrgMastersController);
 
   /** @ngInject */
-  function MailTabCtrl(composeModal, mailMessages, pageService) {
+  function OrgMastersController(composeModal, mailMessages, pageService) {
     debugger;
     pageService.getPagData(1).then(function(result){
       console.log(result)
