@@ -1,5 +1,5 @@
 /**
- * @author v.lugovsky dj
+ * @author v.lugovsky djain
  * created on 16.12.2015
  */
 (function () {
