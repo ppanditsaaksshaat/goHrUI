@@ -6,7 +6,8 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.leave', [
-    'BlurAdmin.pages.leave.masters'
+    'BlurAdmin.pages.leave.masters',
+    'BlurAdmin.pages.leave.applications'
   ])
       .config(routeConfig);
 
