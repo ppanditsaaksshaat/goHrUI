@@ -32,7 +32,7 @@
           url: '/:label/:id',
           templateUrl: 'app/pages/leave/applications/detail/applicationsdetail.html',
           title: 'Detail',
-          controller: "LeaveApplicationDetailController",
+          controller: "LeaveApplicationsDetailController",
           controllerAs: "leaveDetailCtrl"
         });
     $urlRouterProvider.when('/leave/applications','/leave/applications/inbox');
