@@ -22,7 +22,7 @@
         text: 'text'
       })
     };
-    $scope.templateUrl = function () {
+    $scope.templateUrl = function () {    
       return "app/pages/organization/masters/templates/" + vm.tempFile + "/" + vm.tempFile + "-list.html"
     }
     function _setupColumns() {
