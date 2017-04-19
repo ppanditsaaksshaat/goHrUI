@@ -1,0 +1,46 @@
+<table class="table table-bordered table-hover table-condensed">
+    <thead>
+        <tr class="sortable">
+            <td class="table-id">Sno</td>
+            <td>Designation</td>
+            <td>Description</td>
+            <td>Is Administrator</td>
+            <td>Is Manager</td>
+            <td class="col-md-3">Actions</td>
+        </tr>
+    </thead>
+    <tbody ng-show="rows.length>0">
+        <tr ng-repeat="row in rows" class="editable-row">
+            <td >
+                {{$index+1}}
+            </td>
+            <td>
+                <span editable-text="row.DesgName" e-name="DesgName" e-form="rowform" e-required>
+                {{ row.DesgName || '' }}
+                </span>
+            </td>
+            <td>
+                <span editable-text="row.DesgDesc" e-name="DesgDesc" e-form="rowform" e-required>
+                {{ row.DesgDesc || '' }}
+                </span>
+            </td>
+            <td>
+                <span editable-text="row.DesgIsAdministrator" e-name="DesgIsAdministrator" e-form="rowform" e-required>
+                {{ row.DesgIsAdministrator || '' }}
+                </span>
+            </td><td>
+                <span editable-text="row.DesgIsManager" e-name="DesgIsManager" e-form="rowform" e-required>
+                {{ row.DesgIsManager || '' }}
+                </span>
+            </td>
+            <td class="col-md-3">
+                <div include-with-scope="app/pages/organization/masters/list/action.html"></div>
+            </td>
+        </tr>
+    </tbody>
+    <tbody ng-hide="rows.length>0">
+        <tr>
+            <td colspan="3">No branch found</td>
+        </tr>
+    </tbody>
+</table>

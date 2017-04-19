@@ -2,7 +2,8 @@
     <thead>
         <tr class="sortable">
             <td class="table-id">Sno</td>
-            <td>Branch</td>
+            <td>Department</td>
+            <td>Description</td>
             <td class="col-md-3">Actions</td>
         </tr>
     </thead>
@@ -12,9 +13,14 @@
                 {{$index+1}}
             </td>
             <td>
-                <span editable-text="row.BRName" e-name="BRName" e-form="rowform" e-required>
-          {{ row.BRName || 'empty' }}
-        </span>
+                <span editable-text="row.DeptName" e-name="DeptName" e-form="rowform" e-required>
+                {{ row.DeptName || 'empty' }}
+                </span>
+            </td>
+            <td>
+                <span editable-text="row.DeptDesc" e-name="DeptDesc" e-form="rowform" e-required>
+                {{ row.DeptDesc || 'empty' }}
+                </span>
             </td>
 
             <td class="col-md-3">

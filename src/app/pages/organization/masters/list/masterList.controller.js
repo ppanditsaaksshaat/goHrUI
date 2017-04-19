@@ -23,8 +23,7 @@
       })
     };
     $scope.templateUrl = function () {
-      console.log('url', vm.tempFile);
-      return "app/pages/organization/masters/templates/" + vm.tempFile + ".html"
+      return "app/pages/organization/masters/templates/" + vm.tempFile + "/" + vm.tempFile + "-list.html"
     }
     function _setupColumns() {
       if (vm.pageId == 109) {
@@ -33,7 +32,18 @@
       else if (vm.pageId == 111) {
         vm.tempFile = 'sub-unit';
       }
-      console.log('col', vm.tempFile);
+      else if (vm.pageId == 29) {
+        vm.tempFile = 'department';
+      }
+      else if (vm.pageId == 30) {
+        vm.tempFile = 'designation';
+      }
+      else if (vm.pageId == 47) {
+        vm.tempFile = 'grades';
+      }
+      else if (vm.pageId == 48) {
+        vm.tempFile = 'levels';
+      }                                                                                 
     }
     function _loadController() {
       _setupColumns();
