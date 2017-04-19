@@ -36,6 +36,7 @@
           controller: "AttendanceMastersDetailController",
           controllerAs: "attdetailCtrl"
         });
+        
     $urlRouterProvider.when('/attendance/masters','/attendance/masters/inbox');
   }
 
