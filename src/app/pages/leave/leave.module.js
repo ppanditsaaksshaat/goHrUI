@@ -7,7 +7,10 @@
 
   angular.module('BlurAdmin.pages.leave', [
     'BlurAdmin.pages.leave.masters',
-    'BlurAdmin.pages.leave.applications'
+    'BlurAdmin.pages.leave.applications',
+    
+    
+    
   ])
       .config(routeConfig);
 

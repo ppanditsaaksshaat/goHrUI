@@ -17,25 +17,27 @@
           abstract: true,
           templateUrl: 'app/pages/leave/masters/masters.html',
           controller: "LeaveMastersController",
-          controllerAs: "leaveCtrl",
+          controllerAs: "tabCtrl",
           title: 'Master',
           sidebarMeta: {
             order: 0,
           },
         }).state('leave.masters.label', {
-          url: '/:label',
+          url: '/:pageId',
           templateUrl: 'app/pages/leave/masters/list/mastersList.html',
-          title: 'Mail',
+          title: 'Leave Master',
           controller: "LeaveMastersListController",
           controllerAs: "lmCtrl"
         }).state('leave.masters.detail', {
-          url: '/:label/:id',
-          templateUrl: 'app/pages/leave/masters/detail/mastersDetail.html',
+          url: '/:pageId/:id',
+          templateUrl: 'app/pages/leave/masters/detail/master.detail.html',
           title: 'Detail',
           controller: "LeaveMastersDetailController",
           controllerAs: "detailCtrl"
         });
-    $urlRouterProvider.when('/leave/masters','/leave/masters/inbox');
+    $urlRouterProvider.when('/leave/masters','/leave/masters/157');
   }
 
 })();
+
+

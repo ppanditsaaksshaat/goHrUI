@@ -30,12 +30,12 @@
           controllerAs: "lmCtrls"
         }).state('leave.applications.detail', {
           url: '/:pageId/:id',
-          templateUrl: 'app/pages/leave/applications/detail/applicationsdetail.html',
+          templateUrl: 'app/pages/leave/masters/detail/applicationsdetail.html',
           title: 'Detail',
           controller: "ApplicationsMastersDetailController",
           controllerAs: "detailCtrls"
         });
-    $urlRouterProvider.when('/leave/applications','/leave/applications/157');
+    $urlRouterProvider.when('/leave/masters','/leave/masters');
   }
 
 })();
