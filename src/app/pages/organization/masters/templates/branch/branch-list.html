@@ -8,7 +8,7 @@
     </thead>
     <tbody ng-show="rows.length>0">
         <tr ng-repeat="row in rows" class="editable-row">
-            <td >
+            <td>
                 {{$index+1}}
             </td>
             <td>
@@ -22,9 +22,14 @@
             </td>
         </tr>
     </tbody>
-    <tbody ng-hide="rows.length>0">
+    <tbody ng-show="rows.length<=0&&!isLoaded">
         <tr>
-            <td colspan="3">No branch found</td>
+            <td colspan="4">No {{listCtrl.page.pageinfo.title}} found</td>
+        </tr>
+    </tbody>
+    <tbody ng-show="isLoading">
+        <tr>
+            <td colspan="4">Loading {{listCtrl.page.pageinfo.title}} Please wait..</td>
         </tr>
     </tbody>
 </table>
