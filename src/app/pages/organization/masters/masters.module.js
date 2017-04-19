@@ -23,19 +23,19 @@
             order: 0,
           },
         }).state('organization.masters.label', {
-          url: '/:label',
+          url: '/:pageId',
           templateUrl: 'app/pages/organization/masters/list/mastersList.html',
-          title: 'Mail',
+          title: 'Organization Masters',
           controller: "OrgMastersListController",
           controllerAs: "listCtrl"
         }).state('organization.masters.detail', {
-          url: '/:label/:id',
+          url: '/:pageId/:id',
           templateUrl: 'app/pages/organization/masters/detail/mastersDetail.html',
-          title: 'Mail',
+          title: 'Organization Masters',
           controller: "OrgMastersDetailController",
           controllerAs: "detailCtrl"
         });
-    $urlRouterProvider.when('/organization/masters','/organization/masters/inbox');
+    $urlRouterProvider.when('/organization/masters','/organization/masters/109');
   }
 
 })();

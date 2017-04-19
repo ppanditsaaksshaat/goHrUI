@@ -1035,7 +1035,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     }
                 }).then(function (results) {
                     return results;
-                    console.log(results)
+                    
                 });
     }
 
