@@ -22,19 +22,21 @@
           sidebarMeta: {
             order: 0,
           },
-        }).state('leave.masters.label', {
+        })
+        .state('leave.masters.label', {
           url: '/:pageId',
           templateUrl: 'app/pages/leave/masters/list/mastersList.html',
           title: 'Leave Master',
           controller: "LeaveMastersListController",
           controllerAs: "lmCtrl"
-        }).state('leave.masters.detail', {
-          url: '/:pageId/:id',
-          templateUrl: 'app/pages/leave/masters/detail/master.detail.html',
-          title: 'Detail',
-          controller: "LeaveMastersDetailController",
-          controllerAs: "detailCtrl"
         });
+        // .state('leave.masters.detail', {
+        //   url: '/:pageId/:id',
+        //   templateUrl: 'app/pages/leave/masters/detail/master.detail.html',
+        //   title: 'Detail',
+        //   controller: "LeaveMastersDetailController",
+        //   controllerAs: "detailCtrl"
+        // });
     $urlRouterProvider.when('/leave/masters','/leave/masters/157');
   }
 
