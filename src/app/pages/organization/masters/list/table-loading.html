@@ -1,0 +1,10 @@
+<tbody ng-show="rows.length<=0&&!isLoaded">
+    <tr>
+        <td colspan="4">No {{listCtrl.page.pageinfo.title}} found</td>
+    </tr>
+</tbody>
+<tbody ng-show="isLoading">
+    <tr>
+        <td colspan="4">Loading {{listCtrl.page.pageinfo.title}} Please wait..</td>
+    </tr>
+</tbody>

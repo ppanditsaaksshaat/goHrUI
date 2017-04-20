@@ -9,9 +9,9 @@
     .controller('OrgMastersListController', OrgMastersListController);
 
   /** @ngInject */
-  function OrgMastersListController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes) {
+  function OrgMastersListController($scope, $stateParams,
+    pageService, editableOptions, editableThemes, DJWebStore) {
     var vm = this;
-    vm.messages = mailMessages.getMessagesByLabel($stateParams.label);
     vm.pageId = $stateParams.pageId;
     vm.table = { rows: [] }
     vm.page = {};
@@ -24,6 +24,20 @@
     };
     $scope.templateUrl = function () {    
       return "app/pages/organization/masters/templates/" + vm.tempFile + "/" + vm.tempFile + "-list.html"
+=======
+    $scope.isLoading = true;
+    $scope.isLoaded = false;
+
+
+    var rndValu = Math.round((Math.random() * 10) * 10);
+    var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
+    $scope.templateUrl = function () {
+
+      return "app/pages/organization/masters/templates/" + vm.tempFile + "/" + vm.tempFile + "-list.html?" + rndValu2 + "=" + rndValu
+    }
+    vm.refreshData = function () {
+      _getTableData();
+>>>>>>> 119f07729457747cabfcd3617cea016f3e2488d9
     }
     function _setupColumns() {
       if (vm.pageId == 109) {
@@ -43,7 +57,7 @@
       }
       else if (vm.pageId == 48) {
         vm.tempFile = 'levels';
-      }                                                                                 
+      }
     }
     function _loadController() {
       _setupColumns();
@@ -53,6 +67,7 @@
     function _successGetPage(result) {
       console.log(result)
       vm.page = result;
+      DJWebStore.SetValue('Page_' + vm.pageId, result)
       // vm.table = {};
       // vm.table.columns = [];
       // vm.page.pageinfo.columns.forEach(function (col) {
@@ -67,7 +82,8 @@
 
     }
     function _getTableData() {
-
+      $scope.isLoaded = false
+      $scope.isLoading = true
       var data = {
         searchList: [],
         orderByList: []
@@ -81,9 +97,12 @@
       tableData.then(_getTableSuccessResult, _getTableErrorResult)
     }
     function _getTableErrorResult(err) {
-
+      $scope.isLoaded = true
+      $scope.isLoading = false
     }
     function _getTableSuccessResult(result) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
       console.log(result)
       if (result == 'NoDataFound') {
         // uivm.showMsg('warning', 'No Record Found.');

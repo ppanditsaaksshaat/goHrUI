@@ -1,0 +1,35 @@
+<div class="row" ng-controller="branchAddController as bmAddCtrl">
+    <div class="col-md-6">
+
+        <form class="form-horizontal" name="editForm" ng-submit="bmAddCtrl.saveForm(editForm)">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Branch Name</label>
+                <div class="col-sm-9">
+                    <input ng-model="bmAddCtrl.entity.BRName" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Branch Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-3 control-label">Location</label>
+                <div class="col-sm-9">
+                    <ui-select ng-model="bmAddCtrl.entity.BRLocationId" class="btn-group bootstrap-select form-control" ng-disabled="false"
+                    append-to-body="true" search-enabled="true">
+                    <ui-select-match placeholder="Select With Search">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="withSearchItem in bmAddCtrl.selects.BRLocationId | filter: $select.search">
+                        <span ng-bind-html="withSearchItem.name"></span>
+                    </ui-select-choices>
+                </ui-select>
+                </div>
+            </div>
+           
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button type="submit" class="btn btn-warning">Save</button>
+                    <button type="button" class="btn btn-danger" ui-sref="organization.masters.label({pageId : addCtrl.pageId})">Cancel</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

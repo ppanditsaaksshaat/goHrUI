@@ -35,6 +35,12 @@
           title: 'Organization Masters',
           controller: "OrgMastersDetailController",
           controllerAs: "detailCtrl"
+        }).state('organization.masters.add', {
+          url: '/:action/:pageId/',
+          templateUrl: 'app/pages/organization/masters/add/add.html',
+          title: 'Organization Masters',
+          controller: "OrgMastersAddController",
+          controllerAs: "addCtrl"
         });
     $urlRouterProvider.when('/organization/masters','/organization/masters/109');
   }

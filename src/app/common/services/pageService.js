@@ -2,7 +2,8 @@
 //This Factory is used to call get & set data method through our own c# WebAPI  
 
 'use strict';
-angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore', 'fileUpload', function ($http, DJWebStore, fileUpload) {
+angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore', 'fileUpload', 
+function ($http, DJWebStore, fileUpload) {
     var title = 'default';
 
     var serviceBase = DJWebStore.GetServiceBase();
