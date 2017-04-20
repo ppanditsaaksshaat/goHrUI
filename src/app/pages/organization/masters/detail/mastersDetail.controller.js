@@ -12,7 +12,7 @@
   function OrgMastersDetailController($stateParams, mailMessages) {
     var vm = this;
     vm.mail = mailMessages.getMessageById($stateParams.id);
-    vm.label = $stateParams.label;
+    vm.pageId = $stateParams.pageId;
   }
 
 })();

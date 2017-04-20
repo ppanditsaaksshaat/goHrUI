@@ -15,7 +15,7 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
             config.headers.Authorization = 'Bearer ' + authData.token;
             //console.log(authData.token)
         }
-console.log (config)
+        // console.log (config)
         // config.defaults.useXDomain = true;
         // delete config.defaults.headers.common['X-Requested-With'];
 
@@ -44,7 +44,7 @@ console.log (config)
             || response.config.url.endsWith('GetFile')
             || response.config.url.endsWith('GetAttach')) {
         }
-        else if (response.config.url.startsWith('/api/')) {
+        else if (response.config.url.indexOf('/api/') > 0) {
             var result = {};
             if (response.data !== undefined) {
                 var result_data = angular.fromJson(response.data);
@@ -59,8 +59,8 @@ console.log (config)
             }
             response = angular.copy(result);
         }
-        //var newresponse = response;
-        //if (response.data !== undefined) {
+        // var newresponse = response;
+        // if (response.data !== undefined) {
         //    console.log(response.data)
         //    var objData = angular.fromJson(response.data);
         //    if (objData.lz !== undefined) {
@@ -72,7 +72,7 @@ console.log (config)
         //    else {
 
         //    }
-        //}
+        // }
         return response;
     }
 
