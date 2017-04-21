@@ -46,7 +46,7 @@
     vm.oldEntity = {};
     function _loadController() {
       vm.page = DJWebStore.GetValue('Page_' + vm.pageId)
-      vm.selects = vm.page.pageinfo.selects;
+      //    vm.selects = vm.page.pageinfo.selects;
       if (vm.pkId > 0)
         _findEntity()
     }
