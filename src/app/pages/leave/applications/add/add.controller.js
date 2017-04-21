@@ -9,7 +9,20 @@
     .controller('ApplicationAddController', ApplicationAddController);
 
   /** @ngInject */
-  function ApplicationAddController($scope, $stateParams, DJWebStore, pageService,$timeout) {
+  function ApplicationAddController($scope, $stateParams, DJWebStore, pageService, $timeout, editFormService) {
+
+    $scope.open = open;
+    $scope.opened = false;
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.options = {
+      showWeeks: false
+    };
+
+    function open() {
+      $scope.opened = true;
+    }
+
     var vm = this;
     vm.pageId = 157;
     vm.page = DJWebStore.GetValue('Page_' + vm.pageId);
@@ -17,16 +30,52 @@
     // vm.page.pageinfo.pageid
     console.log(vm.selects)
     vm.entity = {};
-
+    vm.action = 0;
     vm.entity.LEADEmpId;
 
-    
-    var employeeLeaveDataDetail=vm.selects.LEADEmpId;
-    var employeeLeaveDataDetailList=[]
-    angular.forEach(employeeLeaveDataDetail,function(val,key){
-      var empData={
-        id:val.value,
-        name:val.name
+    vm.pageId = $stateParams.pageId;
+    vm.action = $stateParams.action;
+    //  vm.tempName = $stateParams.name;
+    vm.pkId = 0;
+
+    console.log($stateParams.pageId, $stateParams.action, $stateParams.name)
+
+    if ($stateParams.pkId !== undefined) {
+      vm.pkId = $stateParams.pkId;
+    }
+    vm.oldEntity = {};
+    function _loadController() {
+      vm.page = DJWebStore.GetValue('Page_' + vm.pageId)
+      vm.selects = vm.page.pageinfo.selects;
+      if (vm.pkId > 0)
+        _findEntity()
+    }
+    function _findEntity() {
+      vm.isLoaded = false;
+      vm.isLoading = true;
+      $timeout(function () {
+        pageService.findEntity(vm.page.pageinfo.tableid, vm.pkId, undefined).then(
+          _findEntitySuccessResult, _findEntityErrorResult);
+      });
+    }
+    function _findEntitySuccessResult(result) {
+      vm.isLoaded = true;
+      vm.isLoading = false;
+      vm.entity = result;
+      vm.oldEntity = angular.copy(result)
+    }
+    function _findEntityErrorResult(err) {
+      vm.isLoaded = true;
+      vm.isLoading = false;
+    }
+
+
+    var employeeLeaveDataDetail = vm.selects.LEADEmpId;
+    var employeeLeaveDataDetailList = []
+    angular.forEach(employeeLeaveDataDetail, function (val, key) {
+      var empData = {
+        id: val.value,
+        name: val.name
       }
       employeeLeaveDataDetailList.push(empData)
       console.log(empData)
@@ -57,6 +106,37 @@
     var employeePageId = 25;
     vm.leaveTypeHeadingList = [];
     vm.leaveTypeDataList = [];
+    vm.saveForm = _saveForm;
+
+    function _validateForm(form) {
+      return true;
+    }
+
+    function _saveForm(form) {
+      if (_validateForm(form)) {
+
+        if (vm.entity.LEADEmpId === undefined) {
+          vm.entity.LEADEmpId = "";
+        }
+        if (vm.entity.LEADLTId === undefined) {
+          vm.entity.LEADLTId = "";
+        }
+        if (vm.entity.LEADDateFrom === undefined) {
+          vm.entity.LEADDateFrom = "";
+        }
+        if (vm.entity.LeadComment === undefined) {
+          vm.entity.LeadComment = "";
+        }
+
+        vm.oldEntity = {};
+        vm.action = 'create';
+
+        console.log(vm.entity, vm.oldEntity, vm.action)
+        editFormService.saveForm(vm.pageId, vm.entity, vm.oldEntity, vm.action, vm.page.pageinfo.tagline)
+
+      }
+    }
+
 
 
 
@@ -99,94 +179,94 @@
     }
 
 
-    function _loadController() {
-      //  vm.param = DJWebStoreGlobal.GetParam();
+    // function _loadController() {
+    //   //  vm.param = DJWebStoreGlobal.GetParam();
 
-      $timeout(function () {
-        pageService.getAssignedUser().then(function (users) {
-          console.log(users)
-          angular.forEach(users, function (k, v) {
-            var user = { value: k.Id, name: k.Name }
-            vm.selectEmployeeList.push(user);
-          });
-          console.log(vm.selectEmployeeList)
-        }), function (err) {
-        }
-      });
-      $timeout(function () {
-        pageService.getTableData(vm.leaveTransactionTableId, vm.leaveTransactionPageId, undefined, undefined, false, undefined).then(function (result) {
-          console.log(result)
-        })
+    //   $timeout(function () {
+    //     pageService.getAssignedUser().then(function (users) {
+    //       console.log(users)
+    //       angular.forEach(users, function (k, v) {
+    //         var user = { value: k.Id, name: k.Name }
+    //         vm.selectEmployeeList.push(user);
+    //       });
+    //       console.log(vm.selectEmployeeList)
+    //     }), function (err) {
+    //     }
+    //   });
+    //   $timeout(function () {
+    //     pageService.getTableData(vm.leaveTransactionTableId, vm.leaveTransactionPageId, undefined, undefined, false, undefined).then(function (result) {
+    //       console.log(result)
+    //     })
 
-      });
+    //   });
 
-      //var leaveTypeTableId = 82;
-      //var leaveTypePageId = 78;
-      //var employeeTableId = 68;
-      //var employeePageId = 65;
-
-
-
-      var data = {
-        searchList: [],
-        orderByList: []
-      }
-      $timeout(function () {
-
-        //var searchData = { searchList: [], orderByList: [] }
-        pageService.getTableData(employeeTableId, employeePageId, '', '', true, data)
-          .then(function (result) {
-            vm.template.employeeData = [];
-            // console.log(vm.template.employeeData)
-            //console.log(result)
+    //   //var leaveTypeTableId = 82;
+    //   //var leaveTypePageId = 78;
+    //   //var employeeTableId = 68;
+    //   //var employeePageId = 65;
 
 
-            if (result.Errors !== undefined) {
-              vm.template.errorList.push(result.Errors)
-            }
-            else if (result.error_message !== undefined) {
-              vm.template.errorList.push(error_message)
-            }
-            else if (result == 'NoDataFound') {
-              vm.template.errorList.push(result)
-            }
-            else {
 
-              vm.employeeSelectOptions.data = result;
-              //console.log(vm.employeeSelectOptions.data)
-            }
-          }, function (err) {
+    //   var data = {
+    //     searchList: [],
+    //     orderByList: []
+    //   }
+    //   $timeout(function () {
 
-          });
-      });
-      $timeout(function () {
-        //var searchData = { searchList: [], orderBy: [] }
-        pageService.getTableData(leaveTypeTableId, leaveTypePageId, '', '', true, data)
-          .then(function (result) {
-            vm.template.leaveTypeData = [];
-            //console.log(result)
-            if (result.Errors !== undefined) {
-              vm.template.errorList.push(result.Errors)
-            }
-            else if (result.error_message !== undefined) {
-              vm.template.errorList.push(error_message)
-            }
-            else if (result == 'NoDataFound') {
-              vm.template.errorList.push(result)
-            }
-            else {
+    //     //var searchData = { searchList: [], orderByList: [] }
+    //     pageService.getTableData(employeeTableId, employeePageId, '', '', true, data)
+    //       .then(function (result) {
+    //         vm.template.employeeData = [];
+    //         // console.log(vm.template.employeeData)
+    //         //console.log(result)
 
-              vm.template.leaveTypeData = result;
-              //_selectingDefaultOpening();
-              //console.log(result)
-            }
-          }, function (err) {
 
-          });
-      });
-      _setEditForm()
-      _getLeaveTypeData()
-    }
+    //         if (result.Errors !== undefined) {
+    //           vm.template.errorList.push(result.Errors)
+    //         }
+    //         else if (result.error_message !== undefined) {
+    //           vm.template.errorList.push(error_message)
+    //         }
+    //         else if (result == 'NoDataFound') {
+    //           vm.template.errorList.push(result)
+    //         }
+    //         else {
+
+    //           vm.employeeSelectOptions.data = result;
+    //           //console.log(vm.employeeSelectOptions.data)
+    //         }
+    //       }, function (err) {
+
+    //       });
+    //   });
+    //   $timeout(function () {
+    //     //var searchData = { searchList: [], orderBy: [] }
+    //     pageService.getTableData(leaveTypeTableId, leaveTypePageId, '', '', true, data)
+    //       .then(function (result) {
+    //         vm.template.leaveTypeData = [];
+    //         //console.log(result)
+    //         if (result.Errors !== undefined) {
+    //           vm.template.errorList.push(result.Errors)
+    //         }
+    //         else if (result.error_message !== undefined) {
+    //           vm.template.errorList.push(error_message)
+    //         }
+    //         else if (result == 'NoDataFound') {
+    //           vm.template.errorList.push(result)
+    //         }
+    //         else {
+
+    //           vm.template.leaveTypeData = result;
+    //           //_selectingDefaultOpening();
+    //           //console.log(result)
+    //         }
+    //       }, function (err) {
+
+    //       });
+    //   });
+    //   _setEditForm()
+    //   _getLeaveTypeData()
+    // }
 
 
     function _getLeaveTypeData() {
@@ -573,7 +653,7 @@
 
     //public methods
     vm.saveEmployeeLeaveApplication = _saveEmployeeLeaveApplication;
-   // vm.GoBack = DJWebStoreGlobal.GoBack
+    // vm.GoBack = DJWebStoreGlobal.GoBack
     //vm.saveForm = _saveForm;
 
     _loadController();

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <div ba-panel ba-panel-class="xmedium-panel" ba-panel-title="Employee List">
+        <div ba-panel ba-panel-class="xmedium-panel" ba-panel-title="Leave List">
             <table class="table table-bordered table-hover table-condensed">
     <thead>
         <tr class="sortable">
@@ -56,8 +56,12 @@
                 {{ row.LEADDateTo || '' }}
                 </span>
             </td>
-            <td class="col-md-3">
+            <!--<td class="col-md-3">
                 <div include-with-scope="app/pages/leave/applications/list/action.html"></div>
+            </td>-->
+            <td style="width: 50px">
+                <a ui-sref="leave.appedit({pageId: tabCtrl.pageId, action:'edit', pkId:row.LEADId})">
+                    <i class="ion-edit"></i></a>
             </td>
         </tr>
     </tbody>
