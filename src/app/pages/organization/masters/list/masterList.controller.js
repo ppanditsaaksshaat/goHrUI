@@ -20,15 +20,17 @@
     vm.pageId = $stateParams.pageId;
     vm.table = { rows: [] }
     vm.page = {};
-    vm.showAdd = function () {
-      addModal.open({
-        subject: 'subject',
-        to: 'to',
-        text: 'text'
-      })
-    };
-    $scope.templateUrl = function () {    
-      return "app/pages/organization/masters/templates/" + vm.tempFile + "/" + vm.tempFile + "-list.html"
+    $scope.isLoading = true;
+    $scope.isLoaded = false;
+    vm.templateUrlPath = '';
+    vm.tempName = $stateParams.name;
+    vm.templateUrlPath = "app/pages/organization/masters/templates/"
+      + vm.tempName + "/" + vm.tempName + "-list.html?" + rndValu2 + "=" + rndValu;
+
+
+    vm.refreshData = function () {
+      $scope.rows = [];
+      _getTableData();
     }
 
     function _loadController() {
