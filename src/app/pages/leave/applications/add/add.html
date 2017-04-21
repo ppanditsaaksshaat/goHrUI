@@ -1,0 +1,194 @@
+<form class="form-horizontal" name="editForm" ng-submit="appCtrl.saveForm(editForm)">
+ <div ba-panel ba-panel-class="xmedium-panel" ba-panel-title="Leave List">
+   
+      <div class="content-box-wrapper">
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-3 control-label">Employee</label>
+    <div class="col-sm-9">
+      <select class="form-control selectpicker with-search" data-live-search="true" title="Select Employee" selectpicker ng-model="appCtrl.entity.LEADEmpId"
+              ng-options="opt.value as opt.name for opt in appCtrl.selects.LEADEmpId" required>
+                    </select>
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-3 control-label">Employee</label>
+    <div class="col-sm-9">
+      <select class="form-control selectpicker with-search" data-live-search="true" title="Select Employee" selectpicker ng-model="addCtrl.entity.EmpId"
+        ng-options="opt.value as opt.name for opt in appCtrl.selects.LEADEmpId" required>
+                    </select>
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-3 control-label">Employee</label>
+    <div class="col-sm-9">
+      <select class="form-control selectpicker with-search" data-live-search="true" title="Select Employee" selectpicker ng-model="addCtrl.entity.EmpId"
+        ng-options="opt.value as opt.name for opt in appCtrl.selects.LEADEmpId" required>
+                    </select>
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-3 control-label">Employee</label>
+    <div class="col-sm-9">
+      <select class="form-control selectpicker with-search" data-live-search="true" title="Select Employee" selectpicker ng-model="addCtrl.entity.EmpId"
+        ng-options="opt.value as opt.name for opt in appCtrl.selects.LEADEmpId" required>
+                    </select>
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-3 control-label">Employee</label>
+    <div class="col-sm-9">
+      <select class="form-control selectpicker with-search" data-live-search="true" title="Select Employee" selectpicker ng-model="addCtrl.entity.EmpId"
+        ng-options="opt.value as opt.name for opt in appCtrl.selects.LEADEmpId" required>
+                    </select>
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-3 control-label">Employee</label>
+    <div class="col-sm-9">
+      <select class="form-control selectpicker with-search" data-live-search="true" title="Select Employee" selectpicker ng-model="addCtrl.entity.EmpId"
+        ng-options="opt.value as opt.name for opt in appCtrl.selects.LEADEmpId" required>
+                    </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-3 control-label">Country</label>
+    <div class="col-sm-9">
+      <select class="form-control selectpicker with-search" data-live-search="true" title="Select Country" selectpicker ng-model="addCtrl.entity.CountryId"
+        ng-options="opt.value as opt.name for opt in addCtrl.selects.CountryId" required>
+                    </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-3 control-label">State</label>
+    <div class="col-sm-9">
+      <select class="form-control selectpicker with-search" data-live-search="true" title="Select State" selectpicker ng-model="addCtrl.entity.StateId"
+        ng-options="opt.value as opt.name for opt in addCtrl.selects.StateId | filter: {CountryId:addCtrl.entity.CountryId}"
+        required>
+                    </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-3 control-label">City</label>
+    <div class="col-sm-9">
+      <select class="form-control selectpicker with-search" data-live-search="true" title="Select City" selectpicker ng-model="addCtrl.entity.LocationCityId"
+        ng-options="opt.value as opt.name for opt in addCtrl.selects.LocationCityId | filter: {StateId:addCtrl.entity.StateId}"
+        required>
+                    </select>
+    </div>
+  </div>
+   </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <button type="submit" class="btn btn-warning">Save</button>
+      <button type="button" class="btn btn-danger" ng-click="back()">Cancel</button>
+    </div>
+  </div>
+  </div>
+
+</form>
+ 
+
+<!--
+<form class="form-horizontal" name="editForm" ng-submit="appCtrl.saveForm(editForm)">
+ <div ba-panel ba-panel-class="xmedium-panel" ba-panel-title="Leave List">
+      <div class="content-box-wrapper">
+        <div class="form-group col-md-12">
+          <h3 class="content-box-header bg-blue-alt">
+            Employee Leave Application
+          </h3>
+        </div>
+      </div>
+      <div class="content-box-wrapper">
+        <div class="form-group col-md-12">
+          <label class="col-md-2">Employee Name</label>
+          <div class="col-md-4">
+            <select class="form-control selectpicker with-search" data-live-search="true" title="Select Employee" selectpicker ng-model="appCtrl.entity.LEADEmpId"
+              ng-options="opt.value as opt.name for opt in appCtrl.selects.LEADEmpId" required>
+                    </select>
+          </div>
+          <label class="col-md-2">Leave Type</label>
+          <div class="col-md-4">
+            <select class="form-control selectpicker with-search" data-live-search="true" title="Select Leave Type" selectpicker ng-model="appCtrl.entity.LEADLTId"
+              ng-options="opt.value as opt.name for opt in appCtrl.selects.LEADLTId | filter:{LEADEmpId:appCtrl.entity.LEADEmpId}"
+              required>
+                    </select>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2">Leave For Half Day</label>
+          <div class="col-md-4">
+            <input type="checkbox" ng-model="vm.entity.LeadHalfDay">
+          </div>
+          <label class="col-md-2">Comment</label>
+          <div class="col-md-4">
+            <textarea type="text" ng-model="vm.entity.LeadComment" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2">Date From</label>
+          <div class="col-md-4">
+            <input type="datetime" datetimepicker class="form-control" ng-model="vm.entity.LEADDateFrom" />
+          </div>
+          <label class="col-md-2">Date To</label>
+          <div class="col-md-4">
+            <input type="datetime" datetimepicker class="form-control" ng-model="vm.entity.LEADDateTo" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3 class="with-line">Contact Detail On Leave Period</h3>
+    <div class="row animated">
+      <div class="content-box-wrapper">
+        <div class="form-group col-md-12">
+          <label class="col-md-2">Contact Name</label>
+          <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="vm.entity.LEADContactName" /></div>
+          <label class="col-md-2">Contact Number</label>
+          <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="vm.entity.LEADContactNo">
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="col-md-2">Address</label>
+          <div class="col-md-4">
+            <textarea type="text" class="form-control" ng-model="vm.entity.LEADAddress" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="row animated">
+      <div class="content-box-wrapper">
+        <div class="form-group col-md-12" ng-show="vm.isLeaveTransactionTable">
+          <div class="col-md-12">
+            <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A">
+              <thead>
+                <tr>
+                  <th>Leave Type</th>
+                  <th>Creadit Leave</th>
+                  <th>Debit Leave</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="transactionList in vm.leaveTypeSelectOptions.data">
+                  <td>{{transactionList.LTName}}</td>
+                  <td>{{transactionList.ELTLeaveCr}}</td>
+                  <td>{{transactionList.ELTLeaveDr}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+ <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <button type="submit" class="btn btn-warning">Save</button>
+      <button type="button" class="btn btn-danger" ng-click="back()">Cancel</button>
+    </div>
+  </div>
+
+  </div>
+  </form>-->

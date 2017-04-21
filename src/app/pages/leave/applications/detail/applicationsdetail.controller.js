@@ -1,18 +1,18 @@
-/**
- * @author a.demeshko
- * created on 28.12.2015
- */
-(function () {
-  'use strict';
+// /**
+//  * @author a.demeshko
+//  * created on 28.12.2015
+//  */
+// (function () {
+//   'use strict';
 
-  angular.module('BlurAdmin.pages.leave.masters')
-    .controller('LeaveApplicationsDetailController', LeaveApplicationsDetailController);
+//   angular.module('BlurAdmin.pages.leave.applications')
+//     .controller('LeaveMastersDetailController', LeaveMastersDetailController);
 
-  /** @ngInject */
-  function LeaveApplicationsDetailController($stateParams, mailMessages) {
-    var vm = this;
-    vm.mail = mailMessages.getMessageById($stateParams.id);
-    vm.label = $stateParams.label;
-  }
+//   /** @ngInject */
+//   function LeaveMastersDetailController($stateParams, mailMessages) {
+//     var vm = this;
+//     vm.mail = mailMessages.getMessageById($stateParams.id);
+//     vm.pageId = $stateParams.pageId;
+//   }
 
-})();
+// })();

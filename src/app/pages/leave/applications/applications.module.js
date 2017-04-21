@@ -1,41 +1,33 @@
 
 /**
- * @author deepak jain
+ * @author v.lugovsky
  * created on 16.12.2015
  */
 (function () {
-  'use strict';
+    'use strict';
 
-  angular.module('BlurAdmin.pages.leave.applications', [])
-    .config(routeConfig);
+    angular.module('BlurAdmin.pages.leave.applications', [
 
-  /** @ngInject */
-  function routeConfig($stateProvider,$urlRouterProvider) {
-    $stateProvider
-        .state('leave.applications', {
-          url: '/applications',
-          abstract: true,
-          templateUrl: 'app/pages/leave/applications/applications.html',
-          controller: "LeaveApplicationController",
-          controllerAs: "leaveApCtrl",
-          title: 'Application',
-          sidebarMeta: {
-            order: 0,
-          },
-        }).state('leave.applications.label', {
-          url: '/:label',
-          templateUrl: 'app/pages/leave/applications/list/applicationslist.html',
-          title: 'Mail',
-          controller: "LeaveApplicationListController",
-          controllerAs: "lmAppLtCtrl"
-        }).state('leave.applications.detail', {
-          url: '/:label/:id',
-          templateUrl: 'app/pages/leave/applications/detail/applicationsdetail.html',
-          title: 'Detail',
-          controller: "LeaveApplicationsDetailController",
-          controllerAs: "leaveDetailCtrl"
-        });
-    $urlRouterProvider.when('/leave/applications','/leave/applications/inbox');
-  }
+    ])
+        .config(routeConfig);
+
+    /** @ngInject */
+    function routeConfig($stateProvider) {
+        $stateProvider
+            .state('leave.applications', {
+                url: '/app',
+                templateUrl: 'app/pages/leave/applications/applications.html',
+                controller: "LeaveApplicationController",
+                controllerAs: "tabCtrl",
+                title: 'Application',
+                sidebarMeta: {
+                    order: 0,
+                },
+            })
+            
+        //$urlRouterProvider.when('/leave/application', '/leave/applications/25');
+    }
 
 })();
+
+

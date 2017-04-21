@@ -68,7 +68,6 @@
   }
 </style>
 <div class="message-container" ng-class="{'expanded': tabCtrl.navigationCollapsed}">
-<<<<<<< HEAD
 
   <form name="editForm" ng-submit="vm.saveEmployeeLeaveApplication(editForm)">
     <div class="panel bg-white mrg0B">
@@ -230,22 +229,4 @@
 
   </form>
 
-=======
-  <div class="message">
-    <div class="row">
-      <!--<div class="toggle-navigation-container detail-page">
-        <a href class="collapse-navigation-link ion-navicon"
-           ng-click="tabCtrl.navigationCollapsed=!tabCtrl.navigationCollapsed"></a>
-      </div>-->
-      <button ui-sref="organization.masters.list({name:addCtrl.tempName, pageId : addCtrl.pageId})" type="button" class="back-button btn btn-default btn-with-icon"><i
-          class="ion-chevron-left"></i>Back
-      </button>
-      <span>{{addCtrl.page.pageinfo.tagline}}</span>
-      <i ng-hide="addCtrl.tempLoaded" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
-    </div>
-    <div class="line"></div>
-    <ng-include src="addCtrl.templateUrlPath" onload="addCtrl.tempLoaded=true"></ng-include>
-    <span ng-show="(addCtrl.templateUrlPath=='')">Template URL is empty</span>
-  </div>
->>>>>>> 8be5d6ed45d93b69bf7883b1dc7259f0805c742f
 </div>
