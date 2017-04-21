@@ -26,12 +26,13 @@
     function _getTabs() {
 
       var mastersMenu = [];
+      mastersMenu.push({ name: 'location', text: 'Location', id: 34 })
       mastersMenu.push({ name: 'branch', text: 'Branch', id: 109 })
-      mastersMenu.push({ name: 'unit', text: 'Sub Unit', id: 111 })
-      mastersMenu.push({ name: 'depart', text: 'Departments', id: 29 })
-      mastersMenu.push({ name: 'design', text: 'Designation', id: 30 })
-      mastersMenu.push({ name: 'grade', text: 'Grades', id: 47 })
-      mastersMenu.push({ name: 'level', text: 'Levels', id: 48 })
+      mastersMenu.push({ name: 'sub-unit', text: 'Sub Unit', id: 111 })
+      mastersMenu.push({ name: 'department', text: 'Departments', id: 29 })
+      mastersMenu.push({ name: 'designation', text: 'Designation', id: 30 })
+      mastersMenu.push({ name: 'grades', text: 'Grades', id: 47 })
+      mastersMenu.push({ name: 'levels', text: 'Levels', id: 48 })
       return mastersMenu;
 
     }

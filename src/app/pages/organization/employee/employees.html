@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-md-12">
+        <div ba-panel ba-panel-class="xmedium-panel" ba-panel-title="Employee List">
+            <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                    <tr class="sortable">
+                        <td class="table-id">Sno</td>
+                        <td>Employee Code</td>
+                        <td>Employee Name</td>
+                        <td class="col-md-3">Actions</td>
+                    </tr>
+                </thead>
+                <tbody ng-show="rows.length>0">
+                    <tr ng-repeat="row in rows" class="editable-row">
+                        <td>
+                            {{$index+1}}
+                        </td>
+                        <td>
+                            <span editable-text="row.EmpCode" e-name="EmpCode" e-form="rowform" e-required>
+          {{ row.EmpCode || '' }}
+
+        </span>
+
+                        </td>
+                        <td>
+                            <span editable-text="row.EmpName" e-name="EmpName" e-form="rowform" e-required>
+          {{ row.EmpName || '' }}
+          
+        </span>
+
+                        </td>
+                        <td class="col-md-3">
+                            <div include-with-scope="app/pages/organization/masters/list/action.html"></div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-hide="rows.length>0">
+                    <tr>
+                        <td colspan="3">No employee found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="side-message-navigation" ng-class="{'expanded': tabCtrl.navigationCollapsed}">
+    <div class="mail-messages-control side-message-navigation-item">
+        <div class="toggle-navigation-container">
+            <a href class="collapse-navigation-link ion-navicon" ng-click="tabCtrl.navigationCollapsed=!tabCtrl.navigationCollapsed"></a>
+        </div>
+        <label class="checkbox-inline custom-checkbox nowrap">
+      <input type="checkbox" id="inlineCheckbox01" value="option1">
+      <span class="select-all-label">Select All</span>
+    </label>
+        <button type="button" class="btn  btn-icon refresh-button"><i class="ion-refresh"></i></button>
+        <button type="button" class="btn  btn-icon refresh-button" ng-click="listCtrl.showAdd()"><i class="ion-add"></i>Add</button>
+        <div class="btn-group" uib-dropdown>
+            <button type="button" class="btn more-button" uib-dropdown-toggle>
+        More <span class="caret"></span>
+      </button>
+            <ul uib-dropdown-menu>
+                <li><a href>Edit</a></li>
+                <li><a href>Delete</a></li>
+                <li><a href>Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href>Separated link</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--<ng-include src="templateUrl()"></ng-include>-->
+
+</div>
+
+<!--<div>
+    <ui-view></ui-view>
+</div>-->
