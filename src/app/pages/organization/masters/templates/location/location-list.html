@@ -1,16 +1,16 @@
 <table class="table table-bordered table-hover table-condensed" st-table="displayedCollection" st-safe-src="rows" st-pagination-scroll>
     <thead>
         <tr class="sortable">
-            <td class="table-id">Sno</td>
-            <td st-sort="DesgName" class="col-sm-3">Designation</td>
-            <td class="col-sm-3">Description</td>
-            <td class="col-sm-2">Is Administrator</td>
-            <td class="col-sm-2">Is Manager</td>
-            <td class="table-id">Actions</td>
+            <th st-sort="$index" class="col-sm-1">Sno</th>
+            <th st-sort="LocationName" class="col-sm-3">Location Name</th>
+            <th st-sort="CityName" class="col-sm-2">City</th>
+            <th st-sort="StateName" class="col-sm-2">State</th>
+            <th st-sort="CountryName" class="col-sm-2">Country</th>
+            <th class="col-sm-1">Actions</th>
         </tr>
         <tr>
             <th></th>
-            <th><input st-search="DesgName" placeholder="Search by Location" class="input-sm form-control search-input" type="search"
+            <th><input st-search="LocationName" placeholder="Search by Location" class="input-sm form-control search-input" type="search"
                 /></th>
             <th colspan="4"><input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
         </tr>
@@ -20,11 +20,11 @@
             <td>
                 {{$index+1}}
             </td>
-            <td> {{ row.DesgName || '' }} </td>
-            <td> {{ row.DesgDesc || '' }} </td>
-            <td> {{ row.DesgIsAdministrator || '' }} </td>
-            <td> {{ row.DesgIsManager || '' }} </td>
-            <td class="col-md-3">
+            <td> {{ row.LocationName || '' }} </td>
+            <td> {{ row.CityName || '' }} </td>
+            <td> {{ row.StateName || '' }} </td>
+            <td> {{ row.CountryName || '' }} </td>
+            <td style="width: 50px">
                 <a ui-sref="organization.masters.edit({name:listCtrl.tempName, pageId: listCtrl.pageId, action:'edit', pkId:row.LocationId})">
                     <i class="ion-edit"></i></a>
             </td>
@@ -37,7 +37,7 @@
     </tbody>
     <tbody ng-show="isLoading">
         <tr>
-            <td colspan="6">Loading {{listCtrl.page.pageinfo.title}} Please wait..</td>
+            <td colspan="6">Loading {{listCtrl.page.pageinfo.title}} Please wait..<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i></td>
         </tr>
     </tbody>
     <tfoot>

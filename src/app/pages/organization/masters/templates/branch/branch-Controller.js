@@ -48,14 +48,7 @@
             }
             editFormService.saveForm(vm.pageId, newEntity, {}, vm.action, vm.page.pageinfo.title, 'organization.masters.label')
         }
-
-``
-
         _loadController();
-
-
-
-
     }
 
 })();

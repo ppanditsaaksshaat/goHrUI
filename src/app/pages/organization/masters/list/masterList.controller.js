@@ -11,60 +11,35 @@
   /** @ngInject */
   function OrgMastersListController($scope, $stateParams,
     pageService, editableOptions, editableThemes, DJWebStore) {
+
+
+    var rndValu = Math.round((Math.random() * 10) * 10);
+    var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
+
     var vm = this;
     vm.pageId = $stateParams.pageId;
     vm.table = { rows: [] }
     vm.page = {};
     $scope.isLoading = true;
     $scope.isLoaded = false;
+    vm.templateUrlPath = '';
+    vm.tempName = $stateParams.name;
+    vm.templateUrlPath = "app/pages/organization/masters/templates/"
+      + vm.tempName + "/" + vm.tempName + "-list.html?" + rndValu2 + "=" + rndValu;
 
 
-    var rndValu = Math.round((Math.random() * 10) * 10);
-    var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
-    $scope.templateUrl = function () {
-
-      return "app/pages/organization/masters/templates/" + vm.tempFile + "/" + vm.tempFile + "-list.html?" + rndValu2 + "=" + rndValu
-    }
     vm.refreshData = function () {
+      $scope.rows = [];
       _getTableData();
     }
-    function _setupColumns() {
-      if (vm.pageId == 109) {
-        vm.tempFile = 'branch'
-      }
-      else if (vm.pageId == 111) {
-        vm.tempFile = 'sub-unit';
-      }
-      else if (vm.pageId == 29) {
-        vm.tempFile = 'department';
-      }
-      else if (vm.pageId == 30) {
-        vm.tempFile = 'designation';
-      }
-      else if (vm.pageId == 47) {
-        vm.tempFile = 'grades';
-      }
-      else if (vm.pageId == 48) {
-        vm.tempFile = 'levels';
-      }
-    }
-    function _loadController() {
-      _setupColumns();
-      pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
 
+    function _loadController() {
+      pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
     }
     function _successGetPage(result) {
       console.log(result)
       vm.page = result;
       DJWebStore.SetValue('Page_' + vm.pageId, result)
-      // vm.table = {};
-      // vm.table.columns = [];
-      // vm.page.pageinfo.columns.forEach(function (col) {
-      //   if (!col.name.endsWith('Id')) {
-      //     vm.table.columns.push(col);
-      //   }
-      // }, this);
-
       _getTableData();
     }
     function _errorGetPage(err) {
@@ -113,6 +88,42 @@
     }
     _loadController();
 
+
+
+
+        var nameList = ['Pierre', 'Pol', 'Jacques', 'Robert', 'Elisa'];
+        var familyName = ['Dupont', 'Germain', 'Delcourt', 'bjip', 'Menez'];
+
+        $scope.isLoading = false;
+        $scope.rowCollection = [];
+
+
+        function createRandomItem() {
+            var
+                firstName = nameList[Math.floor(Math.random() * 4)],
+                lastName = familyName[Math.floor(Math.random() * 4)],
+                age = Math.floor(Math.random() * 100),
+                email = firstName + lastName + '@whatever.com',
+                balance = Math.random() * 3000;
+
+            return {
+                firstName: firstName,
+                lastName: lastName,
+                age: age,
+                email: email,
+                balance: balance
+            };
+        }
+
+        function getAPage() {
+            var data = [];
+            for (var j = 0; j < 20; j++) {
+                data.push(createRandomItem());
+            }
+            return data;
+        }
+        $scope.rowCollection = getAPage();
+        console.log($scope.rowCollection)
 
     $scope.smartTablePageSize = 10;
 
