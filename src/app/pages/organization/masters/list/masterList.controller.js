@@ -20,6 +20,16 @@
     vm.pageId = $stateParams.pageId;
     vm.table = { rows: [] }
     vm.page = {};
+    vm.showAdd = function () {
+      addModal.open({
+        subject: 'subject',
+        to: 'to',
+        text: 'text'
+      })
+    };
+    $scope.templateUrl = function () {    
+      return "app/pages/organization/masters/templates/" + vm.tempFile + "/" + vm.tempFile + "-list.html"
+=======
     $scope.isLoading = true;
     $scope.isLoaded = false;
     vm.templateUrlPath = '';
@@ -31,6 +41,7 @@
     vm.refreshData = function () {
       $scope.rows = [];
       _getTableData();
+>>>>>>> 119f07729457747cabfcd3617cea016f3e2488d9
     }
 
     function _loadController() {

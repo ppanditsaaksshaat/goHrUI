@@ -11,6 +11,7 @@
 
   /** @ngInject */
   function routeConfig($stateProvider,$urlRouterProvider) {
+   
     $stateProvider
         .state('organization.masters', {
           url: '/masters',
