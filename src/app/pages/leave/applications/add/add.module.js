@@ -1,36 +1,31 @@
+
 /**
- * @author a.demeshko
- * created on 12/24/15
+ * @author v.lugovsky
+ * created on 16.12.2015
  */
 (function () {
-  'use strict';
+    'use strict';
 
-  angular.module('BlurAdmin.pages.leave.masters')
-    .service('addModal', addModal);
+    angular.module('BlurAdmin.pages.leave.appadd', [
 
-  /** @ngInject */
-  function addModal($uibModal) {
-      this.open = function(options){
-        return $uibModal.open({
-          animation: true,
-          templateUrl: 'app/pages/leave/applications/add/add.html',
-          controller: 'mastersAddController',
-          controllerAs: 'boxCtrls',
-          size: 'md',
-          resolve: {
-            subject: function () {
-              return options.subject;
-            },
-            to: function () {
-              return options.to;
-            },
-            text: function () {
-              return options.text;
-            }
-          }
-        });
-      }
+    ])
+        .config(routeConfig);
 
-  }
+    /** @ngInject */
+    function routeConfig($stateProvider) {
+        $stateProvider
+            .state('leave.appadd', {
+                url: '/applications/:action',
+                templateUrl: 'app/pages/leave/applications/add/add.html',
+                controller: "ApplicationAddController",
+                controllerAs: "appCtrl",
+                title: 'Application',
+              
+            })
+            
+        //$urlRouterProvider.when('/leave/application', '/leave/applications/25');
+    }
 
 })();
+
+

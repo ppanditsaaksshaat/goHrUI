@@ -5,11 +5,11 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.leave.masters')
-    .controller('LeaveMastersController', LeaveMastersController);
+  angular.module('BlurAdmin.pages.leave.applications')
+    .controller('ApplicationsMastersController', ApplicationsMastersController);
 
   /** @ngInject */
-  function LeaveMastersController(composeModal, mailMessages, pageService) {
+  function ApplicationsMastersController(composeModal, mailMessages, pageService) {
    
     var vm = this;
     vm.navigationCollapsed = true;
@@ -26,9 +26,8 @@
     function _getTabs() {
 
       var mastersMenu = [];
-      mastersMenu.push({ name: 'DayCriteria', text: 'DayCriteria', id: 262 })
-      mastersMenu.push({ name: 'LeaveType', text: 'LeaveType', id: 260 })
       mastersMenu.push({ name: 'leaveapplication', text: 'leaveapplication', id: 157 })
+     
       return mastersMenu;
 
     }

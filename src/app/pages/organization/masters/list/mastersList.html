@@ -8,7 +8,7 @@
       <span class="select-all-label">Select All</span>
     </label>
     <button type="button" class="btn  btn-icon refresh-button"><i class="ion-refresh"></i></button>
-    <button type="button" class="btn  btn-icon refresh-button" ng-click="listCtrl.showAdd()"><i class="ion-add"></i>Add</button>
+    <button type="button" class="btn  btn-icon refresh-button" ui-sref="organization.masters.add({pageId: listCtrl.pageId, action:'create'})"><i class="ion-add"></i>Add</button>
     <div class="btn-group" uib-dropdown>
       <button type="button" class="btn more-button" uib-dropdown-toggle>
         More <span class="caret"></span>
@@ -21,6 +21,7 @@
         <li><a href>Separated link</a></li>
       </ul>
     </div>
+    <span class="font-bold">{{listCtrl.page.pageinfo.title}}</span>
   </div>
   <ng-include src="templateUrl()"></ng-include>
 </div>

@@ -4,10 +4,9 @@
  */
 (function () {
   'use strict';
-  angular.module('BlurAdmin.pages.leave', [
-    'BlurAdmin.pages.leave.masters',
+  angular.module('BlurAdmin.pages.leave', [   
     'BlurAdmin.pages.leave.applications',
-  
+    'BlurAdmin.pages.leave.appadd'
   ])
       .config(routeConfig);
 
