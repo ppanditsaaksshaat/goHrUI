@@ -6,21 +6,16 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.leave.applications')
-      .controller('LeaveApplicationController', LeaveApplicationController);
+    .controller('ApplicationsMastersController', ApplicationsMastersController);
 
   /** @ngInject */
-  function LeaveApplicationController(composeModal, mailMessages, pageService) {
-    // debugger;
-    // pageService.getPagData(1).then(function(result){
-    //   console.log(result)
-    // }, function(err){
-
-    // })
+  function ApplicationsMastersController(composeModal, mailMessages, pageService) {
+   
     var vm = this;
     vm.navigationCollapsed = true;
-    vm.showCompose = function(subject, to , text){
+    vm.showCompose = function (subject, to, text) {
       composeModal.open({
-        subject : subject,
+        subject: subject,
         to: to,
         text: text
       })
@@ -28,47 +23,15 @@
 
     vm.tabs = _getTabs();
 
-    function _getTabs(){
-      
-      var tabs = [
-        {
-          label:'branch',
-          name:'Branch',
-          pageId:29
-        },
-        {
-          label:'unit',
-          name:'Sub Unit',
-          pageId:30
-        },
-      {
-        label: 'inbox',
-      name: 'Departments',
-      newMails: 7,
-      pageId:30
-    }, {
-      label: 'sent',
-      name: 'Designation',
-      pageId:30
-    }, {
-      label: 'important',
-      name: 'Grades',
-      pageId:30
-    }, {
-      label: 'draft',
-      name: 'Levels',
-      newMails: 2,
-      pageId:30
-    }, {
-      label: 'spam',
-      name: 'Spam'
-    }, {
-      label: 'trash',
-      name: 'Trash'
-    }];
-    return tabs;
-  }
-  
+    function _getTabs() {
+
+      var mastersMenu = [];
+      mastersMenu.push({ name: 'leaveapplication', text: 'leaveapplication', id: 157 })
+     
+      return mastersMenu;
+
+    }
+
   }
 
 })();

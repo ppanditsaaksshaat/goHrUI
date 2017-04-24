@@ -1,61 +1,22 @@
-/**
- * @author deepak.jain
- * created on 19.04.2017
- */
 (function () {
     'use strict';
-
     angular.module('BlurAdmin.pages.organization.masters')
-        .controller('branchAddController', branchAddController)
+        .controller('orgMasterBranchController', orgMasterBranchController);
+    function orgMasterBranchController($scope, $stateParams) {
 
+        $scope.setGrid(
 
-
-    function branchAddController($scope, $state, $stateParams, DJWebStore, editFormService) {
-
-        $scope.ok = function () {
-            return true;
-        }
-
-        var vm = this;
-
-        vm.saveForm = _saveForm;
-        vm.pageId = $stateParams.pageId;
-        vm.action = $stateParams.action;
-        if ($stateParams.pkId !== undefined) {
-            vm.pkId = $stateParams.pkId;
-        }
-        vm.selects = { BRLocationId: [] }
-
-        function _loadController() {
-            vm.page = DJWebStore.GetValue('Page_' + vm.pageId)
-
-            if (vm.page.pageinfo.filters !== undefined) {
-
-                vm.page.pageinfo.filters.forEach(function (filter) {
-                    if (filter.name == "BRLocationId") {
-                        vm.selects.BRLocationId = filter.titleMap;
-                    }
-                }, this);
-
+            {
+                columns: ['BRName'],//list of columns
+                enableTitleFilter: true,//show title filter
+                enableGlobalFilter: true,//show global filter
+                enbleColumnFilter: false,//show each column filter
+                enableSrNo: true,//show serial no column
+                enableAction: true,//show action column
+                enablePagination: true,//enable pagination
+                paginationLength: 10,//length of rows per page,
+                pageId: $stateParams.pageId//page id for which grid to be design
             }
-        }
-        function _saveForm(form) {
-            console.log(vm.entity, vm.action)
-            var newEntity = {
-                BRId: 0,
-                BRName: vm.entity.BRName,
-                BRLocationId: vm.entity.BRLocationId.value
-            }
-            editFormService.saveForm(vm.pageId, newEntity, {}, vm.action, vm.page.pageinfo.title, 'organization.masters.label')
-        }
-
-``
-
-        _loadController();
-
-
-
-
+        )
     }
-
 })();

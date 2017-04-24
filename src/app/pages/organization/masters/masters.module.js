@@ -23,8 +23,8 @@
           sidebarMeta: {
             order: 0,
           },
-        }).state('organization.masters.label', {
-          url: '/:pageId',
+        }).state('organization.masters.list', {
+          url: '/:name/:pageId',
           templateUrl: 'app/pages/organization/masters/list/mastersList.html',
           title: 'Organization Masters',
           controller: "OrgMastersListController",
@@ -36,13 +36,19 @@
           controller: "OrgMastersDetailController",
           controllerAs: "detailCtrl"
         }).state('organization.masters.add', {
-          url: '/:action/:pageId/',
+          url: '/:name/:action/:pageId/',
+          templateUrl: 'app/pages/organization/masters/add/add.html',
+          title: 'Organization Masters',
+          controller: "OrgMastersAddController",
+          controllerAs: "addCtrl"
+        }).state('organization.masters.edit', {
+          url: '/:name/:action/:pageId/:pkId/',
           templateUrl: 'app/pages/organization/masters/add/add.html',
           title: 'Organization Masters',
           controller: "OrgMastersAddController",
           controllerAs: "addCtrl"
         });
-    $urlRouterProvider.when('/organization/masters','/organization/masters/109');
+    $urlRouterProvider.when('/organization/masters','/organization/masters/location/34');
   }
 
 })();

@@ -11,7 +11,7 @@
     'BlurAdmin.pages.organization.empview'
   ])
       .config(routeConfig);
-
+      
   /** @ngInject */
   function routeConfig($stateProvider) {
     $stateProvider

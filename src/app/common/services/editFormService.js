@@ -6,29 +6,14 @@
 'use strict';
 
 angular.module('BlurAdmin.common')
-    .factory('editFormService', ['pageService', 'DJWebStore', 'toastr', 'toastrConfig', '$uibModal', '$state',
+    .factory('editFormService', ['pageService', 'DJWebStore', 'toastr', 'toastrConfig', '$uibModal', '$state', '$rootScope',
         editFormService])
-    .controller('ModalConfirmCtrl', ['$scope', '$uibModalInstance', 'confirmClick', 'confirmMessge',
+    .controller('ModalConfirmCtrl', ['$scope', '$uibModalInstance', 'param',
         ModalConfirmCtrl]);
 
-//Controller for confirm box
-function ModalConfirmCtrl($scope, $uibModalInstance, confirmClick, confirmMessge, pageId, data, stateUrl, title) {
-    $scope.confirmMessage = confirmMessge;
-    function closeModal() {
-        $uibModalInstance.dismiss('cancel');
-    }
 
-    $scope.ok = function () {
-        confirmClick(pageId, data, stateUrl, title);
-        closeModal();
-    }
-
-    $scope.cancel = function () {
-        closeModal();
-    }
-}
 //Controller for save edit form
-function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModal, $state) {
+function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModal, $state, $rootScope) {
 
     var toastOption = {};
     var defaultConfig = angular.copy(toastrConfig);
@@ -51,7 +36,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
         msg: ""
     };
     //calling func from outer side of factory
-    function _saveEditForm(pageId, newEntity, oldEntity, action, title, stateUrl) {
+    function _saveEditForm(pageId, newEntity, oldEntity, action, title) {
         var data = {
             oldEntity: oldEntity,
             newEntity: newEntity,
@@ -62,11 +47,11 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
             _showToast('info', 'Nothing to save', title)
         }
         else {
-            _showConfirm('Do you want to save ' + title + '?', _confirmClick, pageId, data, stateUrl, title)
+            _showConfirm('Do you want to save ' + title + '?', _confirmClick, pageId, data, title)
         }
     }
 
-    function _confirmClick(pageId, data, stateUrl, title) {
+    function _confirmClick(pageId, data, title) {
 
         pageService.editPageData(pageId, JSON.stringify(data)).then(function (result) {
 
@@ -76,7 +61,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
                 }
                 else {
                     _showToast('success', result.success_message, title)
-                    $state.go(stateUrl, { pageId: pageId }, {})
+                    $rootScope.back();
                 }
             }
             else {
@@ -95,32 +80,25 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
         openedToasts.push(toastr[toastOption.type](msg, title));
     }
 
-    function _showConfirm(msg, funcConfirm, pageId, data, stateUrl, title) {
+    function _showConfirm(msg, funcConfirm, pageId, data, title) {
+
+        console.log(data)
+        var para = {
+            pageId: pageId, 
+            data: data,
+            title: title,
+            confirmClick: funcConfirm, 
+            confirmMessge: msg
+        }
         var modalInstance = $uibModal.open({
             template: '<div class="modal-header"><h3 class="modal-title">{{confirmMessage}}</h3></div><div class="modal-footer"><button class="btn btn-primary" type="button" ng-click="ok()">Yes</button><button class="btn btn-warning" type="button" ng-click="cancel()">No</button></div>',
             controller: 'ModalConfirmCtrl',
             size: 'sm',
             windowClass: 'confirm-window',
             resolve: {
-                confirmClick: function () {
-                    return funcConfirm;
-                },
-                confirmMessge: function () {
-                    return msg;
-                },
-                pageId: function () {
-                    return pageId;
-                },
-                data: function () {
-                    return data;
-                },
-                stateUrl: function () {
-                    return stateUrl;
-                },
-                title: function () {
-                    return title;
+                param: function () {
+                    return para;
                 }
-
             }
         });
     }
@@ -128,4 +106,24 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
     var editForm = {};
     editForm.saveForm = _saveEditForm;
     return editForm;
+}
+//Controller for confirm box
+function ModalConfirmCtrl($scope, $uibModalInstance, param) {
+
+    var confirmClick = param.confirmClick, confirmMessge = param.confirmMessge;
+
+    console.log(param, confirmMessge)
+    $scope.confirmMessage = confirmMessge;
+    function closeModal() {
+        $uibModalInstance.dismiss('cancel');
+    }
+
+    $scope.ok = function () {
+        confirmClick(param.pageId, param.data, param.title);
+        closeModal();
+    }
+
+    $scope.cancel = function () {
+        closeModal();
+    }
 }
