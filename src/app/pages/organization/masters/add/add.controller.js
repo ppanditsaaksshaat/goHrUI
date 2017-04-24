@@ -15,9 +15,10 @@
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
     vm.saveForm = _saveForm;
     vm.oldEntity = {};
+    vm.templateUrlPath = '';
 
     function _loadController() {
-
+      // debugger;
       vm.pageId = $stateParams.pageId;
       vm.tempName = $stateParams.name;
       vm.action = $stateParams.action;
@@ -26,7 +27,7 @@
         vm.pkId = $stateParams.pkId;
       }
 
-      vm.page = DJWebStore.GetValue('Page_' + vm.pageId)
+      vm.page = $scope.getPage(vm.pageId)
       vm.templateUrlPath = '';
       vm.templateUrlPath = "app/pages/organization/masters/templates/"
         + vm.tempName + "/" + vm.tempName + "-add.html?" + rndValu2 + "=" + rndValu;
