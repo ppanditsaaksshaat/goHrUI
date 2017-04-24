@@ -21,6 +21,7 @@
       pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
     }
     function _successGetPage(result) {
+  
       console.log(result)
       vm.page = result;
       _getTableData();

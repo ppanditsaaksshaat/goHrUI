@@ -1,0 +1,100 @@
+
+    <h3 class="">Personal Detail</h3>
+    <hr>
+   
+    <div class="row">
+      <div class="col-md-12">
+      <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">Email</label>
+
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputLastName" ng-model="empTabCtrl.empPersonalDetail.PdEmail">
+          </div>
+        </div>
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-lg-3 control-label">Mobile</label>
+
+          <div class="col-lg-9">
+            <input type="text" class="form-control" id="inputFirstName"ng-model="empTabCtrl.empPersonalDetail.PdMobileNo">
+          </div>
+        </div>
+     </div>
+      <div class="col-md-12">             
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-lg-3 control-label">Gender</label>
+
+          <div class="col-lg-9">
+             <select id="empGender_{{$index}}"
+                      name="empGender_{{$index}}"
+                      ng-model="empTabCtrl.empPersonalDetail.PdGenderId"
+                      class="form-control"
+                      ng-options="gender.value as gender.name for gender in empTabCtrl.gender"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+          </div>
+        </div>
+         <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">MaritalStatus</label>
+
+          <div class="col-sm-9">
+             <select id="empMaritalStatus_{{$index}}"
+                      name="empMaritalStatus_{{$index}}"
+                      ng-model="empTabCtrl.empPersonalDetail.PdMaritalId"
+                      class="form-control"
+                      ng-options="maritalStatus.value as maritalStatus.name for maritalStatus in empTabCtrl.maritalStatus"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+          </div>
+        </div>
+      </div>
+       <div class="col-md-12">     
+       
+          <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">Nationality</label>
+
+          <div class="col-sm-9">
+             <select id="empNationality_{{$index}}"
+                      name="empNationality_{{$index}}"
+                      ng-model="empTabCtrl.empPersonalDetail.PdNationalityId"
+                      class="form-control"
+                      ng-options="nationality.value as nationality.name for nationality in empTabCtrl.nationality"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+          </div>
+        </div>
+          <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">DateOfBirth</label>
+
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputLastName" ng-model="empTabCtrl.empPersonalDetail.PdDateOfBirth">
+          </div>
+        </div>
+      </div>
+        <div class="col-md-12">
+      
+          <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">NickName</label>
+
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputLastName" ng-model="empTabCtrl.empPersonalDetail.PdNickName">
+          </div>
+        </div>
+         <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">EmpCode</label>
+
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputLastName" ng-model="empTabCtrl.empPersonalDetail.PdOtherID">
+          </div>
+        </div>
+      </div>
+       
+     
+    <button type="button" class="btn btn-primary btn-with-icon save-profile">
+      <i class="ion-android-checkmark-circle"></i>Update Profile
+    </button>

@@ -1,0 +1,79 @@
+<div>
+    <h3 class="">Employee Basic</h3>
+<hr>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row clearfix">
+          <label for="inputFirstName" class="col-sm-3 control-label">Picture</label>
+
+          <div class="col-sm-9">
+            <div class="userpic">
+              <div class="userpic-wrapper">
+                <img ng-src="{{ empTabCtrl.empBasicDetail.EmpPhoto1_64URL }}" ng-click="uploadPicture()">
+              </div>
+              <i class="ion-ios-close-outline" ng-click="removePicture()" ng-if="!noPicture"></i>
+              <a href class="change-userpic" ng-click="uploadPicture()">Change Profile Picture</a>
+              <input type="file" ng-show="false" id="uploadFile" ng-file-select="onFileSelect($files)">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-sm-3 control-label">Title</label>
+
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="Name"  ng-model="empTabCtrl.empBasicDetail.TitleName">
+          </div>
+        </div>
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-lg-3 control-label">Name</label>
+
+          <div class="col-lg-9">
+            <input type="text" class="form-control" id="inputFirstName"ng-model="empTabCtrl.empBasicDetail.EmpName">
+          </div>
+        </div>
+     </div>
+      <div class="col-md-12">
+        
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">EmpCode</label>
+
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputLastName" ng-model="empTabCtrl.empBasicDetail.EmpCode">
+          </div>
+        </div>
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-lg-3 control-label">Gender</label>
+
+          <div class="col-lg-9">
+            <input type="text" class="form-control" id="inputFirstName" ng-model="empTabCtrl.empBasicDetail.GenderName">
+          </div>
+        </div>
+      </div>
+       <div class="col-md-12">
+        
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">Department</label>
+
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputLastName" ng-model="empTabCtrl.empBasicDetail.DeptName">
+          </div>
+        </div>
+          <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">Degisnation</label>
+
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputLastName" ng-model="empTabCtrl.empBasicDetail.DesgName">
+          </div>
+        </div>
+      </div>
+    <button type="button" class="btn btn-primary btn-with-icon save-profile">
+      <i class="ion-android-checkmark-circle"></i>Update Profile
+    </button>
+
+</div>

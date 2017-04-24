@@ -17,17 +17,10 @@
                         </td>
                         <td>
                             <span editable-text="row.EmpCode" e-name="EmpCode" e-form="rowform" e-required>
-          {{ row.EmpCode || '' }}
-
-        </span>
-
+                             {{ row.EmpCode || '' }} </span>
                         </td>
                         <td>
-                            <span editable-text="row.EmpName" e-name="EmpName" e-form="rowform" e-required>
-          {{ row.EmpName || '' }}
-          
-        </span>
-
+                            <a ui-sref="organization.empview({action:'view',empId:row.EmpId})">{{ row.EmpName || '' }}</a>
                         </td>
                         <td class="col-md-3">
                             <div include-with-scope="app/pages/organization/masters/list/action.html"></div>
@@ -43,7 +36,7 @@
         </div>
     </div>
 </div>
-
+<ui-view></ui-view>
 
 <div class="side-message-navigation" ng-class="{'expanded': tabCtrl.navigationCollapsed}">
     <div class="mail-messages-control side-message-navigation-item">

@@ -1,0 +1,29 @@
+<div class="row mail-client-container transparent">
+  <div class="col-md-12">
+    <div ba-panel ba-panel-class="xmedium-panel mail-panel">
+      <div class="letter-layout">
+        <div class="mail-navigation-container" ng-class="{'expanded' : !detailCtrl.navigationCollapsed}">
+          <div class="text-center">
+            <input type="text" class="form-control" ng-model="detailCtrl.menuFilter" id="input01" placeholder="Search">
+          </div>
+          <div ng-repeat="t in detailCtrl.tabs| filter: {name: detailCtrl.menuFilter}" ui-sref-active="active" class="mail-navigation"
+           ui-sref="organization.empview.tab({name:t.name, pageId: t.id})">
+            {{t.text}}
+          </div>
+          
+        </div>
+        <ui-view></ui-view>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<div class="">
+    <div class="col-md-12">
+        <div class="col-md-3">
+            <ng-include src="temalateUrl1()"></ng-include>
+        </div>
+        <div class="col-md-9">
+            <ng-include src="templateUrl()"></ng-include>
+        </div>
+    </div>
+</div>-->
