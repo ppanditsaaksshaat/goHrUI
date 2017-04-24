@@ -10,7 +10,7 @@
     'BlurAdmin.pages.organization.employee'
   ])
       .config(routeConfig);
-
+      
   /** @ngInject */
   function routeConfig($stateProvider) {
     $stateProvider

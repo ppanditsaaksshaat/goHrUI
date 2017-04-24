@@ -5,7 +5,8 @@
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-3 control-label">Location</label>
                 <div class="col-sm-9">
-                    <input ng-model="addCtrl.entity.LocationName" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Branch Name">
+                    <input name="LocationName" ng-model="addCtrl.entity.LocationName" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Branch Name"
+                        text-only-with-space >
                 </div>
             </div>
             <div class="form-group">
@@ -20,7 +21,8 @@
                 <label for="inputPassword3" class="col-sm-3 control-label">State</label>
                 <div class="col-sm-9">
                     <select class="form-control selectpicker with-search" data-live-search="true" title="Select State" selectpicker ng-model="addCtrl.entity.StateId"
-                        ng-options="opt.value as opt.name for opt in addCtrl.selects.StateId | filter: {CountryId:addCtrl.entity.CountryId}" required>
+                        ng-options="opt.value as opt.name for opt in addCtrl.selects.StateId | filter: {CountryId:addCtrl.entity.CountryId}"
+                        required>
                     </select>
                 </div>
             </div>
@@ -28,19 +30,19 @@
                 <label for="inputPassword3" class="col-sm-3 control-label">City</label>
                 <div class="col-sm-9">
                     <select class="form-control selectpicker with-search" data-live-search="true" title="Select City" selectpicker ng-model="addCtrl.entity.LocationCityId"
-                        ng-options="opt.value as opt.name for opt in addCtrl.selects.LocationCityId | filter: {StateId:addCtrl.entity.StateId}" required>
+                        ng-options="opt.value as opt.name for opt in addCtrl.selects.LocationCityId | filter: {StateId:addCtrl.entity.StateId}"
+                        required>
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
-                    <button type="submit" class="btn btn-warning">Save</button>
-                    <button type="button" class="btn btn-danger" ng-click="back()">Cancel</button>
+                    <button ng-disabled="!editForm.$valid" type="submit" class="btn btn-warning">Save</button>
+                    <button type="button" class="btn btn-danger" ng-click="back('organization.master.list')">Cancel</button>
                 </div>
             </div>
         </form>
 
     </div>
 </div>
-<!--<div ng-hide="addCtrl.isLoading"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>-->

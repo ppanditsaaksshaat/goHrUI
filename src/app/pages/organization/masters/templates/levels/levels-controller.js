@@ -1,14 +1,12 @@
 (function () {
     'use strict';
     angular.module('BlurAdmin.pages.organization.masters')
-        .controller('orgMasterLocationController', orgMasterLocationController);
-    function orgMasterLocationController($scope, $stateParams) {
-       
-
+        .controller('orgMasterLevelsController', orgMasterLevelsController);
+    function orgMasterLevelsController($scope, $stateParams) {
         $scope.setGrid(
 
             {
-                columns: ['LocationName', 'CityName', 'StateName', 'CountryName'],//list of columns
+                columns: ['EmpLevelName', 'EmpLevelDesc'],//list of columns
                 enableTitleFilter: true,//show title filter
                 enableGlobalFilter: true,//show global filter
                 enbleColumnFilter: false,//show each column filter
