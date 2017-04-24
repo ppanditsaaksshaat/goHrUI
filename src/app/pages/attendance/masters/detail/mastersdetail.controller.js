@@ -5,11 +5,11 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.leave.masters')
-    .controller('LeaveMastersDetailController', LeaveMastersDetailController);
+  angular.module('BlurAdmin.pages.attendance.masters')
+    .controller('AttendanceMastersDetailController', AttendanceMastersDetailController);
 
   /** @ngInject */
-  function LeaveMastersDetailController($stateParams, mailMessages) {
+  function AttendanceMastersDetailController($stateParams, mailMessages) {
     var vm = this;
     vm.mail = mailMessages.getMessageById($stateParams.id);
     vm.label = $stateParams.label;

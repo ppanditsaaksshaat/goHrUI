@@ -16,7 +16,7 @@
           templateUrl: 'app/pages/organization/masters/add/add.html',
           controller: 'mastersAddController',
           controllerAs: 'boxCtrl',
-          size: 'md',
+          size: 'compose',
           resolve: {
             subject: function () {
               return options.subject;

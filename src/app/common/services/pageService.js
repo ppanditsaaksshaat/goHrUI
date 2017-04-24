@@ -2,7 +2,8 @@
 //This Factory is used to call get & set data method through our own c# WebAPI  
 
 'use strict';
-angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore', 'fileUpload', function ($http, DJWebStore, fileUpload) {
+angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore', 'fileUpload', 
+function ($http, DJWebStore, fileUpload) {
     var title = 'default';
 
     var serviceBase = DJWebStore.GetServiceBase();
@@ -85,6 +86,8 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
             });
         }
     };
+
+    
 
     var _getPagData = function (pageCode) {
         var rndVal = Math.round((Math.random() * 10) * 10);
@@ -980,6 +983,8 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                });
     }
 
+   
+
     var _getCustomEmailSetting = function (pageId) {
         var rndVal = Math.round((Math.random() * 10) * 10);
         var url = serviceBase + 'api/Email/Custom/' + pageId
@@ -1035,8 +1040,20 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     }
                 }).then(function (results) {
                     return results;
-                    console.log(results)
+                    
                 });
+    }
+
+     var _getCustomQuery = function (data, queryId) {
+        var url = serviceBase + 'api/Data/Query/' + queryId;
+        return $http.post(url, JSON.stringify(JSON.stringify(data)),
+               {
+                   headers: {
+                       'Content-Type': 'application/json'
+                   }
+               }).then(function (results) {
+                   return results;
+               });
     }
 
     pageServiceFactory.serviceBase = serviceBase;
@@ -1063,6 +1080,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
     pageServiceFactory.findEntity = _findEntity;
     pageServiceFactory.getPrintBuilder = _getPrintBuilder;
     pageServiceFactory.getMapColumns = _getMapColumns;
+    pageServiceFactory.getCustomQuery = _getCustomQuery;
 
     pageServiceFactory.getTableData = _getTableData;
     //report builder

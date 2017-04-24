@@ -6,7 +6,9 @@
     "browser-sync-spa": "~1.0.3",
     "chalk": "~1.1.1",
     "del": "~2.2.2",
+    "eslint": "^3.19.0",
     "eslint-plugin-angular": "~0.12.0",
+    "eslint-plugin-react": "^6.10.3",
     "estraverse": "~4.2.0",
     "gulp": "~3.9.0",
     "gulp-angular-filesort": "~1.1.1",
@@ -45,5 +47,9 @@
   },
   "scripts": {
     "postinstall": "bower install"
+  },
+  "dependencies": {
+    "eslint-config-defaults": "^9.0.0",
+    "eslint-plugin-react": "^6.10.3"
   }
 }

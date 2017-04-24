@@ -6,10 +6,11 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.organization', [
-    'BlurAdmin.pages.organization.masters'
+    'BlurAdmin.pages.organization.masters',
+    'BlurAdmin.pages.organization.employee'
   ])
       .config(routeConfig);
-
+      
   /** @ngInject */
   function routeConfig($stateProvider) {
     $stateProvider

@@ -6,21 +6,16 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.organization.masters')
-      .controller('OrgMastersController', OrgMastersController);
+    .controller('OrgMastersController', OrgMastersController);
 
   /** @ngInject */
   function OrgMastersController(composeModal, mailMessages, pageService) {
-    // debugger;
-    // pageService.getPagData(1).then(function(result){
-    //   console.log(result)
-    // }, function(err){
-
-    // })
+   
     var vm = this;
     vm.navigationCollapsed = true;
-    vm.showCompose = function(subject, to , text){
+    vm.showCompose = function (subject, to, text) {
       composeModal.open({
-        subject : subject,
+        subject: subject,
         to: to,
         text: text
       })
@@ -28,47 +23,20 @@
 
     vm.tabs = _getTabs();
 
-    function _getTabs(){
-      
-      var tabs = [
-        {
-          label:'branch',
-          name:'Branch',
-          pageId:29
-        },
-        {
-          label:'unit',
-          name:'Sub Unit',
-          pageId:30
-        },
-      {
-        label: 'inbox',
-      name: 'Departments',
-      newMails: 7,
-      pageId:30
-    }, {
-      label: 'sent',
-      name: 'Designation',
-      pageId:30
-    }, {
-      label: 'important',
-      name: 'Grades',
-      pageId:30
-    }, {
-      label: 'draft',
-      name: 'Levels',
-      newMails: 2,
-      pageId:30
-    }, {
-      label: 'spam',
-      name: 'Spam'
-    }, {
-      label: 'trash',
-      name: 'Trash'
-    }];
-    return tabs;
-  }
-  
+    function _getTabs() {
+
+      var mastersMenu = [];
+      mastersMenu.push({ name: 'location', text: 'Location', id: 34 })
+      mastersMenu.push({ name: 'branch', text: 'Branch', id: 109 })
+      mastersMenu.push({ name: 'sub-unit', text: 'Sub Unit', id: 111 })
+      mastersMenu.push({ name: 'department', text: 'Departments', id: 29 })
+      mastersMenu.push({ name: 'designation', text: 'Designation', id: 30 })
+      mastersMenu.push({ name: 'grades', text: 'Grades', id: 47 })
+      mastersMenu.push({ name: 'levels', text: 'Levels', id: 48 })
+      return mastersMenu;
+
+    }
+
   }
 
 })();

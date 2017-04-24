@@ -7,8 +7,8 @@
             <input type="text" class="form-control" ng-model="tabCtrl.menuFilter" id="input01" placeholder="Search">
           </div>
           <div ng-repeat="t in tabCtrl.tabs| filter: {name: tabCtrl.menuFilter}" ui-sref-active="active" class="mail-navigation"
-               ui-sref="organization.masters.label({label: t.label})" ng-click="selectTab(t.label)">
-            {{t.name}}<span class="new-mails" ng-show="t.newMails">{{t.newMails}}</span>
+           ui-sref="organization.masters.list({name:t.name, pageId: t.id})">
+            {{t.text}}<span class="new-mails" ng-show="t.newMails">{{t.newMails}}</span>
           </div>
           <div class="labels">
             <div class="labels-title">

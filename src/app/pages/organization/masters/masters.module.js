@@ -11,6 +11,7 @@
 
   /** @ngInject */
   function routeConfig($stateProvider,$urlRouterProvider) {
+   
     $stateProvider
         .state('organization.masters', {
           url: '/masters',
@@ -22,20 +23,32 @@
           sidebarMeta: {
             order: 0,
           },
-        }).state('organization.masters.label', {
-          url: '/:label',
+        }).state('organization.masters.list', {
+          url: '/:name/:pageId',
           templateUrl: 'app/pages/organization/masters/list/mastersList.html',
-          title: 'Mail',
+          title: 'Organization Masters',
           controller: "OrgMastersListController",
           controllerAs: "listCtrl"
         }).state('organization.masters.detail', {
-          url: '/:label/:id',
+          url: '/:pageId/:id',
           templateUrl: 'app/pages/organization/masters/detail/mastersDetail.html',
-          title: 'Mail',
+          title: 'Organization Masters',
           controller: "OrgMastersDetailController",
           controllerAs: "detailCtrl"
+        }).state('organization.masters.add', {
+          url: '/:name/:action/:pageId/',
+          templateUrl: 'app/pages/organization/masters/add/add.html',
+          title: 'Organization Masters',
+          controller: "OrgMastersAddController",
+          controllerAs: "addCtrl"
+        }).state('organization.masters.edit', {
+          url: '/:name/:action/:pageId/:pkId/',
+          templateUrl: 'app/pages/organization/masters/add/add.html',
+          title: 'Organization Masters',
+          controller: "OrgMastersAddController",
+          controllerAs: "addCtrl"
         });
-    $urlRouterProvider.when('/organization/masters','/organization/masters/inbox');
+    $urlRouterProvider.when('/organization/masters','/organization/masters/location/34');
   }
 
 })();

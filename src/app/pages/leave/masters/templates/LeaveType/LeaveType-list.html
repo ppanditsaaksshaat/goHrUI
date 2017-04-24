@@ -1,0 +1,37 @@
+<table class="table table-bordered table-hover table-condensed">
+    <thead>
+        <tr class="sortable">
+            <td class="table-id">Sno</td>
+            <td>LeveType</td>
+            <td>Description</td>
+           
+            <td class="col-md-3">Actions</td>
+        </tr>
+    </thead>
+    <tbody ng-show="rows.length>0">
+        <tr ng-repeat="row in rows" class="editable-row">
+            <td >
+                {{$index+1}}
+            </td>
+            <td>
+                <span editable-text="row.LTName" e-name="LTName" e-form="rowform" e-required>
+                {{ row.LTName || '' }}
+                </span>
+            </td>
+            <td>
+                <span editable-text="row.LTDescription" e-name="LTDescription" e-form="rowform" e-required>
+                {{ row.LTDescription || '' }}
+                </span>
+            </td>
+            
+            <td class="col-md-3">
+                <div include-with-scope="app/pages/leave/masters/list/action.html"></div>
+            </td>
+        </tr>
+    </tbody>
+    <tbody ng-hide="rows.length>0">
+        <tr>
+            <td colspan="3">No branch found</td>
+        </tr>
+    </tbody>
+</table>
