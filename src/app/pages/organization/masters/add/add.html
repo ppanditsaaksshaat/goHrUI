@@ -8,6 +8,8 @@
       </button>
     <span>{{addCtrl.page.pageinfo.tagline}}</span>
     <i ng-hide="addCtrl.tempLoaded" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+    <div class="line"></div>
+    <ng-include src="addCtrl.templateUrlPath" onload="addCtrl.tempLoaded=true"></ng-include>
+    <span ng-show="(addCtrl.templateUrlPath=='')">Template URL is empty</span>
   </div>
-  <div ng-include src="addCtrl.templateUrlPath" onload="addCtrl.tempLoaded=true"></div>
 </div>
