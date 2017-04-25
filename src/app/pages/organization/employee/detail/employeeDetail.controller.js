@@ -52,7 +52,12 @@
       mastersMenu.push({ name: 'job', text: 'Job Description', id: 114 })
       mastersMenu.push({ name: 'resign', text: 'Resignation Details', id: 360 })
       mastersMenu.push({ name: 'sign', text: 'Signature Details', id: 192 })
-   //   mastersMenu.push({ name: 'level', text: 'Levels', id: 48 })
+      mastersMenu.push({ name: 'account', text: 'Account Details', id: 125 })
+      mastersMenu.push({ name: 'emergency ', text: 'Emergency  Details', id: 53 })
+      mastersMenu.push({ name: 'family', text: 'Family Details', id: 52 })
+      mastersMenu.push({ name: 'immigration ', text: 'Immigration  Details', id: 119 })
+      mastersMenu.push({ name: 'qualification ', text: 'Qualification  Details', id: 38 })
+      mastersMenu.push({ name: 'workexperience', text: 'Work Experience', id: 56 })
       return mastersMenu;
 
     }

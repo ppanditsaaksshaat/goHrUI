@@ -21,6 +21,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     };
 
     $rootScope.setPage = function (pageObject) {
+
         $rootScope.currentPage = pageObject;
         DJWebStore.SetValue('Page_' + pageObject.pageinfo.pageid, pageObject);
     }
@@ -42,13 +43,20 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
             enableAction: false,
             enablePagination: false,
             paginationLength: 10,
-            pageId: 1
+            pageId: 0
         };
 
         var gridObject = angular.extend(defaults, options);
-        
+
         var userColumns = gridObject.columns;
-        var pageId = $stateParams.pageId;
+
+        var pageId = $stateParams.pageId;;
+        if (gridObject.pageId !== undefined) {
+            if (gridObject.pageId > 0) {
+                pageId = gridObject.pageId;
+            }
+        }
+
         var page = DJWebStore.GetValue('Page_' + pageId);
 
         var colList = [];
@@ -68,5 +76,6 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         gridObject.page = page;
         gridObject.pageId = pageId;
         $rootScope.gridObject = gridObject;
+        console.log(gridObject)
     }
 });

@@ -25,6 +25,7 @@
         vm.empJobDetail={};
          vm.empResignDetail={};
          vm.empSignDetail={};
+         vm.empAccountDetail={};
         var rndValu = Math.round((Math.random() * 10) * 10);
         var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
 
@@ -43,7 +44,7 @@ function _getPageDataSuccessResult(result)
   var field="";
   if(vm.tempName=='basic'){
   pageService.findEntity(vm.tableId,parseInt(vm.pkId), undefined).then(
-   _findEntitySuccessResult, _findEntityErrorResult); 
+ _findEntitySuccessResult, _findEntityErrorResult); 
   }                   
   else if(vm.tempName=='personal'){ 
    vm.gender=result.pageinfo.selects.PdGenderId;
@@ -75,11 +76,21 @@ function _getPageDataSuccessResult(result)
   {
    vm.leavingType=result.pageinfo.selects.RDLeavingTypeId;
    field='RDEmpId';
+   _findEntity(field);
   } 
    else if(vm.tempName=='sign')   
   {
    vm.signatureType=result.pageinfo.selects.SGSTId;
    field='SDEmpId';
+   _findEntity(field);
+  } 
+   else if(vm.tempName=='account')   
+  {
+   vm.salaryMode=result.pageinfo.selects.ADSalaryModeId;
+    vm.salary=result.pageinfo.selects.ADSalaryID;
+    vm.bankName=result.pageinfo.selects.BankId;
+    field='ADEmpId';
+_findEntity(field);
   } 
   if(vm.tempName!='basic')
   {
@@ -89,12 +100,20 @@ function _getPageDataSuccessResult(result)
        operand: '=',
        value: vm.pkId
      }
-   
      searchList.push(searchFields);
+
     pageService.findEntity(vm.tableId,undefined, searchList).then(
    _findEntitySuccessResult, _findEntityErrorResult);  
   }      
       
+}
+function _findEntity(field)
+{
+
+}
+function _getTableData(field)
+{
+
 }
 function _getPageDataErrorResult(error)
 {
@@ -126,6 +145,12 @@ function _findEntitySuccessResult(result)
      console.log(result);
       vm.empSignDetail=result;
   } 
+  else if(vm.tempName=='account')   
+  {
+     console.log(result);
+      vm.empAccountDetail=result;
+  } 
+
   
  vm.templateUrlPath = "app/pages/organization/employee/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
 }
@@ -158,6 +183,14 @@ function _getTableId()
     if(vm.tempName=='sign')
     {
         vm.tableId=202;
+    }
+    if(vm.tempName=='account')
+    {
+        vm.tableId=131;
+    }
+     if(vm.tempName=='workexperience')
+    {
+        vm.tableId=62;
     }
   
 }

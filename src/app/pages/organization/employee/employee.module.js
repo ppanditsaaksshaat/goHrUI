@@ -12,13 +12,14 @@
         .config(routeConfigEmpView);
     /** @ngInject */
     function routeConfig($stateProvider) {
+        console.log($stateProvider)
         $stateProvider
             .state('organization.employee', {
                 url: '/employee',
                 templateUrl: 'app/pages/organization/employee/employees.html',
                 controller: "OrgEmployeesController",
-                controllerAs: "tabCtrl",
-                title: 'Employee',
+                controllerAs: "listCtrl",
+                title: 'Employees',
                 sidebarMeta: {
                     order: 0,
                 },
