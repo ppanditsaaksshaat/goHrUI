@@ -4,7 +4,6 @@
         .controller('orgMasterLevelsController', orgMasterLevelsController);
     function orgMasterLevelsController($scope, $stateParams) {
         $scope.setGrid(
-
             {
                 columns: ['EmpLevelName', 'EmpLevelDesc'],//list of columns
                 enableTitleFilter: true,//show title filter

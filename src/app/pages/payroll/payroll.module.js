@@ -1,25 +1,23 @@
 /**
- * @author k.danovsky
- * created on 15.01.2016
+ * @author deepak.jain
+ * created on 24/04/2017
  */
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization', [
-    'BlurAdmin.pages.organization.masters',
-    'BlurAdmin.pages.organization.employee',
-    'BlurAdmin.pages.organization.empupload'
+  angular.module('BlurAdmin.pages.payroll', [
+    'BlurAdmin.pages.payroll.masters'
   ])
       .config(routeConfig);
       
   /** @ngInject */
   function routeConfig($stateProvider) {
     $stateProvider
-        .state('organization', {
-          url: '/organization',
+        .state('payroll', {
+          url: '/payroll',
           template : '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
           abstract: true,
-          title: 'Organization',
+          title: 'Payroll',
           sidebarMeta: {
             icon: 'ion-gear-a',
             order: 100,
