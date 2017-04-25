@@ -5,6 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+<<<<<<< HEAD
+            "type": "node",
+            "request": "launch",
+            "name": "e2e Tests",
+            "program": "${workspaceRoot}/node_modules/protractor/bin/protractor",
+            "args": [
+                "${workspaceRoot}/proctConfig.js"
+            ],
+            "outFiles": [
+                
+            ]
+=======
             "name": "node gulp.js",
             "type": "node",
             "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
@@ -21,6 +33,7 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${file}"
+>>>>>>> 4def5f86f3d7eeb7776e44704c0113b266a03c8c
         },
         {
             "type": "node",
