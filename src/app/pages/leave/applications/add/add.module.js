@@ -27,6 +27,12 @@
                 title: 'Employee Leave Application',
                 controller: "ApplicationAddController",
                 controllerAs: "appCtrl"
+            }).state('leave.approvedapp', {
+                url: '/:pageId/:pkId/',
+                templateUrl: 'app/pages/leave/applications/applicationapproved/applicationapproved.html',
+                title: 'Employee Leave Approval',
+                controller: "ApprovedAppController",
+                controllerAs: "approvedCtrl"
             });
 
         //$urlRouterProvider.when('/leave/application', '/leave/applications/25');

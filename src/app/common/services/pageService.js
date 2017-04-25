@@ -87,6 +87,8 @@ function ($http, DJWebStore, fileUpload) {
         }
     };
 
+    
+
     var _getPagData = function (pageCode) {
         var rndVal = Math.round((Math.random() * 10) * 10);
         var url = serviceBase + 'api/values/' + pageCode + "?" + rndVal;
@@ -981,6 +983,8 @@ function ($http, DJWebStore, fileUpload) {
                });
     }
 
+   
+
     var _getCustomEmailSetting = function (pageId) {
         var rndVal = Math.round((Math.random() * 10) * 10);
         var url = serviceBase + 'api/Email/Custom/' + pageId
@@ -1040,6 +1044,18 @@ function ($http, DJWebStore, fileUpload) {
                 });
     }
 
+     var _getCustomQuery = function (data, queryId) {
+        var url = serviceBase + 'api/Data/Query/' + queryId;
+        return $http.post(url, JSON.stringify(JSON.stringify(data)),
+               {
+                   headers: {
+                       'Content-Type': 'application/json'
+                   }
+               }).then(function (results) {
+                   return results;
+               });
+    }
+
     pageServiceFactory.serviceBase = serviceBase;
     pageServiceFactory.getPagData = _getPagData;
     pageServiceFactory.deletePageData = _deletePageData;
@@ -1064,6 +1080,7 @@ function ($http, DJWebStore, fileUpload) {
     pageServiceFactory.findEntity = _findEntity;
     pageServiceFactory.getPrintBuilder = _getPrintBuilder;
     pageServiceFactory.getMapColumns = _getMapColumns;
+    pageServiceFactory.getCustomQuery = _getCustomQuery;
 
     pageServiceFactory.getTableData = _getTableData;
     //report builder
