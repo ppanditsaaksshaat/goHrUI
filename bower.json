@@ -57,7 +57,8 @@
     "angular-ui-select": "^0.19.6",
     "angular-local-storage": "^0.5.2",
     "lz-string": "^1.4.4",
-    "angular-messages": "^1.6.4"
+    "angular-messages": "^1.6.4",
+    "angular-ui-grid": "^4.0.4"
   },
   "resolutions": {
     "angular": "~1.5.9",

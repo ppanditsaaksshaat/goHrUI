@@ -8,8 +8,12 @@
   angular.module('BlurAdmin.pages.organization', [
     'BlurAdmin.pages.organization.masters',
     'BlurAdmin.pages.organization.employee',
+<<<<<<< HEAD
     'BlurAdmin.pages.organization.empview',
     'BlurAdmin.pages.organization.empadd'
+=======
+    'BlurAdmin.pages.organization.empupload'
+>>>>>>> 98afafa5cfce6da1f9f2585ef7200cbe239de270
   ])
       .config(routeConfig);
       

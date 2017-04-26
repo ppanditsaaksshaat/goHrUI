@@ -33,6 +33,13 @@
       mastersMenu.push({ name: 'designation', text: 'Designation', id: 30 })
       mastersMenu.push({ name: 'grades', text: 'Grades', id: 47 })
       mastersMenu.push({ name: 'levels', text: 'Levels', id: 48 })
+      mastersMenu.push({ name: 'titles', text: 'Titles', id: 24 })
+      mastersMenu.push({ name: 'gender', text: 'Gender', id: 31 })
+      mastersMenu.push({ name: 'marital', text: 'Marital Status', id: 32 })
+      mastersMenu.push({ name: 'emptype', text: 'Employment', id: 115 })
+      mastersMenu.push({ name: 'category', text: 'Category', id: 46 })
+      mastersMenu.push({ name: 'empstat', text: 'Employee Status', id: 54 })
+      mastersMenu.push({ name: 'relationship', text: 'Relationship ', id: 51 })
       return mastersMenu;
 
     }

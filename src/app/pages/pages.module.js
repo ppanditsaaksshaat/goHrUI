@@ -17,7 +17,9 @@
     'BlurAdmin.pages.profile',
     'BlurAdmin.pages.organization',
     'BlurAdmin.pages.leave',
-    'BlurAdmin.pages.attendance'
+    'BlurAdmin.pages.attendance',
+    'BlurAdmin.pages.payroll',
+    'BlurAdmin.pages.loan'
   ])
       .config(routeConfig);
 

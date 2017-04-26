@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-6">
+
+        <form class="form-horizontal" name="editForm" ng-submit="addCtrl.saveForm(editForm)">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Grade</label>
+                <div class="col-sm-9">
+                    <input name="MaritalName" ng-model="addCtrl.entity.MaritalName" type="text" ng-required="true" class="form-control" id="inputEmail3"
+                        placeholder="Enter Marital Status" text-only-with-space>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button ng-disabled="!editForm.$valid" type="submit" class="btn btn-warning">Save</button>
+                    <button type="button" class="btn btn-danger" ng-click="back('organization.master.list')">Cancel</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
