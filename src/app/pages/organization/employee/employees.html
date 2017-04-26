@@ -1,4 +1,122 @@
-<div class="row">
+<div class="row mail-client-container transparent">
+  <div class="col-md-12">
+    <div ba-panel ba-panel-class="xmedium-panel mail-panel">
+      <div class="letter-layout">
+        <span class="font-bold">{{listCtrl.page.pageinfo.title}}</span></t></t>
+         <label class="checkbox-inline custom-checkbox nowrap">
+      <input type="checkbox" id="inlineCheckbox01" value="option1">
+      <span class="select-all-label">Select All</span>
+    </label>
+        <button type="button" class="btn  btn-icon refresh-button" ng-click="listCtrl.refreshData()"><i class="ion-refresh"></i></button>
+        <button type="button" class="btn  btn-icon refresh-button" ui-sref="organization.empadd({action:'create'})"><i class="ion-add"></i>Add</button>
+        <div class="btn-group" uib-dropdown>
+            <button type="button" class="btn more-button" uib-dropdown-toggle>
+        More <span class="caret"></span>
+      </button>
+            <ul uib-dropdown-menu>
+                <li><a href>Edit</a></li>
+                <li><a href>Delete</a></li>
+                <li><a href>Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href>Separated link</a></li>
+            </ul>
+        </div>
+      
+    </div>
+ <style>
+        .djTable {
+            width: 100%;
+        }
+        
+        .djTable td,
+        th {
+            overflow: hidden;
+        }
+        
+        .djTable td:first,
+        th:first {
+            width: 30px;
+        }
+        
+        .djTable td:last-child,
+        th:last-child {
+            width: 30px;
+        }
+    </style>
+    
+    <table class="table table-bordered table-hover table-condensed djTable" st-table="displayedCollection" st-safe-src="rows"
+        st-pagination-scroll>
+        <thead>
+            <tr class="sortable">
+                <th class="col-md-1" ng-show="gridObject.enableSrNo" st-sort="$index">Sno</th>
+                <th class="col-md-5" ng-repeat="col in gridObject.columns" st-sort="{{col.name}}">{{col.text}}</th>
+                <th class="col-md-1">Actions</th>
+            </tr>
+            <tr ng-show="gridObject.enableFilter">
+                <th ng-show="gridObject.enableSrNo"></th>
+                <th ng-show="gridObject.enableTitleFilter"><input st-search="{{searchName}}" placeholder="Search" class="input-sm form-control search-input" type="search"
+                    /></th>
+                <th ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
+                    <input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
+            </tr>
+        </thead>
+        <tbody ng-show="displayedCollection.length>0">
+            <tr ng-repeat="row in displayedCollection">
+                <td cursor="pointer" ui-sref="organization.empview({action:'view',empId:row.EmpId})" ng-show="gridObject.enableSrNo">
+                    {{$index+1}}
+                </td>
+                <td cursor="pointer" ui-sref="organization.empview({action:'view',empId:row.EmpId})" ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
+                <td ng-show="gridObject.enableAction">
+                    <a ui-sref="organization.masters.edit({name:listCtrl.tempName, pageId: gridObject.pageId, action:'edit', pkId: row[gridObject.page.pageinfo.idencolname]})">
+                        <i class="fa fa-pencil-square-o"></i></a>
+                </td>
+            </tr>
+        </tbody>
+        <tbody ng-show="displayedCollection.length<=0&&isLoaded">
+            <tr>
+                <td colspan="6">No {{listCtrl.page.pageinfo.title}} found</td>
+            </tr>
+        </tbody>
+        <tbody ng-show="isLoading">
+            <tr>
+                <td colspan="6">Loading {{listCtrl.page.pageinfo.title}} Please wait..<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i></td>
+            </tr>
+        </tbody>
+        <tfoot ng-show="gridObject.enablePagination">
+            <tr>
+                <td colspan="6" class="text-center">
+                    <div st-pagination="" st-items-by-page="gridObject.paginationLength" st-displayed-pages="5"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+<div class="side-message-navigation" ng-class="{'expanded': tabCtrl.navigationCollapsed}">
+    <div class="mail-messages-control side-message-navigation-item">
+        <div class="toggle-navigation-container">
+            <a href class="collapse-navigation-link ion-navicon" ng-click="tabCtrl.navigationCollapsed=!tabCtrl.navigationCollapsed"></a>
+        </div>-->
+        
+    <!--<ng-include src="listCtrl.templateUrlPath"></ng-include>-->
+    <!--<ng-include src="listCtrl.listTemplateUrlPath"></ng-include>-->
+
+   
+<!--
+</div>-->
+
+
+<!--</div>-->
+
+
+
+
+<!--<div class="row">
     <div class="col-md-12">
         <div ba-panel ba-panel-class="xmedium-panel" ba-panel-title="Employee List">
             <table class="table table-bordered table-hover table-condensed">
@@ -17,17 +135,10 @@
                         </td>
                         <td>
                             <span editable-text="row.EmpCode" e-name="EmpCode" e-form="rowform" e-required>
-          {{ row.EmpCode || '' }}
-
-        </span>
-
+                             {{ row.EmpCode || '' }} </span>
                         </td>
                         <td>
-                            <span editable-text="row.EmpName" e-name="EmpName" e-form="rowform" e-required>
-          {{ row.EmpName || '' }}
-          
-        </span>
-
+                            <label ui-sref="organization.empview({action:'view',empId:row.EmpId})">{{ row.EmpName || '' }}</label>
                         </td>
                         <td class="col-md-3">
                             <div include-with-scope="app/pages/organization/masters/list/action.html"></div>
@@ -43,7 +154,7 @@
         </div>
     </div>
 </div>
-
+<ui-view></ui-view>
 
 <div class="side-message-navigation" ng-class="{'expanded': tabCtrl.navigationCollapsed}">
     <div class="mail-messages-control side-message-navigation-item">
@@ -70,8 +181,6 @@
         </div>
     </div>
     <!--<ng-include src="templateUrl()"></ng-include>-->
-
-</div>
 
 <!--<div>
     <ui-view></ui-view>
