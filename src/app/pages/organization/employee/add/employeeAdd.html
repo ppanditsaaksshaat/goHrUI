@@ -1,0 +1,146 @@
+
+<div class="row">
+   <div class="col-sm-1">
+    <div class="form-group">   
+      <label for="title">Title</label>    
+    <select id="title"
+                      name="empTitle_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.BRName"
+                      class="form-control"
+                      ng-options="branch.name as branch.name for branch in empCtrl.gender"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="form-group">   
+      <label for="inputFirstName">First Name</label>    
+       <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">  
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputLastName">Middle Name</label>
+      <input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+    </div>
+  </div>
+   <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputFirstName">Last Name</label>
+      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputFirstName">Gender</label>
+       <select id="empGender_{{$index}}"
+                      name="empGender_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.BRName"
+                      class="form-control"
+                      ng-options="branch.name as branch.name for branch in empCtrl.gender"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputWebsite">Date Of Joining</label>
+      <input type="text" class="form-control" id="inputWebsite" placeholder="Website">
+    </div>
+  </div>
+   <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputWebsite">Mobile</label>
+      <input type="text" class="form-control" id="inputWebsite" placeholder="Website">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputFirstName">Department</label>
+       <select id="empDepartment_{{$index}}"
+                      name="empDepartment_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.BRName"
+                      class="form-control"
+                      ng-options="branch.name as branch.name for branch in empCtrl.gender"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputFirstName">Designation</label>
+       <select id="empDesignation_{{$index}}"
+                      name="empDesignation_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.BRName"
+                      class="form-control"
+                      ng-options="branch.name as branch.name for branch in empCtrl.gender"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputFirstName">Employee Type</label>
+       <select id="empEmployeeType_{{$index}}"
+                      name="empEmployeeType_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.BRName"
+                      class="form-control"
+                      ng-options="branch.name as branch.name for branch in empCtrl.gender"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputFirstName">Grade</label>
+      <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputLastName">Level</label>
+      <input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+    </div>
+  </div>
+   <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputFirstName">Employee Code</label>
+      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputFirstName">Photo</label>
+      <input type="file" class="form-control" id="inputFirstName" placeholder="First Name">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputLastName">Other Code</label>
+      <input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+    </div>
+  </div>
+   
+</div>
+<div class="text-center">
+<button type="submit" class="btn btn-primary">Save</button>
+<button type="button" class="btn btn-primary">Cancel</button>
+</div>

@@ -8,7 +8,8 @@
   angular.module('BlurAdmin.pages.organization', [
     'BlurAdmin.pages.organization.masters',
     'BlurAdmin.pages.organization.employee',
-    'BlurAdmin.pages.organization.empview'
+    'BlurAdmin.pages.organization.empview',
+    'BlurAdmin.pages.organization.empadd'
   ])
       .config(routeConfig);
       

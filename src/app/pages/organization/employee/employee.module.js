@@ -10,6 +10,9 @@
         .config(routeConfig);
     angular.module('BlurAdmin.pages.organization.empview', [])
         .config(routeConfigEmpView);
+          angular.module('BlurAdmin.pages.organization.empadd', [])
+        .config(routeConfigEmpAdd);
+        
     /** @ngInject */
     function routeConfig($stateProvider) {
         console.log($stateProvider)
@@ -41,6 +44,18 @@
                 controller: "OrgEmployeeTabController",
                 controllerAs: "empTabCtrl"
             });
+      //$urlRouterProvider.when('/organization/employee/view','/organization/view/109');
+   }
+   function routeConfigEmpAdd($stateProvider,$urlRouterProvider) {
+        $stateProvider
+
+            .state('organization.empadd', {
+                url: '/employee/:action',
+                templateUrl: 'app/pages/organization/employee/add/employeeAdd.html',
+                title: 'Add Employee',
+                controller: "AddEmployeeController",
+                controllerAs: "addCtrl"
+            })
       //$urlRouterProvider.when('/organization/employee/view','/organization/view/109');
    }
 
