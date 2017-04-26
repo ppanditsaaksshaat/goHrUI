@@ -17,7 +17,7 @@
     $scope.format = $scope.formats[0];
     $scope.options = {
       showWeeks: false
-    };
+    }
 
     function open() {
       $scope.opened = true;
@@ -114,9 +114,17 @@
     }
 
     function _saveForm(form) {
+      debugger;
       if (_validateForm(form)) {
 
-        if (vm.employeeSelectOptions.selectedItem != "" && vm.employeeSelectOptions.selectedItem !== undefined) {
+        if (vm.entity.LEADEmpId != "" && vm.entity.LEADEmpId !== undefined) {
+
+          if(vm.entity.LEADDateFrom===undefined){
+            vm.entity.LEADDateFrom="";
+          }
+           if(vm.entity.LEADDateTo===undefined){
+            vm.entity.LEADDateTo="";
+          }
           var firstdate = vm.entity.LEADDateFrom;
           var seconddate = vm.entity.LEADDateTo;
 
@@ -193,15 +201,15 @@
     function _employeeOnChange() {
       vm.isLeaveTransactionTable = false;
 
-      var searchList = [];
+      var searchLists = [];
       var searchListData = {
         field: 'ELTEmpId',
         operand: '=',
         value: vm.entity.LEADEmpId
       }
-      searchList.push(searchListData)
+      searchLists.push(searchListData)
       var data = {
-        searchList,
+        searchList:searchLists,
         orderByList: []
       }
 

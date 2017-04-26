@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.loan.loanmanagement')
+  angular.module('BlurAdmin.pages.loan.masters')
     .controller('OrgMastersListController', OrgMastersListController);
 
   /** @ngInject */
@@ -24,9 +24,9 @@
     $scope.isLoaded = false;
     vm.templateUrlPath = '';
     vm.tempName = $stateParams.name;
-    vm.templateUrlPath = "app/pages/loan/loanmanagement"
+    vm.templateUrlPath = "app/pages/loan/masters/templates/"
       + vm.tempName + "/" + vm.tempName + "-list.html?" + rndValu2 + "=" + rndValu;
-    vm.listTemplateUrlPath = 'app/pages/loan/loanmanagement/list/table-list.html';
+    vm.listTemplateUrlPath = 'app/pages/loan/masters/list/table-list.html';
 
     vm.refreshData = function () {
       $scope.rows = [];

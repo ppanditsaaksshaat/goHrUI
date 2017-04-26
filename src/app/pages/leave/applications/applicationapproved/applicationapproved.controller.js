@@ -24,15 +24,15 @@
     }
 
     var vm = this;
-    vm.leaveApprovalPageId=285;
+    vm.leaveApprovalPageId = 285;
     vm.page = DJWebStore.GetValue('Page_' + vm.leaveApprovalPageId);
-  //  // vm.selects = vm.page.pageinfo.selects;
+    //  // vm.selects = vm.page.pageinfo.selects;
     // // vm.page.pageinfo.pageid
     console.log(vm.page)
     vm.entity = {};
     vm.action = 0;
     vm.entity.LEADEmpId;
-    
+
 
     vm.pageId = $stateParams.pageId;
     vm.action = $stateParams.action;
@@ -52,23 +52,23 @@
       if (vm.pkId > 0)
         _findEntity()
       console.log($scope.employeeLeaveAppDetailList)
-      _getEmployeeSancationData();
+      //_getEmployeeSancationData();
     }
-    
 
-function _getEmployeeSancationData(){
-  pageService.getPagData(vm.leaveApprovalPageId).then(_successGetPage, _errorGetPage)
-}
-    function _successGetPage(result) {
-      console.log(result)
-      vm.pageData = result;
-      vm.selects=vm.pageData.pageinfo.selects;
-      // console.log(vm.selects)
-     
-    }
-    function _errorGetPage(err) {
 
-    }
+    // function _getEmployeeSancationData() {
+    //   pageService.getPagData(vm.leaveApprovalPageId).then(_successGetPage, _errorGetPage)
+    // }
+    // function _successGetPage(result) {
+    //   console.log(result)
+    //   vm.pageData = result;
+    //   vm.selects = vm.pageData.pageinfo.selects;
+    //   console.log(vm.selects)
+
+    // }
+    // function _errorGetPage(err) {
+
+    // }
 
     vm.findEntity = _findEntity;
     function _findEntity() {
@@ -85,35 +85,32 @@ function _getEmployeeSancationData(){
       vm.isLoading = false;
       vm.entity = result;
       $scope.employeeLeaveAppDetailList = result;
+      vm.entity.ELSDSanctionFromDate = $scope.employeeLeaveAppDetailList.LEADDateFrom;
+      vm.entity.ELSDSanctionToDate = $scope.employeeLeaveAppDetailList.LEADDateTo;
       console.log($scope.employeeLeaveAppDetailList.EmpName)
 
       console.log(vm.entity);
       vm.oldEntity = angular.copy(result)
     }
-    console.log($scope.employeeLeaveAppDetailList)
+
     function _findEntityErrorResult(err) {
       vm.isLoaded = true;
       vm.isLoading = false;
     }
     vm.pageData = {};
-    vm.template = {};
-    vm.param = {};
 
-    vm.param = { LEADId: 0, entity: {} };
 
-    vm.assign = {};
-    vm.leaveTransactionTableId = 279;
-    vm.leaveTransactionPageId = 270;
-    vm.leaveTransactionList = [];
-    vm.selectEmployeeList = [];
-    vm.template = { leaveTypeData: [], employeeData: [], errorList: [] };
-    var searchEmployeeLeaveTransactionList = [];
-    var leaveTypeTableId = 279;
-    var leaveTypePageId = 270;
-    var employeeTableId = 30;
-    var employeePageId = 25;
-    vm.leaveTypeHeadingList = [];
-    vm.leaveTypeDataList = [];
+
+
+
+
+
+
+
+
+
+
+
     vm.saveForm = _saveForm;
 
     function _validateForm(form) {
@@ -131,6 +128,10 @@ function _getEmployeeSancationData(){
         editFormService.saveForm(vm.leaveSanctionPageId, vm.entity, vm.oldEntity, vm.action, vm.page.pageinfo.tagline)
 
       }
+    }
+    vm.showLeaveDate = _showLeaveDate;
+    function _showLeaveDate() {
+      vm.isLeaveDate = true;
     }
     _loadController()
 
