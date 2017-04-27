@@ -1055,6 +1055,31 @@ function ($http, DJWebStore, fileUpload) {
                    return results;
                });
     }
+    var _getAllSelect=function(columnIds)
+    {
+         var url = serviceBase + 'api/GetSelect/All';
+        return $http.post(url, JSON.stringify(JSON.stringify(columnIds)),
+               {
+                   headers: {
+                       'Content-Type': 'application/json'
+                   }
+               }).then(function (results) {
+                   return results;
+               });
+    }
+   var _create = function (entity) {
+        var rndVal = Math.round((Math.random() * 10) * 10);
+        var url = serviceBase + 'api/Employee/Add';
+        return $http.post(url, JSON.stringify(entity),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
+    };
+
 
     pageServiceFactory.serviceBase = serviceBase;
     pageServiceFactory.getPagData = _getPagData;
@@ -1149,7 +1174,7 @@ function ($http, DJWebStore, fileUpload) {
     pageServiceFactory.getCustomReport = _getCustomReport;
     pageServiceFactory.updateMultiField = _updateMultiField;
     pageServiceFactory.generateSalary = _generateSalary;
-
+pageServiceFactory.getFieldSetting=_getFieldSetting;
 
 
 
@@ -1164,6 +1189,8 @@ function ($http, DJWebStore, fileUpload) {
     pageServiceFactory.ucvSaveUSV = _ucvSaveUSV;
     pageServiceFactory.getCustomEmailSetting = _getCustomEmailSetting;
     pageServiceFactory.getUserDashboard = _getUserDashBoard;
+    pageServiceFactory.getAllSelect = _getAllSelect;
+    pageServiceFactory.create = _create;
 
     return pageServiceFactory;
 

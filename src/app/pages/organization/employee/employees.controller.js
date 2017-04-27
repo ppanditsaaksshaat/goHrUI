@@ -11,7 +11,7 @@
   /** @ngInject */
   /** @ngInject */
   function OrgEmployeesController($scope, $stateParams, mailMessages,
-    addModal, pageService, editableOptions, editableThemes, DJWebStore) {
+    addModal, pageService, editableOptions, editableThemes, DJWebStore,$timeout) {
 
     var rndValu = Math.round((Math.random() * 10) * 10);
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
@@ -28,7 +28,9 @@
     }
 
     function _loadController() {
+       $timeout(function () {
       pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
+       });
     }
     function _successGetPage(result) {
       console.log(result)
