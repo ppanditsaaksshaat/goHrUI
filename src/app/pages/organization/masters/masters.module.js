@@ -16,8 +16,8 @@
         .state('organization.masters', {
           url: '/masters',
           abstract: true,
-          templateUrl: 'app/pages/organization/masters/masters.html',
-          controller: "OrgMastersController",
+          templateUrl: 'app/pages/organization/masters/masters.html?v=1',
+          controller: "OrgMastersController1",
           controllerAs: "tabCtrl",
           title: 'Master',
           sidebarMeta: {
@@ -27,7 +27,7 @@
           url: '/:name/:pageId',
           templateUrl: 'app/pages/organization/masters/list/mastersList.html',
           title: 'Organization Masters',
-          controller: "OrgMastersListController",
+          controller: "OrgMastersListController1",
           controllerAs: "listCtrl"
         }).state('organization.masters.detail', {
           url: '/:pageId/:id',
@@ -39,7 +39,7 @@
           url: '/:name/:action/:pageId/',
           templateUrl: 'app/pages/organization/masters/add/add.html',
           title: 'Organization Masters',
-          controller: "OrgMastersAddController",
+          controller: "OrgMastersAddController1",
           controllerAs: "addCtrl"
         }).state('organization.masters.edit', {
           url: '/:name/:action/:pageId/:pkId/',

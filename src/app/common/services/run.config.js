@@ -71,6 +71,8 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                 }
             }
         })
+        if (page.pageinfo.titlecolname != '')
+            gridObject.titleField = page.pageinfo.titlecolname
         gridObject.columns = colList;;
         gridObject.enableFilter = (!gridObject.enableTitleFilter) ? ((!gridObject.enableGlobalFilter) ? (!gridObject.enbleColumnFilter ? false : true) : true) : true
         gridObject.page = page;

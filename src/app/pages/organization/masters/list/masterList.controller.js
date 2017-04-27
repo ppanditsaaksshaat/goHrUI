@@ -6,10 +6,10 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.organization.masters')
-    .controller('OrgMastersListController', OrgMastersListController);
+    .controller('OrgMastersListController1', OrgMastersListController1);
 
   /** @ngInject */
-  function OrgMastersListController($scope, $stateParams,
+  function OrgMastersListController1($scope, $stateParams,
     pageService, editableOptions, editableThemes, DJWebStore) {
 
 
@@ -36,6 +36,8 @@
     }
 
     function _loadController() {
+      
+      $scope.gridOption = {columns: [] }
       pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
     }
     function _successGetPage(result) {
@@ -43,6 +45,10 @@
       vm.page = result;
       // DJWebStore.SetValue('Page_' + vm.pageId, result)
       $scope.setPage(vm.page)
+      // $scope.$emit("designGrid");
+      
+      $scope.$broadcast('designGrid');
+
       _getTableData([], []);
     }
     function _errorGetPage(err) {

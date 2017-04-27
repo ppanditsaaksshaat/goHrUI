@@ -6,6 +6,7 @@
         $scope.setGrid(
             {
                 columns: ['EmpLevelName', 'EmpLevelDesc'],//list of columns
+                titleField: 'EmpLevelName',//first search field
                 enableTitleFilter: true,//show title filter
                 enableGlobalFilter: true,//show global filter
                 enbleColumnFilter: false,//show each column filter

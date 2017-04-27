@@ -12,7 +12,7 @@
 
     /** @ngInject */
     /** @ngInject */
-    function OrgEmployeeTabController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout) {
+    function AddEmployeeController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout) {
         var vm = this;
       
 

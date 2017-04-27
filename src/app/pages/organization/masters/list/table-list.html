@@ -26,7 +26,7 @@
         </tr>
         <tr ng-show="gridObject.enableFilter">
             <th ng-show="gridObject.enableSrNo"></th>
-            <th ng-show="gridObject.enableTitleFilter"><input st-search="{{searchName}}" placeholder="Search" class="input-sm form-control search-input" type="search"
+            <th ng-show="gridObject.enableTitleFilter"><input st-search="{{gridObject.titleField}}" placeholder="Search" class="input-sm form-control search-input" type="search"
                 /></th>
             <th  ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
                 <input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
