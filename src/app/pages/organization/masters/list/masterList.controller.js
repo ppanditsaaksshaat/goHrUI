@@ -6,10 +6,10 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.organization.masters')
-    .controller('OrgMastersListController', OrgMastersListController);
+    .controller('OrgMastersListController1', OrgMastersListController1);
 
   /** @ngInject */
-  function OrgMastersListController($scope, $stateParams,
+  function OrgMastersListController1($scope, $stateParams,
     pageService, editableOptions, editableThemes, DJWebStore) {
 
 
@@ -17,7 +17,9 @@
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
 
     var vm = this;
+    vm.ucvOnChange = _ucvOnChange;
     vm.pageId = $stateParams.pageId;
+
     vm.table = { rows: [] }
     vm.page = {};
     $scope.isLoading = true;
@@ -34,6 +36,8 @@
     }
 
     function _loadController() {
+      
+      $scope.gridOption = {columns: [] }
       pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
     }
     function _successGetPage(result) {
@@ -41,17 +45,21 @@
       vm.page = result;
       // DJWebStore.SetValue('Page_' + vm.pageId, result)
       $scope.setPage(vm.page)
-      _getTableData();
+      // $scope.$emit("designGrid");
+      
+      $scope.$broadcast('designGrid');
+
+      _getTableData([], []);
     }
     function _errorGetPage(err) {
 
     }
-    function _getTableData() {
+    function _getTableData(searchList, orderByList) {
       $scope.isLoaded = false
       $scope.isLoading = true
       var data = {
-        searchList: [],
-        orderByList: []
+        searchList: searchList,
+        orderByList: orderByList
       }
       var tableData = pageService.getTableData(
         vm.page.pageinfo.tableid,
@@ -86,6 +94,67 @@
 
         // _startMsgTimer();
       }
+    }
+    function _ucvOnChange(item) {
+
+      console.log(item)
+      var searchList = [], orderbyList = [];
+
+      var comData = LZString.decompressFromEncodedURIComponent(item.data);
+      var userData = angular.fromJson(comData);
+      console.log(userData)
+      // SettingVisibleColumns(item)
+      angular.forEach(userData.filters, function (filter, fdx) {
+        var operator = '=';
+        var userValue = ''
+        if (filter.selectedOperator.value == '=') {
+          operator = '=';
+        }
+        else if (filter.selectedOperator.value == 'notempty') {
+          operator = '<>';
+        }
+        else if (filter.selectedOperator.value == 'empty') {
+          operator = '=';
+        }
+        else {
+          operator = filter.selectedOperator.value;
+        }
+
+        if (filter.userValue == 'self') {
+          userValue = uivm.auth.profile.userId;
+        }
+        else if (filter.userValue == 'notempty') {
+          userValue = ''
+        }
+        else if (filter.userValue == 'empty') {
+          userValue = ''
+        }
+        else if (filter.userValue === undefined) {
+          userValue = '';
+        }
+        else {
+          userValue = filter.userValue;
+        }
+
+        var searchFields = {
+          field: filter.selectedColumn.name, operand: operator, value: userValue
+        };
+        //console.log(searchFields)
+        searchList.push(searchFields)
+      })
+      //console.log(userData.orderby)
+      userData.orderby.forEach(function (order) {
+        if (order.selectedColumn !== undefined) {
+          var orderitem = {
+            column: order.selectedColumn.name,
+            isDesc: order.isDesc
+          }
+
+          orderbyList.push(orderitem)
+        }
+      })
+
+      _getTableData(searchList, orderbyList)
     }
     _loadController();
 

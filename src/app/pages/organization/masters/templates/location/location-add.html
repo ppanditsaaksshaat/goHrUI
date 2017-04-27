@@ -12,7 +12,8 @@
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-3 control-label">Country</label>
                 <div class="col-sm-9">
-                    <select class="form-control selectpicker with-search" data-live-search="true" title="Select Country" selectpicker ng-model="addCtrl.entity.CountryId"
+                    <select class="form-control selectpicker with-search" 
+                    data-live-search="true" title="Select Country" selectpicker ng-model="addCtrl.entity.CountryId"
                         ng-options="opt.value as opt.name for opt in addCtrl.selects.CountryId" required>
                     </select>
                 </div>
@@ -20,7 +21,8 @@
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-3 control-label">State</label>
                 <div class="col-sm-9">
-                    <select class="form-control selectpicker with-search" data-live-search="true" title="Select State" selectpicker ng-model="addCtrl.entity.StateId"
+                    <select class="form-control" chosen title="Select State" 
+                     ng-model="addCtrl.entity.StateId"
                         ng-options="opt.value as opt.name for opt in addCtrl.selects.StateId | filter: {CountryId:addCtrl.entity.CountryId}"
                         required>
                     </select>

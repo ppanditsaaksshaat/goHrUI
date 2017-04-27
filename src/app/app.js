@@ -17,6 +17,7 @@ angular.module('BlurAdmin', [
   'LocalStorageModule',
   'ngMessages',
   'naif.base64',
+  // 'angular.chosen',
   'BlurAdmin.theme',
   'BlurAdmin.pages',
   'BlurAdmin.common'

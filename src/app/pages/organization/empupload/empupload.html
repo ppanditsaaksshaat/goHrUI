@@ -1,0 +1,352 @@
+<!--<script type="text/javascript" src="../../assets/widgets/tabs-ui/tabs.js"></script>
+<script type="text/javascript">
+    /* jQuery UI Tabs */
+
+    $(function () {
+        "use strict";
+        $(".tabs").tabs();
+    });
+
+    $(function () {
+        "use strict";
+        $(".tabs-hover").tabs({
+            event: "mouseover"
+        });
+    });
+
+</script>-->
+<style>
+    .grid {
+        height: 450px;
+        width: 600px;
+    }
+    
+    @media only screen and (min-width: 320px) {
+        .grid {
+            width: 300px;
+        }
+    }
+    
+    @media only screen and (min-width: 375px) {
+        .grid {
+            width: 355px;
+        }
+    }
+    
+    @media only screen and (min-width: 410px) {
+        .grid {
+            width: 390px;
+        }
+    }
+    
+    @media only screen and (min-width: 560px) {
+        .grid {
+            width: 540px;
+        }
+    }
+    
+    @media only screen and (min-width: 760px) {
+        .grid {
+            width: 600px;
+        }
+    }
+    
+    @media only screen and (min-width: 790px) {
+        .grid {
+            width: 600px;
+        }
+    }
+    
+    @media only screen and (min-width: 1300px) {
+        .grid {
+            width: 800px;
+        }
+    }
+</style>
+
+<div ba-panel ba-panel-class="xmedium-panel" ba-panel-title="Upload Employee">
+    <div ng-cloak>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <ul>
+                        <div class="col-md-6">
+                            <li>
+
+                                <a href="#normal-tabs-1" title="Tab 1">
+                    Import Data
+                </a>
+
+
+                            </li>
+                        </div>
+                        <div class="col-md-6">
+                            <li>
+                                <a href="#normal-tabs-2" title="Tab 2">
+                    Import History
+                </a>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+
+    </div>
+
+    <h3 class="with-line"></h3>
+
+
+    <div id="normal-tabs-1">
+        <h2>Import Data Wizard</h2>
+        <h3 class="with-line"></h3>
+        <div id="step1" ng-show="tabCtrl.migrate.step1">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="schema-form-section row">
+                        <div class="schema-form-section col-xs-12">
+                            <div class="form-group schema-form-text  has-feedback">
+                                <label class="control-label ">
+                                        Choose Your Destination
+                                    </label>
+                                <select chosen class="form-control">
+                                        <option>Employee</option>
+                                        <option>Contact</option>
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schema-form-section row" ng-hide="tabCtrl.gridOptions.data.length > 0">
+                        <div class="schema-form-section col-xs-12">
+                            <div class="form-group schema-form-text  has-feedback">
+                                <label class="control-label ">
+                                        Choose Your File
+                                    </label>
+                                <label class="btn btn-success btn-file">
+                                        Browse
+                                        <input type="file" 
+                                        accept=".xls,.xlsx,.ods"  
+                                        opts="tabCtrl.gridOptions" 
+                                        uploader="tabCtrl.uploader"
+                                        multiple="false" 
+                                        style="display: none;">
+                                    </label>
+                                <label class="">(Only .xls, .xlsx are supported)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schema-form-section row" ng-show="tabCtrl.gridOptions.data.length > 0">
+                        <div class="schema-form-section col-xs-12">
+                            <div class="form-group schema-form-text  has-feedback">
+                                <label class="control-label ">
+                                        You have selected {{tabCtrl.gridOptions.data.length}} record file
+                                    </label>
+                                <label class="btn btn-success btn-file">
+                                        Reset
+                                        <input type="button" ng-click="tabCtrl.gridOptions.data=[]" style="display: none;">
+                                    </label>
+                                <label class="">{{tabCtrl.excel.columnDefs.length}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div id="grid1" ui-grid="tabCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav ng-show="tabCtrl.gridOptions.data.length > 0">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="step2" ng-show="tabCtrl.migrate.step2">
+            <h4 class="title-hero">Map the Employee Detail field names to the columns of your imported source files.</h4>
+            <div class="content-box" ng-repeat="table in tabCtrl.migrate.tables">
+                <h3 class="content-box-header bg-blue-alt">
+                    {{table.title}}
+                </h3>
+                <div class="content-box-wrapper">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6 text-right font-bold  title-alt">
+                                    Employee Field
+                                </div>
+                                <div class="col-md-6 font-bold  title-alt">
+                                    File Column
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6 text-right font-bold">
+                                    Employee Field
+                                </div>
+                                <div class="col-md-6 font-bold">
+                                    File Column
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="row" ng-repeat-start="field in table.rows">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6 text-right">
+                                    {{field.column1.text}}<span ng-show="field.column1.required" class="font-red">*</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" name="{{field.column1.name}}" ng-model="field.column1.value">
+                                            <option class="font-red" value="none"><em class="font-red font-italic">None</em></option>
+                                            <option ng-repeat="col in vm.gridOptions.columnDefs" value="{{col.name}}">{{col.name}}</option>
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6 text-right">
+                                    {{field.column2.text}}<span ng-show="field.column2.required" class="font-red">*</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" name="{{field.column2.name}}" ng-model="field.column2.value">
+                                            <option class="font-red" value="none"><em class="font-red font-italic">None</em></option>
+                                            <option ng-repeat="col in tabCtrl.gridOptions.columnDefs" value="{{col.name}}">{{col.name}}</option>
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-repeat-end class="divider"></div>
+                </div>
+            </div>
+        </div>
+        <div id="step3" ng-show="tabCtrl.migrate.step3">
+            <h4 class="pad10A text-black">The following columns in your import file are not mapped with any of the Rudra CRM fields. If you continue, the
+                data in these columns will not be imported. Click the back button to go back and map these fields. If you
+                wish to continue, click the Import button.</h4>
+            <div class="content-box">
+                <h3 class="content-box-header bg-blue-alt">
+                    Unmapped File Columns
+                </h3>
+                <div class="content-box-wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="unmapped in  tabCtrl.migrate.unMappedList">
+                                <td>{{unmapped}}</td>
+                            </tr>
+                        </tbody>
+                        <!--<tbody>
+                                <tr><th>Column Name</th></tr>
+                                <tr ng-repeat="">
+                                    <td></td>
+                                </tr>
+                            </tbody>-->
+                    </table>
+                </div>
+            </div>
+
+            <h4 class="pad10A text-black">The following columns are maped with CRM Fields</h4>
+            <div class="content-box">
+                <h3 class="content-box-header bg-blue-alt">
+                    Mapped Column
+                </h3>
+                <div class="content-box-wrapper">
+                    <table class="table" ng-repeat="table in tabCtrl.migrate.tables">
+                        <caption>{{table.title}}</caption>
+                        <thead>
+                            <tr>
+                                <th>CRM Field</th>
+                                <th>File Column</th>
+                                <th>CRM Field</th>
+                                <th>File Column</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in  table.rows">
+                                <td class="font-black">{{row.column1.text}}</td>
+                                <td ng-class="{'font-red': (row.column1.value!='none')}">{{row.column1.value}}</td>
+                                <td class="font-black">{{row.column2.text}}</td>
+                                <td ng-class="{'font-red': (row.column2.value!='none')}">{{row.column2.value}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="step4" ng-show="tabCtrl.migrate.step4">
+            <div class="content-box">
+                <h3 class="content-box-header bg-blue-alt">
+                    Processing Data
+                </h3>
+                <div class="content-box-wrapper">
+
+                </div>
+            </div>
+        </div>
+        <h3 class="with-line"></h3>
+        <div class="row">
+            <div class="col-md-6">
+                <button ng-hide="tabCtrl.migrate.currentStep==3" class="btn btn-primary" ng-click="tabCtrl.nextDataUpload()">Next</button>
+                <button class="btn btn-default" ng-click="tabCtrl.cancelDataUpload()">Back</button>
+                <button ng-show="tabCtrl.migrate.currentStep==3" class="btn btn-primary" ng-click="tabCtrl.importDataUpload()">Import</button>
+
+            </div>
+            <div class="col-md-6">
+                <div class="alert alert-danger" ng-show="tabCtrl.isError">
+                    <i class="glyph-icon icon-times"></i>&nbsp; {{tabCtrl.errorMsg}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="normal-tabs-2" ng-show="tabCtrl.normaltabs2">
+        tab 2 content
+        <!--<table class="table" ng-repeat="table in vm.migrate.tables">
+                <caption>{{table.title}}</caption>
+                <thead>
+                    <tr>
+                        <th>CRM Field</th>
+                        <th>File Column</th>
+                        <th>CRM Field</th>
+                        <th>File Column</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in  table.rows">
+                        <td class="font-black">{{row.column1.text}}</td>
+                        <td ng-class="{'font-red': (row.column1.value!='none')}">{{row.column1.value}}</td>
+                        <td class="font-black">{{row.column2.text}}</td>
+                        <td ng-class="{'font-red': (row.column2.value!='none')}">{{row.column2.value}}</td>
+                    </tr>
+                </tbody>
+            </table>-->
+        <table class="table" ng-repeat="table in tabCtrl.migrate.tables">
+            <caption>{{table.title}}</caption>
+            <thead>
+                <tr>
+                    <th>CRM Field</th>
+                    <th>File Column</th>
+                    <th>CRM Field</th>
+                    <th>File Column</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="val in table.rows">
+                    <td class="font-black">{{val.column1.text}}</td>
+                    <td>{{val.column1.value}}</td>
+                    <td class="font-black">{{val.column2.text}}</td>
+                    <td ng-class="">{{val.column2.value}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</div>
+</div>

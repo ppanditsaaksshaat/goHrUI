@@ -11,7 +11,6 @@
     'BlurAdmin.pages.organization.empview',
     'BlurAdmin.pages.organization.empadd',
     'BlurAdmin.pages.organization.empupload'
-
   ])
       .config(routeConfig);
       

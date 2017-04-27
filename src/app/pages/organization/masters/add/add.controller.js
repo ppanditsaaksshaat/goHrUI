@@ -6,10 +6,10 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.organization.masters')
-    .controller('OrgMastersAddController', OrgMastersAddController);
+    .controller('OrgMastersAddController1', OrgMastersAddController1);
 
   /** @ngInject */
-  function OrgMastersAddController($scope, $stateParams, $timeout, DJWebStore, pageService, editFormService) {
+  function OrgMastersAddController1($scope, $stateParams, $timeout, DJWebStore, pageService, editFormService) {
     var vm = this;
     var rndValu = Math.round((Math.random() * 10) * 10);
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);

@@ -6,25 +6,18 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.organization.masters')
-    .controller('OrgMastersController', OrgMastersController);
+    .controller('OrgMastersController1', OrgMastersController1);
 
   /** @ngInject */
-  function OrgMastersController(composeModal, mailMessages, pageService) {
-   
+  function OrgMastersController1() {
+   console.log('this controller')
     var vm = this;
     vm.navigationCollapsed = true;
-    vm.showCompose = function (subject, to, text) {
-      composeModal.open({
-        subject: subject,
-        to: to,
-        text: text
-      })
-    };
 
     vm.tabs = _getTabs();
 
     function _getTabs() {
-
+      
       var mastersMenu = [];
       mastersMenu.push({ name: 'location', text: 'Location', id: 34 })
       mastersMenu.push({ name: 'branch', text: 'Branch', id: 109 })

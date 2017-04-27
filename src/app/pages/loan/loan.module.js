@@ -6,6 +6,7 @@
   'use strict';
   angular.module('BlurAdmin.pages.loan', [   
     'BlurAdmin.pages.loan.loanmanagement',
+    'BlurAdmin.pages.loan.masters'
     
   ])
       .config(routeConfig);

@@ -1,4 +1,26 @@
-angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParams, $filter, DJWebStore) {
+angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParams, $filter, DJWebStore, toastr, toastrConfig) {
+
+    var toastOption = {};
+    var defaultConfig = angular.copy(toastrConfig);
+    var openedToasts = [];
+    toastOption = {
+        autoDismiss: false,
+        positionClass: 'toast-top-center',
+        type: 'success',
+        timeOut: '5000',
+        extendedTimeOut: '2000',
+        allowHtml: false,
+        closeButton: true,
+        tapToDismiss: true,
+        progressBar: true,
+        newestOnTop: true,
+        maxOpened: 0,
+        preventDuplicates: false,
+        preventOpenDuplicates: false,
+        title: "",
+        msg: ""
+    };
+
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
@@ -71,11 +93,19 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                 }
             }
         })
+        if (page.pageinfo.titlecolname != '')
+            gridObject.titleField = page.pageinfo.titlecolname
         gridObject.columns = colList;;
         gridObject.enableFilter = (!gridObject.enableTitleFilter) ? ((!gridObject.enableGlobalFilter) ? (!gridObject.enbleColumnFilter ? false : true) : true) : true
         gridObject.page = page;
         gridObject.pageId = pageId;
         $rootScope.gridObject = gridObject;
         console.log(gridObject)
+    }
+
+    $rootScope.showMsg = function(type, msg, title){
+        toastOption.type = type;
+        angular.extend(toastrConfig, toastOption);
+        openedToasts.push(toastr[toastOption.type](msg, title));
     }
 });
