@@ -10,10 +10,10 @@
 
     /** @ngInject */
     /** @ngInject */
-    function OrgEmpUploadController($scope, $stateParams, $http, uiGridConstants, $interval, $timeout,
-        pageService,  DJWebStore) {
+    function OrgEmpUploadController($scope, $sce, $filter, $http, uiGridConstants, $interval, $timeout,
+        $uibModal, pageService, $q, DJWebStore) {
         var vm = this;
-        debugger;
+        // debugger;
 
         vm.gridOptions = { data: [] }
         vm.uploader = [];
@@ -23,7 +23,7 @@
             unMappedList: [],
             step1: true, step2: false, step3: false, step4: false
         }
-        vm.normaltabs2 = false;
+        vm.normaltabs2 = true;
 
         //  vm.migrate.step1=true;
 
@@ -42,75 +42,131 @@
         //Public Functions
         vm.setupMigrate = function () {
 
-            var table1 = { title: 'Employee', rows: [] }
+
+            var table1 = { title: 'Job Description', rows: [] }
 
             table1.rows.push({
-                column1: { name: 'EmpCode', text: 'Emp Code', type: 'text', required: true, value: 'none' },
-                column2: { name: 'EmpTitleId', text: 'Title', type: 'text', required: true, value: 'none' }
+                column1: { name: 'JDDeptId', text: 'Department', type: 'text', required: true, value: 'none' },
+                column2: { name: 'JDDesgId', text: 'Designation', type: 'text', required: true, value: 'none' }
             })
 
             table1.rows.push({
-                column1: { name: 'EmpName', text: 'Employee Name', type: 'text', required: true, value: 'none' },
-                column2: { name: 'EmpFirstName', text: 'First Name', type: 'text', required: false, value: 'none' }
+                column1: { name: 'JDEmploymentId', text: 'Employeement Type', type: 'text', required: true, value: 'none' },
+                column2: { name: 'JDDate', text: 'Date Of Joining', type: 'date', required: false, value: 'none' }
             })
 
             table1.rows.push({
-                column1: { name: 'EmpMiddleName', text: 'Middle Name', type: 'text', required: false, value: 'none' },
-                column2: { name: 'EmpLastName', text: 'Last Name', type: 'text', required: false, value: 'none' }
+                column1: { name: 'JDEmpGradeId', text: 'Grade', type: 'text', required: false, value: 'none' },
+                column2: { name: 'JDEmpLevelId', text: 'Lavel', type: 'text', required: false, value: 'none' }
             })
 
-           
+            table1.rows.push({
+                column1: { name: 'JDSubUnitID', text: 'SubUnit', type: 'text', required: false, value: 'none' },
+                column2: { name: 'InsComId', text: 'Company', type: 'text', required: false, value: 'none' }
+            })
+
+            table1.rows.push({
+                column1: { name: 'PdEmail', text: 'Email', type: 'text', required: false, value: 'none' },
+                column2: { name: 'PdMobileNo', text: 'Mobile', type: 'text', required: false, value: 'none' }
+            })
+
+            table1.rows.push({
+                column1: { name: 'INSInsComId', text: 'Company', type: 'text', required: false, value: 'none' },
+                column2: { name: 'CDHomePhoneNo', text: 'Phone', type: 'text', required: false, value: 'none' }
+            })
+
+
 
             vm.migrate.tables.push(table1);
 
-
-            //contact information
-            var table2 = { title: 'Job Description', rows: [] }
+            var table2 = { title: 'Personal', rows: [] }
 
             table2.rows.push({
-                column1: { name: 'JDDate', text: 'Joining Date', type: 'text', required: true, value: 'none' },
-                column2: { name: 'DOB', text: 'Date Of Birth', type: 'date', required: false, value: 'none' }
+                column1: { name: 'PdDateOfBirth', text: 'Date Of Birth', type: 'date', required: true, value: 'none' },
+                column2: { name: 'PdMaritalId', text: 'Marriage Status', type: 'text', required: true, value: 'none' }
             })
 
             table2.rows.push({
-                column1: { name: 'CBEmailAddress', text: 'Email', type: 'text', required: false, value: 'none' },
-                column2: { name: 'CBMobileNo', text: 'Mobile', type: 'text', required: false, value: 'none' }
+                column1: { name: 'PdGenderId', text: 'Gender', type: 'text', required: true, value: 'none' },
+                column2: { name: 'PdMobileNo', text: 'Mobile', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
-                column1: { name: 'LCCDesig', text: 'Designation', type: 'text', required: false, value: 'none' },
-                column2: { name: 'LCCRating', text: 'Rating', type: 'text', required: false, value: 'none' }
+                column1: { name: 'PdEmail', text: 'Email', type: 'text', required: false, value: 'none' },
+                column2: { name: 'PDAnniversaryDate', text: 'Anniversary Date', type: 'date', required: false, value: 'none' }
+            })
+
+
+
+            table2.rows.push({
+                column1: { name: 'PDFacebookId', text: 'Facebook', type: 'text', required: true, value: 'none' },
+                column2: { name: 'PDTwitter', text: 'Twitter', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
-                column1: { name: 'LCCEmail', text: 'Alt Email', type: 'text', required: false, value: 'none' },
-                column2: { name: 'LCCMobile', text: 'Alt Mobile', type: 'text', required: false, value: 'none' }
+                column1: { name: 'PDLinkedIn', text: 'LinkedIn', type: 'text', required: false, value: 'none' },
+                column2: { name: 'PDAdhar', text: 'Adhar', type: 'text', required: false, value: 'none' }
             })
+
+            table2.rows.push({
+                column1: { name: 'PDPancard', text: 'Pan Card', type: 'text', required: true, value: 'none' },
+                column2: { name: 'PDOtherNumber', text: 'Other Number', type: 'text', required: false, value: 'none' }
+            })
+
+            table2.rows.push({
+                column1: { name: 'EmpName', text: 'Emrg Name', type: 'text', required: false, value: 'none' },
+                column2: { name: 'ECContactNo', text: 'Emrg Mobile', type: 'text', required: false, value: 'none' }
+            })
+
+
+            table2.rows.push({
+                column1: { name: 'FdName', text: 'Famly Name', type: 'text', required: true, value: 'none' },
+                column2: { name: 'FdRelationshipId', text: 'Relation', type: 'text', required: false, value: 'none' }
+            })
+
+            table2.rows.push({
+                column1: { name: 'FdDateOfBirth', text: 'Date Of Birth', type: 'date', required: false, value: 'none' },
+                column2: { name: 'RelationshipName', text: 'Contact', type: 'text', required: false, value: 'none' }
+            })
+
+            table2.rows.push({
+                column1: { name: 'DepenName', text: 'Dependent', type: 'text', required: false, value: 'none' },
+                column2: { name: 'PDNominee', text: 'Nominee Member', type: 'text', required: false, value: 'none' }
+            })
+
+            table2.rows.push({
+                column1: { name: 'PDType', text: 'Type', type: 'text', required: false, value: 'none' },
+                column2: { name: 'PDPercentage', text: 'Persentage', type: 'text', required: false, value: 'none' }
+            })
+
+            table2.rows.push({
+                column1: { name: 'PDIdentityTypeId', text: 'Identity Type', type: 'text', required: false, value: 'none' },
+                column2: { name: 'PDIdentityNumber', text: 'Identity Number', type: 'text', required: false, value: 'none' }
+            })
+
+
+
 
             vm.migrate.tables.push(table2);
 
 
-            //company information
-            var table3 = { title: 'Company Information', rows: [] }
+
+            //Account information
+            var table3 = { title: 'Account', rows: [] }
 
             table3.rows.push({
-                column1: { name: 'CIDECompanyName', text: 'Company Name', type: 'text', required: false, value: 'none' },
-                column2: { name: 'CIDELocation', text: 'Location/ Branch', type: 'text', required: false, value: 'none' }
+                column1: { name: 'CIDECompanyName', text: 'Salary Mode', type: 'text', required: false, value: 'none' },
+                column2: { name: 'PFPPFAccountNo', text: 'PF Account Number', type: 'text', required: false, value: 'none' }
             })
 
             table3.rows.push({
-                column1: { name: 'CIDEWebsite', text: 'Website', type: 'text', required: false, value: 'none' },
-                column2: { name: 'CIDECompanySize', text: 'Company Size', type: 'text', required: false, value: 'none' }
+                column1: { name: 'PFPPFMemberDate', text: 'PF Start Date', type: 'text', required: false, value: 'none' },
+                column2: { name: 'ESIMemeberNo', text: 'ESI Account Number', type: 'text', required: false, value: 'none' }
             })
 
             table3.rows.push({
-                column1: { name: 'CIDEFunctionalArea', text: 'Functional Area', type: 'text', required: false, value: 'none' },
-                column2: { name: 'CIDEIndustrialArea', text: 'Industrial Area', type: 'text', required: false, value: 'none' }
-            })
-
-            table3.rows.push({
-                column1: { name: 'CIDECompanyContactNo', text: 'Company Contact No', type: 'text', required: false, value: 'none' },
-                column2: { name: 'company_email', text: 'Company Email', type: 'text', required: false, value: 'none' }
+                column1: { name: 'ESIMemeberDate', text: 'ESI Start Date', type: 'text', required: false, value: 'none' },
+                column2: { name: 'Dispensary', text: 'ESI Dispensary name', type: 'text', required: false, value: 'none' }
             })
 
             vm.migrate.tables.push(table3);
@@ -121,7 +177,7 @@
 
         }
         vm.nextDataUpload = function () {
-            debugger;
+
             if (vm.migrate.currentStep == 1) {
                 if (vm.gridOptions.data.length <= 0) {
 
@@ -242,21 +298,6 @@
                 console.log(err)
             })
         }
-        // vm.openMenu = function (src) {
-        //     var rndValu = Math.round((Math.random() * 10) * 10);
-        //     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
-
-        //     if (src == 'import') {
-        //         vm.includeSrc = 'templates/crm/migrate.html?' + rndValu2 + '=' + rndValu;
-        //     }
-        //     else if (src == 'profile') {
-        //         vm.includeSrc = 'templates/crm/profile.html?' + rndValu2 + '=' + rndValu;
-        //     }
-        //     else if (src == 'msg') {
-        //         vm.includeSrc = 'templates/crm/msg.html?' + rndValu2 + '=' + rndValu;
-        //     }
-        //     console.log(vm.includeSrc)
-        // }
 
         //Private Functions
         function findUsable(colName) {

@@ -6,6 +6,7 @@ angular.module('BlurAdmin.common').directive("fileread", function ($filter) {
         },
         link: function ($scope, $elm, $attrs) {
             $elm.on('change', function (changeEvent) {
+                debugger;
                 var reader = new FileReader();
 
                 reader.onload = function (evt) {
