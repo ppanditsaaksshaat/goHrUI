@@ -16,6 +16,7 @@ angular.module('BlurAdmin', [
   'angular-progress-button-styles',
   'LocalStorageModule',
   'ngMessages',
+  // 'angular.chosen',
   'BlurAdmin.theme',
   'BlurAdmin.pages',
   'BlurAdmin.common'
