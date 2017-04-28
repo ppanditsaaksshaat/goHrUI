@@ -28,51 +28,76 @@
         //  vm.migrate.step1=true;
 
         vm.gridOptions = {
-            paginationPageSizes: [10, 25, 50, 75, 100],
-            paginationPageSize: 10,
-            enableFiltering: true,
+            enableFiltering: false,
             showGridFooter: false,
-            showColumnFooter: true,
+            showColumnFooter: false,
             enableHorizontalScrollbar: false,
             enableVerticalScrollbar: false,
-            enableCellEditOnFocus: true
+            enableCellEditOnFocus: false
         };
         //  vm.includeSrc = 'templates/crm/migrate.html?q=1';
+
+        function _loadController() {
+            vm.migrate.findFieldList = [];
+
+            addFieldCheck('Department', '', 0, 0, 0);
+            addFieldCheck('Designation', '', 0, 0, 1);
+            addFieldCheck('Employeement', '', 0, 1, 0);
+            addFieldCheck('DOJ', '', 0, 1, 1);
+            addFieldCheck('Grade', '', 0, 2, 0);
+            addFieldCheck('Level', '', 0, 2, 1);
+            addFieldCheck('Sub', 'Unit', 0, 3, 0);
+            addFieldCheck('Sub', 'Unit', 0, 3, 0);
+
+        }
 
         //Public Functions
         vm.setupMigrate = function () {
 
+            _loadController();
 
             var table1 = { title: 'Job Description', rows: [] }
 
             table1.rows.push({
                 column1: { name: 'JDDeptId', text: 'Department', type: 'text', required: true, value: 'none' },
-                column2: { name: 'JDDesgId', text: 'Designation', type: 'text', required: true, value: 'none' }
-            })
-
-            table1.rows.push({
-                column1: { name: 'JDEmploymentId', text: 'Employeement Type', type: 'text', required: true, value: 'none' },
                 column2: { name: 'JDDate', text: 'Date Of Joining', type: 'date', required: false, value: 'none' }
             })
 
             table1.rows.push({
-                column1: { name: 'JDEmpGradeId', text: 'Grade', type: 'text', required: false, value: 'none' },
+                column1: { name: 'JDEmploymentId', text: 'Employeement Type', type: 'text', required: true, value: 'none' },
+                column2: { name: 'JDEmpGradeId', text: 'Grade', type: 'text', required: false, value: 'none' },
+                
+            })
+
+            table1.rows.push({
+                column1: { name: 'JDDesgId', text: 'Designation', type: 'text', required: true, value: 'none' },
                 column2: { name: 'JDEmpLevelId', text: 'Lavel', type: 'text', required: false, value: 'none' }
             })
 
             table1.rows.push({
-                column1: { name: 'JDSubUnitID', text: 'SubUnit', type: 'text', required: false, value: 'none' },
-                column2: { name: 'InsComId', text: 'Company', type: 'text', required: false, value: 'none' }
+                column1: { name: 'InsComId', text: 'Category', type: 'text', required: false, value: 'none' },
+                column2: { name: 'JDSubUnitID', text: 'Sub Unit', type: 'text', required: false, value: 'none' }
             })
 
             table1.rows.push({
-                column1: { name: 'PdEmail', text: 'Email', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PdMobileNo', text: 'Mobile', type: 'text', required: false, value: 'none' }
+                column1: { name: 'JDSubUnitID', text: 'Office Email', type: 'text', required: false, value: 'none' },
+                column2: { name: 'InsComId', text: 'Office Mobile', type: 'text', required: false, value: 'none' }
             })
 
             table1.rows.push({
-                column1: { name: 'INSInsComId', text: 'Company', type: 'text', required: false, value: 'none' },
-                column2: { name: 'CDHomePhoneNo', text: 'Phone', type: 'text', required: false, value: 'none' }
+                column1: { name: 'JDSubUnitID', text: 'Office Phone', type: 'text', required: false, value: 'none' },
+                column2: { name: 'InsComId', text: 'Office Ext.', type: 'text', required: false, value: 'none' }
+            })
+
+
+            table1.rows.push({
+                column1: { name: 'SingleOT', text: 'Single OT', type: 'bool', required: false, value: 'none' },
+                column2: { name: 'JDDoubleOT', text: 'Double OT', type: 'bool', required: false, value: 'none' }
+            })
+
+            table1.rows.push({
+                column1: { name: 'JDSingleOTRate', text: 'Single OT Rate', type: 'decimal', required: false, value: 'none' },
+                column2: { name: 'DoubleOTRate', text: 'Double OT Rate', type: 'decimal', required: false, value: 'none' }
             })
 
 
@@ -83,24 +108,22 @@
 
             table2.rows.push({
                 column1: { name: 'PdDateOfBirth', text: 'Date Of Birth', type: 'date', required: true, value: 'none' },
-                column2: { name: 'PdMaritalId', text: 'Marriage Status', type: 'text', required: true, value: 'none' }
+                column2: { name: 'PdMaritalId', text: 'Marriage Status', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
                 column1: { name: 'PdGenderId', text: 'Gender', type: 'text', required: true, value: 'none' },
-                column2: { name: 'PdMobileNo', text: 'Mobile', type: 'text', required: false, value: 'none' }
+                column2: { name: 'PdEmail', text: 'Email', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
-                column1: { name: 'PdEmail', text: 'Email', type: 'text', required: false, value: 'none' },
+                column1: { name: 'PdMobileNo', text: 'Mobile', type: 'text', required: true, value: 'none' },
                 column2: { name: 'PDAnniversaryDate', text: 'Anniversary Date', type: 'date', required: false, value: 'none' }
             })
 
-
-
             table2.rows.push({
-                column1: { name: 'PDFacebookId', text: 'Facebook', type: 'text', required: true, value: 'none' },
-                column2: { name: 'PDTwitter', text: 'Twitter', type: 'text', required: false, value: 'none' }
+                column1: { name: 'PDFacebookId', text: 'Facebook', type: 'text', required: false, value: 'none' },
+                column2: { name: 'PDPancard', text: 'Pan Card', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
@@ -109,41 +132,11 @@
             })
 
             table2.rows.push({
-                column1: { name: 'PDPancard', text: 'Pan Card', type: 'text', required: true, value: 'none' },
+                column1: { name: 'PDTwitter', text: 'Twitter', type: 'text', required: false, value: 'none' },
                 column2: { name: 'PDOtherNumber', text: 'Other Number', type: 'text', required: false, value: 'none' }
             })
 
-            table2.rows.push({
-                column1: { name: 'EmpName', text: 'Emrg Name', type: 'text', required: false, value: 'none' },
-                column2: { name: 'ECContactNo', text: 'Emrg Mobile', type: 'text', required: false, value: 'none' }
-            })
-
-
-            table2.rows.push({
-                column1: { name: 'FdName', text: 'Famly Name', type: 'text', required: true, value: 'none' },
-                column2: { name: 'FdRelationshipId', text: 'Relation', type: 'text', required: false, value: 'none' }
-            })
-
-            table2.rows.push({
-                column1: { name: 'FdDateOfBirth', text: 'Date Of Birth', type: 'date', required: false, value: 'none' },
-                column2: { name: 'RelationshipName', text: 'Contact', type: 'text', required: false, value: 'none' }
-            })
-
-            table2.rows.push({
-                column1: { name: 'DepenName', text: 'Dependent', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDNominee', text: 'Nominee Member', type: 'text', required: false, value: 'none' }
-            })
-
-            table2.rows.push({
-                column1: { name: 'PDType', text: 'Type', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDPercentage', text: 'Persentage', type: 'text', required: false, value: 'none' }
-            })
-
-            table2.rows.push({
-                column1: { name: 'PDIdentityTypeId', text: 'Identity Type', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDIdentityNumber', text: 'Identity Number', type: 'text', required: false, value: 'none' }
-            })
-
+          
 
 
 
@@ -180,7 +173,7 @@
 
             if (vm.migrate.currentStep == 1) {
                 if (vm.gridOptions.data.length <= 0) {
-
+                    alert('No data found.')
                 }
                 else {
                     vm.matchingFields();
@@ -188,7 +181,6 @@
                     vm.migrate.step1 = false;
                     vm.migrate.step2 = true;
                     vm.migrate.step3 = false;
-                    console.log(vm.gridOptions.columnDefs);
                 }
             }
             else if (vm.migrate.currentStep == 2) {
@@ -226,7 +218,6 @@
                             vm.migrate.unMappedList.push(col.name)
                         }
                     });
-                    console.log("santosh");
                     console.log(vm.migrate.unMappedList);
                     // alert('unmapped column');
                 }
@@ -236,6 +227,40 @@
                 vm.migrate.step2 = false;
                 vm.migrate.step3 = false;
                 vm.migrate.step4 = true;
+
+                vm.gridValidOptions = angular.copy(vm.gridOptions);
+
+                vm.gridValidOptions.columnDefs = [];
+                vm.gridValidOptions.data = [];
+            }
+        }
+        vm.goPrevious = function () {
+            if (vm.migrate.currentStep == 1) {
+
+            }
+            else if (vm.migrate.currentStep == 2) {
+                vm.migrate.step1 = true;
+                vm.migrate.step2 = false;
+                vm.migrate.step3 = false;
+                vm.migrate.step4 = false;
+                vm.migrate.step5 = false;
+                vm.migrate.currentStep = 1;
+            }
+            else if (vm.migrate.currentStep == 3) {
+                vm.migrate.step1 = false;
+                vm.migrate.step2 = true;
+                vm.migrate.step3 = false;
+                vm.migrate.step4 = false;
+                vm.migrate.step5 = false;
+                vm.migrate.currentStep = 2;
+            }
+            else if (vm.migrate.currentStep == 4) {
+                vm.migrate.step1 = false;
+                vm.migrate.step2 = true;
+                vm.migrate.step3 = true;
+                vm.migrate.step4 = false;
+                vm.migrate.step5 = false;
+                vm.migrate.currentStep = 3;
             }
         }
         vm.cancelDataUpload = function () {
@@ -259,7 +284,7 @@
         }
         vm.matchingFields = function () {
             angular.forEach(vm.gridOptions.columnDefs, function (col, colIdx) {
-                var isUsable = findUsable(col.name);
+                var isUsable = _findUsable(col.name);
                 if (isUsable) {
                     console.log(isUsable);
                 }
@@ -300,47 +325,10 @@
         }
 
         //Private Functions
-        function findUsable(colName) {
+        function _findUsable(colName) {
             var isUsable = false;
 
-            vm.migrate.findFieldList = [];
 
-            addFieldCheck('Employee', 'code', 0, 0, 1);
-            addFieldCheck('srno', '', 0, 0, 1);
-            addFieldCheck('date', '', 0, 0, 2);
-
-            addFieldCheck('deal', '', 0, 1, 1);
-            addFieldCheck('value', '', 0, 1, 1);
-            addFieldCheck('amount', '', 0, 1, 1);
-            addFieldCheck('annual', '', 0, 1, 1);
-
-            addFieldCheck('remark', '', 0, 1, 2);
-            addFieldCheck('desc', '', 0, 1, 2);
-
-            addFieldCheck('first', 'name', 1, 0, 1);
-            addFieldCheck('last', 'name', 1, 0, 2);
-
-            addFieldCheck('email', '', 1, 1, 1);
-            addFieldCheck('mobile', '', 1, 1, 2);
-
-            addFieldCheck('title', '', 1, 2, 1);
-            addFieldCheck('desig', '', 1, 2, 1);
-
-            addFieldCheck('rating', '', 1, 2, 2);
-
-            addFieldCheck('company', '', 2, 0, 1);
-            addFieldCheck('branch', '', 2, 0, 2);
-            addFieldCheck('location', '', 2, 0, 2);
-
-            addFieldCheck('website', '', 2, 1, 1);
-            addFieldCheck('url', '', 2, 1, 1);
-            addFieldCheck('portal', '', 2, 1, 1);
-
-            addFieldCheck('size', '', 2, 1, 2);
-            addFieldCheck('employee', '', 2, 1, 2);
-
-            addFieldCheck('company', 'contact', 2, 3, 1);
-            addFieldCheck('company', 'email', 2, 3, 2);
 
             angular.forEach(vm.migrate.findFieldList, function (field, rowidx) {
                 setUsable(colName, field.firstCheck, field.secondCheck, field.tableIdx, field.rowIdx, field.colIdx)
@@ -403,7 +391,9 @@
             });
 
             if (!isValid) {
+
                 vm.errorMsg = 'Please select a column in ' + invalidField;
+                $scope.showMsg('error', vm.errorMsg, 'Import Wizard')
                 vm.isError = true;
             }
             console.log(vm.errorMsg);
