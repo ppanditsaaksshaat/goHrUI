@@ -48,6 +48,7 @@
       vm.isLoaded = true;
       vm.isLoading = false;
       vm.entity = result;
+      console.log(vm.entity)
       vm.oldEntity = angular.copy(result)
     }
     function _findEntityErrorResult(err) {
