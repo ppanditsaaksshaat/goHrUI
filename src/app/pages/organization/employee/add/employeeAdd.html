@@ -64,13 +64,13 @@
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDOB">Date Of Joining*</label>
-      <input type="text" class="form-control" id="inputDOB" ng-model="addCtrl.empAdd.JDDate" placeholder="Date Of Joining">
+      <input type="text" class="form-control" id="inputDOB" ng-model="addCtrl.empAdd.JDDate" placeholder="MM-DD-YYYY">
     </div>
   </div>
    <div class="col-sm-4">
     <div class="form-group">
       <label for="inputMobile">Mobile*</label>
-      <input type="text" class="form-control" id="inputMobile" ng-model="addCtrl.empAdd.PdMobileNo" placeholder="Mobile">
+      <input type="text" class="form-control" id="inputMobile" maxlength="15" ng-model="addCtrl.empAdd.PdMobileNo" placeholder="Mobile">
     </div>
   </div>
 </div>
@@ -105,7 +105,7 @@
   </div>
   <div class="col-sm-4">
     <div class="form-group">
-      <label for="inputEmployeeType">Employee Type*</label>
+      <label for="inputEmployeeType">Employment Type*</label>
        <select id="inputEmployeeType"
                       name="empEmployeeType_{{$index}}"
                       ng-model="addCtrl.empAdd.JDEmploymentId"
@@ -174,7 +174,7 @@
 </div>
 <div class="text-center">
 <button type="button" class="btn btn-primary" ng-click="addCtrl.saveForm()">Save</button>
-<button type="button" class="btn btn-primary">Cancel</button>
+<button type="button" ui-sref="organization.employee" class="btn btn-primary">Cancel</button>
 </div>
    </form>
 </div>
