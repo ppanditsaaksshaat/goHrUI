@@ -73,8 +73,12 @@
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-4 control-label">Country</label>
                         <div class="col-sm-8">
-                            <select class="form-control selectpicker with-search" data-live-search="true" title="Select Country" selectpicker ng-model="addCtrl.entity.CountryId"
+                            <!--<select class="form-control selectpicker with-search" data-live-search="true" title="Select Country" selectpicker ng-model="addCtrl.entity.CountryId"
                                 ng-options="opt.value as opt.name for opt in addCtrl.selects.CountryId" required>
+                    </select>-->
+
+                     <select class="form-control" chosen title="Select Country" ng-model="addCtrl.entity.CountryId" ng-options="opt.value as opt.name for opt in addCtrl.selects.CountryId"
+                                required>
                     </select>
                         </div>
                     </div>
