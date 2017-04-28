@@ -13,6 +13,7 @@
     /** @ngInject */
     /** @ngInject */
     function OrgEmployeeTabController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout) {
+    alert("hi");
         var vm = this;
         vm.navigationCollapsed = true;
         vm.pageId = $stateParams.pageId;

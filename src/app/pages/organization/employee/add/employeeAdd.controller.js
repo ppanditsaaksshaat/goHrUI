@@ -12,7 +12,7 @@
 
     /** @ngInject */
     /** @ngInject */
-    function AddEmployeeController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout) {
+    function AddEmployeeController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout,$state) {
         var vm = this;
         var columnIds = ['132', '667', '674', '192', '668', '743', '744'];
         vm.empAdd = {};
@@ -23,18 +23,16 @@
             $timeout(function () {
 
                 pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
-                pageService.getFieldSetting(25).then(_getFieldSettingSuccessResult,_getFieldSettingErrorResult)
+                pageService.getFieldSetting(25).then(_getFieldSettingSuccessResult, _getFieldSettingErrorResult)
             });
         }
-function _getFieldSettingSuccessResult(result)
-{
-    vm.empAdd.EmpCode=result.colvalue;
-//alert(JSON.stringify(result))
-}
-function _getFieldSettingErrorResult(error)
-{
-    
-}
+        function _getFieldSettingSuccessResult(result) {
+            vm.empAdd.EmpCode = result.colvalue;
+            //alert(JSON.stringify(result))
+        }
+        function _getFieldSettingErrorResult(error) {
+
+        }
         function _getAllSelectSuccessResult(result) {
             console.log(result)
             vm.title = result[0];
@@ -48,11 +46,66 @@ function _getFieldSettingErrorResult(error)
         function _getAllSelectErrorResult(error) {
             alert(JSON.stringify(error))
         }
-        function _validateForm(form) {
-            return true;
+        function _validateField(form) {
+           if(vm.empAdd.EmpTitleId==undefined)
+           {
+               $scope.showMsg('error', 'Please Select Title', 'Requried')
+               return false;
+           }
+            if(vm.empAdd.EmpFirstName==undefined)
+           {
+               $scope.showMsg('error', 'Please Enter FirstName', 'Requried')
+               return false;
+           }
+          
+           if(vm.empAdd.PdGenderId==undefined)
+           {
+               $scope.showMsg('error', 'Please Select Gender', 'Requried')
+               return false;
+           }
+           if(vm.empAdd.JDDate==undefined)
+           {
+               $scope.showMsg('error', 'Please Select Date Of Joining', 'Requried')
+               return false;
+           }
+            if(vm.empAdd.PdMobileNo==undefined)
+           {
+               $scope.showMsg('error', 'Please Enter Mobile', 'Requried')
+               return false;
+           }
+         
+            if(vm.empAdd.JDDeptId==undefined)
+           {
+               $scope.showMsg('error', 'Please Select Department', 'Requried')
+               return false;
+           }
+            if(vm.empAdd.JDDesgId==undefined)
+           {
+               $scope.showMsg('error', 'Please Select Designation', 'Requried')
+               return false;
+           }
+            if(vm.empAdd.JDEmploymentId==undefined)
+           {
+               $scope.showMsg('error', 'Please Select EmployeeType', 'Requried')
+               return false;
+           }
+            if(vm.empAdd.JDEmpGradeId==undefined)
+           {
+               $scope.showMsg('error', 'Please Select Grade', 'Requried')
+               return false;
+           }
+            if(vm.empAdd.JDEmpLevelId==undefined)
+           {
+               $scope.showMsg('error', 'Please Select Level', 'Requried')
+               return false;
+           }
+           return true;
+          
+         
         }
         function _saveForm() {
-      
+        if(_validateField()){
+           
             var basic = {
                 EmpTitleId: vm.empAdd.EmpTitleId,
                 EmpFirstName: vm.empAdd.EmpFirstName,
@@ -74,16 +127,18 @@ function _getFieldSettingErrorResult(error)
                 PdGenderId: vm.empAdd.PdGenderId,
                 PdMobileNo: vm.empAdd.PdMobileNo
             }
-            var employeeData = { basic: basic, job: job, personal: personal };        
+            var employeeData = { basic: basic, job: job, personal: personal };
             pageService.create(JSON.stringify(employeeData)).then(_createSuccessResult, _createErrorResult)
         }
+        }
         function _createSuccessResult(result) {
-alert(JSON.stringify(result))
+         //   alert(JSON.stringify(result))
+            $scope.showMsg('success', 'Saved Sucussfylly', 'Add En');
+            $state.go('organization.employee');
         }
         function _createErrorResult(error) {
 
         }
-
-        _loadController();
+       _loadController();
     }
 })();

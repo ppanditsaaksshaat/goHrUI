@@ -1,4 +1,4 @@
-angular.module('BlurAdmin.common').directive("fileread", function ($filter) {
+angular.module('BlurAdmin.common').directive("readfiledata", function ($filter) {
     return {
         scope: {
             opts: '=',
@@ -6,9 +6,8 @@ angular.module('BlurAdmin.common').directive("fileread", function ($filter) {
         },
         link: function ($scope, $elm, $attrs) {
             $elm.on('change', function (changeEvent) {
-                debugger;
                 var reader = new FileReader();
-
+// debugger;
                 reader.onload = function (evt) {
                     $scope.$apply(function () {
                         var data = evt.target.result;
@@ -21,7 +20,7 @@ angular.module('BlurAdmin.common').directive("fileread", function ($filter) {
 
                         $scope.opts.columnDefs = [];
                         headerNames.forEach(function (h) {
-                            var colDef = { field: h, width: 150 }
+                            var colDef = { field: h, width: 150 , value:h}
                             angular.forEach($scope.uploader.columns, function (key, value) {
                                 if (h == key.field) {
                                     if (key.format !== undefined) {
@@ -55,14 +54,14 @@ angular.module('BlurAdmin.common').directive("fileread", function ($filter) {
 
                                     //extra column in excel file will be ignored
                                     //comment this if want to show extra column from excel , and uncomment outer forEach below
-                                    $scope.opts.columnDefs.push(colDef);
+                                    //$scope.opts.columnDefs.push(colDef);
 
                                 }
                             });
 
 
                             //uncomment if want to show extra column from excel to grid
-                            //$scope.opts.columnDefs.push(colDef);
+                            $scope.opts.columnDefs.push(colDef);
 
                         });
 
@@ -109,7 +108,7 @@ angular.module('BlurAdmin.common').directive("fileread", function ($filter) {
                         });
 
                         $scope.opts.data = data;
-
+                        console.log($scope.opts)
                         $elm.val(null);
                     });
                 };
