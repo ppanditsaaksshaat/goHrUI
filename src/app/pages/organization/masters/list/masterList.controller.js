@@ -32,12 +32,14 @@
 
     vm.refreshData = function () {
       $scope.rows = [];
-      _getTableData();
+      // _getTableData();
+      _getTableData([], [])
     }
 
     function _loadController() {
       
       $scope.gridOption = {columns: [] }
+     
       pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
     }
     function _successGetPage(result) {
