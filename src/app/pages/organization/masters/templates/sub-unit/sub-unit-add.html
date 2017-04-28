@@ -5,8 +5,8 @@
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-4 control-label">Unit Name</label>
                 <div class="col-sm-8">
-                    <input name="SUName" ng-model="addCtrl.entity.SUName" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Branch Name"
-                        text-only-with-space >
+                    <input name="SUName" ng-model="addCtrl.entity.SUName" type="text" ng-required="true" class="form-control" id="inputEmail3"
+                        placeholder="Enter Unit Name">
                 </div>
             </div>
             <div class="form-group">
@@ -20,10 +20,15 @@
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-4 control-label">Branch</label>
                 <div class="col-sm-8">
-                    <select class="form-control selectpicker with-search" data-live-search="true" title="Select Branch" selectpicker ng-model="addCtrl.entity.SUBranchId"
+                    <!--<select class="form-control selectpicker with-search" data-live-search="true" title="Select Branch" selectpicker ng-model="addCtrl.entity.SUBranchId"
                         ng-options="opt.value as opt.name for opt in addCtrl.selects.SUBranchId | filter: {LocationId:addCtrl.entity.LocationId}"
                         required>
+                    </select>-->
+
+                    <select class="form-control" chosen title="Select Branch" ng-model="addCtrl.entity.SUBranchId" ng-options="opt.value as opt.name for opt in addCtrl.selects.SUBranchId | filter: {LocationId:addCtrl.entity.LocationId}"
+                        required>
                     </select>
+
                 </div>
             </div>
             <div class="form-group">
