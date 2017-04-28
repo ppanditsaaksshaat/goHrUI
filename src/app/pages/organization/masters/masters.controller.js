@@ -33,6 +33,10 @@
       mastersMenu.push({ name: 'category', text: 'Category', id: 46 })
       mastersMenu.push({ name: 'empstat', text: 'Employee Status', id: 54 })
       mastersMenu.push({ name: 'relationship', text: 'Relationship ', id: 51 })
+      mastersMenu.push({ name: 'bank-branch', text: 'Bank Branch ', id: 37 })
+      mastersMenu.push({ name: 'qualification', text: 'Qualification ', id: 38 })
+      mastersMenu.push({ name: 'other-qualification', text: 'Otehr Qualification ', id: 43 })
+      mastersMenu.push({ name: 'skill', text: 'Skill ', id: 45 })
       return mastersMenu;
 
     }

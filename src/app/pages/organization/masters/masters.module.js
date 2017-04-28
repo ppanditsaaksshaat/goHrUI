@@ -45,7 +45,7 @@
           url: '/:name/:action/:pageId/:pkId/',
           templateUrl: 'app/pages/organization/masters/add/add.html',
           title: 'Organization Masters',
-          controller: "OrgMastersAddController",
+          controller: "OrgMastersAddController1",
           controllerAs: "addCtrl"
         });
     $urlRouterProvider.when('/organization/masters','/organization/masters/location/34');

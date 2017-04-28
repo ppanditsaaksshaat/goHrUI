@@ -3,20 +3,22 @@
 
         <form class="form-horizontal" name="editForm" ng-submit="addCtrl.saveForm(editForm)">
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Level</label>
+                <label for="inputEmail3" class="col-sm-3 control-label">Qualification</label>
                 <div class="col-sm-9">
-                    <input name="EmpLevelName" ng-model="addCtrl.entity.EmpLevelName" type="text" ng-required="true" class="form-control" id="inputEmail3"
-                        placeholder="Enter Level Name">
+                    <input name="OtherQualificationName" ng-model="addCtrl.entity.OtherQualificationName" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Qualification"
+                         >
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-3 control-label">Description</label>
                 <div class="col-sm-9">
-                    <input name="EmpLevelDesc" ng-model="addCtrl.entity.EmpLevelDesc" type="text" ng-required="true" class="form-control" id="inputEmail3"
-                        placeholder="Enter Description" text-only-with-space>
+                    <input name="OtherQualificationDesc" ng-model="addCtrl.entity.OtherQualificationDesc" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Description"
+                         >
                 </div>
             </div>
-
+            
+            
+            
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">

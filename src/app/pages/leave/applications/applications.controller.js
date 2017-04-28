@@ -63,6 +63,22 @@
       vm.ucvlist = vm.page.pageinfo.ucvlist;
       console.log(vm.ucvlist)
 
+
+       $scope.setPage(vm.page)
+      $scope.setGrid(
+        {
+          columns: ['EmpName','LEADContactName','LEADContactNo','ApplicationStatus','LeadComment','LTName','LEADDateFrom','LEADDateTo'],//list of columns
+          enableTitleFilter: true,//show title filter
+          enableGlobalFilter: true,//show global filter
+          enbleColumnFilter: false,//show each column filter
+          enableSrNo: true,//show serial no column
+          enableAction: true,//show action column
+          enablePagination: true,//enable pagination
+          paginationLength: 10,//length of rows per page,
+          pageId: vm.pageId//page id for which grid to be design
+        }
+      )
+
       // vm.table = {};
       // vm.table.columns = [];
       // vm.page.pageinfo.columns.forEach(function (col) {
