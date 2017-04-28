@@ -12,7 +12,7 @@
 
     /** @ngInject */
     /** @ngInject */
-    function AddEmployeeController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout) {
+    function AddEmployeeController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout,$state) {
         var vm = this;
         var columnIds = ['132', '667', '674', '192', '668', '743', '744'];
         vm.empAdd = {};
@@ -133,12 +133,12 @@
         }
         function _createSuccessResult(result) {
          //   alert(JSON.stringify(result))
-            $scope.showMsg('success', 'Saved Sucussfylly', 'Add En')
+            $scope.showMsg('success', 'Saved Sucussfylly', 'Add En');
+            $state.go('organization.employee');
         }
         function _createErrorResult(error) {
 
         }
-
-        _loadController();
+       _loadController();
     }
 })();

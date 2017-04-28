@@ -11,7 +11,7 @@
   /** @ngInject */
   /** @ngInject */
   function OrgEmployeesController($scope, $stateParams, mailMessages,
-    addModal, pageService, editableOptions, editableThemes, DJWebStore,$timeout) {
+    addModal, pageService, editableOptions, editableThemes, DJWebStore, $timeout) {
 
     var rndValu = Math.round((Math.random() * 10) * 10);
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
@@ -21,16 +21,16 @@
     $stateParams.pageId = vm.pageId;
     vm.table = { rows: [] }
     vm.page = {};
-  
+    vm.ucvOnChange = _ucvOnChange;
     vm.refreshData = function () {
       $scope.rows = [];
       _getTableData();
     }
 
     function _loadController() {
-       $timeout(function () {
-      pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
-       });
+      $timeout(function () {
+        pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
+      });
     }
     function _successGetPage(result) {
       console.log(result)
@@ -38,7 +38,7 @@
       $scope.setPage(vm.page)
       $scope.setGrid(
         {
-          columns: ['EmpCode','EmpName'],//list of columns
+          columns: ['EmpCode', 'EmpName'],//list of columns
           enableTitleFilter: true,//show title filter
           enableGlobalFilter: true,//show global filter
           enbleColumnFilter: false,//show each column filter
@@ -89,8 +89,69 @@
         vm.table.rows = result;
         $scope.rows = result;
 
-       
+
       }
+    }
+    function _ucvOnChange(item) {
+
+      console.log(item)
+      var searchList = [], orderbyList = [];
+
+      var comData = LZString.decompressFromEncodedURIComponent(item.data);
+      var userData = angular.fromJson(comData);
+      console.log(userData)
+      // SettingVisibleColumns(item)
+      angular.forEach(userData.filters, function (filter, fdx) {
+        var operator = '=';
+        var userValue = ''
+        if (filter.selectedOperator.value == '=') {
+          operator = '=';
+        }
+        else if (filter.selectedOperator.value == 'notempty') {
+          operator = '<>';
+        }
+        else if (filter.selectedOperator.value == 'empty') {
+          operator = '=';
+        }
+        else {
+          operator = filter.selectedOperator.value;
+        }
+
+        if (filter.userValue == 'self') {
+          userValue = uivm.auth.profile.userId;
+        }
+        else if (filter.userValue == 'notempty') {
+          userValue = ''
+        }
+        else if (filter.userValue == 'empty') {
+          userValue = ''
+        }
+        else if (filter.userValue === undefined) {
+          userValue = '';
+        }
+        else {
+          userValue = filter.userValue;
+        }
+
+        var searchFields = {
+          field: filter.selectedColumn.name, operand: operator, value: userValue
+        };
+        //console.log(searchFields)
+        searchList.push(searchFields)
+      })
+      //console.log(userData.orderby)
+      userData.orderby.forEach(function (order) {
+        if (order.selectedColumn !== undefined) {
+          var orderitem = {
+            column: order.selectedColumn.name,
+            isDesc: order.isDesc
+          }
+
+          orderbyList.push(orderitem)
+        }
+      })
+
+      _getTableData(searchList, orderbyList)
     }
     _loadController();
   }
