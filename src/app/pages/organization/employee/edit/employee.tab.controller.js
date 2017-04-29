@@ -13,7 +13,7 @@
     /** @ngInject */
     /** @ngInject */
     function OrgEmployeeTabController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout) {
-    alert("hi");
+    
         var vm = this;
         vm.navigationCollapsed = true;
         vm.pageId = $stateParams.pageId;
@@ -27,12 +27,17 @@
          vm.empResignDetail={};
          vm.empSignDetail={};
          vm.empAccountDetail={};
+         vm.param.entity={};
         var rndValu = Math.round((Math.random() * 10) * 10);
         var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
+
+        vm.updateForm=_updateForm;
 
 
 function _loadController()
 {  
+
+    vm.templateUrlPath = "app/pages/organization/employee/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
      _getTableId();  
       $timeout(function () {
         pageService.getPagData(vm.pageId).then(
@@ -71,6 +76,7 @@ function _getPageDataSuccessResult(result)
    vm.department=result.pageinfo.selects.JDDeptId;
    vm.designation=result.pageinfo.selects.JDDesgId;
    vm.employeeType=result.pageinfo.selects.JDEmploymentId;
+   vm.employee=result.pageinfo.selects.JDEmpId;
    field='JDEmpId';
   }  
   else if(vm.tempName=='resign')   
@@ -134,6 +140,8 @@ function _findEntitySuccessResult(result)
   }  
    else if(vm.tempName=='job')   
   {  
+      console.log(result);
+      vm.param.entity=result;
       vm.empJobDetail=result;
   }   
   else if(vm.tempName=='resign')   
@@ -151,8 +159,7 @@ function _findEntitySuccessResult(result)
      console.log(result);
       vm.empAccountDetail=result;
   } 
-
-  
+ 
  vm.templateUrlPath = "app/pages/organization/employee/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
 }
 function _findEntityErrorResult(error)
@@ -195,6 +202,43 @@ function _getTableId()
     }
   
 }
-_loadController();
+ function _setupSaving(dataObject) {
+        var data = {
+            oldEntity: vm.param.entity,
+            newEntity: dataObject,
+            pageCode: vm.pageId,
+            activity: action
+        }
+        return data;
+    }
+function _updateForm() {
+        // if(_validateField()){                    
+            var job = {
+                JDId:vm.empJobDetail.JDId,
+                JDDate: vm.empJobDetail.JDDate,
+                JDDeptId: vm.empJobDetail.JDDeptId,
+                JDDesgId: vm.empJobDetail.JDDesgId,
+                JDEmploymentId: vm.empJobDetail.JDEmploymentId,
+                JDEmpGradeId: vm.empJobDetail.JDEmpGradeId,
+                JDEmpLevelId: vm.empJobDetail.JDEmpLevelId,
+                JDIsOT=vm.empJobDetail.JDIsOT,
+                SingleOT=vm.empJobDetail.SingleOT,
+                JDDoubleOT=vm.empJobDetail.JDDoubleOT,
+                JDSingleOTRate=vm.empJobDetail.JDSingleOTRate,
+                DoubleOTRate=vm.empJobDetail.DoubleOTRate
+             }         
+            var savingObj = _setupSaving(job)
+            pageService.editPageData(vm.param.pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult)
+      //  }
+        }
+        function _updateSuccessResult(result) {
+         //   alert(JSON.stringify(result))
+            $scope.showMsg('success', 'Update Successfully', 'Add En');
+           
+        }
+        function _updateErrorResult(error) {
+         alert(JSON.stringify(error))
+        }
+        _loadController();
     }
 })();

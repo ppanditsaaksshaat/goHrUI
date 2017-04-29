@@ -2,119 +2,62 @@
     <h3 class="">Job</h3>
     <hr>
    
-    <div class="row">
-   
-      <div class="col-md-12">             
-        <div class="form-group row clearfix col-md-6">
-          <label for="inputFirstName" class="col-lg-3 control-label">EmployeeGrade</label>
 
-          <div class="col-lg-9">
-             <select id="empGrade_{{$index}}"
-                      name="empGrade_{{$index}}"
-                      ng-model="empTabCtrl.empJobDetail.EmpGradeName"
-                      class="form-control"
-                      ng-options="grade.name as grade.name for grade in empTabCtrl.grade"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
-               </select>
-          </div>
-        </div>
-         <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">Level</label>
-
-          <div class="col-sm-9">
-             <select id="empLevel_{{$index}}"
-                      name="empLevel_{{$index}}"
-                      ng-model="empTabCtrl.empJobDetail.EmpLevelName"
-                      class="form-control"
-                      ng-options="level.name as level.name for level in empTabCtrl.level"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
-               </select>
-          </div>
-        </div>
-      </div>
-       <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">Location</label>
-
-          <div class="col-sm-9">
-             <select id="empLocation_{{$index}}"
-                      name="empLocation_{{$index}}"
-                      ng-model="empTabCtrl.empJobDetail.LocationName"
-                      class="form-control"
-                      ng-options="location.name as location.name for location in empTabCtrl.location"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
-               </select>
-          </div>
-        </div>
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">JoinDate</label>
-
-          <div class="col-sm-9">
-            <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.JDDate">
-          </div>
-        </div>
-      </div>
-       <div class="col-md-12">             
-        <div class="form-group row clearfix col-md-6">
-          <label for="inputFirstName" class="col-lg-3 control-label">Branch</label>
-
-          <div class="col-lg-9">
-             <select id="empBranch_{{$index}}"
-                      name="empBranch_{{$index}}"
-                      ng-model="empTabCtrl.empJobDetail.BRName"
-                      class="form-control"
-                      ng-options="branch.name as branch.name for branch in empTabCtrl.branch"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
-               </select>
-          </div>
-        </div>
-         <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">SubUnit</label>
-
-          <div class="col-sm-9">
-             <select id="empSubUnit_{{$index}}"
-                      name="empSubUnit_{{$index}}"
-                      ng-model="empTabCtrl.empJobDetail.SUName"
-                      class="form-control"
-                      ng-options="subUnit.name as subUnit.name for subUnit in empTabCtrl.subUnit"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
-               </select>
-          </div>
-        </div>
-      </div>
-       <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">Department</label>
-
-          <div class="col-sm-9">
-             <select id="empDepartment_{{$index}}"
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Department*</label>
+        <select id="empDepartment_{{$index}}"
                       name="empDepartment_{{$index}}"
-                      ng-model="empTabCtrl.empJobDetail.DeptName"
+                      ng-model="empTabCtrl.empJobDetail.JDDeptId"
                       class="form-control"
-                      ng-options="department.name as department.name for department in empTabCtrl.department"
+                      ng-options="department.value as department.name for department in empTabCtrl.department"
                       ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
                       data-placeholder="Select Nav Menu"
                       ng-required="true">
                </select>
-          </div>
-        </div>
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">Designation</label>
-
-          <div class="col-sm-9">
-                     <select id="empdesignation_{{$index}}"
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDesignation">Designation*</label>
+      <select id="empdesignation_{{$index}}"
+                      name="empdesignation_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.JDDesgId"
+                      class="form-control"
+                      ng-options="designation.value as designation.name for designation in empTabCtrl.designation"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputEmployeeType">Employment Type*</label>
+       <select id="empEmployeeType_{{$index}}"
+                      name="empEmployeeType_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.JDEmploymentId"
+                      class="form-control"
+                      ng-options="employeeType.value as employeeType.name for employeeType in empTabCtrl.employeeType"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Date Of Joining*</label>
+          <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.JDDate">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDesignation">Grade*</label>
+      <select id="empdesignation_{{$index}}"
                       name="empdesignation_{{$index}}"
                       ng-model="empTabCtrl.empJobDetail.DesgName"
                       class="form-control"
@@ -123,122 +66,161 @@
                       data-placeholder="Select Nav Menu"
                       ng-required="true">
                </select>
-          </div>
-        </div>
-      </div>
-       <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">EmployeeType</label>
-
-          <div class="col-sm-9">
-             <select id="empEmployeeType_{{$index}}"
-                      name="empEmployeeType_{{$index}}"
-                      ng-model="empTabCtrl.empJobDetail.EmploymentName"
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputEmployeeType">Label*</label>
+      <select id="empLevel_{{$index}}"
+                      name="empLevel_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.EmpLevelName"
                       class="form-control"
-                      ng-options="employeeType.name as employeeType.name for employeeType in empTabCtrl.employeeType"
+                      ng-options="level.name as level.name for level in empTabCtrl.level"
                       ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
                       data-placeholder="Select Nav Menu"
                       ng-required="true">
                </select>
-          </div>
-        </div>
-        
-      </div>
-       <h3 class="">Employee Contract Detail</h3>
-       <hr>
-      <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">StartDate</label>
-
-          <div class="col-sm-9">
-                <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.JDStartDate">
-          </div>
-        </div>
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">EndDate</label>
-
-          <div class="col-sm-9">
-            <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.JDEndDate">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">Contract Deatail</label>
-
-          <div class="col-sm-9">
-               <textarea  ng-model="empTabCtrl.empJobDetail.JDContractDetail"></textarea>
-          </div>
-        </div>
-         
-      </div>
-        <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">HasLeft</label>
-
-          <div class="col-sm-9">
-                <input type="checkbox" class="form-control"  ng-model="empTabCtrl.empJobDetail.CDHomePhoneNo">
-          </div>
-        </div>
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">HasLeftDate</label>
-
-          <div class="col-sm-9">
-            <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.CDWorkPhoneNo">
-          </div>
-        </div>
-      </div>
-           <h3 class="">OT Detail</h3>
-       <hr>
-        <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">SingleOT</label>
-
-          <div class="col-sm-9">
-                <input type="checkbox" class="form-control"  ng-model="empTabCtrl.empJobDetail.SingleOT">
-          </div>
-        </div>
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">SingleOTRate</label>
-
-          <div class="col-sm-9">
-            <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.JDSingleOTRate">
-          </div>
-        </div>
-      </div>
-        <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">DoubleOT</label>
-
-          <div class="col-sm-9">
-                <input type="checkbox" class="form-control"  ng-model="empTabCtrl.empJobDetail.JDDoubleOT">
-          </div>
-        </div>
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">DoubleOTRate</label>
-
-          <div class="col-sm-9">
-            <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.DoubleOTRate">
-          </div>
-        </div>
-      </div>
-        <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">OT</label>
-
-          <div class="col-sm-9">
-                <input type="checkbox" class="form-control"  ng-model="empTabCtrl.empJobDetail.CDHomePhoneNo">
-          </div>
-        </div>
-       
-      </div>
-    <button type="button" class="btn btn-primary btn-with-icon save-profile">
-      <i class="ion-android-checkmark-circle"></i>Update Profile
-    </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">IsOT</label>
+          <input type="checkbox" class=""  ng-model="empTabCtrl.empJobDetail.JDIsOT">
+    </div>
+  </div> 
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Single OT</label>
+          <input type="checkbox" class=""  ng-model="empTabCtrl.empJobDetail.SingleOT">
+    </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Double OT</label>
+          <input type="checkbox" class=""  ng-model="empTabCtrl.empJobDetail.JDDoubleOT">
+    </div>
+  </div> 
+  
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Single OT Rate</label>
+          <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.JDSingleOTRate">
+    </div>
+  </div> 
+   <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Double OT Rate</label>
+          <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.DoubleOTRate">
+    </div>
+  </div> 
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">From Date</label>
+          <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.FromDate">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDesignation">To Date</label>
+      <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.ToDate">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputEmployeeType">Vender</label>
+      <select id="empLevel_{{$index}}"
+                      name="empLevel_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.EmpLevelName"
+                      class="form-control"
+                      ng-options="level.name as level.name for level in empTabCtrl.vendor"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Manager</label>
+        <select id="empDepartment_{{$index}}"
+                      name="empDepartment_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.DeptName"
+                      class="form-control"
+                      ng-options="employee.value as employee.name for employee in empTabCtrl.employee"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDesignation">Team Leader</label>
+      <select id="empdesignation_{{$index}}"
+                      name="empdesignation_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.DesgName"
+                      class="form-control"
+                      ng-options="employee.value as employee.name for employee in empTabCtrl.employee"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputEmployeeType">HR</label>
+       <select id="empEmployeeType_{{$index}}"
+                      name="empEmployeeType_{{$index}}"
+                      ng-model="empTabCtrl.empJobDetail.EmploymentName"
+                      class="form-control"
+                      ng-options="employee.value as employee.name for employee in empTabCtrl.employee"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Company Email</label>
+       <input type="text" class="form-control">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDesignation">Company Mobile</label>
+    <input type="text" class="form-control">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputEmployeeType">Company Phone</label>
+       <input type="text" class="form-control">
+    </div>
+  </div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputEmployeeType">Extension</label>
+       <input type="text" class="form-control">
+    </div>
+  </div>
+</div>
+  <div class="text-center">
+<button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Update</button>
+<button type="button" ui-sref="organization.employee" class="btn btn-primary">Cancel</button>
+</div>
