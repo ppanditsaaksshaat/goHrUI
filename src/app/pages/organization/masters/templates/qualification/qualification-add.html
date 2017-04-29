@@ -5,27 +5,28 @@
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-4 control-label">Qualification</label>
                 <div class="col-sm-8">
-                    <input name="QualificationName" ng-model="addCtrl.entity.QualificationName" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Qualification"
-                        >
+                    <input name="QualificationName" ng-model="addCtrl.entity.QualificationName" type="text" ng-required="true" class="form-control"
+                        id="inputEmail3" placeholder="Enter Qualification">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-4 control-label">Description</label>
                 <div class="col-sm-8">
-                    <input name="QualificationDesc" ng-model="addCtrl.entity.QualificationDesc" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Description"
-                         >
+                    <!--<input name="QualificationDesc" ng-model="addCtrl.entity.QualificationDesc" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Description"
+                         >-->
+                    <textarea type="text" class="form-control" placeholder="Enter Description" ng-required="true" ng-model="addCtrl.entity.QualificationDesc"
+                        text-only-with-space/>
                 </div>
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label for="inputEmail3" class="col-sm-4 control-label">Post Graduate</label>
                 <div class="col-sm-8">
-                    <input style=" width: auto; box-shadow: none;" name="QualificationIsPostGraduate" ng-model="addCtrl.entity.QualificationIsPostGraduate" type="checkbox" 
-                     class="form-control" id="inputEmail3"  
-                        text-only-with-space >
+                    <input style=" width: auto; box-shadow: none;" name="QualificationIsPostGraduate" ng-model="addCtrl.entity.QualificationIsPostGraduate"
+                        type="checkbox" class="form-control" id="inputEmail3" text-only-with-space>
                 </div>
             </div>
-            
-            
+
+
 
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">
