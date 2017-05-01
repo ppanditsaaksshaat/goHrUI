@@ -60,6 +60,9 @@
     }
     function _saveForm(form) {
       if (_validateForm(form)) {
+
+        var boolData = vm.entity.DesgIsAdministrator;
+        console.log(boolData);
         editFormService.saveForm(vm.pageId, vm.entity, vm.oldEntity, vm.action, vm.page.pageinfo.tagline)
       }
     }

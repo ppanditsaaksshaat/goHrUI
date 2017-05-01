@@ -47,12 +47,13 @@
             alert(JSON.stringify(error))
         }
         function _validateField(form) {
-           if(vm.empAdd.EmpTitleId==undefined)
+           
+           if(vm.empAdd.EmpTitleId==undefined )
            {
                $scope.showMsg('error', 'Please Select Title', 'Requried')
                return false;
            }
-            if(vm.empAdd.EmpFirstName==undefined)
+            if(vm.empAdd.EmpFirstName==undefined || vm.empAdd.EmpFirstName=='')
            {
                $scope.showMsg('error', 'Please Enter FirstName', 'Requried')
                return false;
@@ -63,12 +64,12 @@
                $scope.showMsg('error', 'Please Select Gender', 'Requried')
                return false;
            }
-           if(vm.empAdd.JDDate==undefined)
+           if(vm.empAdd.JDDate==undefined || vm.empAdd.JDDate=="")
            {
                $scope.showMsg('error', 'Please Select Date Of Joining', 'Requried')
                return false;
            }
-            if(vm.empAdd.PdMobileNo==undefined)
+            if(vm.empAdd.PdMobileNo==undefined || vm.empAdd.PdMobileNo=='')
            {
                $scope.showMsg('error', 'Please Enter Mobile', 'Requried')
                return false;
@@ -133,7 +134,7 @@
         }
         function _createSuccessResult(result) {
          //   alert(JSON.stringify(result))
-            $scope.showMsg('success', 'Saved Sucussfylly', 'Add En');
+            $scope.showMsg('success', 'Saved Successfully', 'Add En');
             $state.go('organization.employee');
         }
         function _createErrorResult(error) {

@@ -21,7 +21,7 @@
           controllerAs: "tabCtrl",
           title: 'Master',
           sidebarMeta: {
-            order: 0,
+            order: 1,
           },
         }).state('organization.masters.list', {
           url: '/:name/:pageId',
@@ -48,7 +48,7 @@
           controller: "OrgMastersAddController1",
           controllerAs: "addCtrl"
         });
-    $urlRouterProvider.when('/organization/masters','/organization/masters/location/34');
+     $urlRouterProvider.when('/organization/masters','/organization/masters/location/34');
   }
 
 })();

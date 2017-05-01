@@ -37,12 +37,14 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
     };
     //calling func from outer side of factory
     function _saveEditForm(pageId, newEntity, oldEntity, action, title) {
+
         var data = {
             oldEntity: oldEntity,
             newEntity: newEntity,
             pageCode: pageId,
             activity: action
         };
+        console.log(data)
         if (angular.equals(data.newEntity, data.oldEntity)) {
             _showToast('info', 'Nothing to save', title)
         }
@@ -54,7 +56,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
     function _confirmClick(pageId, data, title) {
 
         pageService.editPageData(pageId, JSON.stringify(data)).then(function (result) {
-
+            debugger;
             if (result.error_message === undefined) {
                 if (result.success_message === undefined) {
                     _showToast('error', 'Something went wrong', title)
@@ -63,6 +65,10 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
                     _showToast('success', result.success_message, title)
                     $rootScope.back();
                 }
+            }
+            else if (result.error_message.Message == 'Record Already Added.') {
+
+                _showToast('error', 'Record Already Added', title)
             }
             else {
                 _showToast('error', result.error_message, title)
@@ -84,10 +90,10 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
 
         console.log(data)
         var para = {
-            pageId: pageId, 
+            pageId: pageId,
             data: data,
             title: title,
-            confirmClick: funcConfirm, 
+            confirmClick: funcConfirm,
             confirmMessge: msg
         }
         var modalInstance = $uibModal.open({

@@ -10,8 +10,8 @@
 
   /** @ngInject */
   /** @ngInject */
-  function EditEmployeeController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout) {
-  alert("ji")
+  function EditEmployeeController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout,$window) {
+ 
     var vm = this;
     vm.pkId = $stateParams.empId;
     vm.tableid = 30;
@@ -22,6 +22,7 @@
     // vm.page = {};
 
     function _loadController() {
+      
       $timeout(function () {
         pageService.findEntity(vm.tableid, vm.pkId, undefined).then(
           _findEntitySuccessResult, _findEntityErrorResult);
@@ -35,13 +36,14 @@
 
 
     }
+     
     $scope.templateUrl = function () {
 
       return "app/pages/organization/employee/templates/" + vm.tempFile + "/" + vm.tempFile + "-view.html";
     }
-    $scope.temalateUrl1 = function () {
-      return "app/pages/organization/employee/templates/employeeSideMenu.html";
-    }
+    // $scope.temalateUrl1 = function () {
+    //   return "app/pages/organization/employee/templates/employeeSideMenu.html";
+    // }
     vm.tabs = _getTabs();
 
     function _getTabs() {

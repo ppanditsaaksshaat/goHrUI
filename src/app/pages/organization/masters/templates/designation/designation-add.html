@@ -3,41 +3,43 @@
 
         <form class="form-horizontal" name="editForm" ng-submit="addCtrl.saveForm(editForm)">
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Designation</label>
+                <label       class="col-sm-3 control-label">Designation</label>
                 <div class="col-sm-9">
-                    <input name="DesgName" ng-model="addCtrl.entity.DesgName" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Designation"
-                        text-only-with-space >
+                    <input name="DesgName" maxlength="50" ng-model="addCtrl.entity.DesgName" type="text" ng-required="true" class="form-control"      
+                        placeholder="Enter Designation" text-only-with-space>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Description</label>
+                <label       maxlength="200" class="col-sm-3 control-label">Description</label>
                 <div class="col-sm-9">
-                    <input name="DesgDesc" ng-model="addCtrl.entity.DesgDesc" type="text" ng-required="true" class="form-control" id="inputEmail3" placeholder="Enter Description"
-                        text-only-with-space >
+                    <!--<input name="DesgDesc" ng-model="addCtrl.entity.DesgDesc" type="text" ng-required="true" class="form-control"       placeholder="Enter Description"
+                        text-only-with-space >-->
+                    <textarea type="text" class="form-control" placeholder="Enter Description" ng-required="true" ng-model="addCtrl.entity.DesgDesc" text-only-with-space/>
+
                 </div>
             </div>
-             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Administrator</label>
+            <div class="form-group">
+                <label       class="col-sm-3 control-label">Administrator</label>
                 <div class="col-sm-9">
-                    <input style=" width: auto; box-shadow: none;" name="DesgIsAdministrator" ng-model="addCtrl.entity.DesgIsAdministrator" type="checkbox" 
-                     class="form-control " id="inputEmail3"  
-                        text-only-with-space >
+                    <input style=" width: auto; box-shadow: none;" name="DesgIsAdministrator" ng-model="addCtrl.entity.DesgIsAdministrator" type="checkbox"
+                        class="form-control "      >
+                        
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <label       class="col-sm-3 control-label">Manager</label>
+                <div class="col-sm-9">
+                    <input style=" width: auto; box-shadow: none;" name="DesgIsManager" ng-model="addCtrl.entity.DesgIsManager" type="checkbox"
+                        class="form-control"      >
                 </div>
             </div>
-             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Manager</label>
-                <div class="col-sm-9">
-                    <input style=" width: auto; box-shadow: none;" name="DesgIsManager" ng-model="addCtrl.entity.DesgIsManager" type="checkbox" 
-                     class="form-control" id="inputEmail3"  
-                        text-only-with-space >
-                </div>
-            </div>
-            
+
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
                     <button ng-disabled="!editForm.$valid" type="submit" class="btn btn-warning">Save</button>
-                    <button type="button" class="btn btn-danger" ng-click="back('organization.master.list')">Cancel</button>
+                    <button type="button" class="btn btn-danger" ng-click="back('organization.masters.list')">Cancel</button>
                 </div>
             </div>
         </form>
