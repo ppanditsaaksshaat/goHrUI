@@ -11,7 +11,7 @@
     /** @ngInject */
     /** @ngInject */
     function OrgEmpUploadController($scope, $sce, $filter, $http, uiGridConstants, $interval, $timeout,
-        $uibModal, pageService, $q, DJWebStore) {
+        $uibModal, pageService, $q, DJWebStore, $window) {
         var vm = this;
         // debugger;
 
@@ -66,7 +66,7 @@
             table1.rows.push({
                 column1: { name: 'JDEmploymentId', text: 'Employeement Type', type: 'text', required: true, value: 'none' },
                 column2: { name: 'JDEmpGradeId', text: 'Grade', type: 'text', required: false, value: 'none' },
-                
+
             })
 
             table1.rows.push({
@@ -136,7 +136,7 @@
                 column2: { name: 'PDOtherNumber', text: 'Other Number', type: 'text', required: false, value: 'none' }
             })
 
-          
+
 
 
 
@@ -170,7 +170,7 @@
 
         }
         vm.nextDataUpload = function () {
-
+            $window.scrollTo(0, 0);
             if (vm.migrate.currentStep == 1) {
                 if (vm.gridOptions.data.length <= 0) {
                     alert('No data found.')
@@ -218,7 +218,7 @@
                             vm.migrate.unMappedList.push(col.name)
                         }
                     });
-                    console.log(vm.migrate.unMappedList);
+                    // console.log(vm.migrate.unMappedList);
                     // alert('unmapped column');
                 }
             }
@@ -228,10 +228,6 @@
                 vm.migrate.step3 = false;
                 vm.migrate.step4 = true;
 
-                vm.gridValidOptions = angular.copy(vm.gridOptions);
-
-                vm.gridValidOptions.columnDefs = [];
-                vm.gridValidOptions.data = [];
             }
         }
         vm.goPrevious = function () {
@@ -324,7 +320,27 @@
             })
         }
 
+
         //Private Functions
+        function _validateImport() {
+             var mappedFieldsList = {};
+
+            angular.forEach(vm.migrate.tables, function (table, tidx) {
+                angular.forEach(table.rows, function (row, ridx) {
+
+                    mappedFieldsList[row.column1.name] = row.column1.value;
+
+                    mappedFieldsList[row.column2.name] = row.column2.value;
+
+                })
+            })
+            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee' }
+            var postData = JSON.stringify(uncData);
+            var compressed = LZString.compressToEncodedURIComponent(postData);
+            var data = { lz: true, data: compressed }
+
+            
+        }
         function _findUsable(colName) {
             var isUsable = false;
 
