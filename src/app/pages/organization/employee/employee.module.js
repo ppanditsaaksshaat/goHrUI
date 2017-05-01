@@ -19,14 +19,19 @@
     function routeConfig($stateProvider) {     
         $stateProvider
             .state('organization.employee', {
-                url: '/employee',
-                templateUrl: 'app/pages/organization/employee/employees.html',
+                url: '/employee',            
                 controller: "OrgEmployeesController",
                 controllerAs: "listCtrl",
+                templateUrl: 'app/pages/organization/employee/employees.html',             
                 title: 'Employee List',
                 sidebarMeta: {
                     order: 0,
                 },
+                resolve : {OrgEmployeesController : function(){
+                return true;
+                }
+
+                    }
             })
     }
 //     function routeConfigEmployeeView($stateProvider,$urlRouterProvider) {

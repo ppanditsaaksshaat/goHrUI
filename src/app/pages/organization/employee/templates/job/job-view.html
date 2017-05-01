@@ -40,7 +40,7 @@
                       ng-model="empTabCtrl.empJobDetail.JDEmploymentId"
                       class="form-control"
                       ng-options="employeeType.value as employeeType.name for employeeType in empTabCtrl.employeeType"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      ng-change="empTabCtrl.employmentOnChange(empTabCtrl.empJobDetail.JDEmploymentId)"
                       data-placeholder="Select Nav Menu"
                       ng-required="true">
                </select>
@@ -85,28 +85,32 @@
 </div>
 <div class="row">
   <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputDepartment">IsOT</label>
-          <input type="checkbox" class=""  ng-model="empTabCtrl.empJobDetail.JDIsOT">
-    </div>
+      <div class="checkbox">
+      <label class="custom-checkbox">      
+      <input type="checkbox" ng-model="empTabCtrl.empJobDetail.JDIsOT" >   
+      <span>IsOT</span>
+    </label>
+   </div>
+  </div> 
+   <div ng-if="empTabCtrl.empJobDetail.JDIsOT" class="col-sm-4">  
+     <div class="checkbox">
+      <label class="custom-checkbox">      
+      <input type="checkbox" ng-model="empTabCtrl.empJobDetail.SingleOT" >   
+      <span>Single OT</span>
+    </label>
+   </div>
+  </div> 
+  <div ng-if="empTabCtrl.empJobDetail.JDIsOT" class="col-sm-4"> 
+   <div class="checkbox">
+      <label class="custom-checkbox">      
+      <input type="checkbox" ng-model="empTabCtrl.empJobDetail.JDDoubleOT" >   
+      <span>Double OT</span>
+    </label>
+   </div>
   </div> 
 </div>
-<div class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputDepartment">Single OT</label>
-          <input type="checkbox" class=""  ng-model="empTabCtrl.empJobDetail.SingleOT">
-    </div>
-  </div> 
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputDepartment">Double OT</label>
-          <input type="checkbox" class=""  ng-model="empTabCtrl.empJobDetail.JDDoubleOT">
-    </div>
-  </div> 
-  
-</div>
-<div class="row">
+
+<div ng-if="empTabCtrl.empJobDetail.JDIsOT" class="row">
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDepartment">Single OT Rate</label>
@@ -120,6 +124,7 @@
     </div>
   </div> 
 </div>
+<div ng-show="empTabCtrl.contractBase">
 <div class="row">
   <div class="col-sm-4">
     <div class="form-group">
@@ -147,7 +152,7 @@
                </select>
     </div>
   </div>
-</div>
+</div >
 <div class="row">
   <div class="col-sm-4">
     <div class="form-group">
@@ -220,6 +225,8 @@
     </div>
   </div>
 </div>
+</div>
+
   <div class="text-center">
 <button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Update</button>
 <button type="button" ui-sref="organization.employee" class="btn btn-primary">Cancel</button>

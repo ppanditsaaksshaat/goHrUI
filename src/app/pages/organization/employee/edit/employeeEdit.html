@@ -1,16 +1,26 @@
 <div class="row mail-client-container transparent">
   <div class="col-md-12">
-    <div ba-panel ba-panel-class="xmedium-panel mail-panel">
+
+    <div ba-panel ba-panel-class="tabs-panel">
       <div class="letter-layout">
-        <div class="mail-navigation-container " ng-class="{'expanded' : !editCtrl.navigationCollapsed}">        
+        <div class="mail-navigation-container col-md-4" ng-class="{'expanded' : !editCtrl.navigationCollapsed}">
           <div class="text-center">
             <input type="text" class="form-control" ng-model="editCtrl.menuFilter" id="input01" placeholder="Search">
           </div>
           <div ng-repeat="t in editCtrl.tabs| filter: {name: editCtrl.menuFilter}" ui-sref-active="active" class="mail-navigation"
-           ui-sref="organization.empedit.tab({name:t.name, pageId: t.id})">
+            ui-sref="organization.empedit.tab({name:t.name, pageId: t.id})">
             {{t.text}}
-          </div>                                   
-        </div>            
+          </div>
+        </div>
+        <div class="">
+          <div class="col-md-2">
+            <img ng-src="{{ editCtrl.picture }}">
+          </div>
+          <div class="col-md-6">
+            Title:- <label ng-bind="editCtrl.empBasicDetail.TitleName"></label><br> Name:- <label ng-bind="editCtrl.empBasicDetail.EmpName"></label><br>            EmpCode:- <label ng-bind="editCtrl.empBasicDetail.EmpCode"></label><br> Department:- <label ng-bind="editCtrl.empBasicDetail.DeptName"></label><br>            Designation:- <label ng-bind="editCtrl.empBasicDetail.DesgName"></label>
+          </div>
+        </div>
+
         <ui-view></ui-view>
       </div>
     </div>

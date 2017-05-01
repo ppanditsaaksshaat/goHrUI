@@ -10,7 +10,7 @@
 
   /** @ngInject */
   /** @ngInject */
-  function EditEmployeeController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout,$window) {
+  function EditEmployeeController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout,$filter) {
  
     var vm = this;
     vm.pkId = $stateParams.empId;
@@ -30,13 +30,22 @@
 
     }
     function _findEntitySuccessResult(result) {  
+      console.log(result)
+       vm.picture = $filter('appImage')('theme/no-photo.png');
+     // alert(result.EmpPhoto1_64URL)
+      //vm.picture=result.EmpPhoto1_64URL;
       vm.empBasicDetail = result;    
     }
     function _findEntityErrorResult(error) {
 
 
     }
-     
+    $scope.headerUrlPath=function()
+    {
+      
+       return "app/pages/organization/employee/edit/employeeHeader.html";
+    }
+    
     $scope.templateUrl = function () {
 
       return "app/pages/organization/employee/templates/" + vm.tempFile + "/" + vm.tempFile + "-view.html";
@@ -62,7 +71,7 @@
 
     }
 
-   
+   _loadController();
 
 
   }

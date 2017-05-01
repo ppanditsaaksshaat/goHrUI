@@ -13,11 +13,11 @@
     /** @ngInject */
     /** @ngInject */
     function OrgEmployeeTabController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout) {
-    
-        var vm = this;
+   
+ var vm = this;
         vm.navigationCollapsed = true;
         vm.pageId = $stateParams.pageId;
-        vm.pkId= $stateParams.empId;
+        vm.empPKId= $stateParams.empId;
         vm.tempName = $stateParams.name;
         vm.tableId=0;
         vm.empBasicDetail={};
@@ -27,11 +27,12 @@
          vm.empResignDetail={};
          vm.empSignDetail={};
          vm.empAccountDetail={};
-         vm.param.entity={};
+         vm.oldEntity={};
         var rndValu = Math.round((Math.random() * 10) * 10);
         var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
 
         vm.updateForm=_updateForm;
+        vm.employmentOnChange=_employmentOnChange;
 
 
 function _loadController()
@@ -49,7 +50,7 @@ function _getPageDataSuccessResult(result)
   console.log(result)
   var field="";
   if(vm.tempName=='basic'){
-  pageService.findEntity(vm.tableId,parseInt(vm.pkId), undefined).then(
+  pageService.findEntity(vm.tableId,parseInt(vm.empPKId), undefined).then(
  _findEntitySuccessResult, _findEntityErrorResult); 
   }                   
   else if(vm.tempName=='personal'){ 
@@ -77,6 +78,7 @@ function _getPageDataSuccessResult(result)
    vm.designation=result.pageinfo.selects.JDDesgId;
    vm.employeeType=result.pageinfo.selects.JDEmploymentId;
    vm.employee=result.pageinfo.selects.JDEmpId;
+   
    field='JDEmpId';
   }  
   else if(vm.tempName=='resign')   
@@ -105,7 +107,7 @@ _findEntity(field);
      var searchFields = {
        field: field,
        operand: '=',
-       value: vm.pkId
+       value: vm.empPKId
      }
      searchList.push(searchFields);
 
@@ -132,6 +134,7 @@ function _findEntitySuccessResult(result)
   vm.empBasicDetail = result; 
   }                   
   else if(vm.tempName=='personal'){
+      vm.oldEntity=result;
   vm.empPersonalDetail=result;
 }    
   else if(vm.tempName=='contact')   
@@ -140,8 +143,13 @@ function _findEntitySuccessResult(result)
   }  
    else if(vm.tempName=='job')   
   {  
+      
+      if(result.JDEmploymentId==3)
+      {
+          vm.contractBase=true;
+      }
       console.log(result);
-      vm.param.entity=result;
+      vm.oldEntity=result;
       vm.empJobDetail=result;
   }   
   else if(vm.tempName=='resign')   
@@ -204,16 +212,19 @@ function _getTableId()
 }
  function _setupSaving(dataObject) {
         var data = {
-            oldEntity: vm.param.entity,
+            oldEntity: vm.oldEntity,
             newEntity: dataObject,
             pageCode: vm.pageId,
-            activity: action
+            activity: "edit"
         }
         return data;
     }
 function _updateForm() {
-        // if(_validateField()){                    
+   
+    if(vm.tempName=='job')
+    {             
             var job = {
+                JDEmpId:vm.empPKId,
                 JDId:vm.empJobDetail.JDId,
                 JDDate: vm.empJobDetail.JDDate,
                 JDDeptId: vm.empJobDetail.JDDeptId,
@@ -221,24 +232,57 @@ function _updateForm() {
                 JDEmploymentId: vm.empJobDetail.JDEmploymentId,
                 JDEmpGradeId: vm.empJobDetail.JDEmpGradeId,
                 JDEmpLevelId: vm.empJobDetail.JDEmpLevelId,
-                JDIsOT=vm.empJobDetail.JDIsOT,
-                SingleOT=vm.empJobDetail.SingleOT,
-                JDDoubleOT=vm.empJobDetail.JDDoubleOT,
-                JDSingleOTRate=vm.empJobDetail.JDSingleOTRate,
-                DoubleOTRate=vm.empJobDetail.DoubleOTRate
-             }         
-            var savingObj = _setupSaving(job)
-            pageService.editPageData(vm.param.pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult)
-      //  }
-        }
+                JDIsOT:vm.empJobDetail.JDIsOT,
+                SingleOT:vm.empJobDetail.SingleOT,
+                JDDoubleOT:vm.empJobDetail.JDDoubleOT,
+                JDSingleOTRate:vm.empJobDetail.JDSingleOTRate,
+                DoubleOTRate:vm.empJobDetail.DoubleOTRate
+             }    
+           
+             _editPage(job)  ;
+    }
+    if(vm.tempName=='personal')
+    {
+     var personal={
+         PdEmpId:vm.empPKId,
+         PdId:vm.empPersonalDetail.PdId,
+         PdEmail: vm.empPersonalDetail.PdEmail,
+         PdMobileNo: vm.empPersonalDetail.PdMobileNo,
+         PdGenderId: vm.empPersonalDetail.PdGenderId,
+         PdMaritalId: vm.empPersonalDetail.PdMaritalId,
+         PdNationalityId: vm.empPersonalDetail.PdNationalityId,
+         PdDateOfBirth: vm.empPersonalDetail.PdDateOfBirth,
+         PdNickName:vm.empPersonalDetail.PdNickName
+     }
+     _editPage(personal);
+    }              
+}
+
+function _editPage(objectData)
+{
+    alert(JSON.stringify(objectData))
+ var savingObj = _setupSaving(objectData);
+ pageService.editPageData(vm.pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult) 
+}
         function _updateSuccessResult(result) {
          //   alert(JSON.stringify(result))
-            $scope.showMsg('success', 'Update Successfully', 'Add En');
+            $scope.showMsg('success', 'Updated Successfully', 'Employee');
            
         }
         function _updateErrorResult(error) {
          alert(JSON.stringify(error))
         }
+
+        function _employmentOnChange(value)
+        {
+            if(value==3){
+            vm.contractBase=true;
+            }
+        else {
+            vm.contractBase=false;
+        }
+        }
         _loadController();
+   
     }
 })();
