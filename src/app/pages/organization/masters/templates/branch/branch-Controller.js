@@ -20,6 +20,7 @@
                     pageId: $stateParams.pageId//page id for which grid to be design
                 }
             )
+            console.log($scope.setGrid);
         });
 
 

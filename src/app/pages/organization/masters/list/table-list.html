@@ -1,18 +1,20 @@
-
 <style>
     .djTable {
         width: 100%;
     }
     
-    .djTable td, th {
+    .djTable td,
+    th {
         overflow: hidden;
     }
     
-    .djTable td:first , th:first{
+    .djTable td:first,
+    th:first {
         width: 30px;
     }
     
-    .djTable td:last-child , th:last-child{
+    .djTable td:last-child,
+    th:last-child {
         width: 30px;
     }
 </style>
@@ -26,9 +28,9 @@
         </tr>
         <tr ng-show="gridObject.enableFilter">
             <th ng-show="gridObject.enableSrNo"></th>
-            <th ng-show="gridObject.enableTitleFilter"><input st-search="{{gridObject.titleField}}" placeholder="Search" class="input-sm form-control search-input" type="search"
-                /></th>
-            <th  ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
+            <th ng-show="gridObject.enableTitleFilter"><input st-search="{{gridObject.titleField}}" placeholder="Search" class="input-sm form-control search-input"
+                    type="search" /></th>
+            <th ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
                 <input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
         </tr>
     </thead>
@@ -37,7 +39,7 @@
             <td ng-show="gridObject.enableSrNo">
                 {{$index+1}}
             </td>
-            <td ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
+            <td style="max-width: 40px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
             <td ng-show="gridObject.enableAction">
                 <a ui-sref="organization.masters.edit({name:listCtrl.tempName, pageId: gridObject.pageId, action:'edit', pkId: row[gridObject.page.pageinfo.idencolname]})">
                     <i class="fa fa-pencil-square-o"></i></a>
