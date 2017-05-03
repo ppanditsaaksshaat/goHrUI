@@ -69,9 +69,9 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         };
 
         var gridObject = angular.extend(defaults, options);
-
+        console.log(gridObject)
         var userColumns = gridObject.columns;
-
+        console.log(userColumns);
         var pageId = $stateParams.pageId;;
         if (gridObject.pageId !== undefined) {
             if (gridObject.pageId > 0) {
@@ -89,10 +89,12 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                     var newcol = {}
                     newcol.text = sysCol.displayName;
                     newcol.name = sysCol.name;
+                    newcol.type = sysCol.type;
                     colList.push(newcol);
                 }
             }
         })
+        console.log(page.pageinfo.columns);
         if (page.pageinfo.titlecolname != '')
             gridObject.titleField = page.pageinfo.titlecolname
         gridObject.columns = colList;;
@@ -103,7 +105,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         console.log(gridObject)
     }
 
-    $rootScope.showMsg = function(type, msg, title){
+    $rootScope.showMsg = function (type, msg, title) {
         toastOption.type = type;
         angular.extend(toastrConfig, toastOption);
         openedToasts.push(toastr[toastOption.type](msg, title));

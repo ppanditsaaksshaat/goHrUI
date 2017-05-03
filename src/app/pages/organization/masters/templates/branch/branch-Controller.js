@@ -8,7 +8,7 @@
             $scope.setGrid(
 
                 {
-                    columns: ['BRName'],//list of columns
+                    columns: ['BRName','LocationName'],//list of columns
                     titleField: 'BRName',//first search field
                     enableTitleFilter: true,//show title filter
                     enableGlobalFilter: true,//show global filter

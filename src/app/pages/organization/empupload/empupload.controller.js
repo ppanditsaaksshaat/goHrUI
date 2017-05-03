@@ -312,8 +312,9 @@
             var compressed = LZString.compressToEncodedURIComponent(postData);
 
             var data = { lz: true, data: compressed }
+            // var data = { data: postData }
 
-            pageService.migrateData(data).then(function (result) {
+            pageService.uploadEmployeeData(data).then(function (result) {
                 console.log(result)
             }, function (err) {
                 console.log(err)
@@ -323,7 +324,7 @@
 
         //Private Functions
         function _validateImport() {
-             var mappedFieldsList = {};
+            var mappedFieldsList = {};
 
             angular.forEach(vm.migrate.tables, function (table, tidx) {
                 angular.forEach(table.rows, function (row, ridx) {
@@ -339,7 +340,7 @@
             var compressed = LZString.compressToEncodedURIComponent(postData);
             var data = { lz: true, data: compressed }
 
-            
+
         }
         function _findUsable(colName) {
             var isUsable = false;
