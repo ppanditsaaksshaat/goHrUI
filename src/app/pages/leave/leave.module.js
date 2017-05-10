@@ -19,8 +19,8 @@
           abstract: true,
           title: 'Leave',
           sidebarMeta: {
-            icon: 'ion-gear-a',
-            order: 101,
+            icon: 'ion-android-calendar',
+            order: 3,
           },
         });
   }

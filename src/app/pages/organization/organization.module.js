@@ -6,9 +6,12 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.organization', [
-    'BlurAdmin.pages.organization.employee',
-    'BlurAdmin.pages.organization.empupload',
-    'BlurAdmin.pages.organization.masters'
+    'BlurAdmin.pages.organization.employees',
+    // 'BlurAdmin.pages.organization.employee',
+    // 'BlurAdmin.pages.organization.empupload',
+    // 'BlurAdmin.pages.organization.masters',
+    'BlurAdmin.pages.organization.general',
+    'BlurAdmin.pages.organization.employees.reports'
     
     // 'BlurAdmin.pages.organization.empadd',
     // 'BlurAdmin.pages.organization.empedit',
@@ -25,8 +28,8 @@
           abstract: true,
           title: 'Organization',
           sidebarMeta: {
-            icon: 'ion-gear-a',
-            order: 100,
+            icon: 'ion-ios-people',
+            order: 1,
           },
         });
   }

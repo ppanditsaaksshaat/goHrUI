@@ -8,15 +8,13 @@
 
     angular.module('BlurAdmin.pages.organization.employee', [])
         .config(routeConfig);
-    // angular.module('BlurAdmin.pages.organization.empview', [])
-    //     .config(routeConfigEmployeeView);
-          angular.module('BlurAdmin.pages.organization.empadd', [])
+    angular.module('BlurAdmin.pages.organization.empadd', [])
         .config(routeConfigEmpAdd);
-         angular.module('BlurAdmin.pages.organization.empedit', [])
+    angular.module('BlurAdmin.pages.organization.empedit', [])
         .config(routeConfigEmpEdit);
-        
+
     /** @ngInject */
-    function routeConfig($stateProvider) {     
+    function routeConfig($stateProvider) {
         $stateProvider
             .state('organization.employee', {
                 url: '/employee',
@@ -29,26 +27,26 @@
                 },
             })
     }
-//     function routeConfigEmployeeView($stateProvider,$urlRouterProvider) {
-//         $stateProvider
-//             .state('organization.empview', {
-//                 url: '/employee/:action/:empId',
-//                 templateUrl: 'app/pages/organization/employee/detail/employeeDetail.html',
-//                 title: 'View Employees',
-//                 controller: "OrgEmployeesDetailController",
-//                 controllerAs: "detailCtrl"
-//             })
-//             .state('organization.empview.tab', {
-//                 url: '/:name/:pageId',
-//                 templateUrl: 'app/pages/organization/employee/detail/empTab.html',
-//                 title: 'View Employees',
-//                 controller: "OrgEmployeeTabController",
-//                 controllerAs: "empTabCtrl"
-//             })
-            
-//       //$urlRouterProvider.when('/organization/employee/view','/organization/view/109');
-//    }
-   function routeConfigEmpAdd($stateProvider,$urlRouterProvider) {
+    //     function routeConfigEmployeeView($stateProvider,$urlRouterProvider) {
+    //         $stateProvider
+    //             .state('organization.', {
+    //                 url: '/employee/:action/:empId',
+    //                 templateUrl: 'app/pages/organization/employee/detail/employeeDetail.html',
+    //                 title: 'View Employees',
+    //                 controller: "OrgEmployeesDetailController",
+    //                 controllerAs: "detailCtrl"
+    //             })
+    //             .state('organization..tab', {
+    //                 url: '/:name/:pageId',
+    //                 templateUrl: 'app/pages/organization/employee/detail/empTab.html',
+    //                 title: 'View Employees',
+    //                 controller: "OrgEmployeeTabController",
+    //                 controllerAs: "empTabCtrl"
+    //             })
+
+    //       //$urlRouterProvider.when('/organization/employee/view','/organization/view/109');
+    //    }
+    function routeConfigEmpAdd($stateProvider, $urlRouterProvider) {
         $stateProvider
 
             .state('organization.empadd', {
@@ -58,9 +56,9 @@
                 controller: "AddEmployeeController",
                 controllerAs: "addCtrl"
             })
-      //$urlRouterProvider.when('/organization/employee/view','/organization/view/109');
-   }
-    function routeConfigEmpEdit($stateProvider,$urlRouterProvider) {
+        //$urlRouterProvider.when('/organization/employee/view','/organization/view/109');
+    }
+    function routeConfigEmpEdit($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('organization.empedit', {
                 url: '/employee/:action/:empId',
@@ -68,14 +66,14 @@
                 title: 'Edit Employee',
                 controller: "EditEmployeeController",
                 controllerAs: "editCtrl"
-            }) .state('organization.empedit.tab', {
+            }).state('organization.empedit.tab', {
                 url: '/:name/:pageId',
                 templateUrl: 'app/pages/organization/employee/edit/empTab.html',
                 title: 'View Employees',
                 controller: "OrgEmployeeTabController",
                 controllerAs: "empTabCtrl"
             })
-      //$urlRouterProvider.when('/organization/employee/view','/organization/view/109');
-   }
+        //$urlRouterProvider.when('/organization/employee/view','/organization/view/109');
+    }
 
 })();

@@ -8,7 +8,7 @@
             <input type="text" class="form-control" ng-model="detailCtrl.menuFilter" id="input01" placeholder="Search">
           </div>
           <div ng-repeat="t in detailCtrl.tabs| filter: {name: detailCtrl.menuFilter}" ui-sref-active="active" class="mail-navigation"
-            ui-sref="organization.empview({action:'view',empId:5})" >
+            ui-sref="organization.empedit({action:'view',empId:5})" >
             {{t.text}}<span class="new-mails" ng-show="t.newMails">{{t.newMails}}</span>
           </div>
           <div class="labels">

@@ -1,0 +1,22 @@
+<div class="panel panel-default bootstrap-panel xmedium-panel">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title pull-left">
+            {{pageTitleText}}
+        </h3>
+        <div class="pull-right">
+            <button type="button" class="btn btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>
+            <button type="button" class="btn btn-default" ui-sref="organization.masters.add({name:listCtrl.tempName,pageId: listCtrl.pageId, action:'create'})">
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
+            <button type="button" class="btn  btn-default">
+          <i class="fa fa-filter" aria-hidden="true"></i></button>
+            <select ng-show="(listCtrl.page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="listCtrl.selectedUcvItem" ng-options="opt.name for opt in listCtrl.page.pageinfo.ucvlist"
+                ng-change="listCtrl.ucvOnChange(listCtrl.selectedUcvItem)">
+                    </select>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        <div id="djGrid1" ui-grid="gridOptions" ui-grid-pagination ui-grid-selection class="djGrid"></div>
+    </div>
+</div>
