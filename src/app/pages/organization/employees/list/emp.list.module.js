@@ -18,7 +18,7 @@
         // abstract: true,
         templateUrl: 'app/pages/organization/employees/list/emp.list.html?v=1',
         controller: "emplistController",
-        controllerAs: "tabCtrl",
+        controllerAs: "empCtrl",
         title: 'List',
         sidebarMeta: {
           order: 2,

@@ -14,6 +14,8 @@
     var vm = this;
     var pageId = 25;
     var currentState = $state.current;
+    vm.page = {}
+    vm.filterOpt = {};
     $scope.gridOptions = {};
     $scope.pageTitleText = currentState.sidebarMeta.pageTitle;
     $scope.refreshData = _refreshData;
@@ -21,11 +23,30 @@
     $scope.editRecord = _editRecord;
     $scope.openView = _openView;
     $scope.gridOptions = $scope.getGridSetting();
+    $scope.showFilter = true;
 
     function _loadController() {
       $timeout(function () {
         pageService.getPagData(pageId).then(_successGetPage, _errorGetPage)
       });
+
+      vm.filterOpt.textbox = [];
+      vm.filterOpt.textbox.push({ value: '=', name: 'equal' });
+      vm.filterOpt.textbox.push({ value: '!=', name: 'not equal' });
+      vm.filterOpt.textbox.push({ value: 'like', name: 'like' });
+      vm.filterOpt.textbox.push({ value: 'notlike', name: 'not like' });
+      vm.filterOpt.textbox.push({ value: 'start', name: 'starts with' });
+      vm.filterOpt.textbox.push({ value: 'end', name: 'ends with' });
+      vm.filterOpt.textbox.push({ value: 'start', name: 'start with' });
+      vm.filterOpt.textbox.push({ value: 'isempty', name: 'empty' });
+      vm.filterOpt.textbox.push({ value: 'isnotempty', name: 'not empty' });
+
+      vm.filterOpt.select = [];
+      vm.filterOpt.select.push({ value: '=', name: 'equal' });
+      vm.filterOpt.select.push({ value: '!=', name: 'not equal' });
+      vm.filterOpt.select.push({ value: 'isempty', name: 'empty' });
+      vm.filterOpt.select.push({ value: 'isnotempty', name: 'not empty' });
+
     }
     function _successGetPage(result) {
       console.log(result)
@@ -53,6 +74,7 @@
         false, data);
       $scope.isLoaded = false
       $scope.isLoading = true
+      $scope.gridOptions.data = [];
       tableData.then(_getTableSuccessResult, _getTableErrorResult)
     }
     function _getTableErrorResult(err) {
