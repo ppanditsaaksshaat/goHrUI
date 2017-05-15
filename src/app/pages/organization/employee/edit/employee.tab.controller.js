@@ -12,9 +12,9 @@
 
     /** @ngInject */
     /** @ngInject */
-    function OrgEmployeeTabController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout) {
+    function OrgEmployeeTabController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions, editableThemes, $timeout, $uibModal,baProgressModal,$rootScope) {
    
- var vm = this;
+        var vm = this;
         vm.navigationCollapsed = true;
         vm.pageId = $stateParams.pageId;
         vm.empPKId= $stateParams.empId;
@@ -35,8 +35,7 @@
         vm.employmentOnChange=_employmentOnChange;
 
 
-function _loadController()
-{  
+function _loadController(){  
 
     vm.templateUrlPath = "app/pages/organization/employee/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
      _getTableId();  
@@ -44,9 +43,37 @@ function _loadController()
         pageService.getPagData(vm.pageId).then(
           _getPageDataSuccessResult, _getPageDataErrorResult);
       }); 
+       $timeout(function () {
+        pageService.getPagData(52).then(
+          _getfamilyDetailSuccessResult, _getfamilyDetailErrorResult);
+      }); 
 }
-function _getPageDataSuccessResult(result)
+function _getfamilyDetailSuccessResult(result){
+ console.log(result)
+      $scope.page = result;
+      $scope.setPage($scope.page)
+      $scope.setGrid(
+        {
+          columns: ['FdName', 'FdDateOfBirth'],//list of columns
+          enableTitleFilter: true,//show title filter
+          enableGlobalFilter: true,//show global filter
+          enbleColumnFilter: false,//show each column filter
+          enableSrNo: true,//show serial no column
+          enableAction: true,//show action column
+          enablePagination: true,//enable pagination
+          paginationLength: 10,//length of rows per page,
+          pageId: 52  //page id for which grid to be design
+        }
+      )
+      console.log($scope.gridObject)
+     
+      _getTableData();
+}
+function _getfamilyDetailErrorResult(error)
 {
+alert(error);
+}
+function _getPageDataSuccessResult(result){
   console.log(result)
   var field="";
   if(vm.tempName=='basic'){
@@ -101,8 +128,7 @@ function _getPageDataSuccessResult(result)
     field='ADEmpId';
 _findEntity(field);
   } 
-  if(vm.tempName!='basic')
-  {
+  if(vm.tempName!='basic'){
     var searchList=[];
      var searchFields = {
        field: field,
@@ -116,54 +142,43 @@ _findEntity(field);
   }      
       
 }
-function _findEntity(field)
-{
+function _findEntity(field){
 
 }
-function _getTableData(field)
-{
+// function _getTableData(field){
 
-}
-function _getPageDataErrorResult(error)
-{
+// }
+function _getPageDataErrorResult(error){
     
 }
-function _findEntitySuccessResult(result)
-{
+function _findEntitySuccessResult(result){
   if(vm.tempName=='basic'){
   vm.empBasicDetail = result; 
   }                   
   else if(vm.tempName=='personal'){
       vm.oldEntity=result;
-  vm.empPersonalDetail=result;
+      vm.empPersonalDetail=result;
 }    
-  else if(vm.tempName=='contact')   
-  {
+  else if(vm.tempName=='contact'){
        vm.empContactDetail=result;
   }  
-   else if(vm.tempName=='job')   
-  {  
-      
-      if(result.JDEmploymentId==3)
-      {
+   else if(vm.tempName=='job'){      
+      if(result.JDEmploymentId==3){
           vm.contractBase=true;
       }
       console.log(result);
       vm.oldEntity=result;
       vm.empJobDetail=result;
   }   
-  else if(vm.tempName=='resign')   
-  {
+  else if(vm.tempName=='resign'){
       console.log(result);
       vm.empResignDetail=result;
   }       
-    else if(vm.tempName=='sign')   
-  {
+    else if(vm.tempName=='sign'){
      console.log(result);
       vm.empSignDetail=result;
   } 
-  else if(vm.tempName=='account')   
-  {
+  else if(vm.tempName=='account'){
      console.log(result);
       vm.empAccountDetail=result;
   } 
@@ -174,8 +189,7 @@ function _findEntityErrorResult(error)
 {
     
 }
-function _getTableId()
-{
+function _getTableId(){
     if(vm.tempName=='basic')
     {
         vm.tableId=30;
@@ -258,31 +272,130 @@ function _updateForm() {
     }              
 }
 
-function _editPage(objectData)
-{
+function _editPage(objectData){
     alert(JSON.stringify(objectData))
  var savingObj = _setupSaving(objectData);
  pageService.editPageData(vm.pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult) 
 }
         function _updateSuccessResult(result) {
          //   alert(JSON.stringify(result))
-            $scope.showMsg('success', 'Updated Successfully', 'Employee');
+            $scope.showMsg('success', 'Employee Updated Successfully');
            
         }
         function _updateErrorResult(error) {
          alert(JSON.stringify(error))
         }
 
-        function _employmentOnChange(value)
-        {
+        function _employmentOnChange(value){
             if(value==3){
             vm.contractBase=true;
             }
         else {
             vm.contractBase=false;
         }
+    }
+
+   $scope.addFamily=function()
+   {
+   alert("hi")
+   }
+
+    function _temaplateURL(tempName,action)
+    {
+      vm.templateUrlPath ="app/pages/organization/employee/templates/" + tempName + "/" + tempName + "-"+action+".html?" + rndValu2 + "=" + rndValu;
+    }
+      
+     $scope.open = function (page, size) {
+      $uibModal.open({
+        animation: true,
+        templateUrl: page,
+        size: size,
+        resolve: {
+          items: function () {
+            return $scope.items;
+          }
         }
-        _loadController();
+      });
+    };
+    $scope.editFamily= function (page, size,FdId) {
+      
+      //  alert(FdId);
+      $timeout(function()
+      {
+      $uibModal.open({
+        animation: true,
+        templateUrl: page,
+        size: size,
+        resolve: {
+          items: function () {
+            return $scope.items;
+          }
+        }
+      });
+       $rootScope.$broadcast("FdId", FdId);
+       })
+    };
+    $scope.openProgressDialog = baProgressModal.open;
+function _editFamily(FdId)
+{
+  pageService.findEntity(56,parseInt(FdId), undefined).then(
+ _familyEntitySuccessResult, _familyEntityErrorResult); 
+}
+var family={};
+function _familyEntitySuccessResult(result)
+{
+alert(JSON.stringify(result))
+$s.family.FdName=result.FdName;
+}
+function _familyEntityErrorResult(error)
+{
+
+}
+ function _getTableData() {
+var search=[];
+      var searchFields = {
+           field: "FdEmpId",
+           operand: "=", 
+           value: 85
+        }
+        search.push(searchFields);
+      var data = {
+        searchList: search,
+        orderByList: []
+      }
+      var tableData = pageService.getTableData(
+        56,
+        52,
+        '', '',
+        false, data);
+      $scope.isLoaded = false
+      $scope.isLoading = true
+      tableData.then(_getTableSuccessResult, _getTableErrorResult)
+    }
+    function _getTableErrorResult(err) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+    }
+    function _getTableSuccessResult(result) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+      if (result == 'NoDataFound') {
+        // uivm.showMsg('warning', 'No Record Found.');
+      } else if (result.Errors !== undefined) {
+        // uivm.showMsg('error', result.Message);
+        // _startMsgTimer();
+      }
+      else {
+        console.log(result)
+      //  $scope.table.rows = result;
+        $scope.rows = result;
+
+
+      }
+    }
+
+
+  _loadController();
    
     }
 })();
