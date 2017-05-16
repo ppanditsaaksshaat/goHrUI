@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.masters')
+  angular.module('BlurAdmin.pages.organization.employees.masters')
     .service('addModal', addModal);
 
   /** @ngInject */
