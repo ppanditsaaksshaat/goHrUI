@@ -305,7 +305,7 @@
       </div>
       <div class="col-md-6 text-right">
         <button type="button" class="btn  btn-icon refresh-button" ng-click="$scope.refreshData()"><i class="ion-refresh"></i>Refresh</button>
-        <button type="button" class="btn  btn-icon refresh-button" data-toggle="modal"  ng-click="addFamily('app/pages/organization/employee/templates/personal/addfamily-modal.html', 'md')">     
+        <button type="button" class="btn  btn-icon refresh-button" data-toggle="modal"  ng-click="addFamily('app/pages/organization/employees/templates/personal/addfamily-modal.html', 'md')">     
           <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
         <button type="button" class="btn  btn-icon refresh-button">
           <i class="fa fa-filter" aria-hidden="true"></i></button>
@@ -354,12 +354,12 @@
                 </thead>
                 <tbody ng-show="displayedCollection.length>0">
                     <tr ng-repeat="row in displayedCollection">
-                        <td cursor="pointer" ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')" ng-show="gridObject.enableSrNo">
+                        <td cursor="pointer" ng-click="editFamily('app/pages/organization/employees/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')" ng-show="gridObject.enableSrNo">
                             {{$index+1}}
                         </td>
-                        <td cursor="pointer" ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')" ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
+                        <td cursor="pointer" ng-click="editFamily('app/pages/organization/employees/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')" ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
                         <td ng-show="gridObject.enableAction">
-                            <a ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'edit')">
+                            <a ng-click="editFamily('app/pages/organization/employees/templates/personal/editFamily-modal.html', 'md',row.FdId,'edit')">
                                 <i class="fa fa-pencil-square-o"></i></a>
                         </td>
                     </tr>
