@@ -34,7 +34,7 @@
 
     vm.updateForm = _updateForm;
     vm.jobEmploymentOnChange = _jobEmploymentOnChange;
-    vm.accountSalaryModeOnChange=_accountSalaryModeOnChange;
+    vm.accountSalaryModeOnChange = _accountSalaryModeOnChange;
 
 
     function _loadController() {
@@ -177,13 +177,13 @@
       }
       else if (vm.tempName == 'account') {
         console.log(result);
-        vm.oldEntity=result;
+        vm.oldEntity = result;
         vm.empAccountDetail = result;
-        if(result.ADSalaryModeId==3)
-        vm.bankDetail=true;
+        if (result.ADSalaryModeId == 3)
+          vm.bankDetail = true;
         else
-        vm.bankDetail=false;
-       
+          vm.bankDetail = false;
+
       }
 
       vm.templateUrlPath = "app/pages/organization/employee/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
@@ -218,7 +218,7 @@
       }
 
     }
-    function _setupSaving(dataObject,action) {
+    function _setupSaving(dataObject, action) {
       var data = {
         oldEntity: vm.oldEntity,
         newEntity: dataObject,
@@ -247,7 +247,7 @@
           DoubleOTRate: vm.empJobDetail.DoubleOTRate
         }
 
-        _editPage(job,'edit');
+        _editPage(job, 'edit');
       }
       if (vm.tempName == 'personal') {
         var personal = {
@@ -261,50 +261,50 @@
           PdDateOfBirth: vm.empPersonalDetail.PdDateOfBirth,
           PdNickName: vm.empPersonalDetail.PdNickName
         }
-        _editPage(personal,'edit');
+        _editPage(personal, 'edit');
       }
-       if (vm.tempName == 'account') {      
-           if(vm.bankDetail==false) {
-            var account={
-            ADId:vm.empAccountDetail.ADId==undefined?undefined:vm.empAccountDetail.ADId,
-            ADEmpId:vm.empPKId,
-            ADSalaryModeId:vm.empAccountDetail.ADSalaryModeId           
-           }
-           if(vm.empAccountDetail.ADId==undefined) {
-             _editPage(account,'create');
-           }
-           else{
-             _editPage(account,'edit');
-           }
+      if (vm.tempName == 'account') {
+        if (vm.bankDetail == false) {
+          var account = {
+            ADId: vm.empAccountDetail.ADId == undefined ? undefined : vm.empAccountDetail.ADId,
+            ADEmpId: vm.empPKId,
+            ADSalaryModeId: vm.empAccountDetail.ADSalaryModeId
           }
-          else{
-          var account={
-            ADId:vm.empAccountDetail.ADId==undefined?undefined:vm.empAccountDetail.ADId,
-            ADEmpId:vm.empPKId,
-            ADSalaryModeId:vm.empAccountDetail.ADSalaryModeId,
-            BankId:vm.empAccountDetail.BankId,
-            BankAccountNo:vm.empAccountDetail.BankAccountNo,
-            PFPPFMemberDate:vm.empAccountDetail.PFPPFMemberDate,
-            PFPPFAccountNo:vm.empAccountDetail.PFPPFAccountNo,
-            ESIMemeberDate:vm.empAccountDetail.ESIMemeberDate,
-            ESIMemeberNo:vm.empAccountDetail.ESIMemeberNo,
-            PFPPFIsActive:vm.empAccountDetail.PFPPFIsActive,
-            ESIIsActive:vm.empAccountDetail.ESIIsActive,
-            ADBranchName :vm.empAccountDetail.ADBranchName,
-            ADIFSCCode:vm.empAccountDetail.ADIFSCCode,
-            ADChequeNo:vm.empAccountDetail.ADChequeNo,
-            ADSalaryID:vm.empAccountDetail.ADSalaryID     
-           }
-           alert(JSON.stringify(account))
-           if(vm.empAccountDetail.ADId==undefined) {
-             _editPage(account,'create');
-           }
-           else{
-            
-             _editPage(account,'edit');
-           }
+          if (vm.empAccountDetail.ADId == undefined) {
+            _editPage(account, 'create');
           }
-          
+          else {
+            _editPage(account, 'edit');
+          }
+        }
+        else {
+          var account = {
+            ADId: vm.empAccountDetail.ADId == undefined ? undefined : vm.empAccountDetail.ADId,
+            ADEmpId: vm.empPKId,
+            ADSalaryModeId: vm.empAccountDetail.ADSalaryModeId,
+            BankId: vm.empAccountDetail.BankId,
+            BankAccountNo: vm.empAccountDetail.BankAccountNo,
+            PFPPFMemberDate: vm.empAccountDetail.PFPPFMemberDate,
+            PFPPFAccountNo: vm.empAccountDetail.PFPPFAccountNo,
+            ESIMemeberDate: vm.empAccountDetail.ESIMemeberDate,
+            ESIMemeberNo: vm.empAccountDetail.ESIMemeberNo,
+            PFPPFIsActive: vm.empAccountDetail.PFPPFIsActive,
+            ESIIsActive: vm.empAccountDetail.ESIIsActive,
+            ADBranchName: vm.empAccountDetail.ADBranchName,
+            ADIFSCCode: vm.empAccountDetail.ADIFSCCode,
+            ADChequeNo: vm.empAccountDetail.ADChequeNo,
+            ADSalaryID: vm.empAccountDetail.ADSalaryID
+          }
+          alert(JSON.stringify(account))
+          if (vm.empAccountDetail.ADId == undefined) {
+            _editPage(account, 'create');
+          }
+          else {
+
+            _editPage(account, 'edit');
+          }
+        }
+
         // var account = {
         //   PdEmpId: vm.empPKId,
         //   PdId: vm.empPersonalDetail.PdId,
@@ -316,13 +316,13 @@
         //   PdDateOfBirth: vm.empPersonalDetail.PdDateOfBirth,
         //   PdNickName: vm.empPersonalDetail.PdNickName
         // }
-      //  _editPage(account);
+        //  _editPage(account);
       }
     }
 
-    function _editPage(objectData,action) {
+    function _editPage(objectData, action) {
       alert(JSON.stringify(objectData))
-      var savingObj = _setupSaving(objectData,action);
+      var savingObj = _setupSaving(objectData, action);
       pageService.editPageData(vm.pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult)
     }
     function _updateSuccessResult(result) {
@@ -342,8 +342,8 @@
         vm.contractBase = false;
       }
     }
-    function _accountSalaryModeOnChange(value){
-       if (value == 3) {
+    function _accountSalaryModeOnChange(value) {
+      if (value == 3) {
         vm.bankDetail = true;
       }
       else {
@@ -360,22 +360,22 @@
     }
 
     $scope.addFamily = function (page, size) {
-      var param = { FdId: "",Action:null }
+      var param = { FdId: "", Action: null }
       $uibModal.open({
         animation: true,
         templateUrl: page,
         controller: 'addEmployeeFamilyDetails',
         size: size,
-         resolve: {
+        resolve: {
           param: function () {
             return param;
           }
         }
       });
     };
-   
-    $scope.editFamily = function (page, size, FdId,action) {     
-      var param = { FdId: FdId,Action:action}
+
+    $scope.editFamily = function (page, size, FdId, action) {
+      var param = { FdId: FdId, Action: action }
       $uibModal.open({
         animation: true,
         templateUrl: page,
@@ -389,7 +389,7 @@
       });
     };
     $scope.openProgressDialog = baProgressModal.open;
-   
+
     function _getTableData() {
       var search = [];
       var searchFields = {
