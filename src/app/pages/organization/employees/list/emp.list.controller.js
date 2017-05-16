@@ -28,6 +28,7 @@
     this.deleteRecord = _deleteRecord;
     this.openView = _openView;
     this.applyFilter = _applyFilter;
+    this.uploadRecord = _uploadRecord;
 
     $scope.page = {}
     $scope.page.gridOptions = $scope.getGridSetting();
@@ -37,7 +38,8 @@
       showFilter: true,
       showAdd: true,
       showRowMenu: true,
-      showCustomView: true
+      showCustomView: true,
+      showUpload: true
     }
 
     function _loadController() {
@@ -134,6 +136,9 @@
     }
     function _openView() {
       alert('view opened')
+    }
+    function _uploadRecord() {
+      $state.go('organization.employees.upload')
     }
     function _applyFilter() {
       console.log($scope.page.pageinfo.filters);

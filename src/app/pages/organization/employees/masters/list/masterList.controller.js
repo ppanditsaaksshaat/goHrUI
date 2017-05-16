@@ -1,24 +1,54 @@
 /**
- * @author a.demeshko
- * created on 28.12.2015
+ * @author deepak.jain
+ * created on 16/05/2017
  */
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.masters')
+  angular.module('BlurAdmin.pages.organization.employees.masters')
     .controller('OrgMastersListController1', OrgMastersListController1);
 
   /** @ngInject */
   function OrgMastersListController1($scope, $stateParams,
     pageService, editableOptions, editableThemes, DJWebStore) {
+    var vm = this;
+
+    var currentState = $state.current;
+    vm.ucvOnChange = _ucvOnChange;
+    vm.pageId = $stateParams.pageId;
+
+    vm.filterOpt = {};
+    vm.searchList = [];
+    vm.orderByList = [];
+
+    this.refreshData = _refreshData;
+    this.addRecord = _addRecord;
+    this.editRecord = _editRecord;
+    this.updateRecord = _updateRecord;
+    this.viewRecord = _viewRecord;
+    this.deleteRecord = _deleteRecord;
+    this.openView = _openView;
+    // this.applyFilter = _applyFilter;
+    this.uploadRecord = _uploadRecord;
+
+    $scope.page = {}
+    $scope.page.gridOptions = $scope.getGridSetting();
+    $scope.gridStyle = { width: 500, height: 450 }
+    $scope.boxSetting = {
+      showRefresh: true,
+      showFilter: true,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: true
+    }
 
 
     var rndValu = Math.round((Math.random() * 10) * 10);
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
 
-    var vm = this;
-    vm.ucvOnChange = _ucvOnChange;
-    vm.pageId = $stateParams.pageId;
+
+
 
     vm.table = { rows: [] }
     vm.page = {};
@@ -26,13 +56,12 @@
     $scope.isLoaded = false;
     vm.templateUrlPath = '';
     vm.tempName = $stateParams.name;
-    vm.templateUrlPath = "app/pages/organization/masters/templates/"
+    vm.templateUrlPath = "app/pages/organization/employees/masters/templates/"
       + vm.tempName + "/" + vm.tempName + "-list.html?" + rndValu2 + "=" + rndValu;
-    vm.listTemplateUrlPath = 'app/pages/organization/masters/list/table-list.html';
+    vm.listTemplateUrlPath = 'app/pages/organization/employees/masters/list/table-list.html';
 
-    vm.refreshData = function () {
+    function _refreshData() {
       $scope.rows = [];
-      // _getTableData();
       _getTableData([], [])
     }
 
@@ -44,7 +73,7 @@
     }
     function _successGetPage(result) {
       $scope.setPage(result)
-      // $scope.$emit("designGrid");
+      $scope.page = result;
 
       $scope.$broadcast('designGrid');
 

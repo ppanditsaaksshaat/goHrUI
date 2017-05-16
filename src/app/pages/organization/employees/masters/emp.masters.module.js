@@ -24,6 +24,12 @@
           order: 2,
           parent: 'organization.employees'
         },
+      }).state('organization.employees.masters.list', {
+        url: '/:name/:pageId',
+        templateUrl: 'app/pages/organization/employees/masters/list/mastersList.html',
+        title: 'Organization Masters',
+        controller: "OrgMastersListController1",
+        controllerAs: "listCtrl"
       })
   }
 
