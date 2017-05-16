@@ -958,6 +958,20 @@ function ($http, DJWebStore, fileUpload) {
                });
     }
 
+    var _uploadEmployeeData = function (data) {
+        var url = serviceBase + 'api/Upload/EmployeeUpload';
+        return $http.post(url, JSON.stringify(JSON.stringify(data)),
+               {
+                   headers: {
+                       'Content-Type': 'application/json'
+                   }
+               }).then(function (results) {
+                   return results;
+               });
+    }
+
+    
+
     var _getRowCount = function (data, tableId, pageId) {
         var url = serviceBase + 'api/Data/RowCount/' + tableId + "/" + pageId;
         return $http.post(url, JSON.stringify(JSON.stringify(data)),
@@ -1184,6 +1198,8 @@ pageServiceFactory.getFieldSetting=_getFieldSetting;
     pageServiceFactory.migrateData = _migrateData;
 
     pageServiceFactory.getRowCount = _getRowCount;
+
+    pageServiceFactory.uploadEmployeeData = _uploadEmployeeData;
 
     //User Custom View
     pageServiceFactory.ucvSaveUSV = _ucvSaveUSV;
