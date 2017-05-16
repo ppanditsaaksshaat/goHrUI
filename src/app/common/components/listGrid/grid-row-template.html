@@ -1,0 +1,10 @@
+<!--
+  This div is copied from the default row template. I have added the ng-mouseover
+  and ng-mouseleave events to highlight it red. 
+-->
+<div ng-mouseover="rowStyle={'background-color': 'lightyellow'}; grid.appScope.onRowHover(row); row.isMouseOver=true" ng-mouseleave="rowStyle={};row.isMouseOver=false">
+    <div ng-style="rowStyle" ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.uid" ui-grid-one-bind-id-grid="rowRenderIndex + '-' + col.uid + '-cell'"
+        class="ui-grid-cell" ng-class="{ 'ui-grid-row-header-cell': col.isRowHeader }" role="{{col.isRowHeader ? 'rowheader' : 'gridcell'}}"
+        ui-grid-cell>
+    </div>
+</div>

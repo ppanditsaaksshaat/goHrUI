@@ -20,8 +20,8 @@
           abstract: true,
           title: 'Loan',
           sidebarMeta: {
-            icon: 'ion-gear-a',
-            order: 101,
+            icon: 'ion-briefcase',
+            order: 4,
           },
         });
   }

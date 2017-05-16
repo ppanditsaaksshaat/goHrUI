@@ -19,9 +19,9 @@
     }
 </style>
 <table class="table table-bordered table-hover table-condensed djTable" st-table="displayedCollection" st-safe-src="rows"
-    st-pagination-scroll>
+    st-pagination-scroll >
     <thead>
-        <tr class="sortable">
+        <tr class="show-grid">
             <th ng-show="gridObject.enableSrNo" st-sort="$index">Sno</th>
             <th ng-repeat="col in gridObject.columns" st-sort="{{col.name}}">{{col.text}}</th>
             <th>Actions</th>
@@ -39,7 +39,10 @@
             <td ng-show="gridObject.enableSrNo">
                 {{$index+1}}
             </td>
-            <td style="max-width: 40px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
+            <td style="max-width: 40px;" class="no-wrap"
+            ng-repeat="col in gridObject.columns">
+            {{row[col.name]}}
+            </td>
             <td ng-show="gridObject.enableAction">
                 <a ui-sref="organization.masters.edit({name:listCtrl.tempName, pageId: gridObject.pageId, action:'edit', pkId: row[gridObject.page.pageinfo.idencolname]})">
                     <i class="fa fa-pencil-square-o"></i></a>

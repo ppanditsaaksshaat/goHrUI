@@ -11,7 +11,7 @@
     ])
         .config(routeConfig);
         angular.module('BlurAdmin.pages.loanmanagement.empview', [])
-        .config(routeConfigEmpView);
+        // .config(routeConfigEmpView);
 
     /** @ngInject */
     function routeConfig($stateProvider) {

@@ -7,7 +7,7 @@
             $scope.setGrid(
 
                 {
-                    columns: ['DeptName'],//list of columns
+                    columns: ['DeptName','DeptDesc'],//list of columns
                     titleField: 'DeptName',//first search field
                     enableTitleFilter: true,//show title filter
                     enableGlobalFilter: true,//show global filter

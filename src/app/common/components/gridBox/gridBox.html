@@ -1,0 +1,45 @@
+<div class="panel panel-default bootstrap-panel xmedium-panel">
+    <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
+        <h3 class="panel-title pull-left">
+            {{page.pageinfo.title}}
+            <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+        </h3>
+        <div class="pull-right red">
+            <button ng-show="boxOptions.showRefresh" type="button" class="btn btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>
+            <button ng-show="boxOptions.showAdd" type="button" class="btn btn-default" ng-click="addRecord()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
+            <select ng-show="boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
+                ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
+                    </select>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-heading" ng-show="(page.selectedRows.length>0)">
+        <div class="row">
+            <div class="col-md-3">{{page.selectedRows.length}} Rows Selected [<a href ng-click="clearSelected()">Clear</a>]</div>
+            <div class="col-md-9">
+                <div class="dropdown" uib-dropdown dropdown-append-to-body>
+                    <button class="btn btn-xs btn-default dropdown-toggle" type="button" uib-dropdown-toggle>
+                          <span class="glyphicon glyphicon-tasks"></span></button>
+                    <ul uib-dropdown-menu>
+                        <li ng-show="page.selectedRows.length==1"><a href ng-click="editRecord(row)">Edit</a></li>
+                        <li><a href ng-click="viewRecord(page.selectedRows[0])">View</a></li>
+                        <li><a href ng-click="updateRecord(page.selectedRows)">Update</a></li>
+                        <li class="divider"></li>
+                        <li><a href ng-click="deleteRecord(page.selectedRows)">Delete</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <button ng-show="boxOptions.showFilter" id="image" style="width:3px;
+                height:30px;
+                position:absolute;
+                top:200px;
+                left:0px;" ng-click="page.showFilter=!page.showFilter">
+                    <i ng-class="{'ion-arrow-right-b':!page.showFilter, 'ion-arrow-left-b':page.showFilter}"></i>
+                </button>
+        <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="djGrid"></div>
+    </div>
+</div>

@@ -19,8 +19,8 @@
           abstract: true,
           title: 'Payroll',
           sidebarMeta: {
-            icon: 'ion-gear-a',
-            order: 100,
+            icon: 'ion-pound',
+            order: 5,
           },
         });
   }
