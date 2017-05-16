@@ -1,8 +1,8 @@
 
 
 /**
- * @author v.lugovsky
- * created on 16.12.2015
+ * @author pradeep.pandip
+ * created on 16.05.2017
  */
 (function () {
   'use strict';
