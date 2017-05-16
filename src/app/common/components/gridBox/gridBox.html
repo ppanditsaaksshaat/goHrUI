@@ -8,6 +8,8 @@
             <button ng-show="boxOptions.showRefresh" type="button" class="btn btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>
             <button ng-show="boxOptions.showAdd" type="button" class="btn btn-default" ng-click="addRecord()">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
+            <button ng-show="boxOptions.showUpload" type="button" class="btn btn-default" ng-click="uploadRecord()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>
             <select ng-show="boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
                 ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
                     </select>

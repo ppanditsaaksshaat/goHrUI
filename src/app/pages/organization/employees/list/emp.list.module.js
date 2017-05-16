@@ -25,7 +25,16 @@
           parent: 'organization.employees',
           pageTitle: 'Employee List'
         },
-      })
+      }).state('organization.employees.upload', {
+        url: '/upload',
+        templateUrl: 'app/pages/organization/employees/upload/empupload.html',
+        controller: "OrgEmpUploadController",
+        controllerAs: "tabCtrl",
+        title: 'Upload Employee',
+        sidebarMeta: {
+          order: 0,
+        },
+      });
   }
 
 })();

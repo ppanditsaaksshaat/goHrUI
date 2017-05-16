@@ -41,6 +41,7 @@
                 scope.deleteRecord = _deleteRecord;
                 scope.openView = _openView;
                 scope.clearSelected = _clearSelected;
+                scope.uploadRecord = _uploadRecord;
                 scope.page.gridOptions.onRegisterApi = _onRegisterApi;
 
                 console.log(scope.page)
@@ -69,6 +70,9 @@
                 function _clearSelected() {
                     scope.page.gridApi.selection.clearSelectedRows();
                     scope.page.selectedRows = [];
+                }
+                function _uploadRecord() {
+                    parent.uploadRecord();
                 }
                 function _onRegisterApi(gridApi) {
                     console.log('register grid api')
