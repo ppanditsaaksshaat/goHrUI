@@ -36,6 +36,21 @@
                                     <span>Show Preview</span>
                                 </label>
 
+                               
+
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="tabCtrl.gridOptions.data.length > 0">
+                            <div class="col-md-12">
+
+                                <label class="checkbox-inline custom-checkbox nowrap">
+                                    <input type="checkbox" id="inlineCheckbox02" ng-model="tabCtrl.showEmpName">
+                                    <span>Show Employee Full Name</span>
+                                </label>
+
+                               
+
                             </div>
                         </div>
                         <hr ng-show="tabCtrl.gridOptions.data.length > 0" />
@@ -104,10 +119,11 @@
                                             ng-options="opt.value as opt.name for opt in tabCtrl.gridOptions.columnDefs">
                                         </select></td>
                                     <td class="col-sm-2" style="padding-top: 8px; padding-bottom: 8px"><span ng-show="field.column2.required" class="font-red">*</span> <span ng-class="{'font-red':field.column2.required}">{{field.column2.text}}</span></td>
-                                    <td style="padding-top: 8px; padding-bottom: 8px"> <select style="width:200px" class="form-control" name="{{field.column2.name}}" ng-model="field.column2.value">
+                                    <td style="padding-top: 8px; padding-bottom: 8px"> 
+                                        <select style="width:200px" class="form-control" name="{{field.column2.name}}" ng-model="field.column2.value">
                                             <option class="font-red" value="none"><em class="font-red font-italic">None</em></option>
                                             <option ng-repeat="col in tabCtrl.gridOptions.columnDefs" value="{{col.name}}">{{col.name}}</option>
-                                    </select></td>
+                                       </select></td>
                                 </tr>
                             </tbody>
                         </table>

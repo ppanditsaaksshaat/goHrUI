@@ -106,6 +106,21 @@
 
             var table2 = { title: 'Personal', rows: [] }
 
+
+            table2.rows.push({
+                column1: { name: 'EmpCode', text: 'EmployeeCode', type: 'text', value: 'none' },
+                column2: { name: 'EmpName', text: 'Employee Full Name', type: 'text', value: 'none' }
+            })
+            table2.rows.push({
+                column1: { name: 'EmpFirstName', text: 'First Name', type: 'text', value: 'none' },
+                column2: { name: 'EmpMiddleName', text: 'Middle Name', type: 'text', required: false, value: 'none' }
+            })
+            table2.rows.push({
+                column1: { name: 'EmpLastName', text: 'Last Name', type: 'text', value: 'none' },
+                column2: { name: 'EmployeeName', text: 'Employee Full Name', type: 'text', value: 'none' }
+            })
+
+
             table2.rows.push({
                 column1: { name: 'PdDateOfBirth', text: 'Date Of Birth', type: 'date', required: true, value: 'none' },
                 column2: { name: 'PdMaritalId', text: 'Marriage Status', type: 'text', required: false, value: 'none' }
