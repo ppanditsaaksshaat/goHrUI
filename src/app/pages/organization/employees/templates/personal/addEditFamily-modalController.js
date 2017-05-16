@@ -10,8 +10,7 @@
 
   /** @ngInject */
   /** @ngInject */
-  function addEmployeeFamilyDetails($scope, $stateParams, mailMessages,
-    addModal, pageService, editableOptions, editableThemes, DJWebStore, $timeout, param) {
+  function addEmployeeFamilyDetails($scope, $stateParams, pageService,DJWebStore, $timeout, param) {
     console.log(param.FdId)   
     var rndValu = Math.round((Math.random() * 10) * 10);
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
@@ -75,10 +74,9 @@
         FdDependents: $scope.family.FdDependents,
       }
       var savingObj = _setupSaving(family,'create');
-      _familyCreatEdit(savingObj);     
+      _familyCreateEdit(savingObj);     
     }
-    function _familyCreatEdit(savingObj)
-    {
+    function _familyCreateEdit(savingObj)   {
      pageService.editPageData(vm.pageId, JSON.stringify(savingObj)).then(_createEditSuccessResult, _createEditErrorResult)
     }
 
@@ -95,10 +93,9 @@
         FdRelationshipId: $scope.family.FdRelationshipId,
         FdDateOfBirth: $scope.family.FdDateOfBirth,
         FdDependents: $scope.family.FdDependents,
-      }
-      alert(JSON.stringify(family))
+      }    
       var savingObj = _setupSaving(family,'edit');
-      _familyCreatEdit(savingObj);
+      _familyCreateEdit(savingObj);
     }
 
     _loadController();
