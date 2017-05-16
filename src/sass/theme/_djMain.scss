@@ -48,11 +48,18 @@
   max-height: 430px;
   overflow: scroll;
 }
+.panHead{
+  padding-top:0px;
+}
 .djGrid{
   height: 450px;
+  width: 100%;
 }
 
-
+.overflow-visible,
+.overflow-visible .ui-grid-cell-contents {
+  overflow: visible;
+}
 *:focus {
     outline:none !important
 }

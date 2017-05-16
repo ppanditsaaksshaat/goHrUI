@@ -1,69 +1,10 @@
 <div class="row">
-
-    <div class="col-md-3 clearfix" ng-show="showFilter">
-        <div class="panel panel-default bootstrap-panel xmedium-panel">
-            <div class="panel-heading clearfix">
-
-                Filter data by
-
-                <!--<div class="pull-right red">
-                    <button type="button" class="btn btn-default" ng-click="refreshData()"><i class="ion-search"></i> </button>
-                </div>
-                <div class="clearfix"></div>-->
-            </div>
-            <div class="panel-body" style="overflow: scroll">
-                <ul class="list-unstyled filters filter-panel">
-                    <li ng-repeat="filter in empCtrl.page.pageinfo.filters" ng-init="filter.selectedOpt='='">
-                        <label class="checkbox-inline custom-checkbox nowrap">
-                            <input type="checkbox" id="inlineCheckbox01" ng-model="filter.showFilter">
-                            <span>{{filter.displayName}}</span>
-                        </label>
-                        <div class="filter-box" ng-show="filter.showFilter">
-                            <div ng-switch on="filter.controlType">
-                                <div ng-switch-when="textbox">
-                                    <select ng-options="opt.value as opt.name for opt in empCtrl.filterOpt.textbox"
-                                    ng-model="filter.selectedOpt">
-                                    </select>
-                                    <input type="text" placeholder="Enter Value" ng-model="filter.filterValue"/>
-                                </div>
-                                <div ng-switch-when="select">
-                                    <select ng-options="opt.value as opt.name for opt in empCtrl.filterOpt.select" ng-model="filter.selectedOpt">
-                                    </select>
-                                    <select ng-options="opt.value as opt.name for opt in filter.titleMap" ng-model="filter.filterValue">
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <div class="nav">
-                    <button type="button" class="btn btn-info">Apply Filter</button>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-3" ng-show="page.showFilter" style="padding-right:0px; margin-right:0px;  ">
+        <filter-box page="page"></filter-box>
     </div>
-    <div ng-class="{'col-md-12':!showFilter, 'col-md-9':showFilter}">
-        <div class="panel panel-default bootstrap-panel xmedium-panel">
-            <div class="panel-heading clearfix">
-                <h3 class="panel-title pull-left">
-                    {{pageTitleText}}
-                    <i ng-show="isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
-                </h3>
-                <div class="pull-right red">
-                    <button type="button" class="btn btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>
-                    <button type="button" class="btn btn-default" ui-sref="organization.masters.add({name:listCtrl.tempName,pageId: listCtrl.pageId, action:'create'})">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
-                    <button type="button" class="btn  btn-default" ng-click="showFilter=!showFilter">
-                        <i class="fa fa-filter" aria-hidden="true"></i></button>
-                    <select ng-show="(listCtrl.page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="listCtrl.selectedUcvItem" ng-options="opt.name for opt in listCtrl.page.pageinfo.ucvlist"
-                        ng-change="listCtrl.ucvOnChange(listCtrl.selectedUcvItem)">
-                    </select>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="panel-body">
-                <div id="djGrid1" ui-grid="gridOptions" ui-grid-pagination ui-grid-selection class="djGrid"></div>
-            </div>
-        </div>
+    <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
+        <grid-box page="page" box-options="boxSetting">
+        </grid-box>
     </div>
 </div>
+
