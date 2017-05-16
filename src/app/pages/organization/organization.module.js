@@ -6,7 +6,7 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.organization', [
-    'BlurAdmin.pages.organization.employees',
+    'employee',
     // 'BlurAdmin.pages.organization.employee',
     // 'BlurAdmin.pages.organization.empupload',
     // 'BlurAdmin.pages.organization.masters',

@@ -114,11 +114,11 @@
       _getTableData();
     }
     function _addRecord() {
-      alert('add record called')
+      $state.go("organization.employees.add", "{action:'create'}");
     }
     function _editRecord(row) {
       var empId = row.entity.EmpId;
-      alert('_editRecord called:' + empId)
+      $state.go("organization.employees.edit", { action: 'edit', empId: empId });
     }
     function _updateRecord(row) {
       var empId = row.entity.EmpId;

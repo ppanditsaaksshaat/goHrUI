@@ -5,20 +5,20 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.employee')
+  angular.module('employee')
     .controller('EditEmployeeController', EditEmployeeController);
 
   /** @ngInject */
   /** @ngInject */
-  function EditEmployeeController($scope, $stateParams, mailMessages, addModal,
-    pageService, editableOptions, editableThemes, $timeout, $filter) {
+  function EditEmployeeController($scope, $stateParams,
+    pageService, $timeout, $filter) {
 
     var vm = this;
     vm.pkId = $stateParams.empId;
     vm.tableid = 30;
     vm.tempFile = "profile";
     vm.empBasicDetail = {};
-  //  $scope.param = param;
+    //  $scope.param = param;
     // vm.table = { rows: [] }
     // vm.page = {};
 
@@ -43,12 +43,12 @@
     }
     $scope.headerUrlPath = function () {
 
-      return "app/pages/organization/employee/edit/employeeHeader.html";
+      return "app/pages/organization/employees/edit/employeeHeader.html";
     }
 
     $scope.templateUrl = function () {
 
-      return "app/pages/organization/employee/templates/" + vm.tempFile + "/" + vm.tempFile + "-view.html";
+      return "app/pages/organization/employees/templates/" + vm.tempFile + "/" + vm.tempFile + "-view.html";
     }
     // $scope.temalateUrl1 = function () {
     //   return "app/pages/organization/employee/templates/employeeSideMenu.html";

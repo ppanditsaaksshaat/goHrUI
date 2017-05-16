@@ -1,0 +1,143 @@
+<style type="text/css">
+  .css-form.ng-invalid.ng-touched {
+    border: 1px solid #FF0000;
+  }
+
+  .css-form.focusOn.ng-invalid {
+
+    background: #FFFFFF;
+  }
+</style>
+<div ba-panel ba-panel-class="x-medium" ba-panel-title="Add Employee">
+  <form name="form">
+    <div class="row">
+
+      <div class="col-sm-1">
+        <div class="form-group">
+          <label for="inputTitle">Title*</label>
+          <select id="inputTitle" name="empTitle_{{$index}}" ng-model="addCtrl.empAdd.EmpTitleId" class="form-control" ng-options="title.value as title.name for title in addCtrl.title"
+            ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+       </select>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label for="inputFirstName">First Name*</label>
+          <input text-Only type="text" class="form-control css-form" name="inputFirstName" maxlength="50" ng-model="addCtrl.empAdd.EmpFirstName"
+            placeholder="First Name">
+
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputMiddleName">Middle Name</label>
+          <input text-Only type="text" class="form-control" id="inputMiddleName" maxlength="50" ng-model="addCtrl.empAdd.EmpMiddleName"
+            placeholder="Middle Name">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputLastName">Last Name</label>
+          <input text-Only type="text" class="form-control" id="inputLastName" maxlength="50" ng-model="addCtrl.empAdd.EmpLastName"
+            placeholder="Last Name">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputGender">Gender*</label>
+          <select id="inputGender" name="empGender_{{$index}}" ng-model="addCtrl.empAdd.PdGenderId" class="form-control" ng-options="gender.value as gender.name for gender in addCtrl.gender"
+            ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputDOB">Date Of Joining*</label>
+          <input type="text" class="form-control" id="inputDOB" ng-model="addCtrl.empAdd.JDDate" placeholder="MM-DD-YYYY">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputMobile">Mobile*</label>
+          <input numeric-Only type="text" class="form-control" id="inputMobile" maxlength="15" ng-model="addCtrl.empAdd.PdMobileNo"
+            placeholder="Mobile">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputDepartment">Department*</label>
+          <select id="inputDepartment" name="empDepartment_{{$index}}" ng-model="addCtrl.empAdd.JDDeptId" class="form-control" ng-options="department.value as department.name for department in addCtrl.department"
+            ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputDesignation">Designation*</label>
+          <select id="inputDesignation" name="empDesignation_{{$index}}" ng-model="addCtrl.empAdd.JDDesgId" class="form-control" ng-options="designation.value as designation.name for designation in addCtrl.designation"
+            ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputEmployeeType">Employment Type*</label>
+          <select id="inputEmployeeType" name="empEmployeeType_{{$index}}" ng-model="addCtrl.empAdd.JDEmploymentId" class="form-control"
+            ng-options="employeeType.value as employeeType.name for employeeType in addCtrl.employeeType" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+            data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputGrade">Grade*</label>
+          <select id="empEmployeeType_{{$index}}" name="inputGrade" ng-model="addCtrl.empAdd.JDEmpGradeId" class="form-control" ng-options="grade.value as grade.name for grade in addCtrl.grade"
+            ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputLevel">Level*</label>
+          <select id="inputLevel" name="empLevel_{{$index}}" ng-model="addCtrl.empAdd.JDEmpLevelId" class="form-control" ng-options="level.value as level.name for level in addCtrl.level"
+            ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputEmployeeCode">Employee Code*</label>
+          <input type="text" class="form-control text_type_bold" disabled="disabled" id="inputEmployeeCode" ng-model="addCtrl.empAdd.EmpCode"
+            placeholder="Employee Code">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!--<div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputPhoto">Photo</label>
+    
+       <input type="file" ng-model="file" name="file" base-sixty-four-input  maxsize="500" accept="image/*">
+   
+    </div>
+  </div>-->
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputOtherCode">Other Code</label>
+          <input type="text" class="form-control" id="inputOtherCode" ng-model="addCtrl.empAdd.OtherCode" placeholder="Other Code">
+        </div>
+      </div>
+
+    </div>
+    <div class="text-center">
+      <button type="button" class="btn btn-primary" ng-click="addCtrl.saveForm()">Save</button>
+      <button type="button" ng-click="back('organization.employees.list')" class="btn btn-primary">Cancel</button>
+    </div>
+  </form>
+</div>

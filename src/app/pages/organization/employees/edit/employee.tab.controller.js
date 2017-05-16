@@ -7,13 +7,12 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.employee')
+  angular.module('employee')
     .controller('OrgEmployeeTabController', OrgEmployeeTabController);
 
   /** @ngInject */
   /** @ngInject */
-  function OrgEmployeeTabController($scope, $stateParams, mailMessages, addModal, pageService, editableOptions,
-    editableThemes, $timeout, $uibModal, baProgressModal) {
+  function OrgEmployeeTabController($scope, $stateParams, pageService, $timeout, $uibModal, baProgressModal) {
 
     var vm = this;
     vm.navigationCollapsed = true;
@@ -39,7 +38,7 @@
 
     function _loadController() {
 
-      vm.templateUrlPath = "app/pages/organization/employee/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
+      vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
       _getTableId();
       $timeout(function () {
         pageService.getPagData(vm.pageId).then(
@@ -186,7 +185,7 @@
 
       }
 
-      vm.templateUrlPath = "app/pages/organization/employee/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
+      vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
     }
     function _findEntityErrorResult(error) {
 
@@ -356,7 +355,7 @@
     // }
 
     function _temaplateURL(tempName, action) {
-      vm.templateUrlPath = "app/pages/organization/employee/templates/" + tempName + "/" + tempName + "-" + action + ".html?" + rndValu2 + "=" + rndValu;
+      vm.templateUrlPath = "app/pages/organization/employees/templates/" + tempName + "/" + tempName + "-" + action + ".html?" + rndValu2 + "=" + rndValu;
     }
 
     $scope.addFamily = function (page, size) {
