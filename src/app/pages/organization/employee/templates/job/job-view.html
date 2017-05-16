@@ -40,7 +40,7 @@
                       ng-model="empTabCtrl.empJobDetail.JDEmploymentId"
                       class="form-control"
                       ng-options="employeeType.value as employeeType.name for employeeType in empTabCtrl.employeeType"
-                      ng-change="empTabCtrl.employmentOnChange(empTabCtrl.empJobDetail.JDEmploymentId)"
+                      ng-change="empTabCtrl.jobEmploymentOnChange(empTabCtrl.empJobDetail.JDEmploymentId)"
                       data-placeholder="Select Nav Menu"
                       ng-required="true">
                </select>
