@@ -1,0 +1,53 @@
+<div class="panel panel-default bootstrap-panel xmedium-panel">
+    <div class="panel-heading panHead">
+        <div class="row" ng-hide="showSearchFilter">
+            <div class="col-md-9">Filter data by</div>
+            <div class="col-md-3"><button type="button" class="btn btn-default" ng-click="openSearchFilter()">
+                        <i class="ion-search"></i> </button></div>
+        </div>
+        <div class="row" ng-show="showSearchFilter">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Filter" ng-model="filterSearchText">
+                    <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="showSearchFilter=false">
+                                    <i class="ion-close"></i>
+                                </button>
+                        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body" style="overflow: scroll">
+
+        <ul class="list-unstyled filters filter-panel">
+            <li ng-repeat="filter in page.pageinfo.filters|filter: {displayName: filterSearchText}" ng-init="filter.selectedOpt='='">
+                <label class="checkbox-inline custom-checkbox nowrap">
+                            <input type="checkbox" id="inlineCheckbox01" ng-model="filter.showFilter">
+                            <span>{{filter.displayName}}</span>
+                        </label>
+                <div class="filter-box" ng-show="filter.showFilter">
+                    <div ng-switch on="filter.controlType">
+                        <div ng-switch-when="textbox">
+                            <select ng-options="opt.value as opt.name for opt in filterOpt.textbox" ng-model="filter.operator">
+                                    </select>
+                            <input type="text" placeholder="Enter Value" ng-model="filter.value" />
+                        </div>
+                        <div ng-switch-when="select">
+                            <select ng-options="opt.value as opt.name for opt in filterOpt.select" ng-model="filter.operator">
+                                    </select>
+                            <select ng-options="opt.value as opt.name for opt in filter.titleMap" ng-model="filter.value">
+                                    </select>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="nav">
+            <button type="button" class="btn btn-info" ng-click="applyBoxFilter()">Apply Filter</button>
+            <a href ng-click="clearFilter()">Clear</a>
+        </div>
+
+    </div>
+</div>

@@ -37,18 +37,15 @@
     }
 
     function _loadController() {
-      
-      $scope.gridOption = {columns: [] }
-     
+
+      $scope.gridOption = { columns: [] }
+      $scope.setPage(undefined)
       pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
     }
     function _successGetPage(result) {
-      console.log(result)
-      vm.page = result;
-      // DJWebStore.SetValue('Page_' + vm.pageId, result)
-      $scope.setPage(vm.page)
+      $scope.setPage(result)
       // $scope.$emit("designGrid");
-      
+
       $scope.$broadcast('designGrid');
 
       _getTableData([], []);

@@ -1,0 +1,50 @@
+<h3>Add Family</h3>
+<hr>
+
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputName"> Name</label>
+          <input type="text" class="form-control" id="inputName"  ng-model="empTabCtrl.empFamilyDetail.FdName">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputRelation_{{$index}}">Relation</label>
+       <select id="inputRelation_{{$index}}"
+                      name="inputRelation_{{$index}}"
+                      ng-model="empTabCtrl.empFamilyDetail.FdRealtionshipId"
+                      class="form-control"
+                      ng-options="relationship.name as relationship.name for relationship in empTabCtrl.relationship"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDOB">Date OF Birth</label>
+       <input type="text" class="form-control" id="inputDOB"  ng-model="empTabCtrl.empFamilyDetail.FdDateOfBirth">
+    </div>
+  </div>
+</div >
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputContact">Contact</label>
+          <input type="text" class="form-control" id="inputContact"  ng-model="empTabCtrl.empFamilyDetail.FdName">
+    </div>
+  </div>
+  
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDependent">Dependent</label>
+       <input type="text" class="form-control" id="inputDependent"  ng-model="empTabCtrl.empFamilyDetail.FdDependents">
+    </div>
+  </div>
+</div >
+ <div class="text-center">
+<button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Save</button>
+<button type="button" ng-click="empTabCtrl.cancelFamily()" class="btn btn-primary">Cancel</button>
+</div>

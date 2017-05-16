@@ -1,0 +1,43 @@
+<div class="mail-messages-control side-message-navigation-item" style="padding-top: 0px; padding-bottom:0px">
+  <div class="row animate-show-hide" ng-hide="IsRowSelected">
+    <div class="col-md-6"><span class="bold-text">{{pageTitleText}}</span><br/>
+      <!--<span ng-show="(rows.length!==undefined)" class="font-bold">Total {{rows.length}} Record(s) found</span>-->
+    </div>
+    <div class="col-md-6 text-right">
+      <button type="button" class="btn  btn-icon refresh-button" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>
+      <button type="button" class="btn  btn-icon refresh-button" ui-sref="organization.masters.add({name:listCtrl.tempName,pageId: listCtrl.pageId, action:'create'})">
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
+      <button type="button" class="btn  btn-icon refresh-button">
+          <i class="fa fa-filter" aria-hidden="true"></i></button>
+      <select ng-show="(listCtrl.page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="listCtrl.selectedUcvItem" ng-options="opt.name for opt in listCtrl.page.pageinfo.ucvlist"
+        ng-change="listCtrl.ucvOnChange(listCtrl.selectedUcvItem)">
+                    </select>
+      <!--<div class="btn-group" uib-dropdown>
+      <button type="button" class="btn more-button" uib-dropdown-toggle>
+        More <span class="caret"></span>
+      </button>
+      <ul uib-dropdown-menu>
+        <li><a href>Edit</a></li>
+        <li><a href>Delete</a></li>
+        <li><a href>Something else here</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href>Separated link</a></li>
+      </ul>
+    </div>-->
+    </div>
+  </div>
+  <div class="row animate-show-hide" ng-show="IsRowSelected">
+    <div class="col-md-6">{{SelectedRowsCount}} Row Selected <a href ng-click="clearSelection()">Clear</a></div>
+    <div class="col-md-6 text-right">
+      <button type="button" class="btn  btn-icon refresh-button" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>
+      <button type="button" class="btn  btn-icon refresh-button" ui-sref="organization.masters.add({name:listCtrl.tempName,pageId: listCtrl.pageId, action:'create'})">
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
+      <button type="button" class="btn  btn-icon refresh-button">
+          <i class="fa fa-filter" aria-hidden="true"></i></button>
+      <select ng-show="(listCtrl.page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="listCtrl.selectedUcvItem" ng-options="opt.name for opt in listCtrl.page.pageinfo.ucvlist"
+        ng-change="listCtrl.ucvOnChange(listCtrl.selectedUcvItem)">
+                    </select>
+    </div>
+  </div>
+  </div>
+</div>

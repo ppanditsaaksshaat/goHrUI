@@ -2,29 +2,31 @@
     <h3 class="">Bank Account</h3>
     <hr>
    
-    <div class="row">
-   
-      <div class="col-md-12">             
-        <div class="form-group row clearfix col-md-6">
-          <label for="inputFirstName" class="col-lg-3 control-label">SalaryMode</label>
-
-          <div class="col-lg-9">
-             <select id="empSalaryMode_{{$index}}"
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Salary Mode*</label>
+          <select id="empSalaryMode_{{$index}}"
                       name="empSalaryMode_{{$index}}"
                       ng-model="empTabCtrl.empAccountDetail.ADSalaryModeId"
                       class="form-control"
                       ng-options="salaryMode.value as salaryMode.name for salaryMode in empTabCtrl.salaryMode"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                       ng-change="empTabCtrl.accountSalaryModeOnChange(empTabCtrl.empAccountDetail.ADSalaryModeId)"
                       data-placeholder="Select Nav Menu"
                       ng-required="true">
                </select>
-          </div>
-        </div>
-         <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">Salary</label>
+    </div>
+  </div> 
+</div>
 
-          <div class="col-sm-9">
-             <select id="empSalary_{{$index}}"
+<div ng-show="empTabCtrl.bankDetail">
+<h3 class="">Bank Detail</h3>
+<hr>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Salary</label>
+         <select id="empSalary_{{$index}}"
                       name="empSalary_{{$index}}"
                       ng-model="empTabCtrl.empAccountDetail.ADSalaryID"
                       class="form-control"
@@ -33,16 +35,12 @@
                       data-placeholder="Select Nav Menu"
                       ng-required="true">
                </select>
-          </div>
-        </div>
-      </div>
-       <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">BankName</label>
-
-          <div class="col-sm-9">
-             <select id="empBankName_{{$index}}"
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Bank Name</label>
+         <select id="empBankName_{{$index}}"
                       name="empBankName_{{$index}}"
                       ng-model="empTabCtrl.empAccountDetail.BankId"
                       class="form-control"
@@ -51,106 +49,92 @@
                       data-placeholder="Select Nav Menu"
                       ng-required="true">
                </select>
-          </div>
-        </div>
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">AcountNo.</label>
-
-          <div class="col-sm-9">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Account No.</label>
             <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.BankAccountNo">
-          </div>
-        </div>
-      </div>
-       <div class="col-md-12">             
-        <div class="form-group row clearfix col-md-6">
-          <label for="inputFirstName" class="col-lg-3 control-label">BranchName</label>
+    </div>
+  </div> 
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Branch Name</label>
+         <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ADBranchName">
+    </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">IFSC</label>
+         <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ADIFSCCode">
+    </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Cheque</label>
+         <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ADChequeNo">
+    </div>
+  </div> 
+</div>
 
-          <div class="col-lg-9">
-               <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.JDDate">
-          </div>
-        </div>
-         <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">IFSC</label>
-
-          <div class="col-sm-9">         
-              <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.JDDate">
-          </div>
-        </div>
-      </div>
-       <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">Cheque</label>
-          <div class="col-sm-9">
-              <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.JDDate">
-          </div>
-        </div>
-         
-      </div>
-     
-       <h3 class="">PF Account</h3>
-       <hr>
-      <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">IsActive</label>
-
-          <div class="col-sm-9">
-                <input type="checkbox" class="form-control"  ng-model="empTabCtrl.empAccountDetail.PFPPFIsActive">
-          </div>
-        </div>
-         
-      </div>
-      <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">PFMemberDate</label>
-
-          <div class="col-sm-9">
-                   <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.PFPPFMemberDate">
-          </div>
-        </div>
-         <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">PFAccontNo.</label>
-
-          <div class="col-sm-9">
-                <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.PFPPFAccountNo">
-          </div>
-        </div>
-         
-      </div>
-            <h3 class="">ESI Account</h3>
-       <hr>
-      <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">IsActive</label>
-
-          <div class="col-sm-9">
-                <input type="checkbox" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ESIIsActive">
-          </div>
-        </div>
-         
-      </div>
-      <div class="col-md-12">     
-       
-          <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">ESIMemberDate</label>
-
-          <div class="col-sm-9">
-                   <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ESIMemeberDate">
-          </div>
-        </div>
-         <div class="form-group row clearfix col-md-6">
-          <label for="inputLastName" class="col-sm-3 control-label">ESIAccontNo.</label>
-
-          <div class="col-sm-9">
-                <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ESIMemeberNo">
-          </div>
-        </div>
-         
-      </div>
-        
-    <button type="button" class="btn btn-primary btn-with-icon save-profile">
-      <i class="ion-android-checkmark-circle"></i>Update Profile
-    </button>
+<h3 class="">PF Account</h3>
+ <hr>
+ <div class="row">
+   <div class="col-sm-4">
+      <div class="checkbox">
+      <label class="custom-checkbox">      
+      <input type="checkbox" ng-model="empTabCtrl.empAccountDetail.PFPPFIsActive">   
+      <span>IsActive</span>
+    </label>
+   </div>
+  </div> 
+   </div>
+<div class="row">
+  
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">PF Account No.</label>
+          <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.PFPPFAccountNo">
+    </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">PF Start Date</label>
+          <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.PFPPFMemberDate">
+    </div>
+  </div> 
+</div>
+<h3 class="">ESI Account</h3>
+ <hr>
+ <div class="row">
+   <div class="col-sm-4">
+      <div class="checkbox">
+      <label class="custom-checkbox">      
+      <input type="checkbox"  ng-model="empTabCtrl.empAccountDetail.ESIIsActive" >   
+      <span>IsActive</span>
+    </label>
+   </div>
+  </div> 
+   </div>
+<div class="row">
+  
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">ESI Account No.</label>
+       <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ESIMemeberNo">
+    </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">ESI Start Date</label>
+         <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ESIMemeberDate">
+    </div>
+  </div> 
+</div>
+</div>
+<div class="text-center">
+<button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Update</button>
+<button type="button" ui-sref="organization.employee" class="btn btn-primary">Cancel</button>
+</div>

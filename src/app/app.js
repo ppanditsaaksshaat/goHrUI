@@ -7,6 +7,7 @@ angular.module('BlurAdmin', [
   'ui.router',
   'ui.grid', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.pagination',
   'ui.grid.edit', 'ui.grid.moveColumns', 'ui.grid.saveState', 'ui.grid.resizeColumns', 'ui.grid.cellNav', 'ui.grid.pinning',
+  'ui.indeterminate',
   'ngTouch',
   'toastr',
   'smart-table',

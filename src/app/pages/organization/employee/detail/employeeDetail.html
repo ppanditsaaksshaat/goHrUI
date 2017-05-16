@@ -7,7 +7,7 @@
             <input type="text" class="form-control" ng-model="detailCtrl.menuFilter" id="input01" placeholder="Search">
           </div>
           <div ng-repeat="t in detailCtrl.tabs| filter: {name: detailCtrl.menuFilter}" ui-sref-active="active" class="mail-navigation"
-           ui-sref="organization.empview.tab({name:t.name, pageId: t.id})">
+           >
             {{t.text}}
           </div>
           
@@ -17,6 +17,7 @@
     </div>
   </div>
 </div>
+<!--ui-sref="organization.empview.tab({name:t.name, pageId: t.id})"-->
 <!--<div class="">
     <div class="col-md-12">
         <div class="col-md-3">

@@ -50,7 +50,7 @@
         }
       )
       console.log($scope.gridObject)
-
+     
       _getTableData();
     }
     function _errorGetPage(err) {
