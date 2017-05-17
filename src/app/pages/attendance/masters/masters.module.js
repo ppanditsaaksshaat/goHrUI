@@ -1,6 +1,6 @@
 
 /**
- * @author deepak jain
+ * @author v.lugovsky
  * created on 16.12.2015
  */
 (function () {
@@ -11,33 +11,44 @@
 
   /** @ngInject */
   function routeConfig($stateProvider,$urlRouterProvider) {
+   
     $stateProvider
         .state('attendance.masters', {
           url: '/masters',
           abstract: true,
-          templateUrl: 'app/pages/attendance/masters/masters.html',
-          controller: "AttendanceMastersController",          
-          controllerAs: "attCtrl",
+          templateUrl: 'app/pages/attendance/masters/masters.html?v=1',
+          controller: "attMastersController1",
+          controllerAs: "tabCtrl",
           title: 'Master',
           sidebarMeta: {
             order: 0,
           },
-          
-        }).state('attendance.masters.label', {
-          url: '/:label',
-          templateUrl: 'app/pages/attendance/masters/list/masterlist.html',
-          title: 'Mail',
-          controller: "attendanceMastersListController",
-          controllerAs: "attlsCtrl"
+        }).state('attendance.masters.list', {
+          url: '/:name/:pageId',
+          templateUrl: 'app/pages/attendance/masters/list/mastersList.html',
+          title: 'attendance Masters',
+          controller: "attMastersListController1",
+          controllerAs: "listCtrl"
         }).state('attendance.masters.detail', {
-          url: '/:label/:id',
-          templateUrl: 'app/pages/attendance/masters/detail/mastersdetail.html',
-          title: 'Detail',
-          controller: "AttendanceMastersDetailController",
-          controllerAs: "attdetailCtrl"
+          url: '/:pageId/:id',
+          templateUrl: 'app/pages/attendance/masters/detail/mastersDetail.html',
+          title: 'attendance Masters',
+          controller: "attMastersDetailController",
+          controllerAs: "detailCtrl"
+        }).state('attendance.masters.add', {
+          url: '/:name/:action/:pageId/',
+          templateUrl: 'app/pages/attendance/masters/add/add.html',
+          title: 'attendance Masters',
+          controller: "attMastersAddController1",
+          controllerAs: "addCtrl"
+        }).state('attendance.masters.edit', {
+          url: '/:name/:action/:pageId/:pkId/',
+          templateUrl: 'app/pages/attendance/masters/add/add.html',
+          title: 'attendance Masters',
+          controller: "attMastersAddController1",
+          controllerAs: "addCtrl"
         });
-        
-    $urlRouterProvider.when('/attendance/masters','/attendance/masters/inbox');
+    $urlRouterProvider.when('/attendance/masters','/attendance/masters/location/34');
   }
 
 })();

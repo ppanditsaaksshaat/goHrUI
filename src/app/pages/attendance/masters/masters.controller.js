@@ -6,69 +6,23 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.attendance.masters')
-      .controller('AttendanceMastersController', AttendanceMastersController);
+    .controller('attMastersController1', attMastersController1);
 
   /** @ngInject */
-  function AttendanceMastersController(composeModal, mailMessages, pageService) {
-    // debugger;
-    // pageService.getPagData(1).then(function(result){
-    //   console.log(result)
-    // }, function(err){
-
-    // })
+  function attMastersController1() {
+   console.log('this controller')
     var vm = this;
     vm.navigationCollapsed = true;
-    vm.showCompose = function(subject, to , text){
-      composeModal.open({
-        subject : subject,
-        to: to,
-        text: text
-      })
-    };
-
     vm.tabs = _getTabs();
+    function _getTabs() {      
+      var mastersMenu = [];    
+      mastersMenu.push({ name: 'shiftset', text: 'Shift Set ', id: 289 })
+      mastersMenu.push({ name: 'shiftdetail', text: 'Shift detail ', id: 128 })
+       mastersMenu.push({ name: 'holidaymaster', text: 'holiday master ', id: 291 })
+      return mastersMenu;
 
-    function _getTabs(){
-      
-      var tabs = [
-        {
-          label:'branch',
-          name:'Branch',
-          pageId:29
-        },
-        {
-          label:'unit',
-          name:'Sub Unit',
-          pageId:30
-        },
-      {
-        label: 'inbox',
-      name: 'Departments',
-      newMails: 7,
-      pageId:30
-    }, {
-      label: 'sent',
-      name: 'Designation',
-      pageId:30
-    }, {
-      label: 'important',
-      name: 'Grades',
-      pageId:30
-    }, {
-      label: 'draft',
-      name: 'Levels',
-      newMails: 2,
-      pageId:30
-    }, {
-      label: 'spam',
-      name: 'Spam'
-    }, {
-      label: 'trash',
-      name: 'Trash'
-    }];
-    return tabs;
-  }
-  
+    }
+
   }
 
 })();
