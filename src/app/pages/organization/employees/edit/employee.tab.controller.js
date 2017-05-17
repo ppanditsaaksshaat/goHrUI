@@ -162,6 +162,9 @@
         if (result.JDEmploymentId == 3) {
           vm.contractBase = true;
         }
+        else{
+          vm.contractBase = false;
+        }
         console.log(result);
         vm.oldEntity = result;
         vm.empJobDetail = result;
@@ -374,6 +377,7 @@
     };
 
     $scope.editFamily = function (page, size, FdId, action) {
+    
       var param = { FdId: FdId, Action: action }
       $uibModal.open({
         animation: true,
@@ -394,7 +398,7 @@
       var searchFields = {
         field: "FdEmpId",
         operand: "=",
-        value: 85
+        value: vm.empPKId
       }
       search.push(searchFields);
       var data = {

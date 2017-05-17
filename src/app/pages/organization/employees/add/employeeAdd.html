@@ -56,6 +56,12 @@
         <div class="form-group">
           <label for="inputDOB">Date Of Joining*</label>
           <input type="text" class="form-control" id="inputDOB" ng-model="addCtrl.empAdd.JDDate" placeholder="MM-DD-YYYY">
+           <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{addCtrl.format}}" datepicker-options="addCtrl.options" ng-model="dt" is-open="opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
         </div>
       </div>
       <div class="col-sm-4">
