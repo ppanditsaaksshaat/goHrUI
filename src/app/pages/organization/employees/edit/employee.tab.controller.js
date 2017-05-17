@@ -36,6 +36,42 @@
     vm.accountSalaryModeOnChange = _accountSalaryModeOnChange;
 
 
+        //datepicker format
+
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    
+        // dateofbirth datepicker         
+        $scope.opendob = _opendob;
+        function _opendob() {
+         $scope.formatdob = $scope.formats[0];
+         $scope.optionsdob = {
+            showWeeks: false
+          };
+         $scope.openeddob = true;
+          
+        }
+
+       // anniversary datepicker 
+        $scope.openanniversary = _openanniversary;                         
+        function _openanniversary() {                   
+         $scope.formatanniversary = $scope.formats[0];
+         $scope.optionsanniversary = {
+            showWeeks: false
+         }; 
+         $scope.openedanniversary=true;
+        }
+
+        function _getDate(date)
+        {
+            var mmddyyyy="";
+            var date=new Date(date);
+            var month=date.getMonth()+1;
+            mmddyyyy=month +"/"+date.getDate()+"/" +date.getFullYear();
+            
+           return mmddyyyy;
+        }
+
+
     function _loadController() {
 
       vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
@@ -152,7 +188,11 @@
         vm.empBasicDetail = result;
       }
       else if (vm.tempName == 'personal') {
+        console.log(result)
         vm.oldEntity = result;
+         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];       
+         $scope.formatdob = $scope.formats[0];
+        alert(result.PdDateOfBirth)
         vm.empPersonalDetail = result;
       }
       else if (vm.tempName == 'contact') {
@@ -260,9 +300,17 @@
           PdGenderId: vm.empPersonalDetail.PdGenderId,
           PdMaritalId: vm.empPersonalDetail.PdMaritalId,
           PdNationalityId: vm.empPersonalDetail.PdNationalityId,
-          PdDateOfBirth: vm.empPersonalDetail.PdDateOfBirth,
-          PdNickName: vm.empPersonalDetail.PdNickName
+          PdDateOfBirth: _getDate(vm.empPersonalDetail.PdDateOfBirth),
+          PdNickName: vm.empPersonalDetail.PdNickName,
+          PDAnniversaryDate:_getDate(vm.empPersonalDetail.PDAnniversaryDate),
+          PDFacebook:vm.empPersonalDetail.PDFacebook,
+          PDTwitter:vm.empPersonalDetail.PDTwitter,
+          PDLinkedIn:vm.empPersonalDetail.PDLinkedIn,
+          PDAdhar:vm.empPersonalDetail.PDAdhar,
+          PDPanCard:vm.empPersonalDetail.PDPanCard,
+          PDOtherNumber:vm.empPersonalDetail.PDOtherNumber,
         }
+        alert(JSON.stringify(personal))
         _editPage(personal, 'edit');
       }
       if (vm.tempName == 'account') {
@@ -297,7 +345,7 @@
             ADChequeNo: vm.empAccountDetail.ADChequeNo,
             ADSalaryID: vm.empAccountDetail.ADSalaryID
           }
-          alert(JSON.stringify(account))
+        
           if (vm.empAccountDetail.ADId == undefined) {
             _editPage(account, 'create');
           }

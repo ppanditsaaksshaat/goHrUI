@@ -6,7 +6,13 @@
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDOB">Date Of Birth*</label>       
-            <input type="text" class="form-control" id="inputDOB" ng-model="empTabCtrl.empPersonalDetail.PdDateOfBirth">        
+            <!--<input type="text" class="form-control" id="inputDOB" ng-model="empTabCtrl.empPersonalDetail.PdDateOfBirth"> -->
+         <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{formatdob}}" datepicker-options="optionsdob" ng-model="empTabCtrl.empPersonalDetail.PdDateOfBirth" is-open="openeddob" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="opendob()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+         </p>       
     </div>
   </div>
   <div class="col-sm-4">
@@ -42,7 +48,7 @@
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputMobile">Mobile*</label>       
-             <input type="text" class="form-control" id="inputMobile" ng-model="empTabCtrl.empPersonalDetail.PdEmail">       
+             <input type="text" class="form-control" id="inputMobile" ng-model="empTabCtrl.empPersonalDetail.PdMobileNo">       
     </div>
   </div>
   <div class="col-sm-4">
@@ -54,27 +60,33 @@
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputAnniversaryDate">Anniversary Date*</label>
-           <input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.empPersonalDetail.PdAnniversaryDate"> 
-    </div>
+           <!--<input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.empPersonalDetail.PDAnniversaryDate"> -->
+         <p class="input-group">
+             <input type="text" class="form-control" uib-datepicker-popup="{{formatanniversary}}" datepicker-options="optionsanniversary" ng-model="empTabCtrl.empPersonalDetail.PDAnniversaryDate" is-open="openedanniversary" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openanniversary()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+         </p> 
+   </div>
   </div>
 </div>
 <div class="row">
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputFacebook">Facebook</label>       
-             <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.empPersonalDetail.PdFacebook">       
+             <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.empPersonalDetail.PDFacebook">       
     </div>
   </div>
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputTwitter">Twitter</label>
-       <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.empPersonalDetail.PdTwitter">
+       <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.empPersonalDetail.PDTwitter">
     </div>
   </div>
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputAnniversaryDate">Linked In</label>
-           <input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.empPersonalDetail.PdLinkedIn"> 
+           <input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.empPersonalDetail.PDLinkedIn"> 
     </div>
   </div>
 </div>
@@ -82,19 +94,19 @@
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputFacebook">Adhaar</label>       
-             <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.empPersonalDetail.PdAdhaar">       
+             <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.empPersonalDetail.PDAdhar">       
     </div>
   </div>
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputTwitter">Pan</label>
-       <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.empPersonalDetail.PdPan">
+       <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.empPersonalDetail.PDPanCard">
     </div>
   </div>
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputOtherNo">Other No.</label>
-           <input type="text" class="form-control" id="inputOtherNo" ng-model="empTabCtrl.empPersonalDetail.PdOtherNo"> 
+           <input type="text" class="form-control" id="inputOtherNo" ng-model="empTabCtrl.empPersonalDetail.PDOtherNumber"> 
     </div>
   </div>
 </div>
@@ -135,9 +147,8 @@
     </div>
   </div>
 </div>
-           <div class="text-center">
-<button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Update</button>
-<button type="button"  class="btn btn-primary">Cancel</button>
+<div class="text-center">
+<button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Save</button>
 </div>
         </uib-tab>
         <uib-tab heading="Address">

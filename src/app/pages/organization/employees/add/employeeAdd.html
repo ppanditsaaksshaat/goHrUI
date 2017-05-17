@@ -55,9 +55,9 @@
       <div class="col-sm-4">
         <div class="form-group">
           <label for="inputDOB">Date Of Joining*</label>
-          <input type="text" class="form-control" id="inputDOB" ng-model="addCtrl.empAdd.JDDate" placeholder="MM-DD-YYYY">
+          <!--<input type="text" class="form-control" id="inputDOB" ng-model="addCtrl.empAdd.JDDate" placeholder="MM-DD-YYYY">-->
            <p class="input-group">
-            <input type="text" class="form-control" uib-datepicker-popup="{{addCtrl.format}}" datepicker-options="addCtrl.options" ng-model="dt" is-open="opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
+            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" datepicker-options="options" ng-model="addCtrl.empAdd.JDDate" is-open="opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
@@ -119,7 +119,7 @@
       <div class="col-sm-4">
         <div class="form-group">
           <label for="inputEmployeeCode">Employee Code*</label>
-          <input type="text" class="form-control text_type_bold" disabled="disabled" id="inputEmployeeCode" ng-model="addCtrl.empAdd.EmpCode"
+          <input type="text" class="form-control text_type_bold" disabled="disabled" id="inputEmployeeCode" ng-model="addCtrl.EmpCode"
             placeholder="Employee Code">
         </div>
       </div>
@@ -136,14 +136,15 @@
       <div class="col-sm-4">
         <div class="form-group">
           <label for="inputOtherCode">Other Code</label>
-          <input type="text" class="form-control" id="inputOtherCode" ng-model="addCtrl.empAdd.OtherCode" placeholder="Other Code">
+          <input type="text" class="form-control" id="inputOtherCode" ng-model="addCtrl.empAdd.PDOtherNumber" placeholder="Other Code">
         </div>
       </div>
 
     </div>
     <div class="text-center">
       <button type="button" class="btn btn-primary" ng-click="addCtrl.saveForm()">Save</button>
-      <button type="button" ng-click="back('organization.employees.list')" class="btn btn-primary">Cancel</button>
+      <button type="button" ng-click="addCtrl.clear()" class="btn btn-primary">Clear</button>
+       <button type="button" ng-click="back('organization.employees.list')" class="btn btn-primary">Back</button>
     </div>
   </form>
 </div>
