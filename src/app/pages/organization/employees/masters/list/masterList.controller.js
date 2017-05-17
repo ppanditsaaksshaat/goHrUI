@@ -1,6 +1,6 @@
 /**
- * @author deepak.jain
- * created on 16/05/2017
+ * @author v.lugovsky
+ * created on 16.12.2015
  */
 (function () {
   'use strict';
@@ -9,13 +9,12 @@
     .controller('OrgMastersListController1', OrgMastersListController1);
 
   /** @ngInject */
-  function OrgMastersListController1($scope, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore) {
-    var vm = this;
+  function OrgMastersListController1($scope, $state, $stateParams, $timeout, pageService) {
 
+    var vm = this;
+    var pageId = $stateParams.pageId;
+    var tempName = $stateParams.name;
     var currentState = $state.current;
-    vm.ucvOnChange = _ucvOnChange;
-    vm.pageId = $stateParams.pageId;
 
     vm.filterOpt = {};
     vm.searchList = [];
@@ -28,7 +27,7 @@
     this.viewRecord = _viewRecord;
     this.deleteRecord = _deleteRecord;
     this.openView = _openView;
-    // this.applyFilter = _applyFilter;
+    this.applyFilter = _applyFilter;
     this.uploadRecord = _uploadRecord;
 
     $scope.page = {}
@@ -36,75 +35,53 @@
     $scope.gridStyle = { width: 500, height: 450 }
     $scope.boxSetting = {
       showRefresh: true,
-      showFilter: true,
+      showFilter: false,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
-      showUpload: true
-    }
-
-
-    var rndValu = Math.round((Math.random() * 10) * 10);
-    var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
-
-
-
-
-    vm.table = { rows: [] }
-    vm.page = {};
-    $scope.isLoading = true;
-    $scope.isLoaded = false;
-    vm.templateUrlPath = '';
-    vm.tempName = $stateParams.name;
-    vm.templateUrlPath = "app/pages/organization/employees/masters/templates/"
-      + vm.tempName + "/" + vm.tempName + "-list.html?" + rndValu2 + "=" + rndValu;
-    vm.listTemplateUrlPath = 'app/pages/organization/employees/masters/list/table-list.html';
-
-    function _refreshData() {
-      $scope.rows = [];
-      _getTableData([], [])
+      showUpload: false
     }
 
     function _loadController() {
-
-      $scope.gridOption = { columns: [] }
-      $scope.setPage(undefined)
-      pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
+      $timeout(function () {
+        pageService.getPagData(pageId).then(_successGetPage, _errorGetPage)
+      });
     }
     function _successGetPage(result) {
+      console.log(result)
+      $scope.page = angular.extend($scope.page, result);
+      console.log($scope.page)
       $scope.setPage(result)
-      $scope.page = result;
-
-      $scope.$broadcast('designGrid');
-
-      _getTableData([], []);
+      $scope.pageTitleText = $scope.page.pageinfo.title;
+      $scope.page.gridOptions = $scope.gridSetupColumns($scope.page.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+      _getTableData();
     }
     function _errorGetPage(err) {
-
     }
-    function _getTableData(searchList, orderByList) {
-      $scope.isLoaded = false
-      $scope.isLoading = true
+    function _getTableData() {
+      console.log(new Date())
       var data = {
-        searchList: searchList,
-        orderByList: orderByList
+        searchList: vm.searchList,
+        orderByList: vm.orderByList
       }
       var tableData = pageService.getTableData(
-        vm.page.pageinfo.tableid,
-        vm.page.pageinfo.pageid,
+        $scope.page.pageinfo.tableid,
+        $scope.page.pageinfo.pageid,
         '', '',
         false, data);
-
+      $scope.page.isLoaded = false
+      $scope.page.isLoading = true
+      $scope.page.gridOptions.data = []
       tableData.then(_getTableSuccessResult, _getTableErrorResult)
     }
     function _getTableErrorResult(err) {
-      $scope.isLoaded = true
-      $scope.isLoading = false
+      $scope.page.isLoaded = true
+      $scope.page.isLoading = false
     }
     function _getTableSuccessResult(result) {
-      $scope.isLoaded = true
-      $scope.isLoading = false
-      console.log(result)
+      console.log(new Date())
+      $scope.page.isLoaded = true
+      $scope.page.isLoading = false
       if (result == 'NoDataFound') {
         // uivm.showMsg('warning', 'No Record Found.');
       } else if (result.Errors !== undefined) {
@@ -112,80 +89,66 @@
         // _startMsgTimer();
       }
       else {
-        vm.table.rows = result;
         $scope.rows = result;
-        console.log($scope.rows.length)
-        // if (uivm.page.gridOptions.data.length == 1)
-        //   uivm.showMsg('info', result.length + ' Records found.');
-        // else
-        //   uivm.showMsg('info', result.length + ' Record found.');
-
-        // _startMsgTimer();
+        $scope.page.gridOptions.data = result;
+        console.log(new Date())
       }
     }
-    function _ucvOnChange(item) {
+    function _refreshData() {
+      _getTableData();
+    }
+    function _addRecord() {
+      $state.go("organization.employees.masters.add", { name: tempName, action: 'create', pageId: pageId });
+    }
+    function _editRecord(row) {
+      var entity = row.entity;
+      $state.go("organization.employees.masters.edit",
+        { name: tempName, pageId: pageId, action: 'edit', pkId: entity[$scope.page.pageinfo.idencolname] }
+      );
+    }
+    function _updateRecord(row) {
+      var empId = row.entity.EmpId;
+      alert('_updateRecord called:' + empId)
+    }
+    function _deleteRecord(row) {
+      var empId = row.entity.EmpId;
+      alert('_deleteRecord called:' + empId)
+    }
+    function _viewRecord(row) {
+      var empId = row.entity.EmpId;
+      alert('_viewRecord called:' + empId)
+    }
+    function _openView() {
+      alert('view opened')
+    }
+    function _uploadRecord() {
+      $state.go('organization.employees.upload')
+    }
+    function _applyFilter() {
+      console.log($scope.page.pageinfo.filters);
+      vm.searchList = [];
+      angular.forEach($scope.page.pageinfo.filters, function (filter) {
 
-      console.log(item)
-      var searchList = [], orderbyList = [];
-
-      var comData = LZString.decompressFromEncodedURIComponent(item.data);
-      var userData = angular.fromJson(comData);
-      console.log(userData)
-      // SettingVisibleColumns(item)
-      angular.forEach(userData.filters, function (filter, fdx) {
-        var operator = '=';
-        var userValue = ''
-        if (filter.selectedOperator.value == '=') {
-          operator = '=';
-        }
-        else if (filter.selectedOperator.value == 'notempty') {
-          operator = '<>';
-        }
-        else if (filter.selectedOperator.value == 'empty') {
-          operator = '=';
-        }
-        else {
-          operator = filter.selectedOperator.value;
-        }
-
-        if (filter.userValue == 'self') {
-          userValue = uivm.auth.profile.userId;
-        }
-        else if (filter.userValue == 'notempty') {
-          userValue = ''
-        }
-        else if (filter.userValue == 'empty') {
-          userValue = ''
-        }
-        else if (filter.userValue === undefined) {
-          userValue = '';
-        }
-        else {
-          userValue = filter.userValue;
-        }
-
-        var searchFields = {
-          field: filter.selectedColumn.name, operand: operator, value: userValue
-        };
-        //console.log(searchFields)
-        searchList.push(searchFields)
-      })
-      //console.log(userData.orderby)
-      userData.orderby.forEach(function (order) {
-        if (order.selectedColumn !== undefined) {
-          var orderitem = {
-            column: order.selectedColumn.name,
-            isDesc: order.isDesc
+        if (filter.showFilter !== undefined) {
+          if (filter.showFilter) {
+            if (filter.value !== undefined) {
+              var search = {};
+              search.field = filter.name;
+              search.operand = filter.operator;
+              search.value = filter.value;
+              vm.searchList.push(search)
+            }
           }
-
-          orderbyList.push(orderitem)
         }
       })
 
-      _getTableData(searchList, orderbyList)
+      this.refreshData();
+
+    }
+    $scope.onRowHover = function (row) {
+      console.log(row)
     }
     _loadController();
-
   }
 
 })();

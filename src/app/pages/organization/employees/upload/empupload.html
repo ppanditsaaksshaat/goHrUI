@@ -18,6 +18,8 @@
                                         style="display: none;">
                                     </label><br/>
                         <span class="">(Only .xls, .xlsx are supported)</span>
+                        
+
                         <div class="schema-form-section row" ng-show="tabCtrl.gridOptions.data.length > 0">
                             <div class="schema-form-section col-xs-12">
                                 <div class="form-group schema-form-text  has-feedback">
@@ -27,8 +29,8 @@
                                 </div>
                             </div>
                         </div>
-                        <hr ng-show="tabCtrl.gridOptions.data.length > 0" />
-                        <div class="row" ng-show="tabCtrl.gridOptions.data.length > 0">
+                        <hr ng-show="tabCtrl.gridOptions.data.length >= 0" />
+                        <div class="row" ng-show="tabCtrl.gridOptions.data.length >= 0">
                             <div class="col-md-12">
 
                                 <label class="checkbox-inline custom-checkbox nowrap">
@@ -36,7 +38,7 @@
                                     <span>Show Preview</span>
                                 </label>
 
-                               
+
 
                             </div>
                         </div>
@@ -49,19 +51,24 @@
                                     <span>Show Employee Full Name</span>
                                 </label>
 
-                               
+
 
                             </div>
                         </div>
-                        <hr ng-show="tabCtrl.gridOptions.data.length > 0" />
-                        <div class="row" ng-show="tabCtrl.gridOptions.data.length > 0">
+                        <hr ng-show="tabCtrl.gridOptions.data.length >= 0" />
+                        <div class="row" ng-show="tabCtrl.gridOptions.data.length >= 0">
                             <div class="col-md-12">
-                                <button type="button" ng-click="tabCtrl.gridOptions.data=[]" class="btn btn-default">
+                                <button type="button" ng-show="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.gridOptions.data=[]" class="btn btn-default">
                                     Cancel
                                 </button>
-                                <button type="button" ng-click="tabCtrl.nextDataUpload()" class="btn btn-info">
+                                <button type="button" ng-click="tabCtrl.nextDataUpload()" ng-show="tabCtrl.gridOptions.data.length > 0" class="btn btn-info">
                                     Next
                                 </button>
+                                <button type="button" ng-click="back('organization.employees.list')" ng-hide="tabCtrl.gridOptions.data.length > 0" class="btn btn-default">
+                                    Back
+                                </button>
+                                <button type="button"  class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadTemp()">
+                            Download Template</button>
                             </div>
                         </div>
                     </div>
@@ -114,12 +121,12 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="field in table.rows">
-                                    <td class="padT8 padB8 col-sm-2" style="padding-left:10px; text-align: left"><span ng-show="field.column1.required" class="font-red">*</span> <span ng-class="{'font-red':field.column1.required}">{{field.column1.text}}</span></td>
+                                    <td ng-hide="abc{{$index}}" class="padT8 padB8 col-sm-2" style="padding-left:10px; text-align: left"><span ng-show="field.column1.required" class="font-red">*</span> <span ng-class="{'font-red':field.column1.required}">{{field.column1.text}}</span></td>
                                     <td style="padding-top: 8px; padding-bottom: 8px; padding-right: 20px;"> <select style="width:200px" class="form-control" name="{{field.column1.name}}" ng-model="field.column1.value"
                                             ng-options="opt.value as opt.name for opt in tabCtrl.gridOptions.columnDefs">
                                         </select></td>
-                                    <td class="col-sm-2" style="padding-top: 8px; padding-bottom: 8px"><span ng-show="field.column2.required" class="font-red">*</span> <span ng-class="{'font-red':field.column2.required}">{{field.column2.text}}</span></td>
-                                    <td style="padding-top: 8px; padding-bottom: 8px"> 
+                                    <td ng-hide="xyz{{$index}}" class="col-sm-2" style="padding-top: 8px; padding-bottom: 8px"><span ng-show="field.column2.required" class="font-red">*</span> <span ng-class="{'font-red':field.column2.required}">{{field.column2.text}}</span></td>
+                                    <td style="padding-top: 8px; padding-bottom: 8px">
                                         <select style="width:200px" class="form-control" name="{{field.column2.name}}" ng-model="field.column2.value">
                                             <option class="font-red" value="none"><em class="font-red font-italic">None</em></option>
                                             <option ng-repeat="col in tabCtrl.gridOptions.columnDefs" value="{{col.name}}">{{col.name}}</option>
@@ -234,7 +241,7 @@
                     <button type="button" ng-click="tabCtrl.importDataUpload()" class="btn btn-info">
                        {{(tabCtrl.migrate.step3)?"Import":"Next"}}
                     </button>
-                    
+
 
                 </div>
             </div>

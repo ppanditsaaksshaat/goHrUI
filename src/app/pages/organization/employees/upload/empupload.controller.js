@@ -11,9 +11,9 @@
     /** @ngInject */
     /** @ngInject */
     function OrgEmpUploadController($scope, $sce, $filter, $http, uiGridConstants, $interval, $timeout,
-        $uibModal, pageService, $q, DJWebStore, $window) {
+        $uibModal, pageService, $q, DJWebStore, $window, DJWebStoreGlobal) {
         var vm = this;
-        // debugger;
+        debugger;
 
         vm.gridOptions = { data: [] }
         vm.uploader = [];
@@ -112,12 +112,14 @@
                 column2: { name: 'EmpName', text: 'Employee Full Name', type: 'text', value: 'none' }
             })
             table2.rows.push({
-                column1: { name: 'EmpFirstName', text: 'First Name', type: 'text', value: 'none' },
-                column2: { name: 'EmpMiddleName', text: 'Middle Name', type: 'text', required: false, value: 'none' }
+                column1: { name: 'EmpTitleId', text: 'Title', type: 'text', value: 'none' },
+                column2: { name: 'EmpFirstName', text: 'First Name', type: 'text', value: 'none' }
+
             })
             table2.rows.push({
                 column1: { name: 'EmpLastName', text: 'Last Name', type: 'text', value: 'none' },
-                column2: { name: 'EmployeeName', text: 'Employee Full Name', type: 'text', value: 'none' }
+                column2: { name: 'EmpMiddleName', text: 'Middle Name', type: 'text', required: false, value: 'none' }
+
             })
 
 
@@ -150,7 +152,7 @@
                 column1: { name: 'PDTwitter', text: 'Twitter', type: 'text', required: false, value: 'none' },
                 column2: { name: 'PDOtherNumber', text: 'Other Number', type: 'text', required: false, value: 'none' }
             })
-
+           
 
 
 
@@ -442,6 +444,25 @@
 
 
             return isValid;
+        }
+
+        vm.downloadTemp = function () {
+            debugger;
+            alert('download temp is working');
+            var tempColumns = [];
+
+            tempColumns.push({ EmpCode: '' });
+            tempColumns.push({ Title: '' });
+            tempColumns.push({ FirstName: '' });
+            tempColumns.push({ MiddleName: '' });
+            tempColumns.push({ LastName: '' });
+
+
+
+
+
+
+            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
         }
 
 

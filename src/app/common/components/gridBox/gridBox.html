@@ -1,20 +1,25 @@
 <div class="panel panel-default bootstrap-panel xmedium-panel">
     <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
-        <h3 class="panel-title pull-left">
-            {{page.pageinfo.title}}
-            <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
-        </h3>
-        <div class="pull-right red">
-            <button ng-show="boxOptions.showRefresh" type="button" class="btn btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>
-            <button ng-show="boxOptions.showAdd" type="button" class="btn btn-default" ng-click="addRecord()">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
-            <button ng-show="boxOptions.showUpload" type="button" class="btn btn-default" ng-click="uploadRecord()">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>
-            <select ng-show="boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
-                ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
+        <div class="row">
+            <div class="col-md-3">
+                {{page.pageinfo.title}}
+                <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+            </div>
+            <div class="col-md-9">
+                <div class="pull-right">
+                    <button ng-show="boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>                    &nbsp;
+                    <button ng-show="boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="addRecord()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button> &nbsp;
+                    <button ng-show="boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="uploadRecord()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button> &nbsp;
+                    <select ng-show="boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
+                        ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
                     </select>
+                </div>
+
+            </div>
         </div>
-        <div class="clearfix"></div>
+     
     </div>
     <div class="panel-heading" ng-show="(page.selectedRows.length>0)">
         <div class="row">

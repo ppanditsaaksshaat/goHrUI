@@ -48,6 +48,24 @@
   max-height: 430px;
   overflow: scroll;
 }
+
+.side-menu li{
+  padding: 8px 0px 8px 5px;
+  cursor: pointer;
+}
+.side-menu li.active, .side-menu li.active a, .side-menu li.active:hover, .side-menu li.active a:hover, .side-menu li.active:hover a{
+  background-color: lightseagreen;
+  color: white;
+}
+
+.side-menu li:hover, .side-menu li a:hover, .side-menu li:hover a
+{
+  background-color: lightgray;
+}
+.maxHeight450{
+  max-height: 430px;
+  overflow: scroll;
+}
 .panHead{
   padding-top:0px;
 }
