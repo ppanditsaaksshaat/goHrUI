@@ -7,7 +7,7 @@
 (function () {
   'use strict';
 
-  angular.module('employee')
+  angular.module('BlurAdmin.pages.organization.employees')
     .controller('OrgEmployeeTabController', OrgEmployeeTabController);
 
   /** @ngInject */
@@ -161,6 +161,9 @@
       else if (vm.tempName == 'job') {
         if (result.JDEmploymentId == 3) {
           vm.contractBase = true;
+        }
+        else{
+          vm.contractBase = false;
         }
         console.log(result);
         vm.oldEntity = result;
@@ -374,6 +377,7 @@
     };
 
     $scope.editFamily = function (page, size, FdId, action) {
+    
       var param = { FdId: FdId, Action: action }
       $uibModal.open({
         animation: true,
@@ -394,7 +398,7 @@
       var searchFields = {
         field: "FdEmpId",
         operand: "=",
-        value: 85
+        value: vm.empPKId
       }
       search.push(searchFields);
       var data = {

@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.masters')
+  angular.module('BlurAdmin.pages.organization.employees.masters')
     .controller('OrgMastersAddController1', OrgMastersAddController1);
 
   /** @ngInject */
@@ -27,9 +27,27 @@
         vm.pkId = $stateParams.pkId;
       }
 
+      vm.formrows = [];
       vm.page = $scope.getPage(vm.pageId)
+      if (vm.page !== undefined) {
+        if (vm.page.pageinfo.pageid == vm.pageId) {
+          //find tabs
+          angular.forEach(vm.page.pageinfo.viewform, function (tab) {
+            //find rows
+            angular.forEach(tab.rows, function (row) {
+              //find columns
+              angular.forEach(row, function (col) {
+                if (col.name != vm.page.pageinfo.idencolname) {
+                  vm.formrows.push(col);
+                }
+              })
+            })
+          })
+        }
+      }
+
       vm.templateUrlPath = '';
-      vm.templateUrlPath = "app/pages/organization/masters/templates/"
+      vm.templateUrlPath = "app/pages/organization/employees/masters/templates/"
         + vm.tempName + "/" + vm.tempName + "-add.html?" + rndValu2 + "=" + rndValu;
 
       vm.selects = vm.page.pageinfo.selects;

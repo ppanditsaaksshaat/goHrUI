@@ -1,0 +1,62 @@
+<div class="panel panel-default bootstrap-panel xmedium-panel">
+  <div class="panel-heading clearfix">
+    <div class="row">
+      <div class="col-md-6">
+        <button ng-click="back('organization.employees.masters.list')" type="button" class="btn btn-xs btn-default btn-with-icon"><i
+          class="ion-chevron-left"></i>Back
+      </button> {{addCtrl.page.pageinfo.tagline}}
+        <i ng-show="addCtrl.tempLoaded" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+      </div>
+      <div class="col-md-6">
+        <div class="pull-right">
+          <button ng-show="boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>          &nbsp;
+          <button ng-show="boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="addRecord()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button> &nbsp;
+          <button ng-show="boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="uploadRecord()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button> &nbsp;
+          <select ng-show="boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
+            ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
+                    </select>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="panel-body">
+    <!--<form class="form-horizontal" name="editForm" ng-submit="addCtrl.saveForm(editForm)">
+      <div  class="form-group" ng-repeat="field in addCtrl.formrows">
+        <label class="col-sm-3 control-label">{{field.text}}</label>
+        <div class="col-sm-9">
+          <input name="{{field.name}}" maxlength="50" ng-model="addCtrl.entity[field.name]" type="text" ng-required="true" class="form-control"
+            id="inputEmail3" placeholder="Enter {{field.text}}">
+        </div>
+      </div>
+      
+
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <button ng-disabled="!editForm.$valid" type="submit" class="btn btn-warning">Save</button>
+          <button type="button" class="btn btn-danger" ng-click="back('organization.masters.list')">Cancel</button>
+        </div>
+      </div>
+    </form>-->
+    <ng-include src="addCtrl.templateUrlPath" onload="addCtrl.tempLoaded=true"></ng-include>
+  </div>
+</div>
+
+<!--<div class="side-message-navigation" ng-class="{'expanded': tabCtrl.navigationCollapsed}">
+  <div class="mail-messages-control side-message-navigation-item">
+    <div class="toggle-navigation-container">
+      <a href class="collapse-navigation-link ion-navicon" ng-click="tabCtrl.navigationCollapsed=!tabCtrl.navigationCollapsed"></a>
+    </div>
+    <button ng-click="back('organization.masters.list')" type="button" class="back-button btn btn-default btn-with-icon"><i
+          class="ion-chevron-left"></i>Back
+      </button>
+    <span>{{addCtrl.page.pageinfo.tagline}}</span>
+    <i ng-hide="addCtrl.tempLoaded" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+    <div class="line"></div>
+    <ng-include src="addCtrl.templateUrlPath" onload="addCtrl.tempLoaded=true"></ng-include>
+    <span ng-show="(addCtrl.templateUrlPath=='')">Template URL is empty</span>
+  </div>
+</div>-->

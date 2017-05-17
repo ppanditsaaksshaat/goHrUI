@@ -5,16 +5,16 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.employees.list')
-    .controller('emplistController', emplistController);
+  angular.module('BlurAdmin.pages.organization.employees.masters')
+    .controller('OrgMastersListController1', OrgMastersListController1);
 
   /** @ngInject */
-  function emplistController($scope, $state, $timeout, pageService) {
+  function OrgMastersListController1($scope, $state, $stateParams, $timeout, pageService) {
 
     var vm = this;
-    var pageId = 25;
+    var pageId = $stateParams.pageId;
+    var tempName = $stateParams.name;
     var currentState = $state.current;
-
 
     vm.filterOpt = {};
     vm.searchList = [];
@@ -35,11 +35,11 @@
     $scope.gridStyle = { width: 500, height: 450 }
     $scope.boxSetting = {
       showRefresh: true,
-      showFilter: true,
+      showFilter: false,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
-      showUpload: true
+      showUpload: false
     }
 
     function _loadController() {
@@ -98,11 +98,13 @@
       _getTableData();
     }
     function _addRecord() {
-      $state.go("organization.employees.add", "{action:'create'}");
+      $state.go("organization.employees.masters.add", { name: tempName, action: 'create', pageId: pageId });
     }
     function _editRecord(row) {
-      var empId = row.entity.EmpId;
-      $state.go("organization.employees.edit", { action: 'edit', empId: empId });
+      var entity = row.entity;
+      $state.go("organization.employees.masters.edit",
+        { name: tempName, pageId: pageId, action: 'edit', pkId: entity[$scope.page.pageinfo.idencolname] }
+      );
     }
     function _updateRecord(row) {
       var empId = row.entity.EmpId;

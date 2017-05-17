@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('employee', [
+  angular.module('BlurAdmin.pages.organization.employees', [
     'BlurAdmin.pages.organization.employees.list',
     'BlurAdmin.pages.organization.employees.masters',
     // 'BlurAdmin.pages.organization.employees.report'
