@@ -13,7 +13,7 @@
     function OrgEmpUploadController($scope, $sce, $filter, $http, uiGridConstants, $interval, $timeout,
         $uibModal, pageService, $q, DJWebStore, $window, DJWebStoreGlobal) {
         var vm = this;
-        debugger;
+
 
         vm.gridOptions = { data: [] }
         vm.uploader = [];
@@ -54,7 +54,7 @@
         //Public Functions
         vm.setupMigrate = function () {
 
-            _loadController();
+            vm.migrate.tables = [];
 
             var table1 = { title: 'Job Description', rows: [] }
 
@@ -64,14 +64,14 @@
             })
 
             table1.rows.push({
-                column1: { name: 'JDEmploymentId', text: 'Employeement Type', type: 'text', required: true, value: 'none' },
+                column1: { name: 'JDEmploymentId', text: 'Employment Type', type: 'text', required: true, value: 'none' },
                 column2: { name: 'JDEmpGradeId', text: 'Grade', type: 'text', required: false, value: 'none' },
 
             })
 
             table1.rows.push({
                 column1: { name: 'JDDesgId', text: 'Designation', type: 'text', required: true, value: 'none' },
-                column2: { name: 'JDEmpLevelId', text: 'Lavel', type: 'text', required: false, value: 'none' }
+                column2: { name: 'JDEmpLevelId', text: 'Level', type: 'text', required: false, value: 'none' }
             })
 
             table1.rows.push({
@@ -108,19 +108,23 @@
 
 
             table2.rows.push({
-                column1: { name: 'EmpCode', text: 'EmployeeCode', type: 'text', value: 'none' },
-                column2: { name: 'EmpName', text: 'Employee Full Name', type: 'text', value: 'none' }
+                column1: { name: 'EmpCode', text: 'Employee Code', type: 'text', required: false, value: 'none' }
             })
-            table2.rows.push({
-                column1: { name: 'EmpTitleId', text: 'Title', type: 'text', value: 'none' },
-                column2: { name: 'EmpFirstName', text: 'First Name', type: 'text', value: 'none' }
+            if (vm.showEmployeeName) {
+                table2.rows[0].column2 = { name: 'EmpName', text: 'Employee Full Name', type: 'text', required: false, value: 'none' };
+            }
+            else {
+                table2.rows.push({
+                    column1: { name: 'EmpTitleId', text: 'Title', type: 'text', required: false, value: 'none' },
+                    column2: { name: 'EmpFirstName', text: 'First Name', type: 'text', required: false, value: 'none' }
 
-            })
-            table2.rows.push({
-                column1: { name: 'EmpLastName', text: 'Last Name', type: 'text', value: 'none' },
-                column2: { name: 'EmpMiddleName', text: 'Middle Name', type: 'text', required: false, value: 'none' }
+                })
+                table2.rows.push({
+                    column1: { name: 'EmpLastName', text: 'Last Name', type: 'text', required: false, value: 'none' },
+                    column2: { name: 'EmpMiddleName', text: 'Middle Name', type: 'text', required: false, value: 'none' }
 
-            })
+                })
+            }
 
 
             table2.rows.push({
@@ -152,7 +156,7 @@
                 column1: { name: 'PDTwitter', text: 'Twitter', type: 'text', required: false, value: 'none' },
                 column2: { name: 'PDOtherNumber', text: 'Other Number', type: 'text', required: false, value: 'none' }
             })
-           
+
 
 
 
@@ -187,12 +191,20 @@
 
         }
         vm.nextDataUpload = function () {
+            debugger;
             $window.scrollTo(0, 0);
+            if (vm.showEmployeeName == true) {
+                // vm.showEmpName();
+            }
+            // vm.rudraField20 = true;
+            // vm.importColumn20 = true;
+
             if (vm.migrate.currentStep == 1) {
                 if (vm.gridOptions.data.length <= 0) {
                     alert('No data found.')
                 }
                 else {
+                    vm.setupMigrate();
                     vm.matchingFields();
                     vm.migrate.currentStep = 2;
                     vm.migrate.step1 = false;
@@ -216,9 +228,10 @@
                     //if not found push in unMapped otherwise ignore
 
                     vm.migrate.unMappedList = [];
-
+                    
                     angular.forEach(vm.gridOptions.columnDefs, function (col, colIdx) {
                         var isFound = false;
+                        
                         angular.forEach(vm.migrate.tables, function (table, tidx) {
                             angular.forEach(table.rows, function (row, ridx) {
 
@@ -410,14 +423,18 @@
             angular.forEach(vm.migrate.tables, function (table, tidx) {
                 angular.forEach(table.rows, function (row, ridx) {
                     if (isValid) {
-                        if (row.column1.required && row.column1.value == 'none') {
-                            isValid = false;
-                            invalidField = row.column1.text;
+                        if (row.column1 !== undefined) {
+                            if (row.column1.required && row.column1.value == 'none') {
+                                isValid = false;
+                                invalidField = row.column1.text;
+                            }
                         }
                         if (isValid) {
-                            if (row.column2.required && row.column2.value == 'none') {
-                                invalidField = row.column2.text;
-                                isValid = false;
+                            if (row.column2 !== undefined) {
+                                if (row.column2.required && row.column2.value == 'none') {
+                                    invalidField = row.column2.text;
+                                    isValid = false;
+                                }
                             }
                         }
                     }
@@ -457,17 +474,25 @@
             tempColumns.push({ MiddleName: '' });
             tempColumns.push({ LastName: '' });
 
-
-
-
-
-
             DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
         }
+        // vm.showEmpName = function () {
+        //     alert('abcd');
+        //     vm.rudraField20 = false;
+        //     vm.importColumn20 = false;
+        //     vm.rudraField21 = true;
+        //     vm.importColumn21 = true;
+        //     vm.rudraField2 = true;
+        //     vm.importColumn2 = true;
+        //     vm.rudraField22 = true;
+        //     vm.importColumn22 = true;
+        //     vm.rudra2 = true;
+        //     vm.import2 = true;
 
+        // }
 
         //Calling Default Function
-        vm.setupMigrate();
+        _loadController();
 
     }
 })();
