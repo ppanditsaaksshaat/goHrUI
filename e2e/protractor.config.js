@@ -37,11 +37,8 @@
 exports.config = {
   framework: 'jasmine',
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  specs: ['e2e/LoginPage-spec.js'],
+  specs: ['src/tests/LoginPage-spec.js'],
   capabilities: {
     'browserName': 'firefox'
-   
   },
- 
-  
 }
