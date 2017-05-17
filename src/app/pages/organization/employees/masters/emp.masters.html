@@ -1,18 +1,13 @@
 <div class="row">
     <div class="col-md-3" style="padding-right:0px; margin-right:0px;  ">
         <div class="panel panel-default bootstrap-panel xmedium-panel">
-            <div class="panel-heading panHead">
-                <div class="row" ng-hide="showSearchFilter">
-                    <div class="col-md-9">Filter data by</div>
-                    <div class="col-md-3"><button type="button" class="btn btn-default" ng-click="openSearchFilter()">
-                        <i class="ion-search"></i> </button></div>
-                </div>
-                <div class="row" ng-show="showSearchFilter">
+            <div class="panel-heading panHead" style="vertical-align: super">
+                <div class="row">
                     <div class="col-md-12">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search Filter" ng-model="filterSearchText">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="Search Master" ng-model="menuFilter">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" ng-click="showSearchFilter=false">
+                                <button class="btn btn-default" type="button" ng-click="menuFilter=''">
                                     <i class="ion-close"></i>
                                 </button>
                         </span>
@@ -22,11 +17,16 @@
             </div>
 
             <div class="panel-body" style="overflow: scroll">
-
-                <div ng-repeat="t in tabCtrl.tabs| filter: {name: tabCtrl.menuFilter}" ui-sref-active="active" 
-                class="mail-navigation" ui-sref="organization.employees.masters.list({name:t.name, pageId: t.id})">
-                    {{t.text}}<span class="new-mails" ng-show="t.newMails">{{t.newMails}}</span>
-                </div>
+                <ul class="list-unstyled side-menu maxHeight450">
+                    <li ng-repeat="t in tabCtrl.tabs| filter: {name: menuFilter}" ui-sref-active="active" ui-sref="organization.employees.masters.list({name:t.name, pageId: t.id})">
+                        <a href >{{t.text}}</a>
+                    </li>
+                </ul>
+                <!--<div class="letter-layout">
+                    <div ng-repeat="t in tabCtrl.tabs| filter: {name: menuFilter}" ui-sref-active="active" class="mail-navigation" ui-sref="organization.employees.masters.list({name:t.name, pageId: t.id})">
+                        {{t.text}}<span class="new-mails" ng-show="t.newMails">{{t.newMails}}</span>
+                    </div>
+                </div>-->
                 <!--<div class="nav">
                     <button type="button" class="btn btn-info" ng-click="applyBoxFilter()">Apply Filter</button>
                     <a href ng-click="clearFilter()">Clear</a>
@@ -38,4 +38,4 @@
     <div class="col-md-9" style="padding-left:0px; margin-left:0px;">
         <ui-view></ui-view>
     </div>
-</div>  
+</div>

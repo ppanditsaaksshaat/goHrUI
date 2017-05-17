@@ -2,12 +2,12 @@
     <div class="panel-heading panHead">
         <div class="row" ng-hide="showSearchFilter">
             <div class="col-md-9">Filter data by</div>
-            <div class="col-md-3"><button type="button" class="btn btn-default" ng-click="openSearchFilter()">
+            <div class="col-md-3"><button type="button" class="btn btn-default btn-sm" ng-click="openSearchFilter()">
                         <i class="ion-search"></i> </button></div>
         </div>
         <div class="row" ng-show="showSearchFilter">
             <div class="col-md-12">
-                <div class="input-group">
+                <div class="input-group input-group-sm">
                     <input type="text" class="form-control" placeholder="Search Filter" ng-model="filterSearchText">
                     <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" ng-click="showSearchFilter=false">
