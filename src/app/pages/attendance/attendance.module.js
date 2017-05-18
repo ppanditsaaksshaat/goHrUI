@@ -1,16 +1,15 @@
 /**
- * @author deepak jain
- * created on 18/04/2017
+ * @author k.danovsky
+ * created on 15.01.2016
  */
 (function () {
   'use strict';
 
   angular.module('BlurAdmin.pages.attendance', [
-    'BlurAdmin.pages.attendance.masters',
-
+    'BlurAdmin.pages.attendance.masters'       
   ])
       .config(routeConfig);
-
+      
   /** @ngInject */
   function routeConfig($stateProvider) {
     $stateProvider
@@ -21,7 +20,7 @@
           title: 'attendance',
           sidebarMeta: {
             icon: 'ion-gear-a',
-            order: 101,
+            order: 100,
           },
         });
   }
