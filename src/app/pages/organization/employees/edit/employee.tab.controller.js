@@ -334,10 +334,12 @@ vm.empEmgContact=result;
         CDAreaId:2
       }
     
-      if(vm.empContactDetail.CDId==undefined){      
+      if(vm.empContactDetail.CDId==undefined){  
+        vm.tempName1="address"    
        _editPage(Address, 'create');
       }
       else{
+         vm.tempName1="address"   
       _editPage(Address, 'edit');
       }    
     }
@@ -392,13 +394,13 @@ vm.empEmgContact=result;
         } 
         if(vm.empEmgContact.ECId==undefined)
         {
-        vm.tempName1=="emgcontact"
+        vm.tempName1="emgcontact"
         vm.pageId=53;
         _editPage(emgContact, 'create');
         }
         else
         {
-           vm.tempName1=="emgcontact"
+           vm.tempName1="emgcontact"
            vm.pageId=53;
            _editPage(emgContact, 'edit');
         }
@@ -464,19 +466,19 @@ vm.empEmgContact=result;
     }
     var count=1;
     function _updateSuccessResult(result) {     
-       if(vm.tempName=="personal")
+       if(vm.tempName=="personal" && vm.tempName1=="emgcontact")
        {       
          if(count==2)
          {
          $scope.showMsg('success', 'Record Saved Successfully');  
          count=1;      
          }
-        else{
+         else{
            count++;
-        }              
-       }
-       else
-       {
+         }              
+        }
+        else
+        {
         $scope.showMsg('success', 'Record Saved Successfully');
        }
 
