@@ -116,8 +116,7 @@
                                 <tr ng-repeat="field in table.rows">
                                     <td class="padT8 padB8 col-sm-2" style="padding-left:10px; text-align: left"><span ng-show="field.column1.required" class="font-red">*</span> <span ng-class="{'font-red':field.column1.required}">{{field.column1.text}}</span></td>
                                     <td style="padding-top: 8px; padding-bottom: 8px; padding-right: 20px;">
-                                        <select style="width:200px" class="form-control" name="{{field.column1.name}}" 
-                                        ng-model="field.column1.value">
+                                        <select style="width:200px" class="form-control" name="{{field.column1.name}}" ng-model="field.column1.value">
                                         <option class="font-red" value="none"><em class="font-red font-italic">None</em></option>
                                             <option ng-repeat="col in tabCtrl.gridOptions.columnDefs" value="{{col.name}}">{{col.name}}</option>
 
@@ -125,8 +124,7 @@
                                         </select></td>
                                     <td ng-show="(field.column2!==undefined)" class="col-sm-2" style="padding-top: 8px; padding-bottom: 8px"><span ng-show="field.column2.required" class="font-red">*</span> <span ng-class="{'font-red':field.column2.required}">{{field.column2.text}}</span></td>
                                     <td ng-show="(field.column2!==undefined)" style="padding-top: 8px; padding-bottom: 8px">
-                                        <select style="width:200px" class="form-control" name="{{field.column2.name}}" 
-                                        ng-model="field.column2.value">
+                                        <select style="width:200px" class="form-control" name="{{field.column2.name}}" ng-model="field.column2.value">
                                             <option class="font-red" value="none"><em class="font-red font-italic">None</em></option>
                                             <option ng-repeat="col in tabCtrl.gridOptions.columnDefs" value="{{col.name}}">{{col.name}}</option>
                                        </select></td>
@@ -234,20 +232,21 @@
                     <button type="button" ng-click="tabCtrl.gridOptions.data=[]" class="btn btn-default">
                         Cancel
                     </button>
-                    <button type="button" ng-click="tabCtrl.nextDataUpload()" class="btn btn-info">
+                    <button type="button" ng-click="tabCtrl.nextDataUpload()" ng-hide="tabCtrl.migrate.step3"  class="btn btn-info">
                        {{(tabCtrl.migrate.step3)?"Import":"Next"}}
                     </button>
-                    <button type="button" ng-click="tabCtrl.importDataUpload()" class="btn btn-info">
-                       {{(tabCtrl.migrate.step3)?"Import":"Next"}}
+                    <button type="button" ng-click="tabCtrl.importDataUpload()" ng-show="tabCtrl.migrate.step3" class="btn btn-info">
+                       Imports
                     </button>
 
 
                     <!--<button type="button" ng-click="tabCtrl.nextDataUpload()" ng-show="tabCtrl.gridOptions.data.length > 0" class="btn btn-info">
                                     Next
                                 </button>
-                    <button type="button" ng-click="back('organization.employees.list')" ng-hide="tabCtrl.gridOptions.data.length > 0" class="btn btn-default">
-                                    Back
-                                </button>-->
+                                
+                                <button type="button" class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadTemp()">
+                            Download Template</button>
+                            </div>-->
 
 
 
