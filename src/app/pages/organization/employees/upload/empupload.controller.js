@@ -169,7 +169,7 @@
             var table3 = { title: 'Account', rows: [] }
 
             table3.rows.push({
-                column1: { name: 'CIDECompanyName', text: 'Salary Mode', type: 'text', required: false, value: 'none' },
+                column1: { name: 'ADSalaryModeId', text: 'Salary Mode', type: 'text', required: false, value: 'none' },
                 column2: { name: 'PFPPFAccountNo', text: 'PF Account Number', type: 'text', required: false, value: 'none' }
             })
 
@@ -191,7 +191,7 @@
 
         }
         vm.nextDataUpload = function () {
-            debugger;
+
             $window.scrollTo(0, 0);
             if (vm.showEmployeeName == true) {
                 // vm.showEmpName();
@@ -228,19 +228,26 @@
                     //if not found push in unMapped otherwise ignore
 
                     vm.migrate.unMappedList = [];
-                    
+
                     angular.forEach(vm.gridOptions.columnDefs, function (col, colIdx) {
                         var isFound = false;
-                        
+
                         angular.forEach(vm.migrate.tables, function (table, tidx) {
                             angular.forEach(table.rows, function (row, ridx) {
+                                if (row.column1 !== undefined) {
+                                    if (col.name == row.column1.value) {
+                                        isFound = true;
+                                    }
+                                }
+                                if (row.column2 !== undefined) {
+                                    if (col.name == row.column2.value) {
+                                        isFound = true;
+                                    }
+                                }
 
-                                if (col.name == row.column1.value) {
-                                    isFound = true;
-                                }
-                                if (col.name == row.column2.value) {
-                                    isFound = true;
-                                }
+
+
+
                             })
                         })
 
@@ -318,6 +325,7 @@
             })
         }
         vm.importDataUpload = function () {
+            alert('import');
             vm.migrate.currentStep = 3;
             vm.migrate.step1 = false;
             vm.migrate.step2 = false;
@@ -328,10 +336,14 @@
 
             angular.forEach(vm.migrate.tables, function (table, tidx) {
                 angular.forEach(table.rows, function (row, ridx) {
+                    if (row.column1 !== undefined) {
+                        mappedFieldsList[row.column1.name] = row.column1.value;
+                    }
+                    if (row.column2 !== undefined) {
+                        mappedFieldsList[row.column2.name] = row.column2.value;
+                    }
 
-                    mappedFieldsList[row.column1.name] = row.column1.value;
 
-                    mappedFieldsList[row.column2.name] = row.column2.value;
 
                 })
             })
@@ -464,7 +476,7 @@
         }
 
         vm.downloadTemp = function () {
-            debugger;
+
             alert('download temp is working');
             var tempColumns = [];
 
@@ -473,6 +485,12 @@
             tempColumns.push({ FirstName: '' });
             tempColumns.push({ MiddleName: '' });
             tempColumns.push({ LastName: '' });
+            tempColumns.push({ Department: '' });
+            tempColumns.push({ EmploymentType: '' });
+            tempColumns.push({ Designation: '' });
+            tempColumns.push({ DateOfBirth: '' });
+            tempColumns.push({ Gender: '' });
+            tempColumns.push({ Mobile: '' });
 
             DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
         }
