@@ -18,7 +18,7 @@
     'BlurAdmin.pages.organization',
     'BlurAdmin.pages.time',
     'BlurAdmin.pages.leave',
-    // 'BlurAdmin.pages.attendance',
+    'BlurAdmin.pages.attendance',
     'BlurAdmin.pages.payroll',
     'BlurAdmin.pages.loan',
     'BlurAdmin.pages.mis'
