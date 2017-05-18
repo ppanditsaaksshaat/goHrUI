@@ -27,6 +27,7 @@
     vm.empResignDetail = {};
     vm.empSignDetail = {};
     vm.empAccountDetail = {};
+    vm.empEmgContact={};
     vm.oldEntity = {};
     var rndValu = Math.round((Math.random() * 10) * 10);
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
@@ -34,35 +35,31 @@
     vm.updateForm = _updateForm;
     vm.jobEmploymentOnChange = _jobEmploymentOnChange;
     vm.accountSalaryModeOnChange = _accountSalaryModeOnChange;
+    vm.permanentAddress=_permanentAddress;
+    vm.saveContact=_saveContact;
 
 
-        //datepicker format
 
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    
-        // dateofbirth datepicker         
-        $scope.opendob = _opendob;
-        function _opendob() {
-         $scope.formatdob = $scope.formats[0];
-         $scope.optionsdob = {
-            showWeeks: false
-          };
-         $scope.openeddob = true;
-          
-        }
-
-       // anniversary datepicker 
-        $scope.openanniversary = _openanniversary;                         
-        function _openanniversary() {                   
-         $scope.formatanniversary = $scope.formats[0];
-         $scope.optionsanniversary = {
-            showWeeks: false
-         }; 
-         $scope.openedanniversary=true;
-        }
-
-        function _getDate(date)
-        {
+// Permanent Address Same as Current Address        
+function _permanentAddress(){ 
+  if(vm.CDPermanent){
+    vm.empContactDetail.CDPAddLine1=vm.empContactDetail.CDAddLine1;
+    vm.empContactDetail.CDPAddLine2=vm.empContactDetail.CDAddLine2;
+    vm.empContactDetail.CDPPincode=vm.empContactDetail.CDPincode;
+    vm.empContactDetail.PCountryId=vm.empContactDetail.CountryId
+    vm.empContactDetail.PStateId=vm.empContactDetail.StateId
+    vm.empContactDetail.PCityId=vm.empContactDetail.CityId
+  }
+  else{
+    vm.empContactDetail.CDPAddLine1='';
+    vm.empContactDetail.CDPAddLine2='';
+    vm.empContactDetail.CDPPincode='';
+    vm.empContactDetail.PCountryId='';
+    vm.empContactDetail.PStateId='';
+    vm.empContactDetail.PCityId='';
+  }
+}
+        function _getDate(date) {
             var mmddyyyy="";
             var date=new Date(date);
             var month=date.getMonth()+1;
@@ -76,14 +73,80 @@
 
       vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
       _getTableId();
+      //for according to tab click
       $timeout(function () {
         pageService.getPagData(vm.pageId).then(
           _getPageDataSuccessResult, _getPageDataErrorResult);
       });
+      //for emgcontact detail
+      $timeout(function () {
+       var searchList = [];
+        var searchFields = {
+          field: 'ECEmpId',
+          operand: '=',
+          value: vm.empPKId
+        }
+        searchList.push(searchFields);
+      
+          pageService.findEntity(57, undefined, searchList).then(
+         _findEMGContactEntitySuccessResult, _findEMGContactEntityErrorResult);
+      });
+      //for family detail
       $timeout(function () {
         pageService.getPagData(52).then(
           _getfamilyDetailSuccessResult, _getfamilyDetailErrorResult);
       });
+      //for contact detail
+      $timeout(function () {
+        pageService.getPagData(36).then(
+          _getcontactSuccessResult, _getcontactErrorResult);
+      });
+    }
+   function _findEMGContactEntitySuccessResult(result)
+   {
+
+vm.oldEntity=result;
+vm.empEmgContact=result;
+   }
+   function _findEMGContactEntityErrorResult()
+   {
+
+   }
+    function _getcontactSuccessResult(result)
+    {
+        console.log(result)
+        vm.CountryId = result.pageinfo.selects.CountryId;
+        vm.StateId = result.pageinfo.selects.StateId;
+        vm.CityId = result.pageinfo.selects.CityId;
+        vm.AreaId = result.pageinfo.selects.CDAreaId;      
+        var searchList = [];
+        var searchFields = {
+          field: 'CDEmpId',
+          operand: '=',
+          value: vm.empPKId
+        }
+        searchList.push(searchFields);
+        $timeout(function(){
+          pageService.findEntity(45, undefined, searchList).then(
+         _findContactEntitySuccessResult, _findContactEntityErrorResult);
+        })
+       
+    }
+
+    function _getcontactErrorResult(error)
+    {
+
+    }
+    function _findContactEntitySuccessResult(result)
+    {
+      console.log(result)
+      vm.oldEntity=result;     
+      vm.empContactDetail=result;
+
+    }
+    function _findContactEntityErrorResult(result)
+    {
+
     }
     function _getfamilyDetailSuccessResult(result) {
       console.log(result)
@@ -103,7 +166,6 @@
         }
       )
       console.log($scope.gridObject)
-
       _getTableData();
     }
     function _getfamilyDetailErrorResult(error) {
@@ -111,12 +173,8 @@
     }
     function _getPageDataSuccessResult(result) {
       console.log(result)
-      var field = "";
-      if (vm.tempName == 'basic') {
-        pageService.findEntity(vm.tableId, parseInt(vm.empPKId), undefined).then(
-          _findEntitySuccessResult, _findEntityErrorResult);
-      }
-      else if (vm.tempName == 'personal') {
+      var field = "";    
+       if (vm.tempName == 'personal') {
         vm.gender = result.pageinfo.selects.PdGenderId;
         vm.maritalStatus = result.pageinfo.selects.PdMaritalId;
         vm.nationality = result.pageinfo.selects.PdNationalityId;
@@ -145,12 +203,12 @@
       else if (vm.tempName == 'resign') {
         vm.leavingType = result.pageinfo.selects.RDLeavingTypeId;
         field = 'RDEmpId';
-        _findEntity(field);
+        
       }
       else if (vm.tempName == 'sign') {
         vm.signatureType = result.pageinfo.selects.SGSTId;
         field = 'SDEmpId';
-        _findEntity(field);
+       
       }
       else if (vm.tempName == 'account') {
         console.log(result)
@@ -158,9 +216,16 @@
         vm.salary = result.pageinfo.selects.ADSalaryID;
         vm.bankName = result.pageinfo.selects.BankId;
         field = 'ADEmpId';
-        _findEntity(field);
+        
       }
-      if (vm.tempName != 'basic') {
+       _findEntity(field);
+
+    }
+    
+    function _getPageDataErrorResult(error) {
+
+    }
+    function _findEntity(field) {
         var searchList = [];
         var searchFields = {
           field: field,
@@ -170,29 +235,20 @@
         searchList.push(searchFields);
 
         pageService.findEntity(vm.tableId, undefined, searchList).then(
-          _findEntitySuccessResult, _findEntityErrorResult);
-      }
-
-    }
-    function _findEntity(field) {
-
-    }
-    // function _getTableData(field){
-
-    // }
-    function _getPageDataErrorResult(error) {
-
+         _findEntitySuccessResult, _findEntityErrorResult);
     }
     function _findEntitySuccessResult(result) {
       if (vm.tempName == 'basic') {
         vm.empBasicDetail = result;
       }
       else if (vm.tempName == 'personal') {
-        console.log(result)
         vm.oldEntity = result;
-         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];       
-         $scope.formatdob = $scope.formats[0];
-        alert(result.PdDateOfBirth)
+        // var dob=new Date(result.PdDateOfBirth)
+        // var anniversary=new Date(result.PDAnniversaryDate)
+        // $scope.formatdob = $scope.formats[0];
+        // $scope.formatanniversary = $scope.formats[0];
+        // result.PdDateOfBirth=dob;
+        // result.PDAnniversaryDate=anniversary;
         vm.empPersonalDetail = result;
       }
       else if (vm.tempName == 'contact') {
@@ -241,7 +297,7 @@
         vm.tableId = 43;
       }
       if (vm.tempName == 'contact') {
-        vm.tableId = 45;
+          vm.tableId = 45;
       }
       if (vm.tempName == 'job') {
         vm.tableId = 121;
@@ -260,15 +316,30 @@
       }
 
     }
-    function _setupSaving(dataObject, action) {
-      var data = {
-        oldEntity: vm.oldEntity,
-        newEntity: dataObject,
-        pageCode: vm.pageId,
-        activity: action
+ 
+    function _saveContact() {
+       vm.pageId=36;
+       var Address={
+        CDId:vm.empContactDetail.CDAddLine1==undefined ?undefined:vm.empContactDetail.CDId,
+        CDEmpId:vm.empPKId,
+        CDAddLine1:vm.empContactDetail.CDAddLine1,
+        CDAddLine2:vm.empContactDetail.CDAddLine2,
+        CDPincode:vm.empContactDetail.CDPincode,
+        CDPAddLine1:vm.empContactDetail.CDPAddLine1,
+        CDPAddLine2:vm.empContactDetail.CDPAddLine2,
+        CDPPincode:vm.empContactDetail.CDPPincode,
+        CountryId:vm.empContactDetail.CountryId,
+        StateId:vm.empContactDetail.StateId,
+        CityId:vm.empContactDetail.CityId,
+        CDAreaId:2
       }
-      alert(JSON.stringify(data))
-      return data;
+    
+      if(vm.empContactDetail.CDId==undefined){      
+       _editPage(Address, 'create');
+      }
+      else{
+      _editPage(Address, 'edit');
+      }    
     }
     function _updateForm() {
 
@@ -291,6 +362,7 @@
 
         _editPage(job, 'edit');
       }
+      
       if (vm.tempName == 'personal') {
         var personal = {
           PdEmpId: vm.empPKId,
@@ -309,9 +381,28 @@
           PDAdhar:vm.empPersonalDetail.PDAdhar,
           PDPanCard:vm.empPersonalDetail.PDPanCard,
           PDOtherNumber:vm.empPersonalDetail.PDOtherNumber,
+        }  
+         _editPage(personal, 'edit');
+        var emgContact={
+          ECId:vm.empEmgContact.ECId==undefined?undefined:vm.emgContact.ECId,
+          ECEmpId:vm.empPKId,
+          ECPersonName: vm.empEmgContact.ECPersonName,
+          ECContactNo:vm.empEmgContact.ECContactNo,
+          ECAddress:vm.empEmgContact.ECAddress,
+        } 
+        if(vm.empEmgContact.ECId==undefined)
+        {
+        vm.tempName1=="emgcontact"
+        vm.pageId=53;
+        _editPage(emgContact, 'create');
         }
-        alert(JSON.stringify(personal))
-        _editPage(personal, 'edit');
+        else
+        {
+           vm.tempName1=="emgcontact"
+           vm.pageId=53;
+           _editPage(emgContact, 'edit');
+        }
+
       }
       if (vm.tempName == 'account') {
         if (vm.bankDetail == false) {
@@ -355,29 +446,39 @@
           }
         }
 
-        // var account = {
-        //   PdEmpId: vm.empPKId,
-        //   PdId: vm.empPersonalDetail.PdId,
-        //   PdEmail: vm.empPersonalDetail.PdEmail,
-        //   PdMobileNo: vm.empPersonalDetail.PdMobileNo,
-        //   PdGenderId: vm.empPersonalDetail.PdGenderId,
-        //   PdMaritalId: vm.empPersonalDetail.PdMaritalId,
-        //   PdNationalityId: vm.empPersonalDetail.PdNationalityId,
-        //   PdDateOfBirth: vm.empPersonalDetail.PdDateOfBirth,
-        //   PdNickName: vm.empPersonalDetail.PdNickName
-        // }
-        //  _editPage(account);
       }
     }
+   function _setupSaving(dataObject, action) {
+      var data = {
+        oldEntity: vm.oldEntity==undefined?dataObject:vm.oldEntity,
+        newEntity: dataObject,
+        pageCode: vm.pageId,
+        activity: action
+      }      
+      return data;
+    }
+    function _editPage(objectData, action) {      
 
-    function _editPage(objectData, action) {
-      alert(JSON.stringify(objectData))
       var savingObj = _setupSaving(objectData, action);
       pageService.editPageData(vm.pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult)
     }
-    function _updateSuccessResult(result) {
-      //   alert(JSON.stringify(result))
-      $scope.showMsg('success', 'Employee Updated Successfully');
+    var count=1;
+    function _updateSuccessResult(result) {     
+       if(vm.tempName=="personal")
+       {       
+         if(count==2)
+         {
+         $scope.showMsg('success', 'Record Saved Successfully');  
+         count=1;      
+         }
+        else{
+           count++;
+        }              
+       }
+       else
+       {
+        $scope.showMsg('success', 'Record Saved Successfully');
+       }
 
     }
     function _updateErrorResult(error) {
@@ -400,10 +501,6 @@
         vm.bankDetail = false;
       }
     }
-
-    // $scope.addFamily = function () {
-    //   alert("hi")
-    // }
 
     function _temaplateURL(tempName, action) {
       vm.templateUrlPath = "app/pages/organization/employees/templates/" + tempName + "/" + tempName + "-" + action + ".html?" + rndValu2 + "=" + rndValu;

@@ -18,6 +18,7 @@ angular.module('BlurAdmin', [
   'LocalStorageModule',
   'ngMessages',
   'naif.base64',
+  '720kb.datepicker',
   // 'angular.chosen',
   'BlurAdmin.theme',
   'BlurAdmin.pages',
