@@ -80,11 +80,13 @@
     }
     function _getTableSuccessResult(result) {
       console.log(new Date())
+      console.log(result)
       $scope.page.isLoaded = true
       $scope.page.isLoading = false
       if (result == 'NoDataFound') {
-        // uivm.showMsg('warning', 'No Record Found.');
+        $scope.showMsg('warning', 'No Record Found.', 'Employee List');
       } else if (result.Errors !== undefined) {
+        $scope.showMsg('error', result.Message, 'Error')
         // uivm.showMsg('error', result.Message);
         // _startMsgTimer();
       }
@@ -92,6 +94,7 @@
         $scope.rows = result;
         $scope.page.gridOptions.data = result;
         console.log(new Date())
+        console.log($scope.page.gridOptions.data)
       }
     }
     function _refreshData() {

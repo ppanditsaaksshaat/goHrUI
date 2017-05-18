@@ -2,7 +2,7 @@
   <div class="panel-heading clearfix">
     <div class="row">
       <div class="col-md-6">
-        <button ng-click="back('organization.employees.masters.list')" type="button" class="btn btn-xs btn-default btn-with-icon"><i
+        <button ng-click="$close()" type="button" class="btn btn-xs btn-default btn-with-icon"><i
           class="ion-chevron-left"></i>Back
       </button> {{addCtrl.page.pageinfo.tagline}}
         <i ng-show="addCtrl.tempLoaded" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
@@ -24,24 +24,162 @@
 
   </div>
   <div class="panel-body">
-    <!--<form class="form-horizontal" name="editForm" ng-submit="addCtrl.saveForm(editForm)">
-      <div  class="form-group" ng-repeat="field in addCtrl.formrows">
+    <form class="form-horizontal" name="editForm" ng-submit="addCtrl.saveForm(editForm)">
+
+      <div class="content-box" ng-repeat="view in addCtrl.page.pageinfo.viewform" on-finish-render="onTabFinished">
+        <h3 class="content-box-header bg-blue-alt">
+          {{view.title}}
+        </h3>
+        <div class="content-box-wrapper">
+          <div class="row" ng-repeat="row in view.rows">
+            <div ng-repeat="col in row" ng-class="{'col-md-12': (row.length==1),'col-md-6':(row.length==2)}">
+              <div class="row" ng-class="{'disabled': col.readonly}">
+                <div class="col-md-3 text-left">
+                  {{col.text}}:
+                </div>
+                <div class="col-md-9" ng-switch="col.type">
+                  <div class="input-group">
+                    <!--Textbox-->
+                    <input ng-switch-when="textbox" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" maxlength="{{col.maxLength}}"
+                      ng-model="vm.entity[col.name]" type="text" class="form-control" ng-minlength="1" ng-maxlength="col.maxLength"
+                      ng-required="col.required" ng-class="{'border-red': col.haserror}" />
+                    <!--email-->
+                    <div class="input-group" ng-switch-when="email">
+                      <span class="input-group-addon">
+                                                            <i class="glyph-icon icon-typicons-at"></i>
+                                                        </span>
+                      <input name="{{col.name}}" ng-model="vm.entity[col.name]" type="email" class="form-control" ng-minlength="10" ng-maxlength="col.maxLength"
+                        id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
+                      />
+
+                    </div>
+
+                    <!--mobile-->
+                    <div class="input-group" ng-switch-when="mobile">
+                      <span class="input-group-addon">
+                                                            <i class="glyph-icon icon-linecons-mobile"></i>
+                                                        </span>
+                      <input name="{{col.name}}" ng-model="vm.entity[col.name]" type="number" class="form-control" ng-minlength="col.maxLength"
+                        ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}"
+                        ng-class="{'border-red': col.haserror}" ng-pattern="vm.pattern.mobile" maxlength="{{col.maxLength}}"
+                      />
+                    </div>
+
+                    <!--Select-->
+                    <select name="{{col.name}}" id="{{col.name}}" ng-model="vm.entity[col.name]" class="form-control" ng-options="opt.value as opt.name for opt in col.options"
+                      ng-switch-when="select" placeholder="{{col.place}}" ng-required="col.required"></select>
+
+                    <!--UISelect-->
+                    <select id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" class="form-control" ng-options="opt.id as opt.name for opt in col.options"
+                      ng-switch-when="uiselect" placeholder="{{col.place}}" ng-required="col.required"></select>
+
+                    <!--strapselect-->
+                    <select id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" class="form-control" ng-options="opt.value as opt.name for opt in col.options | filter:{ '{{col.propColName}}': vm.entity[col.propColName] }"
+                      ng-switch-when="strapselect" data-placeholder="{{col.place}}" ng-required="col.required"></select>
+
+                    <!--multi-select-->
+                    <select id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" type="date" class="form-control" ng-options="opt.value as opt.name for opt in col.options"
+                      ng-switch-when="multi-select" multiple placeholder="{{col.place}}" ng-required="col.required"></select>
+                    <!--Checkbox-->
+                    <div class="checkbox checkbox-success" ng-switch-when="checkbox">
+                      <label>
+                                                            <input name="{{col.name}}"
+                                                                   ng-model="vm.entity[col.name]"
+                                                                   ng-required="col.required"
+                                                                   type="checkbox"
+                                                                   id="{{col.name}}"
+                                                                   checked
+                                                                   class="custom-checkbox">
+                                                            {{col.place}}
+                                                        </label>
+                    </div>
+                    <!--Linklabel-->
+                    <label id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" ng-switch-when="linklabel">{{vm.entity[col.name]}}</label>
+                    <!--sequence-->
+                    <label id="{{col.name}}" name="{{col.name}}" ng-switch-when="sequence">{{vm.entity[col.name]}}</label>
+                    <!--YesNo-->
+                    <input id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" ng-required="col.required" ng-switch-when="YesNo"
+                      type="checkbox" data-on-color="primary" class="input-switch" checked data-size="medium" data-on-text="On"
+                      data-off-text="Off">
+                    <!--Textarea-->
+                    <textarea id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" ng-required="col.required" type="textarea"
+                      class="form-control" ng-switch-when="textarea" placeholder="{{col.place}}"></textarea>
+                    <!--Password-->
+                    <div class="input-group" ng-switch-when="password">
+                      <span class="input-group-addon bg-black">
+                                                            <i class="glyph-icon icon-lock"></i>
+                                                        </span>
+                      <input id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" ng-required="col.required" type="text" class="form-control"
+                        placeholder="{{col.place}}">
+                    </div>
+
+
+                    <!--html-->
+                    <!--datetimepicker-->
+                    <input id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" ng-required="col.required" type="text" datetimepicker
+                      class="form-control" ng-switch-when="datetimepicker" placeholder="{{col.place}}" />
+                    <!--datepicker-->
+                    <input id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" ng-required="col.required" type="text" datetimepicker
+                      class="form-control" ng-switch-when="datepicker" placeholder="{{col.place}}" />
+                    <!--timepicker-->
+                    <input id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" ng-required="col.required" type="text" datetimepicker
+                      class="form-control" ng-switch-when="timepicker" placeholder="{{col.place}}" />
+
+                    <!--list-->
+                    <div ng-switch-when="list" angucomplete-alt id="{{col.name}}" placeholder="{{col.place}}" pause="300" selected-object="vm.entity[col.name]"
+                      local-data="col.options" local-search="localObjSearch" title-field="name" minlength="1" input-class="form-control form-control-small"
+                      match-class="highlight" name="{{col.name}}"></div>
+                    <!--currency-->
+                    <input name="{{col.name}}" ng-model="vm.entity[col.name]" ng-switch-when="currency" id="{{col.name}}" class="form-control touchspin-currency-left"
+                      type="text" value="0" name="touchspin-left-2" placeholder="{{col.place}}">
+                    <!--number-->
+                    <input id="{{col.name}}" name="{{col.name}}" ng-model="vm.entity[col.name]" type="number" class="form-control" ng-switch-when="number"
+                      placeholder="{{col.place}}" />
+
+                    <!--right icon-->
+                    <span class="input-group-addon" ng-if="col.type!='linklabel' && col.type !='sequence'">
+                                                        <i class="glyph-icon "
+                                                           ng-class="{'font-red icon-asterisk': !(editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty']) && col.required, 'font-green icon-iconic-ok': (editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty']), 'font-red icon-iconic-cancel': (editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'])}"></i>
+                                                    </span>
+                  </div>
+
+                  <!--<span class="help-block font-size-11 font-red"
+                                                                       ng-show="editForm[col.name].$error.required ||
+                                                editForm[col.name].$error.number">
+                                                                     Valid {{col.text}} is required
+                                                                 </span>
+                                                                 <span class="help-block font-size-11 font-red"
+                                                                       ng-show="((editForm[col.name]['$error'].minlength ||
+                                                editForm[col.name].$error.maxlength) &&
+                                                editForm[col.name].$dirty) ">
+                                                                     {{col.text}} should be {{col.maxLength}} digits
+                                                                 </span>-->
+                </div>
+
+              </div>
+              <div class="divider"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="form-group" ng-repeat="field in addCtrl.formrows">
         <label class="col-sm-3 control-label">{{field.text}}</label>
         <div class="col-sm-9">
           <input name="{{field.name}}" maxlength="50" ng-model="addCtrl.entity[field.name]" type="text" ng-required="true" class="form-control"
             id="inputEmail3" placeholder="Enter {{field.text}}">
         </div>
-      </div>
-      
+      </div>-->
+
 
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">
           <button ng-disabled="!editForm.$valid" type="submit" class="btn btn-warning">Save</button>
-          <button type="button" class="btn btn-danger" ng-click="back('organization.masters.list')">Cancel</button>
+          <button type="button" class="btn btn-danger" ng-click="$close()">Cancel</button>
         </div>
       </div>
-    </form>-->
-    <ng-include src="addCtrl.templateUrlPath" onload="addCtrl.tempLoaded=true"></ng-include>
+    </form>
+    <!--<ng-include src="addCtrl.templateUrlPath" onload="addCtrl.tempLoaded=true"></ng-include>-->
   </div>
 </div>
 

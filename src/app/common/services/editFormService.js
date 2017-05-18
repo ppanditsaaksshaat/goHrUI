@@ -63,7 +63,8 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
                 }
                 else {
                     _showToast('success', result.success_message, title)
-                    $rootScope.back();
+                    //$rootScope.back();
+                    $rootScope.$broadcast('form-success', result);
                 }
             }
             else if (result.error_message.Message == 'Record Already Added.') {

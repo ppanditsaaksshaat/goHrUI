@@ -9,7 +9,7 @@
     .controller('OrgMastersListController1', OrgMastersListController1);
 
   /** @ngInject */
-  function OrgMastersListController1($scope, $state, $stateParams, $timeout, pageService) {
+  function OrgMastersListController1($scope, $state, $stateParams, $timeout, pageService, dialogModal) {
 
     var vm = this;
     var pageId = $stateParams.pageId;
@@ -98,13 +98,24 @@
       _getTableData();
     }
     function _addRecord() {
-      $state.go("organization.employees.masters.add", { name: tempName, action: 'create', pageId: pageId });
+      var param = { name: tempName, action: 'create', pageId: pageId };
+      var options = {
+        url: 'app/pages/organization/employees/masters/add/add-vertical.html',
+        controller: 'OrgMastersAddController1', controllerAs: 'addCtrl',
+        param: param
+      }
+      dialogModal.open(options);
     }
     function _editRecord(row) {
       var entity = row.entity;
-      $state.go("organization.employees.masters.edit",
-        { name: tempName, pageId: pageId, action: 'edit', pkId: entity[$scope.page.pageinfo.idencolname] }
-      );
+
+      var param = { name: tempName, action: 'edit', pageId: pageId, pkId: entity[$scope.page.pageinfo.idencolname] };
+      var options = {
+        url: 'app/pages/organization/employees/masters/add/add-vertical.html',
+        controller: 'OrgMastersAddController1', controllerAs: 'addCtrl',
+        param: param
+      }
+      dialogModal.open(options);
     }
     function _updateRecord(row) {
       var empId = row.entity.EmpId;
@@ -115,8 +126,15 @@
       alert('_deleteRecord called:' + empId)
     }
     function _viewRecord(row) {
-      var empId = row.entity.EmpId;
-      alert('_viewRecord called:' + empId)
+      var entity = row.entity;
+
+      var param = { name: tempName, action: 'edit', pageId: pageId, pkId: entity[$scope.page.pageinfo.idencolname] };
+      var options = {
+        url: 'app/pages/organization/employees/masters/detail/detail.html',
+        controller: 'OrgMastersAddController1', controllerAs: 'addCtrl',
+        param: param
+      }
+      dialogModal.openCorner(options);
     }
     function _openView() {
       alert('view opened')
