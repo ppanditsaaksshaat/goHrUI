@@ -5,14 +5,14 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.attendance.masters')
-    .controller('AttendanceMastersDetailController', AttendanceMastersDetailController);
+  angular.module('BlurAdmin.pages.organization.masters')
+    .controller('attMastersDetailController', attMastersDetailController);
 
   /** @ngInject */
-  function AttendanceMastersDetailController($stateParams, mailMessages) {
+  function attMastersDetailController($stateParams, mailMessages) {
     var vm = this;
     vm.mail = mailMessages.getMessageById($stateParams.id);
-    vm.label = $stateParams.label;
+    vm.pageId = $stateParams.pageId;
   }
 
 })();

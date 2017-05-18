@@ -51,7 +51,10 @@
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDepartment">Date Of Joining*</label>
-          <input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.empJobDetail.JDDate">
+          <!--<input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.empJobDetail.JDDate">-->
+            <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
+            <input ng-model="empTabCtrl.empJobDetail.JDDate" type="text" class="form-control"/>           
+          </datepicker>
     </div>
   </div>
   <div class="col-sm-4">
@@ -88,7 +91,7 @@
       <div class="checkbox">
       <label class="custom-checkbox">      
       <input type="checkbox" ng-model="empTabCtrl.empJobDetail.JDIsOT" >   
-      <span>IsOT</span>
+      <span>OT</span>
     </label>
    </div>
   </div> 
@@ -110,14 +113,14 @@
   </div> 
 </div>
 
-<div ng-if="empTabCtrl.empJobDetail.JDIsOT" class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
+<div class="row" ng-if="empTabCtrl.empJobDetail.JDIsOT">
+  <div class="col-sm-4" ng-if="empTabCtrl.empJobDetail.SingleOT">
+    <div class="form-group"  >
       <label for="inputDepartment">Single OT Rate</label>
           <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.JDSingleOTRate">
     </div>
   </div> 
-   <div class="col-sm-4">
+   <div class="col-sm-4" ng-if="empTabCtrl.empJobDetail.JDDoubleOT">
     <div class="form-group">
       <label for="inputDepartment">Double OT Rate</label>
           <input type="text" class="form-control"  ng-model="empTabCtrl.empJobDetail.DoubleOTRate">
@@ -125,11 +128,15 @@
   </div> 
 </div>
 <div ng-show="empTabCtrl.contractBase">
+  <hr>
 <div class="row">
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDepartment">From Date</label>
-          <input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.empJobDetail.FromDate">
+          <!--<input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.empJobDetail.FromDate">-->
+          <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
+            <input ng-model="empTabCtrl.empJobDetail.FromDate" type="text" class="form-control"/>           
+          </datepicker>
     </div>
   </div>
   <div class="col-sm-4">
@@ -140,7 +147,7 @@
   </div>
   <div class="col-sm-4">
     <div class="form-group">
-      <label for="inputEmployeeType">Vender</label>
+      <label for="inputEmployeeType">Vendor</label>
       <select id="empLevel_{{$index}}"
                       name="empLevel_{{$index}}"
                       ng-model="empTabCtrl.empJobDetail.EmpLevelName"
@@ -225,6 +232,7 @@
     </div>
   </div>
 </div>
+ <hr>
 </div>
 
   <div class="text-center">

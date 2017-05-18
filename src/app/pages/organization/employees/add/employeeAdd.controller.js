@@ -17,7 +17,24 @@
         var columnIds = ['132', '667', '674', '192', '668', '743', '744'];
         vm.empAdd = {};
         vm.saveForm = _saveForm;
+        vm.clear = _clear;
 
+       function _clear()
+       {
+           vm.empAdd=[];
+       }
+
+        $scope.open = open;
+        $scope.opened = false;
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[0];
+        $scope.options = {
+            showWeeks: false
+        };
+
+        function open() {
+            $scope.opened = true;
+        }
 
         function _loadController() {
             $timeout(function () {
@@ -27,7 +44,7 @@
             });
         }
         function _getFieldSettingSuccessResult(result) {
-            vm.empAdd.EmpCode = result.colvalue;
+            vm.EmpCode = result.colvalue;
             //alert(JSON.stringify(result))
         }
         function _getFieldSettingErrorResult(error) {
@@ -95,6 +112,11 @@
 
         }
         function _saveForm() {
+        //    alert(vm.empAdd.JDDate)
+            var date=new Date(vm.empAdd.JDDate);
+            var month=date.getMonth()+1;
+            var doj=month +"/"+date.getDate()+"/" +date.getFullYear();
+
             if (_validateField()) {
 
                 var basic = {
@@ -102,12 +124,13 @@
                     EmpFirstName: vm.empAdd.EmpFirstName,
                     EmpMiddleName: vm.empAdd.EmpMiddleName,
                     EmpLastName: vm.empAdd.EmpLastName,
-                    EmpCode: vm.empAdd.EmpCode,
+                    EmpCode: vm.EmpCode,
                     OtherCode: vm.empAdd.OtherCode,
                     EmpPhoto1_64URL: vm.empAdd.EmpPhoto1_64URL,
                 }
+               
                 var job = {
-                    JDDate: vm.empAdd.JDDate,
+                    JDDate:doj,
                     JDDeptId: vm.empAdd.JDDeptId,
                     JDDesgId: vm.empAdd.JDDesgId,
                     JDEmploymentId: vm.empAdd.JDEmploymentId,
@@ -116,7 +139,8 @@
                 }
                 var personal = {
                     PdGenderId: vm.empAdd.PdGenderId,
-                    PdMobileNo: vm.empAdd.PdMobileNo
+                    PdMobileNo: vm.empAdd.PdMobileNo,
+                    PDOtherNumber:vm.empAdd.PDOtherNumber
                 }
                 var employeeData = { basic: basic, job: job, personal: personal };
                 pageService.create(JSON.stringify(employeeData)).then(_createSuccessResult, _createErrorResult)
@@ -124,8 +148,8 @@
         }
         function _createSuccessResult(result) {
             //   alert(JSON.stringify(result))
-            $scope.showMsg('success', 'Saved Successfully', 'Add En');
-            $state.go('organization.employee');
+            $scope.showMsg('success', 'Employee Saved Successfully');
+            $state.go('organization.employees.list');
         }
         function _createErrorResult(error) {
 

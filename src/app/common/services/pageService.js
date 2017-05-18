@@ -20,7 +20,7 @@ function ($http, DJWebStore, fileUpload) {
     };
 
     var _findEntity = function (tableId, pkValue, searchList) {
-        //debugger;
+      
 
         var url = serviceBase + 'api/Data/FindEntity/' + tableId;
         if (pkValue !== undefined) {
