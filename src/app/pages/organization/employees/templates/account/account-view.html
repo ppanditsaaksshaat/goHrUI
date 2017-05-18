@@ -78,21 +78,29 @@
     </div>
   </div> 
 </div>
-
-<h3 class="">PF Account</h3>
- <hr>
- <div class="row">
+<div class="row">
    <div class="col-sm-4">
       <div class="checkbox">
       <label class="custom-checkbox">      
       <input type="checkbox" ng-model="empTabCtrl.empAccountDetail.PFPPFIsActive">   
-      <span>IsActive</span>
+      <span>PF Active</span>
     </label>
    </div>
   </div> 
+    <div class="col-sm-4">
+      <div class="checkbox">
+      <label class="custom-checkbox">      
+      <input type="checkbox"  ng-model="empTabCtrl.empAccountDetail.ESIIsActive" >   
+      <span>ESI Active</span>
+    </label>
    </div>
-<div class="row">
-  
+  </div> 
+</div>
+
+<div ng-if="empTabCtrl.empAccountDetail.PFPPFIsActive">
+<h3 class="">PF Account</h3>
+<hr>
+<div class="row">  
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDepartment">PF Account No.</label>
@@ -102,24 +110,20 @@
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDepartment">PF Start Date</label>
-          <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.PFPPFMemberDate">
+          <!--<input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.PFPPFMemberDate">-->
+          <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
+            <input ng-model="empTabCtrl.empAccountDetail.PFPPFMemberDate" type="text" class="form-control"/>           
+          </datepicker>
     </div>
   </div> 
 </div>
+<hr>
+</div>
+
+<div ng-if="empTabCtrl.empAccountDetail.ESIIsActive">
 <h3 class="">ESI Account</h3>
  <hr>
- <div class="row">
-   <div class="col-sm-4">
-      <div class="checkbox">
-      <label class="custom-checkbox">      
-      <input type="checkbox"  ng-model="empTabCtrl.empAccountDetail.ESIIsActive" >   
-      <span>IsActive</span>
-    </label>
-   </div>
-  </div> 
-   </div>
-<div class="row">
-  
+<div class="row"> 
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDepartment">ESI Account No.</label>
@@ -129,12 +133,17 @@
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDepartment">ESI Start Date</label>
-         <input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ESIMemeberDate">
+         <!--<input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ESIMemeberDate">-->
+          <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
+            <input ng-model="empTabCtrl.empAccountDetail.ESIMemeberDate" type="text" class="form-control"/>           
+          </datepicker>
     </div>
   </div> 
 </div>
+<hr>
+</div>
 </div>
 <div class="text-center">
-<button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Update</button>
-<button type="button" ui-sref="organization.employee" class="btn btn-primary">Cancel</button>
+<button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Save</button>
+<!--<button type="button" ui-sref="organization.employee" class="btn btn-primary">Cancel</button>-->
 </div>

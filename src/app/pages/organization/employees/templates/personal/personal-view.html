@@ -1,605 +1,376 @@
- <h3 class="">Personal Detail</h3> <hr>
+<h3 class="">Personal Detail</h3>
+<hr>
 <div ba-panel ba-panel-class="horizontal-tabs tabs-panel">
-    <uib-tabset active="$tabSetStatus.activeTab">
-        <uib-tab heading="Personal">
-          <div class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputDOB">Date Of Birth*</label>       
+  <uib-tabset active="$tabSetStatus.activeTab">
+    <uib-tab heading="Personal">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputDOB">Date Of Birth*</label>
             <!--<input type="text" class="form-control" id="inputDOB" ng-model="empTabCtrl.empPersonalDetail.PdDateOfBirth"> -->
-         <!--<p class="input-group">
+            <!--<p class="input-group">
             <input type="text" class="form-control" uib-datepicker-popup="{{formatdob}}" datepicker-options="optionsdob" ng-model="empTabCtrl.empPersonalDetail.PdDateOfBirth" is-open="openeddob" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="opendob()"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
          </p>       -->
-            <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
-            <input ng-model="empTabCtrl.empPersonalDetail.PdDateOfBirth" type="text" class="form-control"/>            
+            <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
+              <input ng-model="empTabCtrl.empPersonalDetail.PdDateOfBirth" type="text" class="form-control" />
             </datepicker>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputDesignation">Marital Status*</label>
-      <select id="empMaritalStatus_{{$index}}"
-                      name="empMaritalStatus_{{$index}}"
-                      ng-model="empTabCtrl.empPersonalDetail.PdMaritalId"
-                      class="form-control"
-                      ng-options="maritalStatus.value as maritalStatus.name for maritalStatus in empTabCtrl.maritalStatus"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputDesignation">Marital Status*</label>
+            <select id="empMaritalStatus_{{$index}}" name="empMaritalStatus_{{$index}}" ng-model="empTabCtrl.empPersonalDetail.PdMaritalId"
+              class="form-control" ng-options="maritalStatus.value as maritalStatus.name for maritalStatus in empTabCtrl.maritalStatus"
+              ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
                </select>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputEmployeeType">Gender*</label>
-           <select id="empGender_{{$index}}"
-                      name="empGender_{{$index}}"
-                      ng-model="empTabCtrl.empPersonalDetail.PdGenderId"
-                      class="form-control"
-                      ng-options="gender.value as gender.name for gender in empTabCtrl.gender"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputEmployeeType">Gender*</label>
+            <select id="empGender_{{$index}}" name="empGender_{{$index}}" ng-model="empTabCtrl.empPersonalDetail.PdGenderId" class="form-control"
+              ng-options="gender.value as gender.name for gender in empTabCtrl.gender" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+              data-placeholder="Select Nav Menu" ng-required="true">
                </select>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputMobile">Mobile*</label>       
-             <input type="text" class="form-control" id="inputMobile" ng-model="empTabCtrl.empPersonalDetail.PdMobileNo">       
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputEmail">Email*</label>
-       <input type="text" class="form-control" id="inputEmail" ng-model="empTabCtrl.empPersonalDetail.PdEmail">
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputAnniversaryDate">Anniversary Date*</label>
-           <!--<input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.empPersonalDetail.PDAnniversaryDate"> -->
-         <!--<p class="input-group">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputMobile">Mobile*</label>
+            <input type="text" class="form-control" id="inputMobile" ng-model="empTabCtrl.empPersonalDetail.PdMobileNo">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input type="text" class="form-control" id="inputEmail" ng-model="empTabCtrl.empPersonalDetail.PdEmail">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputAnniversaryDate">Anniversary Date</label>
+            <!--<input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.empPersonalDetail.PDAnniversaryDate"> -->
+            <!--<p class="input-group">
              <input type="text" class="form-control" uib-datepicker-popup="{{formatanniversary}}" datepicker-options="optionsanniversary" ng-model="empTabCtrl.empPersonalDetail.PDAnniversaryDate" is-open="openedanniversary" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="openanniversary()"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
          </p> -->
-          <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
-            <input ng-model="empTabCtrl.empPersonalDetail.PDAnniversaryDate" type="text" class="form-control"/>            
+            <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
+              <input ng-model="empTabCtrl.empPersonalDetail.PDAnniversaryDate" type="text" class="form-control" />
             </datepicker>
-   </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputFacebook">Facebook</label>       
-             <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.empPersonalDetail.PDFacebook">       
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputTwitter">Twitter</label>
-       <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.empPersonalDetail.PDTwitter">
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputAnniversaryDate">Linked In</label>
-           <input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.empPersonalDetail.PDLinkedIn"> 
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputFacebook">Adhaar</label>       
-             <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.empPersonalDetail.PDAdhar">       
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputTwitter">Pan</label>
-       <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.empPersonalDetail.PDPanCard">
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputOtherNo">Other No.</label>
-           <input type="text" class="form-control" id="inputOtherNo" ng-model="empTabCtrl.empPersonalDetail.PDOtherNumber"> 
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputFacebook">Nationality*</label>       
-           <select id="empNationality_{{$index}}"
-                      name="empNationality_{{$index}}"
-                      ng-model="empTabCtrl.empPersonalDetail.PdNationalityId"
-                      class="form-control"
-                      ng-options="nationality.value as nationality.name for nationality in empTabCtrl.nationality"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
-               </select>       
-    </div>
-  </div>
-  </div>
- <h3 class="">Emergency Number</h3> <hr>
-<div class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputEmgName">Name</label>       
-             <input type="text" class="form-control" id="inputEmgName" ng-model="empTabCtrl.empEmgContact.ECPersonName">       
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputEmgMobile">Mobile</label>
-       <input type="text" class="form-control" id="inputEmgMobile" ng-model="empTabCtrl.empEmgContact.ECContactNo">
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputEmgAddress">Address</label>
-           <input type="text" class="form-control" id="inputEmgAddress" ng-model="empTabCtrl.empEmgContact.ECAddress"> 
-    </div>
-  </div>
-</div>
-<div class="text-center">
-<button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Save</button>
-</div>
-        </uib-tab>
-        <uib-tab heading="Address">
-           <h3 class="">Current Address</h3> <hr>
-<div class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputLine1">Line1</label>       
-             <input type="text" class="form-control" id="inputLine1" ng-model="empTabCtrl.empContactDetail.CDAddLine1">       
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputLine2">Line2</label>
-       <input type="text" class="form-control" id="inputLine2" ng-model="empTabCtrl.empContactDetail.CDAddLine2">
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputEmgAddress">Country</label>
-         <select id="empCmpCountry_{{$index}}"
-                      name="empCmpCountry_{{$index}}"
-                      ng-model="empTabCtrl.empContactDetail.CountryId"
-                      class="form-control"
-                      ng-options="country.value as country.name for country in empTabCtrl.CountryId"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputFacebook">Facebook</label>
+            <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.empPersonalDetail.PDFacebook">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputTwitter">Twitter</label>
+            <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.empPersonalDetail.PDTwitter">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputAnniversaryDate">Linked In</label>
+            <input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.empPersonalDetail.PDLinkedIn">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputFacebook">Adhaar</label>
+            <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.empPersonalDetail.PDAdhar">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputTwitter">PAN</label>
+            <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.empPersonalDetail.PDPanCard">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputOtherNo">Other Identity</label>
+            <input type="text" class="form-control" id="inputOtherNo" ng-model="empTabCtrl.empPersonalDetail.PDOtherNumber">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputFacebook">Nationality*</label>
+            <select id="empNationality_{{$index}}" name="empNationality_{{$index}}" ng-model="empTabCtrl.empPersonalDetail.PdNationalityId"
+              class="form-control" ng-options="nationality.value as nationality.name for nationality in empTabCtrl.nationality"
+              ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
                </select>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="empCmpState_{{$index}}">State</label>       
-         <select id="empCmpState_{{$index}}"
-                      name="empCmpState_{{$index}}"
-                      ng-model="empTabCtrl.empContactDetail.StateId"
-                      class="form-control"
-                      ng-options="state.value as state.name for state in empTabCtrl.StateId | filter:{CountryId:empTabCtrl.empContactDetail.CountryId}"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
-               </select>      
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="empCmpCity_{{$index}}">City</label>
-      <select id="empCmpCity_{{$index}}"
-                      name="empCmpCity_{{$index}}"
-                      ng-model="empTabCtrl.empContactDetail.CityId"
-                      class="form-control"
-                      ng-options="city.value as city.name for city in empTabCtrl.CityId |filter:{StateId:empTabCtrl.empContactDetail.StateId}"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
+          </div>
+        </div>
+      </div>
+      <h3 class="">Emergency Number</h3>
+      <hr>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputEmgName">Name</label>
+            <input type="text" class="form-control" id="inputEmgName" ng-model="empTabCtrl.empEmgContact.ECPersonName">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputEmgMobile">Mobile</label>
+            <input type="text" class="form-control" id="inputEmgMobile" ng-model="empTabCtrl.empEmgContact.ECContactNo">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputEmgAddress">Address</label>
+            <input type="text" class="form-control" id="inputEmgAddress" ng-model="empTabCtrl.empEmgContact.ECAddress">
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Save</button>
+      </div>
+    </uib-tab>
+    <uib-tab heading="Address">
+      <h3 class="">Current Address</h3>
+      <hr>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputLine1">Line1</label>
+            <input type="text" class="form-control" id="inputLine1" ng-model="empTabCtrl.empContactDetail.CDAddLine1">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputLine2">Line2</label>
+            <input type="text" class="form-control" id="inputLine2" ng-model="empTabCtrl.empContactDetail.CDAddLine2">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputEmgAddress">Country</label>
+            <select id="empCmpCountry_{{$index}}" name="empCmpCountry_{{$index}}" ng-model="empTabCtrl.empContactDetail.CountryId" class="form-control"
+              ng-options="country.value as country.name for country in empTabCtrl.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+              data-placeholder="Select Nav Menu" ng-required="true">
                </select>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputZip">Zip</label>
-       <input type="text" class="form-control" id="inputZip" ng-model="empTabCtrl.empContactDetail.CDPincode">       
-    </div>
-  </div>
-</div>
-<div class="row"> 
- <div class="col-sm-5">
-      <div class="checkbox">
-      <label class="custom-checkbox">      
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="empCmpState_{{$index}}">State</label>
+            <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.StateId" class="form-control"
+              ng-options="state.value as state.name for state in empTabCtrl.StateId | filter:{CountryId:empTabCtrl.empContactDetail.CountryId}"
+              ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="empCmpCity_{{$index}}">City</label>
+            <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.CityId" class="form-control"
+              ng-options="city.value as city.name for city in empTabCtrl.CityId |filter:{StateId:empTabCtrl.empContactDetail.StateId}"
+              ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip" ng-model="empTabCtrl.empContactDetail.CDPincode">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="checkbox">
+            <label class="custom-checkbox">      
       <input type="checkbox" ng-click="empTabCtrl.permanentAddress()" ng-model="empTabCtrl.CDPermanent" >   
       <span>Permanent Address Same as Current Address</span>
     </label>
-   </div>
-  </div> 
-  </div> 
-<h3 class="">Permanent Address</h3> <hr>
-<div >
-<div  class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputPerLine1">Line1</label>       
-             <input type="text" class="form-control" id="inputPerLine1" ng-model="empTabCtrl.empContactDetail.CDPAddLine1">       
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputPerLine2">Line2</label>
-       <input type="text" class="form-control" id="inputPerLine2" ng-model="empTabCtrl.empContactDetail.CDPAddLine2">
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputPerCountry">Country</label>
-         <select id="empCmpCountry_{{$index}}"
-                      name="empCmpCountry_{{$index}}"
-                      ng-model="empTabCtrl.empContactDetail.PCountryId"
-                      class="form-control"
-                      ng-options="country.value as country.name for country in empTabCtrl.CountryId"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
+          </div>
+        </div>
+      </div>
+      <h3 class="">Permanent Address</h3>
+      <hr>
+      <div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="inputPerLine1">Line1</label>
+              <input type="text" class="form-control" id="inputPerLine1" ng-model="empTabCtrl.empContactDetail.CDPAddLine1">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="inputPerLine2">Line2</label>
+              <input type="text" class="form-control" id="inputPerLine2" ng-model="empTabCtrl.empContactDetail.CDPAddLine2">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="inputPerCountry">Country</label>
+              <select id="empCmpCountry_{{$index}}" name="empCmpCountry_{{$index}}" ng-model="empTabCtrl.empContactDetail.PCountryId" class="form-control"
+                ng-options="country.value as country.name for country in empTabCtrl.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                data-placeholder="Select Nav Menu" ng-required="true">
                </select>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="empPerState_{{$index}}">State</label>       
-      <select id="empCmpState_{{$index}}"
-                      name="empCmpState_{{$index}}"
-                      ng-model="empTabCtrl.empContactDetail.PStateId"
-                      class="form-control"
-                      ng-options="state.value as state.name for state in empTabCtrl.StateId | filter:{CountryId:empTabCtrl.empContactDetail.PCountryId}"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
-               </select>       
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="empPerCity_{{$index}}">City</label>
-      <select id="empCmpCity_{{$index}}"
-                      name="empCmpCity_{{$index}}"
-                      ng-model="empTabCtrl.empContactDetail.PCityId"
-                      class="form-control"
-                      ng-options="city.value as city.name for city in empTabCtrl.CityId |filter:{StateId:empTabCtrl.empContactDetail.PStateId}"
-                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                      data-placeholder="Select Nav Menu"
-                      ng-required="true">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="empPerState_{{$index}}">State</label>
+              <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.PStateId" class="form-control"
+                ng-options="state.value as state.name for state in empTabCtrl.StateId | filter:{CountryId:empTabCtrl.empContactDetail.PCountryId}"
+                ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
                </select>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="form-group">
-      <label for="inputPerZip">Zip</label>
-       <input type="text" class="form-control" id="inputPerZip" ng-model="empTabCtrl.empContactDetail.CDPPincode">
-         
-    </div>
-  </div>
-</div>
-</div>
- <div class="text-center">
-<button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveContact()">Save</button>
-</div>
-        </uib-tab>
-        
-  <uib-tab heading="Family">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="empPerCity_{{$index}}">City</label>
+              <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.PCityId" class="form-control"
+                ng-options="city.value as city.name for city in empTabCtrl.CityId |filter:{StateId:empTabCtrl.empContactDetail.PStateId}"
+                ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="inputPerZip">Zip</label>
+              <input type="text" class="form-control" id="inputPerZip" ng-model="empTabCtrl.empContactDetail.CDPPincode">
 
-    <div class="col-md-12">
-    
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveContact()">Save</button>
+      </div>
+    </uib-tab>
+
+    <uib-tab heading="Family">
+      <grid-box page="familyPage" box-options="boxSetting">
+      </grid-box>
+    </uib-tab>
+    <uib-tab heading="Nominee">
+     <grid-box page="nomineePage" box-options="boxSetting">
+      </grid-box>
+    </uib-tab>
+    <uib-tab heading="Identity">
+      <div class="col-md-12">
+
         <div class="mail-messages-control side-message-navigation-item">
-    <div class="toggle-navigation-container">
-      <a href class="collapse-navigation-link ion-navicon" ng-click="tabCtrl.navigationCollapsed=!tabCtrl.navigationCollapsed"></a>
-    </div>
-      <div class="row">
-      <div class="col-md-6"><span class="bold-text">{{$scope.page.pageinfo.title}}</span><br/>
-      <span ng-show="(rows.length!==undefined)" class="font-bold">Total {{rows.length}} Record(s) found</span>
-      </div>
-      <div class="col-md-6 text-right">
-        <button type="button" class="btn  btn-icon refresh-button" ng-click="$scope.refreshData()"><i class="ion-refresh"></i>Refresh</button>
-        <button type="button" class="btn  btn-icon refresh-button" data-toggle="modal"  ng-click="addFamily('app/pages/organization/employees/templates/personal/addfamily-modal.html', 'md')">     
+          <div class="toggle-navigation-container">
+            <a href class="collapse-navigation-link ion-navicon" ng-click="tabCtrl.navigationCollapsed=!tabCtrl.navigationCollapsed"></a>
+          </div>
+          <div class="row">
+            <div class="col-md-6"><span class="bold-text">{{$scope.page.pageinfo.title}}</span><br/>
+              <span ng-show="(rows.length!==undefined)" class="font-bold">Total {{rows.length}} Record(s) found</span>
+            </div>
+            <div class="col-md-6 text-right">
+              <button type="button" class="btn  btn-icon refresh-button" ng-click="$scope.refreshData()"><i class="ion-refresh"></i>Refresh</button>
+              <button type="button" class="btn  btn-icon refresh-button" data-toggle="modal" ng-click="addFamily('app/pages/organization/employee/templates/personal/addfamily-modal.html', 'md')">     
           <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
-        <button type="button" class="btn  btn-icon refresh-button">
+              <button type="button" class="btn  btn-icon refresh-button">
           <i class="fa fa-filter" aria-hidden="true"></i></button>
-        <select ng-show="($scope.page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="$scope.selectedUcvItem" ng-options="opt.name for opt in $scope.page.pageinfo.ucvlist"
-          ng-change="$scope.ucvOnChange($scope.selectedUcvItem)">
+              <select ng-show="($scope.page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="$scope.selectedUcvItem" ng-options="opt.name for opt in $scope.page.pageinfo.ucvlist"
+                ng-change="$scope.ucvOnChange($scope.selectedUcvItem)">
                     </select>
-    
+
+            </div>
+          </div>
+          <style>
+            .djTable {
+              width: 100%;
+            }
+            
+            .djTable td,
+            th {
+              overflow: hidden;
+            }
+            
+            .djTable td:first,
+            th:first {
+              width: 30px;
+            }
+            
+            .djTable td:last-child,
+            th:last-child {
+              width: 30px;
+            }
+          </style>
+
+          <table class="table table-bordered table-hover table-condensed djTable" st-table="displayedCollection" st-safe-src="rows"
+            st-pagination-scroll>
+            <thead>
+              <tr class="sortable">
+                <th class="col-md-1" ng-show="gridObject.enableSrNo" st-sort="$index">Sno</th>
+                <th class="col-md-5" ng-repeat="col in gridObject.columns" st-sort="{{col.name}}">{{col.text}}</th>
+                <th class="col-md-1">Actions</th>
+              </tr>
+              <tr ng-show="gridObject.enableFilter">
+                <th ng-show="gridObject.enableSrNo"></th>
+                <th ng-show="gridObject.enableTitleFilter"><input st-search="{{searchName}}" placeholder="Search" class="input-sm form-control search-input" type="search"
+                  /></th>
+                <th ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
+                  <input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
+              </tr>
+            </thead>
+            <tbody ng-show="displayedCollection.length>0">
+              <tr ng-repeat="row in displayedCollection">
+                <td cursor="pointer" ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')"
+                  ng-show="gridObject.enableSrNo">
+                  {{$index+1}}
+                </td>
+                <td cursor="pointer" ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')"
+                  ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
+                <td ng-show="gridObject.enableAction">
+                  <a ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'edit')">
+                    <i class="fa fa-pencil-square-o"></i></a>
+                </td>
+              </tr>
+            </tbody>
+            <tbody ng-show="displayedCollection.length<=0&&isLoaded">
+              <tr>
+                <td colspan="6">No {{$scope.page.pageinfo.title}} found</td>
+              </tr>
+            </tbody>
+            <tbody ng-show="isLoading">
+              <tr>
+                <td colspan="6">Loading {{$scope.page.pageinfo.title}} Please wait..<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i></td>
+              </tr>
+            </tbody>
+            <tfoot ng-show="gridObject.enablePagination">
+              <tr>
+                <td colspan="6" class="text-center">
+                  <div st-pagination="" st-items-by-page="gridObject.paginationLength" st-displayed-pages="5"></div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+
+
+        </div>
       </div>
-    </div>
-            <style>
-                .djTable {
-                    width: 100%;
-                }
-                
-                .djTable td,
-                th {
-                    overflow: hidden;
-                }
-                
-                .djTable td:first,
-                th:first {
-                    width: 30px;
-                }
-                
-                .djTable td:last-child,
-                th:last-child {
-                    width: 30px;
-                }
-            </style>
-    
-            <table class="table table-bordered table-hover table-condensed djTable" st-table="displayedCollection" st-safe-src="rows"
-                st-pagination-scroll>
-                <thead>
-                    <tr class="sortable">
-                        <th class="col-md-1" ng-show="gridObject.enableSrNo" st-sort="$index">Sno</th>
-                        <th class="col-md-5" ng-repeat="col in gridObject.columns" st-sort="{{col.name}}">{{col.text}}</th>
-                        <th class="col-md-1">Actions</th>
-                    </tr>
-                    <tr ng-show="gridObject.enableFilter">
-                        <th ng-show="gridObject.enableSrNo"></th>
-                        <th ng-show="gridObject.enableTitleFilter"><input st-search="{{searchName}}" placeholder="Search" class="input-sm form-control search-input"
-                                type="search" /></th>
-                        <th ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
-                            <input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
-                    </tr>
-                </thead>
-                <tbody ng-show="displayedCollection.length>0">
-                    <tr ng-repeat="row in displayedCollection">
-                        <td cursor="pointer" ng-click="editFamily('app/pages/organization/employees/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')" ng-show="gridObject.enableSrNo">
-                            {{$index+1}}
-                        </td>
-                        <td cursor="pointer" ng-click="editFamily('app/pages/organization/employees/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')" ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
-                        <td ng-show="gridObject.enableAction">
-                            <a ng-click="editFamily('app/pages/organization/employees/templates/personal/editFamily-modal.html', 'md',row.FdId,'edit')">
-                                <i class="fa fa-pencil-square-o"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody ng-show="displayedCollection.length<=0&&isLoaded">
-                    <tr>
-                        <td colspan="6">No {{$scope.page.pageinfo.title}} found</td>
-                    </tr>
-                </tbody>
-                <tbody ng-show="isLoading">
-                    <tr>
-                        <td colspan="6">Loading {{$scope.page.pageinfo.title}} Please wait..<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i></td>
-                    </tr>
-                </tbody>
-                <tfoot ng-show="gridObject.enablePagination">
-                    <tr>
-                        <td colspan="6" class="text-center">
-                            <div st-pagination="" st-items-by-page="gridObject.paginationLength" st-displayed-pages="5"></div>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-
-       
-    </div>
-    </div>
 
 
-
-
-         </uib-tab>
-          <uib-tab heading="Nominee">
-          <div class="col-md-12">
-    
-        <div class="mail-messages-control side-message-navigation-item">
-    <div class="toggle-navigation-container">
-      <a href class="collapse-navigation-link ion-navicon" ng-click="tabCtrl.navigationCollapsed=!tabCtrl.navigationCollapsed"></a>
-    </div>
-      <div class="row">
-      <div class="col-md-6"><span class="bold-text">{{$scope.page.pageinfo.title}}</span><br/>
-      <span ng-show="(rows.length!==undefined)" class="font-bold">Total {{rows.length}} Record(s) found</span>
-      </div>
-      <div class="col-md-6 text-right">
-        <button type="button" class="btn  btn-icon refresh-button" ng-click="$scope.refreshData()"><i class="ion-refresh"></i>Refresh</button>
-        <button type="button" class="btn  btn-icon refresh-button" data-toggle="modal"  ng-click="addFamily('app/pages/organization/employee/templates/personal/addfamily-modal.html', 'md')">     
-          <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
-        <button type="button" class="btn  btn-icon refresh-button">
-          <i class="fa fa-filter" aria-hidden="true"></i></button>
-        <select ng-show="($scope.page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="$scope.selectedUcvItem" ng-options="opt.name for opt in $scope.page.pageinfo.ucvlist"
-          ng-change="$scope.ucvOnChange($scope.selectedUcvItem)">
-                    </select>
-    
-      </div>
-    </div>
-            <style>
-                .djTable {
-                    width: 100%;
-                }
-                
-                .djTable td,
-                th {
-                    overflow: hidden;
-                }
-                
-                .djTable td:first,
-                th:first {
-                    width: 30px;
-                }
-                
-                .djTable td:last-child,
-                th:last-child {
-                    width: 30px;
-                }
-            </style>
-    
-            <table class="table table-bordered table-hover table-condensed djTable" st-table="displayedCollection" st-safe-src="rows"
-                st-pagination-scroll>
-                <thead>
-                    <tr class="sortable">
-                        <th class="col-md-1" ng-show="gridObject.enableSrNo" st-sort="$index">Sno</th>
-                        <th class="col-md-5" ng-repeat="col in gridObject.columns" st-sort="{{col.name}}">{{col.text}}</th>
-                        <th class="col-md-1">Actions</th>
-                    </tr>
-                    <tr ng-show="gridObject.enableFilter">
-                        <th ng-show="gridObject.enableSrNo"></th>
-                        <th ng-show="gridObject.enableTitleFilter"><input st-search="{{searchName}}" placeholder="Search" class="input-sm form-control search-input"
-                                type="search" /></th>
-                        <th ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
-                            <input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
-                    </tr>
-                </thead>
-                <tbody ng-show="displayedCollection.length>0">
-                    <tr ng-repeat="row in displayedCollection">
-                        <td cursor="pointer" ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')" ng-show="gridObject.enableSrNo">
-                            {{$index+1}}
-                        </td>
-                        <td cursor="pointer" ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')" ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
-                        <td ng-show="gridObject.enableAction">
-                            <a ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'edit')">
-                                <i class="fa fa-pencil-square-o"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody ng-show="displayedCollection.length<=0&&isLoaded">
-                    <tr>
-                        <td colspan="6">No {{$scope.page.pageinfo.title}} found</td>
-                    </tr>
-                </tbody>
-                <tbody ng-show="isLoading">
-                    <tr>
-                        <td colspan="6">Loading {{$scope.page.pageinfo.title}} Please wait..<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i></td>
-                    </tr>
-                </tbody>
-                <tfoot ng-show="gridObject.enablePagination">
-                    <tr>
-                        <td colspan="6" class="text-center">
-                            <div st-pagination="" st-items-by-page="gridObject.paginationLength" st-displayed-pages="5"></div>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-
-       
-    </div>
-    </div>
-
-
-         </uib-tab>
-          <uib-tab heading="Identity">
-          <div class="col-md-12">
-    
-        <div class="mail-messages-control side-message-navigation-item">
-    <div class="toggle-navigation-container">
-      <a href class="collapse-navigation-link ion-navicon" ng-click="tabCtrl.navigationCollapsed=!tabCtrl.navigationCollapsed"></a>
-    </div>
-      <div class="row">
-      <div class="col-md-6"><span class="bold-text">{{$scope.page.pageinfo.title}}</span><br/>
-      <span ng-show="(rows.length!==undefined)" class="font-bold">Total {{rows.length}} Record(s) found</span>
-      </div>
-      <div class="col-md-6 text-right">
-        <button type="button" class="btn  btn-icon refresh-button" ng-click="$scope.refreshData()"><i class="ion-refresh"></i>Refresh</button>
-        <button type="button" class="btn  btn-icon refresh-button" data-toggle="modal"  ng-click="addFamily('app/pages/organization/employee/templates/personal/addfamily-modal.html', 'md')">     
-          <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
-        <button type="button" class="btn  btn-icon refresh-button">
-          <i class="fa fa-filter" aria-hidden="true"></i></button>
-        <select ng-show="($scope.page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="$scope.selectedUcvItem" ng-options="opt.name for opt in $scope.page.pageinfo.ucvlist"
-          ng-change="$scope.ucvOnChange($scope.selectedUcvItem)">
-                    </select>
-    
-      </div>
-    </div>
-            <style>
-                .djTable {
-                    width: 100%;
-                }
-                
-                .djTable td,
-                th {
-                    overflow: hidden;
-                }
-                
-                .djTable td:first,
-                th:first {
-                    width: 30px;
-                }
-                
-                .djTable td:last-child,
-                th:last-child {
-                    width: 30px;
-                }
-            </style>
-    
-            <table class="table table-bordered table-hover table-condensed djTable" st-table="displayedCollection" st-safe-src="rows"
-                st-pagination-scroll>
-                <thead>
-                    <tr class="sortable">
-                        <th class="col-md-1" ng-show="gridObject.enableSrNo" st-sort="$index">Sno</th>
-                        <th class="col-md-5" ng-repeat="col in gridObject.columns" st-sort="{{col.name}}">{{col.text}}</th>
-                        <th class="col-md-1">Actions</th>
-                    </tr>
-                    <tr ng-show="gridObject.enableFilter">
-                        <th ng-show="gridObject.enableSrNo"></th>
-                        <th ng-show="gridObject.enableTitleFilter"><input st-search="{{searchName}}" placeholder="Search" class="input-sm form-control search-input"
-                                type="search" /></th>
-                        <th ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
-                            <input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
-                    </tr>
-                </thead>
-                <tbody ng-show="displayedCollection.length>0">
-                    <tr ng-repeat="row in displayedCollection">
-                        <td cursor="pointer" ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')" ng-show="gridObject.enableSrNo">
-                            {{$index+1}}
-                        </td>
-                        <td cursor="pointer" ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'view')" ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
-                        <td ng-show="gridObject.enableAction">
-                            <a ng-click="editFamily('app/pages/organization/employee/templates/personal/editFamily-modal.html', 'md',row.FdId,'edit')">
-                                <i class="fa fa-pencil-square-o"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody ng-show="displayedCollection.length<=0&&isLoaded">
-                    <tr>
-                        <td colspan="6">No {{$scope.page.pageinfo.title}} found</td>
-                    </tr>
-                </tbody>
-                <tbody ng-show="isLoading">
-                    <tr>
-                        <td colspan="6">Loading {{$scope.page.pageinfo.title}} Please wait..<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i></td>
-                    </tr>
-                </tbody>
-                <tfoot ng-show="gridObject.enablePagination">
-                    <tr>
-                        <td colspan="6" class="text-center">
-                            <div st-pagination="" st-items-by-page="gridObject.paginationLength" st-displayed-pages="5"></div>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-
-       
-    </div>
-    </div>
-
-
-         </uib-tab>
-    </uib-tabset>
+    </uib-tab>
+  </uib-tabset>
 </div>
-  
