@@ -86,6 +86,17 @@
 
                 scope.$on('form-success', function (successEvent, result) {
                     if (result.entity[scope.page.pageinfo.idencolname] !== undefined) {
+                        if (scope.page.boxOptions !== undefined) {
+                            if (scope.page.boxOptions.refreshData != null &&
+                                scope.page.boxOptions.refreshData !== undefined) {
+                                if(scope.page.boxOptions.enableAutoRefresh!==undefined)    
+                                {
+                                if (scope.page.boxOptions.enableAutoRefresh) {
+                                    scope.page.boxOptions.refreshData();
+                                }
+                                }
+                            }
+                        }
                         scope.modalInstance.dismiss('cancel');
                     }
                 })
