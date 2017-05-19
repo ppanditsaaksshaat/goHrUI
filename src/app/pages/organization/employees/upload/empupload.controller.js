@@ -37,27 +37,155 @@
         };
         //  vm.includeSrc = 'templates/crm/migrate.html?q=1';
 
-        function _loadController() {
+        function _setFieldMatching() {
             vm.migrate.findFieldList = [];
             //firstCheck, secondCheck, tableIndex, rowIndex, colIndex
             addFieldCheck('department', '', 0, 0, 0);
-            addFieldCheck('designation', '', 0, 0, 1);
-            addFieldCheck('Employeement', '', 0, 1, 0);
-            addFieldCheck('DOJ', '', 0, 1, 1);
-            addFieldCheck('Grade', '', 0, 2, 0);
-            addFieldCheck('Level', '', 0, 2, 1);
-            addFieldCheck('Sub', 'Unit', 0, 3, 0);
-            addFieldCheck('Sub', 'Unit', 0, 3, 0);
 
-            //for names
-            addFieldCheck('first', 'name', 1, 1, 1);
-            
+            //Date Of Joining
+            addFieldCheck('doj', '', 0, 0, 1);
+            addFieldCheck('date', 'joining', 0, 0, 1);
+            addFieldCheck('D.O.J', '', 0, 0, 1);
+
+            addFieldCheck('employeement', '', 0, 1, 0);
+            addFieldCheck('grade', '', 0, 1, 1);
+            addFieldCheck('designation', '', 0, 2, 0);
+            addFieldCheck('level', '', 0, 2, 1);
+            addFieldCheck('category', '', 0, 3, 0);
+
+            //subunit
+            addFieldCheck('sub', '', 0, 3, 1);
+            addFieldCheck('sub', 'unit', 0, 3, 1);
+
+            //email
+            addFieldCheck('office', 'email', 0, 4, 0);
+            addFieldCheck('email', '', 0, 4, 0);
+
+            //mobile
+            addFieldCheck('office', 'mobile', 0, 4, 1);
+            addFieldCheck('mobile', '', 0, 4, 1);
+
+            //phone
+            addFieldCheck('office', 'phone', 0, 5, 0);
+            addFieldCheck('phone', '', 0, 5, 0);
+
+            //Office Ext.
+            addFieldCheck('office', 'ext', 0, 5, 1);
+            addFieldCheck('ext', '', 0, 5, 1);
+
+            // Single OT
+            addFieldCheck('single', 'ot', 0, 6, 0);
+            addFieldCheck('ot', '', 0, 6, 0);
+
+            // Double OT
+            addFieldCheck('double', 'ot', 0, 6, 1);
+            addFieldCheck('ot', '', 0, 6, 1);
+
+            //Single OT Rate
+            addFieldCheck('single', 'rate', 0, 7, 0);
+            addFieldCheck('rate', '', 0, 7, 0);
+
+            //Double OT Rate
+            addFieldCheck('double', 'rate', 0, 7, 1);
+            addFieldCheck('rate', '', 0, 7, 1);
+
+            //emp code
+            addFieldCheck('emp', 'code', 1, 0, 0);
+            addFieldCheck('employee', 'code', 1, 0, 0);
+            addFieldCheck('empcode', '', 1, 0, 0);
+            addFieldCheck('code', '', 1, 0, 0);
+
+            var extraRowIndex = 0;
+            //emp name
+            if (vm.showEmployeeName) {
+                addFieldCheck('employee', 'name', 1, 0, 1);
+                addFieldCheck('empname', '', 1, 0, 1);
+                extraRowIndex = 0;
+            }
+            else {
+                extraRowIndex = 2
+                addFieldCheck('title', '', 1, 1, 0);
+
+
+                //for first name
+                addFieldCheck('first', 'name', 1, 1, 1);
+                addFieldCheck('firstname', '', 1, 1, 1);
+
+
+                //for last name
+                addFieldCheck('last', 'name', 1, 2, 0);
+                addFieldCheck('lastname', '', 1, 2, 0);
+
+                //for middle name
+                addFieldCheck('middle', 'name', 1, 2, 1);
+                addFieldCheck('middlename', '', 1, 2, 1);
+            }
+
+
+
             //date of birth check
-            addFieldCheck('date', 'birth', 1, 3, 0);
-            addFieldCheck('dob', '', 1, 3, 0);
-            addFieldCheck('d.o.b', '', 1, 3, 0);
+            addFieldCheck('date', 'birth', 1, 1 + extraRowIndex, 0);
+            addFieldCheck('dateofbirth', '', 1, 1 + extraRowIndex, 0);
+            addFieldCheck('dob', '', 1, 1 + extraRowIndex, 0);
+            addFieldCheck('d.o.b', '', 1, 1 + extraRowIndex, 0);
+            addFieldCheck('birthdate', '', 1, 1 + extraRowIndex, 0);
+
+            //Marriage Status
+            addFieldCheck('marriage', 'status', 1, 1 + extraRowIndex, 1);
+            addFieldCheck('marriagestatus', '', 1, 1 + extraRowIndex, 1);
+
+            addFieldCheck('gender', '', 1, 2 + extraRowIndex, 0);
+            addFieldCheck('email', '', 1, 2 + extraRowIndex, 1);
+
+            addFieldCheck('mobile', '', 1, 3 + extraRowIndex, 0);
+
+            //anniversery date
+            addFieldCheck('anniversary', 'date', 1, 3 + extraRowIndex, 1);
+            addFieldCheck('anniversarydate', '', 1, 3 + extraRowIndex, 1);
+
+            addFieldCheck('facebook', '', 1, 4 + extraRowIndex, 0);
+
+            //pancard
+            addFieldCheck('pan', 'card', 1, 4 + extraRowIndex, 1);
+            addFieldCheck('pancard', '', 1, 4 + extraRowIndex, 1);
 
 
+            //linkedin
+            addFieldCheck('linked', 'in', 1, 5 + extraRowIndex, 0);
+            addFieldCheck('linkedin', 'Unit', 1, 5 + extraRowIndex, 0);
+            //adhar card
+            addFieldCheck('adhar', 'card', 1, 5 + extraRowIndex, 1);
+            addFieldCheck('adharcard', '', 1, 5 + extraRowIndex, 1);
+
+            addFieldCheck('twitter', '', 1, 6 + extraRowIndex, 0);
+
+            //other number
+            addFieldCheck('other', 'number', 1, 8, 1);
+            addFieldCheck('othernumber', '', 1, 8, 1);
+
+            //Salary Mode
+            addFieldCheck('salary', 'mode', 2, 0, 0);
+            addFieldCheck('salarymode', '', 2, 0, 0);
+
+            //PF Account Number
+            addFieldCheck('pf', 'account', 2, 0, 1);
+            addFieldCheck('pfaccount', '', 2, 0, 1);
+
+            //PF Start Date
+            addFieldCheck('pf', 'date', 2, 1, 0);
+            addFieldCheck('pfdate', '', 2, 1, 0);
+
+            //ESI Account Number
+            addFieldCheck('esi', 'account', 2, 1, 1);
+            addFieldCheck('esiaccount', '', 2, 1, 1);
+
+            //ESI Start Date
+            addFieldCheck('other', 'number', 2, 2, 0);
+            addFieldCheck('othernumber', '', 2, 2, 0);
+
+            //ESI Dispensary name
+            addFieldCheck('esi', 'dispensary', 2, 2, 1);
+            addFieldCheck('esidispensary', '', 2, 2, 1);
         }
 
         //Public Functions
@@ -213,6 +341,7 @@
                     alert('No data found.')
                 }
                 else {
+                    _setFieldMatching();
                     vm.setupMigrate();
                     // debugger;
                     vm.matchingFields();
@@ -288,6 +417,7 @@
                 vm.migrate.step4 = false;
                 vm.migrate.step5 = false;
                 vm.migrate.currentStep = 1;
+                _setFieldMatching();
             }
             else if (vm.migrate.currentStep == 3) {
                 vm.migrate.step1 = false;
@@ -305,6 +435,20 @@
                 vm.migrate.step5 = false;
                 vm.migrate.currentStep = 3;
             }
+        }
+
+        vm.clear = function () {
+           
+            angular.forEach(vm.migrate.tables, function (table, tidx) {
+                angular.forEach(table.rows, function (row, ridx) {
+                    row.column1.value = 'none';
+
+                    if (row.column2 !== undefined) {
+                        row.column2.value = 'none';
+                    }
+
+                })
+            })
         }
         vm.cancelDataUpload = function () {
 
@@ -440,7 +584,8 @@
 
                 if (isUsable) {
                     if (colIdx == 1) {
-                        vm.migrate.tables[tableIdx].rows[rowIdx].column2.value = colName;
+                        if (vm.migrate.tables[tableIdx].rows[rowIdx].column2 !== undefined)
+                            vm.migrate.tables[tableIdx].rows[rowIdx].column2.value = colName;
                     }
                     else {
                         vm.migrate.tables[tableIdx].rows[rowIdx].column1.value = colName;
@@ -540,7 +685,6 @@
         // }
 
         //Calling Default Function
-        _loadController();
 
     }
 })();
