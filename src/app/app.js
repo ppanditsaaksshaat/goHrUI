@@ -19,6 +19,7 @@ angular.module('BlurAdmin', [
   'ngMessages',
   'naif.base64',
   '720kb.datepicker',
+  'ui.timepicker',
   // 'angular.chosen',
   'BlurAdmin.theme',
   'BlurAdmin.pages',

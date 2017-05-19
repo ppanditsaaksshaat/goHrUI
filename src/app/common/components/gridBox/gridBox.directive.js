@@ -8,7 +8,7 @@
     angular.module('BlurAdmin.common.components')
         .directive('gridBox', gridBox);
     /** @ngInject */
-    function gridBox($location, $state, $compile) {
+    function gridBox($location, $state, $compile, $rootScope) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/gridBox/gridBox.html',
@@ -27,13 +27,34 @@
                     showUpload: false,
                     gridStyle: { height: '450px' }
                 }
+                var gridOptions = $rootScope.getGridSetting();
 
                 if (scope.page.boxOptions === undefined)
                     scope.page.boxOptions = angular.copy(boxSetting);
                 if (!scope.page.boxOptions.showFilter) {
                     scope.page.showFilter = false;
                 }
-                console.log(scope.refreshData)
+
+                if (scope.page.gridOptions === undefined) {
+                    scope.page.gridOptions = angular.copy(gridOptions);
+                }
+                if (scope.page.pageinfo !== undefined) {
+                    var isCreate, isEdit, isDelete, isUpdate, isExport, isRefresh, isHelp, isColSetting;
+
+                    if (scope.page.pageinfo.buttons !== undefined) {
+                        var buttons = scope.page.pageinfo.buttons;
+                        isCreate = buttons.create.isvisible;
+                        isDelete = buttons.delete.isvisible;
+                        isEdit = buttons.edit.isvisible;
+                        isExport = buttons.export.isvisible;
+                        isRefresh = buttons.refresh.isvisible;
+                        isHelp = buttons.help.isvisible;
+                        isColSetting = buttons.colsetting.isvisible;
+                    }
+                    scope.page.gridOptions = $rootScopescope.gridSetupColumns(scope.page.gridOptions,
+                        scope.page.pageinfo.columns, scope.page, isEdit, isDelete, isHelp, isEdit);
+                }
+
                 scope.page.selectedRows = [];
 
                 scope.refreshData = _refreshData;
@@ -53,7 +74,7 @@
                     console.log('ref')
                     // parent.refreshData();
                     console.log(scope.page.boxOptions);
-                    scope.$eval(scope.page.boxOptions.refreshData);
+                    scope.page.boxOptions.refreshData();
                     // console.log(parent[scope.page.boxOptions.refreshData]);
                 }
                 function _addRecord() {
