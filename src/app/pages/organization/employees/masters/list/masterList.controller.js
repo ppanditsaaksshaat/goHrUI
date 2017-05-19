@@ -20,7 +20,7 @@
     vm.searchList = [];
     vm.orderByList = [];
 
-    // this.refreshData = _refreshData;
+    this.refreshData = _refreshData;
     this.addRecord = _addRecord;
     this.editRecord = _editRecord;
     this.updateRecord = _updateRecord;
@@ -31,16 +31,15 @@
     this.uploadRecord = _uploadRecord;
 
     $scope.page = {}
-    $scope.page.gridOptions = $scope.getGridSetting();
-    $scope.gridStyle = { width: 500, height: 450 }
-    $scope.boxSetting = {
+    $scope.page.boxOptions = {
       showRefresh: true,
       showFilter: false,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
-      refresh: _refreshData,
+      gridHeight: 450,
+      refreshData: _refreshData,
       addRecord: _addRecord,
       editRecord: _editRecord,
       updateRecord: _updateRecord,
