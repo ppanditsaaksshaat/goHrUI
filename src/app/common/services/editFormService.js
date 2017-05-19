@@ -56,14 +56,14 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
     function _confirmClick(pageId, data, title) {
 
         pageService.editPageData(pageId, JSON.stringify(data)).then(function (result) {
-            debugger;
             if (result.error_message === undefined) {
                 if (result.success_message === undefined) {
                     _showToast('error', 'Something went wrong', title)
                 }
                 else {
                     _showToast('success', result.success_message, title)
-                    $rootScope.back();
+                    //$rootScope.back();
+                    $rootScope.$broadcast('form-success', result);
                 }
             }
             else if (result.error_message.Message == 'Record Already Added.') {

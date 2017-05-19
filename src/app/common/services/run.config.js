@@ -21,6 +21,8 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         msg: ""
     };
 
+    $rootScope.modalInstance = {};
+
     //gridObject Defaults
     $rootScope.gridObject = {
         columns: [],
@@ -183,7 +185,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                     '</div>'
                 ].join(''),
                 pinnedLeft: true,
-                width:30
+                width: 30
             }
             gridOptions.columnDefs.push(optMenu);
 

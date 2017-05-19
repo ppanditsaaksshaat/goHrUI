@@ -7,12 +7,12 @@
             </div>
             <div class="col-md-9">
                 <div class="pull-right">
-                    <button ng-show="boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>                    &nbsp;
-                    <button ng-show="boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="addRecord()">
+                    <button ng-show="page.boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>                    &nbsp;
+                    <button ng-show="page.boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="addRecord()">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button> &nbsp;
-                    <button ng-show="boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="uploadRecord()">
+                    <button ng-show="page.boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="uploadRecord()">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button> &nbsp;
-                    <select ng-show="boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
+                    <select ng-show="page.boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
                         ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
                     </select>
                 </div>
@@ -40,13 +40,15 @@
         </div>
     </div>
     <div class="panel-body">
-        <button ng-show="boxOptions.showFilter" id="image" style="width:3px;
+        <button ng-show="page.boxOptions.showFilter" id="image" style="width:3px;
                 height:30px;
                 position:absolute;
                 top:200px;
                 left:0px;" ng-click="page.showFilter=!page.showFilter">
                     <i ng-class="{'ion-arrow-right-b':!page.showFilter, 'ion-arrow-left-b':page.showFilter}"></i>
                 </button>
-        <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="djGrid"></div>
+        <div id="djGrid1" ui-grid="page.gridOptions" 
+        ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning 
+        class="djGrid" ></div>
     </div>
 </div>

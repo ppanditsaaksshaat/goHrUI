@@ -74,6 +74,40 @@
   width: 100%;
 }
 
+.pnl100{
+  height: 200px;
+}
+.pnl200{
+  height: 250px;
+}
+.pnl300{
+  height: 300px;
+}
+.pnl400{
+  height: 400px;
+}
+.pnl500{
+  height: 600px;
+}
+.pnl600{
+  height: 700px;
+}
+.pnl800{
+  height: 800px;
+}
+.modal .modal-dialog.modal-top-center-500
+{
+  width: 600px;
+  position: fixed;
+  top: 150px;
+  left: 450px;
+}
+.modal .modal-dialog.modal-right-bottom-500{
+  width: 600px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
 .overflow-visible,
 .overflow-visible .ui-grid-cell-contents {
   overflow: visible;

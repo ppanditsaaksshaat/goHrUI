@@ -1,8 +1,7 @@
+ 
 
-    <h3 class="">Job</h3>
+ <h3 class="">Job</h3>
     <hr>
-   
-
 <div class="row">
   <div class="col-sm-4">
     <div class="form-group">
@@ -51,7 +50,10 @@
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDepartment">Date Of Joining*</label>
-          <input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.empJobDetail.JDDate">
+          <!--<input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.empJobDetail.JDDate">-->
+            <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
+            <input ng-model="empTabCtrl.empJobDetail.JDDate" type="text" class="form-control"/>           
+          </datepicker>
     </div>
   </div>
   <div class="col-sm-4">
@@ -130,7 +132,10 @@
   <div class="col-sm-4">
     <div class="form-group">
       <label for="inputDepartment">From Date</label>
-          <input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.empJobDetail.FromDate">
+          <!--<input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.empJobDetail.FromDate">-->
+          <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
+            <input ng-model="empTabCtrl.empJobDetail.FromDate" type="text" class="form-control"/>           
+          </datepicker>
     </div>
   </div>
   <div class="col-sm-4">

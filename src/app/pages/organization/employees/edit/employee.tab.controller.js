@@ -12,9 +12,51 @@
 
   /** @ngInject */
   /** @ngInject */
-  function OrgEmployeeTabController($scope, $stateParams, pageService, $timeout, $uibModal, baProgressModal) {
+  function OrgEmployeeTabController($scope, $stateParams, pageService, $timeout, $uibModal, baProgressModal, dialogModal) {
 
+
+    $scope.familyPage = {}
+    $scope.familyPage.gridOptions = $scope.getGridSetting();
+    $scope.familyPage.boxOptions = {
+      showRefresh: true,
+      showFilter: false,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: false,
+      enableAutoRefresh: true,
+      refreshData: _refreshDataFamily,
+      addRecord: _addRecordFamily,
+      editRecord: _editRecordFamily,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
+      openView: null,
+      uploadRecord: null
+    }
+    //Nominee Page Setting
+    $scope.nomineePage = {}
+    $scope.nomineePage.gridOptions = $scope.getGridSetting();
+    $scope.nomineePage.boxOptions = {
+      showRefresh: true,
+      showFilter: false,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: false,
+      refreshData: _refreshDataNominee,
+      addRecord: _addRecordNominee,
+      editRecord: _editRecordNominee,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
+      openView: null,
+      uploadRecord: null
+    }
     var vm = this;
+
+    vm.pageIds = { familyPageId: 52, nomineePageId: 438 }
+
     vm.navigationCollapsed = true;
     vm.pageId = $stateParams.pageId;
     vm.empPKId = $stateParams.empId;
@@ -27,7 +69,7 @@
     vm.empResignDetail = {};
     vm.empSignDetail = {};
     vm.empAccountDetail = {};
-    vm.empEmgContact={};
+    vm.empEmgContact = {};
     vm.oldEntity = {};
     var rndValu = Math.round((Math.random() * 10) * 10);
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
@@ -35,40 +77,46 @@
     vm.updateForm = _updateForm;
     vm.jobEmploymentOnChange = _jobEmploymentOnChange;
     vm.accountSalaryModeOnChange = _accountSalaryModeOnChange;
-    vm.permanentAddress=_permanentAddress;
-    vm.saveContact=_saveContact;
+    vm.permanentAddress = _permanentAddress;
+    vm.saveContact = _saveContact;
 
 
 
-// Permanent Address Same as Current Address        
-function _permanentAddress(){ 
-  if(vm.CDPermanent){
-    vm.empContactDetail.CDPAddLine1=vm.empContactDetail.CDAddLine1;
-    vm.empContactDetail.CDPAddLine2=vm.empContactDetail.CDAddLine2;
-    vm.empContactDetail.CDPPincode=vm.empContactDetail.CDPincode;
-    vm.empContactDetail.PCountryId=vm.empContactDetail.CountryId
-    vm.empContactDetail.PStateId=vm.empContactDetail.StateId
-    vm.empContactDetail.PCityId=vm.empContactDetail.CityId
-  }
-  else{
-    vm.empContactDetail.CDPAddLine1='';
-    vm.empContactDetail.CDPAddLine2='';
-    vm.empContactDetail.CDPPincode='';
-    vm.empContactDetail.PCountryId='';
-    vm.empContactDetail.PStateId='';
-    vm.empContactDetail.PCityId='';
-  }
-}
-        function _getDate(date) {
-            var mmddyyyy="";
-            var date=new Date(date);
-            var month=date.getMonth()+1;
-            mmddyyyy=month +"/"+date.getDate()+"/" +date.getFullYear();
-            
-           return mmddyyyy;
-        }
+    // Permanent Address Same as Current Address        
+    function _permanentAddress() {
+      if (vm.CDPermanent) {
+        vm.empContactDetail.CDPAddLine1 = vm.empContactDetail.CDAddLine1;
+        vm.empContactDetail.CDPAddLine2 = vm.empContactDetail.CDAddLine2;
+        vm.empContactDetail.CDPPincode = vm.empContactDetail.CDPincode;
+        vm.empContactDetail.PCountryId = vm.empContactDetail.CountryId
+        vm.empContactDetail.PStateId = vm.empContactDetail.StateId
+        vm.empContactDetail.PCityId = vm.empContactDetail.CityId
+      }
+      else {
+        vm.empContactDetail.CDPAddLine1 = '';
+        vm.empContactDetail.CDPAddLine2 = '';
+        vm.empContactDetail.CDPPincode = '';
+        vm.empContactDetail.PCountryId = '';
+        vm.empContactDetail.PStateId = '';
+        vm.empContactDetail.PCityId = '';
+      }
+    }
+    //End of Permanent Address Same as Current Address  
+
+    // Get date format mmddyyyy
+    function _getDate(date) {
+      var mmddyyyy = "";
+      var date = new Date(date);
+      var month = date.getMonth() + 1;
+      mmddyyyy = month + "/" + date.getDate() + "/" + date.getFullYear();
+
+      return mmddyyyy;
+    }
+
+    // End of get date format mmddyyyy
 
 
+    //Page load
     function _loadController() {
 
       vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
@@ -80,21 +128,26 @@ function _permanentAddress(){
       });
       //for emgcontact detail
       $timeout(function () {
-       var searchList = [];
+        var searchList = [];
         var searchFields = {
           field: 'ECEmpId',
           operand: '=',
           value: vm.empPKId
         }
         searchList.push(searchFields);
-      
-          pageService.findEntity(57, undefined, searchList).then(
-         _findEMGContactEntitySuccessResult, _findEMGContactEntityErrorResult);
+
+        pageService.findEntity(57, undefined, searchList).then(
+          _findEMGContactEntitySuccessResult, _findEMGContactEntityErrorResult);
       });
       //for family detail
       $timeout(function () {
         pageService.getPagData(52).then(
           _getfamilyDetailSuccessResult, _getfamilyDetailErrorResult);
+      });
+      //for nominee detail
+      $timeout(function () {
+        pageService.getPagData(438).then(
+          _getNomineeDetailSuccessResult, _getNomineeDetailErrorResult);
       });
       //for contact detail
       $timeout(function () {
@@ -102,79 +155,141 @@ function _permanentAddress(){
           _getcontactSuccessResult, _getcontactErrorResult);
       });
     }
-   function _findEMGContactEntitySuccessResult(result)
-   {
+    // End of Page load
 
-vm.oldEntity=result;
-vm.empEmgContact=result;
-   }
-   function _findEMGContactEntityErrorResult()
-   {
-
-   }
-    function _getcontactSuccessResult(result)
-    {
-        console.log(result)
-        vm.CountryId = result.pageinfo.selects.CountryId;
-        vm.StateId = result.pageinfo.selects.StateId;
-        vm.CityId = result.pageinfo.selects.CityId;
-        vm.AreaId = result.pageinfo.selects.CDAreaId;      
-        var searchList = [];
-        var searchFields = {
-          field: 'CDEmpId',
-          operand: '=',
-          value: vm.empPKId
-        }
-        searchList.push(searchFields);
-        $timeout(function(){
-          pageService.findEntity(45, undefined, searchList).then(
-         _findContactEntitySuccessResult, _findContactEntityErrorResult);
-        })
-       
-    }
-
-    function _getcontactErrorResult(error)
-    {
-
-    }
-    function _findContactEntitySuccessResult(result)
-    {
+    //Nominee
+    function _getNomineeDetailSuccessResult(result) {
       console.log(result)
-      vm.oldEntity=result;     
-      vm.empContactDetail=result;
+      $scope.nomineePage = angular.extend($scope.nomineePage, result);
+      // $scope.setPage($scope.page)
+      console.log($scope.nomineePage);
+      $scope.nomineePage.gridOptions = $scope.gridSetupColumns($scope.nomineePage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+      _refreshDataNominee();
+    }
+    function _getNomineeDetailErrorResult(error) {
+      alert(JSON.stringify(error))
+    }
+    function _refreshDataNominee() {
+      var search = [];
+      var searchFields = {
+        field: "NDEmpId",
+        operand: "=",
+        value: vm.empPKId
+      }
+      search.push(searchFields);
+      var data = {
+        searchList: search,
+        orderByList: []
+      }
+      var tableData = pageService.getTableData(
+        113,
+        438,
+        '', '',
+        false, data);
+      $scope.isLoaded = false
+      $scope.isLoading = true
+      tableData.then(_getNomineeTableSuccessResult, _getNomineeTableErrorResult)
+    }
+    function _getNomineeTableErrorResult(err) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+    }
+    function _getNomineeTableSuccessResult(result) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+      if (result == 'NoDataFound') {
+        // uivm.showMsg('warning', 'No Record Found.');
+      } else if (result.Errors !== undefined) {
+        // uivm.showMsg('error', result.Message);
+        // _startMsgTimer();
+      }
+      else {
+        console.log(result)
+        $scope.nomineePage.gridOptions.data = result;
+      }
+    }
+    function _addRecordNominee() {
+      var param = {
+        action: 'create',
+        page: $scope.nomineePage,
+        linkColumns: [{ name: 'NDEmpId', value: vm.empPKId }]
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+    }
+    function _editRecordNominee(row) {
+      var param = {
+        action: 'edit',
+        page: $scope.nomineePage,
+        entity: row.entity,
+        linkColumns: [{ name: 'NDEmpId', value: vm.empPKId }]
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+    }
+    //End Nominee
+
+    function _findEMGContactEntitySuccessResult(result) {
+
+      vm.oldEntity = result;
+      vm.empEmgContact = result;
+    }
+    function _findEMGContactEntityErrorResult() {
 
     }
-    function _findContactEntityErrorResult(result)
-    {
+    function _getcontactSuccessResult(result) {
+      console.log(result)
+      vm.CountryId = result.pageinfo.selects.CountryId;
+      vm.StateId = result.pageinfo.selects.StateId;
+      vm.CityId = result.pageinfo.selects.CityId;
+      vm.AreaId = result.pageinfo.selects.CDAreaId;
+      var searchList = [];
+      var searchFields = {
+        field: 'CDEmpId',
+        operand: '=',
+        value: vm.empPKId
+      }
+      searchList.push(searchFields);
+      $timeout(function () {
+        pageService.findEntity(45, undefined, searchList).then(
+          _findContactEntitySuccessResult, _findContactEntityErrorResult);
+      })
 
     }
+
+    function _getcontactErrorResult(error) {
+
+    }
+    function _findContactEntitySuccessResult(result) {
+      console.log(result)
+      vm.oldEntity = result;
+      vm.empContactDetail = result;
+
+    }
+    function _findContactEntityErrorResult(result) {
+
+    }
+
+    //family detail
     function _getfamilyDetailSuccessResult(result) {
       console.log(result)
-      $scope.page = result;
-      $scope.setPage($scope.page)
-      $scope.setGrid(
-        {
-          columns: ['FdName', 'FdDateOfBirth'],//list of columns
-          enableTitleFilter: true,//show title filter
-          enableGlobalFilter: true,//show global filter
-          enbleColumnFilter: false,//show each column filter
-          enableSrNo: true,//show serial no column
-          enableAction: true,//show action column
-          enablePagination: true,//enable pagination
-          paginationLength: 10,//length of rows per page,
-          pageId: 52  //page id for which grid to be design
-        }
-      )
-      console.log($scope.gridObject)
-      _getTableData();
+      $scope.familyPage = angular.extend($scope.familyPage, result);
+      $scope.setPage(result)
+      console.log($scope.familyPage);
+      $scope.familyPage.gridOptions = $scope.gridSetupColumns($scope.familyPage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+      _refreshDataFamily();
     }
-    function _getfamilyDetailErrorResult(error) {
-      alert(error);
+    function _getfamilyDetailErrorResult(err) {
+      console.log(err)
     }
     function _getPageDataSuccessResult(result) {
       console.log(result)
-      var field = "";    
-       if (vm.tempName == 'personal') {
+      var field = "";
+      if (vm.tempName == 'personal') {
         vm.gender = result.pageinfo.selects.PdGenderId;
         vm.maritalStatus = result.pageinfo.selects.PdMaritalId;
         vm.nationality = result.pageinfo.selects.PdNationalityId;
@@ -203,12 +318,12 @@ vm.empEmgContact=result;
       else if (vm.tempName == 'resign') {
         vm.leavingType = result.pageinfo.selects.RDLeavingTypeId;
         field = 'RDEmpId';
-        
+
       }
       else if (vm.tempName == 'sign') {
         vm.signatureType = result.pageinfo.selects.SGSTId;
         field = 'SDEmpId';
-       
+
       }
       else if (vm.tempName == 'account') {
         console.log(result)
@@ -216,26 +331,73 @@ vm.empEmgContact=result;
         vm.salary = result.pageinfo.selects.ADSalaryID;
         vm.bankName = result.pageinfo.selects.BankId;
         field = 'ADEmpId';
-        
+
       }
-       _findEntity(field);
+      _findEntity(field);
 
     }
-    
+    function _addRecordFamily() {
+      var param = {
+        action: 'create',
+        page: $scope.familyPage,
+        linkColumns: [{ name: 'FdEmpId', value: vm.empPKId }]
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+    }
+    function _editRecordFamily(row) {
+      var param = {
+        action: 'edit',
+        page: $scope.familyPage,
+        entity: row.entity,
+        linkColumns: [
+          { name: 'FdEmpId', value: vm.empPKId }]
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+      _refreshDataFamily();
+    }
+    function _refreshDataFamily() {
+      var search = [];
+      var searchFields = {
+        field: "FdEmpId",
+        operand: "=",
+        value: vm.empPKId
+      }
+      search.push(searchFields);
+      var data = {
+        searchList: search,
+        orderByList: []
+      }
+      var tableData = pageService.getTableData(
+        56,
+        52,
+        '', '',
+        false, data);
+      $scope.isLoaded = false
+      $scope.isLoading = true
+      tableData.then(_getTableSuccessResult, _getTableErrorResult)
+    }
+    //end family detail
+
     function _getPageDataErrorResult(error) {
 
     }
     function _findEntity(field) {
-        var searchList = [];
-        var searchFields = {
-          field: field,
-          operand: '=',
-          value: vm.empPKId
-        }
-        searchList.push(searchFields);
+      var searchList = [];
+      var searchFields = {
+        field: field,
+        operand: '=',
+        value: vm.empPKId
+      }
+      searchList.push(searchFields);
 
-        pageService.findEntity(vm.tableId, undefined, searchList).then(
-         _findEntitySuccessResult, _findEntityErrorResult);
+      pageService.findEntity(vm.tableId, undefined, searchList).then(
+        _findEntitySuccessResult, _findEntityErrorResult);
     }
     function _findEntitySuccessResult(result) {
       if (vm.tempName == 'basic') {
@@ -258,7 +420,7 @@ vm.empEmgContact=result;
         if (result.JDEmploymentId == 3) {
           vm.contractBase = true;
         }
-        else{
+        else {
           vm.contractBase = false;
         }
         console.log(result);
@@ -297,7 +459,7 @@ vm.empEmgContact=result;
         vm.tableId = 43;
       }
       if (vm.tempName == 'contact') {
-          vm.tableId = 45;
+        vm.tableId = 45;
       }
       if (vm.tempName == 'job') {
         vm.tableId = 121;
@@ -316,30 +478,35 @@ vm.empEmgContact=result;
       }
 
     }
- 
+
     function _saveContact() {
-       vm.pageId=36;
-       var Address={
-        CDId:vm.empContactDetail.CDAddLine1==undefined ?undefined:vm.empContactDetail.CDId,
-        CDEmpId:vm.empPKId,
-        CDAddLine1:vm.empContactDetail.CDAddLine1,
-        CDAddLine2:vm.empContactDetail.CDAddLine2,
-        CDPincode:vm.empContactDetail.CDPincode,
-        CDPAddLine1:vm.empContactDetail.CDPAddLine1,
-        CDPAddLine2:vm.empContactDetail.CDPAddLine2,
-        CDPPincode:vm.empContactDetail.CDPPincode,
-        CountryId:vm.empContactDetail.CountryId,
-        StateId:vm.empContactDetail.StateId,
-        CityId:vm.empContactDetail.CityId,
-        CDAreaId:2
+      vm.pageId = 36;
+      var Address = {
+        CDId: vm.empContactDetail.CDAddLine1 == undefined ? undefined : vm.empContactDetail.CDId,
+        CDEmpId: vm.empPKId,
+        CDAddLine1: vm.empContactDetail.CDAddLine1,
+        CDAddLine2: vm.empContactDetail.CDAddLine2,
+        CDPincode: vm.empContactDetail.CDPincode,
+        CDPAddLine1: vm.empContactDetail.CDPAddLine1,
+        CDPAddLine2: vm.empContactDetail.CDPAddLine2,
+        CDPPincode: vm.empContactDetail.CDPPincode,
+        CountryId: vm.empContactDetail.CountryId,
+        StateId: vm.empContactDetail.StateId,
+        CityId: vm.empContactDetail.CityId,
+        PCountryId: vm.empContactDetail.PCountryId,
+        PStateId: vm.empContactDetail.PStateId,
+        PCityId: vm.empContactDetail.PCityId,
+        CDAreaId: 2
       }
-    
-      if(vm.empContactDetail.CDId==undefined){      
-       _editPage(Address, 'create');
+      alert(JSON.stringify(Address))
+      if (vm.empContactDetail.CDId == undefined) {
+        vm.tempName1 = "address"
+        _editPage(Address, 'create');
       }
-      else{
-      _editPage(Address, 'edit');
-      }    
+      else {
+        vm.tempName1 = "address"
+        _editPage(Address, 'edit');
+      }
     }
     function _updateForm() {
 
@@ -362,7 +529,7 @@ vm.empEmgContact=result;
 
         _editPage(job, 'edit');
       }
-      
+
       if (vm.tempName == 'personal') {
         var personal = {
           PdEmpId: vm.empPKId,
@@ -374,33 +541,33 @@ vm.empEmgContact=result;
           PdNationalityId: vm.empPersonalDetail.PdNationalityId,
           PdDateOfBirth: _getDate(vm.empPersonalDetail.PdDateOfBirth),
           PdNickName: vm.empPersonalDetail.PdNickName,
-          PDAnniversaryDate:_getDate(vm.empPersonalDetail.PDAnniversaryDate),
-          PDFacebook:vm.empPersonalDetail.PDFacebook,
-          PDTwitter:vm.empPersonalDetail.PDTwitter,
-          PDLinkedIn:vm.empPersonalDetail.PDLinkedIn,
-          PDAdhar:vm.empPersonalDetail.PDAdhar,
-          PDPanCard:vm.empPersonalDetail.PDPanCard,
-          PDOtherNumber:vm.empPersonalDetail.PDOtherNumber,
-        }  
-         _editPage(personal, 'edit');
-        var emgContact={
-          ECId:vm.empEmgContact.ECId==undefined?undefined:vm.emgContact.ECId,
-          ECEmpId:vm.empPKId,
-          ECPersonName: vm.empEmgContact.ECPersonName,
-          ECContactNo:vm.empEmgContact.ECContactNo,
-          ECAddress:vm.empEmgContact.ECAddress,
-        } 
-        if(vm.empEmgContact.ECId==undefined)
-        {
-        vm.tempName1=="emgcontact"
-        vm.pageId=53;
-        _editPage(emgContact, 'create');
+          PDAnniversaryDate: _getDate(vm.empPersonalDetail.PDAnniversaryDate),
+          PDFacebook: vm.empPersonalDetail.PDFacebook,
+          PDTwitter: vm.empPersonalDetail.PDTwitter,
+          PDLinkedIn: vm.empPersonalDetail.PDLinkedIn,
+          PDAdhar: vm.empPersonalDetail.PDAdhar,
+          PDPanCard: vm.empPersonalDetail.PDPanCard,
+          PDOtherNumber: vm.empPersonalDetail.PDOtherNumber,
         }
-        else
-        {
-           vm.tempName1=="emgcontact"
-           vm.pageId=53;
-           _editPage(emgContact, 'edit');
+        _editPage(personal, 'edit');
+
+        var emgContact = {
+          ECID: vm.empEmgContact.ECID == undefined ? undefined : vm.empEmgContact.ECID,
+          ECEmpId: vm.empPKId,
+          ECPersonName: vm.empEmgContact.ECPersonName,
+          ECContactNo: vm.empEmgContact.ECContactNo,
+          ECAddress: vm.empEmgContact.ECAddress,
+        }
+
+        if (vm.empEmgContact.ECID == undefined) {
+          vm.tempName1 = "emgcontact"
+          vm.pageId = 53;
+          _editPage(emgContact, 'create');
+        }
+        else {
+          vm.tempName1 = "emgcontact"
+          vm.pageId = 53;
+          _editPage(emgContact, 'edit');
         }
 
       }
@@ -436,7 +603,7 @@ vm.empEmgContact=result;
             ADChequeNo: vm.empAccountDetail.ADChequeNo,
             ADSalaryID: vm.empAccountDetail.ADSalaryID
           }
-        
+
           if (vm.empAccountDetail.ADId == undefined) {
             _editPage(account, 'create');
           }
@@ -448,37 +615,34 @@ vm.empEmgContact=result;
 
       }
     }
-   function _setupSaving(dataObject, action) {
+    function _setupSaving(dataObject, action) {
       var data = {
-        oldEntity: vm.oldEntity==undefined?dataObject:vm.oldEntity,
+        oldEntity: vm.oldEntity == undefined ? dataObject : vm.oldEntity,
         newEntity: dataObject,
         pageCode: vm.pageId,
         activity: action
-      }      
+      }
       return data;
     }
-    function _editPage(objectData, action) {      
+    function _editPage(objectData, action) {
 
       var savingObj = _setupSaving(objectData, action);
       pageService.editPageData(vm.pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult)
     }
-    var count=1;
-    function _updateSuccessResult(result) {     
-       if(vm.tempName=="personal")
-       {       
-         if(count==2)
-         {
-         $scope.showMsg('success', 'Record Saved Successfully');  
-         count=1;      
-         }
-        else{
-           count++;
-        }              
-       }
-       else
-       {
+    var count = 1;
+    function _updateSuccessResult(result) {
+      if (vm.tempName == "personal" && vm.tempName1 == "emgcontact") {
+        if (count == 2) {
+          $scope.showMsg('success', 'Record Saved Successfully');
+          count = 1;
+        }
+        else {
+          count++;
+        }
+      }
+      else {
         $scope.showMsg('success', 'Record Saved Successfully');
-       }
+      }
 
     }
     function _updateErrorResult(error) {
@@ -506,28 +670,13 @@ vm.empEmgContact=result;
       vm.templateUrlPath = "app/pages/organization/employees/templates/" + tempName + "/" + tempName + "-" + action + ".html?" + rndValu2 + "=" + rndValu;
     }
 
-    $scope.addFamily = function (page, size) {
-      var param = { FdId: "", Action: null }
-      $uibModal.open({
-        animation: true,
-        templateUrl: page,
-        controller: 'addEmployeeFamilyDetails',
-        size: size,
-        resolve: {
-          param: function () {
-            return param;
-          }
-        }
-      });
-    };
 
-    $scope.editFamily = function (page, size, FdId, action) {
-    
-      var param = { FdId: FdId, Action: action }
+    $scope.addNominee = function (page, size) {
+      var param = { NDId: "", Action: null }
       $uibModal.open({
         animation: true,
         templateUrl: page,
-        controller: 'addEmployeeFamilyDetails',
+        controller: 'addEmployeeNomineeDetails',
         size: size,
         resolve: {
           param: function () {
@@ -538,27 +687,8 @@ vm.empEmgContact=result;
     };
     $scope.openProgressDialog = baProgressModal.open;
 
-    function _getTableData() {
-      var search = [];
-      var searchFields = {
-        field: "FdEmpId",
-        operand: "=",
-        value: vm.empPKId
-      }
-      search.push(searchFields);
-      var data = {
-        searchList: search,
-        orderByList: []
-      }
-      var tableData = pageService.getTableData(
-        56,
-        52,
-        '', '',
-        false, data);
-      $scope.isLoaded = false
-      $scope.isLoading = true
-      tableData.then(_getTableSuccessResult, _getTableErrorResult)
-    }
+
+
     function _getTableErrorResult(err) {
       $scope.isLoaded = true
       $scope.isLoading = false
@@ -575,7 +705,7 @@ vm.empEmgContact=result;
       else {
         console.log(result)
         //  $scope.table.rows = result;
-        $scope.rows = result;
+        $scope.familyPage.gridOptions.data = result;
 
 
       }
