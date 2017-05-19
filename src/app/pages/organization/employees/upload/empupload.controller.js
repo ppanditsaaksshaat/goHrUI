@@ -306,7 +306,7 @@
             var table3 = { title: 'Account', rows: [] }
 
             table3.rows.push({
-                column1: { name: 'ADSalaryModeId', text: 'Salary Mode', type: 'text', required: false, value: 'none' },
+                column1: { name: 'ADSalaryModeId', text: 'Salary Mode', type: 'text', required: true, value: 'none' },
                 column2: { name: 'PFPPFAccountNo', text: 'PF Account Number', type: 'text', required: false, value: 'none' }
             })
 
