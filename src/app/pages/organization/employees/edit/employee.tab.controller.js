@@ -360,7 +360,7 @@
     }
     function _addRecordExperience() {
 
-       var param = { FdId: "", Action: null }
+       var param = { WEId: 0, Action: null }
        $uibModal.open({
         animation: true,
         templateUrl: 'app/pages/organization/employees/templates/experience/addExperience-modal.html',
@@ -384,17 +384,30 @@
     //  dialogModal.openFormVertical(options);
     }
     function _editRecordExperience(row) {
-      alert(JSON.stringify(row.entity))
-      var param = {
-        action: 'edit',
-        page: $scope.experiencePage,
-        entity: row.entity,
-        linkColumns: [{ name: 'WEEmpId', value: vm.empPKId }]
-      };
-      var options = {
-        param: param
-      }
-      dialogModal.openFormVertical(options);
+      alert(row.entity.WEId)
+
+       var param = { WEId: row.entity.WEId, Action: null }
+       $uibModal.open({
+        animation: true,
+        templateUrl: 'app/pages/organization/employees/templates/experience/editExperience-modal.html',
+        controller: 'addEditExperienceDetails',
+        size: 'md',
+        resolve: {
+          param: function () {
+            return param;
+          }
+        }
+      });
+      // var param = {
+      //   action: 'edit',
+      //   page: $scope.experiencePage,
+      //   entity: row.entity,
+      //   linkColumns: [{ name: 'WEEmpId', value: vm.empPKId }]
+      // };
+      // var options = {
+      //   param: param
+      // }
+      // dialogModal.openFormVertical(options);
     }
     //End Experience
     
