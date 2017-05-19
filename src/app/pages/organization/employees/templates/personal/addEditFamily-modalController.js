@@ -16,8 +16,9 @@
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
     var vm = this;
     vm.empPKId = $stateParams.empId;
-    vm.tableId = 56;
-    vm.pageId = 52;
+    vm.tableId = 62;
+    vm.pageId = 56;
+   
     var family = {};
     function _loadController() {
       $timeout(function () {      
@@ -27,16 +28,16 @@
     }
     function _getPageDataSuccessResult(result) {
       console.log(result)
-      $scope.relationships = result.pageinfo.selects.FdRelationshipId;
-      if(param.FdId!=0)
-      {
-        pageService.findEntity(56, parseInt(param.FdId), undefined).then(_familyEntitySuccessResult, _familyEntityErrorResult);
-      }
+      vm.designation = result.pageinfo.selects.WEDesgId;  
+      // if(param.FdId!=0)
+      // {
+      //   pageService.findEntity(vm.tableId, parseInt(param.FdId), undefined).then(_experienceEntitySuccessResult, _experienceEntityErrorResult);
+      // }
     }
     function _getPageDataErrorResult(error) {
     }
-    function _familyEntitySuccessResult(result) {   
-       $scope.family = result;
+    function _experienceEntitySuccessResult(result) {   
+        $scope.family = result;
        vm.oldEntity=result;
        if(param.Action=='view') {
          $scope.name=true;
@@ -51,10 +52,14 @@
          $scope.dependent=false;
        }
      }
-     function _familyEntityErrorResult(error) {
+     function _experienceEntityErrorResult(error) {
 
      }
 
+ 
+ 
+ 
+   
     function _setupSaving(dataObject,action) {
       var data = {
         oldEntity: vm.oldEntity!=null?vm.oldEntity: dataObject,
