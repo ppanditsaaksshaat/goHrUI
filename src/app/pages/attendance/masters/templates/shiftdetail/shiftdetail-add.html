@@ -40,9 +40,8 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label       class="col-sm-4 control-label">Lunch Time</label>
-                        <div class="col-sm-8">
-                            <input name="SMLunchTime" maxlength="15" ng-model="addCtrl.entity.SMLunchTime" type="text" placeholder="Enter IFSC Code" class="form-control"
-                                  >
+                        <div class="col-sm-8">  
+                         <input name="SMLunchTime" maxlength="15" ui-timepicker ng-model="addCtrl.entity.SMLunchTime" type="text" placeholder="Enter IFSC Code" class="form-control" >
                         </div>
                     </div>
                 </div>
@@ -50,8 +49,11 @@
                     <div class="form-group">
                         <label       class="col-sm-4 control-label">From Time</label>
                         <div class="col-sm-8">
-                            <input name="SMFromTime" maxlength="6" ng-model="addCtrl.entity.SMFromTime" type="text" ng-required="true" class="form-control"
-                                   placeholder="Enter Postal Zip Code" numeric-Only>
+
+
+   <input name="SMFromTime" maxlength="15" ui-timepicker ng-model="addCtrl.entity.SMFromTime" base-date"someDateObject" type="text" ng-required="true" placeholder="Enter IFSC Code" class="form-control" >
+                   
+
                         </div>
                     </div>
                 </div>
@@ -64,8 +66,12 @@
                     <div class="form-group">
                         <label       class="col-sm-4 control-label">To Time</label>
                         <div class="col-sm-8">
-                            <input name="SMToTime" maxlength="100" ng-model="addCtrl.entity.SMToTime" type="text" ng-required="true" class="form-control"
-                                   placeholder="Enter Branch Name">
+                         
+
+<input name="SMToTime" maxlength="15" ui-timepicker ng-model="addCtrl.entity.SMToTime" type="text" ng-required="true" placeholder="Enter To Time " class="form-control" >
+ 
+
+
                         </div>
                     </div>
                 </div>
@@ -75,6 +81,10 @@
                         <div class="col-sm-8">
                             <input name="SMsetMaxWorkingTimeForHalfDay" maxlength="100" ng-model="addCtrl.entity.SMsetMaxWorkingTimeForHalfDay" type="text" ng-required="true" class="form-control"
                                    placeholder="Enter Branch Name">
+
+
+
+                                   
                         </div>
                     </div>
                 </div>

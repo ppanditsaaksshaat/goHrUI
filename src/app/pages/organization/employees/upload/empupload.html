@@ -224,15 +224,51 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-hide="tabCtrl.migrate.step1">
+
+            <div id="step5" ng-show="tabCtrl.migrate.step5">
+                 <h3 class="with-line">Import Summary</h3>
+                 <div class="row">
+                      <div class="col-md-12">
+                          total record in file  {{tabCtrl.totalRecord}}
+                       </div>
+                 </div>
+
+                 <div class="row">
+                      <div class="col-md-4">
+                          <div class="col-md-4">
+                              <a href="">Added {{tabCtrl.successLength}}</a>
+                           </div>
+                           <div class="col-md-4">
+                               <a href="">Skip {{tabCtrl.skipListLength}}</a>
+                           </div>
+                          <div class="col-md-4">
+                        </div>
+
+                       </div>
+                       <div class="col-md-4">
+                       </div>
+                       <div class="col-md-4">
+                       </div>
+                 </div>
+
+                 
+                 <br>
+               
+               
+              
+
+
+            </div>
+
+            <div class="row" ng-if="!tabCtrl.migrate.step5" ng-hide="tabCtrl.migrate.step1">
                 <div class="col-md-12">
                     <button type="button" ng-click="tabCtrl.goPrevious()" class="btn btn-default">
                         Previous
                     </button>
-                    <button type="button" ng-click="tabCtrl.gridOptions.data=[]" class="btn btn-default">
-                        Cancel
+                    <button type="button" ng-click="tabCtrl.clear()" class="btn btn-default">
+                        Clear
                     </button>
-                    <button type="button" ng-click="tabCtrl.nextDataUpload()" ng-hide="tabCtrl.migrate.step3"  class="btn btn-info">
+                    <button type="button" ng-click="tabCtrl.nextDataUpload()" ng-hide="tabCtrl.migrate.step3" class="btn btn-info">
                        {{(tabCtrl.migrate.step3)?"Import":"Next"}}
                     </button>
                     <button type="button" ng-click="tabCtrl.importDataUpload()" ng-show="tabCtrl.migrate.step3" class="btn btn-info">

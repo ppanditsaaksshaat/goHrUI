@@ -10,15 +10,15 @@
 
   /** @ngInject */
   function attMastersController1() {
-   console.log('this controller')
+    console.log('this controller')
     var vm = this;
     vm.navigationCollapsed = true;
     vm.tabs = _getTabs();
-    function _getTabs() {      
-      var mastersMenu = [];    
+    function _getTabs() {
+      var mastersMenu = [];
       mastersMenu.push({ name: 'shiftset', text: 'Shift Set ', id: 289 })
       mastersMenu.push({ name: 'shiftdetail', text: 'Shift detail ', id: 128 })
-       mastersMenu.push({ name: 'holidaymaster', text: 'holiday master ', id: 291 })
+      mastersMenu.push({ name: 'holidaymaster', text: 'holiday master ', id: 291 })
       return mastersMenu;
 
     }

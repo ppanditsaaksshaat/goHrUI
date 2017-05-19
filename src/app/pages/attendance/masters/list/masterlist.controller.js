@@ -9,48 +9,51 @@
     .controller('attMastersListController1', attMastersListController1);
 
   /** @ngInject */
-  function attMastersListController1($scope, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore) {
-
-
-    var rndValu = Math.round((Math.random() * 10) * 10);
-    var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
+  function attMastersListController1($scope, $state, $stateParams,
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal) {
 
     var vm = this;
-    vm.ucvOnChange = _ucvOnChange;
-    vm.pageId = $stateParams.pageId;
+    var pageId = $stateParams.pageId;
+    var tempName = $stateParams.name;
+    var currentState = $state.current;
 
-    vm.table = { rows: [] }
-    vm.page = {};
+
+    $scope.page = {}
+    $scope.page.boxOptions = {
+      showRefresh: true,
+      showFilter: false,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: false,
+      gridHeight: 450,
+      refreshData: _refreshData,
+      addRecord: _addRecord,
+      editRecord: _editRecord,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
+      openView: null,
+      uploadRecord: null
+    }
+
+    vm.ucvOnChange = _ucvOnChange;
+
     $scope.isLoading = true;
     $scope.isLoaded = false;
-    vm.templateUrlPath = '';
-    vm.tempName = $stateParams.name;
-    vm.templateUrlPath = "app/pages/attendance/masters/templates/"
-      + vm.tempName + "/" + vm.tempName + "-list.html?" + rndValu2 + "=" + rndValu;
-    vm.listTemplateUrlPath = 'app/pages/attendance/masters/list/table-list.html';
 
-    vm.refreshData = function () {
-      $scope.rows = [];
-      // _getTableData();
+    function _refreshData() {
       _getTableData([], [])
     }
 
     function _loadController() {
-      
-      $scope.gridOption = {columns: [] }
-     
-      pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
+      pageService.getPagData(pageId).then(_successGetPage, _errorGetPage)
     }
     function _successGetPage(result) {
       console.log(result)
-      vm.page = result;
-      // DJWebStore.SetValue('Page_' + vm.pageId, result)
-      $scope.setPage(vm.page)
-      // $scope.$emit("designGrid");
-      
-      $scope.$broadcast('designGrid');
-
+      $scope.page = angular.extend($scope.page, result);
+      $scope.setPage(result)
+      $scope.page.gridOptions = $scope.gridSetupColumns($scope.page.gridOptions, result.pageinfo.columns, result, true, true, true, true);
       _getTableData([], []);
     }
     function _errorGetPage(err) {
@@ -64,8 +67,8 @@
         orderByList: orderByList
       }
       var tableData = pageService.getTableData(
-        vm.page.pageinfo.tableid,
-        vm.page.pageinfo.pageid,
+        $scope.page.pageinfo.tableid,
+        $scope.page.pageinfo.pageid,
         '', '',
         false, data);
 
@@ -86,17 +89,41 @@
         // _startMsgTimer();
       }
       else {
-        vm.table.rows = result;
-        $scope.rows = result;
-        console.log($scope.rows.length)
-        // if (uivm.page.gridOptions.data.length == 1)
-        //   uivm.showMsg('info', result.length + ' Records found.');
-        // else
-        //   uivm.showMsg('info', result.length + ' Record found.');
 
-        // _startMsgTimer();
+        $scope.page.gridOptions.data = result;
+
       }
     }
+
+    function _addRecord() {
+      if ($scope.page.pageinof.pageid == 1) {
+
+      }
+      else {
+        var param = {
+          action: 'create',
+          page: $scope.page,
+          linkColumns: []
+        };
+        var options = {
+          param: param
+        }
+        dialogModal.openFormVertical(options);
+      }
+    }
+    function _editRecord(row) {
+      var param = {
+        action: 'create',
+        page: $scope.page,
+        entity: row.entity,
+        linkColumns: []
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+    }
+
     function _ucvOnChange(item) {
 
       console.log(item)
