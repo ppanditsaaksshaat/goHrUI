@@ -360,7 +360,7 @@
     }
     function _addRecordExperience() {
 
-       var param = { WEId: 0, Action: null }
+       var param = { WEId: "", Action: null }
        $uibModal.open({
         animation: true,
         templateUrl: 'app/pages/organization/employees/templates/experience/addExperience-modal.html',
@@ -383,10 +383,8 @@
       // }
     //  dialogModal.openFormVertical(options);
     }
-    function _editRecordExperience(row) {
-      alert(row.entity.WEId)
-
-       var param = { WEId: row.entity.WEId, Action: null }
+    function _editRecordExperience(row) {    
+       var param = { WEId: row.entity.WEId, Action: null }     
        $uibModal.open({
         animation: true,
         templateUrl: 'app/pages/organization/employees/templates/experience/editExperience-modal.html',

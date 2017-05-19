@@ -11,7 +11,7 @@
   /** @ngInject */
   /** @ngInject */
   function addEditExperienceDetails($scope, $stateParams, pageService,DJWebStore, $timeout, param) {
-    console.log(param)   
+    console.log(param.WEId)   
     
     var rndValu = Math.round((Math.random() * 10) * 10);
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
@@ -35,7 +35,7 @@
         $scope.designation = result.pageinfo.selects.WEDesgId;  
       if(param.WEId!=0)
       {
-        pageService.findEntity(56, parseInt(param.WEId), undefined).then(_experienceEntitySuccessResult, _experienceEntityErrorResult);
+        pageService.findEntity(vm.tableId, parseInt(param.WEId), undefined).then(_experienceEntitySuccessResult, _experienceEntityErrorResult);
       }
     }
     function _getPageDataErrorResult(error) {
@@ -103,8 +103,9 @@
            WECompanyAddress:$scope.empExperienceDetail.WECompanyAddress,
            WEDesgId:$scope.empExperienceDetail.WEDesgId,
          }
-      var savingObj = _setupSaving(family,'edit');
-      _nomineeCreateEdit(savingObj);
+        // alert(JSON.stringify(experience))
+      var savingObj = _setupSaving(experience,'edit');
+      _experienceCreateEdit(savingObj);
     }
 
    _loadController();
