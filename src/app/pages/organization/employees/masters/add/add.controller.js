@@ -25,6 +25,7 @@
       vm.tempName = param.name;
       vm.page = $scope.getPage(vm.pageId)
       vm.page.action = param.action;
+      vm.page.linkColumns = param.linkColumns;
       vm.pkId = 0;
       if (param.pkId !== undefined) {
         vm.page.pkId = param.pkId;

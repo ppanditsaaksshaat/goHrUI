@@ -76,8 +76,12 @@
                 <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" datetimepicker
                     class="form-control" ng-switch-when="datetimepicker" placeholder="{{col.place}}" />
                 <!--datepicker-->
-                <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" datetimepicker
-                    class="form-control" ng-switch-when="datepicker" placeholder="{{col.place}}" />
+                <datepicker ng-switch-when="datepicker">
+                    <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" 
+                    type="text" date-format="dd-MMM-yyyy" 
+                    class="form-control"  placeholder="{{col.place}}" />
+                </datepicker>
+                
                 <!--timepicker-->
                 <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" datetimepicker
                     class="form-control" ng-switch-when="timepicker" placeholder="{{col.place}}" />

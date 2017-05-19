@@ -20,7 +20,7 @@
     vm.searchList = [];
     vm.orderByList = [];
 
-    this.refreshData = _refreshData;
+    // this.refreshData = _refreshData;
     this.addRecord = _addRecord;
     this.editRecord = _editRecord;
     this.updateRecord = _updateRecord;
@@ -39,7 +39,15 @@
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
-      showUpload: false
+      showUpload: false,
+      refresh: _refreshData,
+      addRecord: _addRecord,
+      editRecord: _editRecord,
+      updateRecord: _updateRecord,
+      viewRecord: _viewRecord,
+      deleteRecord: _deleteRecord,
+      openView: _openView,
+      uploadRecord: _uploadRecord
     }
 
     function _loadController() {

@@ -12,24 +12,56 @@
 
   /** @ngInject */
   /** @ngInject */
-  function OrgEmployeeTabController($scope, $stateParams, pageService, $timeout, $uibModal, baProgressModal) {
+  function OrgEmployeeTabController($scope, $stateParams, pageService, $timeout, $uibModal, baProgressModal, dialogModal) {
 
 
     $scope.familyPage = {}
     $scope.familyPage.gridOptions = $scope.getGridSetting();
-     $scope.nomineePage = {}
-    $scope.nomineePage.gridOptions = $scope.getGridSetting();
-    $scope.gridStyle = { width: 500, height: 450 }
-    $scope.boxSetting = {
+    $scope.familyPage.boxOptions = {
       showRefresh: true,
       showFilter: false,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
-      showUpload: false
+      showUpload: false,
+      refreshData: _refreshDataFamily,
+      addRecord: _addRecordFamily,
+      editRecord: _editRecordFamily,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
+      openView: null,
+      uploadRecord: null
+    }
+    //Nominee Page Setting
+    $scope.nomineePage = {}
+    $scope.nomineePage.gridOptions = $scope.getGridSetting();
+    $scope.nomineePage.boxOptions = {
+      showRefresh: true,
+      showFilter: false,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: false,
+      refreshData: _refreshDataNominee,
+      addRecord: _addRecordNominee,
+      editRecord: _editRecordNominee,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
+      openView: null,
+      uploadRecord: null
     }
 
+
+
+
+
+
     var vm = this;
+
+    vm.pageIds = { familyPageId: 52, nomineePageId: 438 }
+
     vm.navigationCollapsed = true;
     vm.pageId = $stateParams.pageId;
     vm.empPKId = $stateParams.empId;
@@ -122,9 +154,11 @@
           _getcontactSuccessResult, _getcontactErrorResult);
       });
     }
+
+    //Nominee
     function _getNomineeDetailSuccessResult(result) {
       console.log(result)
-     $scope.nomineePage = angular.extend($scope.nomineePage, result);
+      $scope.nomineePage = angular.extend($scope.nomineePage, result);
       // $scope.setPage($scope.page)
       console.log($scope.nomineePage);
       $scope.nomineePage.gridOptions = $scope.gridSetupColumns($scope.nomineePage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
@@ -133,6 +167,70 @@
     function _getNomineeDetailErrorResult(error) {
       alert(JSON.stringify(error))
     }
+    function _refreshDataNominee() {
+      var search = [];
+      var searchFields = {
+        field: "NDEmpId",
+        operand: "=",
+        value: vm.empPKId
+      }
+      search.push(searchFields);
+      var data = {
+        searchList: search,
+        orderByList: []
+      }
+      var tableData = pageService.getTableData(
+        113,
+        438,
+        '', '',
+        false, data);
+      $scope.isLoaded = false
+      $scope.isLoading = true
+      tableData.then(_getNomineeTableSuccessResult, _getNomineeTableErrorResult)
+    }
+    function _getNomineeTableErrorResult(err) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+    }
+    function _getNomineeTableSuccessResult(result) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+      if (result == 'NoDataFound') {
+        // uivm.showMsg('warning', 'No Record Found.');
+      } else if (result.Errors !== undefined) {
+        // uivm.showMsg('error', result.Message);
+        // _startMsgTimer();
+      }
+      else {
+        console.log(result)
+        $scope.nomineePage.gridOptions.data = result;
+      }
+    }
+    function _addRecordNominee() {
+      var param = {
+        action: 'create',
+        page: $scope.nomineePage,
+        linkColumns: [{ name: 'NDEmpId', value: vm.empPKId }]
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+    }
+    function _editRecordNominee(row) {
+      var param = {
+        action: 'edit',
+        page: $scope.nomineePage,
+        entity: row.entity,
+        linkColumns: [{ name: 'NDEmpId', value: vm.empPKId }]
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+    }
+    //end Nominee
+
     function _findEMGContactEntitySuccessResult(result) {
 
       vm.oldEntity = result;
@@ -173,13 +271,15 @@
     function _findContactEntityErrorResult(result) {
 
     }
+
+    //family detail
     function _getfamilyDetailSuccessResult(result) {
       console.log(result)
       $scope.familyPage = angular.extend($scope.familyPage, result);
-      // $scope.setPage($scope.page)
+      $scope.setPage(result)
       console.log($scope.familyPage);
       $scope.familyPage.gridOptions = $scope.gridSetupColumns($scope.familyPage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
-      _getTableData();
+      _refreshDataFamily();
     }
     function _getfamilyDetailErrorResult(err) {
       console.log(err)
@@ -234,6 +334,52 @@
       _findEntity(field);
 
     }
+    function _addRecordFamily() {
+      var param = {
+        action: 'create',
+        page: $scope.familyPage,
+        linkColumns: [{ name: 'FdEmpId', value: vm.empPKId }]
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+    }
+    function _editRecordFamily(row) {
+      var param = {
+        action: 'edit',
+        page: $scope.familyPage,
+        entity: row.entity,
+        linkColumns: [
+          { name: 'FdEmpId', value: vm.empPKId }]
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+    }
+    function _refreshDataFamily() {
+      var search = [];
+      var searchFields = {
+        field: "FdEmpId",
+        operand: "=",
+        value: vm.empPKId
+      }
+      search.push(searchFields);
+      var data = {
+        searchList: search,
+        orderByList: []
+      }
+      var tableData = pageService.getTableData(
+        56,
+        52,
+        '', '',
+        false, data);
+      $scope.isLoaded = false
+      $scope.isLoading = true
+      tableData.then(_getTableSuccessResult, _getTableErrorResult)
+    }
+    //end family detail
 
     function _getPageDataErrorResult(error) {
 
@@ -521,36 +667,6 @@
       vm.templateUrlPath = "app/pages/organization/employees/templates/" + tempName + "/" + tempName + "-" + action + ".html?" + rndValu2 + "=" + rndValu;
     }
 
-    $scope.addFamily = function (page, size) {
-      var param = { FdId: "", Action: null }
-      $uibModal.open({
-        animation: true,
-        templateUrl: page,
-        controller: 'addEmployeeFamilyDetails',
-        size: size,
-        resolve: {
-          param: function () {
-            return param;
-          }
-        }
-      });
-    };
-
-    $scope.editFamily = function (page, size, FdId, action) {
-
-      var param = { FdId: FdId, Action: action }
-      $uibModal.open({
-        animation: true,
-        templateUrl: page,
-        controller: 'addEmployeeFamilyDetails',
-        size: size,
-        resolve: {
-          param: function () {
-            return param;
-          }
-        }
-      });
-    };
 
     $scope.addNominee = function (page, size) {
       var param = { NDId: "", Action: null }
@@ -568,27 +684,7 @@
     };
     $scope.openProgressDialog = baProgressModal.open;
 
-    function _getTableData() {
-      var search = [];
-      var searchFields = {
-        field: "FdEmpId",
-        operand: "=",
-        value: vm.empPKId
-      }
-      search.push(searchFields);
-      var data = {
-        searchList: search,
-        orderByList: []
-      }
-      var tableData = pageService.getTableData(
-        56,
-        52,
-        '', '',
-        false, data);
-      $scope.isLoaded = false
-      $scope.isLoading = true
-      tableData.then(_getTableSuccessResult, _getTableErrorResult)
-    }
+
 
     function _getTableErrorResult(err) {
       $scope.isLoaded = true
@@ -612,49 +708,7 @@
       }
     }
 
-    function _getTableData1() {
-      var search = [];
-      var searchFields = {
-        field: "NDEmpId",
-        operand: "=",
-        value: vm.empPKId
-      }
-      search.push(searchFields);
-      var data = {
-        searchList: search,
-        orderByList: []
-      }
-      var tableData = pageService.getTableData(
-        113,
-        438,
-        '', '',
-        false, data);
-      $scope.isLoaded = false
-      $scope.isLoading = true
-      tableData.then(_getTableSuccessResult1, _getTableErrorResult1)
-    }
 
-    function _getTableErrorResult1(err) {
-      $scope.isLoaded = true
-      $scope.isLoading = false
-    }
-    function _getTableSuccessResult1(result) {
-      $scope.isLoaded = true
-      $scope.isLoading = false
-      if (result == 'NoDataFound') {
-        // uivm.showMsg('warning', 'No Record Found.');
-      } else if (result.Errors !== undefined) {
-        // uivm.showMsg('error', result.Message);
-        // _startMsgTimer();
-      }
-      else {
-        console.log(result)
-        //  $scope.table.rows = result;
-       $scope.nomineePage.gridOptions.data = result;
-
-
-      }
-    }
     _loadController();
 
   }

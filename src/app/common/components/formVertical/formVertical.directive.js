@@ -16,13 +16,12 @@
                 page: '='
             },
             link: function (scope, elm, attrs) {
-                console.log($rootScope.modalInstance)
                 scope.modalInstance = $rootScope.modalInstance;
                 scope.entity = {};
                 scope.form = {};
                 scope.page.formrows = [];
                 scope.oldEntity = {};
-
+                console.log(scope.page)
                 if (scope.page !== undefined) {
 
                     //find tabs
@@ -32,7 +31,16 @@
                             //find columns
                             angular.forEach(row, function (col) {
                                 if (col.name != scope.page.pageinfo.idencolname) {
-                                    scope.page.formrows.push(col);
+                                    var isValid = true;
+                                    //find any link column with parent
+                                    angular.forEach(scope.page.linkColumns, function (link) {
+                                        if (col.name == link.name) {
+                                            scope.entity[col.name] = link.value;
+                                            isValid = false;
+                                        }
+                                    })
+                                    if (isValid)
+                                        scope.page.formrows.push(col);
                                 }
                             })
                         })

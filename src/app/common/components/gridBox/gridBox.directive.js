@@ -20,17 +20,20 @@
             link: function (scope, elm, attrs, parent) {
                 var boxSetting = {
                     showRefresh: true,
-                    showFilter: true,
+                    showFilter: false,
                     showAdd: true,
                     showRowMenu: true,
-                    showCustomView: true
-                }
-                if (scope.boxOptions === undefined)
-                    scope.boxOptions = angular.copy(boxSetting);
-                if (!scope.boxOptions.showFilter) {
-                    scope.page.showFilter = false;
+                    showCustomView: true,
+                    showUpload: false,
+                    gridStyle: { height: '450px' }
                 }
 
+                if (scope.page.boxOptions === undefined)
+                    scope.page.boxOptions = angular.copy(boxSetting);
+                if (!scope.page.boxOptions.showFilter) {
+                    scope.page.showFilter = false;
+                }
+                console.log(scope.refreshData)
                 scope.page.selectedRows = [];
 
                 scope.refreshData = _refreshData;
@@ -47,32 +50,37 @@
                 console.log(scope.page)
 
                 function _refreshData() {
-                    parent.refreshData();
+                    console.log('ref')
+                    // parent.refreshData();
+                    console.log(scope.page.boxOptions);
+                    scope.$eval(scope.page.boxOptions.refreshData);
+                    // console.log(parent[scope.page.boxOptions.refreshData]);
                 }
                 function _addRecord() {
-                    parent.addRecord();
+                    // parent.addRecord();
+                    scope.page.boxOptions.addRecord();
                 }
                 function _editRecord(row) {
-                    parent.editRecord(row);
+                    scope.page.boxOptions.editRecord(row);
                 }
                 function _updateRecord(row) {
-                    parent.updateRecord(row);
+                    scope.page.boxOptions.updateRecord(row);
                 }
                 function _viewRecord(row) {
-                    parent.viewRecord(row);
+                    scope.page.boxOptions.viewRecord(row);
                 }
                 function _deleteRecord(row) {
-                    parent.deleteRecord(row);
+                    scope.page.boxOptions.deleteRecord(row);
                 }
                 function _openView(row) {
-                    parent.openView(row);
+                    scope.page.boxOptions.openView(row);
                 }
                 function _clearSelected() {
                     scope.page.gridApi.selection.clearSelectedRows();
                     scope.page.selectedRows = [];
                 }
                 function _uploadRecord() {
-                    parent.uploadRecord();
+                    scope.page.boxOptions.uploadRecord();
                 }
                 function _onRegisterApi(gridApi) {
                     console.log('register grid api')
@@ -98,6 +106,18 @@
                         }
                     });
                 }
+
+                scope.getGridHeight = function () {
+                    var rowHeight = 30;
+                    var headerHeight = 30;
+                    var defaultHeight = 450;
+                    if (scope.page.gridOptions.data.length < 10) {
+                        defaultHeight = (scope.page.gridOptions.data.length * rowHeight + headerHeight);
+                    }
+                    return {
+                        height: defaultHeight + "px"
+                    };
+                };
             }
         };
     }

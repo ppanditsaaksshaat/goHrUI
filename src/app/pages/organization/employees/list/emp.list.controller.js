@@ -20,26 +20,34 @@
     vm.searchList = [];
     vm.orderByList = [];
 
-    this.refreshData = _refreshData;
-    this.addRecord = _addRecord;
-    this.editRecord = _editRecord;
-    this.updateRecord = _updateRecord;
-    this.viewRecord = _viewRecord;
-    this.deleteRecord = _deleteRecord;
-    this.openView = _openView;
+    // this.refreshData = _refreshData;
+    // this.addRecord = _addRecord;
+    // this.editRecord = _editRecord;
+    // this.updateRecord = _updateRecord;
+    // this.viewRecord = _viewRecord;
+    // this.deleteRecord = _deleteRecord;
+    // this.openView = _openView;
     this.applyFilter = _applyFilter;
-    this.uploadRecord = _uploadRecord;
+    // this.uploadRecord = _uploadRecord;
 
     $scope.page = {}
     $scope.page.gridOptions = $scope.getGridSetting();
-    $scope.gridStyle = { width: 500, height: 450 }
-    $scope.boxSetting = {
+    $scope.page.gridStyle = { width: 500, height: 450 }
+    $scope.page.boxOptions = {
       showRefresh: true,
       showFilter: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
-      showUpload: true
+      showUpload: true,
+      refreshData: _refreshData,
+      addRecord: _addRecord,
+      editRecord: _editRecord,
+      updateRecord: _updateRecord,
+      viewRecord: _viewRecord,
+      deleteRecord: _deleteRecord,
+      openView: _openView,
+      uploadRecord: _uploadRecord
     }
 
     function _loadController() {
