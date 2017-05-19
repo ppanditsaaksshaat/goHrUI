@@ -21,7 +21,7 @@
             currentStep: 1,
             tables: [],
             unMappedList: [],
-            step1: true, step2: false, step3: false, step4: false
+            step1: true, step2: false, step3: false, step4: false, step5: false
         }
         vm.normaltabs2 = true;
 
@@ -39,15 +39,24 @@
 
         function _loadController() {
             vm.migrate.findFieldList = [];
-
-            addFieldCheck('Department', '', 0, 0, 0);
-            addFieldCheck('Designation', '', 0, 0, 1);
+            //firstCheck, secondCheck, tableIndex, rowIndex, colIndex
+            addFieldCheck('department', '', 0, 0, 0);
+            addFieldCheck('designation', '', 0, 0, 1);
             addFieldCheck('Employeement', '', 0, 1, 0);
             addFieldCheck('DOJ', '', 0, 1, 1);
             addFieldCheck('Grade', '', 0, 2, 0);
             addFieldCheck('Level', '', 0, 2, 1);
             addFieldCheck('Sub', 'Unit', 0, 3, 0);
             addFieldCheck('Sub', 'Unit', 0, 3, 0);
+
+            //for names
+            addFieldCheck('first', 'name', 1, 1, 1);
+            
+            //date of birth check
+            addFieldCheck('date', 'birth', 1, 3, 0);
+            addFieldCheck('dob', '', 1, 3, 0);
+            addFieldCheck('d.o.b', '', 1, 3, 0);
+
 
         }
 
@@ -186,7 +195,7 @@
             vm.migrate.tables.push(table3);
 
 
-            vm.migrate.findFieldList = [];
+            //vm.migrate.findFieldList = [];
 
 
         }
@@ -205,6 +214,7 @@
                 }
                 else {
                     vm.setupMigrate();
+                    // debugger;
                     vm.matchingFields();
                     vm.migrate.currentStep = 2;
                     vm.migrate.step1 = false;
@@ -347,9 +357,12 @@
 
                 })
             })
-
+            if (vm.showEmployeeName === undefined) {
+                vm.showEmployeeName = false;
+            }
             console.log(vm.gridOptions.data)
-            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee' }
+            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName }
+            console.log(uncData)
             var postData = JSON.stringify(uncData);
             var compressed = LZString.compressToEncodedURIComponent(postData);
 
@@ -357,10 +370,27 @@
             // var data = { data: postData }
 
             pageService.uploadEmployeeData(data).then(function (result) {
+                var successDataLength = result.successList.length;
+                var skipListDataLength = result.skipList.length;
+
+                vm.successLength = successDataLength;
+                vm.skipListLength = skipListDataLength;
+
+                var successData = parseInt(successDataLength)
+                var skipData = parseInt(skipListDataLength)
+
+                vm.totalRecord = successData + skipData;
+
+                console.log(successDataLength, skipListDataLength, vm.totalRecord)
                 console.log(result)
             }, function (err) {
                 console.log(err)
             })
+            vm.migrate.step1 = false;
+            vm.migrate.step2 = false;
+            vm.migrate.step3 = false;
+            vm.migrate.step4 = false;
+            vm.migrate.step5 = true;
         }
 
 
@@ -398,9 +428,9 @@
         function setUsable(colName, firstCheck, secondCheck, tableIdx, rowIdx, colIdx) {
             var isUsable = false;
             var lowerValue = colName.toString().toLowerCase();
-            if (lowerValue.indexOf(firstCheck) >= 0) {
+            if (lowerValue.indexOf(firstCheck.toString().toLowerCase()) >= 0) {
                 if (secondCheck != '') {
-                    if (lowerValue.indexOf(secondCheck) >= 0) {
+                    if (lowerValue.indexOf(secondCheck.toString().toLowerCase()) >= 0) {
                         isUsable = true;
                     }
                 }
@@ -410,10 +440,10 @@
 
                 if (isUsable) {
                     if (colIdx == 1) {
-                        vm.migrate.tables[tableIdx].rows[rowIdx].column1.value = colName;
+                        vm.migrate.tables[tableIdx].rows[rowIdx].column2.value = colName;
                     }
                     else {
-                        vm.migrate.tables[tableIdx].rows[rowIdx].column2.value = colName;
+                        vm.migrate.tables[tableIdx].rows[rowIdx].column1.value = colName;
                     }
                 }
             }

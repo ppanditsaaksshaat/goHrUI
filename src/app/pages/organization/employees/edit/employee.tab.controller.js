@@ -24,6 +24,7 @@
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
+      enableAutoRefresh: true,
       refreshData: _refreshDataFamily,
       addRecord: _addRecordFamily,
       editRecord: _editRecordFamily,
@@ -52,12 +53,6 @@
       openView: null,
       uploadRecord: null
     }
-
-
-
-
-
-
     var vm = this;
 
     vm.pageIds = { familyPageId: 52, nomineePageId: 438 }
@@ -106,6 +101,9 @@
         vm.empContactDetail.PCityId = '';
       }
     }
+    //End of Permanent Address Same as Current Address  
+
+    // Get date format mmddyyyy
     function _getDate(date) {
       var mmddyyyy = "";
       var date = new Date(date);
@@ -115,7 +113,10 @@
       return mmddyyyy;
     }
 
+    // End of get date format mmddyyyy
 
+
+    //Page load
     function _loadController() {
 
       vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
@@ -154,6 +155,7 @@
           _getcontactSuccessResult, _getcontactErrorResult);
       });
     }
+    // End of Page load
 
     //Nominee
     function _getNomineeDetailSuccessResult(result) {
@@ -162,7 +164,7 @@
       // $scope.setPage($scope.page)
       console.log($scope.nomineePage);
       $scope.nomineePage.gridOptions = $scope.gridSetupColumns($scope.nomineePage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
-      _getTableData1();
+      _refreshDataNominee();
     }
     function _getNomineeDetailErrorResult(error) {
       alert(JSON.stringify(error))
@@ -229,7 +231,7 @@
       }
       dialogModal.openFormVertical(options);
     }
-    //end Nominee
+    //End Nominee
 
     function _findEMGContactEntitySuccessResult(result) {
 
@@ -357,6 +359,7 @@
         param: param
       }
       dialogModal.openFormVertical(options);
+      _refreshDataFamily();
     }
     function _refreshDataFamily() {
       var search = [];
