@@ -584,7 +584,7 @@
     function _addRecordSkill() {
       var param = {
         action: 'create',
-        page: $scope.familyPage,
+        page: $scope.skillPage,
         linkColumns: [{ name: vm.field, value: vm.empPKId }]
       };
       var options = {
@@ -595,7 +595,7 @@
     function _editRecordSkill(row) {
       var param = {
         action: 'edit',
-        page: $scope.familyPage,
+        page: $scope.skillPage,
         entity: row.entity,
         linkColumns: [
           { name: vm.field, value: vm.empPKId }]
@@ -725,15 +725,15 @@
 
       }
 
-      // else if(vm.tempName=='skill')
-      // {
-      // console.log(result)
-      // $scope.skillPage = angular.extend($scope.skillPage, result);
-      // // $scope.setPage($scope.page)
-      // console.log($scope.skillPage);
-      // $scope.skillPage.gridOptions = $scope.gridSetupColumns($scope.skillPage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
-      // _refreshDataSkill();
-      // }
+      else if(vm.tempName=='skill')
+      {
+      console.log(result)
+      $scope.skillPage = angular.extend($scope.skillPage, result);
+      // $scope.setPage($scope.page)
+      console.log($scope.skillPage);
+      $scope.skillPage.gridOptions = $scope.gridSetupColumns($scope.skillPage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+    
+      }
       if (vm.tempName == 'immigration' || vm.tempName == 'education' || vm.tempName == 'experience' || vm.tempName == 'skill') {
         _refreshListData();
       }
@@ -769,7 +769,6 @@
       $scope.isLoading = false
     }
     function _getRefreshListSuccessResult(result) {
-     
       $scope.isLoaded = true
       $scope.isLoading = false
       if (result == 'NoDataFound') {
