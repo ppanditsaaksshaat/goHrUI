@@ -13,6 +13,10 @@
     function OrgEmpUploadController($scope, $sce, $filter, $http, uiGridConstants, $interval, $timeout,
         $uibModal, pageService, $q, DJWebStore, $window, DJWebStoreGlobal) {
         var vm = this;
+        var uploadHistoryPageId = 439;
+        var uploadHistoryTableId = 414;
+        var uploadHistoryPKId = 3;
+        vm.skipDataList = [];
 
 
         vm.gridOptions = { data: [] }
@@ -36,6 +40,20 @@
             enableCellEditOnFocus: false
         };
         //  vm.includeSrc = 'templates/crm/migrate.html?q=1';
+
+        function _getUploadHistoryDetail() {
+            // pageService.getPagData(uploadHistoryPageId).then(function (result) {
+            //    console.log(result)
+
+            pageService.findEntity(uploadHistoryTableId, uploadHistoryPKId, undefined).then(function (result) {
+                console.log(result)
+                var data = result;
+                var decomData = DJWebStoreGlobal.Decompress(result);
+                // var data = result.decompress();
+                console.log(decomData)
+
+            })
+        }
 
         function _setFieldMatching() {
             vm.migrate.findFieldList = [];
@@ -330,6 +348,7 @@
         vm.nextDataUpload = function () {
 
             $window.scrollTo(0, 0);
+            _getUploadHistoryDetail();
             if (vm.showEmployeeName == true) {
                 // vm.showEmpName();
             }
@@ -438,7 +457,7 @@
         }
 
         vm.clear = function () {
-           
+
             angular.forEach(vm.migrate.tables, function (table, tidx) {
                 angular.forEach(table.rows, function (row, ridx) {
                     row.column1.value = 'none';
@@ -524,6 +543,7 @@
                 var skipData = parseInt(skipListDataLength)
 
                 vm.totalRecord = successData + skipData;
+                vm.skipDataList = result.skipList;
 
                 console.log(successDataLength, skipListDataLength, vm.totalRecord)
                 console.log(result)

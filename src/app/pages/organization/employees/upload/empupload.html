@@ -116,8 +116,7 @@
                                 <tr ng-repeat="field in table.rows">
                                     <td class="padT8 padB8 col-sm-2" style="padding-left:10px; text-align: left">
                                         <span ng-show="field.column1.required" class="font-red">*</span>
-                                        <span 
-                                        ng-class="{'font-red': (field.column1.required && field.column1.value=='none'), 'font-green':(field.column1.required && field.column1.value!='none')}">{{field.column1.text}}</span>
+                                        <span ng-class="{'font-red': (field.column1.required && field.column1.value=='none'), 'font-green':(field.column1.required && field.column1.value!='none')}">{{field.column1.text}}</span>
                                     </td>
                                     <td style="padding-top: 8px; padding-bottom: 8px; padding-right: 20px;">
                                         <select style="width:200px" class="form-control" name="{{field.column1.name}}" ng-model="field.column1.value">
@@ -127,7 +126,7 @@
                                          
                                         </select></td>
                                     <td ng-show="(field.column2!==undefined)" class="col-sm-2" style="padding-top: 8px; padding-bottom: 8px">
-                                        <span ng-show="field.column2.required" class="font-red">*</span> 
+                                        <span ng-show="field.column2.required" class="font-red">*</span>
                                         <span ng-class="{'font-red': (field.column2.required && field.column2.value=='none'), 'font-green':(field.column2.required && field.column2.value!='none')}">{{field.column2.text}}</span></td>
                                     <td ng-show="(field.column2!==undefined)" style="padding-top: 8px; padding-bottom: 8px">
                                         <select style="width:200px" class="form-control" name="{{field.column2.name}}" ng-model="field.column2.value">
@@ -256,9 +255,38 @@
                     <div class="col-md-4">
                     </div>
                 </div>
+                <div id="skipDataLists">
+                     <table class="table table-bordered table-hover table-condensed">
+                    <thead>
+                        <tr>
+
+                            <th>Emp Code</th>
+                            <th>Employee Name</th>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="skipData in tabCtrl.skipDataList">
+                            <tr ng-repeat="skipRowData in skipData">
+
+                            <td>{{skipRowData.EmpCode}}</td>
+                            <td>{{skipRowData.EmpFirstName}}</td>
+                            <td>{{skipRowData.EmpMiddleName}}</td>
+                            <td>{{skipRowData.EmpLastName}}</td>
+                            <td>{{skipRowData.EmpName}}</td>
+                            </tr>
+                        </tr>
+                    </tbody>
+                </table>
+
+                </div>
+               
 
 
-                <br>
+
 
 
 
