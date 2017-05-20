@@ -19,7 +19,7 @@
     vm.empPKId = $stateParams.empId;
     vm.tableId = 62;
     vm.pageId = 56;
-    var nominee = {};
+    $scope.empExperienceDetail = {};
    
 
 
