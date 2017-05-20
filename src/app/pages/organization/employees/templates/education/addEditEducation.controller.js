@@ -62,7 +62,7 @@
 
     $scope.addEducation= function () {
      var education={         
-           QualEmpId:vm.empPKId,
+           QualiEmpId:vm.empPKId,
            QualQualificationId:$scope.empEducationDetail.QualQualificationId,
            QualInstititeName:$scope.empEducationDetail.QualInstititeName,
            QualMajorSpecialization:$scope.empEducationDetail.QualMajorSpecialization,
