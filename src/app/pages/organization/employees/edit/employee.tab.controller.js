@@ -769,7 +769,7 @@
       $scope.isLoading = false
     }
     function _getRefreshListSuccessResult(result) {
-      alert(JSON.stringify(result))
+     
       $scope.isLoaded = true
       $scope.isLoading = false
       if (result == 'NoDataFound') {
