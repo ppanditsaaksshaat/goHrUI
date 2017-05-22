@@ -231,59 +231,52 @@
             </div>
 
             <div id="step5" ng-show="tabCtrl.migrate.step5">
-                <h3 class="with-line">Import Summary</h3>
+                <div class="panel">
+                    <div class="panel-body">
+                        <div ng-hide="tabCtrl.validateUploadData">
+                            <h3 class="content-box-header bg-blue-alt">
+                                Validate Data
+                            </h3>
+                            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                        </div>
+
+                        <h3 class="with-line">Import Summary</h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                total record in file {{tabCtrl.totalRecord}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="col-md-4">
+                                    <a href="" ng-click="tabCtrl.getAddedList()">Added {{tabCtrl.successLength}}</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="" ng-click="tabCtrl.getSkipList()">Skip {{tabCtrl.skipListLength}}</a>
+                                </div>
+                                <div class="col-md-4">
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="row">
                     <div class="col-md-12">
-                        total record in file {{tabCtrl.totalRecord}}
+                        <!--<button type="button" ng-click="back('organization.employees.list')" class="btn btn-default">
+                                    Back
+                                </button>-->
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="col-md-4">
-                            <a href="">Added {{tabCtrl.successLength}}</a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="">Skip {{tabCtrl.skipListLength}}</a>
-                        </div>
-                        <div class="col-md-4">
-                        </div>
 
-                    </div>
-                    <div class="col-md-4">
-                    </div>
-                    <div class="col-md-4">
-                    </div>
-                </div>
-                <div id="skipDataLists">
-                     <table class="table table-bordered table-hover table-condensed">
-                    <thead>
-                        <tr>
-
-                            <th>Emp Code</th>
-                            <th>Employee Name</th>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="skipData in tabCtrl.skipDataList">
-                            <tr ng-repeat="skipRowData in skipData">
-
-                            <td>{{skipRowData.EmpCode}}</td>
-                            <td>{{skipRowData.EmpFirstName}}</td>
-                            <td>{{skipRowData.EmpMiddleName}}</td>
-                            <td>{{skipRowData.EmpLastName}}</td>
-                            <td>{{skipRowData.EmpName}}</td>
-                            </tr>
-                        </tr>
-                    </tbody>
-                </table>
-
-                </div>
-               
 
 
 
@@ -293,6 +286,71 @@
 
 
             </div>
+
+            <div id="step6" ng-show="tabCtrl.migrate.step6">
+                <div id="skipDataLists">
+
+                    <div class="panel">
+                        <div class="panel-body">
+                            <h3 class="with-line">Skip Record</h3>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+
+                                        <th>Emp Code</th>
+                                        <th>Department</th>
+                                        <th>Designation</th>
+                                        <th>Mobile</th>
+                                        <th>Gender</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr ng-repeat="skipRowData in tabCtrl.skipDataList">
+
+                                        <td>{{skipRowData.EmpCode}}</td>
+                                        <td>{{skipRowData.Department}}</td>
+                                        <td>{{skipRowData.Designation}}</td>
+                                        <td>{{skipRowData.Mobile}}</td>
+                                        <td>{{skipRowData.Gender}}</td>
+                                    </tr>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" ng-click="back('organization.employees.list')" class="btn btn-default">
+                                    Back
+                                </button>
+                    </div>
+                </div>
+            </div>
+            <div id="step7" ng-show="tabCtrl.migrate.step7">
+                <div id="addedDataLists">
+                    `
+                    <div class="panel">
+                        <div class="panel-body">
+                            <h3 class="with-line">Added Record</h3>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" ng-click="back('organization.employees.list')" class="btn btn-default">
+                                    Back
+                                </button>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="row" ng-if="!tabCtrl.migrate.step5" ng-hide="tabCtrl.migrate.step1">
                 <div class="col-md-12">
@@ -306,7 +364,7 @@
                        {{(tabCtrl.migrate.step3)?"Import":"Next"}}
                     </button>
                     <button type="button" ng-click="tabCtrl.importDataUpload()" ng-show="tabCtrl.migrate.step3" class="btn btn-info">
-                       Imports
+                       Import
                     </button>
 
 
@@ -324,7 +382,9 @@
             </div>
         </uib-tab>
         <uib-tab heading="Import History">
-            test2
+            <h3 class="with-line">Import History</h3>
+            <grid-box page="uploadHistory" box-options="boxSetting">
+            </grid-box>
         </uib-tab>
     </uib-tabset>
 </div>

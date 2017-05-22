@@ -13,10 +13,35 @@
     function OrgEmpUploadController($scope, $sce, $filter, $http, uiGridConstants, $interval, $timeout,
         $uibModal, pageService, $q, DJWebStore, $window, DJWebStoreGlobal) {
         var vm = this;
-        var uploadHistoryPageId = 439;
+        var uploadHistoryPageId = 440;
         var uploadHistoryTableId = 414;
         var uploadHistoryPKId = 3;
         vm.skipDataList = [];
+        vm.skipDataLists = [];
+        vm.validateUploadData = false;
+
+        $scope.uploadHistory = {}
+        $scope.uploadHistory.gridOptions = $scope.getGridSetting();
+        $scope.uploadHistory.boxOptions = {
+            showRefresh: true,
+            showFilter: false,
+            showAdd: true,
+            showRowMenu: true,
+            showCustomView: true,
+            showUpload: false,
+            enableAutoRefresh: true,
+            refreshData: _refreshUploadHistory,
+            addRecord: null,
+            editRecord: null,
+            updateRecord: null,
+            viewRecord: null,
+            deleteRecord: null,
+            openView: null,
+            uploadRecord: null
+        }
+
+        // vm.summaryStep1 = false;
+        // vm.summaryStep2 = false;
 
 
         vm.gridOptions = { data: [] }
@@ -25,11 +50,13 @@
             currentStep: 1,
             tables: [],
             unMappedList: [],
-            step1: true, step2: false, step3: false, step4: false, step5: false
+            step1: true, step2: false, step3: false, step4: false, step5: false, step6: false, step7: false
         }
         vm.normaltabs2 = true;
 
         //  vm.migrate.step1=true;
+
+
 
         vm.gridOptions = {
             enableFiltering: false,
@@ -42,17 +69,45 @@
         //  vm.includeSrc = 'templates/crm/migrate.html?q=1';
 
         function _getUploadHistoryDetail() {
-            // pageService.getPagData(uploadHistoryPageId).then(function (result) {
-            //    console.log(result)
-
-            pageService.findEntity(uploadHistoryTableId, uploadHistoryPKId, undefined).then(function (result) {
+            pageService.getPagData(uploadHistoryPageId).then(function (result) {
                 console.log(result)
-                var data = result;
-                var decomData = DJWebStoreGlobal.Decompress(result);
-                // var data = result.decompress();
-                console.log(decomData)
+
+                // pageService.findEntity(uploadHistoryTableId, uploadHistoryPKId, undefined).then(function (result) {
+                //     console.log(result)
+                // var data = result;
+                // // var decomData = DJWebStoreGlobal.Decompress(result);
+                // var paramData = LZString.decompressFromEncodedURIComponent(result.UEHDUploadData);
+                // // var data = result.decompress();
+                // console.log(paramData)
+
+                $scope.uploadHistory = angular.extend($scope.uploadHistory, result);
+                $scope.setPage(result)
+                console.log($scope.uploadHistory);
+                $scope.uploadHistory.gridOptions = $scope.gridSetupColumns($scope.uploadHistory.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+                _refreshUploadHistory();
 
             })
+        }
+
+        function _refreshUploadHistory() {
+            // var resultDataList = [];
+
+            pageService.getTableData(uploadHistoryTableId, uploadHistoryPageId, '', '', false, undefined).then(function (result) {
+
+                console.log(result)
+                $scope.uploadHistory.gridOptions.data = result;
+
+                // angular.forEach(result, function (rows, ridx) {
+                //      resultDataList = rows.UEHDUploadData
+
+                // })
+
+                // var data = resultDataList;
+                // var paramData = LZString.decompressFromEncodedURIComponent(data);
+                // console.log(paramData)
+            })
+
+
         }
 
         function _setFieldMatching() {
@@ -164,16 +219,17 @@
             addFieldCheck('facebook', '', 1, 4 + extraRowIndex, 0);
 
             //pancard
-            addFieldCheck('pan', 'card', 1, 4 + extraRowIndex, 1);
-            addFieldCheck('pancard', '', 1, 4 + extraRowIndex, 1);
+            addFieldCheck('pan', 'no', 1, 4 + extraRowIndex, 1);
+            addFieldCheck('panno', '', 1, 4 + extraRowIndex, 1);
 
 
             //linkedin
             addFieldCheck('linked', 'in', 1, 5 + extraRowIndex, 0);
             addFieldCheck('linkedin', 'Unit', 1, 5 + extraRowIndex, 0);
-            //adhar card
-            addFieldCheck('adhar', 'card', 1, 5 + extraRowIndex, 1);
-            addFieldCheck('adharcard', '', 1, 5 + extraRowIndex, 1);
+            //aadhaar card
+            addFieldCheck('aadhaar', 'card', 1, 5 + extraRowIndex, 1);
+            addFieldCheck('aadhaarcard', '', 1, 5 + extraRowIndex, 1);
+            addFieldCheck('aadhaarno', '', 1, 5 + extraRowIndex, 1);
 
             addFieldCheck('twitter', '', 1, 6 + extraRowIndex, 0);
 
@@ -207,6 +263,27 @@
         }
 
         //Public Functions
+        vm.getAddedList = function () {
+            vm.migrate.step1 = false;
+            vm.migrate.step2 = false;
+            vm.migrate.step3 = false;
+            vm.migrate.step4 = false;
+            vm.migrate.step5 = true;
+            vm.migrate.step6 = false;
+            vm.migrate.step7 = true;
+        }
+
+        vm.getSkipList = function () {
+            vm.migrate.step1 = false;
+            vm.migrate.step2 = false;
+            vm.migrate.step3 = false;
+            vm.migrate.step4 = false;
+            vm.migrate.step5 = true;
+            vm.migrate.step6 = true;
+            vm.migrate.step7 = false;
+
+        }
+
         vm.setupMigrate = function () {
 
             vm.migrate.tables = [];
@@ -304,7 +381,7 @@
 
             table2.rows.push({
                 column1: { name: 'PDLinkedIn', text: 'LinkedIn', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDAdhar', text: 'Adhar', type: 'text', required: false, value: 'none' }
+                column2: { name: 'PDAdhar', text: 'Aadhaar', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
@@ -498,7 +575,7 @@
             })
         }
         vm.importDataUpload = function () {
-            alert('import');
+            // alert('import');
             vm.migrate.currentStep = 3;
             vm.migrate.step1 = false;
             vm.migrate.step2 = false;
@@ -523,38 +600,65 @@
             if (vm.showEmployeeName === undefined) {
                 vm.showEmployeeName = false;
             }
+            var fileName = 'Employeedata';
+
             console.log(vm.gridOptions.data)
-            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName }
+            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName, fileName: fileName }
             console.log(uncData)
             var postData = JSON.stringify(uncData);
             var compressed = LZString.compressToEncodedURIComponent(postData);
 
             var data = { lz: true, data: compressed }
             // var data = { data: postData }
+            if (confirm('Upload record Sure')) {
+                pageService.uploadEmployeeData(data).then(function (result) {
+                    vm.validateUploadData = true;
+                    var successDataLength = result.successList.length;
+                    var skipListDataLength = result.skipList.length;
 
-            pageService.uploadEmployeeData(data).then(function (result) {
-                var successDataLength = result.successList.length;
-                var skipListDataLength = result.skipList.length;
+                    vm.successLength = successDataLength;
+                    vm.skipListLength = skipListDataLength;
 
-                vm.successLength = successDataLength;
-                vm.skipListLength = skipListDataLength;
+                    var successData = parseInt(successDataLength)
+                    var skipData = parseInt(skipListDataLength)
 
-                var successData = parseInt(successDataLength)
-                var skipData = parseInt(skipListDataLength)
+                    vm.totalRecord = successData + skipData;
+                    vm.skipDataList = result.skipList;
+                    console.log(vm.skipDataList)
 
-                vm.totalRecord = successData + skipData;
-                vm.skipDataList = result.skipList;
+                    if (vm.skipDataLists === undefined) {
+                        vm.skipDataLists = [];
 
-                console.log(successDataLength, skipListDataLength, vm.totalRecord)
-                console.log(result)
-            }, function (err) {
-                console.log(err)
-            })
-            vm.migrate.step1 = false;
-            vm.migrate.step2 = false;
-            vm.migrate.step3 = false;
-            vm.migrate.step4 = false;
-            vm.migrate.step5 = true;
+                    }
+                    // var rowData = "";
+                    // angular.forEach(result.skipList, function (rows, ridx) {
+                    //     angular.forEach(rows, function (rowss, ridx) {
+                    //         rowData = rowss;
+                    //     })
+                    //     vm.skipDataLists.push(rowData);
+
+                    // })
+                    // console.log(vm.skipDataLists)
+
+
+                    vm.migrate.step1 = false;
+                    vm.migrate.step2 = false;
+                    vm.migrate.step3 = false;
+                    vm.migrate.step4 = false;
+                    vm.migrate.step5 = true;
+                    console.log(successDataLength, skipListDataLength, vm.totalRecord)
+                    console.log(result)
+                }
+
+                    , function (err) {
+                        console.log(err)
+                    })
+            }
+            else {
+                vm.migrate.step3 = true;
+                vm.migrate.step4 = false;
+            }
+
         }
 
 
@@ -705,6 +809,8 @@
         // }
 
         //Calling Default Function
+
+        _getUploadHistoryDetail();
 
     }
 })();
