@@ -1,0 +1,95 @@
+
+
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+      <em class="ion-ios-close-empty sn-link-close"></em>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">Add Education</h4>
+  </div>
+  <div class="modal-body">
+   
+<div class="row">
+  
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="qualification">Qualification</label>
+         <select id="qualification_{{$index}}"
+                      name="qualification_{{$index}}"
+                      ng-model="empEducationDetail.QualQualificationId"
+                      class="form-control"
+                      ng-options="qualification.value as qualification.name for qualification in qualification"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Insitute/University Name</label>
+        <input type="text" class="form-control"  ng-model="empEducationDetail.QualInstititeName">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Major/Specialization</label>
+            <input type="text" class="form-control"  ng-model="empEducationDetail.QualMajorSpecialization">
+    </div>
+  </div> 
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Year Of Passing</label>
+      <datepicker date-format="dd-MMMM-yyyy" selector="form-control">   
+            <input type="text" class="form-control"  ng-model="empEducationDetail.QualYear">
+      </datepicker>
+    </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Start Date</label>
+          <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
+            <input ng-model="empEducationDetail.QualStartDate" type="text" class="form-control"/>         
+          </datepicker>
+    </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">End Date</label>
+         <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
+            <input ng-model="empEducationDetail.QualEndDate" type="text" class="form-control"/>         
+          </datepicker>
+    </div>
+  </div> 
+ 
+  
+</div>
+<div class="row">  
+   <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">GPA/Score</label>
+            <input type="text" class="form-control"  ng-model="empEducationDetail.QualGPAScore">
+    </div>
+  </div>  
+</div>
+
+  </div>
+  <div class="modal-footer">
+    <div class="text-center">
+    <button type="button" class="btn btn-primary" ng-click="editEducation()">Save</button>
+    <button type="button" class="btn btn-primary" ng-click="$dismiss()">Cancel</button>
+  </div>
+   </div> 
+</div>
+
+
+
+
+
+
+
+
+
+

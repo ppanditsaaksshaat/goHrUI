@@ -96,7 +96,7 @@
     }
 
     function _addRecord() {
-      if ($scope.page.pageinof.pageid == 1) {
+      if ($scope.page.pageinfo.pageid == 1) {
 
       }
       else {

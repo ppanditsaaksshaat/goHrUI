@@ -53,15 +53,108 @@
       openView: null,
       uploadRecord: null
     }
+    //End of Nominee Page Setting
+    //Experience Page Setting
+    $scope.experiencePage = {}
+    $scope.experiencePage.gridOptions = $scope.getGridSetting();
+    $scope.experiencePage.boxOptions = {
+      showRefresh: true,
+      showFilter: false,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: false,
+      refreshData: _refreshDataExperience,
+      addRecord: _addRecordExperience,
+      editRecord: _editRecordExperience,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
+      openView: null,
+      uploadRecord: null
+    }
+    //End of Experience Page Setting
+
+    //Education Page Setting
+    $scope.educationPage = {}
+    $scope.educationPage.gridOptions = $scope.getGridSetting();
+    $scope.educationPage.boxOptions = {
+      showRefresh: true,
+      showFilter: false,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: false,
+      refreshData: _refreshDataEducation,
+      addRecord: _addRecordEducation,
+      editRecord: _editRecordEducation,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
+      openView: null,
+      uploadRecord: null
+    }
+
+    //End of Education Page Setting
+
+    //Skill Page Setting
+
+    $scope.skillPage = {}
+    $scope.skillPage.gridOptions = $scope.getGridSetting();
+    $scope.skillPage.boxOptions = {
+      showRefresh: true,
+      showFilter: false,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: false,
+      refreshData: _refreshListData,
+      addRecord: _addRecordSkill,
+      editRecord: _editRecordSkill,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
+      openView: null,
+      uploadRecord: null
+    }
+    //End of Skill Page Setting
+
+
+
+    //Immigration Page Setting
+
+    $scope.immigrationPage = {}
+    $scope.immigrationPage.gridOptions = $scope.getGridSetting();
+    $scope.immigrationPage.boxOptions = {
+      showRefresh: true,
+      showFilter: false,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: false,
+      refreshData: _refreshListData,
+      addRecord: _addRecordImmigration,
+      editRecord: _editRecordImmigration,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
+      openView: null,
+      uploadRecord: null
+    }
+    //End of Education Page Setting
     var vm = this;
 
-    vm.pageIds = { familyPageId: 52, nomineePageId: 438 }
-
+    vm.pageIds = {
+      familyPageId: 52, nomineePageId: 438, experiencPageId: 56, contactPageId: 36,
+      emgContactPageId: 57, educationPageId: 112
+    }
+    vm.tableIds = {nomineeTableId:113, experiencTableId: 62, educationTableId: 119 }
     vm.navigationCollapsed = true;
     vm.pageId = $stateParams.pageId;
     vm.empPKId = $stateParams.empId;
     vm.tempName = $stateParams.name;
     vm.tableId = 0;
+    vm.field = "";
     vm.empBasicDetail = {};
     vm.empPersonalDetail = {};
     vm.empContactDetail = {};
@@ -70,6 +163,7 @@
     vm.empSignDetail = {};
     vm.empAccountDetail = {};
     vm.empEmgContact = {};
+    vm.empExperienceDetail = {};
     vm.oldEntity = {};
     var rndValu = Math.round((Math.random() * 10) * 10);
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
@@ -136,23 +230,33 @@
         }
         searchList.push(searchFields);
 
-        pageService.findEntity(57, undefined, searchList).then(
+        pageService.findEntity(vm.pageIds.emgContactPageId, undefined, searchList).then(
           _findEMGContactEntitySuccessResult, _findEMGContactEntityErrorResult);
       });
       //for family detail
       $timeout(function () {
-        pageService.getPagData(52).then(
+        pageService.getPagData(vm.pageIds.familyPageId).then(
           _getfamilyDetailSuccessResult, _getfamilyDetailErrorResult);
       });
       //for nominee detail
       $timeout(function () {
-        pageService.getPagData(438).then(
+        pageService.getPagData(vm.pageIds.nomineePageId).then(
           _getNomineeDetailSuccessResult, _getNomineeDetailErrorResult);
       });
       //for contact detail
       $timeout(function () {
-        pageService.getPagData(36).then(
+        pageService.getPagData(vm.pageIds.contactPageId).then(
           _getcontactSuccessResult, _getcontactErrorResult);
+      });
+      //for Experienc detail
+      $timeout(function () {
+        pageService.getPagData(vm.pageIds.experiencPageId).then(
+          _getExperienceSuccessResult, _getExperienceErrorResult);
+      });
+      //for Education detail
+      $timeout(function () {
+        pageService.getPagData(vm.pageIds.educationPageId).then(
+          _getEducationSuccessResult, _getEducationErrorResult);
       });
     }
     // End of Page load
@@ -232,6 +336,280 @@
       dialogModal.openFormVertical(options);
     }
     //End Nominee
+    //Experince
+    function _getExperienceSuccessResult(result) {
+      console.log(result)
+      $scope.experiencePage = angular.extend($scope.experiencePage, result);
+      // $scope.setPage($scope.page)
+      console.log($scope.nomineePage);
+      $scope.experiencePage.gridOptions = $scope.gridSetupColumns($scope.experiencePage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+      _refreshDataExperience();
+    }
+    function _getExperienceErrorResult(err) {
+      alert(JSON.stringify(error))
+    }
+    function _refreshDataExperience() {
+      var search = [];
+      var searchFields = {
+        field: "WEEmpId",
+        operand: "=",
+        value: vm.empPKId
+      }
+      search.push(searchFields);
+      var data = {
+        searchList: search,
+        orderByList: []
+      }
+      var tableData = pageService.getTableData(
+        vm.tableIds.experiencTableId,
+        vm.pageIds.experiencPageId,
+        '', '',
+        false, data);
+      $scope.isLoaded = false
+      $scope.isLoading = true
+      tableData.then(_getExperienceTableSuccessResult, _getExperienceTableErrorResult)
+    }
+    function _getExperienceTableErrorResult(err) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+    }
+    function _getExperienceTableSuccessResult(result) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+      if (result == 'NoDataFound') {
+        // uivm.showMsg('warning', 'No Record Found.');
+      } else if (result.Errors !== undefined) {
+        // uivm.showMsg('error', result.Message);
+        // _startMsgTimer();
+      }
+      else {
+        console.log(result)
+        $scope.experiencePage.gridOptions.data = result;
+      }
+    }
+    function _addRecordExperience() {
+
+      var param = { WEId: "", Action: null }
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'app/pages/organization/employees/templates/experience/addExperience-modal.html',
+        controller: 'addEditExperienceDetails',
+        size: 'md',
+        resolve: {
+          param: function () {
+            return param;
+          }
+        }
+      });
+      $scope.openProgressDialog = baProgressModal.open;
+      // var param = {
+      //   action: 'create',
+      //   page: $scope.experiencePage,
+      //   linkColumns: [{ name: 'WEEmpId', value: vm.empPKId }]
+      // };
+      // var options = {
+      //   param: param
+      // }
+      //  dialogModal.openFormVertical(options);
+    }
+    function _editRecordExperience(row) {
+      var param = { WEId: row.entity.WEId, Action: null }
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'app/pages/organization/employees/templates/experience/editExperience-modal.html',
+        controller: 'addEditExperienceDetails',
+        size: 'md',
+        resolve: {
+          param: function () {
+            return param;
+          }
+        }
+      });
+      // var param = {
+      //   action: 'edit',
+      //   page: $scope.experiencePage,
+      //   entity: row.entity,
+      //   linkColumns: [{ name: 'WEEmpId', value: vm.empPKId }]
+      // };
+      // var options = {
+      //   param: param
+      // }
+      // dialogModal.openFormVertical(options);
+    }
+    //End Experience
+
+    //Education
+    function _getEducationSuccessResult(result) {
+      console.log(result)
+      $scope.educationPage = angular.extend($scope.educationPage, result);
+      // $scope.setPage($scope.page)
+      console.log($scope.nomineePage);
+      $scope.educationPage.gridOptions = $scope.gridSetupColumns($scope.educationPage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+      _refreshDataEducation();
+    }
+    function _getEducationErrorResult(err) {
+      alert(JSON.stringify(error))
+    }
+    function _refreshDataEducation() {
+
+      var search = [];
+      var searchFields = {
+        field: "QualiEmpId",
+        operand: "=",
+        value: vm.empPKId
+      }
+      search.push(searchFields);
+      var data = {
+        searchList: search,
+        orderByList: []
+      }
+      var tableData = pageService.getTableData(
+        vm.tableIds.educationTableId,
+        vm.pageIds.educationPageId,
+        '', '',
+        false, data);
+      $scope.isLoaded = false
+      $scope.isLoading = true
+      tableData.then(_getEducationTableSuccessResult, _getEducationTableErrorResult)
+    }
+    function _getEducationTableErrorResult(err) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+    }
+    function _getEducationTableSuccessResult(result) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+      if (result == 'NoDataFound') {
+        // uivm.showMsg('warning', 'No Record Found.');
+      } else if (result.Errors !== undefined) {
+        // uivm.showMsg('error', result.Message);
+        // _startMsgTimer();
+      }
+      else {
+        console.log(result)
+        $scope.educationPage.gridOptions.data = result;
+      }
+    }
+    function _addRecordEducation() {
+
+      var param = { QualiId: 0, Action: null }
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'app/pages/organization/employees/templates/education/addEducation-modal.html',
+        controller: 'addEditEducationDetails',
+        size: 'md',
+        resolve: {
+          param: function () {
+            return param;
+          }
+        }
+      });
+      $scope.openProgressDialog = baProgressModal.open;
+      // var param = {
+      //   action: 'create',
+      //   page: $scope.educationPage,
+      //   linkColumns: [{ name: 'QualiEmpId', value: vm.empPKId }]
+      // };
+      // var options = {
+      //   param: param
+      // }
+      // dialogModal.openFormVertical(options);
+    }
+    function _editRecordEducation(row) {
+
+      var param = { QualiId: row.entity.QualiId, Action: null }
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'app/pages/organization/employees/templates/education/editEducation-modal.html',
+        controller: 'addEditEducationDetails',
+        size: 'md',
+        resolve: {
+          param: function () {
+            return param;
+          }
+        }
+      });
+      $scope.openProgressDialog = baProgressModal.open;
+
+      // var param = {
+      //   action: 'edit',
+      //   page: $scope.educationPage,
+      //   entity: row.entity,
+      //   linkColumns: [{ name: 'QualiEmpId', value: vm.empPKId }]
+      // };
+      // var options = {
+      //   param: param
+      // }
+      // dialogModal.openFormVertical(options);
+    }
+    //End Education
+
+
+    //Immigration
+
+    function _addRecordImmigration() {
+      var param = { IMId: 0, Action: null }
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'app/pages/organization/employees/templates/immigration/addImmigration-modal.html',
+        controller: 'addEditImmigrationDetails',
+        size: 'md',
+        resolve: {
+          param: function () {
+            return param;
+          }
+        }
+      });
+      $scope.openProgressDialog = baProgressModal.open;
+    }
+    function _editRecordImmigration(row) {
+      var param = { IMId: row.entity.IMId, Action: null }
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'app/pages/organization/employees/templates/immigration/editImmigration-modal.html',
+        controller: 'addEditImmigrationDetails',
+        size: 'md',
+        resolve: {
+          param: function () {
+            return param;
+          }
+        }
+      });
+      $scope.openProgressDialog = baProgressModal.open;
+    }
+    //End of Immigration
+
+    //Skill
+
+    function _addRecordSkill() {
+     
+      var param = {
+        action: 'create',
+        page: $scope.skillPage,
+        linkColumns: [{ name: vm.field, value: vm.empPKId }]
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+      _refreshListData();
+    }
+    function _editRecordSkill(row) {
+      var param = {
+        action: 'edit',
+        page: $scope.skillPage,
+        entity: row.entity,
+        linkColumns: [
+          { name: vm.field, value: vm.empPKId }]
+      };
+      var options = {
+        param: param
+      }
+      dialogModal.openFormVertical(options);
+       _refreshListData();
+    }
+    //End of Skill
+
 
     function _findEMGContactEntitySuccessResult(result) {
 
@@ -288,6 +666,7 @@
     }
     function _getPageDataSuccessResult(result) {
       console.log(result)
+
       var field = "";
       if (vm.tempName == 'personal') {
         vm.gender = result.pageinfo.selects.PdGenderId;
@@ -333,9 +712,86 @@
         field = 'ADEmpId';
 
       }
-      _findEntity(field);
+      else if (vm.tempName == 'experience') {
+        console.log(result)
+        vm.designation = result.pageinfo.selects.WEDesgId;
+        field = 'WEEmpId';
 
+      }
+
+      else if (vm.tempName == 'immigration') {
+        $scope.immigrationPage = angular.extend($scope.immigrationPage, result);
+        // $scope.setPage($scope.page)
+        console.log($scope.immigrationPage);
+        $scope.immigrationPage.gridOptions = $scope.gridSetupColumns($scope.immigrationPage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+
+      }
+
+      else if(vm.tempName=='skill')
+      {
+      console.log(result)
+      $scope.skillPage = angular.extend($scope.skillPage, result);
+      // $scope.setPage($scope.page)
+      console.log($scope.skillPage);
+      $scope.skillPage.gridOptions = $scope.gridSetupColumns($scope.skillPage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+    
+      }
+      if (vm.tempName == 'immigration' || vm.tempName == 'education' || vm.tempName == 'experience' || vm.tempName == 'skill') {
+        _refreshListData();
+      }
+      else {
+        _findEntity(field);
+      }
     }
+
+    function _refreshListData() {
+
+      var search = [];
+      var searchFields = {
+        field: vm.field,
+        operand: "=",
+        value: vm.empPKId
+      }
+      search.push(searchFields);
+      var data = {
+        searchList: search,
+        orderByList: []
+      }
+      var tableData = pageService.getTableData(
+        vm.tableId,
+        vm.pageId,
+        '', '',
+        false, data);
+      $scope.isLoaded = false
+      $scope.isLoading = true
+      tableData.then(_getRefreshListSuccessResult, _getRefreshListErrorResult)
+    }
+    function _getRefreshListErrorResult(err) {
+      $scope.isLoaded = true
+      $scope.isLoading = false
+    }
+    function _getRefreshListSuccessResult(result) {
+     
+      $scope.isLoaded = true
+      $scope.isLoading = false
+      if (result == 'NoDataFound') {
+        // uivm.showMsg('warning', 'No Record Found.');
+      } else if (result.Errors !== undefined) {
+        // uivm.showMsg('error', result.Message);
+        // _startMsgTimer();
+      }
+      else {
+        console.log(result)
+        if (vm.tempName == 'immigration') {
+          $scope.immigrationPage.gridOptions.data = result;
+        }
+        else if (vm.tempName == 'skill') {
+          $scope.skillPage.gridOptions.data = result;
+        }
+
+      }
+    }
+
     function _addRecordFamily() {
       var param = {
         action: 'create',
@@ -405,12 +861,6 @@
       }
       else if (vm.tempName == 'personal') {
         vm.oldEntity = result;
-        // var dob=new Date(result.PdDateOfBirth)
-        // var anniversary=new Date(result.PDAnniversaryDate)
-        // $scope.formatdob = $scope.formats[0];
-        // $scope.formatanniversary = $scope.formats[0];
-        // result.PdDateOfBirth=dob;
-        // result.PDAnniversaryDate=anniversary;
         vm.empPersonalDetail = result;
       }
       else if (vm.tempName == 'contact') {
@@ -445,6 +895,11 @@
           vm.bankDetail = false;
 
       }
+      else if (vm.tempName == 'experience') {
+        console.log(result)
+        vm.oldEntity = result;
+        vm.empExperienceDetail = result;
+      }
 
       vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
     }
@@ -473,8 +928,19 @@
       if (vm.tempName == 'account') {
         vm.tableId = 131;
       }
-      if (vm.tempName == 'workexperience') {
+      if (vm.tempName == 'experience') {
         vm.tableId = 62;
+      }
+      if (vm.tempName == 'education') {
+        vm.tableId = 119;
+      }
+      if (vm.tempName == 'skill') {
+        vm.tableId = 412;
+        vm.field = 'SEmpId'
+      }
+      if (vm.tempName == 'immigration') {
+        vm.tableId = 125;
+        vm.field = 'EmpId'
       }
 
     }
@@ -498,7 +964,7 @@
         PCityId: vm.empContactDetail.PCityId,
         CDAreaId: 2
       }
-      alert(JSON.stringify(Address))
+
       if (vm.empContactDetail.CDId == undefined) {
         vm.tempName1 = "address"
         _editPage(Address, 'create');
@@ -613,6 +1079,27 @@
           }
         }
 
+      }
+      if (vm.tempName == 'experience') {
+        var experience = {
+          WEId: vm.empExperienceDetail.WEId == undefined ? undefined : vm.empExperienceDetail.WEId,
+          WEEmpId: vm.empPKId,
+          WEOrganizName: vm.empExperienceDetail.WEOrganizName,
+          WEFrom: vm.empExperienceDetail.WEFrom,
+          WETo: vm.empExperienceDetail.WETo,
+          WERemark: vm.empExperienceDetail.WERemark,
+          WECompEmail: vm.empExperienceDetail.WECompEmail,
+          WECompContPersName: vm.empExperienceDetail.WECompContPersName,
+          WECompContPersNo: vm.empExperienceDetail.WECompContPersNo,
+          WECompanyAddress: vm.empExperienceDetail.WECompanyAddress,
+          WEDesgId: vm.empExperienceDetail.WEDesgId,
+        }
+        if (vm.empExperienceDetail.WEId == undefined) {
+          _editPage(experience, 'create');
+        }
+        else {
+          _editPage(experience, 'edit');
+        }
       }
     }
     function _setupSaving(dataObject, action) {

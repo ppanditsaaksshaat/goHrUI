@@ -1,0 +1,101 @@
+
+
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+      <em class="ion-ios-close-empty sn-link-close"></em>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">Edit Immigration</h4>
+  </div>
+  <div class="modal-body">
+   
+<div class="row">
+  <div class="col-sm-4">
+      <div class="checkbox">
+      <label class="custom-checkbox">      
+      <input type="checkbox" ng-model="empImmigrationDetail.IMPassport">   
+      <span>Passport</span>
+    </label>
+   </div>
+  </div> 
+  <div class="col-sm-4">
+      <div class="checkbox">
+      <label class="custom-checkbox">      
+      <input type="checkbox" ng-model="empImmigrationDetail.IMVisa">   
+      <span>Visa</span>
+    </label>
+   </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Number</label>
+            <input type="text" class="form-control"  ng-model="empImmigrationDetail.IMNumber">
+    </div>
+  </div> 
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Issue Date</label>
+          <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
+            <input ng-model="empImmigrationDetail.IMIssueDate" type="text" class="form-control"/>         
+          </datepicker>
+    </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Expiry Date</label>
+         <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
+            <input ng-model="empImmigrationDetail.IMExpiryDate" type="text" class="form-control"/>         
+          </datepicker>
+    </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Eligible Status</label>
+         <input type="text" class="form-control"  ng-model="empImmigrationDetail.IMEligibleStatus">
+    </div>
+  </div> 
+</div>
+<div class="row">  
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Comment</label>
+      <textarea class="form-control"  ng-model="empImmigrationDetail.IMComment"></textarea>       
+    </div>
+  </div> 
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label for="inputDepartment">Issued By</label>
+          <select id="designation_{{$index}}"
+                      name="designation_{{$index}}"
+                      ng-model="empImmigrationDetail.IMIssuedBy"
+                      class="form-control"
+                      ng-options="issuedBy.value as issuedBy.name for issuedBy in issuedBy"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div> 
+
+</div>
+
+  </div>
+  <div class="modal-footer">
+    <div class="text-center">
+    <button type="button" class="btn btn-primary" ng-click="editImmigration()">Save</button>
+    <button type="button" class="btn btn-primary" ng-click="$dismiss()">Cancel</button>
+  </div>
+   </div> 
+</div>
+
+
+
+
+
+
+
+
+
+

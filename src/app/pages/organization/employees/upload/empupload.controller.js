@@ -13,6 +13,35 @@
     function OrgEmpUploadController($scope, $sce, $filter, $http, uiGridConstants, $interval, $timeout,
         $uibModal, pageService, $q, DJWebStore, $window, DJWebStoreGlobal) {
         var vm = this;
+        var uploadHistoryPageId = 440;
+        var uploadHistoryTableId = 414;
+        var uploadHistoryPKId = 3;
+        vm.skipDataList = [];
+        vm.skipDataLists = [];
+        vm.validateUploadData = false;
+
+        $scope.uploadHistory = {}
+        $scope.uploadHistory.gridOptions = $scope.getGridSetting();
+        $scope.uploadHistory.boxOptions = {
+            showRefresh: true,
+            showFilter: false,
+            showAdd: true,
+            showRowMenu: true,
+            showCustomView: true,
+            showUpload: false,
+            enableAutoRefresh: true,
+            refreshData: _refreshUploadHistory,
+            addRecord: null,
+            editRecord: null,
+            updateRecord: null,
+            viewRecord: null,
+            deleteRecord: null,
+            openView: null,
+            uploadRecord: null
+        }
+
+        // vm.summaryStep1 = false;
+        // vm.summaryStep2 = false;
 
 
         vm.gridOptions = { data: [] }
@@ -21,11 +50,13 @@
             currentStep: 1,
             tables: [],
             unMappedList: [],
-            step1: true, step2: false, step3: false, step4: false, step5: false
+            step1: true, step2: false, step3: false, step4: false, step5: false, step6: false, step7: false
         }
         vm.normaltabs2 = true;
 
         //  vm.migrate.step1=true;
+
+
 
         vm.gridOptions = {
             enableFiltering: false,
@@ -37,30 +68,222 @@
         };
         //  vm.includeSrc = 'templates/crm/migrate.html?q=1';
 
-        function _loadController() {
-            vm.migrate.findFieldList = [];
-            //firstCheck, secondCheck, tableIndex, rowIndex, colIndex
-            addFieldCheck('department', '', 0, 0, 0);
-            addFieldCheck('designation', '', 0, 0, 1);
-            addFieldCheck('Employeement', '', 0, 1, 0);
-            addFieldCheck('DOJ', '', 0, 1, 1);
-            addFieldCheck('Grade', '', 0, 2, 0);
-            addFieldCheck('Level', '', 0, 2, 1);
-            addFieldCheck('Sub', 'Unit', 0, 3, 0);
-            addFieldCheck('Sub', 'Unit', 0, 3, 0);
+        function _getUploadHistoryDetail() {
+            pageService.getPagData(uploadHistoryPageId).then(function (result) {
+                console.log(result)
 
-            //for names
-            addFieldCheck('first', 'name', 1, 1, 1);
-            
-            //date of birth check
-            addFieldCheck('date', 'birth', 1, 3, 0);
-            addFieldCheck('dob', '', 1, 3, 0);
-            addFieldCheck('d.o.b', '', 1, 3, 0);
+                // pageService.findEntity(uploadHistoryTableId, uploadHistoryPKId, undefined).then(function (result) {
+                //     console.log(result)
+                // var data = result;
+                // // var decomData = DJWebStoreGlobal.Decompress(result);
+                // var paramData = LZString.decompressFromEncodedURIComponent(result.UEHDUploadData);
+                // // var data = result.decompress();
+                // console.log(paramData)
+
+                $scope.uploadHistory = angular.extend($scope.uploadHistory, result);
+                $scope.setPage(result)
+                console.log($scope.uploadHistory);
+                $scope.uploadHistory.gridOptions = $scope.gridSetupColumns($scope.uploadHistory.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+                _refreshUploadHistory();
+
+            })
+        }
+
+        function _refreshUploadHistory() {
+            // var resultDataList = [];
+
+            pageService.getTableData(uploadHistoryTableId, uploadHistoryPageId, '', '', false, undefined).then(function (result) {
+
+                console.log(result)
+                $scope.uploadHistory.gridOptions.data = result;
+
+                // angular.forEach(result, function (rows, ridx) {
+                //      resultDataList = rows.UEHDUploadData
+
+                // })
+
+                // var data = resultDataList;
+                // var paramData = LZString.decompressFromEncodedURIComponent(data);
+                // console.log(paramData)
+            })
 
 
         }
 
+        function _setFieldMatching() {
+            vm.migrate.findFieldList = [];
+            //firstCheck, secondCheck, tableIndex, rowIndex, colIndex
+            addFieldCheck('department', '', 0, 0, 0);
+
+            //Date Of Joining
+            addFieldCheck('doj', '', 0, 0, 1);
+            addFieldCheck('date', 'joining', 0, 0, 1);
+            addFieldCheck('D.O.J', '', 0, 0, 1);
+
+            addFieldCheck('employeement', '', 0, 1, 0);
+            addFieldCheck('grade', '', 0, 1, 1);
+            addFieldCheck('designation', '', 0, 2, 0);
+            addFieldCheck('level', '', 0, 2, 1);
+            addFieldCheck('category', '', 0, 3, 0);
+
+            //subunit
+            addFieldCheck('sub', '', 0, 3, 1);
+            addFieldCheck('sub', 'unit', 0, 3, 1);
+
+            //email
+            addFieldCheck('office', 'email', 0, 4, 0);
+            addFieldCheck('email', '', 0, 4, 0);
+
+            //mobile
+            addFieldCheck('office', 'mobile', 0, 4, 1);
+            addFieldCheck('mobile', '', 0, 4, 1);
+
+            //phone
+            addFieldCheck('office', 'phone', 0, 5, 0);
+            addFieldCheck('phone', '', 0, 5, 0);
+
+            //Office Ext.
+            addFieldCheck('office', 'ext', 0, 5, 1);
+            addFieldCheck('ext', '', 0, 5, 1);
+
+            // Single OT
+            addFieldCheck('single', 'ot', 0, 6, 0);
+            addFieldCheck('ot', '', 0, 6, 0);
+
+            // Double OT
+            addFieldCheck('double', 'ot', 0, 6, 1);
+            addFieldCheck('ot', '', 0, 6, 1);
+
+            //Single OT Rate
+            addFieldCheck('single', 'rate', 0, 7, 0);
+            addFieldCheck('rate', '', 0, 7, 0);
+
+            //Double OT Rate
+            addFieldCheck('double', 'rate', 0, 7, 1);
+            addFieldCheck('rate', '', 0, 7, 1);
+
+            //emp code
+            addFieldCheck('emp', 'code', 1, 0, 0);
+            addFieldCheck('employee', 'code', 1, 0, 0);
+            addFieldCheck('empcode', '', 1, 0, 0);
+            addFieldCheck('code', '', 1, 0, 0);
+
+            var extraRowIndex = 0;
+            //emp name
+            if (vm.showEmployeeName) {
+                addFieldCheck('employee', 'name', 1, 0, 1);
+                addFieldCheck('empname', '', 1, 0, 1);
+                extraRowIndex = 0;
+            }
+            else {
+                extraRowIndex = 2
+                addFieldCheck('title', '', 1, 1, 0);
+
+
+                //for first name
+                addFieldCheck('first', 'name', 1, 1, 1);
+                addFieldCheck('firstname', '', 1, 1, 1);
+
+
+                //for last name
+                addFieldCheck('last', 'name', 1, 2, 0);
+                addFieldCheck('lastname', '', 1, 2, 0);
+
+                //for middle name
+                addFieldCheck('middle', 'name', 1, 2, 1);
+                addFieldCheck('middlename', '', 1, 2, 1);
+            }
+
+
+
+            //date of birth check
+            addFieldCheck('date', 'birth', 1, 1 + extraRowIndex, 0);
+            addFieldCheck('dateofbirth', '', 1, 1 + extraRowIndex, 0);
+            addFieldCheck('dob', '', 1, 1 + extraRowIndex, 0);
+            addFieldCheck('d.o.b', '', 1, 1 + extraRowIndex, 0);
+            addFieldCheck('birthdate', '', 1, 1 + extraRowIndex, 0);
+
+            //Marriage Status
+            addFieldCheck('marriage', 'status', 1, 1 + extraRowIndex, 1);
+            addFieldCheck('marriagestatus', '', 1, 1 + extraRowIndex, 1);
+
+            addFieldCheck('gender', '', 1, 2 + extraRowIndex, 0);
+            addFieldCheck('email', '', 1, 2 + extraRowIndex, 1);
+
+            addFieldCheck('mobile', '', 1, 3 + extraRowIndex, 0);
+
+            //anniversery date
+            addFieldCheck('anniversary', 'date', 1, 3 + extraRowIndex, 1);
+            addFieldCheck('anniversarydate', '', 1, 3 + extraRowIndex, 1);
+
+            addFieldCheck('facebook', '', 1, 4 + extraRowIndex, 0);
+
+            //pancard
+            addFieldCheck('pan', 'no', 1, 4 + extraRowIndex, 1);
+            addFieldCheck('panno', '', 1, 4 + extraRowIndex, 1);
+
+
+            //linkedin
+            addFieldCheck('linked', 'in', 1, 5 + extraRowIndex, 0);
+            addFieldCheck('linkedin', 'Unit', 1, 5 + extraRowIndex, 0);
+            //aadhaar card
+            addFieldCheck('aadhaar', 'card', 1, 5 + extraRowIndex, 1);
+            addFieldCheck('aadhaarcard', '', 1, 5 + extraRowIndex, 1);
+            addFieldCheck('aadhaarno', '', 1, 5 + extraRowIndex, 1);
+
+            addFieldCheck('twitter', '', 1, 6 + extraRowIndex, 0);
+
+            //other number
+            addFieldCheck('other', 'number', 1, 8, 1);
+            addFieldCheck('othernumber', '', 1, 8, 1);
+
+            //Salary Mode
+            addFieldCheck('salary', 'mode', 2, 0, 0);
+            addFieldCheck('salarymode', '', 2, 0, 0);
+
+            //PF Account Number
+            addFieldCheck('pf', 'account', 2, 0, 1);
+            addFieldCheck('pfaccount', '', 2, 0, 1);
+
+            //PF Start Date
+            addFieldCheck('pf', 'date', 2, 1, 0);
+            addFieldCheck('pfdate', '', 2, 1, 0);
+
+            //ESI Account Number
+            addFieldCheck('esi', 'account', 2, 1, 1);
+            addFieldCheck('esiaccount', '', 2, 1, 1);
+
+            //ESI Start Date
+            addFieldCheck('other', 'number', 2, 2, 0);
+            addFieldCheck('othernumber', '', 2, 2, 0);
+
+            //ESI Dispensary name
+            addFieldCheck('esi', 'dispensary', 2, 2, 1);
+            addFieldCheck('esidispensary', '', 2, 2, 1);
+        }
+
         //Public Functions
+        vm.getAddedList = function () {
+            vm.migrate.step1 = false;
+            vm.migrate.step2 = false;
+            vm.migrate.step3 = false;
+            vm.migrate.step4 = false;
+            vm.migrate.step5 = true;
+            vm.migrate.step6 = false;
+            vm.migrate.step7 = true;
+        }
+
+        vm.getSkipList = function () {
+            vm.migrate.step1 = false;
+            vm.migrate.step2 = false;
+            vm.migrate.step3 = false;
+            vm.migrate.step4 = false;
+            vm.migrate.step5 = true;
+            vm.migrate.step6 = true;
+            vm.migrate.step7 = false;
+
+        }
+
         vm.setupMigrate = function () {
 
             vm.migrate.tables = [];
@@ -153,12 +376,12 @@
 
             table2.rows.push({
                 column1: { name: 'PDFacebookId', text: 'Facebook', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDPancard', text: 'Pan Card', type: 'text', required: false, value: 'none' }
+                column2: { name: 'PDPancard', text: 'Pan No', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
                 column1: { name: 'PDLinkedIn', text: 'LinkedIn', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDAdhar', text: 'Adhar', type: 'text', required: false, value: 'none' }
+                column2: { name: 'PDAdhar', text: 'Aadhaar', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
@@ -202,6 +425,7 @@
         vm.nextDataUpload = function () {
 
             $window.scrollTo(0, 0);
+            _getUploadHistoryDetail();
             if (vm.showEmployeeName == true) {
                 // vm.showEmpName();
             }
@@ -213,6 +437,7 @@
                     alert('No data found.')
                 }
                 else {
+                    _setFieldMatching();
                     vm.setupMigrate();
                     // debugger;
                     vm.matchingFields();
@@ -288,6 +513,7 @@
                 vm.migrate.step4 = false;
                 vm.migrate.step5 = false;
                 vm.migrate.currentStep = 1;
+                _setFieldMatching();
             }
             else if (vm.migrate.currentStep == 3) {
                 vm.migrate.step1 = false;
@@ -305,6 +531,20 @@
                 vm.migrate.step5 = false;
                 vm.migrate.currentStep = 3;
             }
+        }
+
+        vm.clear = function () {
+
+            angular.forEach(vm.migrate.tables, function (table, tidx) {
+                angular.forEach(table.rows, function (row, ridx) {
+                    row.column1.value = 'none';
+
+                    if (row.column2 !== undefined) {
+                        row.column2.value = 'none';
+                    }
+
+                })
+            })
         }
         vm.cancelDataUpload = function () {
 
@@ -335,7 +575,7 @@
             })
         }
         vm.importDataUpload = function () {
-            alert('import');
+            // alert('import');
             vm.migrate.currentStep = 3;
             vm.migrate.step1 = false;
             vm.migrate.step2 = false;
@@ -360,37 +600,65 @@
             if (vm.showEmployeeName === undefined) {
                 vm.showEmployeeName = false;
             }
+            var fileName = 'Employeedata';
+
             console.log(vm.gridOptions.data)
-            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName }
+            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName, fileName: fileName }
             console.log(uncData)
             var postData = JSON.stringify(uncData);
             var compressed = LZString.compressToEncodedURIComponent(postData);
 
             var data = { lz: true, data: compressed }
             // var data = { data: postData }
+            if (confirm('Upload record Sure')) {
+                pageService.uploadEmployeeData(data).then(function (result) {
+                    vm.validateUploadData = true;
+                    var successDataLength = result.successList.length;
+                    var skipListDataLength = result.skipList.length;
 
-            pageService.uploadEmployeeData(data).then(function (result) {
-                var successDataLength = result.successList.length;
-                var skipListDataLength = result.skipList.length;
+                    vm.successLength = successDataLength;
+                    vm.skipListLength = skipListDataLength;
 
-                vm.successLength = successDataLength;
-                vm.skipListLength = skipListDataLength;
+                    var successData = parseInt(successDataLength)
+                    var skipData = parseInt(skipListDataLength)
 
-                var successData = parseInt(successDataLength)
-                var skipData = parseInt(skipListDataLength)
+                    vm.totalRecord = successData + skipData;
+                    vm.skipDataList = result.skipList;
+                    console.log(vm.skipDataList)
 
-                vm.totalRecord = successData + skipData;
+                    if (vm.skipDataLists === undefined) {
+                        vm.skipDataLists = [];
 
-                console.log(successDataLength, skipListDataLength, vm.totalRecord)
-                console.log(result)
-            }, function (err) {
-                console.log(err)
-            })
-            vm.migrate.step1 = false;
-            vm.migrate.step2 = false;
-            vm.migrate.step3 = false;
-            vm.migrate.step4 = false;
-            vm.migrate.step5 = true;
+                    }
+                    // var rowData = "";
+                    // angular.forEach(result.skipList, function (rows, ridx) {
+                    //     angular.forEach(rows, function (rowss, ridx) {
+                    //         rowData = rowss;
+                    //     })
+                    //     vm.skipDataLists.push(rowData);
+
+                    // })
+                    // console.log(vm.skipDataLists)
+
+
+                    vm.migrate.step1 = false;
+                    vm.migrate.step2 = false;
+                    vm.migrate.step3 = false;
+                    vm.migrate.step4 = false;
+                    vm.migrate.step5 = true;
+                    console.log(successDataLength, skipListDataLength, vm.totalRecord)
+                    console.log(result)
+                }
+
+                    , function (err) {
+                        console.log(err)
+                    })
+            }
+            else {
+                vm.migrate.step3 = true;
+                vm.migrate.step4 = false;
+            }
+
         }
 
 
@@ -440,7 +708,8 @@
 
                 if (isUsable) {
                     if (colIdx == 1) {
-                        vm.migrate.tables[tableIdx].rows[rowIdx].column2.value = colName;
+                        if (vm.migrate.tables[tableIdx].rows[rowIdx].column2 !== undefined)
+                            vm.migrate.tables[tableIdx].rows[rowIdx].column2.value = colName;
                     }
                     else {
                         vm.migrate.tables[tableIdx].rows[rowIdx].column1.value = colName;
@@ -540,7 +809,8 @@
         // }
 
         //Calling Default Function
-        _loadController();
+
+        _getUploadHistoryDetail();
 
     }
 })();
