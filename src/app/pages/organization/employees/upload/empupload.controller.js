@@ -121,6 +121,7 @@
             addFieldCheck('D.O.J', '', 0, 0, 1);
 
             addFieldCheck('employment', '', 0, 1, 0);
+            addFieldCheck('employment', 'type', 0, 1, 0);
             addFieldCheck('employmenttype', '', 0, 1, 0);
             addFieldCheck('grade', '', 0, 1, 1);
             addFieldCheck('designation', '', 0, 2, 0);
@@ -133,11 +134,11 @@
 
             //email
             addFieldCheck('office', 'email', 0, 4, 0);
-            addFieldCheck('email', '', 0, 4, 0);
+            addFieldCheck('officeemail', '', 0, 4, 0);
 
             //mobile
             addFieldCheck('office', 'mobile', 0, 4, 1);
-            addFieldCheck('mobile', '', 0, 4, 1);
+            addFieldCheck('officemobile', '', 0, 4, 1);
 
             //phone
             addFieldCheck('office', 'phone', 0, 5, 0);
@@ -649,9 +650,12 @@
                     vm.migrate.step5 = true;
                     console.log(successDataLength, skipListDataLength, vm.totalRecord)
                     console.log(result)
+                    
                 }
 
                     , function (err) {
+
+                        $scope.showMsg('error', err, 'Import Wizard')
                         console.log(err)
                     })
             }
