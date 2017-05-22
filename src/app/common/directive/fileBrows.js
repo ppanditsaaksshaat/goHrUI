@@ -6,9 +6,28 @@ angular.module('BlurAdmin.common').directive("readfiledata", function ($filter) 
         },
         link: function ($scope, $elm, $attrs) {
             $elm.on('change', function (changeEvent) {
+                var files = changeEvent.target.files;
+                // if (files.length <= 0) {
+                //     $scope.showMsg('error', 'Your template file is null.');
+                // }
+                console.log(files);
+                var fileName = "";
+                var fileType = "";
+                angular.forEach(files, function (rows, ridx) {
+                    fileName = rows.name;
+                    fileType = fileName.split(".")
+
+                    console.log(fileName, fileType)
+
+                })
+                // if (fileType == 'xlsx' || fileType == xls){}
+                    console.log(files[0])
+
+                // if(files[0]==)
                 var reader = new FileReader();
-// debugger;
+                // debugger;
                 reader.onload = function (evt) {
+                    console.log(evt)
                     $scope.$apply(function () {
                         var data = evt.target.result;
 
@@ -20,7 +39,7 @@ angular.module('BlurAdmin.common').directive("readfiledata", function ($filter) 
 
                         $scope.opts.columnDefs = [];
                         headerNames.forEach(function (h) {
-                            var colDef = { field: h, width: 150 , value:h}
+                            var colDef = { field: h, width: 150, value: h }
                             angular.forEach($scope.uploader.columns, function (key, value) {
                                 if (h == key.field) {
                                     if (key.format !== undefined) {

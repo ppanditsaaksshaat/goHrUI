@@ -43,7 +43,7 @@
                             <div class="col-md-12">
 
                                 <label class="checkbox-inline custom-checkbox nowrap">
-                                    <input type="checkbox" id="inlineCheckbox02"  ng-model="tabCtrl.showEmployeeName">
+                                    <input type="checkbox" ng-click="tabCtrl.employeeShowData()" id="inlineCheckbox02"  ng-model="tabCtrl.showEmployeeName">
                                     <span>Show Employee Full Name</span>
                                 </label>
                             </div>
@@ -81,7 +81,7 @@
                             <p>File size cannot exceed 5 MB.</p>
                             <p>All duplicate records will be ignored when importing.</p>
                             <p>Checkbox value should be 1 or 0.</p>
-                            <p>Dates must be in the format MM/DD/YYYY. Records that use other date formats will be ignored.</p>
+                            <p>Date must be in the format MM/DD/YYYY. Records that use other date formats will be ignored.</p>
                             <p>Date and time values must be in the following format: MM/DD/YYYY hh:mm:ss. Any other format will
                                 be ignored.</p>
                             <p>By default, the character encoding is UTF-8 (Unicode). Make sure you provide the correct character

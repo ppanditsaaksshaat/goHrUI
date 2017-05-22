@@ -123,6 +123,10 @@
             addFieldCheck('employment', '', 0, 1, 0);
             addFieldCheck('employment', 'type', 0, 1, 0);
             addFieldCheck('employmenttype', '', 0, 1, 0);
+            addFieldCheck('employeement', '', 0, 1, 0);
+            addFieldCheck('employeement', 'type', 0, 1, 0);
+            addFieldCheck('employeementtype', '', 0, 1, 0);
+
             addFieldCheck('grade', '', 0, 1, 1);
             addFieldCheck('designation', '', 0, 2, 0);
             addFieldCheck('level', '', 0, 2, 1);
@@ -378,7 +382,7 @@
 
             table2.rows.push({
                 column1: { name: 'PDFacebookId', text: 'Facebook', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDPancard', text: 'Pan No', type: 'text', required: false, value: 'none' }
+                column2: { name: 'PDPancard', text: 'PAN No', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
@@ -576,6 +580,15 @@
 
             })
         }
+
+
+        vm.employeeShowData = function () {
+            if (vm.showEmployeeName) {
+                $scope.showMsg('success', 'Employee full name is exists in template file.');
+            }
+            
+
+        }
         vm.importDataUpload = function () {
             // alert('import');
             vm.migrate.currentStep = 3;
@@ -650,12 +663,12 @@
                     vm.migrate.step5 = true;
                     console.log(successDataLength, skipListDataLength, vm.totalRecord)
                     console.log(result)
-                    
+
                 }
 
                     , function (err) {
 
-                        $scope.showMsg('error', err, 'Import Wizard')
+                        $scope.showMsg('error', err, 'Error Message')
                         console.log(err)
                     })
             }
