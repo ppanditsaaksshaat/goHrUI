@@ -120,7 +120,8 @@
             addFieldCheck('date', 'joining', 0, 0, 1);
             addFieldCheck('D.O.J', '', 0, 0, 1);
 
-            addFieldCheck('employeement', '', 0, 1, 0);
+            addFieldCheck('employment', '', 0, 1, 0);
+            addFieldCheck('employmenttype', '', 0, 1, 0);
             addFieldCheck('grade', '', 0, 1, 1);
             addFieldCheck('designation', '', 0, 2, 0);
             addFieldCheck('level', '', 0, 2, 1);
@@ -776,7 +777,7 @@
 
         vm.downloadTemp = function () {
 
-            alert('download temp is working');
+            // alert('download temp is working');
             var tempColumns = [];
 
             tempColumns.push({ EmpCode: '' });
