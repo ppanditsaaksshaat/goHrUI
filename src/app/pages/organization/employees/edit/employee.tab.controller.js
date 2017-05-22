@@ -15,8 +15,7 @@
   function OrgEmployeeTabController($scope, $stateParams, pageService, $timeout, $uibModal, baProgressModal, dialogModal) {
 
 
-    $scope.familyPage = {}
-    $scope.familyPage.gridOptions = $scope.getGridSetting();
+    $scope.familyPage = $scope.createPage();
     $scope.familyPage.boxOptions = {
       showRefresh: true,
       showFilter: false,
@@ -25,9 +24,9 @@
       showCustomView: true,
       showUpload: false,
       enableAutoRefresh: true,
-      refreshData: _refreshDataFamily,
-      addRecord: _addRecordFamily,
-      editRecord: _editRecordFamily,
+      refreshData: null,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,

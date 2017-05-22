@@ -20,93 +20,32 @@
     vm.searchList = [];
     vm.orderByList = [];
 
-    // this.refreshData = _refreshData;
-    // this.addRecord = _addRecord;
-    // this.editRecord = _editRecord;
-    // this.updateRecord = _updateRecord;
-    // this.viewRecord = _viewRecord;
-    // this.deleteRecord = _deleteRecord;
-    // this.openView = _openView;
     this.applyFilter = _applyFilter;
     // this.uploadRecord = _uploadRecord;
 
     $scope.page = $scope.createPage();
+    $scope.page.pageId = 25;
     $scope.page.boxOptions = {
+      selfLoading: true,
       showRefresh: true,
       showFilter: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
-      showUpload: true,
+      showUpload: false,
+      showDialog: false,
+      enableRefreshAfterUpdate: true,
       gridHeight: 450,
-      refreshData: _refreshData,
+      getPageData: null,
+      refreshData: null,
       addRecord: _addRecord,
       editRecord: _editRecord,
-      updateRecord: _updateRecord,
-      viewRecord: _viewRecord,
-      deleteRecord: _deleteRecord,
-      openView: _openView,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
       uploadRecord: _uploadRecord
     }
 
-    function _loadController() {
-      $timeout(function () {
-        pageService.getPagData(pageId).then(_successGetPage, _errorGetPage)
-      });
-    }
-    function _successGetPage(result) {
-      console.log(result)
-      $scope.page = angular.extend($scope.page, result);
-      console.log($scope.page)
-      $scope.setPage(result)
-      $scope.pageTitleText = $scope.page.pageinfo.title;
-      $scope.page.gridOptions = $scope.gridSetupColumns($scope.page.gridOptions, result.pageinfo.columns, result, true, true, true, true);
-      _getTableData();
-    }
-    function _errorGetPage(err) {
-    }
-    function _getTableData() {
-      console.log(new Date())
-      var data = {
-        searchList: vm.searchList,
-        orderByList: vm.orderByList
-      }
-      var tableData = pageService.getTableData(
-        $scope.page.pageinfo.tableid,
-        $scope.page.pageinfo.pageid,
-        '', '',
-        false, data);
-      $scope.page.isLoaded = false
-      $scope.page.isLoading = true
-      $scope.page.gridOptions.data = []
-      tableData.then(_getTableSuccessResult, _getTableErrorResult)
-    }
-    function _getTableErrorResult(err) {
-      $scope.page.isLoaded = true
-      $scope.page.isLoading = false
-    }
-    function _getTableSuccessResult(result) {
-      console.log(new Date())
-      console.log(result)
-      $scope.page.isLoaded = true
-      $scope.page.isLoading = false
-      if (result == 'NoDataFound') {
-        $scope.showMsg('warning', 'No Record Found.', 'Employee List');
-      } else if (result.Errors !== undefined) {
-        $scope.showMsg('error', result.Message, 'Error')
-        // uivm.showMsg('error', result.Message);
-        // _startMsgTimer();
-      }
-      else {
-        $scope.rows = result;
-        $scope.page.gridOptions.data = result;
-        console.log(new Date())
-        console.log($scope.page.gridOptions.data)
-      }
-    }
-    function _refreshData() {
-      _getTableData();
-    }
     function _addRecord() {
       $state.go("organization.employees.add", "{action:'create'}");
     }
@@ -156,7 +95,7 @@
     $scope.onRowHover = function (row) {
       console.log(row)
     }
-    _loadController();
+    //_loadController();
   }
 
 })();
