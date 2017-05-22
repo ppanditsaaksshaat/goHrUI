@@ -88,6 +88,8 @@
     function _createEditErrorResult(error) {
     }
 
+   
+
     $scope.editImmigration=function(){
       var immigration={  
            IMId:param.IMId,       

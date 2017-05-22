@@ -148,7 +148,7 @@
       familyPageId: 52, nomineePageId: 438, experiencPageId: 56, contactPageId: 36,
       emgContactPageId: 57, educationPageId: 112
     }
-    vm.tableIds = { experiencTableId: 62, educationTableId: 119 }
+    vm.tableIds = {nomineeTableId:113, experiencTableId: 62, educationTableId: 119 }
     vm.navigationCollapsed = true;
     vm.pageId = $stateParams.pageId;
     vm.empPKId = $stateParams.empId;
@@ -582,6 +582,7 @@
     //Skill
 
     function _addRecordSkill() {
+     
       var param = {
         action: 'create',
         page: $scope.skillPage,
@@ -591,6 +592,7 @@
         param: param
       }
       dialogModal.openFormVertical(options);
+      _refreshListData();
     }
     function _editRecordSkill(row) {
       var param = {
@@ -604,7 +606,7 @@
         param: param
       }
       dialogModal.openFormVertical(options);
-      _refreshDataFamily();
+       _refreshListData();
     }
     //End of Skill
 
@@ -769,6 +771,7 @@
       $scope.isLoading = false
     }
     function _getRefreshListSuccessResult(result) {
+     
       $scope.isLoaded = true
       $scope.isLoading = false
       if (result == 'NoDataFound') {
@@ -778,7 +781,6 @@
         // _startMsgTimer();
       }
       else {
-
         console.log(result)
         if (vm.tempName == 'immigration') {
           $scope.immigrationPage.gridOptions.data = result;
