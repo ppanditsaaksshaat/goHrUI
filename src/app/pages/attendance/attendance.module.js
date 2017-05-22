@@ -6,23 +6,25 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.attendance', [
-    'BlurAdmin.pages.attendance.masters'       
+    'BlurAdmin.pages.attendance.masters',
+    'BlurAdmin.pages.attendance.transaction',
+    'BlurAdmin.pages.attendance.reports'
   ])
-      .config(routeConfig);
-      
+    .config(routeConfig);
+
   /** @ngInject */
   function routeConfig($stateProvider) {
     $stateProvider
-        .state('attendance', {
-          url: '/attendance',
-          template : '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
-          abstract: true,
-          title: 'attendance',
-          sidebarMeta: {
-            icon: 'ion-gear-a',
-            order: 100,
-          },
-        });
+      .state('attendance', {
+        url: '/attendance',
+        template: '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
+        abstract: true,
+        title: 'attendance',
+        sidebarMeta: {
+          icon: 'ion-gear-a',
+          order: 100,
+        },
+      });
   }
 
 })();
