@@ -776,7 +776,7 @@
 
         vm.downloadTemp = function () {
 
-            alert('download temp is working');
+            // alert('download temp is working');
             var tempColumns = [];
 
             tempColumns.push({ EmpCode: '' });
