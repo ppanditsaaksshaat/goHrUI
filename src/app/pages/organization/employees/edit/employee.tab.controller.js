@@ -299,6 +299,7 @@
       $scope.isLoading = false
     }
     function _getNomineeTableSuccessResult(result) {
+      console.log(result)
       $scope.isLoaded = true
       $scope.isLoading = false
       if (result == 'NoDataFound') {
@@ -334,6 +335,8 @@
         param: param
       }
       dialogModal.openFormVertical(options);
+
+      _refreshListData();
     }
     //End Nominee
     //Experince
