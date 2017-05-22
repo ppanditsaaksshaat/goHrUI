@@ -64,7 +64,9 @@
     "angular-base64-upload": "^0.1.22",
     "angular-ui-indeterminate": "^1.0.0",
     "angularjs-datepicker": "^2.1.19",
-    "angular-jquery-timepicker": "^0.12.0"
+    "angular-jquery-timepicker": "^0.12.0",
+    "ng-scrollbars": "^0.0.11",
+    "jquery.scrollbar": "^0.2.11"
   },
   "resolutions": {
     "angular": "~1.5.9",

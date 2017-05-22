@@ -30,9 +30,7 @@
     this.applyFilter = _applyFilter;
     // this.uploadRecord = _uploadRecord;
 
-    $scope.page = {}
-    $scope.page.gridOptions = $scope.getGridSetting();
-    $scope.page.gridStyle = { width: 500, height: 450 }
+    $scope.page = $scope.createPage();
     $scope.page.boxOptions = {
       showRefresh: true,
       showFilter: true,
@@ -40,6 +38,7 @@
       showRowMenu: true,
       showCustomView: true,
       showUpload: true,
+      gridHeight: 450,
       refreshData: _refreshData,
       addRecord: _addRecord,
       editRecord: _editRecord,

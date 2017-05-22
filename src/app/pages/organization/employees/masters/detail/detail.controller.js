@@ -16,16 +16,28 @@
     // vm.saveForm = _saveForm;
     vm.oldEntity = {};
     vm.templateUrlPath = '';
-
+    $scope.totalFormRows = 0;
     function _loadController() {
-      console.log(param)
+
       vm.pageId = param.pageId;
       vm.tempName = param.name;
-      vm.page = $scope.getPage(vm.pageId)
+      vm.page = param.page;
       vm.page.action = param.action;
       vm.pkId = 0;
       if (param.pkId !== undefined) {
         vm.page.pkId = param.pkId;
+      }
+
+      if (param.entity !== undefined) {
+        vm.entity = param.entity;
+
+        //find tabs
+        angular.forEach(vm.page.pageinfo.viewform, function (tab) {
+          //find rows
+          angular.forEach(tab.rows, function (row) {
+            $scope.totalFormRows++;
+          })
+        })
       }
     }
     _loadController();

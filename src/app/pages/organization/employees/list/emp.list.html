@@ -3,7 +3,7 @@
         <filter-box page="page"></filter-box>
     </div>
     <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
-        <grid-box page="page" box-options="boxSetting">
+        <grid-box ng-model="page">
         </grid-box>
     </div>
 </div>

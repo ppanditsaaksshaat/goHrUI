@@ -267,8 +267,45 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
             enableVerticalScrollbar: false,
             enableHighlighting: true,
             enablePinning: true,
+            data: [],
+            columnDefs: []
             // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
         }
         return gridOptions;
+    }
+
+    $rootScope.createPage = function () {
+        var page = { formschema: {}, formsetting: {}, timespan: {} };
+        page.gridOptions = $rootScope.getGridSetting();
+
+        page.boxOptions = {
+            selfLoading: true,
+            showRefresh: true,
+            showFilter: false,
+            showAdd: true,
+            showRowMenu: true,
+            showCustomView: true,
+            showUpload: false,
+            gridHeight: 450,
+            refreshData: null,
+            addRecord: null,
+            editRecord: null,
+            updateRecord: null,
+            viewRecord: null,
+            deleteRecord: null,
+            openView: null,
+            uploadRecord: null
+        }
+
+        page.pageinfo = undefined;
+        page.searchList = [];
+        page.orderByList = [];
+        page.isPageLoading = false;
+        page.isPageLoaded = false;
+        page.isDataLoading = false;
+        page.isDataLoaded = false;
+        page.showFilter = false;
+
+        return page;
     }
 });

@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-md-3" style="padding-right:0px; margin-right:0px;  ">
-        <div class="panel panel-default bootstrap-panel xmedium-panel">
-            <div class="panel-heading panHead" style="vertical-align: super">
+        <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
+            <div class="panel-heading">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" placeholder="Search Master" ng-model="menuFilter">
+                            <input type="text" class="form-control" placeholder="Search Master1" ng-model="menuFilter">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" ng-click="menuFilter=''">
                                     <i class="ion-close"></i>
@@ -16,22 +16,12 @@
                 </div>
             </div>
 
-            <div class="panel-body" style="overflow: scroll">
-                <ul class="list-unstyled side-menu maxHeight450">
+            <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+                <ul class="list-unstyled side-menu">
                     <li ng-repeat="t in tabCtrl.tabs| filter: {name: menuFilter}" ui-sref-active="active" ui-sref="organization.employees.masters.list({name:t.name, pageId: t.id})">
                         <a href >{{t.text}}</a>
                     </li>
                 </ul>
-                <!--<div class="letter-layout">
-                    <div ng-repeat="t in tabCtrl.tabs| filter: {name: menuFilter}" ui-sref-active="active" class="mail-navigation" ui-sref="organization.employees.masters.list({name:t.name, pageId: t.id})">
-                        {{t.text}}<span class="new-mails" ng-show="t.newMails">{{t.newMails}}</span>
-                    </div>
-                </div>-->
-                <!--<div class="nav">
-                    <button type="button" class="btn btn-info" ng-click="applyBoxFilter()">Apply Filter</button>
-                    <a href ng-click="clearFilter()">Clear</a>
-                </div>-->
-
             </div>
         </div>
     </div>

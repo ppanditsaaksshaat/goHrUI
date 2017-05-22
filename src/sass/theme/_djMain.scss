@@ -95,6 +95,15 @@
 .pnl800{
   height: 800px;
 }
+.pnlFixScroll
+{
+  overflow-x: scroll;
+  height: 600px;
+}
+.pnlScroll .panel-body{
+  overflow-x:scroll;
+  max-height: 500px;
+}
 .modal .modal-dialog.modal-top-center-500
 {
   width: 600px;
@@ -107,6 +116,14 @@
   position: fixed;
   right: 0;
   bottom: 0;
+}
+.modal .modal-dialog.modal-top-center-800{
+  width: 875px;
+  height: 565px;
+  position: fixed;
+  top: 65px;
+  left: 478px;
+  overflow: scroll;
 }
 .overflow-visible,
 .overflow-visible .ui-grid-cell-contents {
@@ -1041,3 +1058,11 @@ abbr[title] {
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 
+
+.ui-grid-render-container-middle .scroll-y,
+.ui-grid-render-container-left .scroll-y {
+  display: none !important;
+}
+.ui-grid-render-container-middle:hover + .ui-grid-pinned-container-right .scroll-bar {
+  opacity: 0.7 !important;
+}

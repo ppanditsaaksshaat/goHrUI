@@ -11,8 +11,19 @@
   /** @ngInject */
   function attMastersDetailController($stateParams, mailMessages) {
     var vm = this;
-    vm.mail = mailMessages.getMessageById($stateParams.id);
-    vm.pageId = $stateParams.pageId;
+
+    function _loadController() {
+      vm.page = param.page;
+      vm.page.action = param.action;
+      vm.page.linkColumns = param.linkColumns;
+      vm.pkId = 0;
+      if (param.action != 'create')
+        if (param.entity !== undefined) {
+          vm.page.pkId = param.entity[vm.page.pageinfo.idencolname];
+          vm.page.entity = param.entity;
+        }
+    }
+    _loadController();
   }
 
 })();
