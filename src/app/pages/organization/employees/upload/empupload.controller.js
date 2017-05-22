@@ -376,7 +376,7 @@
 
             table2.rows.push({
                 column1: { name: 'PDFacebookId', text: 'Facebook', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDPancard', text: 'Pan Card', type: 'text', required: false, value: 'none' }
+                column2: { name: 'PDPancard', text: 'Pan No', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
