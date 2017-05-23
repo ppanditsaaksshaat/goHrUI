@@ -17,6 +17,18 @@
 
         //local variable
         var vm = this;
+              
+   
+        var vm = this;
+         var col={
+      text:"Email",
+      type:"email",
+      propColName:null,
+      required:true,
+      place:"Email",
+      maxLength:50
+    }
+$scope.email=col;
         var columnIds = ['132', '667', '674', '192', '668', '743', '744'];
         vm.pageId=25;
         vm.empAdd = {};

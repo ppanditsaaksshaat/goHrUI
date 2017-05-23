@@ -14,15 +14,6 @@
     console.log(param.QualiId)
 
 
-    var col={
-      text:"Email",
-      type:"email",
-      propColName:null,
-      required:true,
-      place:"Email",
-      maxLength:50
-    }
-$scope.email=col;
     var rndValu = Math.round((Math.random() * 10) * 10);
     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
     var vm = this;

@@ -1,5 +1,5 @@
 /**
- * @author pradeep.pandip
+ * @author pradeep.pandit
  * created on 16.05.2017
  */
 (function () {
@@ -12,7 +12,7 @@
     /** @ngInject */
     function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal) {
         console.log('empTabController')
-        var vm = this;
+  
         $scope.entity = {}
         vm.pageIds = {
             familyPageId: "52", nomineePageId: "438", experiencPageId: "56", contactPageId: "36",

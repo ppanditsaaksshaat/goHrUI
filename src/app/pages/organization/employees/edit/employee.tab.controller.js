@@ -1,7 +1,7 @@
 
 
 /**
- * @author pradeep.pandip
+ * @author pradeep.pandit
  * created on 16.05.2017
  */
 (function () {
@@ -20,7 +20,6 @@
       familyPageId: 52, nomineePageId: 438, experiencPageId: 56, contactPageId: 36,
       emgContactPageId: 57, educationPageId: 112, skillPageId: 439, immigrationPageId: 119
     }
-
     $scope.familyPage = $scope.createPage();
     $scope.familyPage.pageId = vm.pageIds.familyPageId;
     $scope.familyPage.boxOptions = {

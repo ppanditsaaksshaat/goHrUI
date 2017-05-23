@@ -24,8 +24,7 @@
                     }
                 })
                 scope.test=function(column)
-                {
-                   
+                {                 
                     scope.testing=column;
                     console.log(column)
                 }

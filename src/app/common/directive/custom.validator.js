@@ -93,39 +93,17 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
         require: 'ngModel',
         restrict: 'A',
         scope: {
-            callBackMethod: '&callback',
-            onChange: '$'
+            callBackMethod: '&callback',     
         },
         link: function (scope, element, attrs, modelCtrl) {
-            $scope.on('blur', function (inputValue) {
-                // if ($scope.onChange !== undefined || $scope.onChange !== null) {
-                //     $scope.onChange(changeEvent);
-                // }
-                // else {
-                //     //directive self todo code here
-                // }
-                 var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            element.on('blur', function (inputValue) { 
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 console.log(inputValue)
                 console.log(re.test(inputValue))
                 /* send an object to the function */
                 scope.callBackMethod({ mustBeTheSame: re.test(inputValue) });
             })
-            // modelCtrl.$parsers.push(function (inputValue) {
-            //     if (inputValue == null)
-            //         return ''
-            //     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            //     console.log(inputValue)
-            //     console.log(re.test(inputValue))
-            //     /* send an object to the function */
-            //     scope.callBackMethod({ mustBeTheSame: re.test(inputValue) });
-            //     //  return  re.test(inputValue);
-            //     // cleanInputValue = inputValue.toUpperCase()
-            //     // if (cleanInputValue != inputValue) {
-            //     //     modelCtrl.$setViewValue(cleanInputValue);
-            //     //     modelCtrl.$render();
-            //     // }
-            //     // return cleanInputValue;
-            // });
+           
         }
     }
 });
