@@ -18,22 +18,27 @@
     var currentState = $state.current;
 
 
-    $scope.page = {}
+    $scope.page = $scope.createPage();
+    $scope.page.pageId = pageId;
     $scope.page.boxOptions = {
+      selfLoading: true,
       showRefresh: true,
-      showFilter: false,
+      showFilter: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
+      showDialog: false,
+      enableRefreshAfterUpdate: true,
       gridHeight: 450,
-      refreshData: _refreshData,
-      addRecord: _addRecord,
-      editRecord: _editRecord,
+      linkColumns: [],
+      getPageData: null,
+      refreshData: null,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      openView: null,
       uploadRecord: null
     }
 
