@@ -15,6 +15,7 @@
                                         opts="tabCtrl.gridOptions" 
                                         uploader="tabCtrl.uploader"
                                         multiple="false" 
+                                        result="tabCtrl.fileResult"
                                         style="display: none;">
                                     </label><br/>
                         <span class="">(Only .xls, .xlsx are supported)</span>
@@ -296,24 +297,17 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-
-                                        <th>Emp Code</th>
-                                        <th>Department</th>
-                                        <th>Designation</th>
-                                        <th>Mobile</th>
-                                        <th>Gender</th>
+                                        <th ng-repeat="head in tabCtrl.selectedHeader">{{head}}</th>
+                                        <th>Result</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr ng-repeat="skipRowData in tabCtrl.skipDataList">
+                                        <td ng-repeat="head in tabCtrl.selectedHeader">{{skipRowData[head]}}</td>
+                                        <td>{{skipRowData.$$result}}</td>
 
-                                        <td>{{skipRowData.EmpCode}}</td>
-                                        <td>{{skipRowData.Department}}</td>
-                                        <td>{{skipRowData.Designation}}</td>
-                                        <td>{{skipRowData.Mobile}}</td>
-                                        <td>{{skipRowData.Gender}}</td>
                                     </tr>
                                     </tr>
                                 </tbody>

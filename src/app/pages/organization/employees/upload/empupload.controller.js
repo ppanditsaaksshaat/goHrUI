@@ -19,7 +19,7 @@
         vm.skipDataList = [];
         vm.skipDataLists = [];
         vm.validateUploadData = false;
-
+        $scope.fileResult = undefined;
         $scope.uploadHistory = {}
         $scope.uploadHistory.gridOptions = $scope.getGridSetting();
         $scope.uploadHistory.boxOptions = {
@@ -91,6 +91,10 @@
 
         function _refreshUploadHistory() {
             // var resultDataList = [];
+            // var data = {
+            //     searchList: search,
+            //     orderByList: []
+            // }
 
             pageService.getTableData(uploadHistoryTableId, uploadHistoryPageId, '', '', false, undefined).then(function (result) {
 
@@ -349,7 +353,7 @@
                 column1: { name: 'EmpCode', text: 'Employee Code', type: 'text', required: false, value: 'none' }
             })
             if (vm.showEmployeeName) {
-                table2.rows[0].column2 = { name: 'EmpName', text: 'Employee Full Name', type: 'text', required: false, value: 'none' };
+                table2.rows[0].column2 = { name: 'EmpName', text: 'Employee Full Name', type: 'text', required: true, value: 'none' };
             }
             else {
                 table2.rows.push({
@@ -586,7 +590,7 @@
             if (vm.showEmployeeName) {
                 $scope.showMsg('success', 'Employee full name is exists in template file.');
             }
-            
+
 
         }
         vm.importDataUpload = function () {
@@ -598,14 +602,18 @@
             vm.migrate.step4 = true;
 
             var mappedFieldsList = {};
-
+            vm.selectedHeader = []
             angular.forEach(vm.migrate.tables, function (table, tidx) {
                 angular.forEach(table.rows, function (row, ridx) {
                     if (row.column1 !== undefined) {
                         mappedFieldsList[row.column1.name] = row.column1.value;
+                        if (row.column1.value != 'none')
+                            vm.selectedHeader.push(row.column1.value)
                     }
                     if (row.column2 !== undefined) {
                         mappedFieldsList[row.column2.name] = row.column2.value;
+                        if (row.column2.value != 'none')
+                            vm.selectedHeader.push(row.column2.value);
                     }
 
 
@@ -627,6 +635,9 @@
             // var data = { data: postData }
             if (confirm('Upload record Sure')) {
                 pageService.uploadEmployeeData(data).then(function (result) {
+                    if (result.skipList.length > 0) {
+                        vm.migrate.step6 = true;
+                    }
                     vm.validateUploadData = true;
                     var successDataLength = result.successList.length;
                     var skipListDataLength = result.skipList.length;
@@ -829,6 +840,8 @@
         //Calling Default Function
 
         _getUploadHistoryDetail();
+
+
 
     }
 })();
