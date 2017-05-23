@@ -139,7 +139,7 @@ angular.module('BlurAdmin.common').directive("readfiledata", function ($filter, 
 
                 }
                 else {
-                    $rootScope.showMsg('error','asl;dfkj;asldkfj')
+                    $rootScope.showMsg('error','Only .xls, .xlsx are supported')
                 }
 
             });
