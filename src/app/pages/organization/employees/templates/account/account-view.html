@@ -8,23 +8,23 @@
       <div class="col-sm-4">
         <div class="form-group">
           <label for="inputDepartment">Salary Mode*</label>
-          <select id="empSalaryMode_{{$index}}" name="empSalaryMode_{{$index}}" ng-model="empTabCtrl.empAccountDetail.ADSalaryModeId"
-            class="form-control" ng-options="salaryMode.value as salaryMode.name for salaryMode in empTabCtrl.salaryMode" ng-change="empTabCtrl.accountSalaryModeOnChange(empTabCtrl.empAccountDetail.ADSalaryModeId)"
-            data-placeholder="Select Nav Menu" ng-required="true">
+          <select id="empSalaryMode_{{$index}}" name="empSalaryMode_{{$index}}" ng-model="empTabCtrl.entity.ADSalaryModeId" class="form-control"
+            ng-options="salaryMode.value as salaryMode.name for salaryMode in page.pageinfo.selects.ADSalaryModeId" data-placeholder="Select Nav Menu"
+            ng-required="true">
                </select>
         </div>
       </div>
     </div>
 
-    <div ng-show="empTabCtrl.bankDetail">
+    <div ng-show="(empTabCtrl.entity.ADSalaryModeId=='3')">
       <h3 class="">Bank Detail</h3>
       <hr>
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
             <label for="inputDepartment">Salary</label>
-            <select id="empSalary_{{$index}}" name="empSalary_{{$index}}" ng-model="empTabCtrl.empAccountDetail.ADSalaryID" class="form-control"
-              ng-options="salary.value as salary.name for salary in empTabCtrl.salary" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+            <select id="empSalary_{{$index}}" name="empSalary_{{$index}}" ng-model="empTabCtrl.entity.ADSalaryID" class="form-control"
+              ng-options="salary.value as salary.name for salary in page.pageinfo.selects.ADSalaryID" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
               data-placeholder="Select Nav Menu" ng-required="true">
                </select>
           </div>
@@ -32,8 +32,8 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label for="inputDepartment">Bank Name</label>
-            <select id="empBankName_{{$index}}" name="empBankName_{{$index}}" ng-model="empTabCtrl.empAccountDetail.BankId" class="form-control"
-              ng-options="bankName.value as bankName.name for bankName in empTabCtrl.bankName" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+            <select id="empBankName_{{$index}}" name="empBankName_{{$index}}" ng-model="empTabCtrl.entity.BankId" class="form-control"
+              ng-options="bankName.value as bankName.name for bankName in page.pageinfo.selects.BankId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
               data-placeholder="Select Nav Menu" ng-required="true">
                </select>
           </div>
@@ -41,7 +41,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label for="inputDepartment">Account No.</label>
-            <input type="text" class="form-control" ng-model="empTabCtrl.empAccountDetail.BankAccountNo">
+            <input type="text" class="form-control" ng-model="empTabCtrl.entity.BankAccountNo">
           </div>
         </div>
       </div>
@@ -49,19 +49,19 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label for="inputDepartment">Branch Name</label>
-            <input type="text" class="form-control" ng-model="empTabCtrl.empAccountDetail.ADBranchName">
+            <input type="text" class="form-control" ng-model="empTabCtrl.entity.ADBranchName">
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group">
             <label for="inputDepartment">IFSC</label>
-            <input type="text" class="form-control" ng-model="empTabCtrl.empAccountDetail.ADIFSCCode">
+            <input type="text" class="form-control" ng-model="empTabCtrl.entity.ADIFSCCode">
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group">
             <label for="inputDepartment">Cheque</label>
-            <input type="text" class="form-control" ng-model="empTabCtrl.empAccountDetail.ADChequeNo">
+            <input type="text" class="form-control" ng-model="empTabCtrl.entity.ADChequeNo">
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@
         <div class="col-sm-4">
           <div class="checkbox">
             <label class="custom-checkbox">      
-      <input type="checkbox" ng-model="empTabCtrl.empAccountDetail.PFPPFIsActive">   
+      <input type="checkbox" ng-model="empTabCtrl.entity.PFPPFIsActive">   
       <span>PF Active</span>
     </label>
           </div>
@@ -77,29 +77,29 @@
         <div class="col-sm-4">
           <div class="checkbox">
             <label class="custom-checkbox">      
-      <input type="checkbox"  ng-model="empTabCtrl.empAccountDetail.ESIIsActive" >   
+      <input type="checkbox"  ng-model="empTabCtrl.entity.ESIIsActive" >   
       <span>ESI Active</span>
     </label>
           </div>
         </div>
       </div>
 
-      <div ng-if="empTabCtrl.empAccountDetail.PFPPFIsActive">
+      <div ng-if="empTabCtrl.entity.PFPPFIsActive">
         <h3 class="">PF Account</h3>
         <hr>
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
               <label for="inputDepartment">PF Account No.</label>
-              <input type="text" class="form-control" ng-model="empTabCtrl.empAccountDetail.PFPPFAccountNo">
+              <input type="text" class="form-control" ng-model="empTabCtrl.entity.PFPPFAccountNo">
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label for="inputDepartment">PF Start Date</label>
-              <!--<input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.PFPPFMemberDate">-->
+              <!--<input type="text" class="form-control"  ng-model="empTabCtrl.entity.PFPPFMemberDate">-->
               <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
-                <input ng-model="empTabCtrl.empAccountDetail.PFPPFMemberDate" type="text" class="form-control" />
+                <input ng-model="empTabCtrl.entity.PFPPFMemberDate" type="text" class="form-control" />
               </datepicker>
             </div>
           </div>
@@ -107,22 +107,22 @@
         <hr>
       </div>
 
-      <div ng-if="empTabCtrl.empAccountDetail.ESIIsActive">
+      <div ng-if="empTabCtrl.entity.ESIIsActive">
         <h3 class="">ESI Account</h3>
         <hr>
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
               <label for="inputDepartment">ESI Account No.</label>
-              <input type="text" class="form-control" ng-model="empTabCtrl.empAccountDetail.ESIMemeberNo">
+              <input type="text" class="form-control" ng-model="empTabCtrl.entity.ESIMemeberNo">
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label for="inputDepartment">ESI Start Date</label>
-              <!--<input type="text" class="form-control"  ng-model="empTabCtrl.empAccountDetail.ESIMemeberDate">-->
+              <!--<input type="text" class="form-control"  ng-model="empTabCtrl.entity.ESIMemeberDate">-->
               <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
-                <input ng-model="empTabCtrl.empAccountDetail.ESIMemeberDate" type="text" class="form-control" />
+                <input ng-model="empTabCtrl.entity.ESIMemeberDate" type="text" class="form-control" />
               </datepicker>
             </div>
           </div>
@@ -131,6 +131,6 @@
       </div>
     </div>
     <div class="text-center">
-      <button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Save</button>
+      <button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveForm()">Save</button>
     </div>
   </div>

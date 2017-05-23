@@ -676,7 +676,6 @@
       vm.empEmgContact = result;
     }
     function _findEMGContactEntityErrorResult() {
-
     }
     function _getcontactSuccessResult(result) {
       console.log(result)

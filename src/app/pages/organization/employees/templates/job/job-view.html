@@ -57,8 +57,8 @@
       <div class="col-sm-4">
         <div class="form-group">
           <label for="inputEmployeeType">Level*</label>
-          <select id="empLevel_{{$index}}" name="empLevel_{{$index}}" ng-model="empTabCtrl.entity.EmpLevelName" class="form-control"
-            ng-options="level.name as level.name for level in page.pageinfo.selects.JDEmpLevelId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+          <select id="empLevel_{{$index}}" name="empLevel_{{$index}}" ng-model="empTabCtrl.entity.JDEmpLevelId" class="form-control"
+            ng-options="level.value as level.name for level in page.pageinfo.selects.JDEmpLevelId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
             data-placeholder="Select Nav Menu" ng-required="true">
                </select>
         </div>
@@ -105,7 +105,7 @@
         </div>
       </div>
     </div>
-    <div ng-show="empTabCtrl.entity.EmpLevelName==3">
+    <div ng-show="empTabCtrl.entity.EmpLevelName=='3'">
       <hr>
       <div class="row">
         <div class="col-sm-4">
@@ -194,6 +194,6 @@
     </div>
 
     <div class="text-center">
-      <button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Save</button>
+      <button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveForm()">Save</button>
     </div>
   </div>
