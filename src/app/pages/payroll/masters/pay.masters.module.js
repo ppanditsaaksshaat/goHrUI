@@ -16,7 +16,7 @@
         .state('payroll.masters', {
           url: '/masters',
           abstract: true,
-          templateUrl: 'app/pages/payroll/masters/pay.masters.html',
+          templateUrl: 'app/pages/payroll/masters/pay.master.html?v=1',
           controller: "PayMastersController",
           controllerAs: "tabCtrl",
           title: 'Master',
@@ -24,33 +24,33 @@
             order: 0,
           },
         })
-        .state('payroll.masters.list', {
-          url: '/:name/:pageId',
-          templateUrl: 'app/pages/payroll/masters/list/mastersList.html',
-          title: 'payroll Masters',
-          controller: "PayMastersListController",
-          controllerAs: "listCtrl"
-        })
-        //.state('payroll.masters.detail', {
+         .state('payroll.masters.list', {
+           url: '/:name/:pageId',
+         templateUrl: 'app/pages/payroll/masters/list/mastersList.html',
+         title: 'payroll Masters',
+         controller: "PayMastersController",
+         controllerAs: "listCtrl"
+         });
+        // .state('payroll.masters.detail', {
         //   url: '/:pageId/:id',
         //   templateUrl: 'app/pages/payroll/masters/detail/mastersDetail.html',
         //   title: 'payroll Masters',
-        //   controller: "OrgMastersDetailController",
+        //   controller: "attMastersDetailController",
         //   controllerAs: "detailCtrl"
         // }).state('payroll.masters.add', {
         //   url: '/:name/:action/:pageId/',
         //   templateUrl: 'app/pages/payroll/masters/add/add.html',
         //   title: 'payroll Masters',
-        //   controller: "OrgMastersAddController",
+        //   controller: "attMastersAddController1",
         //   controllerAs: "addCtrl"
         // }).state('payroll.masters.edit', {
         //   url: '/:name/:action/:pageId/:pkId/',
         //   templateUrl: 'app/pages/payroll/masters/add/add.html',
         //   title: 'payroll Masters',
-        //   controller: "OrgMastersAddController",
+        //   controller: "attMastersAddController1",
         //   controllerAs: "addCtrl"
         // });
-    // $urlRouterProvider.when('/payroll/masters','/payroll/masters/location/34');
+    $urlRouterProvider.when('/payroll/masters','/payroll/masters/location/34');
   }
 
 })();
