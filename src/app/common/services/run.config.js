@@ -175,11 +175,11 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                     '  <div ng-show="row.isMouseOver"   class="dropdown" uib-dropdown dropdown-append-to-body>',
                     '    <button class="btn btn-xs btn-default dropdown-toggle" type="button" uib-dropdown-toggle><span class="glyphicon glyphicon-tasks"></span></button>',
                     '    <ul uib-dropdown-menu>',
-                    (isEdit) ? '      <li><a href ng-click="grid.appScope.editRecord(row)">Edit</a></li>' : '',
-                    (isView) ? '      <li><a href ng-click="grid.appScope.viewRecord(row)">View</a></li>' : '',
-                    (isUpdate) ? '      <li><a href ng-click="grid.appScope.updateRecord(row)">Update</a></li>' : '',
+                    (isEdit) ? '      <li><a href ng-click="grid.appScope.page.editRecord(row)">Edit</a></li>' : '',
+                    (isView) ? '      <li><a href ng-click="grid.appScope.page.viewRecord(row)">View</a></li>' : '',
+                    (isUpdate) ? '      <li><a href ng-click="grid.appScope.page.updateRecord(row)">Update</a></li>' : '',
                     (isDelete) ? '       <li class="divider"></li>' : '',
-                    (isDelete) ? '      <li><a href ng-click="grid.appScope.deleteRecord(row)">Delete</a></li>' : '',
+                    (isDelete) ? '      <li><a href ng-click="grid.appScope.page.deleteRecord(row)">Delete</a></li>' : '',
                     '    </ul>',
                     '  </div>',
                     '</div>'
@@ -196,7 +196,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                 var displayName = column.displayName;
                 var colEndWith = colName.toString().toLowerCase().substring(colName.toString().toLowerCase().length - 2).toLowerCase();
                 if (colName.toString() == "FileId") {
-                    var cellTemplate = "<div class='ui-grid-cell-contents dupl' title='Download Attached File' ng-show=\"row.entity.FileId > 0 \"><a ng-click='grid.appScope.downloadFile(\"{{row.entity.FileId}}\")'>Download File</a></div>"
+                    var cellTemplate = "<div class='ui-grid-cell-contents dupl' title='Download Attached File' ng-show=\"row.entity.FileId > 0 \"><a ng-click='grid.appScope.page.downloadFile(\"{{row.entity.FileId}}\")'>Download File</a></div>"
                     columns[i].cellTemplate = '';
                     columns[i]['cellTemplate'] = cellTemplate;
                     columns[i]['visible'] = true;
@@ -208,7 +208,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                     gridOptions.columnDefs.push(columns[i]);
                 }
                 else if (page.pageinfo.titlecolname == colName) {
-                    var cellTemplate = "<div class='ui-grid-cell-contents' title='View Detail'><a ng-click='grid.appScope.viewRecord(row)' style='cursor:pointer'>{{row.entity." + colName + "}}</a></div>"
+                    var cellTemplate = "<div class='ui-grid-cell-contents' title='View Detail'><a ng-click='grid.appScope.page.viewRecord(row)' style='cursor:pointer'>{{row.entity." + colName + "}}</a></div>"
                     columns[i].cellTemplate = '';
                     columns[i]['cellTemplate'] = cellTemplate;
                     columns[i]['visible'] = true;

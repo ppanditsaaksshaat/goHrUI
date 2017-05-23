@@ -75,19 +75,19 @@
 
                 $scope.page.selectedRows = [];
                 $scope.page.addPageTempUrl = 'app/common/forms/formVertical/formVertical.html';
-                $scope.getPageData = _getPageData;
-                $scope.refreshData = _refreshData;
-                $scope.addRecord = _addRecord;
-                $scope.editRecord = _editRecord;
-                $scope.updateRecord = _updateRecord;
-                $scope.viewRecord = _viewRecord;
-                $scope.deleteRecord = _deleteRecord;
-                $scope.openView = _openView;
-                $scope.clearSelected = _clearSelected;
-                $scope.uploadRecord = _uploadRecord;
-                $scope.closeViewRecord = _closeViewRecord;
-                $scope.closeAddRecord = _closeAddRecord;
-                $scope.closeForm = _closeForm;
+                $scope.page.getPageData = _getPageData;
+                $scope.page.refreshData = _refreshData;
+                $scope.page.addRecord = _addRecord;
+                $scope.page.editRecord = _editRecord;
+                $scope.page.updateRecord = _updateRecord;
+                $scope.page.viewRecord = _viewRecord;
+                $scope.page.deleteRecord = _deleteRecord;
+                $scope.page.openView = _openView;
+                $scope.page.clearSelected = _clearSelected;
+                $scope.page.uploadRecord = _uploadRecord;
+                $scope.page.closeViewRecord = _closeViewRecord;
+                $scope.page.closeAddRecord = _closeAddRecord;
+                $scope.page.closeForm = _closeForm;
                 $scope.page.gridOptions.onRegisterApi = _onRegisterApi;
 
                 function _loadDirective() {
@@ -236,22 +236,31 @@
                 //setup grid columns from pageinfo
                 function _setGridColumns() {
                     if ($scope.page.pageinfo !== undefined) {
-                        var isCreate = false, isEdit = false, isDelete = false, isUpdate = false,
-                            isExport = false, isRefresh = false, isHelp = false, isColSetting = false;
-                        if ($scope.page.pageinfo.buttons !== undefined) {
-                            var buttons = $scope.page.pageinfo.buttons;
-                            isCreate = buttons.create.isvisible;
-                            isDelete = buttons.delete.isvisible;
-                            isEdit = buttons.edit.isvisible;
-                            isExport = buttons.export.isvisible;
-                            isRefresh = buttons.refresh.isvisible;
-                            isHelp = buttons.help.isvisible;
-                            isColSetting = buttons.colsetting.isvisible;
-                        }
-                        $scope.page.gridOptions = $rootScope.gridSetupColumns($scope.page.gridOptions,
-                            $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit);
-                    }
+                        if ($scope.page.pageinfo != null) {
+                            var isCreate = false, isEdit = false, isDelete = false, isUpdate = false,
+                                isExport = false, isRefresh = false, isHelp = false, isColSetting = false;
+                            if ($scope.page.pageinfo.buttons !== undefined) {
+                                var buttons = $scope.page.pageinfo.buttons;
+                                if (buttons.create !== undefined)
+                                    isCreate = buttons.create.isvisible;
+                                if (buttons.delete !== undefined)
+                                    isDelete = buttons.delete.isvisible;
+                                if (buttons.edit !== undefined)
+                                    isEdit = buttons.edit.isvisible;
+                                if (buttons.export !== undefined)
+                                    isExport = buttons.export.isvisible;
+                                if (buttons.refresh !== undefined)
+                                    isRefresh = buttons.refresh.isvisible;
+                                if (buttons.help !== undefined)
+                                    isHelp = buttons.help.isvisible;
+                                if (buttons.colsetting !== undefined)
+                                    isColSetting = buttons.colsetting.isvisible;
+                            }
+                            $scope.page.gridOptions = $rootScope.gridSetupColumns($scope.page.gridOptions,
+                                $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit);
 
+                        }
+                    }
                 }
                 //setup vertical form
                 function _setupVerticalForm() {
@@ -268,7 +277,7 @@
                                     if (col.name != $scope.page.pageinfo.idencolname) {
                                         var isValid = true;
                                         //find any link column with parent
-                                        angular.forEach($scope.page.linkColumns, function (link) {
+                                        angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
                                             if (col.name == link.name) {
                                                 $scope.entity[col.name] = link.value;
                                                 isValid = false;
@@ -286,10 +295,12 @@
                 //get page data
                 function _getPage() {
                     $timeout(function () {
+                        console.log($scope.page)
                         pageService.getPagData($scope.page.pageId).then(_getPageSuccessResult, _getPageErrorResult)
                     });
                 }
                 function _getPageSuccessResult(result) {
+                    console.log(result)
                     $scope.page = angular.extend($scope.page, result);
                     // $scope.setPage(result)
                     console.log('from getpage')
@@ -303,6 +314,18 @@
                 //====================================================================
                 //get table data
                 function _getTableData() {
+                    
+                    if ($scope.page.boxOptions.linkColumns !== undefined) {
+                        if ($scope.page.searchList === undefined)
+                            $scope.page.searchList = []
+                        angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
+                            var search = {};
+                            search.field = link.name;
+                            search.operand = '=';
+                            search.value = link.value;
+                            $scope.page.searchList.push(search)
+                        })
+                    }
                     var data = {
                         searchList: $scope.page.searchList,
                         orderByList: $scope.page.orderByList

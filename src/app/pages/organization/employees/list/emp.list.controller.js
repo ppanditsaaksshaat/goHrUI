@@ -73,7 +73,7 @@
     }
     function _applyFilter() {
       console.log($scope.page.pageinfo.filters);
-      vm.searchList = [];
+      $scope.page.searchList = [];
       angular.forEach($scope.page.pageinfo.filters, function (filter) {
 
         if (filter.showFilter !== undefined) {
@@ -83,19 +83,15 @@
               search.field = filter.name;
               search.operand = filter.operator;
               search.value = filter.value;
-              vm.searchList.push(search)
+              $scope.page.searchList.push(search)
             }
           }
         }
       })
 
-      this.refreshData();
+      $scope.page.refreshData();
 
     }
-    $scope.onRowHover = function (row) {
-      console.log(row)
-    }
-    //_loadController();
   }
 
 })();

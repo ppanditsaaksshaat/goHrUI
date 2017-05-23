@@ -14,106 +14,164 @@
   /** @ngInject */
   function OrgEmployeeTabController($scope, $stateParams, pageService, $timeout, $uibModal, baProgressModal, dialogModal) {
 
+    var vm = this;
+
+    vm.pageIds = {
+      familyPageId: 52, nomineePageId: 438, experiencPageId: 56, contactPageId: 36,
+      emgContactPageId: 57, educationPageId: 112, skillPageId: 439, immigrationPageId: 119
+    }
 
     $scope.familyPage = $scope.createPage();
+    $scope.familyPage.pageId = vm.pageIds.familyPageId;
     $scope.familyPage.boxOptions = {
+      selfLoading: true,
       showRefresh: true,
-      showFilter: false,
+      showFilter: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
-      enableAutoRefresh: true,
+      showDialog: false,
+      enableRefreshAfterUpdate: true,
+      gridHeight: 450,
+      linkColumns: [{ name: 'FdEmpId', value: vm.empPKId }],
+      getPageData: null,
       refreshData: null,
       addRecord: null,
       editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      openView: null,
       uploadRecord: null
     }
     //Nominee Page Setting
-    $scope.nomineePage = {}
-    $scope.nomineePage.gridOptions = $scope.getGridSetting();
+
+    $scope.nomineePage = $scope.createPage();
+    $scope.nomineePage.pageId = vm.pageIds.nomineePageId;
     $scope.nomineePage.boxOptions = {
+      selfLoading: true,
       showRefresh: true,
-      showFilter: false,
+      showFilter: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
-      refreshData: _refreshDataNominee,
-      addRecord: _addRecordNominee,
-      editRecord: _editRecordNominee,
+      showDialog: false,
+      enableRefreshAfterUpdate: true,
+      gridHeight: 450,
+      linkColumns: [{ name: 'NDEmpId', value: vm.empPKId }],
+      getPageData: null,
+      refreshData: null,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      openView: null,
       uploadRecord: null
     }
     //End of Nominee Page Setting
-    //Experience Page Setting
-    $scope.experiencePage = {}
-    $scope.experiencePage.gridOptions = $scope.getGridSetting();
-    $scope.experiencePage.boxOptions = {
+    //Identity Page Setting
+    $scope.identityPage = $scope.createPage();
+    $scope.identityPage.pageId = vm.pageIds.familyPageId;
+    $scope.identityPage.boxOptions = {
+      selfLoading: true,
       showRefresh: true,
-      showFilter: false,
+      showFilter: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
-      refreshData: _refreshDataExperience,
-      addRecord: _addRecordExperience,
-      editRecord: _editRecordExperience,
+      showDialog: false,
+      enableRefreshAfterUpdate: true,
+      gridHeight: 450,
+      linkColumns: [{ name: 'NDEmpId', value: vm.empPKId }],
+      getPageData: null,
+      refreshData: null,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      openView: null,
+      uploadRecord: null
+    }
+    //End Identity Page Setting
+
+    //Experience Page Setting
+    $scope.experiencePage = $scope.createPage();
+    $scope.experiencePage.pageId = vm.pageIds.experiencPageId;
+    $scope.experiencePage.boxOptions = {
+      selfLoading: true,
+      showRefresh: true,
+      showFilter: true,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: false,
+      showDialog: false,
+      enableRefreshAfterUpdate: true,
+      gridHeight: 450,
+      linkColumns: [{ name: 'WEEmpId', value: vm.empPKId }],
+      getPageData: null,
+      refreshData: null,
+      addRecord: null,
+      editRecord: null,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
       uploadRecord: null
     }
     //End of Experience Page Setting
 
     //Education Page Setting
-    $scope.educationPage = {}
-    $scope.educationPage.gridOptions = $scope.getGridSetting();
+
+    $scope.educationPage = $scope.createPage();
+    $scope.educationPage.pageId = vm.pageIds.educationPageId;
     $scope.educationPage.boxOptions = {
+      selfLoading: true,
       showRefresh: true,
-      showFilter: false,
+      showFilter: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
-      refreshData: _refreshDataEducation,
-      addRecord: _addRecordEducation,
-      editRecord: _editRecordEducation,
+      showDialog: false,
+      enableRefreshAfterUpdate: true,
+      gridHeight: 450,
+      linkColumns: [{ name: 'QualiEmpId', value: vm.empPKId }],
+      getPageData: null,
+      refreshData: null,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      openView: null,
       uploadRecord: null
     }
 
     //End of Education Page Setting
 
     //Skill Page Setting
-
-    $scope.skillPage = {}
-    $scope.skillPage.gridOptions = $scope.getGridSetting();
+    $scope.skillPage = $scope.createPage();
+    $scope.skillPage.pageId = vm.pageIds.skillPageId;
     $scope.skillPage.boxOptions = {
+      selfLoading: true,
       showRefresh: true,
-      showFilter: false,
+      showFilter: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
-      refreshData: _refreshListData,
-      addRecord: _addRecordSkill,
-      editRecord: _editRecordSkill,
+      showDialog: false,
+      enableRefreshAfterUpdate: true,
+      gridHeight: 450,
+      linkColumns: [{ name: 'SEmpId', value: vm.empPKId }],
+      getPageData: null,
+      refreshData: null,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      openView: null,
       uploadRecord: null
     }
     //End of Skill Page Setting
@@ -121,33 +179,32 @@
 
 
     //Immigration Page Setting
-
-    $scope.immigrationPage = {}
-    $scope.immigrationPage.gridOptions = $scope.getGridSetting();
+    $scope.immigrationPage = $scope.createPage();
+    $scope.immigrationPage.pageId = vm.pageIds.immigrationPageId;
     $scope.immigrationPage.boxOptions = {
+      selfLoading: true,
       showRefresh: true,
-      showFilter: false,
+      showFilter: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
-      refreshData: _refreshListData,
-      addRecord: _addRecordImmigration,
-      editRecord: _editRecordImmigration,
+      showDialog: false,
+      enableRefreshAfterUpdate: true,
+      gridHeight: 450,
+      linkColumns: [{ name: 'EmpId', value: vm.empPKId }],
+      getPageData: null,
+      refreshData: null,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      openView: null,
       uploadRecord: null
     }
     //End of Education Page Setting
-    var vm = this;
 
-    vm.pageIds = {
-      familyPageId: 52, nomineePageId: 438, experiencPageId: 56, contactPageId: 36,
-      emgContactPageId: 57, educationPageId: 112
-    }
-    vm.tableIds = {nomineeTableId:113, experiencTableId: 62, educationTableId: 119 }
+    vm.tableIds = { nomineeTableId: 113, experiencTableId: 62, educationTableId: 119 }
     vm.navigationCollapsed = true;
     vm.pageId = $stateParams.pageId;
     vm.empPKId = $stateParams.empId;
@@ -229,34 +286,34 @@
         }
         searchList.push(searchFields);
 
-        pageService.findEntity(vm.pageIds.emgContactPageId, undefined, searchList).then(
+        pageService.findEntity($scope.page.pageId, undefined, searchList).then(
           _findEMGContactEntitySuccessResult, _findEMGContactEntityErrorResult);
       });
-      //for family detail
-      $timeout(function () {
-        pageService.getPagData(vm.pageIds.familyPageId).then(
-          _getfamilyDetailSuccessResult, _getfamilyDetailErrorResult);
-      });
-      //for nominee detail
-      $timeout(function () {
-        pageService.getPagData(vm.pageIds.nomineePageId).then(
-          _getNomineeDetailSuccessResult, _getNomineeDetailErrorResult);
-      });
+      // //for family detail
+      // $timeout(function () {
+      //   pageService.getPagData(vm.pageIds.familyPageId).then(
+      //     _getfamilyDetailSuccessResult, _getfamilyDetailErrorResult);
+      // });
+      // //for nominee detail
+      // $timeout(function () {
+      //   pageService.getPagData(vm.pageIds.nomineePageId).then(
+      //     _getNomineeDetailSuccessResult, _getNomineeDetailErrorResult);
+      // });
       //for contact detail
       $timeout(function () {
         pageService.getPagData(vm.pageIds.contactPageId).then(
           _getcontactSuccessResult, _getcontactErrorResult);
       });
-      //for Experienc detail
-      $timeout(function () {
-        pageService.getPagData(vm.pageIds.experiencPageId).then(
-          _getExperienceSuccessResult, _getExperienceErrorResult);
-      });
-      //for Education detail
-      $timeout(function () {
-        pageService.getPagData(vm.pageIds.educationPageId).then(
-          _getEducationSuccessResult, _getEducationErrorResult);
-      });
+      // //for Experienc detail
+      // $timeout(function () {
+      //   pageService.getPagData(vm.pageIds.experiencPageId).then(
+      //     _getExperienceSuccessResult, _getExperienceErrorResult);
+      // });
+      // //for Education detail
+      // $timeout(function () {
+      //   pageService.getPagData(vm.pageIds.educationPageId).then(
+      //     _getEducationSuccessResult, _getEducationErrorResult);
+      // });
     }
     // End of Page load
 
@@ -584,7 +641,7 @@
     //Skill
 
     function _addRecordSkill() {
-     
+
       var param = {
         action: 'create',
         page: $scope.skillPage,
@@ -608,7 +665,7 @@
         param: param
       }
       dialogModal.openFormVertical(options);
-       _refreshListData();
+      _refreshListData();
     }
     //End of Skill
 
@@ -729,14 +786,13 @@
 
       }
 
-      else if(vm.tempName=='skill')
-      {
-      console.log(result)
-      $scope.skillPage = angular.extend($scope.skillPage, result);
-      // $scope.setPage($scope.page)
-      console.log($scope.skillPage);
-      $scope.skillPage.gridOptions = $scope.gridSetupColumns($scope.skillPage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
-    
+      else if (vm.tempName == 'skill') {
+        console.log(result)
+        $scope.skillPage = angular.extend($scope.skillPage, result);
+        // $scope.setPage($scope.page)
+        console.log($scope.skillPage);
+        $scope.skillPage.gridOptions = $scope.gridSetupColumns($scope.skillPage.gridOptions, result.pageinfo.columns, result, true, true, true, true);
+
       }
       if (vm.tempName == 'immigration' || vm.tempName == 'education' || vm.tempName == 'experience' || vm.tempName == 'skill') {
         _refreshListData();
@@ -773,7 +829,7 @@
       $scope.isLoading = false
     }
     function _getRefreshListSuccessResult(result) {
-     
+
       $scope.isLoaded = true
       $scope.isLoading = false
       if (result == 'NoDataFound') {
