@@ -15,6 +15,7 @@
                                         opts="tabCtrl.gridOptions" 
                                         uploader="tabCtrl.uploader"
                                         multiple="false" 
+                                        result="tabCtrl.fileResult"
                                         style="display: none;">
                                     </label><br/>
                         <span class="">(Only .xls, .xlsx are supported)</span>
@@ -43,7 +44,7 @@
                             <div class="col-md-12">
 
                                 <label class="checkbox-inline custom-checkbox nowrap">
-                                    <input type="checkbox" id="inlineCheckbox02"  ng-model="tabCtrl.showEmployeeName">
+                                    <input type="checkbox" ng-click="tabCtrl.employeeShowData()" id="inlineCheckbox02"  ng-model="tabCtrl.showEmployeeName">
                                     <span>Show Employee Full Name</span>
                                 </label>
                             </div>
@@ -81,7 +82,7 @@
                             <p>File size cannot exceed 5 MB.</p>
                             <p>All duplicate records will be ignored when importing.</p>
                             <p>Checkbox value should be 1 or 0.</p>
-                            <p>Dates must be in the format MM/DD/YYYY. Records that use other date formats will be ignored.</p>
+                            <p>Date must be in the format MM/DD/YYYY. Records that use other date formats will be ignored.</p>
                             <p>Date and time values must be in the following format: MM/DD/YYYY hh:mm:ss. Any other format will
                                 be ignored.</p>
                             <p>By default, the character encoding is UTF-8 (Unicode). Make sure you provide the correct character
@@ -296,24 +297,17 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-
-                                        <th>Emp Code</th>
-                                        <th>Department</th>
-                                        <th>Designation</th>
-                                        <th>Mobile</th>
-                                        <th>Gender</th>
+                                        <th ng-repeat="head in tabCtrl.selectedHeader">{{head}}</th>
+                                        <th>Result</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr ng-repeat="skipRowData in tabCtrl.skipDataList">
+                                        <td ng-repeat="head in tabCtrl.selectedHeader">{{skipRowData[head]}}</td>
+                                        <td>{{skipRowData.$$result}}</td>
 
-                                        <td>{{skipRowData.EmpCode}}</td>
-                                        <td>{{skipRowData.Department}}</td>
-                                        <td>{{skipRowData.Designation}}</td>
-                                        <td>{{skipRowData.Mobile}}</td>
-                                        <td>{{skipRowData.Gender}}</td>
                                     </tr>
                                     </tr>
                                 </tbody>

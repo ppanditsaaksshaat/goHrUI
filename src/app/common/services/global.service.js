@@ -113,7 +113,7 @@ angular.module('BlurAdmin.common').factory('DJWebStoreGlobal', ['$http', '$timeo
         //============================================================================================================func : JSONToCSVConvertor
 
         function _JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel, ShowTitle) {
-            debugger;
+            // debugger;
             // var auth = DJWebStore.ValidateUser();
 
             // var dt = new Date();
