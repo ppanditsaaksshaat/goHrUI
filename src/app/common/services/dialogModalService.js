@@ -12,12 +12,16 @@
   function dialogModal($rootScope, $uibModal) {
     //   var url='app/pages/organization/masters/add/add.html'
     this.open = function (options) {
+      var size = 'top-center-500';
+      if (options.size !== undefined) {
+        size = options.size;
+      }
       $rootScope.modalInstance = $uibModal.open({
         animation: false,
         templateUrl: options.url,
         controller: options.controller,
         controllerAs: options.controllerAs,
-        size: 'top-center-500',
+        size: size,
         resolve: {
           param: function () {
             return options.param;
@@ -49,6 +53,8 @@
         controller: 'commonAddVerticalFormController',
         controllerAs: 'addCtrl',
         size: 'top-center-500',
+        backdrop: 'static',
+        keyboard: false,
         resolve: {
           param: function () {
             return options.param;

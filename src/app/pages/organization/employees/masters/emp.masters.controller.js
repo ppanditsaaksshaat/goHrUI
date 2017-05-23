@@ -9,15 +9,16 @@
     .controller('empMastersController', empMastersController);
 
   /** @ngInject */
-  function empMastersController() {
-   console.log('empMastersController controller')
+  function empMastersController($scope) {
+
+    // $scope.config.setHeight = 450;
     var vm = this;
     vm.navigationCollapsed = true;
 
     vm.tabs = _getTabs();
 
     function _getTabs() {
-      
+
       var mastersMenu = [];
       mastersMenu.push({ name: 'location', text: 'Location', id: 34 })
       mastersMenu.push({ name: 'branch', text: 'Branch', id: 109 })

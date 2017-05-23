@@ -32,15 +32,15 @@
         controllerAs: "addCtrl"
       }).state('organization.employees.edit', {
         url: '/:action/:empId',
-        templateUrl: 'app/pages/organization/employees/edit/employeeEdit.html',
+        templateUrl: 'app/pages/organization/employees/edit/employees.edit.html',
         title: 'Edit Employee',
-        controller: "EditEmployeeController",
+        controller: "empEditController",
         controllerAs: "editCtrl"
       }).state('organization.employees.edit.tab', {
         url: '/:name/:pageId',
         templateUrl: 'app/pages/organization/employees/edit/empTab.html',
         title: 'View Employees',
-        controller: "OrgEmployeeTabController",
+        controller: "empTabController",
         controllerAs: "empTabCtrl"
       });
   }

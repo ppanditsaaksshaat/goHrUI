@@ -446,7 +446,7 @@ angular.module('BlurAdmin.common').factory('DJWebStoreGlobal', ['$http', '$timeo
 //01-July-2016`````````
 
 
-DJWebStoreApp.filter('griddropdown', function () {
+angular.module('BlurAdmin.common').filter('griddropdown', function () {
     return function (input, context) {
         var map = context.col.colDef.editDropdownOptionsArray;
         var idField = context.col.colDef.editDropdownIdLabel;
@@ -471,7 +471,7 @@ DJWebStoreApp.filter('griddropdown', function () {
     };
 });
 
-DJWebStoreApp.filter('findobj', function () {
+angular.module('BlurAdmin.common').filter('findobj', function () {
 
     return function (list, obj) {
 
@@ -491,7 +491,7 @@ DJWebStoreApp.filter('findobj', function () {
 
 
 
-DJWebStoreApp.factory('clipboard', ['$document', function ($document) {
+angular.module('BlurAdmin.common').factory('clipboard', ['$document', function ($document) {
     function createNode(text, context) {
         var node = $document[0].createElement('textarea');
         node.style.position = 'absolute';
@@ -535,7 +535,7 @@ DJWebStoreApp.factory('clipboard', ['$document', function ($document) {
     };
 }])
 
-DJWebStoreApp.filter('getById', function () {
+angular.module('BlurAdmin.common').filter('getById', function () {
     return function (input, id, propName) {
         var i = 0, len = input.length;
         for (; i < len; i++) {

@@ -35,6 +35,8 @@
           order: 0,
         },
       });
+
+      //  $urlRouterProvider.when('/organization/employees/masters','/organization/employees/masters/location/34'); 
   }
 
 })();
