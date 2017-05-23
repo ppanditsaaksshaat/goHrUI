@@ -21,7 +21,10 @@
                 scope.form = {};
                 scope.page.formrows = [];
                 scope.oldEntity = {};
-                console.log(scope.page)
+                if (scope.page.entity !== undefined)
+                    scope.entity = scope.page.entity;
+                scope.oldEntity = angular.copy(scope.page.entity);
+                // console.log(scope.page)
                 if (scope.page !== undefined) {
                     
                     //find tabs
@@ -54,7 +57,7 @@
                 }
 
                 scope.saveForm = _saveForm;
-
+                scope.resetForm = _resetForm;
                 function _findEntity() {
                     scope.form.isLoaded = false;
                     scope.form.isLoading = true;
@@ -83,17 +86,18 @@
                             scope.oldEntity, scope.page.action, scope.page.pageinfo.tagline)
                     }
                 }
-
+                function _resetForm() {
+                    scope.entity = angular.copy(scope.oldEntity);
+                }
                 scope.$on('form-success', function (successEvent, result) {
                     if (result.entity[scope.page.pageinfo.idencolname] !== undefined) {
                         if (scope.page.boxOptions !== undefined) {
                             if (scope.page.boxOptions.refreshData != null &&
                                 scope.page.boxOptions.refreshData !== undefined) {
-                                if(scope.page.boxOptions.enableAutoRefresh!==undefined)    
-                                {
-                                if (scope.page.boxOptions.enableAutoRefresh) {
-                                    scope.page.boxOptions.refreshData();
-                                }
+                                if (scope.page.boxOptions.enableAutoRefresh !== undefined) {
+                                    if (scope.page.boxOptions.enableAutoRefresh) {
+                                        scope.page.boxOptions.refreshData();
+                                    }
                                 }
                             }
                         }

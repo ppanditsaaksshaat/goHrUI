@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h3 class="">
 
   Job</h3>
@@ -199,3 +200,204 @@
   </div>
 </form>
 </div>
+=======
+<div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
+  <div class="panel-heading">
+    {{page.pageinfo.title}}
+    <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+  </div>
+  <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+    <div class="row">
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputDepartment">Department*</label>
+          <select id="empDepartment_{{$index}}" name="empDepartment_{{$index}}" ng-model="empTabCtrl.entity.JDDeptId" class="form-control"
+            ng-options="department.value as department.name for department in page.pageinfo.selects.JDDeptId" 
+            data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputDesignation">Designation*</label>
+          <select id="empdesignation_{{$index}}" name="empdesignation_{{$index}}" ng-model="empTabCtrl.entity.JDDesgId" class="form-control"
+            ng-options="designation.value as designation.name for designation in page.pageinfo.selects.JDDesgId" 
+            data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputEmployeeType">Employment Type*</label>
+          <select id="empEmployeeType_{{$index}}" name="empEmployeeType_{{$index}}" ng-model="empTabCtrl.entity.JDEmploymentId"
+            class="form-control" ng-options="employeeType.value as employeeType.name for employeeType in page.pageinfo.selects.JDEmploymentId"
+            data-placeholder="Select Nav Menu"
+            ng-required="true">
+               </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputDepartment">Date Of Joining*</label>
+          <!--<input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.entity.JDDate">-->
+          <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
+            <input ng-model="empTabCtrl.entity.JDDate" type="text" class="form-control" />
+          </datepicker>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputDesignation">Grade*</label>
+          <select id="empdesignation_{{$index}}" name="empdesignation_{{$index}}" ng-model="empTabCtrl.entity.JDEmpGradeId" class="form-control"
+            ng-options="grade.value as grade.name for grade in page.pageinfo.selects.JDEmpGradeId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+            data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="inputEmployeeType">Level*</label>
+          <select id="empLevel_{{$index}}" name="empLevel_{{$index}}" ng-model="empTabCtrl.entity.JDEmpLevelId" class="form-control"
+            ng-options="level.value as level.name for level in page.pageinfo.selects.JDEmpLevelId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+            data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="checkbox">
+          <label class="custom-checkbox">      
+            <input type="checkbox" ng-model="empTabCtrl.entity.JDIsOT" >   
+            <span>OT</span>
+          </label>
+        </div>
+      </div>
+      <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
+        <div class="checkbox">
+          <label class="custom-checkbox">      
+      <input type="checkbox" ng-model="empTabCtrl.entity.SingleOT" >   
+      <span>Single OT</span>
+    </label>
+        </div>
+      </div>
+      <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
+        <div class="checkbox">
+          <label class="custom-checkbox">      
+      <input type="checkbox" ng-model="empTabCtrl.entity.JDDoubleOT" >   
+      <span>Double OT</span>
+    </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" ng-if="empTabCtrl.entity.JDIsOT">
+      <div class="col-sm-4" ng-if="empTabCtrl.entity.SingleOT">
+        <div class="form-group">
+          <label for="inputDepartment">Single OT Rate</label>
+          <input type="text" class="form-control" ng-model="empTabCtrl.entity.JDSingleOTRate">
+        </div>
+      </div>
+      <div class="col-sm-4" ng-if="empTabCtrl.entity.JDDoubleOT">
+        <div class="form-group">
+          <label for="inputDepartment">Double OT Rate</label>
+          <input type="text" class="form-control" ng-model="empTabCtrl.entity.DoubleOTRate">
+        </div>
+      </div>
+    </div>
+    <div ng-show="empTabCtrl.entity.EmpLevelName=='3'">
+      <hr>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputDepartment">From Date</label>
+            <!--<input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.entity.FromDate">-->
+            <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
+              <input ng-model="empTabCtrl.entity.FromDate" type="text" class="form-control" />
+            </datepicker>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputDesignation">To Date</label>
+            <input type="text" class="form-control" placeholder="mm-dd-yyyy" ng-model="empTabCtrl.entity.ToDate">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputEmployeeType">Vendor</label>
+            <select id="empLevel_{{$index}}" name="empLevel_{{$index}}" ng-model="empTabCtrl.entity.EmpLevelName" class="form-control"
+              ng-options="level.name as level.name for level in empTabCtrl.vendor" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+              data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputDepartment">Manager</label>
+            <select id="empDepartment_{{$index}}" name="empDepartment_{{$index}}" ng-model="empTabCtrl.entity.DeptName" class="form-control"
+              ng-options="employee.value as employee.name for employee in empTabCtrl.employee" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+              data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputDesignation">Team Leader</label>
+            <select id="empdesignation_{{$index}}" name="empdesignation_{{$index}}" ng-model="empTabCtrl.entity.DesgName" class="form-control"
+              ng-options="employee.value as employee.name for employee in empTabCtrl.employee" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+              data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputEmployeeType">HR</label>
+            <select id="empEmployeeType_{{$index}}" name="empEmployeeType_{{$index}}" ng-model="empTabCtrl.entity.EmploymentName"
+              class="form-control" ng-options="employee.value as employee.name for employee in empTabCtrl.employee" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+              data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputDepartment">Company Email</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputDesignation">Company Mobile</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputEmployeeType">Company Phone</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputEmployeeType">Extension</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+
+    <div class="text-center">
+      <button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveForm()">Save</button>
+    </div>
+  </div>
+>>>>>>> e42bf0eb679798564becf4e7a6a77cfa7608fde0

@@ -1,0 +1,125 @@
+<div class="content-box" ng-repeat="view in page.pageinfo.viewform" on-finish-render="onTabFinished">
+                <h3 class="content-box-header bg-blue-alt">
+                    {{view.title}}
+                </h3>
+                <div class="content-box-wrapper">
+                    <div class="row" ng-repeat="row in view.rows">
+                        <div ng-repeat="col in row" ng-class="{'col-md-12': (row.length==1),'col-md-6':(row.length==2)}">
+                            <div class="row" ng-class="{'disabled': col.readonly}">
+                                <div class="text-left" ng-class="{'col-md-2': (row.length==1),'col-md-4':(row.length==2)}">
+                                    {{col.text}}:
+                                </div>
+                                <div ng-class="{'col-md-10': (row.length==1),'col-md-8':(row.length==2)}" ng-switch="col.type">
+                                    <div id="{{col.name}}" class="form-control" ng-switch-when="linklabel|textbox|email" ng-switch-when-separator="|">{{entity[col.name]}}</div>
+                                    <span ng-switch-default>
+                                        {{entity[col.name]}}
+                                </span>
+                                    <!--Select-->
+                                    <select ng-disabled="true" name="{{col.name}}" id="{{col.name}}" ng-model="entity[col.name]" class="form-control" ng-options="opt.value as opt.name for opt in col.options"
+                                        ng-switch-when="select" placeholder="{{col.place}}" ng-required="col.required"></select>
+
+                                    <!--UISelect-->
+                                    <select ng-disabled="true" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" class="form-control" ng-options="opt.id as opt.name for opt in col.options"
+                                        ng-switch-when="uiselect" placeholder="{{col.place}}" ng-required="col.required"></select>
+
+                                    <!--strapselect-->
+                                    <select ng-disabled="true" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" class="form-control" ng-options="opt.value as opt.name for opt in col.options | filter:{ '{{col.propColName}}': entity[col.propColName] }"
+                                        ng-switch-when="strapselect" data-placeholder="{{col.place}}" ng-required="col.required"></select>
+
+                                    <!--multi-select-->
+                                    <select ng-disabled="true" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" type="date" class="form-control"
+                                        ng-options="opt.value as opt.name for opt in col.options" ng-switch-when="multi-select"
+                                        multiple placeholder="{{col.place}}" ng-required="col.required"></select>
+                                    <!--Checkbox-->
+                                    <div class="checkbox checkbox-success" ng-switch-when="checkbox">
+                                        <label>
+                                            <input name="{{col.name}}"
+                                                    ng-model="entity[col.name]"
+                                                    ng-required="col.required"
+                                                    type="checkbox"
+                                                    id="{{col.name}}"
+                                                    checked
+                                                    class="custom-checkbox"
+                                                    ng-disabled="true">
+                                                            
+                                        </label>
+                                    </div>
+                                    <div class="input-group">
+
+
+
+
+
+
+                                        <!--YesNo-->
+                                        <input ng-disabled="true" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" ng-switch-when="YesNo"
+                                            type="checkbox" data-on-color="primary" class="input-switch" checked data-size="medium"
+                                            data-on-text="On" data-off-text="Off">
+
+
+
+                                        <!--html-->
+                                        <!--datetimepicker-->
+                                        <!--<input ng-disabled="true" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required"
+                                        type="text" datetimepicker class="form-control" ng-switch-when="datetimepicker" placeholder="{{col.place}}"
+                                    />-->
+                                        <!--datepicker-->
+                                        <!--<input ng-disabled="true" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required"
+                                        type="text" datetimepicker class="form-control" ng-switch-when="datepicker" placeholder="{{col.place}}"
+                                    />-->
+                                        <!--timepicker-->
+                                        <!--<input ng-disabled="true" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required"
+                                        type="text" datetimepicker class="form-control" ng-switch-when="timepicker" placeholder="{{col.place}}"
+                                    />-->
+
+                                        <!--list-->
+                                        <!--<div ng-disabled="true" ng-switch-when="list" angucomplete-alt id="{{col.name}}" placeholder="{{col.place}}" pause="300"
+                                        selected-object="entity[col.name]" local-data="col.options" local-search="localObjSearch"
+                                        title-field="name" minlength="1" input-class="form-control form-control-small" match-class="highlight"
+                                        name="{{col.name}}"></div>-->
+                                        <!--currency-->
+                                        <!--<input ng-disabled="true" name="{{col.name}}" ng-model="entity[col.name]" ng-switch-when="currency" id="{{col.name}}"
+                                        class="form-control touchspin-currency-left" type="text" value="0" name="touchspin-left-2"
+                                        placeholder="{{col.place}}">-->
+                                        <!--number-->
+                                        <!--<input ng-disabled="true" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control"
+                                        ng-switch-when="number" placeholder="{{col.place}}" />-->
+
+                                        <!--right icon-->
+                                        <!--<span class="input-group-addon" ng-if="col.type!='linklabel' && col.type !='sequence'">
+                                                        <i class="glyph-icon "
+                                                           ng-class="{'font-red icon-asterisk': !(editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty']) && col.required, 'font-green icon-iconic-ok': (editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty']), 'font-red icon-iconic-cancel': (editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'])}"></i>
+                                                    </span>-->
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="divider"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <table class="table">
+                        <tr>
+                            <td>Created By:</td>
+                            <td>{{entity.Creator}}</td>
+                            <td>Created On:</td>
+                            <td>{{entity.CreatedOn | date : "dd/MMM/yy" }}</td>
+                        </tr>
+                        <tr>
+                            <td>Modified By:</td>
+                            <td>{{entity.ModifiedBy}}</td>
+                            <td>Modified On:</td>
+                            <td>{{entity.ModifiedOn | date : "dd/MMM/yy" }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                    </div>
+                </div>
+            </div>

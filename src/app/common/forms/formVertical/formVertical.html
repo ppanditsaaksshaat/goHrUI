@@ -3,9 +3,7 @@ ng-class="{pnl100:(addCtrl.page.formrows.length==1), pnl200:(addCtrl.page.formro
     <div class="panel-heading clearfix">
         <div class="row">
             <div class="col-md-6">
-                <button ng-click="$close()" type="button" class="btn btn-xs btn-default btn-with-icon"><i
-          class="ion-chevron-left"></i>Back
-      </button>{{addCtrl.page.pageinfo.tagline}}
+                {{addCtrl.page.pageinfo.tagline}}
                 <i ng-show="addCtrl.tempLoaded" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
             </div>
             <div class="col-md-6">

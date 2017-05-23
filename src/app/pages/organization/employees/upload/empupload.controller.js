@@ -19,7 +19,7 @@
         vm.skipDataList = [];
         vm.skipDataLists = [];
         vm.validateUploadData = false;
-
+        $scope.fileResult = undefined;
         $scope.uploadHistory = {}
         $scope.uploadHistory.gridOptions = $scope.getGridSetting();
         $scope.uploadHistory.boxOptions = {
@@ -90,9 +90,20 @@
         }
 
         function _refreshUploadHistory() {
-            // var resultDataList = [];
+            var orderBy = [];
+            var orderByLists = {
+                column: "CreatedOn",
+                isDesc: true,
+            }
+            orderBy.push(orderByLists);
 
-            pageService.getTableData(uploadHistoryTableId, uploadHistoryPageId, '', '', false, undefined).then(function (result) {
+            // var resultDataList = [];
+            var data = {
+                searchList: [],
+                orderByList: orderBy
+            }
+
+            pageService.getTableData(uploadHistoryTableId, uploadHistoryPageId, '', '', false, data).then(function (result) {
 
                 console.log(result)
                 $scope.uploadHistory.gridOptions.data = result;
@@ -121,7 +132,12 @@
             addFieldCheck('D.O.J', '', 0, 0, 1);
 
             addFieldCheck('employment', '', 0, 1, 0);
+            addFieldCheck('employment', 'type', 0, 1, 0);
             addFieldCheck('employmenttype', '', 0, 1, 0);
+            addFieldCheck('employeement', '', 0, 1, 0);
+            addFieldCheck('employeement', 'type', 0, 1, 0);
+            addFieldCheck('employeementtype', '', 0, 1, 0);
+
             addFieldCheck('grade', '', 0, 1, 1);
             addFieldCheck('designation', '', 0, 2, 0);
             addFieldCheck('level', '', 0, 2, 1);
@@ -133,11 +149,11 @@
 
             //email
             addFieldCheck('office', 'email', 0, 4, 0);
-            addFieldCheck('email', '', 0, 4, 0);
+            addFieldCheck('officeemail', '', 0, 4, 0);
 
             //mobile
             addFieldCheck('office', 'mobile', 0, 4, 1);
-            addFieldCheck('mobile', '', 0, 4, 1);
+            addFieldCheck('officemobile', '', 0, 4, 1);
 
             //phone
             addFieldCheck('office', 'phone', 0, 5, 0);
@@ -344,7 +360,7 @@
                 column1: { name: 'EmpCode', text: 'Employee Code', type: 'text', required: false, value: 'none' }
             })
             if (vm.showEmployeeName) {
-                table2.rows[0].column2 = { name: 'EmpName', text: 'Employee Full Name', type: 'text', required: false, value: 'none' };
+                table2.rows[0].column2 = { name: 'EmpName', text: 'Employee Full Name', type: 'text', required: true, value: 'none' };
             }
             else {
                 table2.rows.push({
@@ -377,7 +393,7 @@
 
             table2.rows.push({
                 column1: { name: 'PDFacebookId', text: 'Facebook', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDPancard', text: 'Pan No', type: 'text', required: false, value: 'none' }
+                column2: { name: 'PDPancard', text: 'PAN No', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
@@ -575,8 +591,163 @@
 
             })
         }
+
+
+        vm.employeeShowData = function () {
+            if (vm.showEmployeeName) {
+                $scope.showMsg('success', 'Employee full name is exists in template file.');
+            }
+
+
+        }
+        // vm.importDataUpload = function () {
+        //     // alert('import');
+        //     vm.migrate.currentStep = 3;
+        //     vm.migrate.step1 = false;
+        //     vm.migrate.step2 = false;
+        //     vm.migrate.step3 = false;
+        //     vm.migrate.step4 = true;
+
+        //     var mappedFieldsList = {};
+        //     vm.selectedHeader = []
+        //     angular.forEach(vm.migrate.tables, function (table, tidx) {
+        //         angular.forEach(table.rows, function (row, ridx) {
+        //             if (row.column1 !== undefined) {
+        //                 mappedFieldsList[row.column1.name] = row.column1.value;
+        //                 if (row.column1.value != 'none')
+        //                     vm.selectedHeader.push(row.column1.value)
+        //             }
+        //             if (row.column2 !== undefined) {
+        //                 mappedFieldsList[row.column2.name] = row.column2.value;
+        //                 if (row.column2.value != 'none')
+        //                     vm.selectedHeader.push(row.column2.value);
+        //             }
+
+
+
+        //         })
+        //     })
+        //     if (vm.showEmployeeName === undefined) {
+        //         vm.showEmployeeName = false;
+        //     }
+        //     var fileName = 'Employeedata';
+
+        //     console.log(vm.gridOptions.data)
+        //     var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName, fileName: fileName }
+        //     console.log(uncData)
+        //     var postData = JSON.stringify(uncData);
+        //     var compressed = LZString.compressToEncodedURIComponent(postData);
+
+        //     var data = { lz: true, data: compressed }
+        //     // var data = { data: postData }
+
+
+        //     if (confirm('Upload record Sure')) {
+        //         pageService.uploadEmployeeData(data).then(function (result) {
+        //             if (result.skipList.length > 0) {
+        //                 vm.migrate.step6 = true;
+        //             }
+        //             vm.validateUploadData = true;
+        //             var successDataLength = result.successList.length;
+        //             var skipListDataLength = result.skipList.length;
+
+        //             vm.successLength = successDataLength;
+        //             vm.skipListLength = skipListDataLength;
+
+        //             var successData = parseInt(successDataLength)
+        //             var skipData = parseInt(skipListDataLength)
+
+        //             vm.totalRecord = successData + skipData;
+        //             vm.skipDataList = result.skipList;
+        //             console.log(vm.skipDataList)
+
+        //             if (vm.skipDataLists === undefined) {
+        //                 vm.skipDataLists = [];
+
+        //             }
+        //             // var rowData = "";
+        //             // angular.forEach(result.skipList, function (rows, ridx) {
+        //             //     angular.forEach(rows, function (rowss, ridx) {
+        //             //         rowData = rowss;
+        //             //     })
+        //             //     vm.skipDataLists.push(rowData);
+
+        //             // })
+        //             // console.log(vm.skipDataLists)
+
+
+        //             vm.migrate.step1 = false;
+        //             vm.migrate.step2 = false;
+        //             vm.migrate.step3 = false;
+        //             vm.migrate.step4 = false;
+        //             vm.migrate.step5 = true;
+        //             console.log(successDataLength, skipListDataLength, vm.totalRecord)
+        //             console.log(result)
+
+        //         }
+
+        //             , function (err) {
+
+        //                 $scope.showMsg('error', err, 'Error Message')
+        //                 console.log(err)
+        //             })
+        //     }
+        //     else {
+        //         vm.migrate.step3 = true;
+        //         vm.migrate.step4 = false;
+        //     }
+
+        // }
+
         vm.importDataUpload = function () {
-            // alert('import');
+
+
+
+            var mappedFieldsList = {};
+            vm.selectedHeader = []
+            angular.forEach(vm.migrate.tables, function (table, tidx) {
+                angular.forEach(table.rows, function (row, ridx) {
+                    if (row.column1 !== undefined) {
+                        mappedFieldsList[row.column1.name] = row.column1.value;
+                        if (row.column1.value != 'none')
+                            vm.selectedHeader.push(row.column1.value)
+                    }
+                    if (row.column2 !== undefined) {
+                        mappedFieldsList[row.column2.name] = row.column2.value;
+                        if (row.column2.value != 'none')
+                            vm.selectedHeader.push(row.column2.value);
+                    }
+
+
+
+                })
+            })
+            if (vm.showEmployeeName === undefined) {
+                vm.showEmployeeName = false;
+            }
+            var fileName = 'Employeedata';
+
+            console.log(vm.gridOptions.data)
+            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName, fileName: fileName }
+            console.log(uncData)
+            var postData = JSON.stringify(uncData);
+            var compressed = LZString.compressToEncodedURIComponent(postData);
+
+            var data = { lz: true, data: compressed }
+
+
+
+            _showConfirm('Do you want to upload ' + '?', _confirmClick, undefined, data)
+
+        }
+        function _showToast(type, msg) {
+            toastOption.type = type;
+            angular.extend(toastrConfig, toastOption);
+            openedToasts.push(toastr[toastOption.type](msg, title));
+        }
+
+        function _confirmClick(pageId, data, title) {
+
             vm.migrate.currentStep = 3;
             vm.migrate.step1 = false;
             vm.migrate.step2 = false;
@@ -584,14 +755,18 @@
             vm.migrate.step4 = true;
 
             var mappedFieldsList = {};
-
+            vm.selectedHeader = []
             angular.forEach(vm.migrate.tables, function (table, tidx) {
                 angular.forEach(table.rows, function (row, ridx) {
                     if (row.column1 !== undefined) {
                         mappedFieldsList[row.column1.name] = row.column1.value;
+                        if (row.column1.value != 'none')
+                            vm.selectedHeader.push(row.column1.value)
                     }
                     if (row.column2 !== undefined) {
                         mappedFieldsList[row.column2.name] = row.column2.value;
+                        if (row.column2.value != 'none')
+                            vm.selectedHeader.push(row.column2.value);
                     }
 
 
@@ -611,56 +786,93 @@
 
             var data = { lz: true, data: compressed }
             // var data = { data: postData }
-            if (confirm('Upload record Sure')) {
-                pageService.uploadEmployeeData(data).then(function (result) {
-                    vm.validateUploadData = true;
-                    var successDataLength = result.successList.length;
-                    var skipListDataLength = result.skipList.length;
-
-                    vm.successLength = successDataLength;
-                    vm.skipListLength = skipListDataLength;
-
-                    var successData = parseInt(successDataLength)
-                    var skipData = parseInt(skipListDataLength)
-
-                    vm.totalRecord = successData + skipData;
-                    vm.skipDataList = result.skipList;
-                    console.log(vm.skipDataList)
-
-                    if (vm.skipDataLists === undefined) {
-                        vm.skipDataLists = [];
-
-                    }
-                    // var rowData = "";
-                    // angular.forEach(result.skipList, function (rows, ridx) {
-                    //     angular.forEach(rows, function (rowss, ridx) {
-                    //         rowData = rowss;
-                    //     })
-                    //     vm.skipDataLists.push(rowData);
-
-                    // })
-                    // console.log(vm.skipDataLists)
 
 
-                    vm.migrate.step1 = false;
-                    vm.migrate.step2 = false;
-                    vm.migrate.step3 = false;
-                    vm.migrate.step4 = false;
-                    vm.migrate.step5 = true;
-                    console.log(successDataLength, skipListDataLength, vm.totalRecord)
-                    console.log(result)
+
+
+
+
+
+            pageService.uploadEmployeeData(data).then(function (result) {
+
+
+                if (result.skipList.length > 0) {
+                    vm.migrate.step6 = true;
                 }
+                vm.validateUploadData = true;
+                var successDataLength = result.successList.length;
+                var skipListDataLength = result.skipList.length;
 
-                    , function (err) {
-                        console.log(err)
-                    })
-            }
-            else {
-                vm.migrate.step3 = true;
+                vm.successLength = successDataLength;
+                vm.skipListLength = skipListDataLength;
+
+                var successData = parseInt(successDataLength)
+                var skipData = parseInt(skipListDataLength)
+
+                vm.totalRecord = successData + skipData;
+                vm.skipDataList = result.skipList;
+                console.log(vm.skipDataList)
+
+                if (vm.skipDataLists === undefined) {
+                    vm.skipDataLists = [];
+
+                }
+                // var rowData = "";
+                // angular.forEach(result.skipList, function (rows, ridx) {
+                //     angular.forEach(rows, function (rowss, ridx) {
+                //         rowData = rowss;
+                //     })
+                //     vm.skipDataLists.push(rowData);
+
+                // })
+                // console.log(vm.skipDataLists)
+
+
+                vm.migrate.step1 = false;
+                vm.migrate.step2 = false;
+                vm.migrate.step3 = false;
                 vm.migrate.step4 = false;
-            }
+                vm.migrate.step5 = true;
+                console.log(successDataLength, skipListDataLength, vm.totalRecord)
+                console.log(result)
 
+                _showToast('success', result.success_message, title)
+                //$rootScope.back();
+                $rootScope.$broadcast('form-success', result);
+
+
+
+
+            }, function (err) {
+                console.log(err)
+                _showToast('error', err, title)
+            });
         }
+
+
+        function _showConfirm(msg, funcConfirm, pageId, data, title) {
+
+            console.log(data)
+            var para = {
+                pageId: pageId,
+                data: data,
+                title: title,
+                confirmClick: funcConfirm,
+                confirmMessge: msg
+            }
+            var modalInstance = $uibModal.open({
+                template: '<div class="modal-header"><h3 class="modal-title">{{confirmMessage}}</h3></div><div class="modal-footer"><button class="btn btn-primary" type="button" ng-click="ok()">Yes</button><button class="btn btn-warning" type="button" ng-click="cancel()">No</button></div>',
+                controller: 'ModalConfirmCtrl',
+                size: 'sm',
+                windowClass: 'confirm-window',
+                resolve: {
+                    param: function () {
+                        return para;
+                    }
+                }
+            });
+        }
+
 
 
         //Private Functions
@@ -812,6 +1024,8 @@
         //Calling Default Function
 
         _getUploadHistoryDetail();
+
+
 
     }
 })();

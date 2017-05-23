@@ -20,6 +20,7 @@
       if (param.action != 'create')
         if (param.entity !== undefined) {
           vm.page.pkId = param.entity[vm.page.pageinfo.idencolname];
+          vm.page.entity = param.entity;
         }
     }
     _loadController();

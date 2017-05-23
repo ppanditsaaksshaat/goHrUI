@@ -1,54 +1,107 @@
-<div class="panel panel-default bootstrap-panel xmedium-panel">
-    <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
-        <div class="row">
-            <div class="col-md-3">
-                {{page.pageinfo.title}}
-                <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
-            </div>
-            <div class="col-md-9">
-                <div class="pull-right">
-                    <button ng-show="page.boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>                    &nbsp;
-                    <button ng-show="page.boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="addRecord()">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button> &nbsp;
-                    <button ng-show="page.boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="uploadRecord()">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button> &nbsp;
-                    <select ng-show="page.boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
-                        ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
-                    </select>
-                </div>
+<div>
+    <div class="row">
+        <div class="col-md-3" ng-show="page.showFilter" style="padding-right:0px; margin-right:0px;  ">
+            <filter-box page="page"></filter-box>
+        </div>
+        <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
 
-            </div>
-        </div>
-     
-    </div>
-    <div class="panel-heading" ng-show="(page.selectedRows.length>0)">
-        <div class="row">
-            <div class="col-md-3">{{page.selectedRows.length}} Rows Selected [<a href ng-click="clearSelected()">Clear</a>]</div>
-            <div class="col-md-9">
-                <div class="dropdown" uib-dropdown dropdown-append-to-body>
-                    <button class="btn btn-xs btn-default dropdown-toggle" type="button" uib-dropdown-toggle>
-                          <span class="glyphicon glyphicon-tasks"></span></button>
-                    <ul uib-dropdown-menu>
-                        <li ng-show="page.selectedRows.length==1"><a href ng-click="editRecord(row)">Edit</a></li>
-                        <li><a href ng-click="viewRecord(page.selectedRows[0])">View</a></li>
-                        <li><a href ng-click="updateRecord(page.selectedRows)">Update</a></li>
-                        <li class="divider"></li>
-                        <li><a href ng-click="deleteRecord(page.selectedRows)">Delete</a></li>
-                    </ul>
+            <div class="panel panel-default bootstrap-panel xmedium-panel" ng-hide="page.showViewRecord || page.showAddRecord">
+                <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
+                    <div class="row">
+                        <div class="col-md-3">
+                            {{page.pageinfo.title}}
+                            <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="pull-right">
+                                <button ng-show="page.boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="page.refreshData()"><i class="ion-refresh"></i>Refresh</button>                                &nbsp;
+                                <button ng-show="page.boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="page.addRecord()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>                                &nbsp;
+                                <button ng-show="page.boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="page.uploadRecord()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>                                &nbsp;
+                                <select ng-show="page.boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
+                                    ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
+                    </select>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="panel-body">
-        <button ng-show="page.boxOptions.showFilter" id="image" style="width:3px;
+                <div class="panel-heading" ng-show="(page.selectedRows.length>0)">
+                    <div class="row">
+                        <div class="col-md-3">{{page.selectedRows.length}} Rows Selected [<a href ng-click="page.clearSelected()">Clear</a>]</div>
+                        <div class="col-md-9">
+                            <div class="dropdown" uib-dropdown dropdown-append-to-body>
+                                <button class="btn btn-xs btn-default dropdown-toggle" type="button" uib-dropdown-toggle>
+                          <span class="glyphicon glyphicon-tasks"></span></button>
+                                <ul uib-dropdown-menu>
+                                    <li ng-show="page.selectedRows.length==1"><a href ng-click="page.editRecord(row)">Edit</a></li>
+                                    <li><a href ng-click="page.viewRecord(page.selectedRows[0])">View</a></li>
+                                    <li><a href ng-click="page.updateRecord(page.selectedRows)">Update</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href ng-click="page.deleteRecord(page.selectedRows)">Delete</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <button ng-show="page.boxOptions.showFilter" id="image" style="width:3px;
                 height:30px;
                 position:absolute;
                 top:200px;
                 left:0px;" ng-click="page.showFilter=!page.showFilter">
                     <i ng-class="{'ion-arrow-right-b':!page.showFilter, 'ion-arrow-left-b':page.showFilter}"></i>
                 </button>
-        <div id="djGrid1" ui-grid="page.gridOptions" 
-        ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning 
-        class="djGrid" ></div>
+                    <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="djGrid"></div>
+                </div>
+            </div>
+            <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll" ng-show="page.showViewRecord">
+                <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-xs btn-default" ng-click="page.closeViewRecord()"><i class="ion-back"></i>Back</button>                            {{page.pageinfo.tagline}}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pull-right">
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
+                    <div class="row">
+                        <div ng-class="{'col-md-7':page.isVerticalView,'col-md-12':!page.isVerticalView}">
+                            <ng-include src="page.viewFormUrl" onload="editFormLoaded=true"></ng-include>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll" ng-show="page.showAddRecord">
+                <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-xs btn-default" ng-click="page.closeAddRecord()"><i class="ion-back"></i>Back</button>                            {{page.pageinfo.tagline}}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pull-right">
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
+                    <div class="row">
+                        <div ng-class="{'col-md-7':page.isVerticalForm,'col-md-12':!page.isVerticalForm}">
+                            <ng-include src="page.editFormUrl" onload="editFormLoaded=true"></ng-include>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>

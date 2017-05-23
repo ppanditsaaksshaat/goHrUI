@@ -20,6 +20,8 @@ angular.module('BlurAdmin', [
   'naif.base64',
   '720kb.datepicker',
   'ui.timepicker',
+  'ngScrollbars',
+  'jQueryScrollbar',
   // 'angular.chosen',
   'BlurAdmin.theme',
   'BlurAdmin.pages',
