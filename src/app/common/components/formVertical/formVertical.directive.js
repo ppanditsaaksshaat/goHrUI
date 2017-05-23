@@ -23,7 +23,7 @@
                 scope.oldEntity = {};
                 console.log(scope.page)
                 if (scope.page !== undefined) {
-
+                    
                     //find tabs
                     angular.forEach(scope.page.pageinfo.viewform, function (tab) {
                         //find rows

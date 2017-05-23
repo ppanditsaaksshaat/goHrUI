@@ -273,27 +273,7 @@
     function _getNomineeDetailErrorResult(error) {
       alert(JSON.stringify(error))
     }
-    function _refreshDataNominee() {
-      var search = [];
-      var searchFields = {
-        field: "NDEmpId",
-        operand: "=",
-        value: vm.empPKId
-      }
-      search.push(searchFields);
-      var data = {
-        searchList: search,
-        orderByList: []
-      }
-      var tableData = pageService.getTableData(
-        113,
-        438,
-        '', '',
-        false, data);
-      $scope.isLoaded = false
-      $scope.isLoading = true
-      tableData.then(_getNomineeTableSuccessResult, _getNomineeTableErrorResult)
-    }
+   
     function _getNomineeTableErrorResult(err) {
       $scope.isLoaded = true
       $scope.isLoading = false
@@ -335,8 +315,28 @@
         param: param
       }
       dialogModal.openFormVertical(options);
-
-      _refreshListData();
+      _refreshDataNominee();
+    }
+     function _refreshDataNominee() {
+      var search = [];
+      var searchFields = {
+        field: "NDEmpId",
+        operand: "=",
+        value: vm.empPKId
+      }
+      search.push(searchFields);
+      var data = {
+        searchList: search,
+        orderByList: []
+      }
+      var tableData = pageService.getTableData(
+        113,
+        438,
+        '', '',
+        false, data);
+      $scope.isLoaded = false
+      $scope.isLoading = true
+      tableData.then(_getNomineeTableSuccessResult, _getNomineeTableErrorResult)
     }
     //End Nominee
     //Experince
