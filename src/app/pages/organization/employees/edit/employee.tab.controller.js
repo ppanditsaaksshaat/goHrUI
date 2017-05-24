@@ -1,7 +1,7 @@
 
 
 /**
- * @author pradeep.pandip
+ * @author pradeep.pandit
  * created on 16.05.2017
  */
 (function () {
@@ -20,7 +20,6 @@
       familyPageId: 52, nomineePageId: 438, experiencPageId: 56, contactPageId: 36,
       emgContactPageId: 57, educationPageId: 112, skillPageId: 439, immigrationPageId: 119
     }
-
     $scope.familyPage = $scope.createPage();
     $scope.familyPage.pageId = vm.pageIds.familyPageId;
     $scope.familyPage.boxOptions = {
@@ -329,27 +328,7 @@
     function _getNomineeDetailErrorResult(error) {
       alert(JSON.stringify(error))
     }
-    function _refreshDataNominee() {
-      var search = [];
-      var searchFields = {
-        field: "NDEmpId",
-        operand: "=",
-        value: vm.empPKId
-      }
-      search.push(searchFields);
-      var data = {
-        searchList: search,
-        orderByList: []
-      }
-      var tableData = pageService.getTableData(
-        113,
-        438,
-        '', '',
-        false, data);
-      $scope.isLoaded = false
-      $scope.isLoading = true
-      tableData.then(_getNomineeTableSuccessResult, _getNomineeTableErrorResult)
-    }
+   
     function _getNomineeTableErrorResult(err) {
       $scope.isLoaded = true
       $scope.isLoading = false
@@ -391,8 +370,28 @@
         param: param
       }
       dialogModal.openFormVertical(options);
-
-      _refreshListData();
+      _refreshDataNominee();
+    }
+     function _refreshDataNominee() {
+      var search = [];
+      var searchFields = {
+        field: "NDEmpId",
+        operand: "=",
+        value: vm.empPKId
+      }
+      search.push(searchFields);
+      var data = {
+        searchList: search,
+        orderByList: []
+      }
+      var tableData = pageService.getTableData(
+        113,
+        438,
+        '', '',
+        false, data);
+      $scope.isLoaded = false
+      $scope.isLoading = true
+      tableData.then(_getNomineeTableSuccessResult, _getNomineeTableErrorResult)
     }
     //End Nominee
     //Experince
@@ -676,7 +675,6 @@
       vm.empEmgContact = result;
     }
     function _findEMGContactEntityErrorResult() {
-
     }
     function _getcontactSuccessResult(result) {
       console.log(result)

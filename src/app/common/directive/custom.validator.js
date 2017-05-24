@@ -88,4 +88,22 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             });
         }
     }
+}).directive('checkValidEmail', function () {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        scope: {
+            callBackMethod: '&callback',     
+        },
+        link: function (scope, element, attrs, modelCtrl) {
+            element.on('blur', function (inputValue) { 
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                console.log(inputValue)
+                console.log(re.test(inputValue))
+                /* send an object to the function */
+                scope.callBackMethod({ mustBeTheSame: re.test(inputValue) });
+            })
+           
+        }
+    }
 });

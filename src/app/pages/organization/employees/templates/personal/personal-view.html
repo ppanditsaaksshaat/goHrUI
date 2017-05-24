@@ -4,19 +4,16 @@
     <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
   </div>
   <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+
+
+
     <uib-tabset active="$tabSetStatus.activeTab">
       <uib-tab heading="Personal">
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
               <label for="inputDOB">Date Of Birth*</label>
-              <!--<input type="text" class="form-control" id="inputDOB" ng-model="empTabCtrl.entity.PdDateOfBirth"> -->
-              <!--<p class="input-group">
-            <input type="text" class="form-control" uib-datepicker-popup="{{formatdob}}" datepicker-options="optionsdob" ng-model="empTabCtrl.entity.PdDateOfBirth" is-open="openeddob" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="opendob()"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-         </p>       -->
+              
               <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
                 <input ng-model="empTabCtrl.entity.PdDateOfBirth" type="text" class="form-control" />
               </datepicker>
@@ -25,9 +22,9 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="inputDesignation">Marital Status*</label>
-              <select id="empMaritalStatus_{{$index}}" name="empMaritalStatus_{{$index}}" ng-model="empTabCtrl.entity.PdMaritalId"
-                class="form-control" ng-options="maritalStatus.value as maritalStatus.name for maritalStatus in page.pageinfo.selectes.PdMaritalId"
-                 data-placeholder="Select Nav Menu" ng-required="true">
+              <select id="empMaritalStatus_{{$index}}" name="empMaritalStatus_{{$index}}" ng-model="empTabCtrl.entity.PdMaritalId" class="form-control"
+                ng-options="maritalStatus.value as maritalStatus.name for maritalStatus in page.pageinfo.selects.PdMaritalId"
+                data-placeholder="Select Nav Menu" ng-required="true">
                </select>
             </div>
           </div>
@@ -35,7 +32,7 @@
             <div class="form-group">
               <label for="inputEmployeeType">Gender*</label>
               <select id="empGender_{{$index}}" name="empGender_{{$index}}" ng-model="empTabCtrl.entity.PdGenderId" class="form-control"
-                ng-options="gender.value as gender.name for gender in page.pageinfo.selectes.PdGenderId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                ng-options="gender.value as gender.name for gender in page.pageinfo.selects.PdGenderId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
                 data-placeholder="Select Nav Menu" ng-required="true">
                </select>
             </div>
@@ -57,13 +54,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="inputAnniversaryDate">Anniversary Date</label>
-              <!--<input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.entity.PDAnniversaryDate"> -->
-              <!--<p class="input-group">
-             <input type="text" class="form-control" uib-datepicker-popup="{{formatanniversary}}" datepicker-options="optionsanniversary" ng-model="empTabCtrl.entity.PDAnniversaryDate" is-open="openedanniversary" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="openanniversary()"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-         </p> -->
+              
               <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
                 <input ng-model="empTabCtrl.entity.PDAnniversaryDate" type="text" class="form-control" />
               </datepicker>
@@ -114,9 +105,9 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="inputFacebook">Nationality*</label>
-              <select id="empNationality_{{$index}}" name="empNationality_{{$index}}" ng-model="empTabCtrl.entity.PdNationalityId"
-                class="form-control" ng-options="nationality.value as nationality.name for nationality in page.pageinfo.selectes.PdNationalityId"
-                 ng-required="true">
+              <select id="empNationality_{{$index}}" name="empNationality_{{$index}}" ng-model="empTabCtrl.entity.PdNationalityId" class="form-control"
+                ng-options="nationality.value as nationality.name for nationality in page.pageinfo.selects.PdNationalityId"
+                ng-required="true">
                </select>
             </div>
           </div>
@@ -144,7 +135,7 @@
           </div>
         </div>
         <div class="text-center">
-          <button type="button" class="btn btn-primary" ng-click="empTabCtrl.updateForm()">Save</button>
+          <button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveForm()">Save</button>
         </div>
       </uib-tab>
       <uib-tab heading="Address">
@@ -167,7 +158,7 @@
             <div class="form-group">
               <label for="inputEmgAddress">Country</label>
               <select id="empCmpCountry_{{$index}}" name="empCmpCountry_{{$index}}" ng-model="empTabCtrl.empContactDetail.CountryId" class="form-control"
-                ng-options="country.value as country.name for country in empTabCtrl.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                ng-options="country.value as country.name for country in contactPage.pageinfo.selects.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
                 data-placeholder="Select Nav Menu" ng-required="true">
                </select>
             </div>
@@ -178,7 +169,7 @@
             <div class="form-group">
               <label for="empCmpState_{{$index}}">State</label>
               <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.StateId" class="form-control"
-                ng-options="state.value as state.name for state in empTabCtrl.StateId | filter:{CountryId:empTabCtrl.empContactDetail.CountryId}"
+                ng-options="state.value as state.name for state in contactPage.pageinfo.selects.StateId | filter:{CountryId:empTabCtrl.empContactDetail.CountryId}"
                 ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
                </select>
             </div>
@@ -187,7 +178,7 @@
             <div class="form-group">
               <label for="empCmpCity_{{$index}}">City</label>
               <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.CityId" class="form-control"
-                ng-options="city.value as city.name for city in empTabCtrl.CityId |filter:{StateId:empTabCtrl.empContactDetail.StateId}"
+                ng-options="city.value as city.name for city in contactPage.pageinfo.selects.CityId |filter:{StateId:empTabCtrl.empContactDetail.StateId}"
                 ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
                </select>
             </div>
@@ -229,7 +220,7 @@
               <div class="form-group">
                 <label for="inputPerCountry">Country</label>
                 <select id="empCmpCountry_{{$index}}" name="empCmpCountry_{{$index}}" ng-model="empTabCtrl.empContactDetail.PCountryId" class="form-control"
-                  ng-options="country.value as country.name for country in empTabCtrl.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                  ng-options="country.value as country.name for country in contactPage.pageinfo.selects.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
                   data-placeholder="Select Nav Menu" ng-required="true">
                </select>
               </div>
@@ -240,7 +231,7 @@
               <div class="form-group">
                 <label for="empPerState_{{$index}}">State</label>
                 <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.PStateId" class="form-control"
-                  ng-options="state.value as state.name for state in empTabCtrl.StateId | filter:{CountryId:empTabCtrl.empContactDetail.PCountryId}"
+                  ng-options="state.value as state.name for state in contactPage.pageinfo.selects.StateId | filter:{CountryId:empTabCtrl.empContactDetail.PCountryId}"
                   ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
                </select>
               </div>
@@ -249,7 +240,7 @@
               <div class="form-group">
                 <label for="empPerCity_{{$index}}">City</label>
                 <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.PCityId" class="form-control"
-                  ng-options="city.value as city.name for city in empTabCtrl.CityId |filter:{StateId:empTabCtrl.empContactDetail.PStateId}"
+                  ng-options="city.value as city.name for city in contactPage.pageinfo.selects.CityId |filter:{StateId:empTabCtrl.empContactDetail.PStateId}"
                   ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
                </select>
               </div>
@@ -264,7 +255,7 @@
           </div>
         </div>
         <div class="text-center">
-          <button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveContact()">Save</button>
+          <button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveAddress()">Save</button>
         </div>
       </uib-tab>
       <uib-tab heading="Family">
@@ -276,8 +267,8 @@
         </grid-box>
       </uib-tab>
       <uib-tab heading="Identity">
-        <grid-box ng-model="identityPage">
-        </grid-box>
+        <!--<grid-box ng-model="identityPage">
+        </grid-box>-->
       </uib-tab>
     </uib-tabset>
   </div>
