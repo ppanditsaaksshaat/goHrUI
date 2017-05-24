@@ -38,6 +38,8 @@
                     showDialog: false,
                     gridStyle: { height: '450px' }
                 }
+
+                 console.log(page.pageinfo)
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.boxOptions = angular.copy(boxSetting);
@@ -120,7 +122,7 @@
                        $scope.entity={};
                    }
                   angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
-                          $scope.entity[col.name] = link.name;
+                          $scope.entity[link.name] = link.value;
                   });
                    
                     $scope.page.action = 'create';

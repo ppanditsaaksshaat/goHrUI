@@ -1,12 +1,11 @@
-
 <form ng-submit="empTabCtrl.saveFormCommon()">
 <div class="panel panel-default xmedium-panel">
-  <edit-panel-head page-title="page.pageinfo.title" save-form="" reset-form="empTabCtrl.resetFormCommon()"
+  <edit-panel-head page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon()"
     clear-form="empTabCtrl.clearFormCommon()" condition="(empTabCtrl.activeTab==0 || empTabCtrl.activeTab==1)"></edit-panel-head>
+ 
   <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
     <uib-tabset active="empTabCtrl.activeTab">
       <uib-tab heading="Personal">
-
         <div style="max-height: 420px" ng-scrollbars ng-scrollbars-config="config">
           <div class="row">
             <div class="col-sm-4">
@@ -14,7 +13,7 @@
                 <label for="inputDOB">Date Of Birth*</label>
 
                 <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
-                  <input ng-model="empTabCtrl.entity.PdDateOfBirth" type="text" class="form-control" requried/>
+                  <input ng-model="empTabCtrl.entity.PdDateOfBirth" type="text" class="form-control" required />
                 </datepicker>
               </div>
             </div>
@@ -23,7 +22,8 @@
                 <label for="inputDesignation">Marital Status*</label>
                 <select id="empMaritalStatus_{{$index}}" name="empMaritalStatus_{{$index}}" ng-model="empTabCtrl.entity.PdMaritalId" class="form-control"
                   ng-options="maritalStatus.value as maritalStatus.name for maritalStatus in page.pageinfo.selects.PdMaritalId"
-                  data-placeholder="Select Nav Menu" ng-required="true">
+                  data-placeholder="Select Nav Menu" required>
+                  <option></option>
                </select>
               </div>
             </div>
@@ -32,7 +32,8 @@
                 <label for="inputEmployeeType">Gender*</label>
                 <select id="empGender_{{$index}}" name="empGender_{{$index}}" ng-model="empTabCtrl.entity.PdGenderId" class="form-control"
                   ng-options="gender.value as gender.name for gender in page.pageinfo.selects.PdGenderId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                  data-placeholder="Select Nav Menu" ng-required="true">
+                  data-placeholder="Select Nav Menu" required>
+                  <option></option>
                </select>
               </div>
             </div>
@@ -41,13 +42,13 @@
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="inputMobile">Mobile*</label>
-                <input type="text" class="form-control" id="inputMobile" ng-model="empTabCtrl.entity.PdMobileNo">
+                <input type="text" class="form-control"  minlength="10" maxlength="17" numeric-Only id="inputMobile" ng-model="empTabCtrl.entity.PdMobileNo" required>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label for="inputEmail">Email</label>
-                <input type="text" class="form-control" id="inputEmail" ng-model="empTabCtrl.entity.PdEmail">
+                <label for="inputEmail">Email*</label>
+                <input type="email" class="form-control" id="inputEmail" maxlength="50" ng-model="empTabCtrl.entity.PdEmail" required>
               </div>
             </div>
             <div class="col-sm-4">
@@ -106,7 +107,8 @@
                 <label for="inputFacebook">Nationality*</label>
                 <select id="empNationality_{{$index}}" name="empNationality_{{$index}}" ng-model="empTabCtrl.entity.PdNationalityId" class="form-control"
                   ng-options="nationality.value as nationality.name for nationality in page.pageinfo.selects.PdNationalityId"
-                  ng-required="true">
+                  required>
+                  <option></option>
                </select>
               </div>
             </div>
@@ -117,19 +119,19 @@
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="inputEmgName">Name</label>
-                <input type="text" class="form-control" id="inputEmgName" ng-model="empTabCtrl.empEmgContact.ECPersonName">
+                <input type="text" class="form-control" id="inputEmgName" text-Only-With-Space ng-model="empTabCtrl.empEmgContact.ECPersonName">
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="inputEmgMobile">Mobile</label>
-                <input type="text" class="form-control" id="inputEmgMobile" ng-model="empTabCtrl.empEmgContact.ECContactNo">
+                <input type="text" class="form-control" id="inputEmgMobile" numeric-Only minlength="10" maxlength="17" ng-model="empTabCtrl.empEmgContact.ECContactNo" required>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="inputEmgAddress">Address</label>
-                <input type="text" class="form-control" id="inputEmgAddress" ng-model="empTabCtrl.empEmgContact.ECAddress">
+                <input type="text" class="form-control" id="inputEmgAddress" maxlength="50" ng-model="empTabCtrl.empEmgContact.ECAddress">
               </div>
             </div>
           </div>
@@ -269,4 +271,4 @@
     </uib-tabset>
   </div>
 </div>
-</form>
+<form>
