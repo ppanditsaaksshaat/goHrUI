@@ -6,7 +6,9 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.payroll', [
-    'BlurAdmin.pages.payroll.masters'
+    'BlurAdmin.pages.payroll.masters',
+    'BlurAdmin.pages.payroll.transaction',
+     'BlurAdmin.pages.payroll.reports'
   ])
       .config(routeConfig);
       
@@ -20,7 +22,7 @@
           title: 'Payroll',
           sidebarMeta: {
             icon: 'ion-pound',
-            order: 5,
+            order: 1,
           },
         });
   }
