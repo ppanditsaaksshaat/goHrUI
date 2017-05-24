@@ -49,13 +49,30 @@
                                 </label>
                             </div>
                         </div>
-                         <div class="row" ng-show="tabCtrl.gridOptions.data.length > 0">
+                        <div class="row" ng-show="tabCtrl.gridOptions.data.length > 0">
                             <div class="col-md-12">
 
                                 <label class="checkbox-inline custom-checkbox nowrap">
-                                    <input type="checkbox"   id="inlineCheckbox03"  ng-model="tabCtrl.isInvalidData">
-                                    <span>Invalid Data</span>
+                                    <input type="checkbox"   id="inlineCheckbox03"  ng-model="tabCtrl.acceptInvalidData">
+                                    <span>Accept Invalid Data</span>
                                 </label>
+                                <div id="notAcceptInvalidData"  ng-hide="tabCtrl.acceptInvalidData">
+                                    <div class="radio">
+                                        <label><input type="radio" ng-model="tabCtrl.ignoreCase" name="ignoreRow" checked value="ignorerow">Ignore Row</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" ng-model="tabCtrl.ignoreCase" name="ignoreRow" value="ignorecolumn">Ignore Column</label>
+                                    </div>
+                                </div>
+                                <div id="acceptInvalidData" ng-show="tabCtrl.acceptInvalidData">
+                                    <div class="radio">
+                                        <label><input type="radio" ng-model="tabCtrl.ignoreCase" name="ignoreRow" value="samedata">Same Data</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" ng-model="tabCtrl.ignoreCase" name="ignoreRow" value="blankdata">Blank Data</label>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <hr ng-show="tabCtrl.gridOptions.data.length >= 0" />

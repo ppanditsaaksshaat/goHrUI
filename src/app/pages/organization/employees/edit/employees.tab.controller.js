@@ -12,7 +12,7 @@
     /** @ngInject */
     function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal) {
         console.log('empTabController')
-  
+        var vm = this;
         $scope.entity = {}
         vm.pageIds = {
             familyPageId: "52", nomineePageId: "438", experiencPageId: "56", contactPageId: "36",
@@ -24,6 +24,11 @@
         vm.tempName = $stateParams.name;
         vm.saveForm = _saveForm;
         vm.saveAddress = _saveAddress;
+
+        vm.saveFormCommon = _saveFormCommon;
+        vm.resetFormCommon = _resetFormCommon;
+        vm.clearFormCommon = _clearFormCommon;
+
         function _loadController() {
             var rndValu = Math.round((Math.random() * 10) * 10);
             var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
@@ -232,7 +237,55 @@
         function _updateErrorResult(error) {
             console.log(error)
         }
+        function _resetPersonal() {
+            vm.entity = angular.copy(vm.oldEntity);
+            vm.empEmgContact = angular.copy(vm.oldEmpEmgContact);
+        }
+        function _resetAddress() {
+            vm.empContactDetail = angular.copy(vm.oldempContactDetail);
+        }
+        function _clearPersonal() {
+            vm.entity = {};
+            vm.empEmgContact = {};
+        }
+        function _clearAddress() {
+            vm.empContactDetail = {};
+        }
+        //=========================================================== common method
+        function _saveFormCommon() {
+            if (vm.activeTab === undefined) {
+                _saveForm();
+            }
+            else if (vm.activeTab == 0) {
+                _saveForm();
+            }
+            else if (vm.activeTab == 1) {
+                _saveAddress();
+            }
+        }
+        function _resetFormCommon() {
 
+            if (vm.activeTab === undefined) {
+                vm.entity = angular.copy(vm.oldEntity);
+            }
+            else if (vm.activeTab == 0) {
+                _resetPersonal();
+            }
+            else if (vm.activeTab == 1) {
+                _resetAddress();
+            }
+        }
+        function _clearFormCommon() {
+            if (vm.activeTab === undefined) {
+                vm.entity = {};
+            }
+            else if (vm.activeTab == 0) {
+                _clearPersonal();
+            }
+            else if (vm.activeTab == 1) {
+                _clearAddress();
+            }
+        }
         _loadController();
     }//controller end
 })();
