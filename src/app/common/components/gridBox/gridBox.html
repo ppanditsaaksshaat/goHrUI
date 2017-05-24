@@ -101,7 +101,7 @@
                                 
                                 <div class="form-group" ng-repeat="col in page.formrows">
                                     <label for="inputPassword3" class="col-sm-5 control-label">{{col.text}}</label>
-                                    <div class="col-md-7" ng-switch="col.type">
+                                    <div class="col-md-7" ng-switch="col.type"> 
                                         <field-box ng-model="col" ng-entity="entity" form="editForm"></field-box>
                                     </div>
                                 </div>

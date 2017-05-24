@@ -1,38 +1,40 @@
 <div ng-switch="col.type">
     <div class="input-group">
         <!--Textbox-->
-        <input ng-switch-when="textbox" 
-            name="{{col.name}}" id="{{col.name}}" 
-            placeholder="{{col.place}}" 
-            maxlength="{{col.maxLength}}"
-            ng-model="entity[col.name]" 
-            type="text" class="form-control" 
-            ng-minlength="1" 
-            ng-maxlength="col.maxLength" 
-            ng-required="col.required"
+        <input ng-switch-when="textbox" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" maxlength="{{col.maxLength}}"
+            ng-model="entity[col.name]" type="text" class="form-control" ng-minlength="1" ng-maxlength="col.maxLength" ng-required="col.required"
             ng-class="{'border-red': col.haserror}" />
+
+        <!--left icon-->
+        <span class="input-group-addon" ng-show="col.type=='email'">
+               <i class="fa fa-at" aria-hidden="true"></i>
+        </span>
+        <span class="input-group-addon" ng-show="col.type=='mobile'">
+                <i class="fa fa-mobile" aria-hidden="true"></i>
+        </span>
+        <span class="input-group-addon" ng-show="col.type=='phone'">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+        </span>
+        <span class="input-group-addon bg-black" ng-show="col.type=='password'">
+                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+        </span>
+
+
         <!--email-->
-        <div class="input-group" ng-switch-when="email">
-            <span class="input-group-addon">
-               <i class="glyphicon icon-typicons-at"></i>
-            </span>
-            <input name="{{col.name}}"
-                   ng-model="entity[col.name]" type="email" class="form-control" 
-                   ng-minlength="10" ng-maxlength="col.maxLength"
-                   id="{{col.name}}" ng-required="col.required" 
-                   placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
-            />
-        </div>
+        <input ng-switch-when="email" name="{{col.name}}" ng-model="entity[col.name]" type="email" class="form-control" ng-minlength="10"
+            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
+        />
 
         <!--mobile-->
-        <div class="input-group" ng-switch-when="mobile">
-            <span class="input-group-addon">
-                        <i class="glyph-icon icon-linecons-mobile"></i>
-                    </span>
-            <input name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="col.maxLength" ng-maxlength="col.maxLength"
-                id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
-                ng-pattern="pattern.mobile" maxlength="{{col.maxLength}}" />
-        </div>
+        <input ng-switch-when="mobile" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="col.maxLength"
+            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
+            ng-pattern="pattern.mobile" maxlength="{{col.maxLength}}" />
+
+        <input ng-switch-when="zipcode" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="col.maxLength"
+            ng-maxlength="6" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
+            ng-pattern="/^(\d{6}(-\d{6})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/" maxlength="6" />
+
+
 
         <!--Select-->
         <select name="{{col.name}}" id="{{col.name}}" ng-model="entity[col.name]" class="form-control" ng-options="opt.value as opt.name for opt in col.options"
@@ -67,14 +69,8 @@
         <textarea id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="textarea" class="form-control"
             ng-switch-when="textarea" placeholder="{{col.place}}"></textarea>
         <!--Password-->
-        <div class="input-group" ng-switch-when="password">
-            <span class="input-group-addon bg-black">
-                                                            <i class="glyph-icon icon-lock"></i>
-                                                        </span>
-            <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" class="form-control"
-                placeholder="{{col.place}}">
-        </div>
-
+        <input ng-switch-when="password" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required"
+            type="text" class="form-control" placeholder="{{col.place}}">
 
         <!--html-->
         <!--datetimepicker-->
@@ -102,10 +98,10 @@
             placeholder="{{col.place}}" />
 
         <!--right icon-->
-        <span class="input-group-addon" 
-            ng-if="col.type!='linklabel' && col.type !='sequence' && col.type != 'checkbox'">
-            <i class="glyph-icon "
-                ng-class="{'font-red icon-asterisk': !(editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty']) && col.required, 'font-green fa fa-check': (editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty']), 'font-red icon-iconic-cancel': (editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'])}"></i>
+        <span class="input-group-addon" ng-if="col.type!='linklabel' && col.type !='sequence' && col.type != 'checkbox'" style="width:30px">
+            <i aria-hidden="true" class="fa font-green fa-check" ng-show="(editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty'])"></i>
+            <i aria-hidden="true" class="fa font-red fa-times" ng-show="(editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'] && editForm[col.name]['$touched'])"></i>
+            <i aria-hidden="true" class="fa font-red fa-asterisk" ng-show="(editForm[col.name]['$viewValue']===undefined ||editForm[col.name]['$viewValue']=='' ) && col.required"></i>
         </span>
     </div>
 

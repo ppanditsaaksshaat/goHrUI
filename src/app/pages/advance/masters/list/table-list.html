@@ -26,7 +26,7 @@
         </tr>
         <tr ng-show="gridObject.enableFilter">
             <th ng-show="gridObject.enableSrNo"></th>
-            <th ng-show="gridObject.enableTitleFilter"><input st-search="{{searchName}}" placeholder="Search" class="input-sm form-control search-input" type="search"
+            <th ng-show="gridObject.enableTitleFilter"><input st-search="{{gridObject.titleField}}" placeholder="Search" class="input-sm form-control search-input" type="search"
                 /></th>
             <th  ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
                 <input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
@@ -39,7 +39,7 @@
             </td>
             <td ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
             <td ng-show="gridObject.enableAction">
-                <a ui-sref="payroll.masters.edit({name:listCtrl.tempName, pageId: gridObject.pageId, action:'edit', pkId: row[gridObject.page.pageinfo.idencolname]})">
+                <a ui-sref="advance.masters.edit({name:listCtrl.tempName, pageId: gridObject.pageId, action:'edit', pkId: row[gridObject.page.pageinfo.idencolname]})">
                     <i class="fa fa-pencil-square-o"></i></a>
             </td>
         </tr>
