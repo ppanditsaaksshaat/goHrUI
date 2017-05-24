@@ -1,8 +1,10 @@
 <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
-  <div class="panel-heading">
-    {{page.pageinfo.title}}
-    <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
-  </div>
+  <edit-panel-head page-title="page.pageinfo.title" 
+    save-form="empTabCtrl.saveFormCommon()" 
+    reset-form="empTabCtrl.resetFormCommon()"
+    clear-form="empTabCtrl.clearFormCommon()" 
+    condition="true"></edit-panel-head>
+
   <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
     <div class="row">
       <div class="col-sm-4">
@@ -131,6 +133,6 @@
       </div>
     </div>
     <div class="text-center">
-      <button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveForm()">Save</button>
+      <!--<button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveForm()">Save</button>-->
     </div>
   </div>

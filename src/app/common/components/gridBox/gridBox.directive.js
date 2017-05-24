@@ -8,7 +8,7 @@
     angular.module('BlurAdmin.common.components')
         .directive('gridBox', gridBox);
     /** @ngInject */
-    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService) {
+    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService, editFormService) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/gridBox/gridBox.html',
@@ -89,6 +89,9 @@
                 $scope.page.closeAddRecord = _closeAddRecord;
                 $scope.page.closeForm = _closeForm;
                 $scope.page.gridOptions.onRegisterApi = _onRegisterApi;
+                $scope.saveForm = _saveForm;
+                $scope.resetForm = _resetForm;
+                $scope.closeForm = _closeForm;
 
                 function _loadDirective() {
                     if ($scope.page.boxOptions.selfLoading) {
@@ -267,6 +270,8 @@
                     $scope.page.editFormUrl = 'app/common/components/gridBox/formVertical.html';
                     $scope.page.isVerticalForm = true;
                     $scope.page.formrows = [];
+                    if ($scope.entity === undefined)
+                        $scope.entity = {};
                     //find tabs
                     if ($scope.page.pageinfo !== undefined) {
                         angular.forEach($scope.page.pageinfo.viewform, function (tab) {
@@ -314,7 +319,7 @@
                 //====================================================================
                 //get table data
                 function _getTableData() {
-                    
+
                     if ($scope.page.boxOptions.linkColumns !== undefined) {
                         if ($scope.page.searchList === undefined)
                             $scope.page.searchList = []
@@ -358,6 +363,20 @@
                     }
                 }
                 //end get table data
+
+
+                function _validateForm(form) {
+                    return true;
+                }
+                function _saveForm(form) {
+                    if (_validateForm(form)) {
+                        editFormService.saveForm(scope.page.pageinfo.pageid, scope.entity,
+                            scope.oldEntity, scope.page.action, scope.page.pageinfo.tagline)
+                    }
+                }
+                function _resetForm() {
+                    $scope.entity = angular.copy($scope.oldEntity);
+                }
                 $scope.getGridHeight = function () {
                     var rowHeight = 30;
                     var headerHeight = 30;

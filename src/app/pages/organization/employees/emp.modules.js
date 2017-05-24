@@ -13,7 +13,7 @@
     .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider) {
+  function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('organization.employees', {
         url: '/employees',
@@ -43,6 +43,7 @@
         controller: "empTabController",
         controllerAs: "empTabCtrl"
       });
+      $urlRouterProvider.when('/organization/employees/edit/{empId}','/organization/employees/edit/{empId}/job/114');
   }
 
 })();
