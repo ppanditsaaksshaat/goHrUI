@@ -96,6 +96,10 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             callBackMethod: '&callback',     
         },
         link: function (scope, element, attrs, modelCtrl) {
+            console.log(scope)
+             console.log(element)
+               console.log(attrs)
+                 console.log(modelCtrl)
             element.on('blur', function (inputValue) { 
                 var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 console.log(inputValue)

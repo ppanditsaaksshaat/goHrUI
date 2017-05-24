@@ -13,6 +13,7 @@
     function OrgEmpUploadController($scope, $sce, $filter, $http, uiGridConstants, $interval, $timeout,
         $uibModal, pageService, $q, DJWebStore, $window, DJWebStoreGlobal) {
         var vm = this;
+        vm.acceptInvalidData = false, vm.ignoreCase = undefined;
         var uploadHistoryPageId = 440;
         var uploadHistoryTableId = 414;
         var uploadHistoryPKId = 3;
@@ -440,7 +441,7 @@
 
         }
         vm.nextDataUpload = function () {
-
+            console.log(vm.ignoreCase, vm.acceptInvalidData)
             $window.scrollTo(0, 0);
             _getUploadHistoryDetail();
             if (vm.showEmployeeName == true) {
@@ -454,6 +455,12 @@
                     alert('No data found.')
                 }
                 else {
+                    if (vm.ignoreCase == undefined) {
+                        // alert('Please choose any one option from acceptance of invalid data')
+                        $scope.showMsg('error', 'Please choose any one option from acceptance of invalid data')
+                        return;
+                    }
+
                     _setFieldMatching();
                     vm.setupMigrate();
                     // debugger;
@@ -725,12 +732,19 @@
 
                 })
             })
+
+
             if (vm.showEmployeeName === undefined) {
                 vm.showEmployeeName = false;
             }
-            if (vm.isInvalidData === undefined) {
-                vm.isInvalidData = false;
+            if (vm.isInvalidData) {
+                vm.isIgnore = vm.notAcceptInvalidData;
             }
+            else {
+                vm.isInvalidData = false;
+                vm.isIgnore = vm.notAcceptInvalidData;
+            }
+            // console.log(vm.isInvalidData, vm.notAcceptInvalidData)
 
             var fileName = 'Employeedata';
 
@@ -783,13 +797,35 @@
             if (vm.showEmployeeName === undefined) {
                 vm.showEmployeeName = false;
             }
-            if (vm.isInvalidData === undefined) {
-                vm.isInvalidData = false;
-            }
+            // if (vm.isInvalidData === undefined) {
+            //     if (vm.notAcceptInvalidData === undefined) {
+            //         vm.notAcceptInvalidData === false;
+            //     }
+            // }
+            // else {
+            //     if (vm.isInvalidData) {
+            //         if (vm.acceptInvalidData === undefined) {
+            //             vm.acceptInvalidData = false;
+            //         }
+
+            //     }
+            // }
+
+
+            // if (vm.isInvalidData) {
+            //     vm.isIgnore = vm.notAcceptInvalidData;
+            // }
+            // else {
+            //     vm.isInvalidData = false;
+            //     vm.isIgnore = vm.notAcceptInvalidData;
+            // }
+            // console.log(vm.isInvalidData, vm.notAcceptInvalidData)
+
+
             var fileName = 'Employeedata';
 
             console.log(vm.gridOptions.data)
-            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName, fileName: fileName, invalidData: vm.isInvalidData }
+            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName, fileName: fileName, invalidData: vm.acceptInvalidData, isIgnoreData: vm.ignoreCase }
             console.log(uncData)
             var postData = JSON.stringify(uncData);
             var compressed = LZString.compressToEncodedURIComponent(postData);
