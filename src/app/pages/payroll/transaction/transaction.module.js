@@ -10,7 +10,9 @@
      'BlurAdmin.pages.payroll.transaction.SalaryAttendancecycle',
      'BlurAdmin.pages.payroll.transaction.Salarypayrollprocess',
        'BlurAdmin.pages.payroll.transaction.LeaveEncashment',
-         'BlurAdmin.pages.payroll.transaction.LeaveEncashmentHistory'
+         'BlurAdmin.pages.payroll.transaction.LeaveEncashmentHistory',
+             'BlurAdmin.pages.payroll.transaction.FullAndFinalSettlement',
+                 'BlurAdmin.pages.payroll.transaction.FullAndFinalDetail'
   ])
     .config(routeConfig);
 

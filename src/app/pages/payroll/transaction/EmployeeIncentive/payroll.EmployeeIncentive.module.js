@@ -18,7 +18,7 @@
         // abstract: true,
         templateUrl: 'app/pages/payroll/transaction/EmployeeIncentive/payroll.EmployeeIncentive.html?v=1',
         controller: "PaySalarypayrollprocessController",
-        controllerAs: "attCtrl",
+        controllerAs: "payCtrl",
         title: 'Employee Incentive',
         sidebarMeta: {
           order: 0,

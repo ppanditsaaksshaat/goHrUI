@@ -18,7 +18,7 @@
         // abstract: true,
         templateUrl: 'app/pages/payroll/transaction/Salarypayrollprocess/payroll.Salarypayrollprocess.html?v=1',
         controller: "paySalarypayrollprocessController",
-        controllerAs: "attCtrl",
+        controllerAs: "payCtrl",
         title: 'SalaryPayProcess',
         sidebarMeta: {
           order: 2,
