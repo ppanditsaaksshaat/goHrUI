@@ -379,6 +379,7 @@
 
                 function _validateForm(form) {
                     var valid = true;
+                    console.log(form)
                     if (!form['$valid']) {
                         if (form['$error'] !== undefined) {
                             var err = form['$error'];
@@ -389,6 +390,11 @@
                             }
                             if (err['maxlength'] !== undefined) {
                                 alert('invalid length')
+                                valid = false
+                            }
+                            if (err['pattern'] !== undefined) {
+                                console.log(err['pattern'])
+                                alert('invalid pattern')
                                 valid = false
                             }
                         }
