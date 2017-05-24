@@ -32,6 +32,7 @@
       showUpload: false,
       showDialog: false,
       gridHeight: 450,
+      enableAutoRefresh: true,
       getPageData: null,
       refreshData: null,
       addRecord: null,

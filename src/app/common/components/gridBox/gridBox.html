@@ -78,30 +78,38 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll" ng-show="page.showAddRecord">
-                <div class="panel-heading clearfix" style="padding-top:0px;">
-                    <div class="row">
-                        <div class="col-md-5" style="padding-top:15px">
-                            <button type="button" class="btn btn-xs btn-default" ng-click="page.closeAddRecord()"><i class="ion-back"></i>Back</button>                            {{page.pageinfo.tagline}}
+            </div> 
+            <form ng-show="page.showAddRecord" ng-submit="saveForm(editForm)" name="editForm">
+                <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
+                    <div class="panel-heading clearfix" style="padding-top:0px;">
+                        <div class="row">
+                            <div class="col-md-5" style="padding-top:15px">
+                                <button type="button" class="btn btn-xs btn-default" ng-click="closeForm()"><i class="ion-back"></i>Back</button>                                {{page.pageinfo.tagline}}
+                            </div>
+                            <div class="col-md-7" style="padding-top:5px">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn  btn-sm btn-primary">Save</button>
+                                    <button type="button" class="btn  btn-sm btn-warning" ng-click="resetForm()">Reset</button>
+                                    <button type="button" class="btn  btn-sm btn-danger" ng-click="closeForm()">Close</button>
+                                </div>
+                            </div>
                         </div>
-                         <div class="col-md-7" style="padding-top:5px">
-                            <div class="pull-right">
-                                <button type="submit" class="btn  btn-sm btn-primary" ng-click="saveForm()">Save</button>
-                                <button type="button" class="btn  btn-sm btn-warning" ng-click="resetForm()">Reset</button>
-                                <button type="button" class="btn  btn-sm btn-danger" ng-click="closeForm()">Close</button>
+                    </div>
+                    <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
+                        <div class="row">
+                            <div ng-class="{'col-md-7':page.isVerticalForm,'col-md-12':!page.isVerticalForm}">
+                                
+                                <div class="form-group" ng-repeat="col in page.formrows">
+                                    <label for="inputPassword3" class="col-sm-5 control-label">{{col.text}}</label>
+                                    <div class="col-md-7" ng-switch="col.type">
+                                        <field-box ng-model="col" ng-entity="entity" form="editForm"></field-box>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
-                    <div class="row">
-                        <div ng-class="{'col-md-7':page.isVerticalForm,'col-md-12':!page.isVerticalForm}">
-                            <ng-include src="page.editFormUrl" onload="editFormLoaded=true"></ng-include>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </form>
 
         </div>
     </div>

@@ -11,23 +11,18 @@
     function fieldBox($location, $state, $compile, $rootScope) {
         return {
             restrict: 'E',
-            require: "^ngModel",
+            require: ['^form', 'ngModel'],
             templateUrl: 'app/common/components/fieldBox/fieldBox.html',
             scope: {
-                col: '=ngModel'
+                col: '=ngModel',
+                entity: '=ngEntity',
+                editForm: '=form'
             },
-            link: function (scope, elm, attrs, parent) {
+            link: function ($scope, $elm, $attrs, $ctrl) {
 
-                scope.$watch('col', function (deepak) {
-                    if (deepak !== undefined) {
-                        console.log(deepak)
-                    }
+                $elm.bind('click', function (evt) {
+                    console.log($ctrl)
                 })
-                scope.test=function(column)
-                {                 
-                    scope.testing=column;
-                    console.log(column)
-                }
 
             }
         };

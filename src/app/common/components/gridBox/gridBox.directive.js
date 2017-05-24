@@ -54,7 +54,7 @@
                     _setupVerticalForm();
                     console.log('from watch')
                 });
-
+                $scope.form = {};
                 _loadDirective();
 
                 // $scope.scroll_config = {
@@ -115,6 +115,7 @@
                 //====================================================================
                 //button functions
                 function _addRecord() {
+                    $scope.page.action = 'create';
                     if ($scope.page.boxOptions.addRecord == null) {
 
                         if ($scope.page.boxOptions.showDialog) {
@@ -129,6 +130,12 @@
                             dialogModal.openFormVertical(options);
                         }
                         else {
+                            if ($scope.page.selectedRows !== undefined) {
+                                if ($scope.page.selectedRows.length > 0)
+                                    $scope.entity = $scope.page.selectedRows[0];
+                                else
+                                    $scope.entity = {};
+                            }
                             $scope.page.showAddRecord = true;
                         }
                     }
@@ -136,6 +143,7 @@
                         $scope.page.boxOptions.addRecord();
                 }
                 function _editRecord(row) {
+                    $scope.page.action = 'edit';
                     if ($scope.page.boxOptions.editRecord == null) {
 
                         if ($scope.page.boxOptions.showDialog) {
@@ -152,6 +160,10 @@
                         }
                         else {
                             $scope.page.showAddRecord = true;
+                            $scope.entity = row.entity;
+                            $scope.oldEntity = angular.copy(row.entity);
+                            $scope.page.pkId = row.entity[$scope.page.pageinfo.idencolname];
+                            _findEntity();
                         }
                     }
                     else
@@ -233,8 +245,9 @@
                 function _closeForm() {
                     $scope.page.showAddRecord = false;
                     $scope.page.showViewRecord = false;
+                    $scope.entity = {};
                 }
-                //END: button function 
+                //END: button function  
                 //====================================================================
                 //setup grid columns from pageinfo
                 function _setGridColumns() {
@@ -362,21 +375,68 @@
                         $scope.page.gridOptions.data = result;
                     }
                 }
-                //end get table data
-
+                //end get table data 
 
                 function _validateForm(form) {
-                    return true;
+                    var valid = true;
+                    if (!form['$valid']) {
+                        if (form['$error'] !== undefined) {
+                            var err = form['$error'];
+
+                            if (err['email'] !== undefined) {
+                                alert('invalid email');
+                                valid = false;
+                            }
+                            if (err['maxlength'] !== undefined) {
+                                alert('invalid length')
+                                valid = false
+                            }
+                        }
+                    }
+                    return valid;
                 }
                 function _saveForm(form) {
                     if (_validateForm(form)) {
-                        editFormService.saveForm(scope.page.pageinfo.pageid, scope.entity,
-                            scope.oldEntity, scope.page.action, scope.page.pageinfo.tagline)
+                        editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
+                            $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
                     }
                 }
                 function _resetForm() {
                     $scope.entity = angular.copy($scope.oldEntity);
                 }
+
+                //find entity
+                function _findEntity() {
+                    $scope.form.isLoaded = false;
+                    $scope.form.isLoading = true;
+                    $timeout(function () {
+                        pageService.findEntity($scope.page.pageinfo.tableid, $scope.page.pkId, undefined).then(
+                            _findEntitySuccessResult, _findEntityErrorResult);
+                    });
+                }
+                function _findEntitySuccessResult(result) {
+                    $scope.form.isLoaded = true;
+                    $scope.form.isLoading = false;
+                    $scope.entity = result;
+                    console.log($scope.entity)
+                    $scope.oldEntity = angular.copy(result)
+                }
+                function _findEntityErrorResult(err) {
+                    $scope.form.isLoaded = true;
+                    $scope.form.isLoading = false;
+                }
+                $scope.$on('form-success', function (successEvent, result) {
+                    if (result.entity[$scope.page.pageinfo.idencolname] !== undefined) {
+                        if ($scope.page.boxOptions !== undefined) {
+                            if ($scope.page.boxOptions.enableAutoRefresh !== undefined) {
+                                if ($scope.page.boxOptions.enableAutoRefresh) {
+                                    _refreshData()
+                                }
+                            }
+                        }
+                        _closeForm();
+                    }
+                })
                 $scope.getGridHeight = function () {
                     var rowHeight = 30;
                     var headerHeight = 30;

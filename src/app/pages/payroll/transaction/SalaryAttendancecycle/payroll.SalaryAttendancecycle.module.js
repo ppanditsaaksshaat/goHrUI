@@ -18,7 +18,7 @@
         // abstract: true,
         templateUrl: 'app/pages/payroll/transaction/SalaryAttendancecycle/payroll.SalaryAttendancecycle.html?v=1',
         controller: "paySalaryAttendancecycleController",
-        controllerAs: "attCtrl",
+        controllerAs: "payCtrl",
         title: 'SalaryAttcycle',
         sidebarMeta: {
           order: 1,

@@ -14,15 +14,14 @@
         <!--email-->
         <div class="input-group" ng-switch-when="email">
             <span class="input-group-addon">
-               <i class="glyph-icon icon-typicons-at"></i>
-         </span>
-            <input name="{{col.name}}" check-Valid-Email callback="test(mustBeTheSame)" ng-model="entity[col.name]" type="email" class="form-control" ng-minlength="10" ng-maxlength="col.maxLength"
-                id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
-            />
-            <span ng-if="!testing">
-                email is not correct
+               <i class="glyphicon icon-typicons-at"></i>
             </span>
-
+            <input name="{{col.name}}"
+                   ng-model="entity[col.name]" type="email" class="form-control" 
+                   ng-minlength="10" ng-maxlength="col.maxLength"
+                   id="{{col.name}}" ng-required="col.required" 
+                   placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
+            />
         </div>
 
         <!--mobile-->
@@ -103,10 +102,11 @@
             placeholder="{{col.place}}" />
 
         <!--right icon-->
-        <span class="input-group-addon" ng-if="col.type!='linklabel' && col.type !='sequence' && col.type != 'checkbox'">
-                            <i class="glyph-icon "
-                                ng-class="{'font-red icon-asterisk': !(editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty']) && col.required, 'font-green icon-iconic-ok': (editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty']), 'font-red icon-iconic-cancel': (editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'])}"></i>
-                        </span>
+        <span class="input-group-addon" 
+            ng-if="col.type!='linklabel' && col.type !='sequence' && col.type != 'checkbox'">
+            <i class="glyph-icon "
+                ng-class="{'font-red icon-asterisk': !(editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty']) && col.required, 'font-green fa fa-check': (editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty']), 'font-red icon-iconic-cancel': (editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'])}"></i>
+        </span>
     </div>
 
 </div>
