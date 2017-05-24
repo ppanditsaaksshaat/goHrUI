@@ -1,17 +1,15 @@
-<div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
-  <div class="panel-heading">
-    {{page.pageinfo.title}}
-    <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
-  </div>
-  <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+<div class="panel panel-default pnlWithFooter">
+  <edit-panel-head page-title="page.pageinfo.title" save-form="empTabCtrl.saveFormCommon()" reset-form="empTabCtrl.resetFormCommon()"
+    clear-form="empTabCtrl.clearFormCommon()" condition="(true)"></edit-panel-head>
+  <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
     <div class="row">
 
       <div class="col-sm-4">
         <div class="form-group">
           <label for="inputDepartment">Department*</label>
           <select id="empDepartment_{{$index}}" name="empDepartment_{{$index}}" ng-model="empTabCtrl.entity.JDDeptId" class="form-control"
-            ng-options="department.value as department.name for department in page.pageinfo.selects.JDDeptId" 
-            data-placeholder="Select Nav Menu" ng-required="true">
+            ng-options="department.value as department.name for department in page.pageinfo.selects.JDDeptId" data-placeholder="Select Nav Menu"
+            ng-required="true">
                </select>
         </div>
       </div>
@@ -19,17 +17,16 @@
         <div class="form-group">
           <label for="inputDesignation">Designation*</label>
           <select id="empdesignation_{{$index}}" name="empdesignation_{{$index}}" ng-model="empTabCtrl.entity.JDDesgId" class="form-control"
-            ng-options="designation.value as designation.name for designation in page.pageinfo.selects.JDDesgId" 
-            data-placeholder="Select Nav Menu" ng-required="true">
+            ng-options="designation.value as designation.name for designation in page.pageinfo.selects.JDDesgId" data-placeholder="Select Nav Menu"
+            ng-required="true">
                </select>
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
           <label for="inputEmployeeType">Employment Type*</label>
-          <select id="empEmployeeType_{{$index}}" name="empEmployeeType_{{$index}}" ng-model="empTabCtrl.entity.JDEmploymentId"
-            class="form-control" ng-options="employeeType.value as employeeType.name for employeeType in page.pageinfo.selects.JDEmploymentId"
-            data-placeholder="Select Nav Menu"
+          <select id="empEmployeeType_{{$index}}" name="empEmployeeType_{{$index}}" ng-model="empTabCtrl.entity.JDEmploymentId" class="form-control"
+            ng-options="employeeType.value as employeeType.name for employeeType in page.pageinfo.selects.JDEmploymentId" data-placeholder="Select Nav Menu"
             ng-required="true">
                </select>
         </div>
@@ -76,21 +73,20 @@
       <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
         <div class="checkbox">
           <label class="custom-checkbox">      
-      <input type="checkbox" ng-model="empTabCtrl.entity.SingleOT" >   
-      <span>Single OT</span>
-    </label>
+            <input type="checkbox" ng-model="empTabCtrl.entity.SingleOT" >   
+            <span>Single OT</span>
+          </label>
         </div>
       </div>
       <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
         <div class="checkbox">
           <label class="custom-checkbox">      
-      <input type="checkbox" ng-model="empTabCtrl.entity.JDDoubleOT" >   
-      <span>Double OT</span>
-    </label>
+            <input type="checkbox" ng-model="empTabCtrl.entity.JDDoubleOT" >   
+            <span>Double OT</span>
+          </label>
         </div>
       </div>
     </div>
-
     <div class="row" ng-if="empTabCtrl.entity.JDIsOT">
       <div class="col-sm-4" ng-if="empTabCtrl.entity.SingleOT">
         <div class="form-group">
@@ -105,7 +101,7 @@
         </div>
       </div>
     </div>
-    <div ng-show="empTabCtrl.entity.EmpLevelName=='3'">
+    <div ng-show="empTabCtrl.entity.JDEmploymentId=='3'">
       <hr>
       <div class="row">
         <div class="col-sm-4">
@@ -155,8 +151,8 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label for="inputEmployeeType">HR</label>
-            <select id="empEmployeeType_{{$index}}" name="empEmployeeType_{{$index}}" ng-model="empTabCtrl.entity.EmploymentName"
-              class="form-control" ng-options="employee.value as employee.name for employee in empTabCtrl.employee" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+            <select id="empEmployeeType_{{$index}}" name="empEmployeeType_{{$index}}" ng-model="empTabCtrl.entity.EmploymentName" class="form-control"
+              ng-options="employee.value as employee.name for employee in empTabCtrl.employee" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
               data-placeholder="Select Nav Menu" ng-required="true">
                </select>
           </div>
@@ -192,8 +188,15 @@
       </div>
       <hr>
     </div>
-
-    <div class="text-center">
-      <button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveForm()">Save</button>
+    <!--<div class="text-center">
+      <button type="submit" class="btn btn-sm btn-primary" ng-click="empTabCtrl.saveForm()">Save</button>
+      <button type="button" class="btn btn-sm btn-warning" ng-click="empTabCtrl.resetForm()">Reset</button>
+      <button type="button" class="btn btn-sm btn-danger" ng-click="empTabCtrl.closeForm()">Clear</button>
+    </div>-->
+  </div>
+  <div class="panel-footer clearfix" style="padding-top:5px">
+    <div class="pull-right">
+      
     </div>
   </div>
+</div>

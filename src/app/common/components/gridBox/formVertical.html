@@ -1,7 +1,7 @@
 <form class="form-horizontal" name="editForm" ng-submit="saveForm(editForm)">
     <div class="form-group" ng-repeat="col in page.formrows">
-        <label for="inputPassword3" class="col-sm-3 control-label">{{col.text}}</label>
-        <div class="col-md-9" ng-switch="col.type">
+        <label for="inputPassword3" class="col-sm-5 control-label">{{col.text}}</label>
+        <div class="col-md-7" ng-switch="col.type">
             <div class="input-group">
                 <!--Textbox-->
                 <input ng-switch-when="textbox" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" maxlength="{{col.maxLength}}"
@@ -106,11 +106,11 @@
 
         </div>
     </div>
-    <div class="form-group">
+    <!--<div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">
             <button ng-disabled="!editForm.$valid" type="submit" class="btn btn-primary">Save</button>
             <button type="button" class="btn btn-warning" ng-click="resetForm()">Reset</button>
             <button type="button" class="btn btn-danger" ng-click="closeForm()">Close</button>
         </div>
-    </div>
+    </div>-->
 </form>
