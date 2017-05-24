@@ -49,6 +49,15 @@
                                 </label>
                             </div>
                         </div>
+                         <div class="row" ng-show="tabCtrl.gridOptions.data.length > 0">
+                            <div class="col-md-12">
+
+                                <label class="checkbox-inline custom-checkbox nowrap">
+                                    <input type="checkbox"   id="inlineCheckbox03"  ng-model="tabCtrl.isInvalidData">
+                                    <span>Invalid Data</span>
+                                </label>
+                            </div>
+                        </div>
                         <hr ng-show="tabCtrl.gridOptions.data.length >= 0" />
                         <div class="row" ng-show="tabCtrl.gridOptions.data.length >= 0">
                             <div class="col-md-12">
@@ -294,7 +303,7 @@
                     <div class="panel">
                         <div class="panel-body">
                             <h3 class="with-line">Skip Record</h3>
-                            <table class="table">
+                            <table class="table" ng-show="tabCtrl.skipDataList.length>0">
                                 <thead>
                                     <tr>
                                         <th ng-repeat="head in tabCtrl.selectedHeader">{{head}}</th>
@@ -377,7 +386,7 @@
         </uib-tab>
         <uib-tab heading="Import History">
             <h3 class="with-line">Import History</h3>
-            <grid-box page="uploadHistory" box-options="boxSetting">
+            <grid-box ng-model="uploadHistory" box-options="boxSetting">
             </grid-box>
         </uib-tab>
     </uib-tabset>

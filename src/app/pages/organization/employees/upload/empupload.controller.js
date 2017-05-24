@@ -164,20 +164,20 @@
             addFieldCheck('ext', '', 0, 5, 1);
 
             // Single OT
-            addFieldCheck('single', 'ot', 0, 6, 0);
-            addFieldCheck('ot', '', 0, 6, 0);
+            addFieldCheck('issingleot', 'ot', 0, 6, 0);
+            // addFieldCheck('singleot', '', 0, 6, 0);
 
             // Double OT
-            addFieldCheck('double', 'ot', 0, 6, 1);
-            addFieldCheck('ot', '', 0, 6, 1);
+            addFieldCheck('isdoubleot', 'ot', 0, 6, 1);
+            // addFieldCheck('doubleot', '', 0, 6, 1);
 
             //Single OT Rate
             addFieldCheck('single', 'rate', 0, 7, 0);
-            addFieldCheck('rate', '', 0, 7, 0);
+            addFieldCheck('singlerate', '', 0, 7, 0);
 
             //Double OT Rate
-            addFieldCheck('double', 'rate', 0, 7, 1);
-            addFieldCheck('rate', '', 0, 7, 1);
+            addFieldCheck('doubleot', 'rate', 0, 7, 1);
+            addFieldCheck('doublerate', '', 0, 7, 1);
 
             //emp code
             addFieldCheck('emp', 'code', 1, 0, 0);
@@ -271,8 +271,8 @@
             addFieldCheck('esiaccount', '', 2, 1, 1);
 
             //ESI Start Date
-            addFieldCheck('other', 'number', 2, 2, 0);
-            addFieldCheck('othernumber', '', 2, 2, 0);
+            addFieldCheck('esi', 'startdate', 2, 2, 0);
+            addFieldCheck('esistartdate', '', 2, 2, 0);
 
             //ESI Dispensary name
             addFieldCheck('esi', 'dispensary', 2, 2, 1);
@@ -596,6 +596,9 @@
         vm.employeeShowData = function () {
             if (vm.showEmployeeName) {
                 $scope.showMsg('success', 'Employee full name is exists in template file.');
+                // vm.migrate.step2=true;
+                // vm.migrate.step1=false;
+
             }
 
 
@@ -725,10 +728,14 @@
             if (vm.showEmployeeName === undefined) {
                 vm.showEmployeeName = false;
             }
+            if (vm.isInvalidData === undefined) {
+                vm.isInvalidData = false;
+            }
+
             var fileName = 'Employeedata';
 
             console.log(vm.gridOptions.data)
-            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName, fileName: fileName }
+            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName, fileName: fileName, invalidData: vm.isInvalidData }
             console.log(uncData)
             var postData = JSON.stringify(uncData);
             var compressed = LZString.compressToEncodedURIComponent(postData);
@@ -776,10 +783,13 @@
             if (vm.showEmployeeName === undefined) {
                 vm.showEmployeeName = false;
             }
+            if (vm.isInvalidData === undefined) {
+                vm.isInvalidData = false;
+            }
             var fileName = 'Employeedata';
 
             console.log(vm.gridOptions.data)
-            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName, fileName: fileName }
+            var uncData = { fieldList: mappedFieldsList, data: vm.gridOptions.data, type: 'Employee', isempFullName: vm.showEmployeeName, fileName: fileName, invalidData: vm.isInvalidData }
             console.log(uncData)
             var postData = JSON.stringify(uncData);
             var compressed = LZString.compressToEncodedURIComponent(postData);
@@ -845,7 +855,7 @@
 
             }, function (err) {
                 console.log(err)
-                _showToast('error', err, title)
+                $scope.showMsg('error', err, 'Error Message')
             });
         }
 
