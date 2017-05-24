@@ -50,6 +50,7 @@
             }
             else {
                 vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
+                console.log(vm.empPKId)
                 $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
             }
         }
@@ -114,6 +115,7 @@
         function _getPageDataErrorResult(error) {
         }
         function _getLocalPageObject(pageId) {
+            
             var linkFieldName, linkFieldValue;
             linkFieldValue = vm.empPKId;
             pageId = parseInt(pageId);
@@ -197,9 +199,11 @@
             return data;
         }
         function _saveAddress() {
+         
             _formSave(vm.empContactDetail, vm.pageIds.contactPageId);
         }
         function _saveForm() {
+         
             _formSave(vm.entity, vm.pageId);
         }
         function _formSave(entity, pageId) {
@@ -245,15 +249,21 @@
             vm.empContactDetail = angular.copy(vm.oldempContactDetail);
         }
         function _clearPersonal() {
-            vm.entity = {};
+             var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
+                vm.entity = {};
+                vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
+
             vm.empEmgContact = {};
+              vm.empEmgContact[$scope.page.pageinfo.idencolname] = oldPkId;
         }
         function _clearAddress() {
-            vm.empContactDetail = {};
+           var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
+                vm.empContactDetail = {};
+                vm.empContactDetail[$scope.page.pageinfo.idencolname] = oldPkId;
+           
         }
         //=========================================================== common method
         function _saveFormCommon() {
-           
             if (vm.activeTab === undefined) {
                 _saveForm();
             }
@@ -278,7 +288,10 @@
         }
         function _clearFormCommon() {
             if (vm.activeTab === undefined) {
+                var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
                 vm.entity = {};
+                vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
+
             }
             else if (vm.activeTab == 0) {
                 _clearPersonal();
