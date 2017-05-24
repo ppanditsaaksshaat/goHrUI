@@ -249,11 +249,18 @@
             vm.empContactDetail = angular.copy(vm.oldempContactDetail);
         }
         function _clearPersonal() {
-            vm.entity = {};
+             var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
+                vm.entity = {};
+                vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
+
             vm.empEmgContact = {};
+              vm.empEmgContact[$scope.page.pageinfo.idencolname] = oldPkId;
         }
         function _clearAddress() {
-            vm.empContactDetail = {};
+           var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
+                vm.empContactDetail = {};
+                vm.empContactDetail[$scope.page.pageinfo.idencolname] = oldPkId;
+           
         }
         //=========================================================== common method
         function _saveFormCommon() {
@@ -281,7 +288,10 @@
         }
         function _clearFormCommon() {
             if (vm.activeTab === undefined) {
+                var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
                 vm.entity = {};
+                vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
+
             }
             else if (vm.activeTab == 0) {
                 _clearPersonal();
