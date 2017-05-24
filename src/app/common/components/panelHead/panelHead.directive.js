@@ -31,6 +31,7 @@
                // $scope.saveForm = _saveForm;
                 $scope.resetForm = _resetForm;
                 $scope.clearForm = _clearForm;
+                $scope.employeeList=_employeeList
 
                 // function _saveForm() {
                 //     if ($scope.ngSaveForm !== undefined) {
@@ -56,6 +57,11 @@
                     else {
                         alert('Not Implemented')
                     }
+                }
+                function _employeeList()
+                {
+                   
+                    $state.go("organization.employees.list");
                 }
             }
         };
