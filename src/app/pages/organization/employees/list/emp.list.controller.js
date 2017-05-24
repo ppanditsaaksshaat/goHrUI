@@ -32,7 +32,7 @@
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
-      showUpload: false,
+      showUpload: true,
       showDialog: false,
       enableRefreshAfterUpdate: true,
       gridHeight: 450,
