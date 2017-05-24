@@ -1,6 +1,5 @@
 
 
-<<<<<<< HEAD
 // /**
 //  * @author pradeep.pandip
 //  * created on 16.05.2017
