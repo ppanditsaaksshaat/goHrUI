@@ -1,8 +1,8 @@
 
 
 /**
- * @author v.lugovsky
- * created on 16.12.2015
+ * @author prardeep.pandit
+ * created on 1.05.2017
  */
 (function () {
     'use strict';
@@ -13,112 +13,60 @@
     /** @ngInject */
     /** @ngInject */
     function AddEmployeeController($scope, $stateParams, pageService, $timeout, $state) {
+
+
+        //local variable
         var vm = this;
+              
+   
+        var vm = this;
+         var col={
+      text:"Email",
+      type:"email",
+      propColName:null,
+      required:true,
+      place:"Email",
+      maxLength:50
+    }
+$scope.email=col;
         var columnIds = ['132', '667', '674', '192', '668', '743', '744'];
+        vm.pageId=25;
         vm.empAdd = {};
+        //end of local variable
+
+        //private function
         vm.saveForm = _saveForm;
-        vm.clear = _clear;
+       //end of private function
+      
 
-       function _clear()
-       {
-           vm.empAdd=[];
-       }
-
-        $scope.open = open;
-        $scope.opened = false;
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[0];
-        $scope.options = {
-            showWeeks: false
-        };
-
-        function open() {
-            $scope.opened = true;
-        }
-
+        //page load 
         function _loadController() {
             $timeout(function () {
-
                 pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
-                pageService.getFieldSetting(25).then(_getFieldSettingSuccessResult, _getFieldSettingErrorResult)
+                pageService.getFieldSetting(vm.pageId).then(_getFieldSettingSuccessResult, _getFieldSettingErrorResult)
             });
         }
+        function _getAllSelectSuccessResult(result) {          
+            vm.dropDownList=result;         
+        }
+        function _getAllSelectErrorResult(err) {
+           console.log(err);
+        }
         function _getFieldSettingSuccessResult(result) {
-            vm.EmpCode = result.colvalue;
-            //alert(JSON.stringify(result))
+            vm.EmpCode = result.colvalue;          
         }
-        function _getFieldSettingErrorResult(error) {
-
+        function _getFieldSettingErrorResult(err) {
+            console.log(err)
         }
-        function _getAllSelectSuccessResult(result) {
-            console.log(result)
-            vm.title = result[0];
-            vm.department = result[1];
-            vm.designation = result[2];
-            vm.gender = result[3];
-            vm.employeeType = result[4];
-            vm.grade = result[5];
-            vm.level = result[6];
-        }
-        function _getAllSelectErrorResult(error) {
-            alert(JSON.stringify(error))
-        }
-        function _validateField(form) {
 
-            if (vm.empAdd.EmpTitleId == undefined) {
-                $scope.showMsg('error', 'Please Select Title', 'Requried')
-                return false;
-            }
-            if (vm.empAdd.EmpFirstName == undefined || vm.empAdd.EmpFirstName == '') {
-                $scope.showMsg('error', 'Please Enter FirstName', 'Requried')
-                return false;
-            }
+        // end of page load 
 
-            if (vm.empAdd.PdGenderId == undefined) {
-                $scope.showMsg('error', 'Please Select Gender', 'Requried')
-                return false;
-            }
-            if (vm.empAdd.JDDate == undefined || vm.empAdd.JDDate == "") {
-                $scope.showMsg('error', 'Please Select Date Of Joining', 'Requried')
-                return false;
-            }
-            if (vm.empAdd.PdMobileNo == undefined || vm.empAdd.PdMobileNo == '') {
-                $scope.showMsg('error', 'Please Enter Mobile', 'Requried')
-                return false;
-            }
-
-            if (vm.empAdd.JDDeptId == undefined) {
-                $scope.showMsg('error', 'Please Select Department', 'Requried')
-                return false;
-            }
-            if (vm.empAdd.JDDesgId == undefined) {
-                $scope.showMsg('error', 'Please Select Designation', 'Requried')
-                return false;
-            }
-            if (vm.empAdd.JDEmploymentId == undefined) {
-                $scope.showMsg('error', 'Please Select EmployeeType', 'Requried')
-                return false;
-            }
-            if (vm.empAdd.JDEmpGradeId == undefined) {
-                $scope.showMsg('error', 'Please Select Grade', 'Requried')
-                return false;
-            }
-            if (vm.empAdd.JDEmpLevelId == undefined) {
-                $scope.showMsg('error', 'Please Select Level', 'Requried')
-                return false;
-            }
-            return true;
-
-
-        }
-        function _saveForm() {
-        //    alert(vm.empAdd.JDDate)
+       
+        // save employee form
+        function _saveForm(data) {      
             var date=new Date(vm.empAdd.JDDate);
             var month=date.getMonth()+1;
-            var doj=month +"/"+date.getDate()+"/" +date.getFullYear();
-
-            if (_validateField()) {
-
+            var doj=month +"/"+date.getDate()+"/" +date.getFullYear();       
                 var basic = {
                     EmpTitleId: vm.empAdd.EmpTitleId,
                     EmpFirstName: vm.empAdd.EmpFirstName,
@@ -127,8 +75,7 @@
                     EmpCode: vm.EmpCode,
                     OtherCode: vm.empAdd.OtherCode,
                     EmpPhoto1_64URL: vm.empAdd.EmpPhoto1_64URL,
-                }
-               
+                }              
                 var job = {
                     JDDate:doj,
                     JDDeptId: vm.empAdd.JDDeptId,
@@ -144,16 +91,24 @@
                 }
                 var employeeData = { basic: basic, job: job, personal: personal };
                 pageService.create(JSON.stringify(employeeData)).then(_createSuccessResult, _createErrorResult)
-            }
+            
         }
-        function _createSuccessResult(result) {
-            //   alert(JSON.stringify(result))
+        function _createSuccessResult(result) {     
+            if(result.success_message=='success')
+            {
             $scope.showMsg('success', 'Employee Saved Successfully');
             $state.go('organization.employees.list');
+            }
+            else
+            {
+            $scope.showMsg('error', result);
+            }
         }
         function _createErrorResult(error) {
-
         }
+        // save employee form
+
+        //page load function
         _loadController();
     }
 })();
