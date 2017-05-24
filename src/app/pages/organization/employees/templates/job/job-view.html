@@ -80,7 +80,7 @@
           <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
             <div class="checkbox">
               <label class="custom-checkbox">      
-            <input type="checkbox" ng-model="empTabCtrl.entity.SingleOT"  >   
+            <input type="checkbox" ng-model="empTabCtrl.entity.SingleOT"   >   
             <span>Single OT</span>
           </label>
             </div>
@@ -98,13 +98,13 @@
           <div class="col-sm-4" ng-if="empTabCtrl.entity.SingleOT">
             <div class="form-group">
               <label for="inputDepartment">Single OT Rate*</label>
-              <input type="text" class="form-control" ng-model="empTabCtrl.entity.JDSingleOTRate" ng-required="empTabCtrl.entity.SingleOT">
+              <input type="text" class="form-control" ng-model="empTabCtrl.entity.JDSingleOTRate" ng-required="empTabCtrl.entity.SingleOT" numeric-Only>
             </div>
           </div>
           <div class="col-sm-4" ng-if="empTabCtrl.entity.JDDoubleOT">
             <div class="form-group">
               <label for="inputDepartment">Double OT Rate*</label>
-              <input type="text" class="form-control" ng-model="empTabCtrl.entity.DoubleOTRate" ng-required="empTabCtrl.entity.JDDoubleOT">
+              <input type="text" class="form-control" ng-model="empTabCtrl.entity.DoubleOTRate" ng-required="empTabCtrl.entity.JDDoubleOT" numeric-Only>
             </div>
           </div>
         </div>
