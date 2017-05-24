@@ -456,8 +456,8 @@
                 }
                 else {
                     if (vm.ignoreCase == undefined) {
-                        alert('Please choose any one option from acceptance of invalid data')
-
+                        // alert('Please choose any one option from acceptance of invalid data')
+                        $scope.showMsg('error', 'Please choose any one option from acceptance of invalid data')
                         return;
                     }
 
