@@ -30,6 +30,7 @@
       mastersMenu.push({ name: 'PayBandDetail', text: 'Pay Band Detail', id:136 })
       mastersMenu.push({ name: 'PayBandRule', text: 'Pay Band  Rule', id: 134 })
       mastersMenu.push({ name: 'PayBandSlab', text: 'Pay Band Slab', id: 135 })
+      mastersMenu.push({ name: 'EmployeeEntiment', text: 'Employee Entiment', id: 183 })
       
       return mastersMenu;
 
