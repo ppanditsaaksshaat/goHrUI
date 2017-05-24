@@ -48,7 +48,7 @@
                 if ($scope.page.gridOptions === undefined) {
                     $scope.page.gridOptions = angular.copy(gridOptions);
                 }
-
+                $scope.oldEntity = {};
                 $scope.$watch('page.pageinfo', function () {
                     _setGridColumns();
                     _setupVerticalForm();
