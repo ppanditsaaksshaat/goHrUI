@@ -1,5 +1,7 @@
+
+<form ng-submit="empTabCtrl.saveFormCommon()">
 <div class="panel panel-default xmedium-panel">
-  <edit-panel-head page-title="page.pageinfo.title" save-form="empTabCtrl.saveFormCommon()" reset-form="empTabCtrl.resetFormCommon()"
+  <edit-panel-head page-title="page.pageinfo.title" save-form="" reset-form="empTabCtrl.resetFormCommon()"
     clear-form="empTabCtrl.clearFormCommon()" condition="(empTabCtrl.activeTab==0 || empTabCtrl.activeTab==1)"></edit-panel-head>
   <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
     <uib-tabset active="empTabCtrl.activeTab">
@@ -12,7 +14,7 @@
                 <label for="inputDOB">Date Of Birth*</label>
 
                 <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
-                  <input ng-model="empTabCtrl.entity.PdDateOfBirth" type="text" class="form-control" />
+                  <input ng-model="empTabCtrl.entity.PdDateOfBirth" type="text" class="form-control" requried/>
                 </datepicker>
               </div>
             </div>
@@ -267,3 +269,4 @@
     </uib-tabset>
   </div>
 </div>
+</form>

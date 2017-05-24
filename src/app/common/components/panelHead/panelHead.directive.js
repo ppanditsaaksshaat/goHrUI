@@ -15,7 +15,7 @@
             templateUrl: 'app/common/components/panelHead/panelHead.html',
             scope: {
                 ngPageTitle: '=pageTitle',
-                ngSaveForm: '&saveForm',
+                // ngSaveForm: '&saveForm',
                 ngResetForm: '&resetForm',
                 ngClearForm: '&clearForm',
                 ngCondition: '=condition'
@@ -28,18 +28,18 @@
                     }
                 })
 
-                $scope.saveForm = _saveForm;
+               // $scope.saveForm = _saveForm;
                 $scope.resetForm = _resetForm;
                 $scope.clearForm = _clearForm;
 
-                function _saveForm() {
-                    if ($scope.ngSaveForm !== undefined) {
-                        $scope.ngSaveForm();
-                    }
-                    else {
-                        alert('Not Implemented')
-                    }
-                }
+                // function _saveForm() {
+                //     if ($scope.ngSaveForm !== undefined) {
+                //         $scope.ngSaveForm();
+                //     }
+                //     else {
+                //         alert('Not Implemented')
+                //     }
+                // }
 
                 function _resetForm() {
                     if ($scope.ngResetForm !== undefined) {

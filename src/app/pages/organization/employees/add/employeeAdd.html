@@ -10,7 +10,7 @@
 <div ba-panel ba-panel-class="x-medium" ba-panel-title="Add Employee">
   <form name="form" ng-submit="addCtrl.saveForm(addCtrl.empAdd)">
     <div class="row">
-   <field-Box ng-model="email" ></field-Box>
+  
     <div class="col-sm-1">
         <div class="form-group">
           <label for="inputTitle">Title*</label>
@@ -64,14 +64,15 @@
         <div class="form-group">
           <label for="inputDOB">Date Of Joining*</label>      
           <datepicker date-format="dd-MMMM-yyyy" selector="form-control">           
-            <input ng-model="addCtrl.empAdd.JDDate" type="text" class="form-control" required/>         
+            <input ng-model="addCtrl.empAdd.JDDate" name="doj" type="text" class="form-control" ng-pattern="/^[0-9]{2}[\/][0-9]{2}[\/][0-9]{4}$/g" onblur=""  placeholder="dd-mm-yyyy" required/>         
+           
           </datepicker>
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
           <label for="inputMobile">Mobile*</label>
-          <input numeric-Only type="text" class="form-control" id="inputMobile" minlength="5" maxlength="15" ng-model="addCtrl.empAdd.PdMobileNo"
+          <input numeric-Only type="text" class="form-control" id="inputMobile" minlength="10" maxlength="17" ng-model="addCtrl.empAdd.PdMobileNo"
             placeholder="Mobile" required>
         </div>
       </div>
@@ -165,7 +166,7 @@
     </div>
     <div class="text-center">
       <button type="submit" class="btn btn-primary">Save</button>
-      <button type="button" ng-click="addCtrl.empAdd=[]" class="btn btn-primary">Clear</button>
+      <button type="button" ng-click="addCtrl.empAdd=[]" class="btn btn-primary">Reset</button>
       <button type="button" ng-click="back('organization.employees.list')" class="btn btn-primary">Back</button>
     </div>
   </form>

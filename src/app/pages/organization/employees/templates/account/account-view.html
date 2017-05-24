@@ -1,6 +1,7 @@
+<form ng-submit="empTabCtrl.saveFormCommon()">
 <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
   <edit-panel-head page-title="page.pageinfo.title" 
-    save-form="empTabCtrl.saveFormCommon()" 
+   
     reset-form="empTabCtrl.resetFormCommon()"
     clear-form="empTabCtrl.clearFormCommon()" 
     condition="true"></edit-panel-head>
@@ -12,8 +13,9 @@
           <label for="inputDepartment">Salary Mode*</label>
           <select id="empSalaryMode_{{$index}}" name="empSalaryMode_{{$index}}" ng-model="empTabCtrl.entity.ADSalaryModeId" class="form-control"
             ng-options="salaryMode.value as salaryMode.name for salaryMode in page.pageinfo.selects.ADSalaryModeId" data-placeholder="Select Nav Menu"
-            ng-required="true">
-               </select>
+            requried>
+           </select>
+          <option></option>
         </div>
       </div>
     </div>
@@ -24,46 +26,48 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="inputDepartment">Salary</label>
+            <label for="inputDepartment">Salary*</label>
             <select id="empSalary_{{$index}}" name="empSalary_{{$index}}" ng-model="empTabCtrl.entity.ADSalaryID" class="form-control"
               ng-options="salary.value as salary.name for salary in page.pageinfo.selects.ADSalaryID" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-              data-placeholder="Select Nav Menu" ng-required="true">
+              data-placeholder="Select Nav Menu" ng-required="empTabCtrl.entity.ADSalaryModeId=='3'">
+              <option></option>
                </select>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="inputDepartment">Bank Name</label>
+            <label for="inputDepartment">Bank Name*</label>
             <select id="empBankName_{{$index}}" name="empBankName_{{$index}}" ng-model="empTabCtrl.entity.BankId" class="form-control"
               ng-options="bankName.value as bankName.name for bankName in page.pageinfo.selects.BankId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-              data-placeholder="Select Nav Menu" ng-required="true">
+              data-placeholder="Select Nav Menu" ng-required="empTabCtrl.entity.ADSalaryModeId=='3'">
+               <option></option>
                </select>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="inputDepartment">Account No.</label>
-            <input type="text" class="form-control" ng-model="empTabCtrl.entity.BankAccountNo">
+            <label for="inputDepartment">Account No.*</label>
+            <input type="text" class="form-control" ng-model="empTabCtrl.entity.BankAccountNo" ng-required="empTabCtrl.entity.ADSalaryModeId=='3'" numeric-Only>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="inputDepartment">Branch Name</label>
-            <input type="text" class="form-control" ng-model="empTabCtrl.entity.ADBranchName">
+            <label for="inputDepartment">Branch Name*</label>
+            <input type="text" class="form-control" ng-model="empTabCtrl.entity.ADBranchName" ng-required="empTabCtrl.entity.ADSalaryModeId=='3'" text-Only maxlength="50">
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="inputDepartment">IFSC</label>
-            <input type="text" class="form-control" ng-model="empTabCtrl.entity.ADIFSCCode">
+            <label for="inputDepartment">IFSC*</label>
+            <input type="text" class="form-control" ng-model="empTabCtrl.entity.ADIFSCCode" ng-required="empTabCtrl.entity.ADSalaryModeId=='3'">
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group">
             <label for="inputDepartment">Cheque</label>
-            <input type="text" class="form-control" ng-model="empTabCtrl.entity.ADChequeNo">
+            <input type="text" class="form-control" ng-model="empTabCtrl.entity.ADChequeNo" >
           </div>
         </div>
       </div>
@@ -92,16 +96,16 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="inputDepartment">PF Account No.</label>
-              <input type="text" class="form-control" ng-model="empTabCtrl.entity.PFPPFAccountNo">
+              <label for="inputDepartment">PF Account No.*</label>
+              <input type="text" class="form-control" ng-model="empTabCtrl.entity.PFPPFAccountNo" ng-required="empTabCtrl.entity.PFPPFIsActive" numeric-Only>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="inputDepartment">PF Start Date</label>
+              <label for="inputDepartment">PF Start Date*</label>
               <!--<input type="text" class="form-control"  ng-model="empTabCtrl.entity.PFPPFMemberDate">-->
               <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
-                <input ng-model="empTabCtrl.entity.PFPPFMemberDate" type="text" class="form-control" />
+                <input ng-model="empTabCtrl.entity.PFPPFMemberDate" type="text" class="form-control" placeholder="dd-mm-yyyy"/ ng-required="empTabCtrl.entity.PFPPFIsActive">
               </datepicker>
             </div>
           </div>
@@ -115,16 +119,16 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="inputDepartment">ESI Account No.</label>
-              <input type="text" class="form-control" ng-model="empTabCtrl.entity.ESIMemeberNo">
+              <label for="inputDepartment">ESI Account No.*</label>
+              <input type="text" class="form-control" ng-model="empTabCtrl.entity.ESIMemeberNo" ng-required="empTabCtrl.entity.ESIIsActive" numeric-Only>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="inputDepartment">ESI Start Date</label>
+              <label for="inputDepartment">ESI Start Date*</label>
               <!--<input type="text" class="form-control"  ng-model="empTabCtrl.entity.ESIMemeberDate">-->
               <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
-                <input ng-model="empTabCtrl.entity.ESIMemeberDate" type="text" class="form-control" />
+                <input ng-model="empTabCtrl.entity.ESIMemeberDate" type="text" class="form-control" placeholder="dd-mm-yyyy" ng-required="empTabCtrl.entity.ESIIsActive"/>
               </datepicker>
             </div>
           </div>
@@ -136,3 +140,4 @@
       <!--<button type="button" class="btn btn-primary" ng-click="empTabCtrl.saveForm()">Save</button>-->
     </div>
   </div>
+  </form>
