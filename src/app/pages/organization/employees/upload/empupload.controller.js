@@ -230,7 +230,7 @@
             addFieldCheck('gender', '', 1, 2 + extraRowIndex, 0);
             addFieldCheck('email', '', 1, 2 + extraRowIndex, 1);
 
-            addFieldCheck('mobile', '', 1, 3 + extraRowIndex, 0);
+            addFieldCheck('mobileno', '', 1, 3 + extraRowIndex, 0);
 
             //anniversery date
             addFieldCheck('anniversary', 'date', 1, 3 + extraRowIndex, 1);
@@ -1053,7 +1053,7 @@
             tempColumns.push({ Designation: '' });
             tempColumns.push({ DateOfBirth: '' });
             tempColumns.push({ Gender: '' });
-            tempColumns.push({ Mobile: '' });
+            tempColumns.push({ MobileNo: '' });
             tempColumns.push({ EmpName: '' });
 
             DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
@@ -1075,7 +1075,7 @@
             tempColumns.push({ Designation: '' });
             tempColumns.push({ DateOfBirth: '' });
             tempColumns.push({ Gender: '' });
-            tempColumns.push({ Mobile: '' });
+            tempColumns.push({ MobileNo: '' });
             tempColumns.push({ DateOfJoining: '' });
             tempColumns.push({ Grade: '' });
             tempColumns.push({ Level: '' });
