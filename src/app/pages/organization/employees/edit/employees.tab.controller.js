@@ -203,7 +203,7 @@
             _formSave(vm.empContactDetail, vm.pageIds.contactPageId);
         }
         function _saveForm() {
-         
+        
             _formSave(vm.entity, vm.pageId);
         }
         function _formSave(entity, pageId) {
