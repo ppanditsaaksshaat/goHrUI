@@ -30,8 +30,8 @@
                                 </div>
                             </div>
                         </div>
-                        <hr ng-show="tabCtrl.gridOptions.data.length >= 0" />
-                        <div class="row" ng-show="tabCtrl.gridOptions.data.length >= 0">
+                        <hr ng-show="tabCtrl.gridOptions.data.length > 0" />
+                        <div class="row" ng-show="tabCtrl.gridOptions.data.length > 0">
                             <div class="col-md-12">
                                 <label class="checkbox-inline custom-checkbox nowrap">
                                     <input type="checkbox" id="inlineCheckbox01" ng-model="tabCtrl.showPreview">
@@ -56,7 +56,7 @@
                                     <input type="checkbox"   id="inlineCheckbox03"  ng-model="tabCtrl.acceptInvalidData">
                                     <span>Accept Invalid Data</span>
                                 </label>
-                                <div id="notAcceptInvalidData"  ng-hide="tabCtrl.acceptInvalidData">
+                                <div id="notAcceptInvalidData" ng-hide="tabCtrl.acceptInvalidData">
                                     <div class="radio">
                                         <label><input type="radio" ng-model="tabCtrl.ignoreCase" name="ignoreRow" checked value="ignorerow">Ignore Row</label>
                                     </div>
@@ -87,13 +87,22 @@
                                 <button type="button" ng-click="back('organization.employees.list')" ng-hide="tabCtrl.gridOptions.data.length > 0" class="btn btn-default">
                                     Back
                                 </button>
-                                <button type="button" class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadTemp()">
+                                <!--<button type="button" class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadTemp()">
                             Download Template</button>
+                            <button type="button" class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadMaxFieldTemp()">
+                            Download Template With Max Field</button>
+                            -->
                             </div>
                         </div>
                     </div>
                     <div class="col-md-9">
                         <div ng-hide="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">
+                            <h5>Download Template</h5>
+                            <button type="button" class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadTemp()">
+                           Minimum Requirement Template</button>
+                            <button type="button" class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadMaxFieldTemp()">
+              Maximum Requirement Template</button>
+
                             <h5>Supported Formats</h5>
                             <p>
                                 You can import up to 1000 records through an .xls, .xlsx file. Please use a .csv file if you're importing more than 1000
