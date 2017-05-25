@@ -238,14 +238,14 @@
 
             //pancard
             addFieldCheck('pan', 'no', 1, 4 + extraRowIndex, 1);
-            addFieldCheck('panno', '', 1, 4 + extraRowIndex, 1);
+            addFieldCheck('pan', '', 1, 4 + extraRowIndex, 1);
 
 
             //linkedin
             addFieldCheck('linked', 'in', 1, 5 + extraRowIndex, 0);
             addFieldCheck('linkedin', 'Unit', 1, 5 + extraRowIndex, 0);
             //aadhaar card
-            addFieldCheck('aadhaar', 'card', 1, 5 + extraRowIndex, 1);
+            addFieldCheck('aadhaar', '', 1, 5 + extraRowIndex, 1);
             addFieldCheck('aadhaarcard', '', 1, 5 + extraRowIndex, 1);
             addFieldCheck('aadhaarno', '', 1, 5 + extraRowIndex, 1);
 
@@ -592,6 +592,7 @@
         vm.matchingFields = function () {
             angular.forEach(vm.gridOptions.columnDefs, function (col, colIdx) {
                 var isUsable = _findUsable(col.name);
+                console.log(col.name)
                 if (isUsable) {
                     console.log(isUsable);
                 }
@@ -948,6 +949,7 @@
 
             angular.forEach(vm.migrate.findFieldList, function (field, rowidx) {
                 setUsable(colName, field.firstCheck, field.secondCheck, field.tableIdx, field.rowIdx, field.colIdx)
+                console.log(colName)
             })
 
             return isUsable;
@@ -969,6 +971,7 @@
                     if (colIdx == 1) {
                         if (vm.migrate.tables[tableIdx].rows[rowIdx].column2 !== undefined)
                             vm.migrate.tables[tableIdx].rows[rowIdx].column2.value = colName;
+                            console.log(colName)
                     }
                     else {
                         vm.migrate.tables[tableIdx].rows[rowIdx].column1.value = colName;
