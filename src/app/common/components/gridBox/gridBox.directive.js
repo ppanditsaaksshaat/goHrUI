@@ -118,9 +118,10 @@
                 //====================================================================
                 //button functions
                 function _addRecord() {
-                    if ($scope.entity === undefined) {
+                  
+                    // if ($scope.entity === undefined) {
                         $scope.entity = {};
-                    }
+                    // }
                     angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
                         $scope.entity[link.name] = link.value;
                     });
@@ -140,12 +141,13 @@
                             dialogModal.openFormVertical(options);
                         }
                         else {
-                            if ($scope.page.selectedRows !== undefined) {
-                                if ($scope.page.selectedRows.length > 0)
-                                    $scope.entity = $scope.page.selectedRows[0];
-                                else
-                                    $scope.entity = {};
-                            }
+                         
+                            // if ($scope.page.selectedRows !== undefined) {
+                            //     if ($scope.page.selectedRows.length > 0)
+                            //         $scope.entity = $scope.page.selectedRows[0];
+                            //     else
+                            //         $scope.entity = {};
+                            // }
                             $scope.page.showAddRecord = true;
                         }
                     }
@@ -412,7 +414,7 @@
                     return valid;
                 }
                 function _saveForm(form) {
-
+                  
                     if (_validateForm(form)) {
                         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
                             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
