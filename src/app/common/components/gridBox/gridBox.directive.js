@@ -38,6 +38,8 @@
                     showDialog: false,
                     gridStyle: { height: '450px' }
                 }
+
+               
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.boxOptions = angular.copy(boxSetting);
@@ -50,6 +52,7 @@
                 }
                 $scope.oldEntity = {};
                 $scope.$watch('page.pageinfo', function () {
+                     console.log($scope.page.pageinfo)
                     _setGridColumns();
                     _setupVerticalForm();
                     console.log('from watch')
@@ -115,14 +118,13 @@
                 //====================================================================
                 //button functions
                 function _addRecord() {
-                   if($scope.entity===undefined)
-                   {                
-                       $scope.entity={};
-                   }
-                  angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
-                          $scope.entity[col.name] = link.name;
-                  });
-                   
+                    if ($scope.entity === undefined) {
+                        $scope.entity = {};
+                    }
+                    angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
+                        $scope.entity[link.name] = link.value;
+                    });
+
                     $scope.page.action = 'create';
                     if ($scope.page.boxOptions.addRecord == null) {
 
@@ -410,7 +412,7 @@
                     return valid;
                 }
                 function _saveForm(form) {
-                   
+
                     if (_validateForm(form)) {
                         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
                             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)

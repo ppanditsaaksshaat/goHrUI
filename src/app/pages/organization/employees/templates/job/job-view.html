@@ -1,4 +1,4 @@
-<form ng-submit="empTabCtrl.saveFormCommon()">
+<form ng-submit="empTabCtrl.saveFormCommon()" name="editForm">
   <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
     <edit-panel-head page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon()" clear-form="empTabCtrl.clearFormCommon()"
       condition="(true)"></edit-panel-head>
@@ -8,103 +8,126 @@
 
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="inputDepartment">Department*</label>
-              <select id="empDepartment_{{$index}}" name="empDepartment_{{$index}}" ng-model="empTabCtrl.entity.JDDeptId" class="form-control"
+              <label for="inputDepartment" ng-bind="page.pageinfo.fields.JDDeptId.text"></label>
+              <field-box ng-model="page.pageinfo.fields.JDDeptId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <!--<select id="empDepartment_{{$index}}" name="empDepartment_{{$index}}" ng-model="empTabCtrl.entity.JDDeptId" class="form-control"
                 ng-options="department.value as department.name for department in page.pageinfo.selects.JDDeptId" data-placeholder="Select Nav Menu"
                 required>
                 <option></option>
-               </select>
+               </select>-->
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="inputDesignation">Designation*</label>
-              <select id="empdesignation_{{$index}}" name="empdesignation_{{$index}}" ng-model="empTabCtrl.entity.JDDesgId" class="form-control"
+              <label ng-bind="page.pageinfo.fields.JDDesgId.text"></label>
+              <field-box ng-model="page.pageinfo.fields.JDDesgId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <!--<select id="empdesignation_{{$index}}" name="empdesignation_{{$index}}" ng-model="empTabCtrl.entity.JDDesgId" class="form-control"
                 ng-options="designation.value as designation.name for designation in page.pageinfo.selects.JDDesgId" data-placeholder="Select Nav Menu"
                 required>
                 <option></option>
-               </select>
+               </select>-->
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="inputEmployeeType">Employment Type*</label>
-              <select id="empEmployeeType_{{$index}}" name="empEmployeeType_{{$index}}" ng-model="empTabCtrl.entity.JDEmploymentId" class="form-control"
+              <label  ng-bind="page.pageinfo.fields.JDEmploymentId.text"></label>
+               <field-box ng-model="page.pageinfo.fields.JDEmploymentId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <!--<select id="empEmployeeType_{{$index}}" name="empEmployeeType_{{$index}}" ng-model="empTabCtrl.entity.JDEmploymentId" class="form-control"
                 ng-options="employeeType.value as employeeType.name for employeeType in page.pageinfo.selects.JDEmploymentId"
                 data-placeholder="Select Nav Menu" required>
                 <option></option>
-               </select>
+               </select>-->
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="inputDepartment">Date Of Joining*</label>
+              <label  ng-bind="page.pageinfo.fields.JDDate.text"></label>
+               <field-box ng-model="page.pageinfo.fields.JDDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
               <!--<input type="text" class="form-control" placeholder="mm-dd-yyyy"  ng-model="empTabCtrl.entity.JDDate">-->
-              <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
+              <!--<datepicker date-format="dd-MMMM-yyyy" selector="form-control">
                 <input ng-model="empTabCtrl.entity.JDDate" type="text" class="form-control" required />
-              </datepicker>
+              </datepicker>-->
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="inputDesignation">Grade*</label>
-              <select id="empdesignation_{{$index}}" name="empdesignation_{{$index}}" ng-model="empTabCtrl.entity.JDEmpGradeId" class="form-control"
+             <label  ng-bind="page.pageinfo.fields.JDEmpGradeId.text"></label>
+             <field-box ng-model="page.pageinfo.fields.JDEmpGradeId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <!--<select id="empdesignation_{{$index}}" name="empdesignation_{{$index}}" ng-model="empTabCtrl.entity.JDEmpGradeId" class="form-control"
                 ng-options="grade.value as grade.name for grade in page.pageinfo.selects.JDEmpGradeId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
                 data-placeholder="Select Nav Menu" required>
                  <option></option>
-               </select>
+               </select>-->
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="inputEmployeeType">Level*</label>
-              <select id="empLevel_{{$index}}" name="empLevel_{{$index}}" ng-model="empTabCtrl.entity.JDEmpLevelId" class="form-control"
+              <label  ng-bind="page.pageinfo.fields.JDEmpLevelId.text"></label>
+             <field-box ng-model="page.pageinfo.fields.JDEmpLevelId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <!--<select id="empLevel_{{$index}}" name="empLevel_{{$index}}" ng-model="empTabCtrl.entity.JDEmpLevelId" class="form-control"
                 ng-options="level.value as level.name for level in page.pageinfo.selects.JDEmpLevelId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
                 data-placeholder="Select Nav Menu" required>
                  <option></option>
-               </select>
+               </select>-->
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-4">
-            <div class="checkbox">
+            <div class="form-group">
+              <label  ng-bind="page.pageinfo.fields.JDIsOT.text"></label>
+             <field-box ng-model="page.pageinfo.fields.JDIsOT" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+             </div>
+            <!--<div class="checkbox">
               <label class="custom-checkbox">      
             <input type="checkbox" ng-model="empTabCtrl.entity.JDIsOT" >   
             <span>OT</span>
           </label>
-            </div>
+            </div>-->
           </div>
           <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
-            <div class="checkbox">
+            <div class="form-group">
+              <label  ng-bind="page.pageinfo.fields.SingleOT.text"></label>
+             <field-box ng-model="page.pageinfo.fields.SingleOT" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+             </div>
+            <!--<div class="checkbox">
               <label class="custom-checkbox">      
             <input type="checkbox" ng-model="empTabCtrl.entity.SingleOT"   >   
             <span>Single OT</span>
           </label>
-            </div>
+            </div>-->
           </div>
           <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
-            <div class="checkbox">
+            <div class="form-group">
+              <label  ng-bind="page.pageinfo.fields.JDDoubleOT.text"></label>
+             <field-box ng-model="page.pageinfo.fields.JDDoubleOT" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+             </div>
+            <!--<div class="checkbox">
               <label class="custom-checkbox">      
             <input type="checkbox" ng-model="empTabCtrl.entity.JDDoubleOT" >   
             <span>Double OT</span>
           </label>
-            </div>
+            </div>-->
           </div>
         </div>
         <div class="row" ng-if="empTabCtrl.entity.JDIsOT">
           <div class="col-sm-4" ng-if="empTabCtrl.entity.SingleOT">
             <div class="form-group">
-              <label for="inputDepartment">Single OT Rate*</label>
-              <input type="text" class="form-control" ng-model="empTabCtrl.entity.JDSingleOTRate" ng-required="empTabCtrl.entity.SingleOT" numeric-Only>
+              <label  ng-bind="page.pageinfo.fields.JDSingleOTRate.text"></label>
+             <field-box ng-model="page.pageinfo.fields.JDSingleOTRate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <!--<label for="inputDepartment">Single OT Rate*</label>
+              <input type="text" class="form-control" ng-model="empTabCtrl.entity.JDSingleOTRate" ng-required="empTabCtrl.entity.SingleOT" numeric-Only>-->
             </div>
           </div>
           <div class="col-sm-4" ng-if="empTabCtrl.entity.JDDoubleOT">
             <div class="form-group">
-              <label for="inputDepartment">Double OT Rate*</label>
-              <input type="text" class="form-control" ng-model="empTabCtrl.entity.DoubleOTRate" ng-required="empTabCtrl.entity.JDDoubleOT" numeric-Only>
+             <label  ng-bind="page.pageinfo.fields.DoubleOTRate.text"></label>
+             <field-box ng-model="page.pageinfo.fields.DoubleOTRate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+
+              <!--<label for="inputDepartment">Double OT Rate*</label>
+              <input type="text" class="form-control" ng-model="empTabCtrl.entity.DoubleOTRate" ng-required="empTabCtrl.entity.JDDoubleOT" numeric-Only>-->
             </div>
           </div>
         </div>
