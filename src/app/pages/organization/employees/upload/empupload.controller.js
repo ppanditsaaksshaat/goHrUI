@@ -153,7 +153,7 @@
             addFieldCheck('officeemail', '', 0, 4, 0);
 
             //mobile
-            addFieldCheck('office', 'mobile', 0, 4, 1);
+            // addFieldCheck('office', 'mobile', 0, 4, 1);
             addFieldCheck('officemobile', '', 0, 4, 1);
 
             //phone
@@ -165,11 +165,13 @@
             addFieldCheck('ext', '', 0, 5, 1);
 
             // Single OT
-            addFieldCheck('issingleot', 'ot', 0, 6, 0);
+            addFieldCheck('is', 'singleot', 0, 6, 0);
+            addFieldCheck('issingleot', '', 0, 6, 0);
             // addFieldCheck('singleot', '', 0, 6, 0);
 
             // Double OT
-            addFieldCheck('isdoubleot', 'ot', 0, 6, 1);
+            addFieldCheck('is', 'doubleot', 0, 6, 1);
+            addFieldCheck('isdoubleot', '', 0, 6, 1);
             // addFieldCheck('doubleot', '', 0, 6, 1);
 
             //Single OT Rate
@@ -252,8 +254,8 @@
             addFieldCheck('twitter', '', 1, 6 + extraRowIndex, 0);
 
             //other number
-            addFieldCheck('other', 'number', 1, 8, 1);
-            addFieldCheck('othernumber', '', 1, 8, 1);
+            addFieldCheck('other', 'identity', 1, 8, 1);
+            addFieldCheck('otheridentity', '', 1, 8, 1);
 
             //Salary Mode
             addFieldCheck('salary', 'mode', 2, 0, 0);
@@ -404,7 +406,7 @@
 
             table2.rows.push({
                 column1: { name: 'PDTwitter', text: 'Twitter', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDOtherNumber', text: 'Other Number', type: 'text', required: false, value: 'none' }
+                column2: { name: 'PDOtherNumber', text: 'Other Identity', type: 'text', required: false, value: 'none' }
             })
 
 
@@ -969,7 +971,7 @@
 
                 if (isUsable) {
                     if (colIdx == 1) {
-                        if (vm.migrate.tables[tableIdx].rows[rowIdx].column2 !== undefined)
+                        if (vm.migrate.tables[tableIdx].rows[rowIdx] !== undefined)
                             vm.migrate.tables[tableIdx].rows[rowIdx].column2.value = colName;
                             console.log(colName)
                     }
@@ -1052,9 +1054,62 @@
             tempColumns.push({ DateOfBirth: '' });
             tempColumns.push({ Gender: '' });
             tempColumns.push({ Mobile: '' });
+            tempColumns.push({ EmpName: '' });
 
             DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
         }
+
+
+        vm.downloadMaxFieldTemp = function () {
+
+            // alert('download temp is working');
+            var tempColumns = [];
+
+            tempColumns.push({ EmpCode: '' });
+            tempColumns.push({ Title: '' });
+            tempColumns.push({ FirstName: '' });
+            tempColumns.push({ MiddleName: '' });
+            tempColumns.push({ LastName: '' });
+            tempColumns.push({ Department: '' });
+            tempColumns.push({ EmploymentType: '' });
+            tempColumns.push({ Designation: '' });
+            tempColumns.push({ DateOfBirth: '' });
+            tempColumns.push({ Gender: '' });
+            tempColumns.push({ Mobile: '' });
+            tempColumns.push({ DateOfJoining: '' });
+            tempColumns.push({ Grade: '' });
+            tempColumns.push({ Level: '' });
+            tempColumns.push({ Category: '' });
+            tempColumns.push({ SubUnit: '' });
+            tempColumns.push({ OfficeEmail: '' });
+            tempColumns.push({ OfficeMobile: '' });
+            tempColumns.push({ OfficePhone: '' });
+            tempColumns.push({ OfficeExt: '' });
+            tempColumns.push({ IsSingleOT: '' });
+            tempColumns.push({ IsDoubleOT: '' });
+            tempColumns.push({ SingleOTRate: '' });
+            tempColumns.push({ DoubleOTRate: '' });
+            tempColumns.push({ MarriageStatus: '' });
+            tempColumns.push({ Email: '' });
+            tempColumns.push({ AnniversaryDate: '' });
+            tempColumns.push({ Facebook: '' });
+            tempColumns.push({ PanNo: '' });
+            tempColumns.push({ LinkedIn: '' });
+            tempColumns.push({ Aadhaar: '' });
+            tempColumns.push({ Twitter: '' });
+            tempColumns.push({ OtherIdentity: '' });
+            tempColumns.push({ SalaryMode: '' });
+            tempColumns.push({ PFAccountNumber: '' });
+            tempColumns.push({ PFStartDate: '' });
+            tempColumns.push({ ESIAccountNumber: '' });
+            tempColumns.push({ ESIStartDate: '' });
+            tempColumns.push({ ESIDispensaryname: '' });
+            
+
+            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
+        }
+
+
         // vm.showEmpName = function () {
         //     alert('abcd');
         //     vm.rudraField20 = false;

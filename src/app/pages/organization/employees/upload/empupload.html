@@ -30,8 +30,8 @@
                                 </div>
                             </div>
                         </div>
-                        <hr ng-show="tabCtrl.gridOptions.data.length >= 0" />
-                        <div class="row" ng-show="tabCtrl.gridOptions.data.length >= 0">
+                        <hr ng-show="tabCtrl.gridOptions.data.length > 0" />
+                        <div class="row" ng-show="tabCtrl.gridOptions.data.length > 0">
                             <div class="col-md-12">
                                 <label class="checkbox-inline custom-checkbox nowrap">
                                     <input type="checkbox" id="inlineCheckbox01" ng-model="tabCtrl.showPreview">
@@ -89,6 +89,9 @@
                                 </button>
                                 <button type="button" class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadTemp()">
                             Download Template</button>
+                            <button type="button" class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadMaxFieldTemp()">
+                            Download Template With Max Field</button>
+                            
                             </div>
                         </div>
                     </div>
