@@ -39,7 +39,7 @@
                     gridStyle: { height: '450px' }
                 }
 
-                //console.log(page.pageinfo)
+               
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.boxOptions = angular.copy(boxSetting);
@@ -52,6 +52,7 @@
                 }
                 $scope.oldEntity = {};
                 $scope.$watch('page.pageinfo', function () {
+                     console.log($scope.page.pageinfo)
                     _setGridColumns();
                     _setupVerticalForm();
                     console.log('from watch')
