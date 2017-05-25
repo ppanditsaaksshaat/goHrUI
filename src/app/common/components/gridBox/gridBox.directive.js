@@ -325,7 +325,7 @@
                 //get page data
                 function _getPage() {
                     $timeout(function () {
-                        console.log($scope.page)
+                        console.log($scope.page);
                         pageService.getPagData($scope.page.pageId).then(_getPageSuccessResult, _getPageErrorResult)
                     });
                 }
@@ -338,7 +338,7 @@
                     _refreshData();
                 }
                 function _getPageErrorResult(err) {
-
+  
                 }
                 //end get page data
                 //====================================================================
@@ -399,7 +399,7 @@
                             if (err['email'] !== undefined) {
                                 alert('invalid email');
                                 valid = false;
-                            }
+                            } 
                             if (err['maxlength'] !== undefined) {
                                 alert('invalid length')
                                 valid = false

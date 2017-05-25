@@ -11,19 +11,44 @@
     function fieldBox($location, $state, $compile, $rootScope) {
         return {
             restrict: 'E',
-            require: ['^form', 'ngModel'],
+            require: ['^form'],
             templateUrl: 'app/common/components/fieldBox/fieldBox.html',
             scope: {
-                col: '=ngModel',
+                col: '=ngColumn',
                 entity: '=ngEntity',
                 editForm: '=form'
             },
             link: function ($scope, $elm, $attrs, $ctrl) {
 
+
                 $elm.bind('click', function (evt) {
-                    console.log($ctrl)
+                    var ngModel = $ctrl[0][$scope.col.name];
+                    var col = $scope.col;
+                    var form = $scope.editForm;
                 })
 
+
+                $scope.hasSuccess = function () {
+                    var ngModel = $ctrl[0][$scope.col.name];
+                    if (!ngModel) {
+                        return false;
+                    }
+                    return (!ngModel.$isEmpty(ngModel.$modelValue) && ngModel.$valid && ngModel.$dirty)
+                };
+
+                $scope.hasError = function () {
+                    var ngModel = $ctrl[0][$scope.col.name];
+                    if (!ngModel) {
+                        return false;
+                    }
+                    return ngModel.$invalid && !ngModel.$pristine;
+                };
+                $scope.hasWarning = function () {
+                    return false;
+                }
+                $scope.hasRequired = function () {
+                    return $scope.col.required && !$scope.hasSuccess() && !$scope.hasError() && !$scope.hasWarning();
+                };
             }
         };
     }

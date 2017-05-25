@@ -1,40 +1,43 @@
-<div ng-switch="col.type">
+<div ng-switch="col.type" class="form-group  has-feedback" ng-class="{'has-success':hasSuccess(),'has-error':hasError(),'has-warning':hasWarning()}">
     <div class="input-group">
         <!--Textbox-->
-        <input ng-switch-when="textbox" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" maxlength="{{col.maxLength}}"
-            ng-model="entity[col.name]" type="text" class="form-control" ng-minlength="1" ng-maxlength="col.maxLength" ng-required="col.required"
-            ng-class="{'border-red': col.haserror}" />
+        <!--<span class="input-group-addon  addon-left" ng-show="col.required">
+              <i aria-hidden="true" class="fa font-red fa-asterisk"></i>
+        </span>-->
 
         <!--left icon-->
-        <span class="input-group-addon" ng-show="col.type=='email'">
-               <i class="fa fa-at" aria-hidden="true"></i>
+        <span class="input-group-addon  addon-left" ng-show="col.type=='email'">
+              @ <!--<i class="fa fa-at" aria-hidden="true"></i>-->
         </span>
-        <span class="input-group-addon" ng-show="col.type=='mobile'">
+        <span class="input-group-addon  addon-left" ng-show="col.type=='mobile'">
                 <i class="fa fa-mobile" aria-hidden="true"></i>
         </span>
-        <span class="input-group-addon" ng-show="col.type=='phone'">
+        <span class="input-group-addon  addon-left" ng-show="col.type=='phone'">
                 <i class="fa fa-phone" aria-hidden="true"></i>
         </span>
-        <span class="input-group-addon bg-black" ng-show="col.type=='password'">
+        <span class="input-group-addon  addon-left" ng-show="col.type=='password'">
                 <i class="fa fa-unlock-alt" aria-hidden="true"></i>
         </span>
 
 
+        <input ng-switch-when="textbox" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" maxlength="{{col.maxLength}}"
+            ng-model="entity[col.name]" type="text" class="form-control" ng-minlength="1" ng-maxlength="col.maxLength" ng-required="col.required"
+             />
+
         <!--email-->
         <input ng-switch-when="email" name="{{col.name}}" ng-model="entity[col.name]" type="email" class="form-control" ng-minlength="10"
-            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
+            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" 
         />
 
         <!--mobile-->
         <input ng-switch-when="mobile" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="col.maxLength"
-            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
-            ng-pattern="pattern.mobile" maxlength="{{col.maxLength}}" />
-
+            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" 
+            ng-pattern="/(7|8|9)\d{9}/" maxlength="{{col.maxLength}}" />
+        
+        <!--zipcode-->
         <input ng-switch-when="zipcode" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="col.maxLength"
-            ng-maxlength="6" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-class="{'border-red': col.haserror}"
+            ng-maxlength="6" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" 
             ng-pattern="/^(\d{6}(-\d{6})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/" maxlength="6" />
-
-
 
         <!--Select-->
         <select name="{{col.name}}" id="{{col.name}}" ng-model="entity[col.name]" class="form-control" ng-options="opt.value as opt.name for opt in col.options"
@@ -98,11 +101,31 @@
             placeholder="{{col.place}}" />
 
         <!--right icon-->
-        <span class="input-group-addon" ng-if="col.type!='linklabel' && col.type !='sequence' && col.type != 'checkbox'" style="width:30px">
+        <!--<span class="input-group-addon" ng-if="col.type!='linklabel' && col.type !='sequence' && col.type != 'checkbox'" style="max-width: 40px">
             <i aria-hidden="true" class="fa font-green fa-check" ng-show="(editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty'])"></i>
             <i aria-hidden="true" class="fa font-red fa-times" ng-show="(editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'] && editForm[col.name]['$touched'])"></i>
             <i aria-hidden="true" class="fa font-red fa-asterisk" ng-show="(editForm[col.name]['$viewValue']===undefined ||editForm[col.name]['$viewValue']=='' ) && col.required"></i>
-        </span>
+        </span>-->
     </div>
+    <!--error icon-->
+    <!--<i class="ion-android-cancel form-control-feedback" aria-hidden="true"></i>-->
+    <!--warning icon-->
+    <!--<i ng-show="(editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'] && editForm[col.name]['$touched'])" class="ion-alert-circled form-control-feedback"
+        aria-hidden="true"></i>-->
+    <!--success icon-->
+    <!--<i ng-show="(editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty'])"
+    ="ion-checkmark-circled form-control-feedback"
+        aria-hidden="true"></i>-->
+
+    <i ng-class="{'form-control-feedback': true, 
+            'ion-checkmark-circled': hasSuccess(), 
+            'ion-android-cancel': hasError(), 
+            'ion-asterisk font-red': hasRequired(), 
+            'ion-alert-circled': hasWarning(), 
+            }">
+
+    </i>
+    <!--info area-->
+    <span id="inputGroupSuccess1Status" class="sr-only">(success)</span>
 
 </div>
