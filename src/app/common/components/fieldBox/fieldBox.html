@@ -20,24 +20,29 @@
         </span>
 
 
-        <input ng-switch-when="textbox" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" maxlength="{{col.maxLength}}"
+        <input  ng-switch-when="textbox" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" maxlength="{{col.maxLength}}"
             ng-model="entity[col.name]" type="text" class="form-control" ng-minlength="1" ng-maxlength="col.maxLength" ng-required="col.required"
-             />
+        />
 
         <!--email-->
         <input ng-switch-when="email" name="{{col.name}}" ng-model="entity[col.name]" type="email" class="form-control" ng-minlength="10"
-            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" 
-        />
+            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" />
 
         <!--mobile-->
         <input ng-switch-when="mobile" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="col.maxLength"
-            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" 
-            ng-pattern="/(7|8|9)\d{9}/" maxlength="{{col.maxLength}}" />
-        
+            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-pattern="/(7|8|9)\d{9}/"
+            maxlength="{{col.maxLength}}" />
+
         <!--zipcode-->
         <input ng-switch-when="zipcode" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="col.maxLength"
-            ng-maxlength="6" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" 
-            ng-pattern="/^(\d{6}(-\d{6})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/" maxlength="6" />
+            ng-maxlength="6" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-pattern="/^(\d{6}(-\d{6})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/"
+            maxlength="6" />
+
+        <!--aadhar no-->
+        <input ng-switch-when="aadharno" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="12"
+            ng-maxlength="12" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" 
+            ng-pattern="\d{4}\s\d{4}\s\d{4}$"
+            maxlength="12" />
 
         <!--Select-->
         <select name="{{col.name}}" id="{{col.name}}" ng-model="entity[col.name]" class="form-control" ng-options="opt.value as opt.name for opt in col.options"
@@ -127,5 +132,8 @@
     </i>
     <!--info area-->
     <span id="inputGroupSuccess1Status" class="sr-only">(success)</span>
-
+    <!--<span ng-show="editForm[col.name]['$error']['blacklist']">
+          The phrase "{{entity[col.name]}}" is blacklisted</span>
+    <span  ng-show="editForm[col.name]['$error']['required']">required</span>
+    {{entity[col.name]}}-->
 </div>

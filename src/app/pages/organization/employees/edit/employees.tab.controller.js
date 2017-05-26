@@ -39,6 +39,8 @@
                 $timeout(function () {
                     pageService.getPagData(vm.pageId).then(
                         _getPageDataSuccessResult, _getPageDataErrorResult);
+                    pageService.getPagData(vm.pageIds.emgContactPageId).then(
+                        _getPageDataSuccessResult, _getPageDataErrorResult);
                 });
                 if (vm.pageId == 35) {
                     $scope.familyPage = _getLocalPageObject(52);
@@ -60,6 +62,9 @@
             console.log(result)
             if (result.pageinfo.pageid == 36) {
                 $scope.contactPage = result;
+            }
+            else if (result.pageinfo.pageid == 53) {
+                $scope.emgContactPage = result;
             }
             else {
                 $scope.page = result;

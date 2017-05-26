@@ -254,8 +254,11 @@
             addFieldCheck('twitter', '', 1, 6 + extraRowIndex, 0);
 
             //other number
-            addFieldCheck('other', 'identity', 1, 8, 1);
+            // addFieldCheck('other', 'identity', 1, 8, 1);
             addFieldCheck('otheridentity', '', 1, 8, 1);
+
+             addFieldCheck('religion', '', 1, 9, 0);
+            addFieldCheck('nationality', '', 1, 9, 1);
 
             //Salary Mode
             addFieldCheck('salary', 'mode', 2, 0, 0);
@@ -278,8 +281,12 @@
             addFieldCheck('esistartdate', '', 2, 2, 0);
 
             //ESI Dispensary name
-            addFieldCheck('esi', 'dispensary', 2, 2, 1);
-            addFieldCheck('esidispensary', '', 2, 2, 1);
+            // addFieldCheck('esi', 'dispensary', 2, 2, 1);
+            addFieldCheck('BankAccountNo', '', 2, 2, 1);
+
+           
+
+            
         }
 
         //Public Functions
@@ -327,18 +334,18 @@
             })
 
             table1.rows.push({
-                column1: { name: 'InsComId', text: 'Category', type: 'text', required: false, value: 'none' },
+                column1: { name: 'JDCategory', text: 'Category', type: 'text', required: false, value: 'none' },
                 column2: { name: 'JDSubUnitID', text: 'Sub Unit', type: 'text', required: false, value: 'none' }
             })
 
             table1.rows.push({
-                column1: { name: 'JDSubUnitID', text: 'Office Email', type: 'text', required: false, value: 'none' },
-                column2: { name: 'InsComId', text: 'Office Mobile', type: 'text', required: false, value: 'none' }
+                column1: { name: 'JDOfficeEmail', text: 'Office Email', type: 'text', required: false, value: 'none' },
+                column2: { name: 'JDOfficeMobile', text: 'Office Mobile', type: 'text', required: false, value: 'none' }
             })
 
             table1.rows.push({
-                column1: { name: 'JDSubUnitID', text: 'Office Phone', type: 'text', required: false, value: 'none' },
-                column2: { name: 'InsComId', text: 'Office Ext.', type: 'text', required: false, value: 'none' }
+                column1: { name: 'JDOfficePhone', text: 'Office Phone', type: 'text', required: false, value: 'none' },
+                column2: { name: 'JDOfficeExtention', text: 'Office Ext.', type: 'text', required: false, value: 'none' }
             })
 
 
@@ -395,8 +402,8 @@
             })
 
             table2.rows.push({
-                column1: { name: 'PDFacebookId', text: 'Facebook', type: 'text', required: false, value: 'none' },
-                column2: { name: 'PDPancard', text: 'PAN No', type: 'text', required: false, value: 'none' }
+                column1: { name: 'PDFacebook', text: 'Facebook', type: 'text', required: false, value: 'none' },
+                column2: { name: 'PDPanCard', text: 'PAN No', type: 'text', required: false, value: 'none' }
             })
 
             table2.rows.push({
@@ -407,6 +414,10 @@
             table2.rows.push({
                 column1: { name: 'PDTwitter', text: 'Twitter', type: 'text', required: false, value: 'none' },
                 column2: { name: 'PDOtherNumber', text: 'Other Identity', type: 'text', required: false, value: 'none' }
+            })
+            table2.rows.push({
+                column1: { name: 'PDReligionId', text: 'Religion', type: 'text', required: false, value: 'none' },
+                column2: { name: 'PdNationalityId', text: 'Nationality', type: 'text', required: false, value: 'none' }
             })
 
 
@@ -432,7 +443,7 @@
 
             table3.rows.push({
                 column1: { name: 'ESIMemeberDate', text: 'ESI Start Date', type: 'text', required: false, value: 'none' },
-                column2: { name: 'Dispensary', text: 'ESI Dispensary name', type: 'text', required: false, value: 'none' }
+                column2: { name: 'BankAccountNo', text: 'Bank Account', type: 'text', required: false, value: 'none' }
             })
 
             vm.migrate.tables.push(table3);
@@ -976,6 +987,7 @@
                             console.log(colName)
                     }
                     else {
+                        if (vm.migrate.tables[tableIdx].rows[rowIdx] !== undefined)
                         vm.migrate.tables[tableIdx].rows[rowIdx].column1.value = colName;
                     }
                 }
@@ -1070,6 +1082,7 @@
             tempColumns.push({ FirstName: '' });
             tempColumns.push({ MiddleName: '' });
             tempColumns.push({ LastName: '' });
+            tempColumns.push({ EmpName: '' });
             tempColumns.push({ Department: '' });
             tempColumns.push({ EmploymentType: '' });
             tempColumns.push({ Designation: '' });
@@ -1103,7 +1116,12 @@
             tempColumns.push({ PFStartDate: '' });
             tempColumns.push({ ESIAccountNumber: '' });
             tempColumns.push({ ESIStartDate: '' });
-            tempColumns.push({ ESIDispensaryname: '' });
+            tempColumns.push({ BankAccountNo: '' });
+
+            tempColumns.push({ religion: '' });
+            tempColumns.push({ nationality: '' });
+
+           
             
 
             DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
