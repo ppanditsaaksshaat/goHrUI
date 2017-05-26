@@ -1082,6 +1082,7 @@
             tempColumns.push({ FirstName: '' });
             tempColumns.push({ MiddleName: '' });
             tempColumns.push({ LastName: '' });
+            tempColumns.push({ EmpName: '' });
             tempColumns.push({ Department: '' });
             tempColumns.push({ EmploymentType: '' });
             tempColumns.push({ Designation: '' });
