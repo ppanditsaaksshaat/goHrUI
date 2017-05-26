@@ -148,8 +148,8 @@
                 case 52://family
                     linkFieldName = 'FdEmpId'
                     break;
-                case 438://skills
-                    linkFieldName = 'NdEmpId'
+                case 438://nominee
+                    linkFieldName = 'NDEmpId'
                     break;
             }
             
@@ -165,6 +165,7 @@
                 showUpload: false,
                 showDialog: false,
                 enableRefreshAfterUpdate: true,
+                enableAutoRefresh:true,
                 gridHeight: 450,
                 linkColumns: [{ name: linkFieldName, value: linkFieldValue }],
                 getPageData: null,
@@ -186,6 +187,7 @@
             }
             else if (result.CDId !== undefined) {//check if entity is emg contact page contact
                 vm.oldempContactDetail = angular.copy(result);
+                console.log(result)
                 vm.empContactDetail = result;
             }
             else {

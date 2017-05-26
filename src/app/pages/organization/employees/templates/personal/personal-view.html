@@ -1,316 +1,358 @@
 <form ng-submit="empTabCtrl.saveFormCommon()" name="editForm">
-<div class="panel panel-default xmedium-panel">
-  <edit-panel-head page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon()"
-    clear-form="empTabCtrl.clearFormCommon()" condition="(empTabCtrl.activeTab==0 || empTabCtrl.activeTab==1)"></edit-panel-head>
- 
-  <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
-    <uib-tabset active="empTabCtrl.activeTab">
-      <uib-tab heading="Personal">
-        <div style="max-height: 420px" ng-scrollbars ng-scrollbars-config="config">
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
+  <div class="panel panel-default xmedium-panel">
+    <edit-panel-head page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon()" clear-form="empTabCtrl.clearFormCommon()"
+      condition="(empTabCtrl.activeTab==0 || empTabCtrl.activeTab==1)"></edit-panel-head>
 
-                <label  ng-bind="page.pageinfo.fields.PdDateOfBirth.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PdDateOfBirth" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                <!--<label for="inputDOB">Date Of Birth*</label>
+    <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+      <uib-tabset active="empTabCtrl.activeTab">
+        <uib-tab heading="Personal">
+          <div style="max-height: 420px" ng-scrollbars ng-scrollbars-config="config">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+
+                  <label ng-bind="page.pageinfo.fields.PdDateOfBirth.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PdDateOfBirth" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--<label for="inputDOB">Date Of Birth*</label>
 
                 <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
                   <input ng-model="empTabCtrl.entity.PdDateOfBirth" type="text" class="form-control" required />
                 </datepicker>-->
+                </div>
               </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                 <label  ng-bind="page.pageinfo.fields.PdMaritalId.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PdMaritalId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="page.pageinfo.fields.PdMaritalId.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PdMaritalId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
-                <!--<label for="inputDesignation">Marital Status*</label>
+                  <!--<label for="inputDesignation">Marital Status*</label>
                 <select id="empMaritalStatus_{{$index}}" name="empMaritalStatus_{{$index}}" ng-model="empTabCtrl.entity.PdMaritalId" class="form-control"
                   ng-options="maritalStatus.value as maritalStatus.name for maritalStatus in page.pageinfo.selects.PdMaritalId"
                   data-placeholder="Select Nav Menu" required>
                   <option></option>
                </select>-->
+                </div>
               </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                 <label  ng-bind="page.pageinfo.fields.PdGenderId.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PdGenderId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="page.pageinfo.fields.PdGenderId.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PdGenderId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
-                <!--<label for="inputEmployeeType">Gender*</label>
+                  <!--<label for="inputEmployeeType">Gender*</label>
                 <select id="empGender_{{$index}}" name="empGender_{{$index}}" ng-model="empTabCtrl.entity.PdGenderId" class="form-control"
                   ng-options="gender.value as gender.name for gender in page.pageinfo.selects.PdGenderId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
                   data-placeholder="Select Nav Menu" required>
                   <option></option>
                </select>-->
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                 <label  ng-bind="page.pageinfo.fields.PdMobileNo.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PdMobileNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-<!--
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="page.pageinfo.fields.PdMobileNo.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PdMobileNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--
                 <label for="inputMobile">Mobile*</label>
                 <input type="text" class="form-control"  minlength="10" maxlength="17" numeric-Only id="inputMobile" ng-model="empTabCtrl.entity.PdMobileNo" required>-->
+                </div>
               </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                
-                <label  ng-bind="page.pageinfo.fields.PdEmail.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PdEmail" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                <!--<input type="email" class="form-control" id="inputEmail" maxlength="50" ng-model="empTabCtrl.entity.PdEmail" required>-->
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
+              <div class="col-sm-4">
+                <div class="form-group">
 
-                 <label  ng-bind="page.pageinfo.fields.PDAnniversaryDate.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PDAnniversaryDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                <!--<label for="inputAnniversaryDate">Anniversary Date</label>
+                  <label ng-bind="page.pageinfo.fields.PdEmail.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PdEmail" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--<input type="email" class="form-control" id="inputEmail" maxlength="50" ng-model="empTabCtrl.entity.PdEmail" required>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+
+                  <label ng-bind="page.pageinfo.fields.PDAnniversaryDate.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PDAnniversaryDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--<label for="inputAnniversaryDate">Anniversary Date</label>
 
                 <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
                   <input ng-model="empTabCtrl.entity.PDAnniversaryDate" type="text" class="form-control" />
                 </datepicker>-->
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                 <label  ng-bind="page.pageinfo.fields.PDFacebook.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PDFacebook" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                <!--<label for="inputFacebook">Facebook</label>
-                <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.entity.PDFacebook">-->
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                  <label  ng-bind="page.pageinfo.fields.PDTwitter.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PDTwitter" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                <!--<label for="inputTwitter">Twitter</label>
-                <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.entity.PDTwitter">-->
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label  ng-bind="page.pageinfo.fields.PDLinkedIn.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PDLinkedIn" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                <!--<label for="inputAnniversaryDate">Linked In</label>
-                <input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.entity.PDLinkedIn">-->
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                 <label  ng-bind="page.pageinfo.fields.PDAdhar.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PDAdhar" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                <!--<label for="inputFacebook">Adhaar</label>
-                <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.entity.PDAdhar">-->
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                   <label  ng-bind="page.pageinfo.fields.PDPanCard.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PDPanCard" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                <!--<label for="inputTwitter">PAN</label>
-                <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.entity.PDPanCard">-->
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                  <label  ng-bind="page.pageinfo.fields.PDOtherNumber.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PDOtherNumber" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                <!--<label for="inputOtherNo">Other Identity</label>
-                <input type="text" class="form-control" id="inputOtherNo" ng-model="empTabCtrl.entity.PDOtherNumber">-->
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                  <label  ng-bind="page.pageinfo.fields.PdNationalityId.text"></label>
-                <field-box ng-column="page.pageinfo.fields.PdNationalityId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                <!--<label for="inputFacebook">Nationality*</label>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="page.pageinfo.fields.PdNationalityId.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PdNationalityId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--<label for="inputFacebook">Nationality*</label>
                 <select id="empNationality_{{$index}}" name="empNationality_{{$index}}" ng-model="empTabCtrl.entity.PdNationalityId" class="form-control"
                   ng-options="nationality.value as nationality.name for nationality in page.pageinfo.selects.PdNationalityId"
                   required>
                   <option></option>
                </select>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="page.pageinfo.fields.PDReligionId.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PDReligionId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="page.pageinfo.fields.PDOtherNumber.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PDOtherNumber" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--<label for="inputOtherNo">Other Identity</label>
+                <input type="text" class="form-control" id="inputOtherNo" ng-model="empTabCtrl.entity.PDOtherNumber">-->
+                </div>
               </div>
             </div>
-          </div>
-          <h3 class="">Emergency Number</h3>
-          <hr>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                 <label  ng-bind="emgContactPage.pageinfo.fields.ECPersonName.text"></label>
-                <field-box ng-column="emgContactPage.pageinfo.fields.ECPersonName" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
-   
-                <!--<label for="inputEmgName">Name</label>
-                <input type="text" class="form-control" id="inputEmgName" text-Only-With-Space ng-model="empTabCtrl.empEmgContact.ECPersonName">-->
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                 <label  ng-bind="emgContactPage.pageinfo.fields.ECContactNo.text"></label>
-                <field-box ng-column="emgContactPage.pageinfo.fields.ECContactNo" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
-   
-                <!--<label for="inputEmgMobile">Mobile</label>
-                <input type="text" class="form-control" id="inputEmgMobile" numeric-Only minlength="10" maxlength="17" ng-model="empTabCtrl.empEmgContact.ECContactNo" required>-->
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                  <label  ng-bind="emgContactPage.pageinfo.fields.ECAddress.text"></label>
-                <field-box ng-column="emgContactPage.pageinfo.fields.ECAddress" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
-
-                <!--<label for="inputEmgAddress">Address</label>
-                <input type="text" class="form-control" id="inputEmgAddress" maxlength="50" ng-model="empTabCtrl.empEmgContact.ECAddress">-->
-              </div>
-            </div>
-          </div>
-        </div>
-      </uib-tab>
-      <uib-tab heading="Address">
-        <div style="max-height: 420px" ng-scrollbars ng-scrollbars-config="config">
-          <h3 class="">Current Address</h3>
-          <hr>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-             <label ng-bind="page.pageinfo.fields.CDAddLine1.text"></label>
-            <field-box ng-column="page.pageinfo.fields.CDAddLine1" ng-entity="empTabCtrl.entity" form="editForm"></field-box>               
-                <!--<label for="inputLine1">Line1</label>
-                <input type="text" class="form-control" id="inputLine1" ng-model="empTabCtrl.empContactDetail.CDAddLine1">-->
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label for="inputLine2">Line2</label>
-                <input type="text" class="form-control" id="inputLine2" ng-model="empTabCtrl.empContactDetail.CDAddLine2">
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label for="inputEmgAddress">Country</label>
-                <select id="empCmpCountry_{{$index}}" name="empCmpCountry_{{$index}}" ng-model="empTabCtrl.empContactDetail.CountryId" class="form-control"
-                  ng-options="country.value as country.name for country in contactPage.pageinfo.selects.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
-                  data-placeholder="Select Nav Menu" ng-required="true">
-               </select>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label for="empCmpState_{{$index}}">State</label>
-                <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.StateId" class="form-control"
-                  ng-options="state.value as state.name for state in contactPage.pageinfo.selects.StateId | filter:{CountryId:empTabCtrl.empContactDetail.CountryId}"
-                  ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
-               </select>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label for="empCmpCity_{{$index}}">City</label>
-                <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.CityId" class="form-control"
-                  ng-options="city.value as city.name for city in contactPage.pageinfo.selects.CityId |filter:{StateId:empTabCtrl.empContactDetail.StateId}"
-                  ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
-               </select>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label for="inputZip">Zip</label>
-                <input type="text" class="form-control" id="inputZip" ng-model="empTabCtrl.empContactDetail.CDPincode">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-5">
-              <div class="checkbox">
-                <label class="custom-checkbox">      
-              <input type="checkbox" ng-click="empTabCtrl.permanentAddress()" ng-model="empTabCtrl.CDPermanent" >   
-                <span>Permanent Address Same as Current Address</span>
-              </label>
-              </div>
-            </div>
-          </div>
-          <h3 class="">Permanent Address</h3>
-          <hr>
-          <div>
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="inputPerLine1">Line1</label>
-                  <input type="text" class="form-control" id="inputPerLine1" ng-model="empTabCtrl.empContactDetail.CDPAddLine1">
+                  <label ng-bind="page.pageinfo.fields.PDFacebook.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PDFacebook" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--<label for="inputFacebook">Facebook</label>
+                <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.entity.PDFacebook">-->
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
+                  <label ng-bind="page.pageinfo.fields.PDTwitter.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PDTwitter" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--<label for="inputTwitter">Twitter</label>
+                <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.entity.PDTwitter">-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="page.pageinfo.fields.PDLinkedIn.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PDLinkedIn" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--<label for="inputAnniversaryDate">Linked In</label>
+                <input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.entity.PDLinkedIn">-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="page.pageinfo.fields.PDAdhar.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PDAdhar" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--<label for="inputFacebook">Adhaar</label>
+                <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.entity.PDAdhar">-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="page.pageinfo.fields.PDPanCard.text"></label>
+                  <field-box ng-column="page.pageinfo.fields.PDPanCard" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <!--<label for="inputTwitter">PAN</label>
+                <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.entity.PDPanCard">-->
+                </div>
+              </div>
+
+            </div>
+
+            <h3 class="">Emergency Number</h3>
+            <hr>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="emgContactPage.pageinfo.fields.ECPersonName.text"></label>
+                  <field-box ng-column="emgContactPage.pageinfo.fields.ECPersonName" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
+
+                  <!--<label for="inputEmgName">Name</label>
+                <input type="text" class="form-control" id="inputEmgName" text-Only-With-Space ng-model="empTabCtrl.empEmgContact.ECPersonName">-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="emgContactPage.pageinfo.fields.ECContactNo.text"></label>
+                  <field-box ng-column="emgContactPage.pageinfo.fields.ECContactNo" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
+
+                  <!--<label for="inputEmgMobile">Mobile</label>
+                <input type="text" class="form-control" id="inputEmgMobile" numeric-Only minlength="10" maxlength="17" ng-model="empTabCtrl.empEmgContact.ECContactNo" required>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="emgContactPage.pageinfo.fields.ECAddress.text"></label>
+                  <field-box ng-column="emgContactPage.pageinfo.fields.ECAddress" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
+
+                  <!--<label for="inputEmgAddress">Address</label>
+                <input type="text" class="form-control" id="inputEmgAddress" maxlength="50" ng-model="empTabCtrl.empEmgContact.ECAddress">-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab heading="Address">
+          <div style="max-height: 420px" ng-scrollbars ng-scrollbars-config="config">
+            <h3 class="">Current Address</h3>
+            <hr>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CDAddLine1.text"></label>
+                  <field-box ng-column="contactPage.pageinfo.fields.CDAddLine1" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <!--<label for="inputLine1">Line1</label>
+                <input type="text" class="form-control" id="inputLine1" ng-model="empTabCtrl.empContactDetail.CDAddLine1">-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CDAddLine2.text"></label>
+                  <field-box ng-column="contactPage.pageinfo.fields.CDAddLine2" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                  <!--<label for="inputLine2">Line2</label>
+                <input type="text" class="form-control" id="inputLine2" ng-model="empTabCtrl.empContactDetail.CDAddLine2">-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CountryId.text"></label>
+                  <field-box ng-column="contactPage.pageinfo.fields.CountryId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                  <!--<label for="inputEmgAddress">Country</label>
+                <select id="empCmpCountry_{{$index}}" name="empCmpCountry_{{$index}}" ng-model="empTabCtrl.empContactDetail.CountryId" class="form-control"
+                  ng-options="country.value as country.name for country in contactPage.pageinfo.selects.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                  data-placeholder="Select Nav Menu" ng-required="true">
+               </select>-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.StateId.text"></label>
+                  <field-box ng-column="contactPage.pageinfo.fields.StateId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                  <!--<label for="empCmpState_{{$index}}">State</label>
+                <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.StateId" class="form-control"
+                  ng-options="state.value as state.name for state in contactPage.pageinfo.selects.StateId | filter:{CountryId:empTabCtrl.empContactDetail.CountryId}"
+                  ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CityId.text"></label>
+                  <field-box ng-column="contactPage.pageinfo.fields.CityId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                  <!--<label for="empCmpCity_{{$index}}">City</label>
+                <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.CityId" class="form-control"
+                  ng-options="city.value as city.name for city in contactPage.pageinfo.selects.CityId |filter:{StateId:empTabCtrl.empContactDetail.StateId}"
+                  ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CDPincode.text"></label>
+                  <field-box ng-column="contactPage.pageinfo.fields.CDPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <!--
+                <label for="inputZip">Zip</label>
+                <input type="text" class="form-control" id="inputZip" ng-model="empTabCtrl.empContactDetail.CDPincode">-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="checkbox">
+                  <label class="custom-checkbox">      
+              <input type="checkbox" ng-click="empTabCtrl.permanentAddress()" ng-model="empTabCtrl.CDPermanent" >   
+                <span>Permanent Address Same as Current Address</span>
+              </label>
+                </div>
+              </div>
+            </div>
+            <h3 class="">Permanent Address</h3>
+            <hr>
+            <div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.CDPAddLine1.text"></label>
+                    <field-box ng-column="contactPage.pageinfo.fields.CDPAddLine1" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                    <!--<label for="inputPerLine1">Line1</label>
+                  <input type="text" class="form-control" id="inputPerLine1" ng-model="empTabCtrl.empContactDetail.CDPAddLine1">-->
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.CDPAddLine2.text"></label>
+                    <field-box ng-column="contactPage.pageinfo.fields.CDPAddLine2" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <!--
                   <label for="inputPerLine2">Line2</label>
-                  <input type="text" class="form-control" id="inputPerLine2" ng-model="empTabCtrl.empContactDetail.CDPAddLine2">
+                  <input type="text" class="form-control" id="inputPerLine2" ng-model="empTabCtrl.empContactDetail.CDPAddLine2">-->
+                  </div>
                 </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.PCountryId.text"></label>
+                    <field-box ng-column="contactPage.pageinfo.fields.CountryId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  </div>
+                  <!--<div class="form-group">
                   <label for="inputPerCountry">Country</label>
                   <select id="empCmpCountry_{{$index}}" name="empCmpCountry_{{$index}}" ng-model="empTabCtrl.empContactDetail.PCountryId" class="form-control"
                     ng-options="country.value as country.name for country in contactPage.pageinfo.selects.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
                     data-placeholder="Select Nav Menu" ng-required="true">
                </select>
+                </div>-->
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="empPerState_{{$index}}">State</label>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.PStateId.text"></label>
+                    <field-box ng-column="contactPage.pageinfo.fields.StateId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                    <!--<label for="empPerState_{{$index}}">State</label>
                   <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.PStateId" class="form-control"
                     ng-options="state.value as state.name for state in contactPage.pageinfo.selects.StateId | filter:{CountryId:empTabCtrl.empContactDetail.PCountryId}"
                     ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
-               </select>
+               </select>-->
+                  </div>
                 </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="empPerCity_{{$index}}">City</label>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.PCityId.text"></label>
+                    <field-box ng-column="contactPage.pageinfo.fields.CityId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                    <!--<label for="empPerCity_{{$index}}">City</label>
                   <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.PCityId" class="form-control"
                     ng-options="city.value as city.name for city in contactPage.pageinfo.selects.CityId |filter:{StateId:empTabCtrl.empContactDetail.PStateId}"
                     ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
-               </select>
+               </select>-->
+                  </div>
                 </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="inputPerZip">Zip</label>
-                  <input type="text" class="form-control" id="inputPerZip" ng-model="empTabCtrl.empContactDetail.CDPPincode">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.CDPPincode.text"></label>
+                    <field-box ng-column="contactPage.pageinfo.fields.CDPPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
+                    <!--<label for="inputPerZip">Zip</label>
+                  <input type="text" class="form-control" id="inputPerZip" ng-model="empTabCtrl.empContactDetail.CDPPincode">-->
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </uib-tab>
-      <uib-tab heading="Family">
-        <grid-box ng-model="familyPage">
-        </grid-box>
-      </uib-tab>
-      <uib-tab heading="Nominee">
-        <grid-box ng-model="nomineePage">
-        </grid-box>
-      </uib-tab>
-      <uib-tab heading="Identity">
-        <!--<grid-box ng-model="identityPage">
+        </uib-tab>
+        <uib-tab heading="Family">
+          <grid-box ng-model="familyPage">
+          </grid-box>
+        </uib-tab>
+        <uib-tab heading="Nominee">
+          <grid-box ng-model="nomineePage">
+          </grid-box>
+        </uib-tab>
+        <uib-tab heading="Identity">
+          <!--<grid-box ng-model="identityPage">
         </grid-box>-->
-      </uib-tab>
-    </uib-tabset>
+        </uib-tab>
+      </uib-tabset>
+    </div>
   </div>
-</div>
-<form>
+  <form>

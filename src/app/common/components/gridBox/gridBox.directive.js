@@ -118,10 +118,8 @@
                 //====================================================================
                 //button functions
                 function _addRecord() {
-                  
-                    // if ($scope.entity === undefined) {
-                        $scope.entity = {};
-                    // }
+
+                    $scope.entity = {};               
                     angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
                         $scope.entity[link.name] = link.value;
                     });
