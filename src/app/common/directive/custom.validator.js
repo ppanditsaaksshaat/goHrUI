@@ -93,21 +93,41 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
         require: 'ngModel',
         restrict: 'A',
         scope: {
-            callBackMethod: '&callback',     
+            callBackMethod: '&callback',
         },
         link: function (scope, element, attrs, modelCtrl) {
             console.log(scope)
-             console.log(element)
-               console.log(attrs)
-                 console.log(modelCtrl)
-            element.on('blur', function (inputValue) { 
+            console.log(element)
+            console.log(attrs)
+            console.log(modelCtrl)
+            element.on('blur', function (inputValue) {
                 var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 console.log(inputValue)
                 console.log(re.test(inputValue))
                 /* send an object to the function */
                 scope.callBackMethod({ mustBeTheSame: re.test(inputValue) });
             })
-           
+
         }
     }
-});
+}).directive('validText', function () {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        scope: {
+            col: '=ngColumn'
+        },
+        link: function (scope, element, attrs, modelCtrl) {
+
+            if (!scope.col)
+                return;
+            modelCtrl.$parsers.push(function (inputValue) {
+                // debugger;
+                var blacklist = 'coconuts,bananas,pears'.split(',');
+                console.log(inputValue);
+                modelCtrl.$setValidity('blacklist', blacklist.indexOf(inputValue) === -1);
+                return inputValue;
+            });
+        }
+    }
+})
