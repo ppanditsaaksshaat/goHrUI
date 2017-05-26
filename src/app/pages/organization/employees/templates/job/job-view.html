@@ -74,6 +74,43 @@
             </div>
           </div>
         </div>
+       
+           <div class="row">
+           <div class="col-sm-4">
+              <div class="form-group">
+              <label  ng-bind="page.pageinfo.fields.JDCategory.text"></label>
+             <field-box ng-column="page.pageinfo.fields.JDCategory" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+             <label  ng-bind="page.pageinfo.fields.JDOfficeEmail.text"></label>
+             <field-box ng-column="page.pageinfo.fields.JDOfficeEmail" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label  ng-bind="page.pageinfo.fields.JDOfficeMobile.text"></label>
+             <field-box ng-column="page.pageinfo.fields.JDOfficeMobile" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              </div>
+            </div>
+           
+          </div>
+          <div class="row">
+             <div class="col-sm-4">
+              <div class="form-group">
+                <label  ng-bind="page.pageinfo.fields.JDOfficePhone.text"></label>
+             <field-box ng-column="page.pageinfo.fields.JDOfficePhone" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                 <label  ng-bind="page.pageinfo.fields.JDOfficeExtention.text"></label>
+             <field-box ng-column="page.pageinfo.fields.JDOfficeExtention" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              </div>
+            </div>
+          </div>
+        
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
@@ -191,34 +228,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label for="inputDepartment">Company Email</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label for="inputDesignation">Company Mobile</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label for="inputEmployeeType">Company Phone</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label for="inputEmployeeType">Extension</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-          </div>
+         
           <hr>
         </div>
       </div>

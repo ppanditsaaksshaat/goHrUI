@@ -184,9 +184,10 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                
-                <label for="inputLine1">Line1</label>
-                <input type="text" class="form-control" id="inputLine1" ng-model="empTabCtrl.empContactDetail.CDAddLine1">
+             <label ng-bind="page.pageinfo.fields.CDAddLine1.text"></label>
+            <field-box ng-column="page.pageinfo.fields.CDAddLine1" ng-entity="empTabCtrl.entity" form="editForm"></field-box>               
+                <!--<label for="inputLine1">Line1</label>
+                <input type="text" class="form-control" id="inputLine1" ng-model="empTabCtrl.empContactDetail.CDAddLine1">-->
               </div>
             </div>
             <div class="col-sm-4">
