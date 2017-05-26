@@ -183,6 +183,9 @@ angular.module('BlurAdmin.common').factory('DJWebStoreGlobal', ['$http', '$timeo
 
                     //2nd loop will extract each column and convert it in string comma-seprated
                     for (var index in arrData[i]) {
+                        if (arrData[i][index] == "") {
+                            arrData[i][index] = "";
+                        }
                         row += '"' + arrData[i][index] + '",';
                     }
 
