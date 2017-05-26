@@ -340,8 +340,9 @@
                                 <tbody>
 
                                     <tr ng-repeat="skipRowData in tabCtrl.skipDataList">
-                                        <td ng-repeat="head in tabCtrl.selectedHeader">{{skipRowData[head]}}</td>
                                         <td>{{skipRowData.$$result}}</td>
+                                        <td ng-repeat="head in tabCtrl.selectedHeader">{{skipRowData[head]}}</td>
+                                        
 
                                     </tr>
                                     </tr>
