@@ -412,7 +412,7 @@
                     return valid;
                 }
                 function _saveForm(form) {
-                  
+               
                     if (_validateForm(form)) {
                         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
                             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)

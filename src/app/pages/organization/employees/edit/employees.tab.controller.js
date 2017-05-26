@@ -191,7 +191,8 @@
                 vm.empContactDetail = result;
             }
             else {
-                vm.oldEntity = angular.copy(result);
+                vm.oldEntity = angular.copy(result); 
+                    
                 vm.entity = result;
             }
         }
@@ -217,10 +218,10 @@
             _formSave(vm.entity, vm.pageId);
         }
         function _formSave(entity, pageId) {
+            console.log(entity);
             var objectData, action;
             objectData = entity;
             action = 'edit';
-
             var savingObj = _setupSaving(objectData, action, pageId);
             console.log(savingObj)
             pageService.editPageData(pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult)
@@ -299,6 +300,7 @@
         function _clearFormCommon() {
             if (vm.activeTab === undefined) {
                 var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
+              
                 vm.entity = {};
                 vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
 
