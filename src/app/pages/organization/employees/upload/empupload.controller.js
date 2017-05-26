@@ -258,7 +258,7 @@
             addFieldCheck('otheridentity', '', 1, 6 + extraRowIndex, 1);
 
              addFieldCheck('religion', '', 1, 7 + extraRowIndex, 0);
-            addFieldCheck('nationality', '', 1, 7 + extraRowIndex, 0);
+            addFieldCheck('nationality', '', 1, 7 + extraRowIndex, 1);
 
             //Salary Mode
             addFieldCheck('salary', 'mode', 2, 0, 0);
