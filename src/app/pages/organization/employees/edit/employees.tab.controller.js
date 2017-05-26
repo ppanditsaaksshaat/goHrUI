@@ -186,6 +186,7 @@
             }
             else if (result.CDId !== undefined) {//check if entity is emg contact page contact
                 vm.oldempContactDetail = angular.copy(result);
+                console.log(result)
                 vm.empContactDetail = result;
             }
             else {
