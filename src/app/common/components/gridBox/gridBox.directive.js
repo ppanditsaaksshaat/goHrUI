@@ -39,7 +39,7 @@
                     gridStyle: { height: '450px' }
                 }
 
-                //console.log(page.pageinfo)
+               
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.boxOptions = angular.copy(boxSetting);
@@ -52,6 +52,7 @@
                 }
                 $scope.oldEntity = {};
                 $scope.$watch('page.pageinfo', function () {
+                     console.log($scope.page.pageinfo)
                     _setGridColumns();
                     _setupVerticalForm();
                     console.log('from watch')
@@ -117,9 +118,10 @@
                 //====================================================================
                 //button functions
                 function _addRecord() {
-                    if ($scope.entity === undefined) {
+                  
+                    // if ($scope.entity === undefined) {
                         $scope.entity = {};
-                    }
+                    // }
                     angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
                         $scope.entity[link.name] = link.value;
                     });
@@ -139,12 +141,13 @@
                             dialogModal.openFormVertical(options);
                         }
                         else {
-                            if ($scope.page.selectedRows !== undefined) {
-                                if ($scope.page.selectedRows.length > 0)
-                                    $scope.entity = $scope.page.selectedRows[0];
-                                else
-                                    $scope.entity = {};
-                            }
+                         
+                            // if ($scope.page.selectedRows !== undefined) {
+                            //     if ($scope.page.selectedRows.length > 0)
+                            //         $scope.entity = $scope.page.selectedRows[0];
+                            //     else
+                            //         $scope.entity = {};
+                            // }
                             $scope.page.showAddRecord = true;
                         }
                     }
@@ -322,7 +325,7 @@
                 //get page data
                 function _getPage() {
                     $timeout(function () {
-                        console.log($scope.page)
+                        console.log($scope.page);
                         pageService.getPagData($scope.page.pageId).then(_getPageSuccessResult, _getPageErrorResult)
                     });
                 }
@@ -335,7 +338,7 @@
                     _refreshData();
                 }
                 function _getPageErrorResult(err) {
-
+  
                 }
                 //end get page data
                 //====================================================================
@@ -396,7 +399,7 @@
                             if (err['email'] !== undefined) {
                                 alert('invalid email');
                                 valid = false;
-                            }
+                            } 
                             if (err['maxlength'] !== undefined) {
                                 alert('invalid length')
                                 valid = false
@@ -411,7 +414,7 @@
                     return valid;
                 }
                 function _saveForm(form) {
-
+                  
                     if (_validateForm(form)) {
                         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
                             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)

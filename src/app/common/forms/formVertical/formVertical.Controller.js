@@ -13,6 +13,7 @@
     var vm = this;
 
     function _loadController() {
+    
       vm.page = param.page;
       vm.page.action = param.action;
       vm.page.linkColumns = param.linkColumns;

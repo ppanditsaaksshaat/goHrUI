@@ -51,7 +51,9 @@
             else {
                 vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                 console.log(vm.empPKId)
-                $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
+                // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
+                 $scope.page = _getLocalPageObject(vm.pageId)
+                 console.log( $scope.page );
             }
         }
         function _getPageDataSuccessResult(result) {
@@ -115,7 +117,7 @@
         function _getPageDataErrorResult(error) {
         }
         function _getLocalPageObject(pageId) {
-            
+           
             var linkFieldName, linkFieldValue;
             linkFieldValue = vm.empPKId;
             pageId = parseInt(pageId);
@@ -145,6 +147,7 @@
                     linkFieldName = 'NdEmpId'
                     break;
             }
+            
             var pageObject = $scope.createPage();
             pageObject.pageId = pageId;
             pageObject.boxOptions = {

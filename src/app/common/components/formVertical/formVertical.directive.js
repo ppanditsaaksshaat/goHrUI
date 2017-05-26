@@ -16,6 +16,7 @@
                 page: '='
             },
             link: function (scope, elm, attrs) {
+                
                 scope.modalInstance = $rootScope.modalInstance;
                 scope.entity = {};
                 scope.form = {};
@@ -26,7 +27,7 @@
                 scope.oldEntity = angular.copy(scope.page.entity);
                 // console.log(scope.page)
                 if (scope.page !== undefined) {
-                    
+                   
                     //find tabs
                     angular.forEach(scope.page.pageinfo.viewform, function (tab) {
                         //find rows
