@@ -11,7 +11,7 @@
     function fieldBox($location, $state, $compile, $rootScope) {
         return {
             restrict: 'E',
-            require: ['ngModel', '^form'],
+            require: ['^form'],
             templateUrl: 'app/common/components/fieldBox/fieldBox.html',
             scope: {
                 col: '=ngColumn',
@@ -19,47 +19,47 @@
                 editForm: '=form'
             },
             link: function ($scope, $elm, $attrs, $ctrl) {
-                var ngModel = $ctrl[0];
-                if (!ngModel)
-                    return;
+                // var ngModel = $ctrl[0];
+                // if (!ngModel)
+                //     return;
 
-                $elm.bind('click', function (evt) {
-                    // var ngModel = $ctrl[0][$scopecol.name];
-                    var col = $scope.col;
-                    var form = $scope.editForm;
-                })
+                // $elm.bind('click', function (evt) {
+                //     // var ngModel = $ctrl[0][$scopecol.name];
+                //     var col = $scope.col;
+                //     var form = $scope.editForm;
+                // })
 
 
-                $scope.hasSuccess = function () {
-                    if (!ngModel) {
-                        return false;
-                    }
-                    return (!ngModel.$isEmpty(ngModel.$modelValue) && ngModel.$valid && ngModel.$dirty)
-                };
+                // $scope.hasSuccess = function () {
+                //     if (!ngModel) {
+                //         return false;
+                //     }
+                //     return (!ngModel.$isEmpty(ngModel.$modelValue) && ngModel.$valid && ngModel.$dirty)
+                // };
 
-                $scope.hasError = function () {
-                    if (!ngModel) {
-                        return false;
-                    }
-                    return ngModel.$invalid && !ngModel.$pristine;
-                };
-                $scope.hasWarning = function () {
-                    return false;
-                }
-                $scope.hasRequired = function () {
-                    // return ngModel.$error.required
-                    return $scope.col.required && !$scope.hasSuccess() && !$scope.hasError() && !$scope.hasWarning();
-                };
+                // $scope.hasError = function () {
+                //     if (!ngModel) {
+                //         return false;
+                //     }
+                //     return ngModel.$invalid && !ngModel.$pristine;
+                // };
+                // $scope.hasWarning = function () {
+                //     return false;
+                // }
+                // $scope.hasRequired = function () {
+                //     // return ngModel.$error.required
+                //     return $scope.col.required && !$scope.hasSuccess() && !$scope.hasError() && !$scope.hasWarning();
+                // };
 
-                ngModel.$parsers.push(function (value) {
-                    debugger;
-                    var blacklist = 'coconuts,bananas,pears'.split(',');
-                    console.log(value);
-                    ngModel.$setValidity('blacklist', blacklist.indexOf(value) === -1);
-                    return value;
-                });
+                // ngModel.$parsers.push(function (value) {
+                //     debugger;
+                //     var blacklist = 'coconuts,bananas,pears'.split(',');
+                //     console.log(value);
+                //     ngModel.$setValidity('blacklist', blacklist.indexOf(value) === -1);
+                //     return value;
+                // });
 
-                console.log(ngModel)
+                // console.log(ngModel)
 
 
 

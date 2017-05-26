@@ -20,7 +20,7 @@
         </span>
 
 
-        <input ng-switch-when="textbox" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" maxlength="{{col.maxLength}}"
+        <input  ng-switch-when="textbox" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" maxlength="{{col.maxLength}}"
             ng-model="entity[col.name]" type="text" class="form-control" ng-minlength="1" ng-maxlength="col.maxLength" ng-required="col.required"
         />
 

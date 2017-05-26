@@ -121,6 +121,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
 
             if (!scope.col)
                 return;
+            console.log(scope.col)
             modelCtrl.$parsers.push(function (inputValue) {
                 // debugger;
                 var blacklist = 'coconuts,bananas,pears'.split(',');
