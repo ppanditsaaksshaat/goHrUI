@@ -257,7 +257,7 @@
             // addFieldCheck('other', 'identity', 1, 8, 1);
             addFieldCheck('otheridentity', '', 1, 6 + extraRowIndex, 1);
 
-             addFieldCheck('religion', '', 1, 7 + extraRowIndex, 0);
+            addFieldCheck('religion', '', 1, 7 + extraRowIndex, 0);
             addFieldCheck('nationality', '', 1, 7 + extraRowIndex, 1);
 
             //Salary Mode
@@ -284,9 +284,9 @@
             // addFieldCheck('esi', 'dispensary', 2, 2, 1);
             addFieldCheck('BankAccountNo', '', 2, 2, 1);
 
-           
 
-            
+
+
         }
 
         //Public Functions
@@ -871,6 +871,8 @@
 
                 vm.totalRecord = successData + skipData;
                 vm.skipDataList = result.skipList;
+                vm.addedDataList=result.successList;
+
                 console.log(vm.skipDataList)
 
                 if (vm.skipDataLists === undefined) {
@@ -984,11 +986,11 @@
                     if (colIdx == 1) {
                         if (vm.migrate.tables[tableIdx].rows[rowIdx] !== undefined)
                             vm.migrate.tables[tableIdx].rows[rowIdx].column2.value = colName;
-                            console.log(colName)
+                        console.log(colName)
                     }
                     else {
                         if (vm.migrate.tables[tableIdx].rows[rowIdx] !== undefined)
-                        vm.migrate.tables[tableIdx].rows[rowIdx].column1.value = colName;
+                            vm.migrate.tables[tableIdx].rows[rowIdx].column1.value = colName;
                     }
                 }
             }
@@ -1071,6 +1073,29 @@
             DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
         }
 
+        vm.downloadExportSkipData = function () {
+
+            // alert('download temp is working');
+            // var tempColumns = [];
+
+            // tempColumns.push({ EmpCode: '' });
+            console.log(vm.skipDataList)
+
+            DJWebStoreGlobal.JSONToCSVConvertor(vm.skipDataList, 'EmployeeList', false, true, true);
+        }
+
+        vm.downloadExportAddedData = function () {
+
+            // alert('download temp is working');
+            // var tempColumns = [];
+
+            // tempColumns.push({ EmpCode: '' });
+            // console.log(vm.skipDataList)
+
+            DJWebStoreGlobal.JSONToCSVConvertor(vm.addedDataList, 'EmployeeList', false, true,true);
+        }
+
+
 
         vm.downloadMaxFieldTemp = function () {
 
@@ -1121,8 +1146,8 @@
             tempColumns.push({ religion: '' });
             tempColumns.push({ nationality: '' });
 
-           
-            
+
+
 
             DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
         }

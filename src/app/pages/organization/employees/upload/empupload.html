@@ -98,9 +98,9 @@
                     <div class="col-md-9">
                         <div ng-hide="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">
                             <h5>Download Template</h5>
-                            <button type="button" class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadTemp()">
+                            <button type="button" class="btn btn-warning"  ng-click="tabCtrl.downloadTemp()">
                            Minimum Requirement Template</button>
-                            <button type="button" class="btn btn-warning" ng-hide="tabCtrl.gridOptions.data.length > 0" ng-click="tabCtrl.downloadMaxFieldTemp()">
+                            <button type="button" class="btn btn-warning"  ng-click="tabCtrl.downloadMaxFieldTemp()">
               Maximum Requirement Template</button>
 
                             <h5>Supported Formats</h5>
@@ -329,12 +329,16 @@
                     <div class="panel">
                         <div class="panel-body">
                             <h3 class="with-line">Skip Record</h3>
+                            <button type="button" class="btn btn-warning" ng-show="tabCtrl.skipDataList.length>0" ng-click="tabCtrl.downloadExportSkipData()">
+                           Export Skip Result</button>
+                            <!--<grid-box ng-model="tabCtrl.skipGrid">
+                            </grid-box>-->
                             <table class="table" ng-show="tabCtrl.skipDataList.length>0">
                                 <thead>
                                     <tr>
                                         <th>Result</th>
                                         <th ng-repeat="head in tabCtrl.selectedHeader">{{head}}</th>
-                                        
+
 
                                     </tr>
                                 </thead>
@@ -343,7 +347,7 @@
                                     <tr ng-repeat="skipRowData in tabCtrl.skipDataList">
                                         <td>{{skipRowData.$$result}}</td>
                                         <td ng-repeat="head in tabCtrl.selectedHeader">{{skipRowData[head]}}</td>
-                                        
+
 
                                     </tr>
                                     </tr>
@@ -367,6 +371,8 @@
                     <div class="panel">
                         <div class="panel-body">
                             <h3 class="with-line">Added Record</h3>
+                            <button type="button" class="btn btn-warning" ng-show="tabCtrl.addedDataList.length>0" ng-click="tabCtrl.downloadExportAddedData()">
+                           Export Skip Result</button>
                         </div>
                     </div>
 
@@ -439,7 +445,7 @@
 </script>-->
 <style>
     .grid {
-        height: 400px;
+        height: 300px;
         width: 500px;
     }
     

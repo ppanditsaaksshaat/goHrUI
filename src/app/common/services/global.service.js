@@ -112,7 +112,7 @@ angular.module('BlurAdmin.common').factory('DJWebStoreGlobal', ['$http', '$timeo
 
         //============================================================================================================func : JSONToCSVConvertor
 
-        function _JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel, ShowTitle) {
+        function _JSONToCSVConvertor(JSONData, ReportTitle, ShowTitle, ShowLabel, ShowData) {
             // debugger;
             // var auth = DJWebStore.ValidateUser();
 
@@ -124,30 +124,30 @@ angular.module('BlurAdmin.common').factory('DJWebStoreGlobal', ['$http', '$timeo
 
 
 
-// //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
-//             var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+            // //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
+            //             var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
 
-//             var CSV = '';
-//             //Set Report title in first row or line
-//             if (ShowTitle)
-//                 CSV += ReportTitle + ',' + appName + ',Export By :, ' + userName + ',Exported On :, ' + dateStamp + '\r\n\n';
+            //             var CSV = '';
+            //             //Set Report title in first row or line
+            //             if (ShowTitle)
+            //                 CSV += ReportTitle + ',' + appName + ',Export By :, ' + userName + ',Exported On :, ' + dateStamp + '\r\n\n';
 
-//             //This condition will generate the Label/Header
-//             if (ShowLabel) {
-//                 var row = "";
+            //             //This condition will generate the Label/Header
+            //             if (ShowLabel) {
+            //                 var row = "";
 
-//                 //This loop will extract the label from 1st index of on array
-//                 for (var index in arrData[0]) {
+            //                 //This loop will extract the label from 1st index of on array
+            //                 for (var index in arrData[0]) {
 
-//                     //Now convert each value to string and comma-seprated
-//                     row += index + ',';
-//                 }
+            //                     //Now convert each value to string and comma-seprated
+            //                     row += index + ',';
+            //                 }
 
-//                 row = row.slice(0, -1);
+            //                 row = row.slice(0, -1);
 
-//                 //append Label row with line break
-//                 CSV += row + '\r\n';
-//             }
+            //                 //append Label row with line break
+            //                 CSV += row + '\r\n';
+            //             }
 
 
 
@@ -157,7 +157,7 @@ angular.module('BlurAdmin.common').factory('DJWebStoreGlobal', ['$http', '$timeo
             var CSV = '';
             //Set Report title in first row or line
             if (ShowTitle)
-                CSV += ReportTitle + ','  + ',Export By :, ' + ',Exported On : ' + '\r\n\n';
+                CSV += ReportTitle + ',' + ',Export By :, ' + ',Exported On : ' + '\r\n\n';
 
             //This condition will generate the Label/Header
             if (ShowLabel) {
@@ -176,27 +176,22 @@ angular.module('BlurAdmin.common').factory('DJWebStoreGlobal', ['$http', '$timeo
                 CSV += row + '\r\n';
             }
 
+            if (ShowData) {
+                //1st loop is to extract each row
+                for (var i = 0; i < arrData.length; i++) {
+                    var row = "";
 
+                    //2nd loop will extract each column and convert it in string comma-seprated
+                    for (var index in arrData[i]) {
+                        row += '"' + arrData[i][index] + '",';
+                    }
 
-            
+                    row.slice(0, row.length - 1);
 
-            //1st loop is to extract each row
-            for (var i = 0; i < arrData.length; i++) {
-                var row = "";
-
-                //2nd loop will extract each column and convert it in string comma-seprated
-                for (var ind in arrData[i]) {
-                    var sd=ind;//arrData[i][ind];
-                    //row += '"' + arrData[i][ind] + '",';
-                    row += '"' + ind + '",';
+                    //add a line break after each row
+                    CSV += row + '\r\n';
                 }
-
-                row.slice(0, row.length - 1);
-
-                //add a line break after each row
-                CSV += row;
             }
-
             if (CSV == '') {
                 alert("Invalid data");
                 return;
@@ -204,7 +199,7 @@ angular.module('BlurAdmin.common').factory('DJWebStoreGlobal', ['$http', '$timeo
 
             //Generate a file name
             //this will remove the blank-spaces from the title and replace it with an underscore
-           var fileName = 'Rudra' + '_' + ReportTitle.replace(/ /g, "_") + '_' + new Date().getMilliseconds();
+            var fileName = 'Rudra' + '_' + ReportTitle.replace(/ /g, "_") + '_' + new Date().getMilliseconds();
 
             //Initialize file format you want csv or xls
             var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
