@@ -871,7 +871,7 @@
 
                 vm.totalRecord = successData + skipData;
                 vm.skipDataList = result.skipList;
-                vm.addedDataList=result.successList;
+                vm.addedDataList = result.successList;
 
                 console.log(vm.skipDataList)
 
@@ -1057,20 +1057,27 @@
             // alert('download temp is working');
             var tempColumns = [];
 
-            tempColumns.push({ EmpCode: '' });
-            tempColumns.push({ Title: '' });
-            tempColumns.push({ FirstName: '' });
-            tempColumns.push({ MiddleName: '' });
-            tempColumns.push({ LastName: '' });
-            tempColumns.push({ Department: '' });
-            tempColumns.push({ EmploymentType: '' });
-            tempColumns.push({ Designation: '' });
-            tempColumns.push({ DateOfBirth: '' });
-            tempColumns.push({ Gender: '' });
-            tempColumns.push({ MobileNo: '' });
-            tempColumns.push({ EmpName: '' });
+            var row = {
+                EmpCode: '',
+                Title: '',
+                FirstName: '',
+                MiddleName: '',
+                LastName: '',
+                Department: '',
+                EmploymentType: '',
+                Designation: '',
+                DateOfBirth: '',
+                Gender: '',
+                MobileNo: '',
+                EmpName: ''
 
-            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
+            }
+
+            tempColumns.push(row)
+
+
+
+            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, true, false);
         }
 
         vm.downloadExportSkipData = function () {
@@ -1092,7 +1099,7 @@
             // tempColumns.push({ EmpCode: '' });
             // console.log(vm.skipDataList)
 
-            DJWebStoreGlobal.JSONToCSVConvertor(vm.addedDataList, 'EmployeeList', false, true,true);
+            DJWebStoreGlobal.JSONToCSVConvertor(vm.addedDataList, 'EmployeeList', false, true, true);
         }
 
 
@@ -1102,54 +1109,60 @@
             // alert('download temp is working');
             var tempColumns = [];
 
-            tempColumns.push({ EmpCode: '' });
-            tempColumns.push({ Title: '' });
-            tempColumns.push({ FirstName: '' });
-            tempColumns.push({ MiddleName: '' });
-            tempColumns.push({ LastName: '' });
-            tempColumns.push({ EmpName: '' });
-            tempColumns.push({ Department: '' });
-            tempColumns.push({ EmploymentType: '' });
-            tempColumns.push({ Designation: '' });
-            tempColumns.push({ DateOfBirth: '' });
-            tempColumns.push({ Gender: '' });
-            tempColumns.push({ MobileNo: '' });
-            tempColumns.push({ DateOfJoining: '' });
-            tempColumns.push({ Grade: '' });
-            tempColumns.push({ Level: '' });
-            tempColumns.push({ Category: '' });
-            tempColumns.push({ SubUnit: '' });
-            tempColumns.push({ OfficeEmail: '' });
-            tempColumns.push({ OfficeMobile: '' });
-            tempColumns.push({ OfficePhone: '' });
-            tempColumns.push({ OfficeExt: '' });
-            tempColumns.push({ IsSingleOT: '' });
-            tempColumns.push({ IsDoubleOT: '' });
-            tempColumns.push({ SingleOTRate: '' });
-            tempColumns.push({ DoubleOTRate: '' });
-            tempColumns.push({ MarriageStatus: '' });
-            tempColumns.push({ Email: '' });
-            tempColumns.push({ AnniversaryDate: '' });
-            tempColumns.push({ Facebook: '' });
-            tempColumns.push({ PanNo: '' });
-            tempColumns.push({ LinkedIn: '' });
-            tempColumns.push({ Aadhaar: '' });
-            tempColumns.push({ Twitter: '' });
-            tempColumns.push({ OtherIdentity: '' });
-            tempColumns.push({ SalaryMode: '' });
-            tempColumns.push({ PFAccountNumber: '' });
-            tempColumns.push({ PFStartDate: '' });
-            tempColumns.push({ ESIAccountNumber: '' });
-            tempColumns.push({ ESIStartDate: '' });
-            tempColumns.push({ BankAccountNo: '' });
-
-            tempColumns.push({ religion: '' });
-            tempColumns.push({ nationality: '' });
 
 
+            var row = {
+                EmpCode: '',
+                Title: '',
+                FirstName: '',
+                MiddleName: '',
+                LastName: '',
+                EmpName: '',
+                Department: '',
+                EmploymentType: '',
+                Designation: '',
+                DateOfBirth: '',
+                Gender: '',
+                MobileNo: '',
+                DateOfJoining: '',
+                Grade: '',
+                Level: '',
+                Category: '',
+                SubUnit: '',
+                OfficeEmail: '',
+                OfficeMobile: '',
+                OfficePhone: '',
+                OfficeExt: '',
+                IsSingleOT: '',
+                IsDoubleOT: '',
+                SingleOTRate: '',
+                DoubleOTRate: '',
+                MarriageStatus: '',
+                Email: '',
+                AnniversaryDate: '',
+                Facebook: '',
+                PanNo: '',
+                LinkedIn: '',
+                Aadhaar: '',
+                Twitter: '',
+                OtherIdentity: '',
+                SalaryMode: '',
+                PFAccountNumber: '',
+                PFStartDate: '',
+                ESIAccountNumber: '',
+                ESIStartDate: '',
+                BankAccountNo: '',
+                Religion: '',
+                Nationality: ''
 
 
-            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
+            }
+
+            tempColumns.push(row)
+
+
+
+            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, true, false);
         }
 
 
