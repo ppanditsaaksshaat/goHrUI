@@ -928,11 +928,11 @@
                         enableFiltering: true
 
                     });
-                    angular.forEach(vm.selectedHeader, function (col, cdx) {
+                    angular.forEach(vm.gridOptions.columnDefs, function (col, cdx) {
                         var colRowHeader = {
-                            name: col,
-                            field: col,
-                            displayName: col,
+                            name: col.name,
+                            field: col.field,
+                            displayName: col.displayName,
                             width: 150,
                             visible: true,
                             enableFiltering: true
