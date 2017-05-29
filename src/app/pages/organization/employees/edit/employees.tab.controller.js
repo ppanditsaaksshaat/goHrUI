@@ -35,7 +35,7 @@
             vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
 
             if (vm.pageId == 114 || vm.pageId == 35 || vm.pageId == 125) {
-               
+
                 $timeout(function () {
                     pageService.getPagData(vm.pageId).then(
                         _getPageDataSuccessResult, _getPageDataErrorResult);
@@ -60,7 +60,7 @@
         }
         function _getPageDataSuccessResult(result) {
             console.log(result)
-           
+
             if (result.pageinfo.pageid == 36) {
                 $scope.contactPage = result;
             }
@@ -79,47 +79,60 @@
             } else if (result.pageinfo.pageid == 125) {
                 linkFieldName = 'ADEmpId';
             }
-          
-          console.log(result)
-            $timeout(function () {            
-             
-                var searchList = [];
-                var searchFields = {
-                    field: linkFieldName,
-                    operand: '=',
-                    value: vm.empPKId
+
+            console.log(result)
+            $timeout(function () {
+                if (result.pageinfo.pageid == 114  || result.pageinfo.pageid == 125) {
+                    var searchList = [];
+                    var searchFields = {
+                        field: linkFieldName,
+                        operand: '=',
+                        value: vm.empPKId
+                    }
+                    searchList.push(searchFields);
+                    console.log(searchList)
+
+                    pageService.findEntity($scope.page.pageinfo.tableid, undefined, searchList).then(
+                        _findEntitySuccessResult, _findEntityErrorResult);
                 }
-                searchList.push(searchFields);
-               console.log(searchList)
-              
-                pageService.findEntity($scope.page.pageinfo.tableid, undefined, searchList).then(
-                    _findEntitySuccessResult, _findEntityErrorResult);
-             
                 if (result.pageinfo.pageid == 35) {
+                    
                     var emgTableId = 57, contTableId = 45
-                    //call emg contact entity
-                    searchList = [];
-                    searchFields = {
-                        field: 'ECEmpId',
+                    var searchList = [];
+                    var searchFields = {
+                        field: linkFieldName,
                         operand: '=',
                         value: vm.empPKId
                     }
                     searchList.push(searchFields);
-                    pageService.findEntity(emgTableId, undefined, searchList).then(
+                    console.log(searchList)
+
+                    pageService.findEntity(43, undefined, searchList).then(
                         _findEntitySuccessResult, _findEntityErrorResult);
 
-                    //call contact address entity
-                    searchList = [];
-                    searchFields = {
-                        field: 'CDEmpId',
-                        operand: '=',
-                        value: vm.empPKId
-                    }
-                    searchList.push(searchFields);
+                    // //call emg contact entity
+                    // searchList = [];
+                    // searchFields = {
+                    //     field: 'ECEmpId',
+                    //     operand: '=',
+                    //     value: vm.empPKId
+                    // }
+                    // searchList.push(searchFields);
+                    // pageService.findEntity(emgTableId, undefined, searchList).then(
+                    //     _findEntitySuccessResult, _findEntityErrorResult);
+
+                    // //call contact address entity
+                    // searchList = [];
+                    // searchFields = {
+                    //     field: 'CDEmpId',
+                    //     operand: '=',
+                    //     value: vm.empPKId
+                    // }
+                    // searchList.push(searchFields);
 
 
-                    pageService.findEntity(contTableId, undefined, searchList).then(
-                        _findEntitySuccessResult, _findEntityErrorResult);
+                    // pageService.findEntity(contTableId, undefined, searchList).then(
+                    //     _findEntitySuccessResult, _findEntityErrorResult);
                 }
             })
         }
@@ -184,7 +197,7 @@
             return pageObject;
         }
         function _findEntitySuccessResult(result) {
-
+           
             if (result.ECEmpId !== undefined) {//check if entity is emg contact page contact
                 vm.oldEmpEmgContact = angular.copy(result);
                 vm.empEmgContact = result;
@@ -197,7 +210,6 @@
             else {
                 console.log(result)
                 vm.oldEntity = angular.copy(result);
-
                 vm.entity = result;
             }
         }
@@ -219,9 +231,8 @@
             _formSave(vm.empContactDetail, vm.pageIds.contactPageId);
         }
         function _saveForm() {
-            if ($scope.page.pageinfo.idencolname !==undefined && $scope.page.pageinfo.idencolname!==null)
-            {
-            _formSave(vm.entity, vm.pageId);
+            if ($scope.page.pageinfo.idencolname !== undefined && $scope.page.pageinfo.idencolname !== null) {
+                _formSave(vm.entity, vm.pageId);
             }
         }
         function _formSave(entity, pageId) {
@@ -289,6 +300,7 @@
             // if (!_validateFormCommon()) {
             //     return;
             // }
+            debugger;
             if (vm.activeTab === undefined) {
                 _saveForm();
             }
