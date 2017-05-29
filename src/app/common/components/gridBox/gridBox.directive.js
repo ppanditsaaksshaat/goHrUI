@@ -8,7 +8,7 @@
     angular.module('BlurAdmin.common.components')
         .directive('gridBox', gridBox);
     /** @ngInject */
-    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService, editFormService) {
+    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService, editFormService, focus) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/gridBox/gridBox.html',
@@ -39,7 +39,7 @@
                     gridStyle: { height: '450px' }
                 }
 
-               
+
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.boxOptions = angular.copy(boxSetting);
@@ -52,7 +52,7 @@
                 }
                 $scope.oldEntity = {};
                 $scope.$watch('page.pageinfo', function () {
-                     console.log($scope.page.pageinfo)
+                    console.log($scope.page.pageinfo)
                     _setGridColumns();
                     _setupVerticalForm();
                     console.log('from watch')
@@ -118,9 +118,9 @@
                 //====================================================================
                 //button functions
                 function _addRecord() {
-                  
+
                     // if ($scope.entity === undefined) {
-                        $scope.entity = {};
+                    $scope.entity = {};
                     // }
                     angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
                         $scope.entity[link.name] = link.value;
@@ -141,7 +141,7 @@
                             dialogModal.openFormVertical(options);
                         }
                         else {
-                         
+
                             // if ($scope.page.selectedRows !== undefined) {
                             //     if ($scope.page.selectedRows.length > 0)
                             //         $scope.entity = $scope.page.selectedRows[0];
@@ -338,7 +338,7 @@
                     _refreshData();
                 }
                 function _getPageErrorResult(err) {
-  
+
                 }
                 //end get page data
                 //====================================================================
@@ -395,11 +395,26 @@
                     if (!form['$valid']) {
                         if (form['$error'] !== undefined) {
                             var err = form['$error'];
+                            if (err.required) {
+                                if (err.required.length > 0) {
+                                    var fieldName = err.required[0].$name;
+                                    err.required[0].$setTouched();
+                                    err.required[0].$setDirty();
+                                    console.log(err)
+                                    focus(fieldName);
+                                    valid = false;
+                                }
+                            }
 
+                            console.log(err)
+                            if (err['emailError']) {
+                                alert('email failed');
+                                valid = false;
+                            }
                             if (err['email'] !== undefined) {
                                 alert('invalid email');
                                 valid = false;
-                            } 
+                            }
                             if (err['maxlength'] !== undefined) {
                                 alert('invalid length')
                                 valid = false
@@ -414,7 +429,7 @@
                     return valid;
                 }
                 function _saveForm(form) {
-                  
+
                     if (_validateForm(form)) {
                         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
                             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
