@@ -79,12 +79,10 @@
             } else if (result.pageinfo.pageid == 125) {
                 linkFieldName = 'ADEmpId';
             }
-            else if (result.pageinfo.pageid == 53) {
-                linkFieldName = 'EmpID';
-            }
+          
           console.log(result)
             $timeout(function () {            
-              if(result.pageinfo.pageid!=53 && result.pageinfo.pageid!=35){
+             
                 var searchList = [];
                 var searchFields = {
                     field: linkFieldName,
@@ -96,7 +94,7 @@
               
                 pageService.findEntity($scope.page.pageinfo.tableid, undefined, searchList).then(
                     _findEntitySuccessResult, _findEntityErrorResult);
-              }
+             
                 if (result.pageinfo.pageid == 35) {
                     var emgTableId = 57, contTableId = 45
                     //call emg contact entity
