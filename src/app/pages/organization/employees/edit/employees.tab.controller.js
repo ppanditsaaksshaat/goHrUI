@@ -54,8 +54,8 @@
                 vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                 console.log(vm.empPKId)
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
-                 $scope.page = _getLocalPageObject(vm.pageId)
-                 console.log( $scope.page );
+                $scope.page = _getLocalPageObject(vm.pageId)
+                console.log($scope.page);
             }
         }
         function _getPageDataSuccessResult(result) {
@@ -122,7 +122,7 @@
         function _getPageDataErrorResult(error) {
         }
         function _getLocalPageObject(pageId) {
-           
+
             var linkFieldName, linkFieldValue;
             linkFieldValue = vm.empPKId;
             pageId = parseInt(pageId);
@@ -152,7 +152,7 @@
                     linkFieldName = 'NDEmpId'
                     break;
             }
-            
+
             var pageObject = $scope.createPage();
             pageObject.pageId = pageId;
             pageObject.boxOptions = {
@@ -165,7 +165,7 @@
                 showUpload: false,
                 showDialog: false,
                 enableRefreshAfterUpdate: true,
-                enableAutoRefresh:true,
+                enableAutoRefresh: true,
                 gridHeight: 450,
                 linkColumns: [{ name: linkFieldName, value: linkFieldValue }],
                 getPageData: null,
@@ -191,8 +191,8 @@
                 vm.empContactDetail = result;
             }
             else {
-                vm.oldEntity = angular.copy(result); 
-                    
+                vm.oldEntity = angular.copy(result);
+
                 vm.entity = result;
             }
         }
@@ -210,12 +210,16 @@
             return data;
         }
         function _saveAddress() {
-         
+
             _formSave(vm.empContactDetail, vm.pageIds.contactPageId);
         }
         function _saveForm() {
-        
-            _formSave(vm.entity, vm.pageId);
+            if ($scope.page.pageinfo.idencolname !==undefined && $scope.page.pageinfo.idencolname!==null)
+            {
+                console.log("check")
+                console.log($scope.page.pageinfo)
+               _formSave(vm.entity, vm.pageId);
+            }
         }
         function _formSave(entity, pageId) {
             console.log(entity);
@@ -260,21 +264,28 @@
             vm.empContactDetail = angular.copy(vm.oldempContactDetail);
         }
         function _clearPersonal() {
-             var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
-                vm.entity = {};
-                vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
+            var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
+            vm.entity = {};
+            vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
 
             vm.empEmgContact = {};
-              vm.empEmgContact[$scope.page.pageinfo.idencolname] = oldPkId;
+            vm.empEmgContact[$scope.page.pageinfo.idencolname] = oldPkId;
         }
         function _clearAddress() {
-           var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
-                vm.empContactDetail = {};
-                vm.empContactDetail[$scope.page.pageinfo.idencolname] = oldPkId;
-           
+            var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
+            vm.empContactDetail = {};
+            vm.empContactDetail[$scope.page.pageinfo.idencolname] = oldPkId;
+
         }
         //=========================================================== common method
+        // function _validateFormCommon() {
+        //     // editForm.$invalid
+        //     return true;
+        // }
         function _saveFormCommon() {
+            // if (!_validateFormCommon()) {
+            //     return;
+            // }
             if (vm.activeTab === undefined) {
                 _saveForm();
             }
@@ -298,12 +309,12 @@
             }
         }
         function _clearFormCommon() {
+
             if (vm.activeTab === undefined) {
                 var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
-              
                 vm.entity = {};
                 vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
-
+                console.log(vm.entity)
             }
             else if (vm.activeTab == 0) {
                 _clearPersonal();
