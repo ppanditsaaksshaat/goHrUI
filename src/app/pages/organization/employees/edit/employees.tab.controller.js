@@ -300,7 +300,7 @@
             // if (!_validateFormCommon()) {
             //     return;
             // }
-            debugger;
+           
             if (vm.activeTab === undefined) {
                 _saveForm();
             }
