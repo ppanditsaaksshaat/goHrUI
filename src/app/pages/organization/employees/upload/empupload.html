@@ -98,9 +98,9 @@
                     <div class="col-md-9">
                         <div ng-hide="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">
                             <h5>Download Template</h5>
-                            <button type="button" class="btn btn-warning"  ng-click="tabCtrl.downloadTemp()">
+                            <button type="button" class="btn btn-warning" ng-click="tabCtrl.downloadTemp()">
                            Minimum Requirement Template</button>
-                            <button type="button" class="btn btn-warning"  ng-click="tabCtrl.downloadMaxFieldTemp()">
+                            <button type="button" class="btn btn-warning" ng-click="tabCtrl.downloadMaxFieldTemp()">
               Maximum Requirement Template</button>
 
                             <h5>Supported Formats</h5>
@@ -126,6 +126,7 @@
 
                         </div>
                         <span ng-show="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">Preview Data</span>
+
                         <div id="grid1" ui-grid="tabCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav ng-show="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">
                         </div>
                     </div>
@@ -333,7 +334,7 @@
                            Export Skip Result</button>
                             <!--<grid-box ng-model="tabCtrl.skipGrid">
                             </grid-box>-->
-                            <table class="table" ng-show="tabCtrl.skipDataList.length>0">
+                            <!--<table class="table" ng-show="tabCtrl.skipDataList.length>0">
                                 <thead>
                                     <tr>
                                         <th>Result</th>
@@ -352,7 +353,13 @@
                                     </tr>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table>-->
+                            <div>
+                                <div id="grid1" ui-grid="tabCtrl.resultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
 
@@ -372,7 +379,13 @@
                         <div class="panel-body">
                             <h3 class="with-line">Added Record</h3>
                             <button type="button" class="btn btn-warning" ng-show="tabCtrl.addedDataList.length>0" ng-click="tabCtrl.downloadExportAddedData()">
-                           Export Skip Result</button>
+                           Export Added Result</button>
+                            
+                                <div>
+                                    <div id="grid3" ui-grid="tabCtrl.succesResultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
+                                    </div>
+                                </div>
+                            
                         </div>
                     </div>
 
@@ -445,12 +458,12 @@
 </script>-->
 <style>
     .grid {
-        height: 300px;
+        height: 250px;
         width: 500px;
     }
     
     .gridValid {
-        height: 400px;
+        height: 250px;
         width: 500px;
     }
     

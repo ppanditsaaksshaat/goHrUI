@@ -57,16 +57,33 @@
 
         //  vm.migrate.step1=true;
 
+        vm.resultGridOptions = $scope.getGridSetting();
+        vm.succesResultGridOptions = $scope.getGridSetting();
+        vm.gridOptions = $scope.getGridSetting();
+
+        // vm.gridOptions = {
+        //     enableFiltering: false,
+        //     showGridFooter: false,
+        //     showColumnFooter: false,
+        //     enableHorizontalScrollbar: false,
+        //     enableVerticalScrollbar: false,
+        //     enableCellEditOnFocus: false
+        // };
+
+        // vm.skipgridOptions = {
+        //     enableFiltering: false,
+        //     showGridFooter: false,
+        //     showColumnFooter: false,
+        //     enableHorizontalScrollbar: false,
+        //     enableVerticalScrollbar: false,
+        //     enableCellEditOnFocus: false
+        // };
 
 
-        vm.gridOptions = {
-            enableFiltering: false,
-            showGridFooter: false,
-            showColumnFooter: false,
-            enableHorizontalScrollbar: false,
-            enableVerticalScrollbar: false,
-            enableCellEditOnFocus: false
-        };
+
+
+
+
         //  vm.includeSrc = 'templates/crm/migrate.html?q=1';
 
         function _getUploadHistoryDetail() {
@@ -879,6 +896,136 @@
                     vm.skipDataLists = [];
 
                 }
+                // var columnList = [];
+
+                // var columnListRows = {
+                //     $$result,
+                //     Aadhaar,
+
+
+
+                // }
+
+
+                //getGridSetting
+                // vm.skipgridOptions.columnDefs.push(vm.selectedHeader)
+                // vm.skipgridOptions.data = result.skipList;
+
+                // console.log(vm.skipgridOptions.data)
+                // console.log(vm.skipgridOptions.data)
+
+                // console.log(result.skipList)
+                // console.log(result.skipList)
+
+                if (vm.skipDataList.length > 0) {
+                    vm.resultGridOptions.columnDefs = [];
+                    vm.resultGridOptions.columnDefs.push({
+                        name: '$$result',
+                        field: '$$result',
+                        displayName: 'Result',
+                        width: 200,
+                        visible: true,
+                        enableFiltering: true
+
+                    });
+                    angular.forEach(vm.selectedHeader, function (col, cdx) {
+                        var colRowHeader = {
+                            name: col,
+                            field: col,
+                            displayName: col,
+                            width: 150,
+                            visible: true,
+                            enableFiltering: true
+
+                        };
+                        vm.resultGridOptions.columnDefs.push(colRowHeader);
+                    })
+
+                    vm.resultGridOptions.data = vm.skipDataList;
+                }
+
+
+                if (result.successList.length > 0) {
+                    vm.succesResultGridOptions.columnDefs = [];
+
+                    vm.succesResultGridOptions.columnDefs.push({
+                        name: 'EmpCode',
+                        field: 'EmpCode',
+                        displayName: 'Employee Code',
+                        width: 250,
+                        visible: true,
+                        enableFiltering: true
+                    });
+                    vm.succesResultGridOptions.columnDefs.push({
+                        name: 'EmpFirstName',
+                        field: 'EmpFirstName',
+                        displayName: 'First Name',
+                        width: 250,
+                        visible: true,
+                        enableFiltering: true
+                    });
+                    vm.succesResultGridOptions.columnDefs.push({
+                        name: 'EmpMiddleName',
+                        field: 'EmpMiddleName',
+                        displayName: 'Middle Name',
+                        width: 230,
+                        visible: true,
+                        enableFiltering: true
+                    });
+                    vm.succesResultGridOptions.columnDefs.push({
+                        name: 'EmpLastName',
+                        field: 'EmpLastName',
+                        displayName: 'Last Name',
+                        width: 230,
+                        visible: true,
+                        enableFiltering: true
+                    });
+                   vm.succesResultGridOptions.columnDefs.push({
+                        name: 'EMPCodeAutometic',
+                        field: 'EMPCodeAutometic',
+                        displayName: 'Employee Auto Code',
+                        width: 230,
+                        visible: true,
+                        enableFiltering: true
+                    });
+                        // vm.succesResultGridOptions.columnDefs.push(colRowHeaders);
+                   
+
+
+                    vm.succesResultGridOptions.data = result.successList;
+                    console.log(result.successList)
+                }
+
+                // if (vm.skipDataList.length > 0) {
+
+                // }
+                // if (vm.skipDataList.length > 0) {
+                //     vm.resultGridOptions.data = vm.skipDataList;
+                // }
+                //6542667 2512003 cisce.org.in
+                // vm.resultGridOptions.data = result.successList;
+
+                // angular.forEach(vm.gridOptions.columnDefs, function (col, colIdx) {
+
+
+                //     angular.forEach(result.successList, function (table, tidx) {
+                //         angular.forEach(table.rows, function (row, ridx) {
+
+                //                 if (col.name == row.column1.value) {
+
+                //                 }
+
+
+                //                 if (col.name == row.column2.value) {
+
+                //                 }
+
+                //         })
+                //     })
+                //     vm.migrate.unMappedList.push(col.name)
+
+                // });
+
                 // var rowData = "";
                 // angular.forEach(result.skipList, function (rows, ridx) {
                 //     angular.forEach(rows, function (rowss, ridx) {
