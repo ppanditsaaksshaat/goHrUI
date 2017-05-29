@@ -35,7 +35,7 @@
             vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
 
             if (vm.pageId == 114 || vm.pageId == 35 || vm.pageId == 125) {
-
+               
                 $timeout(function () {
                     pageService.getPagData(vm.pageId).then(
                         _getPageDataSuccessResult, _getPageDataErrorResult);
@@ -60,6 +60,7 @@
         }
         function _getPageDataSuccessResult(result) {
             console.log(result)
+           
             if (result.pageinfo.pageid == 36) {
                 $scope.contactPage = result;
             }
@@ -78,8 +79,12 @@
             } else if (result.pageinfo.pageid == 125) {
                 linkFieldName = 'ADEmpId';
             }
-
-            $timeout(function () {
+            else if (result.pageinfo.pageid == 53) {
+                linkFieldName = 'EmpID';
+            }
+          console.log(result)
+            $timeout(function () {            
+              if(result.pageinfo.pageid!=53 && result.pageinfo.pageid!=35){
                 var searchList = [];
                 var searchFields = {
                     field: linkFieldName,
@@ -87,10 +92,11 @@
                     value: vm.empPKId
                 }
                 searchList.push(searchFields);
-
+               console.log(searchList)
+              
                 pageService.findEntity($scope.page.pageinfo.tableid, undefined, searchList).then(
                     _findEntitySuccessResult, _findEntityErrorResult);
-
+              }
                 if (result.pageinfo.pageid == 35) {
                     var emgTableId = 57, contTableId = 45
                     //call emg contact entity
@@ -191,6 +197,7 @@
                 vm.empContactDetail = result;
             }
             else {
+                console.log(result)
                 vm.oldEntity = angular.copy(result);
 
                 vm.entity = result;
@@ -216,9 +223,7 @@
         function _saveForm() {
             if ($scope.page.pageinfo.idencolname !==undefined && $scope.page.pageinfo.idencolname!==null)
             {
-                console.log("check")
-                console.log($scope.page.pageinfo)
-               _formSave(vm.entity, vm.pageId);
+            _formSave(vm.entity, vm.pageId);
             }
         }
         function _formSave(entity, pageId) {
