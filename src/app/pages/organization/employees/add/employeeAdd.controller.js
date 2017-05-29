@@ -53,10 +53,6 @@
         // save employee form
         function _saveForm(data) {
         
-            var date = new Date(vm.empAdd.JDDate);
-            var month = date.getMonth() + 1;
-            var doj = month + "/" + date.getDate() + "/" + date.getFullYear();
-            console.log(doj);
             var basic = {
                 EmpTitleId: vm.empAdd.EmpTitleId,
                 EmpFirstName: vm.empAdd.EmpFirstName,
@@ -67,7 +63,7 @@
                 EmpPhoto1_64URL: vm.empAdd.EmpPhoto1_64URL,
             }
             var job = {
-                JDDate: doj,
+                JDDate: vm.empAdd.JDDate,
                 JDDeptId: vm.empAdd.JDDeptId,
                 JDDesgId: vm.empAdd.JDDesgId,
                 JDEmploymentId: vm.empAdd.JDEmploymentId,
