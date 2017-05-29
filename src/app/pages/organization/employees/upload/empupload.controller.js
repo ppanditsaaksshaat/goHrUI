@@ -57,16 +57,33 @@
 
         //  vm.migrate.step1=true;
 
+        vm.resultGridOptions = $scope.getGridSetting();
+        vm.succesResultGridOptions = $scope.getGridSetting();
+        vm.gridOptions = $scope.getGridSetting();
+
+        // vm.gridOptions = {
+        //     enableFiltering: false,
+        //     showGridFooter: false,
+        //     showColumnFooter: false,
+        //     enableHorizontalScrollbar: false,
+        //     enableVerticalScrollbar: false,
+        //     enableCellEditOnFocus: false
+        // };
+
+        // vm.skipgridOptions = {
+        //     enableFiltering: false,
+        //     showGridFooter: false,
+        //     showColumnFooter: false,
+        //     enableHorizontalScrollbar: false,
+        //     enableVerticalScrollbar: false,
+        //     enableCellEditOnFocus: false
+        // };
 
 
-        vm.gridOptions = {
-            enableFiltering: false,
-            showGridFooter: false,
-            showColumnFooter: false,
-            enableHorizontalScrollbar: false,
-            enableVerticalScrollbar: false,
-            enableCellEditOnFocus: false
-        };
+
+
+
+
         //  vm.includeSrc = 'templates/crm/migrate.html?q=1';
 
         function _getUploadHistoryDetail() {
@@ -255,10 +272,10 @@
 
             //other number
             // addFieldCheck('other', 'identity', 1, 8, 1);
-            addFieldCheck('otheridentity', '', 1, 8, 1);
+            addFieldCheck('otheridentity', '', 1, 6 + extraRowIndex, 1);
 
-             addFieldCheck('religion', '', 1, 9, 0);
-            addFieldCheck('nationality', '', 1, 9, 1);
+            addFieldCheck('religion', '', 1, 7 + extraRowIndex, 0);
+            addFieldCheck('nationality', '', 1, 7 + extraRowIndex, 1);
 
             //Salary Mode
             addFieldCheck('salary', 'mode', 2, 0, 0);
@@ -284,9 +301,9 @@
             // addFieldCheck('esi', 'dispensary', 2, 2, 1);
             addFieldCheck('BankAccountNo', '', 2, 2, 1);
 
-           
 
-            
+
+
         }
 
         //Public Functions
@@ -871,12 +888,144 @@
 
                 vm.totalRecord = successData + skipData;
                 vm.skipDataList = result.skipList;
+                vm.addedDataList = result.successList;
+
                 console.log(vm.skipDataList)
 
                 if (vm.skipDataLists === undefined) {
                     vm.skipDataLists = [];
 
                 }
+                // var columnList = [];
+
+                // var columnListRows = {
+                //     $$result,
+                //     Aadhaar,
+
+
+
+                // }
+
+
+                //getGridSetting
+                // vm.skipgridOptions.columnDefs.push(vm.selectedHeader)
+                // vm.skipgridOptions.data = result.skipList;
+
+                // console.log(vm.skipgridOptions.data)
+                // console.log(vm.skipgridOptions.data)
+
+                // console.log(result.skipList)
+                // console.log(result.skipList)
+
+                if (vm.skipDataList.length > 0) {
+                    vm.resultGridOptions.columnDefs = [];
+                    vm.resultGridOptions.columnDefs.push({
+                        name: '$$result',
+                        field: '$$result',
+                        displayName: 'Result',
+                        width: 200,
+                        visible: true,
+                        enableFiltering: true
+
+                    });
+                    angular.forEach(vm.selectedHeader, function (col, cdx) {
+                        var colRowHeader = {
+                            name: col,
+                            field: col,
+                            displayName: col,
+                            width: 150,
+                            visible: true,
+                            enableFiltering: true
+
+                        };
+                        vm.resultGridOptions.columnDefs.push(colRowHeader);
+                    })
+
+                    vm.resultGridOptions.data = vm.skipDataList;
+                }
+
+
+                if (result.successList.length > 0) {
+                    vm.succesResultGridOptions.columnDefs = [];
+
+                    vm.succesResultGridOptions.columnDefs.push({
+                        name: 'EmpCode',
+                        field: 'EmpCode',
+                        displayName: 'Employee Code',
+                        width: 250,
+                        visible: true,
+                        enableFiltering: true
+                    });
+                    vm.succesResultGridOptions.columnDefs.push({
+                        name: 'EmpFirstName',
+                        field: 'EmpFirstName',
+                        displayName: 'First Name',
+                        width: 250,
+                        visible: true,
+                        enableFiltering: true
+                    });
+                    vm.succesResultGridOptions.columnDefs.push({
+                        name: 'EmpMiddleName',
+                        field: 'EmpMiddleName',
+                        displayName: 'Middle Name',
+                        width: 230,
+                        visible: true,
+                        enableFiltering: true
+                    });
+                    vm.succesResultGridOptions.columnDefs.push({
+                        name: 'EmpLastName',
+                        field: 'EmpLastName',
+                        displayName: 'Last Name',
+                        width: 230,
+                        visible: true,
+                        enableFiltering: true
+                    });
+                   vm.succesResultGridOptions.columnDefs.push({
+                        name: 'EMPCodeAutometic',
+                        field: 'EMPCodeAutometic',
+                        displayName: 'Employee Auto Code',
+                        width: 230,
+                        visible: true,
+                        enableFiltering: true
+                    });
+                        // vm.succesResultGridOptions.columnDefs.push(colRowHeaders);
+                   
+
+
+                    vm.succesResultGridOptions.data = result.successList;
+                    console.log(result.successList)
+                }
+
+                // if (vm.skipDataList.length > 0) {
+
+                // }
+                // if (vm.skipDataList.length > 0) {
+                //     vm.resultGridOptions.data = vm.skipDataList;
+                // }
+                //6542667 2512003 cisce.org.in
+                // vm.resultGridOptions.data = result.successList;
+
+                // angular.forEach(vm.gridOptions.columnDefs, function (col, colIdx) {
+
+
+                //     angular.forEach(result.successList, function (table, tidx) {
+                //         angular.forEach(table.rows, function (row, ridx) {
+
+                //                 if (col.name == row.column1.value) {
+
+                //                 }
+
+
+                //                 if (col.name == row.column2.value) {
+
+                //                 }
+
+                //         })
+                //     })
+                //     vm.migrate.unMappedList.push(col.name)
+
+                // });
+
                 // var rowData = "";
                 // angular.forEach(result.skipList, function (rows, ridx) {
                 //     angular.forEach(rows, function (rowss, ridx) {
@@ -984,11 +1133,11 @@
                     if (colIdx == 1) {
                         if (vm.migrate.tables[tableIdx].rows[rowIdx] !== undefined)
                             vm.migrate.tables[tableIdx].rows[rowIdx].column2.value = colName;
-                            console.log(colName)
+                        console.log(colName)
                     }
                     else {
                         if (vm.migrate.tables[tableIdx].rows[rowIdx] !== undefined)
-                        vm.migrate.tables[tableIdx].rows[rowIdx].column1.value = colName;
+                            vm.migrate.tables[tableIdx].rows[rowIdx].column1.value = colName;
                     }
                 }
             }
@@ -1055,21 +1204,51 @@
             // alert('download temp is working');
             var tempColumns = [];
 
-            tempColumns.push({ EmpCode: '' });
-            tempColumns.push({ Title: '' });
-            tempColumns.push({ FirstName: '' });
-            tempColumns.push({ MiddleName: '' });
-            tempColumns.push({ LastName: '' });
-            tempColumns.push({ Department: '' });
-            tempColumns.push({ EmploymentType: '' });
-            tempColumns.push({ Designation: '' });
-            tempColumns.push({ DateOfBirth: '' });
-            tempColumns.push({ Gender: '' });
-            tempColumns.push({ MobileNo: '' });
-            tempColumns.push({ EmpName: '' });
+            var row = {
+                EmpCode: '',
+                Title: '',
+                FirstName: '',
+                MiddleName: '',
+                LastName: '',
+                Department: '',
+                EmploymentType: '',
+                Designation: '',
+                DateOfBirth: '',
+                Gender: '',
+                MobileNo: '',
+                EmpName: ''
 
-            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
+            }
+
+            tempColumns.push(row)
+
+
+
+            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, true, false);
         }
+
+        vm.downloadExportSkipData = function () {
+
+            // alert('download temp is working');
+            // var tempColumns = [];
+
+            // tempColumns.push({ EmpCode: '' });
+            console.log(vm.skipDataList)
+
+            DJWebStoreGlobal.JSONToCSVConvertor(vm.skipDataList, 'EmployeeList', false, true, true);
+        }
+
+        vm.downloadExportAddedData = function () {
+
+            // alert('download temp is working');
+            // var tempColumns = [];
+
+            // tempColumns.push({ EmpCode: '' });
+            // console.log(vm.skipDataList)
+
+            DJWebStoreGlobal.JSONToCSVConvertor(vm.addedDataList, 'EmployeeList', false, true, true);
+        }
+
 
 
         vm.downloadMaxFieldTemp = function () {
@@ -1077,53 +1256,60 @@
             // alert('download temp is working');
             var tempColumns = [];
 
-            tempColumns.push({ EmpCode: '' });
-            tempColumns.push({ Title: '' });
-            tempColumns.push({ FirstName: '' });
-            tempColumns.push({ MiddleName: '' });
-            tempColumns.push({ LastName: '' });
-            tempColumns.push({ Department: '' });
-            tempColumns.push({ EmploymentType: '' });
-            tempColumns.push({ Designation: '' });
-            tempColumns.push({ DateOfBirth: '' });
-            tempColumns.push({ Gender: '' });
-            tempColumns.push({ MobileNo: '' });
-            tempColumns.push({ DateOfJoining: '' });
-            tempColumns.push({ Grade: '' });
-            tempColumns.push({ Level: '' });
-            tempColumns.push({ Category: '' });
-            tempColumns.push({ SubUnit: '' });
-            tempColumns.push({ OfficeEmail: '' });
-            tempColumns.push({ OfficeMobile: '' });
-            tempColumns.push({ OfficePhone: '' });
-            tempColumns.push({ OfficeExt: '' });
-            tempColumns.push({ IsSingleOT: '' });
-            tempColumns.push({ IsDoubleOT: '' });
-            tempColumns.push({ SingleOTRate: '' });
-            tempColumns.push({ DoubleOTRate: '' });
-            tempColumns.push({ MarriageStatus: '' });
-            tempColumns.push({ Email: '' });
-            tempColumns.push({ AnniversaryDate: '' });
-            tempColumns.push({ Facebook: '' });
-            tempColumns.push({ PanNo: '' });
-            tempColumns.push({ LinkedIn: '' });
-            tempColumns.push({ Aadhaar: '' });
-            tempColumns.push({ Twitter: '' });
-            tempColumns.push({ OtherIdentity: '' });
-            tempColumns.push({ SalaryMode: '' });
-            tempColumns.push({ PFAccountNumber: '' });
-            tempColumns.push({ PFStartDate: '' });
-            tempColumns.push({ ESIAccountNumber: '' });
-            tempColumns.push({ ESIStartDate: '' });
-            tempColumns.push({ BankAccountNo: '' });
 
-            tempColumns.push({ religion: '' });
-            tempColumns.push({ nationality: '' });
 
-           
-            
+            var row = {
+                EmpCode: '',
+                Title: '',
+                FirstName: '',
+                MiddleName: '',
+                LastName: '',
+                EmpName: '',
+                Department: '',
+                EmploymentType: '',
+                Designation: '',
+                DateOfBirth: '',
+                Gender: '',
+                MobileNo: '',
+                DateOfJoining: '',
+                Grade: '',
+                Level: '',
+                Category: '',
+                SubUnit: '',
+                OfficeEmail: '',
+                OfficeMobile: '',
+                OfficePhone: '',
+                OfficeExt: '',
+                IsSingleOT: '',
+                IsDoubleOT: '',
+                SingleOTRate: '',
+                DoubleOTRate: '',
+                MarriageStatus: '',
+                Email: '',
+                AnniversaryDate: '',
+                Facebook: '',
+                PanNo: '',
+                LinkedIn: '',
+                Aadhaar: '',
+                Twitter: '',
+                OtherIdentity: '',
+                SalaryMode: '',
+                PFAccountNumber: '',
+                PFStartDate: '',
+                ESIAccountNumber: '',
+                ESIStartDate: '',
+                BankAccountNo: '',
+                Religion: '',
+                Nationality: ''
 
-            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, false);
+
+            }
+
+            tempColumns.push(row)
+
+
+
+            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, true, false);
         }
 
 

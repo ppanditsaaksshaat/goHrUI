@@ -54,12 +54,13 @@
                 vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                 console.log(vm.empPKId)
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
-                 $scope.page = _getLocalPageObject(vm.pageId)
-                 console.log( $scope.page );
+                $scope.page = _getLocalPageObject(vm.pageId)
+                console.log($scope.page);
             }
         }
         function _getPageDataSuccessResult(result) {
             console.log(result)
+
             if (result.pageinfo.pageid == 36) {
                 $scope.contactPage = result;
             }
@@ -79,50 +80,66 @@
                 linkFieldName = 'ADEmpId';
             }
 
+            console.log(result)
             $timeout(function () {
-                var searchList = [];
-                var searchFields = {
-                    field: linkFieldName,
-                    operand: '=',
-                    value: vm.empPKId
+                if (result.pageinfo.pageid == 114  || result.pageinfo.pageid == 125) {
+                    var searchList = [];
+                    var searchFields = {
+                        field: linkFieldName,
+                        operand: '=',
+                        value: vm.empPKId
+                    }
+                    searchList.push(searchFields);
+                    console.log(searchList)
+
+                    pageService.findEntity($scope.page.pageinfo.tableid, undefined, searchList).then(
+                        _findEntitySuccessResult, _findEntityErrorResult);
                 }
-                searchList.push(searchFields);
-
-                pageService.findEntity($scope.page.pageinfo.tableid, undefined, searchList).then(
-                    _findEntitySuccessResult, _findEntityErrorResult);
-
                 if (result.pageinfo.pageid == 35) {
+                    
                     var emgTableId = 57, contTableId = 45
-                    //call emg contact entity
-                    searchList = [];
-                    searchFields = {
-                        field: 'ECEmpId',
+                    var searchList = [];
+                    var searchFields = {
+                        field: linkFieldName,
                         operand: '=',
                         value: vm.empPKId
                     }
                     searchList.push(searchFields);
-                    pageService.findEntity(emgTableId, undefined, searchList).then(
+                    console.log(searchList)
+
+                    pageService.findEntity(43, undefined, searchList).then(
                         _findEntitySuccessResult, _findEntityErrorResult);
 
-                    //call contact address entity
-                    searchList = [];
-                    searchFields = {
-                        field: 'CDEmpId',
-                        operand: '=',
-                        value: vm.empPKId
-                    }
-                    searchList.push(searchFields);
+                    // //call emg contact entity
+                    // searchList = [];
+                    // searchFields = {
+                    //     field: 'ECEmpId',
+                    //     operand: '=',
+                    //     value: vm.empPKId
+                    // }
+                    // searchList.push(searchFields);
+                    // pageService.findEntity(emgTableId, undefined, searchList).then(
+                    //     _findEntitySuccessResult, _findEntityErrorResult);
+
+                    // //call contact address entity
+                    // searchList = [];
+                    // searchFields = {
+                    //     field: 'CDEmpId',
+                    //     operand: '=',
+                    //     value: vm.empPKId
+                    // }
+                    // searchList.push(searchFields);
 
 
-                    pageService.findEntity(contTableId, undefined, searchList).then(
-                        _findEntitySuccessResult, _findEntityErrorResult);
+                    // pageService.findEntity(contTableId, undefined, searchList).then(
+                    //     _findEntitySuccessResult, _findEntityErrorResult);
                 }
             })
         }
         function _getPageDataErrorResult(error) {
         }
         function _getLocalPageObject(pageId) {
-           
+
             var linkFieldName, linkFieldValue;
             linkFieldValue = vm.empPKId;
             pageId = parseInt(pageId);
@@ -148,11 +165,11 @@
                 case 52://family
                     linkFieldName = 'FdEmpId'
                     break;
-                case 438://skills
-                    linkFieldName = 'NdEmpId'
+                case 438://nominee
+                    linkFieldName = 'NDEmpId'
                     break;
             }
-            
+
             var pageObject = $scope.createPage();
             pageObject.pageId = pageId;
             pageObject.boxOptions = {
@@ -165,6 +182,7 @@
                 showUpload: false,
                 showDialog: false,
                 enableRefreshAfterUpdate: true,
+                enableAutoRefresh: true,
                 gridHeight: 450,
                 linkColumns: [{ name: linkFieldName, value: linkFieldValue }],
                 getPageData: null,
@@ -179,16 +197,18 @@
             return pageObject;
         }
         function _findEntitySuccessResult(result) {
-
+           
             if (result.ECEmpId !== undefined) {//check if entity is emg contact page contact
                 vm.oldEmpEmgContact = angular.copy(result);
                 vm.empEmgContact = result;
             }
             else if (result.CDId !== undefined) {//check if entity is emg contact page contact
                 vm.oldempContactDetail = angular.copy(result);
+                console.log(result)
                 vm.empContactDetail = result;
             }
             else {
+                console.log(result)
                 vm.oldEntity = angular.copy(result);
                 vm.entity = result;
             }
@@ -207,18 +227,19 @@
             return data;
         }
         function _saveAddress() {
-         
+
             _formSave(vm.empContactDetail, vm.pageIds.contactPageId);
         }
         function _saveForm() {
-        
-            _formSave(vm.entity, vm.pageId);
+            if ($scope.page.pageinfo.idencolname !== undefined && $scope.page.pageinfo.idencolname !== null) {
+                _formSave(vm.entity, vm.pageId);
+            }
         }
         function _formSave(entity, pageId) {
+            console.log(entity);
             var objectData, action;
             objectData = entity;
             action = 'edit';
-
             var savingObj = _setupSaving(objectData, action, pageId);
             console.log(savingObj)
             pageService.editPageData(pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult)
@@ -257,21 +278,29 @@
             vm.empContactDetail = angular.copy(vm.oldempContactDetail);
         }
         function _clearPersonal() {
-             var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
-                vm.entity = {};
-                vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
+            var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
+            vm.entity = {};
+            vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
 
             vm.empEmgContact = {};
-              vm.empEmgContact[$scope.page.pageinfo.idencolname] = oldPkId;
+            vm.empEmgContact[$scope.page.pageinfo.idencolname] = oldPkId;
         }
         function _clearAddress() {
-           var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
-                vm.empContactDetail = {};
-                vm.empContactDetail[$scope.page.pageinfo.idencolname] = oldPkId;
-           
+            var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
+            vm.empContactDetail = {};
+            vm.empContactDetail[$scope.page.pageinfo.idencolname] = oldPkId;
+
         }
         //=========================================================== common method
+        // function _validateFormCommon() {
+        //     // editForm.$invalid
+        //     return true;
+        // }
         function _saveFormCommon() {
+            // if (!_validateFormCommon()) {
+            //     return;
+            // }
+            debugger;
             if (vm.activeTab === undefined) {
                 _saveForm();
             }
@@ -295,11 +324,12 @@
             }
         }
         function _clearFormCommon() {
+
             if (vm.activeTab === undefined) {
                 var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
                 vm.entity = {};
                 vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
-
+                console.log(vm.entity)
             }
             else if (vm.activeTab == 0) {
                 _clearPersonal();

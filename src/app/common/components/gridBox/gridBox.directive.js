@@ -119,9 +119,8 @@
                 //button functions
                 function _addRecord() {
 
-                    // if ($scope.entity === undefined) {
                     $scope.entity = {};
-                    // }
+
                     angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
                         $scope.entity[link.name] = link.value;
                     });
@@ -429,7 +428,6 @@
                     return valid;
                 }
                 function _saveForm(form) {
-
                     if (_validateForm(form)) {
                         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
                             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
