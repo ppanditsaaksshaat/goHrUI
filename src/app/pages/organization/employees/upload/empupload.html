@@ -380,12 +380,12 @@
                             <h3 class="with-line">Added Record</h3>
                             <button type="button" class="btn btn-warning" ng-show="tabCtrl.addedDataList.length>0" ng-click="tabCtrl.downloadExportAddedData()">
                            Export Added Result</button>
-                            
-                                <div>
-                                    <div id="grid3" ui-grid="tabCtrl.succesResultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
-                                    </div>
+
+                            <div>
+                                <div id="grid3" ui-grid="tabCtrl.succesResultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
                                 </div>
-                            
+                            </div>
+
                         </div>
                     </div>
 
@@ -456,6 +456,16 @@
     });
 
 </script>-->
+<!--.ui-grid-viewport {
+        overflow-anchor: none;
+    }-->
+<style>
+    .djGrid {
+        height: 400px;
+        width: 1100px;
+    }
+</style>
+
 <style>
     .grid {
         height: 250px;
