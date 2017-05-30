@@ -14,7 +14,7 @@
         console.log('empTabController')
         var vm = this;
         $scope.entity = {}
-        vm.empContactDetail={};
+        vm.empContactDetail = {};
         vm.pageIds = {
             familyPageId: "52", nomineePageId: "438", experiencPageId: "56", contactPageId: "36",
             emgContactPageId: "53", educationPageId: "112", skillPageId: "439", immigrationPageId: "119"
@@ -122,18 +122,16 @@
                     pageService.findEntity(emgTableId, undefined, searchList).then(
                         _findEntitySuccessResult, _findEntityErrorResult);
 
-                    // //call contact address entity
-                    // searchList = [];
-                    // searchFields = {
-                    //     field: 'CDEmpId',
-                    //     operand: '=',
-                    //     value: vm.empPKId
-                    // }
-                    // searchList.push(searchFields);
-
-
-                    // pageService.findEntity(contTableId, undefined, searchList).then(
-                    //     _findEntitySuccessResult, _findEntityErrorResult);
+                    //call contact address entity
+                    searchList = [];
+                    searchFields = {
+                        field: 'CDEmpId',
+                        operand: '=',
+                        value: vm.empPKId
+                    }
+                    searchList.push(searchFields);
+                    pageService.findEntity(contTableId, undefined, searchList).then(
+                        _findEntitySuccessResult, _findEntityErrorResult);
                 }
             })
         }
@@ -198,12 +196,13 @@
             return pageObject;
         }
         function _findEntitySuccessResult(result) {
-
+            console.log(result)
             if (result.ECEmpId !== undefined) {//check if entity is emg contact page contact
                 vm.oldEmpEmgContact = angular.copy(result);
                 vm.empEmgContact = result;
             }
-            else if (result.CDId !== undefined) {//check if entity is emg contact page contact
+            else if (result.CDId !== undefined) {//check if entity is  contact page contact
+                alert(JSON.stringify(result))
                 vm.oldempContactDetail = angular.copy(result);
                 console.log(result)
                 vm.empContactDetail = result;
@@ -230,18 +229,44 @@
         }
         function _saveAddress() {
 
+            if (vm.empContactDetail.CDEmpId === undefined) {
+                console.log("CONTACT")
+                vm.empContactDetail.CDEmpId = vm.empPKId;
+                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create');
+            }
+            else {
+                console.log("CONTACT1")
+                console.log(vm.entity);
+                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit');
+            }
             _formSave(vm.empContactDetail, vm.pageIds.contactPageId);
         }
         function _saveForm() {
             if ($scope.page.pageinfo.idencolname !== undefined && $scope.page.pageinfo.idencolname !== null) {
-                _formSave(vm.entity, vm.pageId);
+                if (vm.pageId == 125) {
+                    if (vm.entity.ADEmpId === undefined) {
+                        console.log("test")
+                        vm.entity.ADEmpId = vm.empPKId;
+                        _formSave(vm.entity, vm.pageId, 'create');
+                    }
+                    else {
+                        console.log("test1")
+                        console.log(vm.entity);
+                        _formSave(vm.entity, vm.pageId, 'edit');
+                    }
+                }
+                else {
+                    console.log("test3")
+                    _formSave(vm.entity, vm.pageId, 'edit');
+                }
+
             }
         }
-        function _formSave(entity, pageId) {
+        function _formSave(entity, pageId, action) {
             console.log(entity);
             var objectData, action;
             objectData = entity;
-            action = 'edit';
+            action = action;
             var savingObj = _setupSaving(objectData, action, pageId);
             console.log(savingObj)
             pageService.editPageData(pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult)
@@ -249,12 +274,21 @@
         }
         function _updateSuccessResult(result) {
             console.log(result)
+
             var isSuccess = true;
             if (result.error_message === undefined) {
                 if (result.entity !== undefined) {
                     if (result.entity.PdId !== undefined) {
                         isSuccess = false;
-                        _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId)
+
+                        if (vm.empEmgContact.ECEmpId === undefined) {
+                            vm.empEmgContact.ECEmpId = vm.empPKId;
+                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'create')
+                            console.log(vm.empEmgContact)
+                        }
+                        else {
+                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'edit')
+                        }
                     }
                     else if (result.entity.ECEmpId !== undefined) {
                         isSuccess = true;
