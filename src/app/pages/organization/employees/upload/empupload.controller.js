@@ -58,9 +58,9 @@
         //  vm.migrate.step1=true;
 
         vm.resultGridOptions = $scope.getGridSetting();
-        vm.resultGridOptions.exporterMenuCsv= true;
+        vm.resultGridOptions.exporterMenuCsv = true;
         vm.succesResultGridOptions = $scope.getGridSetting();
-        vm.succesResultGridOptions.exporterMenuCsv= true;
+        vm.succesResultGridOptions.exporterMenuCsv = true;
         vm.gridOptions = $scope.getGridSetting();
 
         // vm.gridOptions = {
@@ -982,7 +982,7 @@
                         visible: true,
                         enableFiltering: true
                     });
-                   vm.succesResultGridOptions.columnDefs.push({
+                    vm.succesResultGridOptions.columnDefs.push({
                         name: 'EMPCodeAutometic',
                         field: 'EMPCodeAutometic',
                         displayName: 'Employee Auto Code',
@@ -990,8 +990,8 @@
                         visible: true,
                         enableFiltering: true
                     });
-                        // vm.succesResultGridOptions.columnDefs.push(colRowHeaders);
-                   
+                    // vm.succesResultGridOptions.columnDefs.push(colRowHeaders);
+
 
 
                     vm.succesResultGridOptions.data = result.successList;
@@ -1055,8 +1055,12 @@
 
 
             }, function (err) {
-                console.log(err)
-                $scope.showMsg('error', err, 'Error Message')
+                var err_data = angular.fromJson(err.data);
+                console.log(err_data)
+                if (err_data.InnerException)
+                    $scope.showMsg('error', err_data.InnerException.ExceptionMessage, err_data.ExceptionMessage)
+                else
+                    $scope.showMsg('error', err_data.ExceptionMessage, 'Error Message')
             });
         }
 
@@ -1207,7 +1211,7 @@
             var tempColumns = [];
 
             var row = {
-               EmpCode: 'Alpha-numeric (ITSL000001) Size(10)',
+                EmpCode: 'Alpha-numeric (ITSL000001) Size(10)',
                 Title: 'Alpha-numeric (Mister) Size(50) ',
                 FirstName: 'Only alphabet (Atul) Size(50)',
                 MiddleName: 'Only alphabet (Kumar) Size(50)',
