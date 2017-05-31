@@ -29,6 +29,7 @@
         vm.saveFormCommon = _saveFormCommon;
         vm.resetFormCommon = _resetFormCommon;
         vm.clearFormCommon = _clearFormCommon;
+        vm.permanentAddress = _permanentAddress;
 
         function _loadController() {
             var rndValu = Math.round((Math.random() * 10) * 10);
@@ -46,7 +47,7 @@
                 if (vm.pageId == 35) {
                     $scope.familyPage = _getLocalPageObject(52);
                     $scope.nomineePage = _getLocalPageObject(438);
-                    $scope.identityPage = _getLocalPageObject(1);
+                    $scope.identityPage = _getLocalPageObject(442);
                     pageService.getPagData(vm.pageIds.contactPageId).then(
                         _getPageDataSuccessResult, _getPageDataErrorResult);
                 }
@@ -167,6 +168,9 @@
                 case 438://nominee
                     linkFieldName = 'NDEmpId'
                     break;
+                case 442://identity
+                    linkFieldName = 'IEmpId'
+                    break;
             }
 
             var pageObject = $scope.createPage();
@@ -202,7 +206,7 @@
                 vm.empEmgContact = result;
             }
             else if (result.CDId !== undefined) {//check if entity is  contact page contact
-                alert(JSON.stringify(result))
+
                 vm.oldempContactDetail = angular.copy(result);
                 console.log(result)
                 vm.empContactDetail = result;
@@ -232,14 +236,19 @@
             if (vm.empContactDetail.CDEmpId === undefined) {
                 console.log("CONTACT")
                 vm.empContactDetail.CDEmpId = vm.empPKId;
+                vm.empContactDetail.CDAreaId=2;
+                vm.empContactDetail.CDCityId=  vm.empContactDetail.PCityId;
                 _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create');
             }
             else {
                 console.log("CONTACT1")
                 console.log(vm.entity);
+                vm.empContactDetail.CDAreaId=2;
+                vm.empContactDetail.CDCityId=  vm.empContactDetail.PCityId;
+                console.log(vm.empContactDetail)
                 _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit');
             }
-            _formSave(vm.empContactDetail, vm.pageIds.contactPageId);
+          
         }
         function _saveForm() {
             if ($scope.page.pageinfo.idencolname !== undefined && $scope.page.pageinfo.idencolname !== null) {
@@ -338,6 +347,7 @@
             // }
 
             if (vm.activeTab === undefined) {
+
                 _saveForm();
             }
             else if (vm.activeTab == 0) {
@@ -372,6 +382,24 @@
             }
             else if (vm.activeTab == 1) {
                 _clearAddress();
+            }
+        }
+        function _permanentAddress() {
+            if (vm.CDPermanent) {
+                vm.empContactDetail.CDPAddLine1 = vm.empContactDetail.CDAddLine1;
+                vm.empContactDetail.CDPAddLine2 = vm.empContactDetail.CDAddLine2;
+                vm.empContactDetail.PCountryId = vm.empContactDetail.CountryId;
+                vm.empContactDetail.PStateId = vm.empContactDetail.StateId;
+                vm.empContactDetail.PCityId = vm.empContactDetail.CityId;
+                vm.empContactDetail.CDPPincode = vm.empContactDetail.CDPincode;
+            }
+            else {
+                vm.empContactDetail.CDPAddLine1 = '';
+                vm.empContactDetail.CDPAddLine2 = '';
+                vm.empContactDetail.PContryId = '';
+                vm.empContactDetail.PStateId = '';
+                vm.empContactDetail.PCityId = '';
+                vm.empContactDetail.CDPPinecode = '';
             }
         }
         _loadController();

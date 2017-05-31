@@ -245,7 +245,22 @@
                </select>-->
                 </div>
               </div>
-              <div class="col-sm-4">
+               <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CDAreaId.text"></label>
+                  <field-box ng-column="contactPage.pageinfo.fields.CDAreaId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                  <!--<label for="empCmpCity_{{$index}}">City</label>
+                <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.CityId" class="form-control"
+                  ng-options="city.value as city.name for city in contactPage.pageinfo.selects.CityId |filter:{StateId:empTabCtrl.empContactDetail.StateId}"
+                  ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>-->
+                </div>
+              </div>
+             
+            </div>
+            <div class="row">
+               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="contactPage.pageinfo.fields.CDPincode.text"></label>
                   <field-box ng-column="contactPage.pageinfo.fields.CDPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
@@ -259,7 +274,7 @@
               <div class="col-sm-5">
                 <div class="checkbox">
                   <label class="custom-checkbox">      
-              <input type="checkbox" ng-click="empTabCtrl.permanentAddress()" ng-model="empTabCtrl.CDPermanent" >   
+              <input type="checkbox" ng-click="empTabCtrl.permanentAddress()"  ng-model="empTabCtrl.CDPermanent" >   
                 <span>Permanent Address Same as Current Address</span>
               </label>
                 </div>
@@ -272,7 +287,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.CDPAddLine1.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.CDPAddLine1" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box ng-column="contactPage.pageinfo.fields.CDPAddLine1"  ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                     <!--<label for="inputPerLine1">Line1</label>
                   <input type="text" class="form-control" id="inputPerLine1" ng-model="empTabCtrl.empContactDetail.CDPAddLine1">-->
@@ -290,7 +305,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.PCountryId.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.CountryId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box ng-column="contactPage.pageinfo.fields.PCountryId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
                   </div>
                   <!--<div class="form-group">
                   <label for="inputPerCountry">Country</label>
@@ -305,7 +320,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.PStateId.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.StateId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box ng-column="contactPage.pageinfo.fields.PStateId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                     <!--<label for="empPerState_{{$index}}">State</label>
                   <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.PStateId" class="form-control"
@@ -317,7 +332,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.PCityId.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.CityId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box ng-column="contactPage.pageinfo.fields.PCityId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                     <!--<label for="empPerCity_{{$index}}">City</label>
                   <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.PCityId" class="form-control"
@@ -349,8 +364,8 @@
           </grid-box>
         </uib-tab>
         <uib-tab heading="Identity">
-          <!--<grid-box ng-model="identityPage">
-        </grid-box>-->
+          <grid-box ng-model="identityPage">
+        </grid-box>
         </uib-tab>
       </uib-tabset>
     </div>
