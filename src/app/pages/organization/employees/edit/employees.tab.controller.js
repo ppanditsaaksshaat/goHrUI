@@ -280,6 +280,14 @@
         function _saveForm() {
             if ($scope.page.pageinfo.idencolname !== undefined && $scope.page.pageinfo.idencolname !== null) {
                 if (vm.pageId == 125) {
+                    if (vm.entity.PFPPFIsActive == false) {
+                        vm.entity.PFPPFAccountNo = '';
+                        vm.entity.PFPPFMemberDate = '';
+                    }
+                    if (vm.entity.ESIIsActive == false) {
+                        vm.entity.ESIMemeberNo = '';
+                        vm.entity.ESIMemeberDate = '';
+                    }
                     if (vm.entity.ADId === undefined) {
                         console.log("test")
                         vm.entity.ADEmpId = vm.empPKId;
@@ -292,7 +300,7 @@
                     }
                 }
                 else if (vm.pageId == 114) {
-                   
+
                     if (vm.entity.JDIsOT == false) {
                         vm.entity.SingleOT = false;
                         vm.entity.JDDoubleOT = false;
