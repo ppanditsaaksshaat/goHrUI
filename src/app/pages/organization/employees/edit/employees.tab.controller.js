@@ -18,7 +18,7 @@
             familyPageId: "52", nomineePageId: "438", experiencPageId: "56", contactPageId: "36",
             emgContactPageId: "53", educationPageId: "112", skillPageId: "439", immigrationPageId: "119"
         }
-
+        vm.empEmgContact = {};
         vm.pageId = $stateParams.pageId;
         vm.empPKId = $stateParams.empId;
         vm.tempName = $stateParams.name;
@@ -82,7 +82,7 @@
 
             console.log(result)
             $timeout(function () {
-                if (result.pageinfo.pageid == 114  || result.pageinfo.pageid == 125) {
+                if (result.pageinfo.pageid == 114 || result.pageinfo.pageid == 125) {
                     var searchList = [];
                     var searchFields = {
                         field: linkFieldName,
@@ -96,7 +96,7 @@
                         _findEntitySuccessResult, _findEntityErrorResult);
                 }
                 if (result.pageinfo.pageid == 35) {
-                    
+
                     var emgTableId = 57, contTableId = 45
                     var searchList = [];
                     var searchFields = {
@@ -197,7 +197,7 @@
             return pageObject;
         }
         function _findEntitySuccessResult(result) {
-           
+
             if (result.ECEmpId !== undefined) {//check if entity is emg contact page contact
                 vm.oldEmpEmgContact = angular.copy(result);
                 vm.empEmgContact = result;

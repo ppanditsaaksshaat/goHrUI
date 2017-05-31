@@ -4,7 +4,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
         restrict: 'A',
         link: function (scope, element, attrs, modelCtrl) {
             modelCtrl.$parsers.push(function (inputValue) {
-                console.log(scope, element, attrs, modelCtrl)
+                //console.log(scope, element, attrs, modelCtrl)
                 if (inputValue == null)
                     return ''
                 cleanInputValue = inputValue.replace(/[^\w\s]/gi, '');
@@ -98,23 +98,22 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
         link: function (scope, element, attrs, modelCtrl) {
             if (!scope.col)
                 return;
+
             var column = scope.col;
-            console.log(column)
-            var regexPattern = {
-                email: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                pan: /^([a-zA-Z]{5})(\d{4})([a-zA-Z]{1})$/,
-                alpha_space: /^[a-zA-Z ]*$/,
-                alpha_nospace: /^[a-zA-Z]*$/,
-                alphanum_space: /^[a-zA-Z0-9\-\s]+$/,
-                alphanum_nospace: /^[a-zA-Z0-9]+$/,
-                mobile: '',
-                phone: '',
-                telephone: ''
+
+            var regexPattern = undefined;
+            var matchPattern = undefined;
+            if (column.match) {
+                matchPattern = column.match.split(',');
             }
+            if (column.pattern) {
+                regexPattern = new RegExp(column.pattern, 'g')
+            }
+            console.log(column)
 
             function ValidatePAN(panNo) {
                 var strPanNo = panNo.toString().toUpperCase();
-                console.log(strPanNo)
+                //console.log(strPanNo)
                 if (strPanNo.length < 10) {
                     return false;
                 }
@@ -123,11 +122,11 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                     var code = /([C,P,H,F,A,T,B,L,J,G])/;
                     var code_chk = strPanNo.substring(3, 4);
                     if (strPanNo.search(panPat) == -1) {
-                        console.log('ptrn failed')
+                        //console.log('ptrn failed')
                         return false;
                     }
                     if (code.test(code_chk) == false) {
-                        console.log('chk failed')
+                        //console.log('chk failed')
                         return false;
                     }
                 }
@@ -138,7 +137,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                 return modelCtrl.$viewValue;
             }, function (newVal, oldVal) {
                 scope.$parent.$parent.ngModel = modelCtrl;
-                console.log('from child', newVal, oldVal)
+                //console.log('from child', newVal, oldVal)
             });
 
             //textbox|email|mobile|aadharno|pancard|zipcode|placename_alpha|placename_alphanum|name_nospace|name_withspace
@@ -146,23 +145,80 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             switch (column.type) {
                 case "textbox":
                     break;
-                case "name_withspace"://pk:26
-                    element.bind('keypress', keypressAlphaWithSpace);
+                case "alphanum_nospace":
+                case "alphanum_space":
+                case "alpha_nospace":
+                case "alpha_space":
+                case "pincode":
+                case "zipcode":
+                case "number_plus":
+                case "number_dash_plus":
+                case "number_dash":
+                case "number_decimal":
+                case "number_nodecimal":
+                    modelCtrl.$parsers.push(function (inputValue) {
+                        if (regexPattern) {
+                            var cleanInputValue = inputValue.replace(regexPattern, '');
+                            var re = regexPattern
+                            var result = re.test(inputValue);
+                            console.log(result)
+                            modelCtrl.$setValidity(column.type, result);
+                        }
+
+                        return inputValue;
+                    });
+
+
+                    element.bind('keypress', function (e) {
+                        if (matchPattern) {
+
+
+                            var result = validKeypress(e, matchPattern);
+                            modelCtrl.$setValidity(column.type, result);
+                        }
+                        else if (regexPattern) {
+                            var char = String.fromCharCode(e.which || e.charCode || e.keyCode);
+                            var result = (char.search(regexPattern) == -1)
+                            if (result) {
+                                e.preventDefault();
+                                return false;
+                            }
+                        }
+                    });
+
                     break;
-                case "name_nospace"://pk:25
-                    element.bind('keypress', keypressAlphaNoSpace);
-                    break;
-                case "placename_alpha"://pk:23
-                    element.bind('keypress', keypressAlphaWithSpace);
-                    break;
-                case "placename_alphanum"://pk:24
-                    element.bind('keypress', keypressAlphaNumWithSpace);
-                    break;
+
                 case "pancard"://pk:22
                     modelCtrl.$parsers.push(function (inputValue) {
-                        var panResult = ValidatePAN(inputValue);
+
+                        var cleanInputValue = inputValue.toUpperCase()
+                        if (cleanInputValue != inputValue) {
+                            modelCtrl.$setViewValue(cleanInputValue);
+                            modelCtrl.$render();
+                        }
+                        var panResult = true;
+                        if (regexPattern) {
+                            if (cleanInputValue.length < 10) {
+                                panResult = false;
+                            }
+                            else {
+                                var panPat = regexPattern;
+                                var code = /([C,P,H,F,A,T,B,L,J,G])/;
+                                var code_chk = cleanInputValue.substring(3, 4);
+                                if (cleanInputValue.search(panPat) == -1) {
+                                    //console.log('ptrn failed')
+                                    panResult = false;
+                                }
+                                if (code.test(code_chk) == false) {
+                                    //console.log('chk failed')
+                                    panResult = false;
+                                }
+                            }
+                        }
+
                         modelCtrl.$setValidity('pan', panResult);
-                        return inputValue;
+
+                        return cleanInputValue;
                     });
                     break;
                 case "aadharno"://pk21
@@ -178,27 +234,26 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                     });
                     element.bind('keypress', keypressOnlyNumeric);
                     break;
-                case "zipcode"://pk:20
+                case "email"://pk:13
                     modelCtrl.$parsers.push(function (inputValue) {
-                        var zipcode = (inputValue.length > 5)
+                        if (regexPattern) {
+                            // var cleanInputValue = inputValue.replace(regexPattern, '');
+                            // var re = regexPattern
+                            var result = regexPattern.test(inputValue);
+                            if (!result) {
+                                var cleanInputValue = inputValue.toUpperCase();
+                                if (cleanInputValue.endsWith('.IN'))
+                                    result = true;
+                                if (cleanInputValue.endsWith('.ORG'))
+                                    result = true;
+                            }
+                            modelCtrl.$setValidity('emailError', result);
+                        }
 
-                        modelCtrl.$setValidity('zipcode', !zipcode);
                         return inputValue;
                     });
-                    element.bind('keypress', keypressOnlyNumeric);
                     break;
-
-
-                case "email":
-                    modelCtrl.$parsers.push(function (inputValue) {
-                        var re = regexPattern.email
-                        var emailResult = re.test(inputValue);
-                        modelCtrl.$setValidity('emailError', emailResult);
-
-                        return inputValue;
-                    });
-                    break;
-                case "mobile":
+                case "mobile"://pk:17
                     modelCtrl.$parsers.push(function (inputValue) {
                         var mobileResult = (inputValue.length > 17)
 
@@ -206,6 +261,44 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                         return inputValue;
                     });
                     element.bind('keypress', keypressOnlyNumericWithPlus);
+                    break;
+                case "phoneno"://pk:34
+                    modelCtrl.$parsers.push(function (inputValue) {
+                        //  (inputValue.length > column.minLength)
+
+                        // modelCtrl.$setValidity('phone', !mobileResult);
+                        return inputValue;
+                    });
+                    element.bind('keypress', keypressOnlyNumericWithPlusDash);
+                    break;
+                case "currency":
+                case "currency_2decimal":
+                case "currency_3decimal":
+                    var format = {
+                        prefix: '',
+                        centsSeparator: '.',
+                        thousandsSeparator: '',
+                        centsLimit: 0
+                    };
+                    if (column.type == 'currency_2decimal') {
+                        format.centsLimit = 2;
+                    }
+                    if (column.type == 'currency_3decimal') {
+                        format.centsLimit = 3;
+                    }
+
+                    modelCtrl.$parsers.unshift(function (value) {
+                        element.priceFormat(format);
+                        console.log('parsers', element[0].value);
+                        return element[0].value;
+                    });
+
+                    modelCtrl.$formatters.unshift(function (value) {
+                        element[0].value = modelCtrl.$modelValue * 100;
+                        element.priceFormat(format);
+                        console.log('formatters', element[0].value);
+                        return elem[0].value;
+                    })
                     break;
 
             }
@@ -249,6 +342,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                 }
                 modelCtrl.$setValidity('alpha_space', !result);
             }
+            //==============================================
             //Numeric  Only
             function keypressOnlyNumeric(e) {
                 var validValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
@@ -273,6 +367,12 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                 var result = validKeypress(e, validValues);
                 modelCtrl.$setValidity('numericPlusDash', !result);
             }
+            //Numeric + decimal
+            function keypressOnlyNumericWithDecimal(e) {
+                var validValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
+                var result = validKeypress(e, validValues);
+                modelCtrl.$setValidity('numericDecimal', !result);
+            }
             //common keypress
             function validKeypress(e, validValues) {
                 var char = String.fromCharCode(e.which || e.charCode || e.keyCode), matches = [];
@@ -288,4 +388,25 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
 
         }
     }
-})
+}).directive('validCurrency', ['$filter', function ($filter) {
+    return {
+        require: '?ngModel',
+        restrict: 'A',
+        scope: {
+            col: '=ngColumn'
+        },
+        link: function (scope, elem, attrs, ctrl) {
+            if (!ctrl) return;
+            if (!scope.col) return;
+            var column = scope.col;
+            scope.$watch(function () {
+                return modelCtrl.$viewValue;
+            }, function (newVal, oldVal) {
+                scope.$parent.$parent.ngModel = modelCtrl;
+                //console.log('from child', newVal, oldVal)
+            });
+
+
+        }
+    };
+}]);

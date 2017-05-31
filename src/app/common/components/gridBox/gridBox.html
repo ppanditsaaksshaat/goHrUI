@@ -89,20 +89,15 @@
                             <div class="col-md-7" style="padding-top:5px">
                                 <div class="pull-right">
                                     <button type="submit" class="btn  btn-sm btn-primary">Save</button>
-                                    <button type="button" class="btn  btn-sm btn-warning" ng-click="resetForm()">Reset</button>
-                                    <button type="button" class="btn  btn-sm btn-danger" ng-click="closeForm()">Close</button>
+                                    <button type="button" class="btn  btn-sm btn-warning" ng-click="resetForm(editForm)">Reset</button>
+                                    <button type="button" class="btn  btn-sm btn-danger" ng-click="closeForm(editForm)">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
                         <div class="row">
-<<<<<<< HEAD
-                            <div ng-class="{'col-md-7':page.isVerticalForm,'col-md-12':!page.isVerticalForm}">
-=======
                             <div ng-class="{'col-md-7':page.isVerticalForm,'col-md-12':!page.isVerticalForm}" style="min-height: 550px;">
-                                
->>>>>>> e93cc7a3d1d4e40ca6ab4c124574fb485c3b4a97
                                 <div class="form-group" ng-repeat="col in page.formrows">
                                     <label for="inputPassword3" class="col-sm-5 control-label">{{col.text}}</label>
                                     <div class="col-md-7" ng-switch="col.type"> 

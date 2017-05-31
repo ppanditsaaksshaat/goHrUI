@@ -11,76 +11,159 @@
     function fieldBox($location, $state, $compile, $rootScope) {
         return {
             restrict: 'E',
-            require: ['^form'],
+            require: ['^form'],//injecting ngForm in $ctrl variable in link function
             templateUrl: 'app/common/components/fieldBox/fieldBox.html',
             scope: {
-                col: '=ngColumn',
-                entity: '=ngEntity',
-                editForm: '=form'
+                col: '=ngColumn',//a database side column setting provided by pageinfo will be passed here
+                entity: '=ngEntity',//an entity of entire form will be passed from this attribute
+                editForm: '=form'//a form tag name will be passed through this attribute
             },
             link: function ($scope, $elm, $attrs, $ctrl) {
 
+                //test will be removed
                 $scope.dynamicPopover = {
                     content: 'Hello, World!',
                     templateUrl: 'myPopoverTemplate.html',
                     title: 'Title'
                 };
 
+                //a local ngModel variable for implemented control which is set by validText directive
                 $scope.ngModel = {};
 
+                //defining entity if passes undefined from implementation
+                //possible if entity is not defined on the top of the implemented controller
+                if (!$scope.entity)
+                    $scope.entity = {};
+
+                //a scope watch listner for ngModel value change to handle validation messages for global
                 $scope.$watch(
                     function () {
                         return $scope.ngModel.$viewValue;
                     },
                     function (newVal, oldVal) {
-                        console.log('from fieldBox', $scope.ngModel)
+
+                        if ($scope.col.format) {
+                            $scope.col.format = $scope.col.format.replace('{0}', $scope.col.text);
+                        }
+
+                        //default clearing validation popover message on every text-change
+                        ////applying message will be display in popover 
+                        $scope.col.errorText = '';
+                        //applying true in this property will show popover validation
+                        $scope.col.showError = false;
+
+
+                        // console.log('from fieldBox', $scope.ngModel)
                         if ($scope.ngModel.$viewValue == '') {
+                            /*==================================================
+                                remove popover validation message
+                            ==================================================*/
                             $scope.col.errorText = '';
                             $scope.col.showError = false;
                         }
                         else {
+                            /*==================================================
+                                handling of validation messages
+                              ==================================================*/
                             if ($scope.ngModel.$error) {
-                                if ($scope.ngModel.$error.onlydigitanddash) {
-                                    $scope.col.errorText = '<i class="fa fa-exclamation-triangle fa-lg font-red" aria-hidden="true"></i> ' +
-                                        'Only 0-9 and - are allowed for ' + $scope.col.text;
-                                    $scope.col.showError = true;
-                                }
-                                else if ($scope.ngModel.$error.pan) {
-                                    $scope.col.errorText = '<i class="fa fa-exclamation-triangle fa-lg font-red" aria-hidden="true"></i> Please enter valid '
-                                        + $scope.col.text;
-                                    $scope.col.showError = true;
-                                }
-                                else if ($scope.ngModel.$error.emailError) {
-                                    $scope.col.errorText = '<i class="fa fa-exclamation-triangle fa-lg font-red" aria-hidden="true"></i> Please enter valid '
-                                        + $scope.col.text;
-                                    $scope.col.showError = true;
-                                }
-                                else if ($scope.ngModel.$error.aadhar) {
-                                    $scope.col.errorText = '<i class="fa fa-exclamation-triangle fa-lg font-red" aria-hidden="true"></i> Please enter valid '
-                                        + $scope.col.text;
+
+
+                                var errorIcon = '<i class="fa fa-exclamation-triangle fa-lg font-red" aria-hidden="true"></i>',
+                                    warningIcon = '<i class="fa fa-exclamation-triangle fa-lg font-red" aria-hidden="true"></i>';
+                                /*==================================================
+                                    these are the system defined validation handler 
+                                    generated by angular ngForm
+                                  ==================================================*/
+                                if ($scope.ngModel.$error.maxlength || $scope.ngModel.$error.maxLength) {
+                                    $scope.col.errorText = errorIcon +
+                                        $scope.col.text + ' can not more than ' + $scope.col.maxLength;
                                     $scope.col.showError = true;
                                 }
                                 else if ($scope.ngModel.$error.minlength) {
-                                    $scope.col.errorText = '<i class="fa fa-exclamation-triangle fa-lg font-red" aria-hidden="true"></i> '
-                                        + $scope.col.text + ' is to short.'
+                                    $scope.col.errorText = errorIcon +
+                                        $scope.col.text + ' must be between ' + $scope.col.minLength + " - " + $scope.col.maxLength + ' character.';
+                                    if ($scope.col.minLength == $scope.col.maxLength) {
+                                        $scope.col.errorText = errorIcon +
+                                            $scope.col.text + ' must be of ' + $scope.col.maxLength + " character."
+                                    }
                                     $scope.col.showError = true;
                                 }
+                                /*
+                                ==================================================
+                                    these are the custom validation handler 
+                                    generated from custom.validator.js:validText
+                                ==================================================
+                                */
+                                else if ($scope.ngModel.$error.onlydigitanddash) {
+                                    $scope.col.errorText = warningIcon +
+                                        'Only 0-9 and - are allowed for ' + $scope.col.text;
+                                    $scope.col.showError = true;
 
+                                    if ($scope.col.format)
+                                        $scope.col.errorText = errorIcon + $scope.col.format;
+
+                                }
+                                else if ($scope.ngModel.$error.pan) {
+                                    $scope.col.errorText = warningIcon + 'Please enter valid '
+                                        + $scope.col.text;
+                                    $scope.col.showError = true;
+
+                                    if ($scope.col.format)
+                                        $scope.col.errorText = errorIcon + $scope.col.format;
+
+                                }
+                                else if ($scope.ngModel.$error.emailError) {
+                                    $scope.col.errorText = warningIcon + 'Please enter valid '
+                                        + $scope.col.text;
+                                    $scope.col.showError = true;
+
+                                    if ($scope.col.format)
+                                        $scope.col.errorText = errorIcon + $scope.col.format;
+
+                                }
+                                else if ($scope.ngModel.$error.aadhar) {
+                                    $scope.col.errorText = warningIcon + 'Please enter valid '
+                                        + $scope.col.text;
+                                    $scope.col.showError = true;
+
+                                    if ($scope.col.format)
+                                        $scope.col.errorText = errorIcon + $scope.col.format;
+
+                                }
+                                else if ($scope.ngModel.$error.pincode) {
+                                    $scope.col.errorText = warningIcon + 'Please enter valid '
+                                        + $scope.col.text;
+                                    $scope.col.showError = true;
+
+                                    if ($scope.col.format)
+                                        $scope.col.errorText = errorIcon + $scope.col.format;
+
+                                }
                                 else {
                                     $scope.col.errorText = '';
                                     $scope.col.showError = false;
                                 }
+
+
                             }
                         }
                         //console.log('from field box', $scope.ngModel)
                         //console.log('new val from field', newVal, 'old val', oldVal);
                     });
 
+                /*==================================================
+                    A watch for form submit, if anything required which 
+                    will act after form sumbit will be work here
+                ==================================================*/
                 $scope.$watch(function () {
                     return $ctrl[0].$submitted;
                 }, function (newVal, oldVal) {
                     if ($ctrl[0].$submitted) {
-                        // $scope.col.errorText = '<i class="fa fa-exclamation-triangle fa-lg font-red" aria-hidden="true"></i> ' +
+                        /*==================================================
+                            anything which will work after form submit only
+                        ==================================================*/
+
+                        // $scope.col.errorText = warningIcon +
                         //     $scope.col.text + ' is required.'
                         // $scope.col.showError = true;
 
@@ -104,6 +187,7 @@
                 //     console.log($ctrl)
                 // })
 
+                //func for checking ngModel existance
                 function _validModel() {
                     if (!$scope.ngModel) {
                         return false;
@@ -113,6 +197,8 @@
                     }
                     return true;
                 }
+
+                //func for handling control icon and success class in form-group
                 $scope.hasSuccess = function () {
                     if (!_validModel())
                         return false;
@@ -120,24 +206,48 @@
                         && $scope.ngModel.$valid && $scope.ngModel.$dirty)
                 };
 
+                //func for handling control icon and error class in form-group
                 $scope.hasError = function () {
                     if (!_validModel())
                         return false;
 
                     return $scope.ngModel.$invalid && !$scope.ngModel.$pristine;
                 };
+
+                //func for handling control icon and warning class in form-group
                 $scope.hasWarning = function () {
-                    if (!_validModel())
-                        return false;
+                    // var isValidModel = _validModel();
+                    // var isSubmitted = false;
+                    // if ($ctrl[0])
+                    //     isSubmitted = $ctrl[0].$submitted;
+                    // if (isSubmitted && $scope.hasRequired())
+                    //     return true;
+                    // // if (isSubmitted && !$scope.hasSuccess() && !$scope.hasError())
+                    // //     return true;
+                    // if($scope.ngModel.$error)
                     return false;
                 }
-                $scope.hasRequired = function () {
 
+                $scope.hasSubmitRequired = function () {
+                    var isValidModel = _validModel();
                     var isSubmitted = false;
                     if ($ctrl[0])
                         isSubmitted = $ctrl[0].$submitted;
-                    return !isSubmitted && $scope.col.required && !$scope.hasSuccess()
-                        && !$scope.hasError() && !$scope.hasWarning();
+                    if (isSubmitted && $scope.hasRequired())
+                        return true;
+                    // if (isSubmitted && !$scope.hasSuccess() && !$scope.hasError())
+                    //     return true;
+                    return false;
+                }
+
+                //func for handling control icon and required class in form-group
+                $scope.hasRequired = function () {
+                    var isRequired = false;
+                    if ($scope.col)
+                        isRequired = $scope.col.required;
+                    var requiredValid = isRequired && !$scope.hasSuccess()
+                        && !$scope.hasError();
+                    return requiredValid;
                 };
 
                 // ngModel.$parsers.push(function (value) {

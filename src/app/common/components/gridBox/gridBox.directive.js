@@ -19,9 +19,9 @@
             },
             controller: function ($scope, $timeout) {
                 // $scope.$watch("page.pageinfo", function (newValue, OldValue, scope) {
-                //     console.log('ctrl', newValue, OldValue, scope)
-                //     console.log(scope.page.boxOptions)
-                //     console.log(scope.page.isLoaded)
+                //     //console.log('ctrl', newValue, OldValue, scope)
+                //     //console.log(scope.page.boxOptions)
+                //     //console.log(scope.page.isLoaded)
                 // });
 
             },
@@ -52,10 +52,10 @@
                 }
                 $scope.oldEntity = {};
                 $scope.$watch('page.pageinfo', function () {
-                    console.log($scope.page.pageinfo)
+                    // console.log($scope.page.pageinfo)
                     _setGridColumns();
                     _setupVerticalForm();
-                    console.log('from watch')
+                    //console.log('from watch')
                 });
                 $scope.form = {};
                 _loadDirective();
@@ -224,7 +224,7 @@
                     $scope.page.boxOptions.uploadRecord();
                 }
                 function _onRegisterApi(gridApi) {
-                    console.log('register grid api')
+                    //console.log('register grid api')
                     $scope.page.gridApi = gridApi;
 
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -233,7 +233,7 @@
                         //     //enable edit button
 
                         //     uivm.currentSelection = uivm.gridApi.selection.getSelectedRows();
-                        //     //console.log(uivm.currentSelection)
+                        //     ////console.log(uivm.currentSelection)
                         //     if (uivm.currentSelection.length > 0) {
                         //         uivm.selectedRow = row;
                         //     }
@@ -253,10 +253,13 @@
                 function _closeAddRecord() {
                     _closeForm();
                 }
-                function _closeForm() {
+                function _closeForm(editForm) {
                     $scope.page.showAddRecord = false;
                     $scope.page.showViewRecord = false;
                     $scope.entity = {};
+                    if (editForm) {
+                        editForm.$setPristine();
+                    }
                 }
                 //END: button function  
                 //====================================================================
@@ -324,7 +327,7 @@
                 //get page data
                 function _getPage() {
                     $timeout(function () {
-                        console.log($scope.page);
+                        //console.log($scope.page);
                         pageService.getPagData($scope.page.pageId).then(_getPageSuccessResult, _getPageErrorResult)
                     });
                 }
@@ -332,7 +335,7 @@
                     console.log(result)
                     $scope.page = angular.extend($scope.page, result);
                     // $scope.setPage(result)
-                    console.log('from getpage')
+                    //console.log('from getpage')
                     _setGridColumns();
                     _refreshData();
                 }
@@ -390,7 +393,7 @@
 
                 function _validateForm(form) {
                     var valid = true;
-                    console.log(form)
+                    //console.log(form)
                     if (!form['$valid']) {
                         if (form['$error'] !== undefined) {
                             var err = form['$error'];
@@ -399,13 +402,13 @@
                                     var fieldName = err.required[0].$name;
                                     err.required[0].$setTouched();
                                     err.required[0].$setDirty();
-                                    console.log(err)
+                                    //console.log(err)
                                     focus(fieldName);
                                     valid = false;
                                 }
                             }
 
-                            console.log(err)
+                            //console.log(err)
                             if (err['emailError']) {
                                 alert('email failed');
                                 valid = false;
@@ -419,7 +422,7 @@
                                 valid = false
                             }
                             if (err['pattern'] !== undefined) {
-                                console.log(err['pattern'])
+                                //console.log(err['pattern'])
                                 alert('invalid pattern')
                                 valid = false
                             }
@@ -433,7 +436,10 @@
                             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
                     }
                 }
-                function _resetForm() {
+                function _resetForm(editForm) {
+                    if (editForm) {
+                        editForm.$setPristine();
+                    }
                     $scope.entity = angular.copy($scope.oldEntity);
                 }
 
@@ -450,7 +456,7 @@
                     $scope.form.isLoaded = true;
                     $scope.form.isLoading = false;
                     $scope.entity = result;
-                    console.log($scope.entity)
+                    //console.log($scope.entity)
                     $scope.oldEntity = angular.copy(result)
                 }
                 function _findEntityErrorResult(err) {
