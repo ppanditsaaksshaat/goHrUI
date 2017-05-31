@@ -581,7 +581,7 @@
             }
             else if (vm.migrate.currentStep == 4) {
                 vm.migrate.step1 = false;
-                vm.migrate.step2 = true;
+                vm.migrate.step2 = false;
                 vm.migrate.step3 = true;
                 vm.migrate.step4 = false;
                 vm.migrate.step5 = false;
@@ -802,7 +802,7 @@
 
         function _confirmClick(pageId, data, title) {
 
-            vm.migrate.currentStep = 3;
+            vm.migrate.currentStep = 4;
             vm.migrate.step1 = false;
             vm.migrate.step2 = false;
             vm.migrate.step3 = false;

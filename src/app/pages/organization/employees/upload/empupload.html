@@ -367,7 +367,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" ng-click="back('organization.employees.list')" class="btn btn-default">
-                                    Back
+                                    List
                                 </button>
                     </div>
                 </div>
@@ -382,7 +382,7 @@
                            Export Added Result</button>-->
 
                             <div>
-                                <div id="grid3" ui-grid="tabCtrl.succesResultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
+                                <div id="grid3" ui-grid="tabCtrl.succesResultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav ui-grid-exporter>
                                 </div>
                             </div>
 
@@ -395,7 +395,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" ng-click="back('organization.employees.list')" class="btn btn-default">
-                                    Back
+                                    List
                                 </button>
                     </div>
                 </div>
@@ -410,7 +410,7 @@
                     <button type="button" ng-click="tabCtrl.clear()" class="btn btn-default">
                         Clear
                     </button>
-                    <button type="button" ng-click="tabCtrl.nextDataUpload()" ng-hide="tabCtrl.migrate.step3" class="btn btn-info">
+                    <button type="button" ng-click="tabCtrl.nextDataUpload()" ng-hide="tabCtrl.migrate.step3 || tabCtrl.migrate.step4" class="btn btn-info">
                        {{(tabCtrl.migrate.step3)?"Import":"Next"}}
                     </button>
                     <button type="button" ng-click="tabCtrl.importDataUpload()" ng-show="tabCtrl.migrate.step3" class="btn btn-info">
