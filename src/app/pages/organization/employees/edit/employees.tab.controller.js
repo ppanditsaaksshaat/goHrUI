@@ -10,8 +10,29 @@
 
     /** @ngInject */
     /** @ngInject */
-    function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal) {
+    function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal, toastrConfig, toastr) {
         console.log('empTabController')
+
+        var toastOption = {};
+        var defaultConfig = angular.copy(toastrConfig);
+        var openedToasts = [];
+        toastOption = {
+            autoDismiss: false,
+            positionClass: 'toast-top-center',
+            type: 'success',
+            timeOut: '5000',
+            extendedTimeOut: '2000',
+            allowHtml: false,
+            closeButton: true,
+            tapToDismiss: true,
+            progressBar: true,
+            newestOnTop: true,
+            maxOpened: 0,
+            preventDuplicates: false,
+            preventOpenDuplicates: false,
+            title: "",
+            msg: ""
+        };
         var vm = this;
         $scope.entity = {}
         vm.empContactDetail = {};
@@ -31,6 +52,13 @@
         vm.clearFormCommon = _clearFormCommon;
         vm.permanentAddress = _permanentAddress;
 
+
+
+        function _showToast(type, msg, title) {
+            toastOption.type = type;
+            angular.extend(toastrConfig, toastOption);
+            openedToasts.push(toastr[toastOption.type](msg, title));
+        }
         function _loadController() {
             var rndValu = Math.round((Math.random() * 10) * 10);
             var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
@@ -206,15 +234,12 @@
                 vm.empEmgContact = result;
             }
             else if (result.CDId !== undefined) {//check if entity is  contact page contact
-
-                vm.oldempContactDetail = angular.copy(result);
-                console.log(result)
+                vm.oldempContactDetail = angular.copy(result);          
                 vm.empContactDetail = result;
-
                 if (result.CDAddLine1 == result.CDPAddLine1 && result.CDAddLine2 == result.CDPAddLine2 && result.CountryId == result.PCountryId &&
                     result.StateId == result.PStateId && result.CityId == result.PCityId && result.CDAreaId == result.CDPAreaId
                     && parseInt(result.CDPincode) == result.CDPPincode) {
-                        console.log("same")
+                    console.log("same")
                     vm.CDPermanent = true;
                 }
                 else {
@@ -242,17 +267,12 @@
             return data;
         }
         function _saveAddress() {
-
-            if (vm.empContactDetail.CDEmpId === undefined) {
-                console.log("CONTACT")
+            console.log()
+            if (vm.empContactDetail.CDId === undefined) {
                 vm.empContactDetail.CDEmpId = vm.empPKId;
-
                 _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create');
             }
             else {
-                console.log("CONTACT1")
-                console.log(vm.entity);
-                console.log(vm.empContactDetail)
                 _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit');
             }
 
@@ -260,7 +280,7 @@
         function _saveForm() {
             if ($scope.page.pageinfo.idencolname !== undefined && $scope.page.pageinfo.idencolname !== null) {
                 if (vm.pageId == 125) {
-                    if (vm.entity.ADEmpId === undefined) {
+                    if (vm.entity.ADId === undefined) {
                         console.log("test")
                         vm.entity.ADEmpId = vm.empPKId;
                         _formSave(vm.entity, vm.pageId, 'create');
@@ -271,9 +291,26 @@
                         _formSave(vm.entity, vm.pageId, 'edit');
                     }
                 }
-                else {
-                    console.log("test3")
-                    _formSave(vm.entity, vm.pageId, 'edit');
+                else if(vm.pageID==114)
+                {
+                    if (vm.entity.JDId === undefined) {                     
+                        vm.entity.JDEmpId = vm.empPKId;
+                        _formSave(vm.entity, vm.pageId, 'create');
+                    }
+                    else {                    
+                        console.log(vm.entity);
+                        _formSave(vm.entity, vm.pageId, 'edit');
+                    }
+                }
+                else if(vm.pageId==35) {
+                    if (vm.entity.PdId === undefined) {                     
+                        vm.entity.PdEmpId = vm.empPKId;
+                        _formSave(vm.entity, vm.pageId, 'create');
+                    }
+                    else {                    
+                        console.log(vm.entity);
+                        _formSave(vm.entity, vm.pageId, 'edit');
+                    }              
                 }
 
             }
@@ -296,8 +333,8 @@
                 if (result.entity !== undefined) {
                     if (result.entity.PdId !== undefined) {
                         isSuccess = false;
-
-                        if (vm.empEmgContact.ECEmpId === undefined) {
+                        vm.oldEntity = angular.copy(result.entity);
+                        if (vm.empEmgContact.ECId === undefined) {
                             vm.empEmgContact.ECEmpId = vm.empPKId;
                             _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'create')
                             console.log(vm.empEmgContact)
@@ -308,6 +345,7 @@
                     }
                     else if (result.entity.ECEmpId !== undefined) {
                         isSuccess = true;
+                        vm.oldEmpEmgContact = angular.copy(result.entity);
                     }
                 }
             }
@@ -344,25 +382,48 @@
 
         }
         //=========================================================== common method
-        // function _validateFormCommon() {
-        //     // editForm.$invalid
-        //     return true;
-        // }
-        function _saveFormCommon() {
-            // if (!_validateFormCommon()) {
-            //     return;
-            // }
-
+        function _validateFormCommon() {
             if (vm.activeTab === undefined) {
-
-                _saveForm();
+                if (angular.equals(vm.entity, vm.oldEntity)) {
+                    _showToast('info', 'Nothing to save', "")
+                    return false;
+                }
             }
             else if (vm.activeTab == 0) {
-                _saveForm();
+            
+                if (angular.equals(vm.entity, vm.oldEntity)) {
+                    _showToast('info', 'Nothing to save', "")                
+                    return false;                
+                }
+                if(angular.equals(vm.empEmgContact, vm.oldEmpEmgContact ))
+                {
+                     _showToast('info', 'Nothing to save', "")
+                      return false;
+                }
             }
             else if (vm.activeTab == 1) {
-                _saveAddress();
+                if (angular.equals(vm.entity, vm.oldEntity)) {
+                    _showToast('info', 'Nothing to save', "")
+                    return false;
+                }
             }
+
+            return true;
+        }
+        function _saveFormCommon() {
+          //   debugger;
+            // if (_validateFormCommon()) {
+                if (vm.activeTab === undefined) {
+
+                    _saveForm();
+                }
+                else if (vm.activeTab == 0) {
+                    _saveForm();
+                }
+                else if (vm.activeTab == 1) {
+                    _saveAddress();
+                }
+          //  }
         }
         function _resetFormCommon() {
 
