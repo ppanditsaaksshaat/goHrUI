@@ -10,10 +10,32 @@
 
     /** @ngInject */
     /** @ngInject */
-    function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal) {
+    function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal, toastrConfig, toastr) {
         console.log('empTabController')
+
+        var toastOption = {};
+        var defaultConfig = angular.copy(toastrConfig);
+        var openedToasts = [];
+        toastOption = {
+            autoDismiss: false,
+            positionClass: 'toast-top-center',
+            type: 'success',
+            timeOut: '5000',
+            extendedTimeOut: '2000',
+            allowHtml: false,
+            closeButton: true,
+            tapToDismiss: true,
+            progressBar: true,
+            newestOnTop: true,
+            maxOpened: 0,
+            preventDuplicates: false,
+            preventOpenDuplicates: false,
+            title: "",
+            msg: ""
+        };
         var vm = this;
         $scope.entity = {}
+        vm.empContactDetail = {};
         vm.pageIds = {
             familyPageId: "52", nomineePageId: "438", experiencPageId: "56", contactPageId: "36",
             emgContactPageId: "53", educationPageId: "112", skillPageId: "439", immigrationPageId: "119"
@@ -28,7 +50,15 @@
         vm.saveFormCommon = _saveFormCommon;
         vm.resetFormCommon = _resetFormCommon;
         vm.clearFormCommon = _clearFormCommon;
+        vm.permanentAddress = _permanentAddress;
 
+
+
+        function _showToast(type, msg, title) {
+            toastOption.type = type;
+            angular.extend(toastrConfig, toastOption);
+            openedToasts.push(toastr[toastOption.type](msg, title));
+        }
         function _loadController() {
             var rndValu = Math.round((Math.random() * 10) * 10);
             var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
@@ -45,7 +75,7 @@
                 if (vm.pageId == 35) {
                     $scope.familyPage = _getLocalPageObject(52);
                     $scope.nomineePage = _getLocalPageObject(438);
-                    $scope.identityPage = _getLocalPageObject(1);
+                    $scope.identityPage = _getLocalPageObject(442);
                     pageService.getPagData(vm.pageIds.contactPageId).then(
                         _getPageDataSuccessResult, _getPageDataErrorResult);
                 }
@@ -96,8 +126,7 @@
                         _findEntitySuccessResult, _findEntityErrorResult);
                 }
                 if (result.pageinfo.pageid == 35) {
-
-                    var emgTableId = 57, contTableId = 45
+                    var emgTableId = 57, contTableId = 45, personalTableId = 43;
                     var searchList = [];
                     var searchFields = {
                         field: linkFieldName,
@@ -107,32 +136,30 @@
                     searchList.push(searchFields);
                     console.log(searchList)
 
-                    pageService.findEntity(43, undefined, searchList).then(
+                    pageService.findEntity(personalTableId, undefined, searchList).then(
                         _findEntitySuccessResult, _findEntityErrorResult);
 
-                    // //call emg contact entity
-                    // searchList = [];
-                    // searchFields = {
-                    //     field: 'ECEmpId',
-                    //     operand: '=',
-                    //     value: vm.empPKId
-                    // }
-                    // searchList.push(searchFields);
-                    // pageService.findEntity(emgTableId, undefined, searchList).then(
-                    //     _findEntitySuccessResult, _findEntityErrorResult);
+                    //call emg contact entity
+                    searchList = [];
+                    searchFields = {
+                        field: 'ECEmpId',
+                        operand: '=',
+                        value: vm.empPKId
+                    }
+                    searchList.push(searchFields);
+                    pageService.findEntity(emgTableId, undefined, searchList).then(
+                        _findEntitySuccessResult, _findEntityErrorResult);
 
-                    // //call contact address entity
-                    // searchList = [];
-                    // searchFields = {
-                    //     field: 'CDEmpId',
-                    //     operand: '=',
-                    //     value: vm.empPKId
-                    // }
-                    // searchList.push(searchFields);
-
-
-                    // pageService.findEntity(contTableId, undefined, searchList).then(
-                    //     _findEntitySuccessResult, _findEntityErrorResult);
+                    //call contact address entity
+                    searchList = [];
+                    searchFields = {
+                        field: 'CDEmpId',
+                        operand: '=',
+                        value: vm.empPKId
+                    }
+                    searchList.push(searchFields);
+                    pageService.findEntity(contTableId, undefined, searchList).then(
+                        _findEntitySuccessResult, _findEntityErrorResult);
                 }
             })
         }
@@ -168,6 +195,9 @@
                 case 438://nominee
                     linkFieldName = 'NDEmpId'
                     break;
+                case 442://identity
+                    linkFieldName = 'IEmpId'
+                    break;
             }
 
             var pageObject = $scope.createPage();
@@ -197,17 +227,30 @@
             return pageObject;
         }
         function _findEntitySuccessResult(result) {
+<<<<<<< HEAD
 
+=======
+            console.log(result)
+>>>>>>> 78cbb84e6da875582fc1bef5391715135418b794
             if (result.ECEmpId !== undefined) {//check if entity is emg contact page contact
                 vm.oldEmpEmgContact = angular.copy(result);
                 vm.empEmgContact = result;
             }
-            else if (result.CDId !== undefined) {//check if entity is emg contact page contact
+            else if (result.CDId !== undefined) {//check if entity is  contact page contact
                 vm.oldempContactDetail = angular.copy(result);
-                console.log(result)
                 vm.empContactDetail = result;
+                if (result.CDAddLine1 == result.CDPAddLine1 && result.CDAddLine2 == result.CDPAddLine2 && result.CountryId == result.PCountryId &&
+                    result.StateId == result.PStateId && result.CityId == result.PCityId && result.CDAreaId == result.CDPAreaId
+                    && parseInt(result.CDPincode) == result.CDPPincode) {
+                    console.log("same")
+                    vm.CDPermanent = true;
+                }
+                else {
+                    vm.CDPermanent = false;
+                }
             }
             else {
+
                 console.log(result)
                 vm.oldEntity = angular.copy(result);
                 vm.entity = result;
@@ -227,19 +270,81 @@
             return data;
         }
         function _saveAddress() {
+            console.log()
+            if (vm.empContactDetail.CDId === undefined) {
+                vm.empContactDetail.CDEmpId = vm.empPKId;
+                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create');
+            }
+            else {
+                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit');
+            }
 
-            _formSave(vm.empContactDetail, vm.pageIds.contactPageId);
         }
         function _saveForm() {
             if ($scope.page.pageinfo.idencolname !== undefined && $scope.page.pageinfo.idencolname !== null) {
-                _formSave(vm.entity, vm.pageId);
+                if (vm.pageId == 125) {
+                    if (vm.entity.PFPPFIsActive == false) {
+                        vm.entity.PFPPFAccountNo = '';
+                        vm.entity.PFPPFMemberDate = '';
+                    }
+                    if (vm.entity.ESIIsActive == false) {
+                        vm.entity.ESIMemeberNo = '';
+                        vm.entity.ESIMemeberDate = '';
+                    }
+                    if (vm.entity.ADId === undefined) {
+                        console.log("test")
+                        vm.entity.ADEmpId = vm.empPKId;
+                        _formSave(vm.entity, vm.pageId, 'create');
+                    }
+                    else {
+                        console.log("test1")
+                        console.log(vm.entity);
+                        _formSave(vm.entity, vm.pageId, 'edit');
+                    }
+                }
+                else if (vm.pageId == 114) {
+
+                    if (vm.entity.JDIsOT == false) {
+                        vm.entity.SingleOT = false;
+                        vm.entity.JDDoubleOT = false;
+                        vm.entity.JDSingleOTRate = '';
+                        vm.entity.DoubleOTRate = '';
+
+                    }
+                    else if (vm.entity.SingleOT == false) {
+                        vm.entity.JDSingleOTRate = '';
+                    }
+                    else if (vm.entity.JDDoubleOT == false) {
+                        vm.entity.DoubleOTRate = '';
+                    }
+                    console.log(vm.entity)
+                    if (vm.entity.JDId === undefined) {
+                        vm.entity.JDEmpId = vm.empPKId;
+                        _formSave(vm.entity, vm.pageId, 'create');
+                    }
+                    else {
+                        console.log(vm.entity);
+                        _formSave(vm.entity, vm.pageId, 'edit');
+                    }
+                }
+                else if (vm.pageId == 35) {
+                    if (vm.entity.PdId === undefined) {
+                        vm.entity.PdEmpId = vm.empPKId;
+                        _formSave(vm.entity, vm.pageId, 'create');
+                    }
+                    else {
+                        console.log(vm.entity);
+                        _formSave(vm.entity, vm.pageId, 'edit');
+                    }
+                }
+
             }
         }
-        function _formSave(entity, pageId) {
+        function _formSave(entity, pageId, action) {
             console.log(entity);
             var objectData, action;
             objectData = entity;
-            action = 'edit';
+            action = action;
             var savingObj = _setupSaving(objectData, action, pageId);
             console.log(savingObj)
             pageService.editPageData(pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult)
@@ -247,15 +352,32 @@
         }
         function _updateSuccessResult(result) {
             console.log(result)
+
             var isSuccess = true;
             if (result.error_message === undefined) {
                 if (result.entity !== undefined) {
+                    if (result.entity.JDId !== undefined) {
+                        vm.oldEntity = angular.copy(result.entity);
+                    }
+
+                    if (result.entity.CDId !== undefined) {
+                        vm.oldempContactDetail = angular.copy(result.entity);
+                    }
                     if (result.entity.PdId !== undefined) {
                         isSuccess = false;
-                        _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId)
+                        vm.oldEntity = angular.copy(result.entity);
+                        if (vm.empEmgContact.ECId === undefined) {
+                            vm.empEmgContact.ECEmpId = vm.empPKId;
+                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'create')
+                            console.log(vm.empEmgContact)
+                        }
+                        else {
+                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'edit')
+                        }
                     }
                     else if (result.entity.ECEmpId !== undefined) {
                         isSuccess = true;
+                        vm.oldEmpEmgContact = angular.copy(result.entity);
                     }
                 }
             }
@@ -292,23 +414,46 @@
 
         }
         //=========================================================== common method
-        // function _validateFormCommon() {
-        //     // editForm.$invalid
-        //     return true;
-        // }
-        function _saveFormCommon() {
-            // if (!_validateFormCommon()) {
-            //     return;
-            // }
-            debugger;
+        function _validateFormCommon() {
             if (vm.activeTab === undefined) {
-                _saveForm();
+                if (angular.equals(vm.entity, vm.oldEntity)) {
+                    _showToast('info', 'Nothing to save', "")
+                    return false;
+                }
             }
             else if (vm.activeTab == 0) {
-                _saveForm();
+
+                if (angular.equals(vm.entity, vm.oldEntity)) {
+                    _showToast('info', 'Nothing to save', "")
+                    return false;
+                }
+                if (angular.equals(vm.empEmgContact, vm.oldEmpEmgContact)) {
+                    _showToast('info', 'Nothing to save', "")
+                    return false;
+                }
             }
             else if (vm.activeTab == 1) {
-                _saveAddress();
+                if (angular.equals(vm.empContactDetail, vm.oldempContactDetail)) {
+                    _showToast('info', 'Nothing to save', "")
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        function _saveFormCommon() {
+
+            if (_validateFormCommon()) {
+                if (vm.activeTab === undefined) {
+
+                    _saveForm();
+                }
+                else if (vm.activeTab == 0) {
+                    _saveForm();
+                }
+                else if (vm.activeTab == 1) {
+                    _saveAddress();
+                }
             }
         }
         function _resetFormCommon() {
@@ -336,6 +481,26 @@
             }
             else if (vm.activeTab == 1) {
                 _clearAddress();
+            }
+        }
+        function _permanentAddress() {
+            if (vm.CDPermanent) {
+                vm.empContactDetail.CDPAddLine1 = vm.empContactDetail.CDAddLine1;
+                vm.empContactDetail.CDPAddLine2 = vm.empContactDetail.CDAddLine2;
+                vm.empContactDetail.PCountryId = vm.empContactDetail.CountryId;
+                vm.empContactDetail.PStateId = vm.empContactDetail.StateId;
+                vm.empContactDetail.PCityId = vm.empContactDetail.CityId;
+                vm.empContactDetail.CDPPincode = vm.empContactDetail.CDPincode;
+                vm.empContactDetail.CDPAreaId = vm.empContactDetail.CDAreaId;
+            }
+            else {
+                vm.empContactDetail.CDPAddLine1 = '';
+                vm.empContactDetail.CDPAddLine2 = '';
+                vm.empContactDetail.PContryId = '';
+                vm.empContactDetail.PStateId = '';
+                vm.empContactDetail.PCityId = '';
+                vm.empContactDetail.CDPPincode = '';
+                vm.empContactDetail.CDPAreaId = '';
             }
         }
         _loadController();

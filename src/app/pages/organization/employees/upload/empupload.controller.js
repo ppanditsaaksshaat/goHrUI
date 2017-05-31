@@ -26,17 +26,12 @@
         $scope.uploadHistory.boxOptions = {
             showRefresh: true,
             showFilter: false,
-            showAdd: true,
-            showRowMenu: true,
-            showCustomView: true,
+            showAdd: false,
+            showRowMenu: false,
+            showCustomView: false,
             showUpload: false,
             enableAutoRefresh: true,
             refreshData: _refreshUploadHistory,
-            addRecord: null,
-            editRecord: null,
-            updateRecord: null,
-            viewRecord: null,
-            deleteRecord: null,
             openView: null,
             uploadRecord: null
         }
@@ -58,7 +53,9 @@
         //  vm.migrate.step1=true;
 
         vm.resultGridOptions = $scope.getGridSetting();
+        vm.resultGridOptions.exporterMenuCsv = true;
         vm.succesResultGridOptions = $scope.getGridSetting();
+        vm.succesResultGridOptions.exporterMenuCsv = true;
         vm.gridOptions = $scope.getGridSetting();
 
         // vm.gridOptions = {
@@ -579,7 +576,7 @@
             }
             else if (vm.migrate.currentStep == 4) {
                 vm.migrate.step1 = false;
-                vm.migrate.step2 = true;
+                vm.migrate.step2 = false;
                 vm.migrate.step3 = true;
                 vm.migrate.step4 = false;
                 vm.migrate.step5 = false;
@@ -800,7 +797,7 @@
 
         function _confirmClick(pageId, data, title) {
 
-            vm.migrate.currentStep = 3;
+            vm.migrate.currentStep = 4;
             vm.migrate.step1 = false;
             vm.migrate.step2 = false;
             vm.migrate.step3 = false;
@@ -928,11 +925,11 @@
                         enableFiltering: true
 
                     });
-                    angular.forEach(vm.selectedHeader, function (col, cdx) {
+                    angular.forEach(vm.gridOptions.columnDefs, function (col, cdx) {
                         var colRowHeader = {
-                            name: col,
-                            field: col,
-                            displayName: col,
+                            name: col.name,
+                            field: col.field,
+                            displayName: col.displayName,
                             width: 150,
                             visible: true,
                             enableFiltering: true
@@ -980,7 +977,7 @@
                         visible: true,
                         enableFiltering: true
                     });
-                   vm.succesResultGridOptions.columnDefs.push({
+                    vm.succesResultGridOptions.columnDefs.push({
                         name: 'EMPCodeAutometic',
                         field: 'EMPCodeAutometic',
                         displayName: 'Employee Auto Code',
@@ -988,8 +985,8 @@
                         visible: true,
                         enableFiltering: true
                     });
-                        // vm.succesResultGridOptions.columnDefs.push(colRowHeaders);
-                   
+                    // vm.succesResultGridOptions.columnDefs.push(colRowHeaders);
+
 
 
                     vm.succesResultGridOptions.data = result.successList;
@@ -1053,8 +1050,30 @@
 
 
             }, function (err) {
-                console.log(err)
-                $scope.showMsg('error', err, 'Error Message')
+
+
+                var err_data = angular.fromJson(err.data);
+                console.log(err_data)
+                if (err_data.InnerException) 
+                    $scope.showMsg('error', err_data.InnerException.ExceptionMessage, err_data.ExceptionMessage)
+                    // vm.migrate.currentStep = 4;
+                    // vm.migrate.step4 = false;
+                    // vm.migrate.step3 = true;
+                
+
+
+
+
+                else 
+                    $scope.showMsg('error', err_data.ExceptionMessage, 'Error Message')
+                    // vm.migrate.currentStep = 4;
+                    // vm.migrate.step4 = false;
+                    // vm.migrate.step3 = true;
+                
+
+
+
+
             });
         }
 
@@ -1205,18 +1224,18 @@
             var tempColumns = [];
 
             var row = {
-                EmpCode: '',
-                Title: '',
-                FirstName: '',
-                MiddleName: '',
-                LastName: '',
-                Department: '',
-                EmploymentType: '',
-                Designation: '',
-                DateOfBirth: '',
-                Gender: '',
-                MobileNo: '',
-                EmpName: ''
+                EmpCode: 'Alpha-numeric (ITSL000001) Size(10)',
+                Title: 'Alpha-numeric (Mister) Size(50) ',
+                FirstName: 'Only alphabet (Atul) Size(50)',
+                MiddleName: 'Only alphabet (Kumar) Size(50)',
+                LastName: 'Only alphabet (Singh) Size(50)',
+                Department: 'Alpha-numeric (IT) Size(50)',
+                EmploymentType: 'Alpha-numeric (Full Time) Size(50)',
+                Designation: 'Alpha-numeric (Software Developer1) Size(50)',
+                DateOfBirth: 'Date(20/11/1992)-[DD/MM/YYYY]',
+                Gender: 'Alpha-numeric (Male) Size(50)',
+                MobileNo: 'Numeric(9919876570) Size(10)',
+                EmpName: 'Only alphabet (Atul Kumar Singh) Size(100)',
 
             }
 
@@ -1235,7 +1254,7 @@
             // tempColumns.push({ EmpCode: '' });
             console.log(vm.skipDataList)
 
-            DJWebStoreGlobal.JSONToCSVConvertor(vm.skipDataList, 'EmployeeList', false, true, true);
+            DJWebStoreGlobal.JSONToCSVConvertor(vm.resultGridOptions.data, 'EmployeeList', false, true, true);
         }
 
         vm.downloadExportAddedData = function () {
@@ -1259,48 +1278,47 @@
 
 
             var row = {
-                EmpCode: '',
-                Title: '',
-                FirstName: '',
-                MiddleName: '',
-                LastName: '',
-                EmpName: '',
-                Department: '',
-                EmploymentType: '',
-                Designation: '',
-                DateOfBirth: '',
-                Gender: '',
-                MobileNo: '',
-                DateOfJoining: '',
-                Grade: '',
-                Level: '',
-                Category: '',
-                SubUnit: '',
-                OfficeEmail: '',
-                OfficeMobile: '',
-                OfficePhone: '',
-                OfficeExt: '',
-                IsSingleOT: '',
-                IsDoubleOT: '',
-                SingleOTRate: '',
-                DoubleOTRate: '',
-                MarriageStatus: '',
-                Email: '',
-                AnniversaryDate: '',
-                Facebook: '',
-                PanNo: '',
-                LinkedIn: '',
-                Aadhaar: '',
-                Twitter: '',
-                OtherIdentity: '',
-                SalaryMode: '',
-                PFAccountNumber: '',
-                PFStartDate: '',
-                ESIAccountNumber: '',
-                ESIStartDate: '',
-                BankAccountNo: '',
-                Religion: '',
-                Nationality: ''
+                EmpCode: 'Alpha-numeric (ITSL000001) Size(10)',
+                Title: 'Alpha-numeric (Mister) Size(50) ',
+                FirstName: 'Only alphabet (Atul) Size(50)',
+                MiddleName: 'Only alphabet (Kumar) Size(50)',
+                LastName: 'Only alphabet (Singh) Size(50)',
+                EmpName: 'Only alphabet (Atul Kumar Singh) Size(100)',
+                Department: 'Alpha-numeric (IT) Size(50)',
+                EmploymentType: 'Alpha-numeric (Full Time) Size(50)',
+                Designation: 'Alpha-numeric (Software Developer1) Size(50)',
+                DateOfBirth: 'Date(20/11/1992)-[DD/MM/YYYY]',
+                Gender: 'Alpha-numeric (Male) Size(50)',
+                MobileNo: 'Numeric(9919876570) Size(10)',
+                DateOfJoining: 'Date(20/11/2016)-[DD/MM/YYYY]',
+                Grade: 'Alpha-numeric (Grade A1) Size(50)',
+                Level: 'Alpha-numeric (Level 1) Size(50)',
+                Category: 'Alpha-numeric (Category A1) Size(50)',
+                OfficeEmail: 'Correct Email(atul095@xyz.com)',
+                OfficeMobile: 'Numeric(9919876570) Size(10)',
+                OfficePhone: 'Numeric(01166283687) Max-Size(17)',
+                OfficeExt: 'Numeric',
+                IsSingleOT: '0 OR 1',
+                IsDoubleOT: '0 OR 1',
+                SingleOTRate: 'Decimal(1.5) OR Numeric(1)',
+                DoubleOTRate: 'Decimal(3.0) OR Numeric(3)',
+                MarriageStatus: 'Alpha-numeric (Married) Size(50)',
+                Email: 'Correct Email(atul095@xyz.com)',
+                AnniversaryDate: 'Date(20/11/2016)-[DD/MM/YYYY]',
+                Facebook: 'Correct Facebook Id(atul095@facebook.com)',
+                PanNo: 'Alfa-numeric(BKAMR1222J)',
+                LinkedIn: 'Correct LinkedIn Id(atul095@linkedin.com)',
+                Aadhaar: 'Numeric(120039882099)',
+                Twitter: 'Correct Twitter Id(atul095@twitter.com)',
+                OtherIdentity: 'Alfa-numeric(XYZ001)',
+                SalaryMode: 'Alpha-numeric (Cash) Size(50)',
+                PFAccountNumber: 'Alpha-numeric (PF00023) Size(50)',
+                PFStartDate: 'Date(20/11/2016)-[DD/MM/YYYY]',
+                ESIAccountNumber: 'Alpha-numeric (ESI001) Size(50)',
+                ESIStartDate: 'Date(20/11/2016)-[DD/MM/YYYY]',
+                BankAccountNo: 'Numeric(12003988209911)',
+                Religion: 'Alpha-numeric (Hindu) Size(50)',
+                Nationality: 'Alpha-numeric (Indian) Size(50)'
 
 
             }
@@ -1309,7 +1327,7 @@
 
 
 
-            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, true, false);
+            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, true, true);
         }
 
 
