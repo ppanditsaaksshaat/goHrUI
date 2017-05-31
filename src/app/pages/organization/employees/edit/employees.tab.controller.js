@@ -413,7 +413,7 @@
         }
         function _saveFormCommon() {
           
-            // if (_validateFormCommon()) {
+            if (_validateFormCommon()) {
                 if (vm.activeTab === undefined) {
 
                     _saveForm();
@@ -424,7 +424,7 @@
                 else if (vm.activeTab == 1) {
                     _saveAddress();
                 }
-          //  }
+            }
         }
         function _resetFormCommon() {
 
