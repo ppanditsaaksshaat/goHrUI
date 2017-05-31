@@ -57,18 +57,18 @@
                                     <span>Accept Invalid Data</span>
                                 </label>
                                 <div id="notAcceptInvalidData" ng-hide="tabCtrl.acceptInvalidData">
-                                    <div class="radio">
+                                    <div class="radio margin-left">
                                         <label><input type="radio" ng-model="tabCtrl.ignoreCase" name="ignoreRow" checked value="ignorerow">Ignore Row</label>
                                     </div>
-                                    <div class="radio">
-                                        <label><input type="radio" ng-model="tabCtrl.ignoreCase" name="ignoreRow" value="ignorecolumn">Ignore Column</label>
+                                    <div class="radio margin-left">
+                                        <label><input  type="radio" ng-model="tabCtrl.ignoreCase" name="ignoreRow" value="ignorecolumn">Ignore Cell/Field</label>
                                     </div>
                                 </div>
                                 <div id="acceptInvalidData" ng-show="tabCtrl.acceptInvalidData">
-                                    <div class="radio">
+                                    <div class="radio margin-left">
                                         <label><input type="radio" ng-model="tabCtrl.ignoreCase" name="ignoreRow" value="samedata">Same Data</label>
                                     </div>
-                                    <div class="radio">
+                                    <div class="radio margin-left">
                                         <label><input type="radio" ng-model="tabCtrl.ignoreCase" name="ignoreRow" value="blankdata">Blank Data</label>
                                     </div>
                                 </div>
@@ -194,7 +194,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="unmapped in tabCtrl.migrate.unMappedList">
-                                    <td style="padding:5px">{{unmapped}}</td>
+                                    <td style="padding:5px" ng-class="{'font-red': unmapped}">{{unmapped}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -219,10 +219,10 @@
                             <tbody>
                                 <tr ng-repeat="field in table.rows">
                                     <tr ng-repeat="row in  table.rows">
-                                        <td class="padT8 padB8 col-sm-2" style="padding-left:10px; text-align: left">{{row.column1.text}}</td>
-                                        <td style="padding-top: 8px; padding-bottom: 8px; padding-right: 20px;" ng-class="{'font-red': (row.column1.value!='none')}">{{row.column1.value}}</td>
-                                        <td class="col-sm-2" style="padding-top: 8px; padding-bottom: 8px">{{row.column2.text}}</td>
-                                        <td style="padding-top: 8px; padding-bottom: 8px" ng-class="{'font-red': (row.column2.value!='none')}">{{row.column2.value}}</td>
+                                        <td class="padT8 padB8 col-sm-2" style="padding-left:10px; text-align: left" ng-class="{'font-blue': (row.column1.text')}">{{row.column1.text}}</td>
+                                        <td style="padding-top: 8px; padding-bottom: 8px; padding-right: 20px;" ng-class="{'font-green': (row.column1.value!='none')}">{{row.column1.value}}</td>
+                                        <td class="col-sm-2" style="padding-top: 8px; padding-bottom: 8px" ng-class="{'font-blue': (row.column2.text')}">{{row.column2.text}}</td>
+                                        <td style="padding-top: 8px; padding-bottom: 8px" ng-class="{'font-green': (row.column2.value!='none')}">{{row.column2.value}}</td>
                                     </tr>
                             </tbody>
                         </table>
@@ -330,8 +330,8 @@
                     <div class="panel">
                         <div class="panel-body">
                             <h3 class="with-line">Skip Record</h3>
-                            <button type="button" class="btn btn-warning" ng-show="tabCtrl.skipDataList.length>0" ng-click="tabCtrl.downloadExportSkipData()">
-                           Export Skip Result</button>
+                            <!--<button type="button" class="btn btn-warning" ng-show="tabCtrl.skipDataList.length>0" ng-click="tabCtrl.downloadExportSkipData()">
+                           Export Skip Result</button>-->
                             <!--<grid-box ng-model="tabCtrl.skipGrid">
                             </grid-box>-->
                             <!--<table class="table" ng-show="tabCtrl.skipDataList.length>0">
@@ -355,7 +355,7 @@
                                 </tbody>
                             </table>-->
                             <div>
-                                <div id="grid1" ui-grid="tabCtrl.resultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
+                                <div id="grid1" ui-grid="tabCtrl.resultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav ui-grid-exporter>
                                 </div>
                             </div>
 
@@ -367,7 +367,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" ng-click="back('organization.employees.list')" class="btn btn-default">
-                                    Back
+                                    List
                                 </button>
                     </div>
                 </div>
@@ -378,11 +378,11 @@
                     <div class="panel">
                         <div class="panel-body">
                             <h3 class="with-line">Added Record</h3>
-                            <button type="button" class="btn btn-warning" ng-show="tabCtrl.addedDataList.length>0" ng-click="tabCtrl.downloadExportAddedData()">
-                           Export Added Result</button>
+                            <!--<button type="button" class="btn btn-warning" ng-show="tabCtrl.addedDataList.length>0" ng-click="tabCtrl.downloadExportAddedData()">
+                           Export Added Result</button>-->
 
                             <div>
-                                <div id="grid3" ui-grid="tabCtrl.succesResultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
+                                <div id="grid3" ui-grid="tabCtrl.succesResultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav ui-grid-exporter>
                                 </div>
                             </div>
 
@@ -395,7 +395,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" ng-click="back('organization.employees.list')" class="btn btn-default">
-                                    Back
+                                    List
                                 </button>
                     </div>
                 </div>
@@ -410,7 +410,7 @@
                     <button type="button" ng-click="tabCtrl.clear()" class="btn btn-default">
                         Clear
                     </button>
-                    <button type="button" ng-click="tabCtrl.nextDataUpload()" ng-hide="tabCtrl.migrate.step3" class="btn btn-info">
+                    <button type="button" ng-click="tabCtrl.nextDataUpload()" ng-hide="tabCtrl.migrate.step3 || tabCtrl.migrate.step4" class="btn btn-info">
                        {{(tabCtrl.migrate.step3)?"Import":"Next"}}
                     </button>
                     <button type="button" ng-click="tabCtrl.importDataUpload()" ng-show="tabCtrl.migrate.step3" class="btn btn-info">
