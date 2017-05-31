@@ -343,6 +343,19 @@
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.CDPAreaId.text"></label>
+                    <field-box ng-column="contactPage.pageinfo.fields.CDPAreaId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                    <!--<label for="inputPerZip">Zip</label>
+                  <input type="text" class="form-control" id="inputPerZip" ng-model="empTabCtrl.empContactDetail.CDPPincode">-->
+
+                  </div>
+                </div>
+              
+              </div>
+              <div class="row">
+                  <div class="col-sm-4">
+                  <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.CDPPincode.text"></label>
                     <field-box ng-column="contactPage.pageinfo.fields.CDPPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
@@ -351,7 +364,7 @@
 
                   </div>
                 </div>
-              </div>
+                </div>
             </div>
           </div>
         </uib-tab>

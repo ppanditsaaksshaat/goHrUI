@@ -210,6 +210,16 @@
                 vm.oldempContactDetail = angular.copy(result);
                 console.log(result)
                 vm.empContactDetail = result;
+
+                if (result.CDAddLine1 == result.CDPAddLine1 && result.CDAddLine2 == result.CDPAddLine2 && result.CountryId == result.PCountryId &&
+                    result.StateId == result.PStateId && result.CityId == result.PCityId && result.CDAreaId == result.CDPAreaId
+                    && parseInt(result.CDPincode) == result.CDPPincode) {
+                        console.log("same")
+                    vm.CDPermanent = true;
+                }
+                else {
+                    vm.CDPermanent = false;
+                }
             }
             else {
 
@@ -236,19 +246,16 @@
             if (vm.empContactDetail.CDEmpId === undefined) {
                 console.log("CONTACT")
                 vm.empContactDetail.CDEmpId = vm.empPKId;
-                vm.empContactDetail.CDAreaId=2;
-                vm.empContactDetail.CDCityId=  vm.empContactDetail.PCityId;
+
                 _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create');
             }
             else {
                 console.log("CONTACT1")
                 console.log(vm.entity);
-                vm.empContactDetail.CDAreaId=2;
-                vm.empContactDetail.CDCityId=  vm.empContactDetail.PCityId;
                 console.log(vm.empContactDetail)
                 _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit');
             }
-          
+
         }
         function _saveForm() {
             if ($scope.page.pageinfo.idencolname !== undefined && $scope.page.pageinfo.idencolname !== null) {
@@ -392,6 +399,7 @@
                 vm.empContactDetail.PStateId = vm.empContactDetail.StateId;
                 vm.empContactDetail.PCityId = vm.empContactDetail.CityId;
                 vm.empContactDetail.CDPPincode = vm.empContactDetail.CDPincode;
+                vm.empContactDetail.CDPAreaId = vm.empContactDetail.CDAreaId;
             }
             else {
                 vm.empContactDetail.CDPAddLine1 = '';
@@ -399,7 +407,8 @@
                 vm.empContactDetail.PContryId = '';
                 vm.empContactDetail.PStateId = '';
                 vm.empContactDetail.PCityId = '';
-                vm.empContactDetail.CDPPinecode = '';
+                vm.empContactDetail.CDPPincode = '';
+                vm.empContactDetail.CDPAreaId = '';
             }
         }
         _loadController();
