@@ -332,6 +332,15 @@
             var isSuccess = true;
             if (result.error_message === undefined) {
                 if (result.entity !== undefined) {
+                    if(result.entity.JDId!==undefined)
+                    {
+                         vm.oldEntity = angular.copy(result.entity);
+                    }
+                   
+                    if(result.entity.CDId!==undefined)
+                    {
+                         vm.oldempContactDetail = angular.copy(result.entity);  
+                    }
                     if (result.entity.PdId !== undefined) {
                         isSuccess = false;
                         vm.oldEntity = angular.copy(result.entity);
@@ -403,7 +412,7 @@
                 }
             }
             else if (vm.activeTab == 1) {
-                if (angular.equals(vm.entity, vm.oldEntity)) {
+                if (angular.equals(vm.empContactDetail, vm.oldempContactDetail)) {
                     _showToast('info', 'Nothing to save', "")
                     return false;
                 }
