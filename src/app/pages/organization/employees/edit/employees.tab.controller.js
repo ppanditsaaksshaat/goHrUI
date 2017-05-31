@@ -291,8 +291,9 @@
                         _formSave(vm.entity, vm.pageId, 'edit');
                     }
                 }
-                else if(vm.pageID==114)
+                else if(vm.pageId==114)
                 {
+                 
                     if (vm.entity.JDId === undefined) {                     
                         vm.entity.JDEmpId = vm.empPKId;
                         _formSave(vm.entity, vm.pageId, 'create');
@@ -411,7 +412,7 @@
             return true;
         }
         function _saveFormCommon() {
-          //   debugger;
+          
             // if (_validateFormCommon()) {
                 if (vm.activeTab === undefined) {
 
