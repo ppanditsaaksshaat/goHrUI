@@ -1294,7 +1294,6 @@
                 Grade: 'Alpha-numeric (Grade A1) Size(50)',
                 Level: 'Alpha-numeric (Level 1) Size(50)',
                 Category: 'Alpha-numeric (Category A1) Size(50)',
-                SubUnit: 'Alpha-numeric (Lado Sarai1) Size(50)',
                 OfficeEmail: 'Correct Email(atul095@xyz.com)',
                 OfficeMobile: 'Numeric(9919876570) Size(10)',
                 OfficePhone: 'Numeric(01166283687) Max-Size(17)',

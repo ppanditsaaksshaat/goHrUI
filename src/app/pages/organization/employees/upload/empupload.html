@@ -126,8 +126,14 @@
 
                         </div>
                         <span ng-show="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">Preview Data</span>
+                        <div class="row">
+                            <div class="col-md-12">
 
-                        <div id="grid1" ui-grid="tabCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav ng-show="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">
+                                <div id="grid1" style="height:auto" ui-grid="tabCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
+                                    ng-show="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -472,7 +478,7 @@
 
 <style>
     .grid {
-        height: 250px;
+        height: 300px;
         width: 500px;
     }
     
