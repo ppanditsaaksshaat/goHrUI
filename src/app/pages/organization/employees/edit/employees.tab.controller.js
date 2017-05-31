@@ -227,11 +227,6 @@
             return pageObject;
         }
         function _findEntitySuccessResult(result) {
-<<<<<<< HEAD
-
-=======
-            console.log(result)
->>>>>>> 78cbb84e6da875582fc1bef5391715135418b794
             if (result.ECEmpId !== undefined) {//check if entity is emg contact page contact
                 vm.oldEmpEmgContact = angular.copy(result);
                 vm.empEmgContact = result;
