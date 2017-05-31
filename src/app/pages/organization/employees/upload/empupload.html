@@ -257,9 +257,9 @@
             <div id="step4" ng-show="tabCtrl.migrate.step4">
                 <div class="content-box">
                     <h3 class="content-box-header bg-blue-alt">
-                        Validate Data
+                        Validate And Import Data
                     </h3>
-                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                    <i id="tabCtrl.validateAndImport" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
                     <div class="content-box-wrapper">
                         <div id="grid1" ui-grid="tabCtrl.gridValidOptions" class="grid-valid" ui-grid-pagination ui-grid-edit ui-grid-cellnav ng-show="tabCtrl.gridValidOptions.data.length > 0">
                         </div>
@@ -382,7 +382,8 @@
                            Export Added Result</button>-->
 
                             <div>
-                                <div id="grid3" ui-grid="tabCtrl.succesResultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav ui-grid-exporter>
+                                <div id="grid3" ui-grid="tabCtrl.succesResultGridOptions" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
+                                    ui-grid-exporter>
                                 </div>
                             </div>
 
@@ -435,6 +436,9 @@
             <h3 class="with-line">Import History</h3>
             <grid-box ng-model="uploadHistory" box-options="boxSetting">
             </grid-box>
+            <!--<div id="grid5" ui-grid="tabCtrl.uploadHistory" class="djGrid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
+                ui-grid-exporter>
+            </div>-->
         </uib-tab>
     </uib-tabset>
 </div>

@@ -26,17 +26,12 @@
         $scope.uploadHistory.boxOptions = {
             showRefresh: true,
             showFilter: false,
-            showAdd: true,
-            showRowMenu: true,
-            showCustomView: true,
+            showAdd: false,
+            showRowMenu: false,
+            showCustomView: false,
             showUpload: false,
             enableAutoRefresh: true,
             refreshData: _refreshUploadHistory,
-            addRecord: null,
-            editRecord: null,
-            updateRecord: null,
-            viewRecord: null,
-            deleteRecord: null,
             openView: null,
             uploadRecord: null
         }
@@ -1055,12 +1050,30 @@
 
 
             }, function (err) {
+
+
                 var err_data = angular.fromJson(err.data);
                 console.log(err_data)
-                if (err_data.InnerException)
+                if (err_data.InnerException) 
                     $scope.showMsg('error', err_data.InnerException.ExceptionMessage, err_data.ExceptionMessage)
-                else
+                    // vm.migrate.currentStep = 4;
+                    // vm.migrate.step4 = false;
+                    // vm.migrate.step3 = true;
+                
+
+
+
+
+                else 
                     $scope.showMsg('error', err_data.ExceptionMessage, 'Error Message')
+                    // vm.migrate.currentStep = 4;
+                    // vm.migrate.step4 = false;
+                    // vm.migrate.step3 = true;
+                
+
+
+
+
             });
         }
 
