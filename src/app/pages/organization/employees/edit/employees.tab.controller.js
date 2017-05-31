@@ -234,7 +234,7 @@
                 vm.empEmgContact = result;
             }
             else if (result.CDId !== undefined) {//check if entity is  contact page contact
-                vm.oldempContactDetail = angular.copy(result);          
+                vm.oldempContactDetail = angular.copy(result);
                 vm.empContactDetail = result;
                 if (result.CDAddLine1 == result.CDPAddLine1 && result.CDAddLine2 == result.CDPAddLine2 && result.CountryId == result.PCountryId &&
                     result.StateId == result.PStateId && result.CityId == result.PCityId && result.CDAreaId == result.CDPAreaId
@@ -291,27 +291,40 @@
                         _formSave(vm.entity, vm.pageId, 'edit');
                     }
                 }
-                else if(vm.pageId==114)
-                {
-                 
-                    if (vm.entity.JDId === undefined) {                     
+                else if (vm.pageId == 114) {
+                   
+                    if (vm.entity.JDIsOT == false) {
+                        vm.entity.SingleOT = false;
+                        vm.entity.JDDoubleOT = false;
+                        vm.entity.JDSingleOTRate = '';
+                        vm.entity.DoubleOTRate = '';
+
+                    }
+                    else if (vm.entity.SingleOT == false) {
+                        vm.entity.JDSingleOTRate = '';
+                    }
+                    else if (vm.entity.JDDoubleOT == false) {
+                        vm.entity.DoubleOTRate = '';
+                    }
+                    console.log(vm.entity)
+                    if (vm.entity.JDId === undefined) {
                         vm.entity.JDEmpId = vm.empPKId;
                         _formSave(vm.entity, vm.pageId, 'create');
                     }
-                    else {                    
+                    else {
                         console.log(vm.entity);
                         _formSave(vm.entity, vm.pageId, 'edit');
                     }
                 }
-                else if(vm.pageId==35) {
-                    if (vm.entity.PdId === undefined) {                     
+                else if (vm.pageId == 35) {
+                    if (vm.entity.PdId === undefined) {
                         vm.entity.PdEmpId = vm.empPKId;
                         _formSave(vm.entity, vm.pageId, 'create');
                     }
-                    else {                    
+                    else {
                         console.log(vm.entity);
                         _formSave(vm.entity, vm.pageId, 'edit');
-                    }              
+                    }
                 }
 
             }
@@ -332,14 +345,12 @@
             var isSuccess = true;
             if (result.error_message === undefined) {
                 if (result.entity !== undefined) {
-                    if(result.entity.JDId!==undefined)
-                    {
-                         vm.oldEntity = angular.copy(result.entity);
+                    if (result.entity.JDId !== undefined) {
+                        vm.oldEntity = angular.copy(result.entity);
                     }
-                   
-                    if(result.entity.CDId!==undefined)
-                    {
-                         vm.oldempContactDetail = angular.copy(result.entity);  
+
+                    if (result.entity.CDId !== undefined) {
+                        vm.oldempContactDetail = angular.copy(result.entity);
                     }
                     if (result.entity.PdId !== undefined) {
                         isSuccess = false;
@@ -400,15 +411,14 @@
                 }
             }
             else if (vm.activeTab == 0) {
-            
+
                 if (angular.equals(vm.entity, vm.oldEntity)) {
-                    _showToast('info', 'Nothing to save', "")                
-                    return false;                
+                    _showToast('info', 'Nothing to save', "")
+                    return false;
                 }
-                if(angular.equals(vm.empEmgContact, vm.oldEmpEmgContact ))
-                {
-                     _showToast('info', 'Nothing to save', "")
-                      return false;
+                if (angular.equals(vm.empEmgContact, vm.oldEmpEmgContact)) {
+                    _showToast('info', 'Nothing to save', "")
+                    return false;
                 }
             }
             else if (vm.activeTab == 1) {
@@ -421,7 +431,7 @@
             return true;
         }
         function _saveFormCommon() {
-          
+
             if (_validateFormCommon()) {
                 if (vm.activeTab === undefined) {
 
