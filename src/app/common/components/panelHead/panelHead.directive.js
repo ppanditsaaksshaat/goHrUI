@@ -18,7 +18,7 @@
                 // ngSaveForm: '&saveForm',
                 ngResetForm: '&resetForm',
                 ngClearForm: '&clearForm',
-                ngCondition: '=condition'
+                ngCondition: '=condition',             
             },
             link: function ($scope, elm, attrs, parent) {
 

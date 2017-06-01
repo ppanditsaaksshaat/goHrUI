@@ -34,7 +34,7 @@
                     showAdd: true,
                     showRowMenu: true,
                     showCustomView: true,
-                    showUpload: false,
+                    showUpload: false,                  
                     showDialog: false,
                     gridStyle: { height: '450px' }
                 }
@@ -42,7 +42,7 @@
                
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
-                    $scope.page.boxOptions = angular.copy(boxSetting);
+                    $scope.page.showUpload = angular.copy(boxSetting);
                 if (!$scope.page.boxOptions.showFilter) {
                     $scope.page.showFilter = false;
                 }

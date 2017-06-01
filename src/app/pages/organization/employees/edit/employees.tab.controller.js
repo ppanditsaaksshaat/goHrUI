@@ -462,6 +462,7 @@
                 _resetPersonal();
             }
             else if (vm.activeTab == 1) {
+                 vm.CDPermanent=true;
                 _resetAddress();
             }
         }
@@ -477,6 +478,7 @@
                 _clearPersonal();
             }
             else if (vm.activeTab == 1) {
+                vm.CDPermanent=false;
                 _clearAddress();
             }
         }

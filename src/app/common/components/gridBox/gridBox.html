@@ -19,9 +19,10 @@
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>                                &nbsp;
                                 <button ng-show="page.boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="page.uploadRecord()">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>                                &nbsp;
+                        
                                 <select ng-show="page.boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
                                     ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
-                    </select>
+                                </select>
                             </div>
 
                         </div>
