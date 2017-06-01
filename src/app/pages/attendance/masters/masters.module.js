@@ -48,7 +48,7 @@
           controller: "attMastersAddController1",
           controllerAs: "addCtrl"
         });
-    $urlRouterProvider.when('/attendance/masters','/attendance/masters/location/34');
+    $urlRouterProvider.when('/attendance/masters','/attendance/masters/shiftset/289');
   }
 
 })();

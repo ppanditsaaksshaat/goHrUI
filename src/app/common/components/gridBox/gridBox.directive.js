@@ -8,7 +8,7 @@
     angular.module('BlurAdmin.common.components')
         .directive('gridBox', gridBox);
     /** @ngInject */
-    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService, editFormService) {
+    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService, editFormService, focus) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/gridBox/gridBox.html',
@@ -19,9 +19,9 @@
             },
             controller: function ($scope, $timeout) {
                 // $scope.$watch("page.pageinfo", function (newValue, OldValue, scope) {
-                //     console.log('ctrl', newValue, OldValue, scope)
-                //     console.log(scope.page.boxOptions)
-                //     console.log(scope.page.isLoaded)
+                //     //console.log('ctrl', newValue, OldValue, scope)
+                //     //console.log(scope.page.boxOptions)
+                //     //console.log(scope.page.isLoaded)
                 // });
 
             },
@@ -39,7 +39,7 @@
                     gridStyle: { height: '450px' }
                 }
 
-               
+
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.showUpload = angular.copy(boxSetting);
@@ -52,10 +52,10 @@
                 }
                 $scope.oldEntity = {};
                 $scope.$watch('page.pageinfo', function () {
-                     console.log($scope.page.pageinfo)
+                    // console.log($scope.page.pageinfo)
                     _setGridColumns();
                     _setupVerticalForm();
-                    console.log('from watch')
+                    //console.log('from watch')
                 });
                 $scope.form = {};
                 _loadDirective();
@@ -119,7 +119,8 @@
                 //button functions
                 function _addRecord() {
 
-                    $scope.entity = {};               
+                    $scope.entity = {};
+
                     angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
                         $scope.entity[link.name] = link.value;
                     });
@@ -139,7 +140,7 @@
                             dialogModal.openFormVertical(options);
                         }
                         else {
-                         
+
                             // if ($scope.page.selectedRows !== undefined) {
                             //     if ($scope.page.selectedRows.length > 0)
                             //         $scope.entity = $scope.page.selectedRows[0];
@@ -223,7 +224,7 @@
                     $scope.page.boxOptions.uploadRecord();
                 }
                 function _onRegisterApi(gridApi) {
-                    console.log('register grid api')
+                    //console.log('register grid api')
                     $scope.page.gridApi = gridApi;
 
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -232,7 +233,7 @@
                         //     //enable edit button
 
                         //     uivm.currentSelection = uivm.gridApi.selection.getSelectedRows();
-                        //     //console.log(uivm.currentSelection)
+                        //     ////console.log(uivm.currentSelection)
                         //     if (uivm.currentSelection.length > 0) {
                         //         uivm.selectedRow = row;
                         //     }
@@ -252,10 +253,13 @@
                 function _closeAddRecord() {
                     _closeForm();
                 }
-                function _closeForm() {
+                function _closeForm(editForm) {
                     $scope.page.showAddRecord = false;
                     $scope.page.showViewRecord = false;
                     $scope.entity = {};
+                    if (editForm) {
+                        editForm.$setPristine();
+                    }
                 }
                 //END: button function  
                 //====================================================================
@@ -323,7 +327,7 @@
                 //get page data
                 function _getPage() {
                     $timeout(function () {
-                        console.log($scope.page);
+                        //console.log($scope.page);
                         pageService.getPagData($scope.page.pageId).then(_getPageSuccessResult, _getPageErrorResult)
                     });
                 }
@@ -331,12 +335,12 @@
                     console.log(result)
                     $scope.page = angular.extend($scope.page, result);
                     // $scope.setPage(result)
-                    console.log('from getpage')
+                    //console.log('from getpage')
                     _setGridColumns();
                     _refreshData();
                 }
                 function _getPageErrorResult(err) {
-  
+
                 }
                 //end get page data
                 //====================================================================
@@ -389,21 +393,36 @@
 
                 function _validateForm(form) {
                     var valid = true;
-                    console.log(form)
+                    //console.log(form)
                     if (!form['$valid']) {
                         if (form['$error'] !== undefined) {
                             var err = form['$error'];
+                            if (err.required) {
+                                if (err.required.length > 0) {
+                                    var fieldName = err.required[0].$name;
+                                    err.required[0].$setTouched();
+                                    err.required[0].$setDirty();
+                                    //console.log(err)
+                                    focus(fieldName);
+                                    valid = false;
+                                }
+                            }
 
+                            //console.log(err)
+                            if (err['emailError']) {
+                                alert('email failed');
+                                valid = false;
+                            }
                             if (err['email'] !== undefined) {
                                 alert('invalid email');
                                 valid = false;
-                            } 
+                            }
                             if (err['maxlength'] !== undefined) {
                                 alert('invalid length')
                                 valid = false
                             }
                             if (err['pattern'] !== undefined) {
-                                console.log(err['pattern'])
+                                //console.log(err['pattern'])
                                 alert('invalid pattern')
                                 valid = false
                             }
@@ -412,13 +431,15 @@
                     return valid;
                 }
                 function _saveForm(form) {
-               
                     if (_validateForm(form)) {
                         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
                             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
                     }
                 }
-                function _resetForm() {
+                function _resetForm(editForm) {
+                    if (editForm) {
+                        editForm.$setPristine();
+                    }
                     $scope.entity = angular.copy($scope.oldEntity);
                 }
 
@@ -435,7 +456,7 @@
                     $scope.form.isLoaded = true;
                     $scope.form.isLoading = false;
                     $scope.entity = result;
-                    console.log($scope.entity)
+                    //console.log($scope.entity)
                     $scope.oldEntity = angular.copy(result)
                 }
                 function _findEntityErrorResult(err) {

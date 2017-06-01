@@ -1,4 +1,6 @@
-<div ng-switch="col.type" class="form-group  has-feedback" ng-class="{'has-success':hasSuccess(),'has-error':hasError(),'has-warning':hasWarning()}">
+<!--{{col.showError}}-->
+<div popover-animation="true" uib-popover-html="col.errorText" popover-trigger="manual" popover-is-open="col.showError" popover-placement="right"
+    ng-switch="col.type" class="form-group  has-feedback" ng-class="{'has-success':hasSuccess(),'has-error':hasError(),'has-warning':hasWarning(), 'has-error':hasSubmitRequired()}">
     <div class="input-group">
         <!--Textbox-->
         <!--<span class="input-group-addon  addon-left" ng-show="col.required">
@@ -7,7 +9,7 @@
 
         <!--left icon-->
         <span class="input-group-addon  addon-left" ng-show="col.type=='email'">
-              @ <!--<i class="fa fa-at" aria-hidden="true"></i>-->
+              <i class="fa fa-at" aria-hidden="true"></i>
         </span>
         <span class="input-group-addon  addon-left" ng-show="col.type=='mobile'">
                 <i class="fa fa-mobile" aria-hidden="true"></i>
@@ -20,45 +22,34 @@
         </span>
 
 
-        <input  ng-switch-when="textbox" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" maxlength="{{col.maxLength}}"
-            ng-model="entity[col.name]" type="text" class="form-control" ng-minlength="1" ng-maxlength="col.maxLength" ng-required="col.required"
-        />
+        <input valid-text ng-column="col" ng-switch-when="textbox|email|mobile|aadharno|pancard|zipcode|pincode|number_nodecimal|number_decimal|number_dash|number_dash_plus|number_plus|number_plus_dash_dot|alphanum_nospace|alphanum_space|alpha_nospace|alpha_space"
+            ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" ng-model="entity[col.name]"
+            type="text" class="form-control" ng-minlength="col.minLength" ng-maxlength="col.maxLength" ng-required="col.required"
+            class="form-control" />
 
-        <!--email-->
-        <input ng-switch-when="email" name="{{col.name}}" ng-model="entity[col.name]" type="email" class="form-control" ng-minlength="10"
-            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" />
+        <input valid-text ng-column="col" ng-switch-when="currency_2decimal|currency_2decimal|currency"
+            ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" ng-model="entity[col.name]"
+            type="number" class="form-control" ng-minlength="col.minLength" ng-maxlength="col.maxLength" ng-required="col.required"
+            class="form-control" />
 
-        <!--mobile-->
-        <input ng-switch-when="mobile" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="col.maxLength"
-            ng-maxlength="col.maxLength" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-pattern="/(7|8|9)\d{9}/"
-            maxlength="{{col.maxLength}}" />
-
-        <!--zipcode-->
-        <input ng-switch-when="zipcode" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="col.maxLength"
-            ng-maxlength="6" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" ng-pattern="/^(\d{6}(-\d{6})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/"
-            maxlength="6" />
-
-        <!--aadhar no-->
-        <input ng-switch-when="aadharno" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-minlength="12"
-            ng-maxlength="12" id="{{col.name}}" ng-required="col.required" placeholder="{{col.place}}" 
-            ng-pattern="\d{4}\s\d{4}\s\d{4}$"
-            maxlength="12" />
 
         <!--Select-->
-        <select name="{{col.name}}" id="{{col.name}}" ng-model="entity[col.name]" class="form-control" ng-options="opt.value as opt.name for opt in col.options"
-            ng-switch-when="select" placeholder="{{col.place}}" ng-required="col.required"></select>
+        <select valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-model="entity[col.name]" class="form-control"
+            ng-options="opt.value as opt.name for opt in col.options" ng-switch-when="select" placeholder="{{col.place}}" ng-required="col.required"></select>
 
         <!--UISelect-->
-        <select id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" class="form-control" ng-options="opt.id as opt.name for opt in col.options"
-            ng-switch-when="uiselect" placeholder="{{col.place}}" ng-required="col.required"></select>
+        <select valid-text ng-column="col" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" class="form-control"
+            ng-options="opt.id as opt.name for opt in col.options" ng-switch-when="uiselect" placeholder="{{col.place}}" ng-required="col.required"></select>
 
         <!--strapselect-->
-        <select id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" class="form-control" ng-options="opt.value as opt.name for opt in col.options | filter:{ '{{col.propColName}}': entity[col.propColName] }"
+        <select valid-text ng-column="col" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" class="form-control"
+            ng-options="opt.value as opt.name for opt in col.options | filter:{ '{{col.propColName}}': entity[col.propColName] }"
             ng-switch-when="strapselect" data-placeholder="{{col.place}}" ng-required="col.required"></select>
 
         <!--multi-select-->
-        <select id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" type="date" class="form-control" ng-options="opt.value as opt.name for opt in col.options"
-            ng-switch-when="multi-select" multiple placeholder="{{col.place}}" ng-required="col.required"></select>
+        <select valid-text ng-column="col" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" type="date" class="form-control"
+            ng-options="opt.value as opt.name for opt in col.options" ng-switch-when="multi-select" multiple placeholder="{{col.place}}"
+            ng-required="col.required"></select>
         <!--Checkbox-->
         <div ng-switch-when="checkbox">
             <!--<label class="checkbox-inline custom-checkbox nowrap">-->
@@ -98,9 +89,6 @@
         <div ng-switch-when="list" angucomplete-alt id="{{col.name}}" placeholder="{{col.place}}" pause="300" selected-object="entity[col.name]"
             local-data="col.options" local-search="localObjSearch" title-field="name" minlength="1" input-class="form-control form-control-small"
             match-class="highlight" name="{{col.name}}"></div>
-        <!--currency-->
-        <input name="{{col.name}}" ng-model="entity[col.name]" ng-switch-when="currency" id="{{col.name}}" class="form-control touchspin-currency-left"
-            type="text" value="0" name="touchspin-left-2" placeholder="{{col.place}}">
         <!--number-->
         <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-switch-when="number"
             placeholder="{{col.place}}" />
@@ -111,6 +99,8 @@
             <i aria-hidden="true" class="fa font-red fa-times" ng-show="(editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'] && editForm[col.name]['$touched'])"></i>
             <i aria-hidden="true" class="fa font-red fa-asterisk" ng-show="(editForm[col.name]['$viewValue']===undefined ||editForm[col.name]['$viewValue']=='' ) && col.required"></i>
         </span>-->
+
+
     </div>
     <!--error icon-->
     <!--<i class="ion-android-cancel form-control-feedback" aria-hidden="true"></i>-->
@@ -125,15 +115,42 @@
     <i ng-class="{'form-control-feedback': true, 
             'ion-checkmark-circled': hasSuccess(), 
             'ion-android-cancel': hasError(), 
-            'ion-asterisk font-red': hasRequired(), 
+            'ion-ios-medical font-red': hasRequired(), 
             'ion-alert-circled': hasWarning(), 
             }">
 
     </i>
     <!--info area-->
-    <span id="inputGroupSuccess1Status" class="sr-only">(success)</span>
+    <!--<span id="inputGroupSuccess1Status" class="sr-only">(success)</span>-->
     <!--<span ng-show="editForm[col.name]['$error']['blacklist']">
           The phrase "{{entity[col.name]}}" is blacklisted</span>
-    <span  ng-show="editForm[col.name]['$error']['required']">required</span>
-    {{entity[col.name]}}-->
+    <span  ng-show="editForm[col.name]['$error']['required']">required</span>-->
+    <span ng-show="editForm['$submitted'] && ngModel.$error.required" class="help-block" for="col.name">{{col.text}} is required</span>
+    <span ng-show="editForm['$submitted'] && ngModel.$error.emailError" class="help-block" for="col.name">{{col.text}} is not valid</span>
+    <span ng-show="editForm['$submitted'] && ngModel.$error.pincode" class="help-block" for="col.name">{{col.text}} must be 6 digit long</span>
+    <span ng-show="editForm['$submitted'] && ngModel.$error.zipcode" class="help-block" for="col.name">{{col.text}} must be 5 digit long</span>
+    <span ng-show="editForm['$submitted'] && ngModel.$error.aadhar" class="help-block" for="col.name">{{col.format}}</span>
 </div>
+<style>
+    .popover {
+        width: 300px;
+        height: auto!important;
+        max-height: 300px;
+    }
+
+    .has-warning .help-block,
+    .has-error .help-block,
+    .help-block {
+        color: red;
+        font-size: 11px;
+        font-family: Arial, Helvetica, sans-serif;
+        display: block;
+        text-align: left;
+        margin:0px;
+        padding: 0px;
+    }
+
+    .input-group {
+        margin-bottom: 0px;
+    }
+</style>

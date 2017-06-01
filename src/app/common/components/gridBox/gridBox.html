@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div> 
-            <form ng-show="page.showAddRecord" ng-submit="saveForm(editForm)" name="editForm" novalidate >
+            <form ng-show="page.showAddRecord" ng-submit="saveForm(editForm)" name="editForm" novalidate>
                 <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
                     <div class="panel-heading clearfix" style="padding-top:0px;">
                         <div class="row">
@@ -90,8 +90,8 @@
                             <div class="col-md-7" style="padding-top:5px">
                                 <div class="pull-right">
                                     <button type="submit" class="btn  btn-sm btn-primary">Save</button>
-                                    <button type="button" class="btn  btn-sm btn-warning" ng-click="resetForm()">Reset</button>
-                                    <button type="button" class="btn  btn-sm btn-danger" ng-click="closeForm()">Close</button>
+                                    <button type="button" class="btn  btn-sm btn-warning" ng-click="resetForm(editForm)">Reset</button>
+                                    <button type="button" class="btn  btn-sm btn-danger" ng-click="closeForm(editForm)">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +99,6 @@
                     <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
                         <div class="row">
                             <div ng-class="{'col-md-7':page.isVerticalForm,'col-md-12':!page.isVerticalForm}" style="min-height: 550px;">
-                                
                                 <div class="form-group" ng-repeat="col in page.formrows">
                                     <label for="inputPassword3" class="col-sm-5 control-label">{{col.text}}</label>
                                     <div class="col-md-7" ng-switch="col.type"> 

@@ -126,7 +126,6 @@
                         _findEntitySuccessResult, _findEntityErrorResult);
                 }
                 if (result.pageinfo.pageid == 35) {
-
                     var emgTableId = 57, contTableId = 45, personalTableId = 43;
                     var searchList = [];
                     var searchFields = {
@@ -228,7 +227,6 @@
             return pageObject;
         }
         function _findEntitySuccessResult(result) {
-            console.log(result)
             if (result.ECEmpId !== undefined) {//check if entity is emg contact page contact
                 vm.oldEmpEmgContact = angular.copy(result);
                 vm.empEmgContact = result;

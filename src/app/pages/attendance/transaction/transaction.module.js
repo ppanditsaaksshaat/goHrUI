@@ -28,6 +28,12 @@
           icon: 'ion-gear-a',
           order: 100,
         },
+      }).state('attendance.transaction.add', {
+        url: '/:action',
+        templateUrl: 'app/pages/attendance/transaction/manual/attendance.manualAdd.html',
+        title: 'Add Application',
+        // controller: "attTransManualController",
+        // controllerAs: "addCtrl"
       })
   }
 
