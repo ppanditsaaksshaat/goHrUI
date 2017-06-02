@@ -19,11 +19,11 @@
         templateUrl: 'app/pages/attendance/transaction/manual/attendance.manual.html?v=1',
         controller: "attTransManualController",
         controllerAs: "attCtrl",
-        title: 'Manual Att',
+        title: 'Manual Attendance',
         sidebarMeta: {
           order: 0,
           parent: 'attendance.transaction',
-          pageTitle: 'Manual Att'
+          pageTitle: 'Manual Attendance'
         },
       })
   }

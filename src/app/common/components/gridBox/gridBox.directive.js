@@ -30,12 +30,15 @@
                 var boxSetting = {
                     selfLoading: true,
                     showRefresh: true,
+                    filterOpened: false,
+                    requiredFilter: false,
                     showFilter: false,
                     showAdd: true,
                     showRowMenu: true,
                     showCustomView: true,
-                    showUpload: false,                  
+                    showUpload: false,
                     showDialog: false,
+                    showDataOnLoad: true,
                     gridStyle: { height: '450px' }
                 }
 
@@ -45,6 +48,9 @@
                     $scope.page.showUpload = angular.copy(boxSetting);
                 if (!$scope.page.boxOptions.showFilter) {
                     $scope.page.showFilter = false;
+                }
+                else if ($scope.page.boxOptions.filterOpened) {
+                    $scope.page.showFilter = true;
                 }
 
                 if ($scope.page.gridOptions === undefined) {
@@ -315,6 +321,12 @@
                                                 isValid = false;
                                             }
                                         })
+
+                                        angular.forEach($scope.page.boxOptions.readonlyColumns, function (rcol) {
+                                            if (col.name == rcol) {
+                                                col.viewonly = true;
+                                            }
+                                        })
                                         if (isValid)
                                             $scope.page.formrows.push(col);
                                     }
@@ -337,7 +349,8 @@
                     // $scope.setPage(result)
                     //console.log('from getpage')
                     _setGridColumns();
-                    _refreshData();
+                    if ($scope.page.boxOptions.showDataOnLoad)
+                        _refreshData();
                 }
                 function _getPageErrorResult(err) {
 
@@ -346,7 +359,13 @@
                 //====================================================================
                 //get table data
                 function _getTableData() {
-
+                    
+                    if (!$scope.page.boxOptions.showDataOnLoad && $scope.page.boxOptions.requiredFilter) {
+                        if ($scope.page.searchList && $scope.page.searchList.length <= 0) {
+                            $rootScope.showMsg('warning', 'Please use any one filter.')
+                            return;
+                        }
+                    }
                     if ($scope.page.boxOptions.linkColumns !== undefined) {
                         if ($scope.page.searchList === undefined)
                             $scope.page.searchList = []
@@ -431,6 +450,7 @@
                     return valid;
                 }
                 function _saveForm(form) {
+
                     if (_validateForm(form)) {
                         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
                             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)

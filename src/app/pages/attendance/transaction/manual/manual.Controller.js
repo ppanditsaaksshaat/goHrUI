@@ -12,7 +12,6 @@
   function attTransManualController($scope, $state, $timeout, pageService) {
 
     var vm = this;
-    var pageId = 25;
     var currentState = $state.current;
 
 
@@ -35,14 +34,17 @@
       showUpload: false,
       showDialog: false,
       enableRefreshAfterUpdate: true,
+      enableAutoRefresh: true,
+      linkColumns: null,
       gridHeight: 450,
       getPageData: null,
       refreshData: null,
-      addRecord: _addRecord,
-      editRecord: _editRecord,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
+     // readonlyColumns: ['col1', 'col2']
     }
 
     $scope.resetFormCommon = _resetFormCommon;
