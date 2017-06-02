@@ -8,7 +8,8 @@
   angular.module('BlurAdmin.pages.attendance', [
     'BlurAdmin.pages.attendance.masters',
     'BlurAdmin.pages.attendance.transaction',
-    'BlurAdmin.pages.attendance.reports'
+    'BlurAdmin.pages.attendance.reports',
+    'BlurAdmin.pages.attendance.synctable'
   ])
     .config(routeConfig);
 
