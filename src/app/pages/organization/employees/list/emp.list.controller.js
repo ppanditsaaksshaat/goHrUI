@@ -35,6 +35,7 @@
       showUpload: true,
       showDialog: false,
       enableRefreshAfterUpdate: true,
+      showDataOnLoad: true,
       gridHeight: 450,
       getPageData: null,
       refreshData: null,
