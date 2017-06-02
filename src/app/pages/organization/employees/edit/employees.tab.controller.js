@@ -10,7 +10,7 @@
 
     /** @ngInject */
     /** @ngInject */
-    function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal, toastrConfig, toastr) {
+    function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal, toastrConfig, toastr,$state) {
         console.log('empTabController')
 
         var toastOption = {};
@@ -50,10 +50,14 @@
         vm.saveFormCommon = _saveFormCommon;
         vm.resetFormCommon = _resetFormCommon;
         vm.clearFormCommon = _clearFormCommon;
+        vm.goToEmployeeList = _goToEmployeeList;
         vm.permanentAddress = _permanentAddress;
 
 
-
+        function _goToEmployeeList()
+        {         
+             $state.go("organization.employees.list");
+        }
         function _showToast(type, msg, title) {
             toastOption.type = type;
             angular.extend(toastrConfig, toastOption);
