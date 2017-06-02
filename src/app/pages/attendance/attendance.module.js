@@ -19,7 +19,7 @@
         url: '/attendance',
         template: '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
         abstract: true,
-        title: 'attendance',
+        title: 'Attendance',
         sidebarMeta: {
           icon: 'ion-gear-a',
           order: 100,

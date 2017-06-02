@@ -19,7 +19,7 @@
         templateUrl: 'app/pages/attendance/transaction/verify/attendance.verify.html?v=1',
         controller: "attTransverifyController",
         controllerAs: "attCtrl",
-        title: 'Att verify',
+        title: 'Verify Attendance',
         sidebarMeta: {
           order: 2,
           parent: 'attendance.transaction',

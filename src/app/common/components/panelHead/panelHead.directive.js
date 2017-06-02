@@ -18,9 +18,34 @@
                 // ngSaveForm: '&saveForm',
                 ngResetForm: '&resetForm',
                 ngClearForm: '&clearForm',
-                ngCondition: '=condition'
+<<<<<<< HEAD
+                ngCondition: '=condition',             
+=======
+                ngCloseForm: '&closeForm',
+                ngOpenList: '&ngOpenList',
+                ngCondition: '=condition',
+                showSave: '=showSave',
+                showReset: '=showReset',
+                showClear: '=showClear',
+                showClose: '=showClose',
+                showList: '=showList',
+>>>>>>> 9e18807553ad81c6555d56a1e57a5901b92f2201
             },
             link: function ($scope, elm, attrs, parent) {
+                if ($scope.showSave === undefined)
+                    $scope.showSave = true;
+
+                if ($scope.showReset === undefined)
+                    $scope.showReset = true;
+
+                if ($scope.showClear === undefined)
+                    $scope.showClear = true;
+
+                if ($scope.showClose === undefined)
+                    $scope.showClose = false;
+
+                if ($scope.showList === undefined)
+                    $scope.showList = false;
 
                 $scope.$watch('ngPageTitle', function (title) {
                     if ($scope.ngPageTitle !== undefined) {
@@ -28,10 +53,11 @@
                     }
                 })
 
-               // $scope.saveForm = _saveForm;
+                // $scope.saveForm = _saveForm;
                 $scope.resetForm = _resetForm;
                 $scope.clearForm = _clearForm;
-                $scope.employeeList=_employeeList
+                $scope.closeForm = _closeForm;
+                $scope.openList = _openList;
 
                 // function _saveForm() {
                 //     if ($scope.ngSaveForm !== undefined) {
@@ -58,10 +84,22 @@
                         alert('Not Implemented')
                     }
                 }
-                function _employeeList()
-                {
-                   
-                    $state.go("organization.employees.list");
+                function _closeForm() {
+                    if ($scope.ngCloseForm !== undefined) {
+                        $scope.ngCloseForm();
+                    }
+                    else {
+                        alert('Not Implemented')
+                    }
+                }
+                function _openList() {
+                    if ($scope.ngOpenList !== undefined) {
+                        $scope.ngOpenList();
+                    }
+                    else {
+                        $state.go("organization.employees.list");
+                    }
+
                 }
             }
         };
