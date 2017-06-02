@@ -49,6 +49,7 @@
     "postinstall": "bower install"
   },
   "dependencies": {
+    "angular-bootstrap-datetimepicker": "^1.1.4",
     "eslint-config-defaults": "^9.0.0",
     "eslint-plugin-react": "^6.10.3"
   }

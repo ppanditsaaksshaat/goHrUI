@@ -88,18 +88,89 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             });
         }
     }
-}).directive('validText', function () {
+}).directive('validText', function ($compile) {
     return {
         require: 'ngModel',
-        restrict: 'A',
+        restrict: 'AE',
         scope: {
-            col: '=ngColumn'
+            col: '=ngColumn',
+            ngModel: '=ngModel'
+        },
+        controller: function ($scope, $timeout) {
+            $scope.dateTimeNow = function () {
+                $scope.date = new Date();
+            };
+            $scope.dateTimeNow();
+
+            $scope.toggleMinDate = function () {
+                var minDate = new Date();
+                var maxDate = new Date();
+                // set to yesterday
+                minDate.setDate(minDate.getDate() - 1);
+                maxDate.setDate(maxDate.getDate() + 3);
+                $scope.dateOptions.minDate = $scope.dateOptions.minDate ? null : minDate;
+                //    $scope.dateOptions.maxDate = $scope.dateOptions.maxDate ? null : maxDate;
+            };
+
+            $scope.dateOptions = {
+                showWeeks: false,
+                startingDay: 0
+            };
+
+            $scope.toggleMinDate();
+
+            // Disable weekend selection
+            $scope.disabled = function (calendarDate, mode) {
+                return mode === 'day' && (calendarDate.getDay() === 0 || calendarDate.getDay() === 6);
+            };
+
+            $scope.open = function ($event, opened) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                $scope.dateOpened = true;
+            };
+
+            $scope.dateOpened = false;
+            $scope.hourStep = 1;
+            $scope.format = "dd-MMM-yyyy";
+            $scope.minuteStep = 15;
+            // add min-time="minTime" to datetimepicker to use this value 
+            $scope.minTime = new Date(0, 0, 0, Math.max(1, $scope.date.getHours() - 2), 0, 0, 0);
+
+            $scope.timeOptions = {
+                hourStep: [1, 2, 3],
+                minuteStep: [1, 5, 10, 15, 25, 30]
+            };
+
+            $scope.showMeridian = false;
+            $scope.timeToggleMode = function () {
+                $scope.showMeridian = !$scope.showMeridian;
+            };
+
+            $scope.$watch("date", function (date) {
+                // read date value
+            }, true);
+
+            $scope.resetHours = function () {
+                $scope.date.setHours(1);
+            };
         },
         link: function (scope, element, attrs, modelCtrl) {
             if (!scope.col)
                 return;
 
             var column = scope.col;
+
+            if (column.type == 'datepicker') {
+
+                var dtPicTemplate = '<datetimepicker hour-step="hourStep" minute-step="minuteStep" ng-model="ngModel" show-meridian="showMeridian" date-format="{{format}}" ' +
+                    '                date-options="dateOptions" date-disabled="disabled(date, mode)" datepicker-append-to-body="false" readonly-date="true" ' +
+                    '                disabled-date="false" hidden-time="true" hidden-date="false" name="datetimepicker" show-spinners="true" readonly-time="false" ' +
+                    '                date-opened="dateOpened" show-button-bar="false" min-date="minDate" max-date="maxDate"> ' +
+                    '</datetimepicker>'
+                element.append($compile(dtPicTemplate)(scope));//addding compiled element
+            }
+
 
             var regexPattern = undefined;
             var matchPattern = undefined;
@@ -137,7 +208,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                 return modelCtrl.$viewValue;
             }, function (newVal, oldVal) {
                 scope.$parent.$parent.ngModel = modelCtrl;
-                //console.log('from child', newVal, oldVal)
+                console.log('from validText', newVal, oldVal)
             });
 
             //textbox|email|mobile|aadharno|pancard|zipcode|placename_alpha|placename_alphanum|name_nospace|name_withspace

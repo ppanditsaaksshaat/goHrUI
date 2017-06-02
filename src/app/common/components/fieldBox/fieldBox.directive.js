@@ -16,10 +16,21 @@
             scope: {
                 col: '=ngColumn',//a database side column setting provided by pageinfo will be passed here
                 entity: '=ngEntity',//an entity of entire form will be passed from this attribute
-                editForm: '=form'//a form tag name will be passed through this attribute
+                editForm: '=form',//a form tag name will be passed through this attribute
+                fbOnKeypress: '&?fbKeypress',//an optional parameter for keypress event
+                fbOnkeydown:'&?fbkeydown',//optional parameter for keyup event
+                fbOnkeyup:'&?fbkeyup',//optional parameter for keydown event
+                fbOnBlur: '&?fbBlur',//optional parameter for blur event
+                fbOnClick: '&?fbClick',//optional parameter for on click event
+                fbOnChange: '&?fbChange',//optional parameter for on change event
+            },
+            controller: function ($scope, $timeout) {
+
             },
             link: function ($scope, $elm, $attrs, $ctrl) {
 
+                if (!$scope.col)
+                    return;
                 //test will be removed
                 $scope.dynamicPopover = {
                     content: 'Hello, World!',
@@ -41,7 +52,10 @@
                         return $scope.ngModel.$viewValue;
                     },
                     function (newVal, oldVal) {
-
+                        console.log('field box', $scope.ngModel)
+                        if (newVal) {
+                            $scope.ngModel.$setDirty();
+                        }
                         if ($scope.col.format) {
                             $scope.col.format = $scope.col.format.replace('{0}', $scope.col.text);
                         }
@@ -105,12 +119,9 @@
                                 }
                                 else if ($scope.ngModel.$error.pan) {
                                     $scope.col.errorText = warningIcon + 'Please enter valid '
-                                        + $scope.col.text;
+                                        + $scope.col.text + "<br/> Must be in given format " +
+                                        $scope.col.format;
                                     $scope.col.showError = true;
-
-                                    if ($scope.col.format)
-                                        $scope.col.errorText = errorIcon + $scope.col.format;
-
                                 }
                                 else if ($scope.ngModel.$error.emailError) {
                                     $scope.col.errorText = warningIcon + 'Please enter valid '
@@ -123,12 +134,9 @@
                                 }
                                 else if ($scope.ngModel.$error.aadhar) {
                                     $scope.col.errorText = warningIcon + 'Please enter valid '
-                                        + $scope.col.text;
+                                        + $scope.col.text + "<br/> Must be in given format " +
+                                        $scope.col.format;
                                     $scope.col.showError = true;
-
-                                    if ($scope.col.format)
-                                        $scope.col.errorText = errorIcon + $scope.col.format;
-
                                 }
                                 else if ($scope.ngModel.$error.pincode) {
                                     $scope.col.errorText = warningIcon + 'Please enter valid '
@@ -250,15 +258,41 @@
                     return requiredValid;
                 };
 
-                // ngModel.$parsers.push(function (value) {
-                //     debugger;
-                //     var blacklist = 'coconuts,bananas,pears'.split(',');
-                //     console.log(value);
-                //     ngModel.$setValidity('blacklist', blacklist.indexOf(value) === -1);
-                //     return value;
-                // });
 
-                // console.log(ngModel)
+                /*==================================================/*
+                bind control events and call parent/implementaion code
+                /*==================================================*/
+                $elm.bind('keypress', function (e) {
+                    if ($scope.fbOnKeypress) {
+                        $scope.fbOnKeypress({ event: e, element: $elm, modelCtrl: $scope.ngModel, column: $scope.col })
+                    }
+                })
+                $elm.bind('keydown', function (e) {
+                    if ($scope.fbOnkeydown) {
+                        $scope.fbOnkeydown({ event: e, element: $elm, modelCtrl: $scope.ngModel, column: $scope.col })
+                    }
+                })
+                $elm.bind('keyup', function (e) {
+                    if ($scope.fbOnkeyup) {
+                        $scope.fbOnkeyup({ event: e, element: $elm, modelCtrl: $scope.ngModel, column: $scope.col })
+                    }
+                })
+                $elm.bind('click', function (e) {
+                    if ($scope.fbOnClick) {
+                        $scope.fbOnClick({ event: e, element: $elm, modelCtrl: $scope.ngModel, column: $scope.col })
+                    }
+                })
+                $elm.bind('change', function (e) {
+                    if ($scope.fbOnChange) {
+                        $scope.fbOnChange({ event: e, element: $elm, modelCtrl: $scope.ngModel, column: $scope.col })
+                    }
+                })
+                $elm.bind('blur', function (e) {
+                    if ($scope.fbOnBlur) {
+                        $scope.fbOnBlur({ event: e, element: $elm, modelCtrl: $scope.ngModel, column: $scope.col })
+                    }
+                })
+
 
 
 

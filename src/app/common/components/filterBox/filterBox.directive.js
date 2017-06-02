@@ -38,6 +38,16 @@
                 $scope.filterOpt.select.push({ value: '!=', name: 'not equal' });
                 $scope.filterOpt.select.push({ value: 'isempty', name: 'empty' });
                 $scope.filterOpt.select.push({ value: 'isnotempty', name: 'not empty' });
+                $scope.filterOpt.select.push({ value: 'in', name: 'in', type:'multiple' });
+                $scope.filterOpt.select.push({ value: 'notin', name: 'not in', type:'multiple' });
+
+                $scope.filterOpt.date = [];
+                $scope.filterOpt.date.push({ value: '=', name: 'equal', type: 'all' });
+                $scope.filterOpt.date.push({ value: '=>', name: 'greater than', type: 'date' });
+                $scope.filterOpt.date.push({ value: '<=', name: 'less than', type: 'date' });
+                $scope.filterOpt.date.push({ value: 'between_date', name: 'between', type: 'date' });
+                $scope.filterOpt.date.push({ value: '=month', name: 'monthly' });
+
 
                 function _openSearchFilter() {
                     $scope.showSearchFilter = true;

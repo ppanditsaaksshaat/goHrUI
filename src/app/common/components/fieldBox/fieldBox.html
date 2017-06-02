@@ -20,16 +20,37 @@
         <span class="input-group-addon  addon-left" ng-show="col.type=='password'">
                 <i class="fa fa-unlock-alt" aria-hidden="true"></i>
         </span>
+        <!--<span class="input-group-addon" ng-show="col.type=='datepicker'">
+            <i class="glyphicon glyphicon-calendar"></i>
+        </span>-->
 
-
-        <input valid-text ng-column="col" ng-switch-when="textbox|email|mobile|aadharno|pancard|zipcode|pincode|number_nodecimal|number_decimal|number_dash|number_dash_plus|number_plus|number_plus_dash_dot|alphanum_nospace|alphanum_space|alpha_nospace|alpha_space"
+        <input valid-text ng-column="col" ng-switch-when="textbox|email|mobile|zipcode|pincode|number_nodecimal|number_decimal|number_dash|number_dash_plus|number_plus|number_plus_dash_dot|alphanum_nospace|alphanum_space|alpha_nospace|alpha_space"
             ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" ng-model="entity[col.name]"
             type="text" class="form-control" ng-minlength="col.minLength" ng-maxlength="col.maxLength" ng-required="col.required"
             class="form-control" />
 
-        <input valid-text ng-column="col" ng-switch-when="currency_2decimal|currency_2decimal|currency"
-            ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" ng-model="entity[col.name]"
-            type="number" class="form-control" ng-minlength="col.minLength" ng-maxlength="col.maxLength" ng-required="col.required"
+        <input valid-text ng-column="col" ng-switch-when="currency_2decimal|currency_2decimal|currency" ng-switch-when-separator="|"
+            name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" ng-model="entity[col.name]" type="number" class="form-control"
+            ng-minlength="col.minLength" ng-maxlength="col.maxLength" ng-required="col.required" class="form-control" />
+
+        <!--datepicker-->
+        <div ng-switch-when="datepicker|datetimepicker" ng-switch-when-separator="|">
+            <!--<datetimepicker hour-step="hourStep" minute-step="minuteStep" ng-model="date" show-meridian="showMeridian" date-format="{{format}}"
+                date-options="dateOptions" date-disabled="disabled(date, mode)" datepicker-append-to-body="false" readonly-date="true"
+                disabled-date="false" hidden-time="true" hidden-date="false" name="datetimepicker" show-spinners="true" readonly-time="false"
+                date-opened="dateOpened" show-button-bar="false" min-date="minDate" max-date="maxDate"
+                valid-text ng-column="col">
+            </datetimepicker>-->
+            <valid-text ng-column="col" ng-model="entity[col.name]"></valid-text>
+        </div>
+
+        <!--Aadhar/Panno/timepicker -->
+        <input ui-mask="{{col.format}}" placeholder="Please enter valid {{col.text}}" ui-mask-placeholder="" ui-mask-placeholder-char="_"
+            valid-text ng-column="col" ng-switch-when="aadharno|pancard" ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}"
+            ng-model="entity[col.name]" type="text" class="form-control" ng-required="col.required" class="form-control" />
+        <!--phoneno-->
+        <input valid-text ng-column="col" ng-switch-when="phoneno" ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}"
+            ng-model="entity[col.name]" type="tel" default-area-code="+91" international="true" default-area-code="+91" ng-required="col.required"
             class="form-control" />
 
 
@@ -73,17 +94,17 @@
 
         <!--html-->
         <!--datetimepicker-->
-        <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" datetimepicker
-            class="form-control" ng-switch-when="datetimepicker" placeholder="{{col.place}}" />
+        <!--<input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" datetimepicker
+            class="form-control" ng-switch-when="datetimepicker" placeholder="{{col.place}}" />-->
         <!--datepicker-->
-        <datepicker date-format="dd-MMMM-yyyy" ng-switch-when="datepicker">
+        <!--<datepicker date-format="dd-MMMM-yyyy" ng-switch-when="datepicker">
             <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" class="form-control"
                 placeholder="{{col.place}}" />
-        </datepicker>
+        </datepicker>-->
 
         <!--timepicker-->
-        <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" datetimepicker
-            class="form-control" ng-switch-when="timepicker" placeholder="{{col.place}}" />
+        <!--<input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" datetimepicker
+            class="form-control" ng-switch-when="timepicker" placeholder="{{col.place}}" />-->
 
         <!--list-->
         <div ng-switch-when="list" angucomplete-alt id="{{col.name}}" placeholder="{{col.place}}" pause="300" selected-object="entity[col.name]"
@@ -132,6 +153,19 @@
     <span ng-show="editForm['$submitted'] && ngModel.$error.aadhar" class="help-block" for="col.name">{{col.format}}</span>
 </div>
 <style>
+    input:-moz-read-only {
+        /* For Firefox */
+        background-color: white!important;
+        color: black!important;
+        cursor: pointer;
+    }
+
+    input:read-only {
+        background-color: white!important;
+        color: black!important;
+        cursor: pointer;
+    }
+
     .popover {
         width: 300px;
         height: auto!important;
@@ -146,7 +180,7 @@
         font-family: Arial, Helvetica, sans-serif;
         display: block;
         text-align: left;
-        margin:0px;
+        margin: 0px;
         padding: 0px;
     }
 

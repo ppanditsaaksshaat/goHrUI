@@ -26,19 +26,42 @@
                 <label class="checkbox-inline custom-checkbox nowrap">
                             <input type="checkbox" id="inlineCheckbox01" ng-model="filter.showFilter">
                             <span>{{filter.displayName}}</span>
-                        </label>
+                            
+                </label>
                 <div class="filter-box" ng-show="filter.showFilter">
-                    <div ng-switch on="filter.controlType">
+                    <div ng-switch on="filter.controlType" class="col-md-offset-1">
                         <div ng-switch-when="textbox">
                             <select ng-options="opt.value as opt.name for opt in filterOpt.textbox" ng-model="filter.operator">
                                     </select>
                             <input type="text" placeholder="Enter Value" ng-model="filter.value" />
                         </div>
                         <div ng-switch-when="select">
+                            <div class="row">
+                                <label class="checkbox-inline custom-checkbox nowrap">
+                                    <input type="checkbox" id="inlineCheckbox01" value="option1" ng-model="filter.isMultiple">
+                                    <span>Multiple</span>
+                                </label>
+                            </div>
                             <select ng-options="opt.value as opt.name for opt in filterOpt.select" ng-model="filter.operator">
                                     </select>
                             <select ng-options="opt.value as opt.name for opt in filter.titleMap" ng-model="filter.value">
                                     </select>
+                        </div>
+                        <div ng-switch-when="datepicker">
+                            <div class="row">
+                                <label class="radio-inline custom-radio nowrap">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="date" checked>
+                                    <span>Date</span>
+                                </label>
+                                    <label class="radio-inline custom-radio nowrap">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="monthly">
+                                    <span>Monthly</span>
+                                </label>
+                                    <label class="radio-inline custom-radio nowrap">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yearly">
+                                    <span>Yearly</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
