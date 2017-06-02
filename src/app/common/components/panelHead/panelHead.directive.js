@@ -18,18 +18,14 @@
                 // ngSaveForm: '&saveForm',
                 ngResetForm: '&resetForm',
                 ngClearForm: '&clearForm',
-<<<<<<< HEAD
                 ngCondition: '=condition',             
-=======
                 ngCloseForm: '&closeForm',
                 ngOpenList: '&ngOpenList',
-                ngCondition: '=condition',
                 showSave: '=showSave',
                 showReset: '=showReset',
                 showClear: '=showClear',
                 showClose: '=showClose',
                 showList: '=showList',
->>>>>>> 9e18807553ad81c6555d56a1e57a5901b92f2201
             },
             link: function ($scope, elm, attrs, parent) {
                 if ($scope.showSave === undefined)
