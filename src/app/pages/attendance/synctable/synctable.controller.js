@@ -5,14 +5,13 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.employees.list')
-    .controller('emplistController', emplistController);
+  angular.module('BlurAdmin.pages.attendance.synctable')
+    .controller('syncTableController', syncTableController);
 
   /** @ngInject */
-  function emplistController($scope, $state, $timeout, pageService) {
-
+  function syncTableController($scope, $state, $timeout, pageService) {
+console.log("sycn")
     var vm = this;
-    var pageId = 25;
     var currentState = $state.current;
 
 
@@ -22,9 +21,9 @@
 
     this.applyFilter = _applyFilter;
     // this.uploadRecord = _uploadRecord;
-
+    $scope.entity = {}
     $scope.page = $scope.createPage();
-    $scope.page.pageId = 25;
+    $scope.page.pageId = 374;
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -32,23 +31,49 @@
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
-      showUpload: true,
+      showUpload: false,
       showDialog: false,
       enableRefreshAfterUpdate: true,
+      enableAutoRefresh: true,
       showDataOnLoad: true,
+      linkColumns: null,
       gridHeight: 450,
       getPageData: null,
       refreshData: null,
-      addRecord: _addRecord,
-      editRecord: _editRecord,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      uploadRecord: _uploadRecord
+     // readonlyColumns: ['col1', 'col2']
     }
 
+    $scope.resetFormCommon = _resetFormCommon;
+    $scope.clearFormCommon = _clearFormCommon;
+    $scope.closeForm = _closeForm;
+    $scope.saveForm = _saveForm;
+
+    function _validateForm(editForm) {
+      return true;
+    }
+    function _saveForm(editForm) {
+      if (_validateForm(editForm)) {
+        console.log($scope.entity)
+      }
+    }
+    function _resetFormCommon(editForm) {
+
+    }
+    function _clearFormCommon(editForm) {
+
+    }
+    function _closeForm(editForm) {
+      $scope.showEditForm = false;
+      $scope.entity = {};
+    }
     function _addRecord() {
-      $state.go("organization.employees.add", "{action:'create'}");
+      // $state.go("attendance.transaction.add", "{action:'create'}");
+      $scope.showEditForm = true;
     }
     function _editRecord(row) {
       var empId = row.entity.EmpId;
@@ -69,9 +94,9 @@
     function _openView() {
       alert('view opened')
     }
-    function _uploadRecord() {
-      $state.go('organization.employees.upload')
-    }
+    // function _uploadRecord() {
+    //   $state.go('organization.employees.upload')
+    // }
     function _applyFilter() {
       console.log($scope.page.pageinfo.filters);
       $scope.page.searchList = [];

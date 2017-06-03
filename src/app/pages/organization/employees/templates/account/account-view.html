@@ -1,7 +1,9 @@
 <div >
 <form ng-submit="empTabCtrl.saveFormCommon()" >
   <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
-    <edit-panel-head page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon()" clear-form="empTabCtrl.clearFormCommon()"
+    <edit-panel-head page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon()"
+     open-List="empTabCtrl.goToEmployeeList()"
+     clear-form="empTabCtrl.clearFormCommon()"
       condition="true"></edit-panel-head>
 
     <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">

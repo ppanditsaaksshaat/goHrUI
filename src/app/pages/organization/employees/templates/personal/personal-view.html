@@ -1,6 +1,8 @@
 <form ng-submit="empTabCtrl.saveFormCommon()" name="editForm" novalidate>
   <div class="panel panel-default xmedium-panel">
-    <edit-panel-head page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon()" clear-form="empTabCtrl.clearFormCommon()"
+    <edit-panel-head page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon()" 
+     open-List="empTabCtrl.goToEmployeeList()"
+     clear-form="empTabCtrl.clearFormCommon()"
       condition="(empTabCtrl.activeTab==0 || empTabCtrl.activeTab==1)"></edit-panel-head>
 
     <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">

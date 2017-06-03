@@ -18,18 +18,14 @@
                 // ngSaveForm: '&saveForm',
                 ngResetForm: '&resetForm',
                 ngClearForm: '&clearForm',
-<<<<<<< HEAD
                 ngCondition: '=condition',             
-=======
                 ngCloseForm: '&closeForm',
-                ngOpenList: '&ngOpenList',
-                ngCondition: '=condition',
-                showSave: '=showSave',
-                showReset: '=showReset',
-                showClear: '=showClear',
-                showClose: '=showClose',
-                showList: '=showList',
->>>>>>> 9e18807553ad81c6555d56a1e57a5901b92f2201
+                ngOpenList: '&openList',
+                showSave: '=?showSave',
+                showReset: '=?showReset',
+                showClear: '=?showClear',
+                showClose: '=?showClose',
+                showList: '=?showList',
             },
             link: function ($scope, elm, attrs, parent) {
                 if ($scope.showSave === undefined)
@@ -45,7 +41,7 @@
                     $scope.showClose = false;
 
                 if ($scope.showList === undefined)
-                    $scope.showList = false;
+                    $scope.showList = true;
 
                 $scope.$watch('ngPageTitle', function (title) {
                     if ($scope.ngPageTitle !== undefined) {

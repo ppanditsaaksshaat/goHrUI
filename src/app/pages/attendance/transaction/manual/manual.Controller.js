@@ -35,6 +35,7 @@
       showDialog: false,
       enableRefreshAfterUpdate: true,
       enableAutoRefresh: true,
+      showDataOnLoad: true,
       linkColumns: null,
       gridHeight: 450,
       getPageData: null,
