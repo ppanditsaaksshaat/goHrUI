@@ -359,7 +359,7 @@
                 //====================================================================
                 //get table data
                 function _getTableData() {
-                    
+
                     if (!$scope.page.boxOptions.showDataOnLoad && $scope.page.boxOptions.requiredFilter) {
                         if ($scope.page.searchList && $scope.page.searchList.length <= 0) {
                             $rootScope.showMsg('warning', 'Please use any one filter.')
@@ -493,6 +493,13 @@
                             }
                         }
                         _closeForm();
+                    }
+                })
+                $scope.$on('apply-filter', function (successEvent, searchList) {
+                    console.log('from gridbox',$scope.page)
+                    if (searchList) {
+                        $scope.page.searchList = searchList;
+                        _refreshData();
                     }
                 })
                 $scope.getGridHeight = function () {

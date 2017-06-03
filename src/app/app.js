@@ -11,6 +11,7 @@ angular.module('BlurAdmin', [
   'ui.mask',
   'teljs',
   'ui.bootstrap.datetimepicker',
+  'moment-picker',
   'ngTouch',
   'toastr',
   'smart-table',

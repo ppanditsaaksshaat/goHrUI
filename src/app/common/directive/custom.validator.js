@@ -165,7 +165,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
 
                 var dtPicTemplate = '<datetimepicker hour-step="hourStep" minute-step="minuteStep" ng-model="ngModel" show-meridian="showMeridian" date-format="{{format}}" ' +
                     '                date-options="dateOptions" date-disabled="disabled(date, mode)" datepicker-append-to-body="false" readonly-date="true" ' +
-                    '                disabled-date="false" hidden-time="true" hidden-date="false" name="datetimepicker" show-spinners="true" readonly-time="false" ' +
+                    '                disabled-date="false"`` hidden-time="true" hidden-date="false" name="datetimepicker" show-spinners="true" ``readonly-time="false" ' +
                     '                date-opened="dateOpened" show-button-bar="false" min-date="minDate" max-date="maxDate"> ' +
                     '</datetimepicker>'
                 element.append($compile(dtPicTemplate)(scope));//addding compiled element
