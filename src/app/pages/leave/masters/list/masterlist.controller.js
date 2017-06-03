@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function LeaveMastersListController1($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService) {
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr) {
 
     var vm = this;
     var pageId = $stateParams.pageId;
@@ -71,10 +71,26 @@
       $scope.showEditForm = true;
     }
 
+    function _validateForm(form) {
+      if (angular.equals($scope.oldEntity, $scope.entity)) {
+        _showToast('info', 'Nothing to save', '');
+        return false;
+      }
+
+      return true;
+    }
+    function _showToast(type, msg, title) {
+      toastOption.type = type;
+      angular.extend(toastrConfig, toastOption);
+      openedToasts.push(toastr[toastOption.type](msg, title));
+    }
+
     function _saveForm(editForm) {
-      alert('save call');
-      editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
-        $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+      if (_validateForm) {
+        editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
+          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+      }
+
 
     }
     // $scope.saveForm(editForm) = _saveForm(editForm);
@@ -83,6 +99,8 @@
       console.log(row)
 
       $scope.entity = row.entity;
+      $scope.oldEntity = angular.copy(row.entity);
+
       $scope.showEditForm = true;
     }
 
