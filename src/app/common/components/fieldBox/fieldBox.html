@@ -35,13 +35,30 @@
 
         <!--datepicker-->
         <div ng-switch-when="datepicker|datetimepicker" ng-switch-when-separator="|">
-            <!--<datetimepicker hour-step="hourStep" minute-step="minuteStep" ng-model="date" show-meridian="showMeridian" date-format="{{format}}"
-                date-options="dateOptions" date-disabled="disabled(date, mode)" datepicker-append-to-body="false" readonly-date="true"
-                disabled-date="false" hidden-time="true" hidden-date="false" name="datetimepicker" show-spinners="true" readonly-time="false"
-                date-opened="dateOpened" show-button-bar="false" min-date="minDate" max-date="maxDate"
-                valid-text ng-column="col">
-            </datetimepicker>-->
-            <valid-text ng-column="col" ng-model="entity[col.name]"></valid-text>
+            <!--<div id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" moment-picker="entity[col.name]" format="dd-MMM-yyyy">
+                <i class="glyphicon glyphicon-time"></i>&nbsp; {{ entity[col.name] || "Pick any date" }}
+            </div>-->
+
+            <div class="input-group" moment-picker="entity[col.name]" format="DD-MM-YYYY">
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                <input type="date" class="form-control" placeholder="Select a date" ng-model="entity[col.name]" 
+                ng-model-options="{ updateOn: 'blur' }">
+            </div>
+
+        </div>
+        <!--timepicker-->
+        <div ng-switch-when="timepicker">
+            <div id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" moment-picker="entity[col.name]" format="hh:mm A">
+                <i class="glyphicon glyphicon-time"></i>&nbsp; {{ entity[col.name] || "Pick any time" }}
+            </div>
+        </div>
+        <!--datetimepicker-->
+        <div ng-switch-when="datetimepicker" ng-switch-when-separator="|">
+            <div id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" moment-picker="entity[col.name]" format="dd-MMM-yyyy hh:mm A">
+                <i class="glyphicon glyphicon-time"></i>&nbsp; {{ entity[col.name] || "Pick any date/time" }}
+            </div>
         </div>
 
         <!--Aadhar/Panno/timepicker -->
@@ -102,9 +119,6 @@
                 placeholder="{{col.place}}" />
         </datepicker>-->
 
-        <!--timepicker-->
-        <!--<input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" datetimepicker
-            class="form-control" ng-switch-when="timepicker" placeholder="{{col.place}}" />-->
 
         <!--list-->
         <div ng-switch-when="list" angucomplete-alt id="{{col.name}}" placeholder="{{col.place}}" pause="300" selected-object="entity[col.name]"

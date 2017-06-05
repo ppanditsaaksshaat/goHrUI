@@ -1,3 +1,4 @@
+
 .font-red {
   color: red;
 }
@@ -142,6 +143,18 @@
     outline:none !important
 }
 
+.side-filters .popover {
+        width: 100px;
+        height: auto!important;
+        max-height: 300px;
+        padding: 0px;
+}
+.bs-example
+{
+    height: 80px;
+    border:1px solid black;
+    overflow:hidden;
+}
 .glyphicon, .glyphicons {
     font-family: "Glyphicons Halflings";
 }
