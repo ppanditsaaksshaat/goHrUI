@@ -21,6 +21,7 @@
     $scope.saveForm = _saveForm;
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
+    $scope.closeForm = _closeForm;
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -36,7 +37,7 @@
       getPageData: null,
       refreshData: null,
       addRecord: null,
-      editRecord: _editRecord,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
@@ -52,6 +53,16 @@
     }, function (newVal, oldVal) {
       if ($scope.yearRange) {
         if ($scope.yearRange == 'calc') {
+          // if ($scope.entity.LCROnCalendarYear !== undefined) {
+          //   $scope.entity.LCROnCalendarYear = true;
+          // }
+          // if ($scope.entity.LCROnFinanceYear !== undefined) {
+          //   $scope.entity.LCROnFinanceYear = true;
+          // }
+          // if ($scope.entity.LCRIsDayWise !== undefined) {
+          //   $scope.entity.LCRIsDayWise = true;
+          // }
+
           $scope.entity.LCROnCalendarYear = true;
           $scope.entity.LCROnFinanceYear = false;
           $scope.entity.LCRIsDayWise = false;
@@ -69,6 +80,16 @@
     function _addRecord() {
       // $state.go("leave.masters.list", "{action:'create'}");
       $scope.showEditForm = true;
+      $scope.entity = [];
+      // if ($scope.entity.LCROnCalendarYear === undefined) {
+      //   $scope.entity.LCROnCalendarYear = true;
+      // }
+      // if ($scope.entity.LCROnFinanceYear === undefined) {
+      //   $scope.entity.LCROnFinanceYear = true;
+      // }
+      // if ($scope.entity.LCRIsDayWise === undefined) {
+      //   $scope.entity.LCRIsDayWise = true;
+      // }
     }
 
     function _validateForm(form) {
@@ -89,19 +110,30 @@
       if (_validateForm) {
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
           $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+          // $scope.showEditForm = false;
       }
 
 
     }
     // $scope.saveForm(editForm) = _saveForm(editForm);
+    if ($scope.page.pageId == 261) {
+      $scope.page.boxOptions.editRecord = _editRecord;
+    }
 
     function _editRecord(row) {
+
       console.log(row)
 
       $scope.entity = row.entity;
       $scope.oldEntity = angular.copy(row.entity);
 
       $scope.showEditForm = true;
+    }
+
+
+
+    function _closeForm(editForm) {
+      $scope.showEditForm = false;
     }
 
 

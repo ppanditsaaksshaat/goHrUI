@@ -15,7 +15,7 @@
     $stateProvider
       .state('leave.transaction.leaveapplication', {
         url: '/leaveapplication',
-        // abstract: true,
+      //  abstract: true,
         templateUrl: 'app/pages/leave/transaction/leaveapplication/leave.leaveapplication.html?v=1',
         controller: "LeaveAppController",
         controllerAs: "attCtrl",

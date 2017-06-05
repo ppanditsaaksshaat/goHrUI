@@ -13,11 +13,19 @@
     $uibModal, pageService, $q, DJWebStore, $window, DJWebStoreGlobal) {
     console.log('attTransuploadController')
 
+    /**Local Variable */
     var vm = this;
+    vm.gridOptions = $scope.getGridSetting();
+
+
+
 
     vm.downloadTemp = _downloadTemp;
+    vm.uploadAttendance = _uploadAttendance;
 
-    //DownLoad Excel Template for Attendance
+    /**
+     * DownLoad Excel Template for Attendance
+     */
     function _downloadTemp() {
       var tempColumns = [];
       var row = {
@@ -29,6 +37,14 @@
       }
       tempColumns.push(row)
       DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'AttendanceList', false, true, true);
+    }
+
+    /**
+     * Upload Attendance List from Excel
+     */
+    function _uploadAttendance() {
+
+      console.log(vm.gridOptions.data)
     }
   }
 

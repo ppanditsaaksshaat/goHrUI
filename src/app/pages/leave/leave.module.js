@@ -5,7 +5,7 @@
 (function () {
   'use strict';
   angular.module('BlurAdmin.pages.leave', [
-    'BlurAdmin.pages.leave.applications',
+    // 'BlurAdmin.pages.leave.applications',
     'BlurAdmin.pages.leave.appadd',
     'BlurAdmin.pages.leave.masters',
     'BlurAdmin.pages.leave.transaction'
