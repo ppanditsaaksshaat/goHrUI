@@ -105,7 +105,10 @@
         <!--timepicker-->
         <!--<input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" datetimepicker
             class="form-control" ng-switch-when="timepicker" placeholder="{{col.place}}" />-->
-
+        <div ng-switch-when="timepicker" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" moment-picker="entity[col.name]"
+            format="hh:mm A">
+            <i class="glyphicon glyphicon-time"></i>&nbsp; {{ filter.value || "Pick any time" }}
+        </div>
         <!--list-->
         <div ng-switch-when="list" angucomplete-alt id="{{col.name}}" placeholder="{{col.place}}" pause="300" selected-object="entity[col.name]"
             local-data="col.options" local-search="localObjSearch" title-field="name" minlength="1" input-class="form-control form-control-small"
