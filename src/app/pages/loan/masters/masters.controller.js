@@ -1,42 +1,35 @@
-// /**
-//  * @author v.lugovsky
-//  * created on 16.12.2015
-//  */
-// (function () {
-//   'use strict';
+/**
+ * @author v.lugovsky
+ * created on 16.12.2015
+ */
+(function () {
+  'use strict';
 
-//   angular.module('BlurAdmin.pages.loan.masters')
-//     .controller('OrgMastersController', OrgMastersController);
+  angular.module('BlurAdmin.pages.loan.masters')
+    .controller('LoanMastersController1', LoanMastersController1);
 
-//   /** @ngInject */
-//   function OrgMastersController(composeModal, mailMessages, pageService) {
-   
-//     var vm = this;
-//     vm.navigationCollapsed = true;
-//     vm.showCompose = function (subject, to, text) {
-//       composeModal.open({
-//         subject: subject,
-//         to: to,
-//         text: text
-//       })
-//     };
+  /** @ngInject */
+  function LoanMastersController1() {
+    console.log('this controller')
+    var vm = this;
+    vm.navigationCollapsed = true;
+    vm.tabs = _getTabs();
+    function _getTabs() {
+      var mastersMenu = [];
+      mastersMenu.push({ name: 'advancetype', text: 'Advance Type Master', id: 257 })
+      mastersMenu.push({ name: 'advancerule', text: 'Advance Rule Master ', id: 99 })
+      mastersMenu.push({ name: 'advancestatus', text: 'Advance Status Master ', id: 101 })
+      mastersMenu.push({ name: 'paymentmode', text: 'Payment Mode Master', id: 296 })
+      mastersMenu.push({ name: 'loanprovider', text: 'Loan Prvider Master', id: 103 })
+      mastersMenu.push({ name: 'loantype', text: 'Loan Type Master', id: 102 })
+      mastersMenu.push({ name: 'loanstatus', text: 'Loan Status Master', id: 256 })
+     
+      
 
-//     vm.tabs = _getTabs();
+      return mastersMenu;
 
-//     function _getTabs() {
+    }
 
-//       var mastersMenu = [];
-//       mastersMenu.push({ name: 'location', text: 'Location', id: 34 })
-//       mastersMenu.push({ name: 'branch', text: 'Branch', id: 109 })
-//       mastersMenu.push({ name: 'sub-unit', text: 'Sub Unit', id: 111 })
-//       mastersMenu.push({ name: 'department', text: 'Departments', id: 29 })
-//       mastersMenu.push({ name: 'designation', text: 'Designation', id: 30 })
-//       mastersMenu.push({ name: 'grades', text: 'Grades', id: 47 })
-//       mastersMenu.push({ name: 'levels', text: 'Levels', id: 48 })
-//       return mastersMenu;
+  }
 
-//     }
-
-//   }
-
-// })();
+})();

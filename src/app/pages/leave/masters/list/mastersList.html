@@ -4,8 +4,8 @@
 <form name="editForm" novalidate ng-submit="saveForm(editForm)" ng-show="showEditForm">
     <div class="panel panel-default xmedium-panel">
         <edit-panel-head page-title="page.pageinfo.title" reset-form="resetFormCommon(editForm)" clear-form="clearFormCommon(editForm)"
-            close-form="closeForm(editForm)" show-close="true" show-save="true" show-clear="true" show-list="false"
-            show-reset="true" condition="true"></edit-panel-head>
+            close-form="closeForm(editForm)" show-close="true" show-save="true" show-clear="true" show-list="false" show-reset="true"
+            condition="true"></edit-panel-head>
 
         <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
 
@@ -78,8 +78,28 @@
                     <label for="inputPassword3">{{page.pageinfo.fields.LCRMaxDays.text}}</label>
                     <field-box ng-column="page.pageinfo.fields.LCRMaxDays" ng-entity="entity" form="editForm"></field-box>
                 </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsComOff.text}}</label>
+                    <field-box ng-column="page.pageinfo.fields.LCRIsComOff" ng-entity="entity" form="editForm"></field-box>
+                </div>
+
             </div>
 
+
+            <div class="row" ng-if="entity.LCRIsComOff">
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3" clas>{{page.pageinfo.fields.LCRIsCompOffCash.text}}</label>
+                    <input type="radio" name="commonRedioForCompOff" ng-model="$scope.entity.LCRIsCompOffCash">
+                    </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsCompOffLeave.text}}</label>
+                    <input type="radio" name="commonRedioForCompOff" ng-model="$scope.entity.LCRIsCompOffLeave">
+                   </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsCompOffNone.text}}</label>
+                    <input type="radio" name="commonRedioForCompOff" ng-model="$scope.entity.LCRIsCompOffNone">
+                   </div>
+            </div>
 
 
 
@@ -211,81 +231,8 @@
 
             </div>
 
-            <!--<div class="form-group col-md-4">
-                        <label for="inputPassword3" >{{page.pageinfo.fields.LCRDayCriteriaId.text}}</label>
-                        <field-box ng-column="page.pageinfo.fields.LCRDayCriteriaId" ng-entity="entity" form="editForm"></field-box>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputPassword3" >{{page.pageinfo.fields.LCRDayCriteriaId.text}}</label>
-                        <field-box ng-column="page.pageinfo.fields.LCRDayCriteriaId" ng-entity="entity" form="editForm"></field-box>
-                    </div>-->
 
-
-        </div>-->
-    </div>
-    <!--<div class="row">
-                <div class="form-group col-md-6">
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AEADAPPDateKey.text}}</label>
-                        </div>
-                        <div class="col-md-8">
-                            <field-box ng-column="page.pageinfo.fields.AEADAPPDateKey" ng-entity="entity" form="editForm"></field-box>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="form-group col-md-6">
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AEADAttInTimeKey.text}}</label>
-                        </div>
-                        <div class="col-md-8">
-                            <field-box ng-column="page.pageinfo.fields.AEADAttInTimeKey" ng-entity="entity" form="editForm"></field-box>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AEADAttOutTimeKey.text}}</label>
-                        </div>
-                        <div class="col-md-8">
-                            <field-box ng-column="page.pageinfo.fields.AEADAttOutTimeKey" ng-entity="entity" form="editForm"></field-box>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="form-group col-md-6">
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AEADRemarksKey.text}}</label>
-                        </div>
-                        <div class="col-md-8">
-                            <field-box ng-column="page.pageinfo.fields.AEADRemarksKey" ng-entity="entity" form="editForm"></field-box>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="inputPassword3">{{page.pageinfo.fields.AEADEmpId.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.AEADEmpId" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputPassword3" class="col-sm-3 control-label">{{page.pageinfo.fields.AEADEmpId.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.AEADEmpId" ng-entity="entity" form="editForm"></field-box>
-                </div>
-            </div>-->
-    </div>
+        </div>
     </div>
 
 </form>
