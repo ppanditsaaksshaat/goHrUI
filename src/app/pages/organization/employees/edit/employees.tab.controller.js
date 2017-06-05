@@ -10,7 +10,7 @@
 
     /** @ngInject */
     /** @ngInject */
-    function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal, toastrConfig, toastr,$state) {
+    function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal, toastrConfig, toastr, $state) {
         console.log('empTabController')
 
         var toastOption = {};
@@ -54,9 +54,8 @@
         vm.permanentAddress = _permanentAddress;
 
 
-        function _goToEmployeeList()
-        {         
-             $state.go("organization.employees.list");
+        function _goToEmployeeList() {
+            $state.go("organization.employees.list");
         }
         function _showToast(type, msg, title) {
             toastOption.type = type;
@@ -93,7 +92,18 @@
             }
         }
         function _getPageDataSuccessResult(result) {
-            console.log(result)
+            //console.log(result)
+            if (result) {
+                if (result.pageinfo) {
+                    if (result.fields) {
+
+                        if (result.pageinfo.fields.PdDateOfBirth) {
+                            result.pageinfo.fields.PdDateOfBirth.maxDate = 'today';
+                        }
+
+                    }
+                }
+            }
 
             if (result.pageinfo.pageid == 36) {
                 $scope.contactPage = result;
@@ -114,7 +124,8 @@
                 linkFieldName = 'ADEmpId';
             }
 
-            console.log(result)
+
+
             $timeout(function () {
                 if (result.pageinfo.pageid == 114 || result.pageinfo.pageid == 125) {
                     var searchList = [];
@@ -207,6 +218,7 @@
             var pageObject = $scope.createPage();
             pageObject.pageId = pageId;
             pageObject.boxOptions = {
+                showBack: true,
                 selfLoading: true,
                 showRefresh: true,
                 showFilter: true,
@@ -219,6 +231,7 @@
                 enableAutoRefresh: true,
                 gridHeight: 450,
                 linkColumns: [{ name: linkFieldName, value: linkFieldValue }],
+                goBack: _goToEmployeeList,
                 getPageData: null,
                 refreshData: null,
                 addRecord: null,
@@ -279,7 +292,7 @@
             }
 
         }
-        function _saveForm() {
+        function _saveForm(editForm) {
             if ($scope.page.pageinfo.idencolname !== undefined && $scope.page.pageinfo.idencolname !== null) {
                 if (vm.pageId == 125) {
                     if (vm.entity.PFPPFIsActive == false) {
@@ -340,6 +353,7 @@
             }
         }
         function _formSave(entity, pageId, action) {
+
             console.log(entity);
             var objectData, action;
             objectData = entity;
@@ -440,18 +454,16 @@
 
             return true;
         }
-        function _saveFormCommon() {
-
+        function _saveFormCommon(editForm) {
             if (_validateFormCommon()) {
                 if (vm.activeTab === undefined) {
-
-                    _saveForm();
+                    _saveForm(editForm);
                 }
                 else if (vm.activeTab == 0) {
-                    _saveForm();
+                    _saveForm(editForm);
                 }
                 else if (vm.activeTab == 1) {
-                    _saveAddress();
+                    _saveAddress(editForm);
                 }
             }
         }
@@ -464,7 +476,7 @@
                 _resetPersonal();
             }
             else if (vm.activeTab == 1) {
-                 vm.CDPermanent=true;
+                vm.CDPermanent = true;
                 _resetAddress();
             }
         }
@@ -480,7 +492,7 @@
                 _clearPersonal();
             }
             else if (vm.activeTab == 1) {
-                vm.CDPermanent=false;
+                vm.CDPermanent = false;
                 _clearAddress();
             }
         }

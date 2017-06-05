@@ -36,7 +36,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
         msg: ""
     };
     //calling func from outer side of factory
-    function _saveEditForm(pageId, newEntity, oldEntity, action, title) {
+    function _saveEditForm(pageId, newEntity, oldEntity, action, title, pageForm) {
 
         var data = {
             oldEntity: oldEntity,

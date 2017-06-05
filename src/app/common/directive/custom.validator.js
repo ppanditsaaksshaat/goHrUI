@@ -4,7 +4,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
         restrict: 'A',
         link: function (scope, element, attrs, modelCtrl) {
             modelCtrl.$parsers.push(function (inputValue) {
-                //console.log(scope, element, attrs, modelCtrl)
+                ////console.log(scope, element, attrs, modelCtrl)
                 if (inputValue == null)
                     return ''
                 cleanInputValue = inputValue.replace(/[^\w\s]/gi, '');
@@ -162,13 +162,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             var column = scope.col;
 
             if (column.type == 'datepicker') {
-
-                var dtPicTemplate = '<datetimepicker hour-step="hourStep" minute-step="minuteStep" ng-model="ngModel" show-meridian="showMeridian" date-format="{{format}}" ' +
-                    '                date-options="dateOptions" date-disabled="disabled(date, mode)" datepicker-append-to-body="false" readonly-date="true" ' +
-                    '                disabled-date="false"`` hidden-time="true" hidden-date="false" name="datetimepicker" show-spinners="true" ``readonly-time="false" ' +
-                    '                date-opened="dateOpened" show-button-bar="false" min-date="minDate" max-date="maxDate"> ' +
-                    '</datetimepicker>'
-                element.append($compile(dtPicTemplate)(scope));//addding compiled element
+                return;
             }
 
 
@@ -180,11 +174,11 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             if (column.pattern) {
                 regexPattern = new RegExp(column.pattern, 'g')
             }
-            console.log(column)
+            //console.log(column)
 
             function ValidatePAN(panNo) {
                 var strPanNo = panNo.toString().toUpperCase();
-                //console.log(strPanNo)
+                ////console.log(strPanNo)
                 if (strPanNo.length < 10) {
                     return false;
                 }
@@ -193,11 +187,11 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                     var code = /([C,P,H,F,A,T,B,L,J,G])/;
                     var code_chk = strPanNo.substring(3, 4);
                     if (strPanNo.search(panPat) == -1) {
-                        //console.log('ptrn failed')
+                        ////console.log('ptrn failed')
                         return false;
                     }
                     if (code.test(code_chk) == false) {
-                        //console.log('chk failed')
+                        ////console.log('chk failed')
                         return false;
                     }
                 }
@@ -208,7 +202,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                 return modelCtrl.$viewValue;
             }, function (newVal, oldVal) {
                 scope.$parent.$parent.ngModel = modelCtrl;
-                console.log('from validText', newVal, oldVal)
+                //console.log('from validText', newVal, oldVal)
             });
 
             //textbox|email|mobile|aadharno|pancard|zipcode|placename_alpha|placename_alphanum|name_nospace|name_withspace
@@ -232,7 +226,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                             var cleanInputValue = inputValue.replace(regexPattern, '');
                             var re = regexPattern
                             var result = re.test(inputValue);
-                            console.log(result)
+                            //console.log(result)
                             modelCtrl.$setValidity(column.type, result);
                         }
 
@@ -277,11 +271,11 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                                 var code = /([C,P,H,F,A,T,B,L,J,G])/;
                                 var code_chk = cleanInputValue.substring(3, 4);
                                 if (cleanInputValue.search(panPat) == -1) {
-                                    //console.log('ptrn failed')
+                                    ////console.log('ptrn failed')
                                     panResult = false;
                                 }
                                 if (code.test(code_chk) == false) {
-                                    //console.log('chk failed')
+                                    ////console.log('chk failed')
                                     panResult = false;
                                 }
                             }
@@ -313,10 +307,11 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                             var result = regexPattern.test(inputValue);
                             if (!result) {
                                 var cleanInputValue = inputValue.toUpperCase();
-                                if (cleanInputValue.endsWith('.IN'))
-                                    result = true;
-                                if (cleanInputValue.endsWith('.ORG'))
-                                    result = true;
+                                if (inputValue.lastIndexOf('.') > 1) {
+                                    if (inputValue.substring(inputValue.lastIndexOf('.') + 1).length > 2) {
+                                        result = true;
+                                    }
+                                }
                             }
                             modelCtrl.$setValidity('emailError', result);
                         }
@@ -360,14 +355,14 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
 
                     modelCtrl.$parsers.unshift(function (value) {
                         element.priceFormat(format);
-                        console.log('parsers', element[0].value);
+                        //console.log('parsers', element[0].value);
                         return element[0].value;
                     });
 
                     modelCtrl.$formatters.unshift(function (value) {
                         element[0].value = modelCtrl.$modelValue * 100;
                         element.priceFormat(format);
-                        console.log('formatters', element[0].value);
+                        //console.log('formatters', element[0].value);
                         return elem[0].value;
                     })
                     break;
@@ -474,7 +469,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                 return modelCtrl.$viewValue;
             }, function (newVal, oldVal) {
                 scope.$parent.$parent.ngModel = modelCtrl;
-                //console.log('from child', newVal, oldVal)
+                ////console.log('from child', newVal, oldVal)
             });
 
 

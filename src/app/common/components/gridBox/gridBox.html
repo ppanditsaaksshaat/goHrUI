@@ -14,6 +14,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="pull-right">
+                                <button ng-show="page.boxOptions.showBack" type="button" class="btn btn-xs btn-default" ng-click="page.goBack()"><i class="ion-backspace"></i>Back</button>                                
                                 <button ng-show="page.boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="page.refreshData()"><i class="ion-refresh"></i>Refresh</button>                                &nbsp;
                                 <button ng-show="page.boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="page.addRecord()">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>                                &nbsp;
