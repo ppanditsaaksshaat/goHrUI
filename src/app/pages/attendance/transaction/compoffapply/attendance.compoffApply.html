@@ -16,7 +16,9 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputPassword3">{{page.pageinfo.fields.COAttnDate.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.COAttnDate" ng-entity="entity" form="editForm"></field-box>
+                    <field-box ng-column="page.pageinfo.fields.COAttnDate" ng-entity="entity" form="editForm"
+                    fb-change="attDateChange(event, element, modelCtrl, column)"
+                    ></field-box>
                
                 </div>
                  <div class="form-group col-md-3">
