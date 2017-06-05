@@ -56,13 +56,22 @@
     $scope.saveForm = _saveForm;
 
     function _validateForm(editForm) {
+      _resetFormCommon()
       return true;
     }
+    /**
+     * 
+     * @param {*kk} editForm 
+     */
     function _saveForm(editForm) {
       if (_validateForm(editForm)) {
         console.log($scope.entity)
       }
     }
+    /**
+     * Reset all controls value 
+     * @param {*from name from view} editForm 
+     */
     function _resetFormCommon(editForm) {
 
     }
