@@ -162,7 +162,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             var column = scope.col;
 
             if (column.type == 'datepicker') {
-                return;
+                //return;
             }
 
 
@@ -174,7 +174,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             if (column.pattern) {
                 regexPattern = new RegExp(column.pattern, 'g')
             }
-            //console.log(column)
+            console.log(column)
 
             function ValidatePAN(panNo) {
                 var strPanNo = panNo.toString().toUpperCase();
@@ -201,8 +201,28 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             scope.$watch(function () {
                 return modelCtrl.$viewValue;
             }, function (newVal, oldVal) {
-                scope.$parent.$parent.ngModel = modelCtrl;
-                //console.log('from validText', newVal, oldVal)
+                if (newVal) {
+                    modelCtrl.$setDirty();
+                }
+                if (scope.$parent.$parent.ngModel) {
+                    scope.$parent.$parent.ngModel = modelCtrl;
+                }
+                else if (scope.$parent.$parent.$parent.ngModel) {
+                    scope.$parent.$parent.$parent.ngModel = modelCtrl;
+                }
+                else if (scope.$parent.$parent.$parent.$parent.ngModel) {
+                    scope.$parent.$parent.$parent.$parent.ngModel = modelCtrl;
+                }
+                else {
+                    console.error('ngModel form fieldBox is not found at 3rd level, custom.validator:215')
+                }
+                // modelCtrl.$setDirty();
+                // if (scope.$parent.$parent.listnerFromValidText) {
+                //     scope.$parent.$parent.listnerFromValidText(modelCtrl)
+                // }
+                // scope.$parent.$parent.ngModel = modelCtrl;
+
+                // console.log('from validText', newVal, scope.$parent.$parent.ngModel)
             });
 
             //textbox|email|mobile|aadharno|pancard|zipcode|placename_alpha|placename_alphanum|name_nospace|name_withspace

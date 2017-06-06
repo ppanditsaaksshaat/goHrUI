@@ -60,8 +60,15 @@
       var EmpId = $scope.entity.EmpId;
       var COAttnDate = moment($scope.entity.COAttnDate);
 
-
+      var queryId = 514;
+      pageService.getCustomQuery(data, queryId).then(function (result) {
+        
+      })
     }
+
+
+
+
 
 
   }

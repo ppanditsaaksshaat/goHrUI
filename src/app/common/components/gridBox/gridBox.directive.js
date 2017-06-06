@@ -45,7 +45,10 @@
 
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
-                    $scope.page.showUpload = angular.copy(boxSetting);
+                    $scope.page.boxOptions = angular.copy(boxSetting);
+                else {
+                    $scope.page.boxOptions = angular.extend($scope.page.boxOptions, boxSetting);
+                }
                 if (!$scope.page.boxOptions.showFilter) {
                     $scope.page.showFilter = false;
                 }
@@ -75,7 +78,7 @@
                 //     setHeight: 500,
                 //     scrollInertia: 0,
                 //     axis: 'y'
-                // } 
+                // }  
 
                 $scope.page.editFormUrl = 'app/common/components/gridBox/formVertical.html';
                 $scope.page.isVerticalForm = true;
@@ -302,6 +305,7 @@
                             }
                             $scope.page.gridOptions = $rootScope.gridSetupColumns($scope.page.gridOptions,
                                 $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit);
+                            console.log($scope.page.gridOptions)
 
                         }
                     }
