@@ -272,7 +272,6 @@
                 function _getFilterOpt(filter) {
                     // console.log(filter)
                     if (filter.controlType == "textbox") {
-                        console.log(filter)
                         return $scope.filterOpt.textbox;
                     }
                     else if (filter.controlType == 'select') {

@@ -17,26 +17,49 @@
                 col: '=ngColumn',//a database side column setting provided by pageinfo will be passed here
                 entity: '=ngEntity',//an entity of entire form will be passed from this attribute
                 editForm: '=form',//a form tag name will be passed through this attribute
+                fbMaxDate: '@?fbMaxDate',//max date for date picker
                 fbOnKeypress: '&?fbKeypress',//an optional parameter for keypress event
-                fbOnkeydown:'&?fbkeydown',//optional parameter for keyup event
-                fbOnkeyup:'&?fbkeyup',//optional parameter for keydown event
+                fbOnkeydown: '&?fbkeydown',//optional parameter for keyup event
+                fbOnkeyup: '&?fbkeyup',//optional parameter for keydown event
                 fbOnBlur: '&?fbBlur',//optional parameter for blur event
                 fbOnClick: '&?fbClick',//optional parameter for on click event
                 fbOnChange: '&?fbChange',//optional parameter for on change event
             },
             controller: function ($scope, $timeout) {
-
+                $scope.data = {
+                    minDate: moment().subtract(24, 'hours').format('LLL'),
+                    maxDate: moment().format('LLL')
+                };
             },
             link: function ($scope, $elm, $attrs, $ctrl) {
-
+                //console.log($scope, $attrs)
                 if (!$scope.col)
                     return;
+                console.log($scope.col.name)
+                if ($scope.col.name == 'PdDateOfBirth') {
+                    console.log($scope.col);
+                }
+
                 //test will be removed
                 $scope.dynamicPopover = {
                     content: 'Hello, World!',
                     templateUrl: 'myPopoverTemplate.html',
                     title: 'Title'
                 };
+
+                // $scope.dtPicker = {};
+                // $scope.dtPicker.maxDate = moment();
+
+                // if ($scope.fbMinDate) {
+                //     if ($scope.fbMinDate == 'today') {
+                //         $scope.dtPicker.minDate = moment();
+                //     }
+                // }
+                $scope.getMaxDate = function () {
+                    console.log('calling max date')
+                    return moment().format('LLL');
+                }
+                //console.log($scope.dtPicker)
 
                 //a local ngModel variable for implemented control which is set by validText directive
                 $scope.ngModel = {};
@@ -67,7 +90,7 @@
                         $scope.col.showError = false;
 
 
-                        // console.log('from fieldBox', $scope.ngModel)
+                        // //console.log('from fieldBox', $scope.ngModel)
                         if ($scope.ngModel.$viewValue == '') {
                             /*==================================================
                                 remove popover validation message
@@ -155,8 +178,8 @@
 
                             }
                         }
-                        //console.log('from field box', $scope.ngModel)
-                        //console.log('new val from field', newVal, 'old val', oldVal);
+                        ////console.log('from field box', $scope.ngModel)
+                        ////console.log('new val from field', newVal, 'old val', oldVal);
                     });
 
                 /*==================================================
@@ -179,7 +202,7 @@
                 })
                 // if (!$scope.entity)
                 //     return;
-                // console.log($scope.entity)
+                // //console.log($scope.entity)
                 // if (!editForm[$scope.col.name])
                 //     return;
 
@@ -191,8 +214,8 @@
                 //     // var ngModel = $ctrl[0][$scopecol.name];
                 //     var col = $scope.col;
                 //     var form = $scope.editForm;
-                //     console.log(col, form, $scope.entity)
-                //     console.log($ctrl)
+                //     //console.log(col, form, $scope.entity)
+                //     //console.log($ctrl)
                 // })
 
                 //func for checking ngModel existance

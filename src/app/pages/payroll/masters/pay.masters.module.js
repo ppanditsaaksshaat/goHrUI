@@ -28,7 +28,7 @@
            url: '/:name/:pageId',
          templateUrl: 'app/pages/payroll/masters/list/mastersList.html',
          title: 'payroll Masters',
-         controller: "PayMastersController",
+         controller: "payMastersListController",
          controllerAs: "listCtrl"
          });
         // .state('payroll.masters.detail', {

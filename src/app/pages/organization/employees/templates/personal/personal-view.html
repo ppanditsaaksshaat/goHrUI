@@ -1,9 +1,9 @@
-<form ng-submit="empTabCtrl.saveFormCommon()" name="editForm" novalidate>
+<form ng-submit="empTabCtrl.saveFormCommon(editForm)" name="editForm" novalidate>
   <div class="panel panel-default xmedium-panel">
-    <edit-panel-head page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon()" 
-     open-List="empTabCtrl.goToEmployeeList()"
-     clear-form="empTabCtrl.clearFormCommon()"
-      condition="(empTabCtrl.activeTab==0 || empTabCtrl.activeTab==1)"></edit-panel-head>
+    <edit-panel-head page-title="page.pageinfo.title" 
+    show-save="editForm.untouch"
+    reset-form="empTabCtrl.resetFormCommon()" open-List="empTabCtrl.goToEmployeeList()"
+      clear-form="empTabCtrl.clearFormCommon()" condition="(empTabCtrl.activeTab==0 || empTabCtrl.activeTab==1)"></edit-panel-head>
 
     <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
       <uib-tabset active="empTabCtrl.activeTab">
@@ -12,9 +12,8 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-
                   <label ng-bind="page.pageinfo.fields.PdDateOfBirth.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PdDateOfBirth" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box ng-column="page.pageinfo.fields.PdDateOfBirth" ng-entity="empTabCtrl.entity" form="editForm" fb-max-date="today"></field-box>
                   <!--<label for="inputDOB">Date Of Birth*</label>
 
                 <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
@@ -247,7 +246,7 @@
                </select>-->
                 </div>
               </div>
-               <div class="col-sm-4">
+              <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="contactPage.pageinfo.fields.CDAreaId.text"></label>
                   <field-box ng-column="contactPage.pageinfo.fields.CDAreaId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
@@ -259,10 +258,10 @@
                </select>-->
                 </div>
               </div>
-             
+
             </div>
             <div class="row">
-               <div class="col-sm-4">
+              <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="contactPage.pageinfo.fields.CDPincode.text"></label>
                   <field-box ng-column="contactPage.pageinfo.fields.CDPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
@@ -289,7 +288,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.CDPAddLine1.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.CDPAddLine1"  ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box ng-column="contactPage.pageinfo.fields.CDPAddLine1" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                     <!--<label for="inputPerLine1">Line1</label>
                   <input type="text" class="form-control" id="inputPerLine1" ng-model="empTabCtrl.empContactDetail.CDPAddLine1">-->
@@ -353,10 +352,10 @@
 
                   </div>
                 </div>
-              
+
               </div>
               <div class="row">
-                  <div class="col-sm-4">
+                <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.CDPPincode.text"></label>
                     <field-box ng-column="contactPage.pageinfo.fields.CDPPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
@@ -366,7 +365,7 @@
 
                   </div>
                 </div>
-                </div>
+              </div>
             </div>
           </div>
         </uib-tab>
@@ -380,7 +379,7 @@
         </uib-tab>
         <uib-tab heading="Identity">
           <grid-box ng-model="identityPage">
-        </grid-box>
+          </grid-box>
         </uib-tab>
       </uib-tabset>
     </div>

@@ -1,94 +1,156 @@
-// /**
-//  * @author a.demeshko
-//  * created on 28.12.2015
-//  */
-// (function () {
-//   'use strict';
+/**
+ * @author a.demeshko
+ * created on 28.12.2015
+ */
+(function () {
+  'use strict';
 
-//   angular.module('BlurAdmin.pages.loan.masters')
-//     .controller('OrgMastersListController', OrgMastersListController);
+  angular.module('BlurAdmin.pages.loan.masters')
+    .controller('LoanMastersListController1', LoanMastersListController1);
 
-//   /** @ngInject */
-//   function OrgMastersListController($scope, $stateParams,
-//     pageService, editableOptions, editableThemes, DJWebStore) {
+  /** @ngInject */
+  function LoanMastersListController1($scope, $state, $stateParams,
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr) {
+
+    var vm = this;
+    var pageId = $stateParams.pageId;
+    var tempName = $stateParams.name;
+    var currentState = $state.current;
+    $scope.oldEntity = {};
+
+    $scope.saveForm = _saveForm;
+    $scope.page = $scope.createPage();
+    $scope.page.pageId = pageId;
+    $scope.closeForm = _closeForm;
+    $scope.page.boxOptions = {
+      selfLoading: true,
+      showRefresh: true,
+      showFilter: true,
+      showAdd: true,
+      showRowMenu: true,
+      showCustomView: true,
+      showUpload: false,
+      showDialog: false,
+      enableRefreshAfterUpdate: true,
+      gridHeight: 450,
+      linkColumns: [],
+      getPageData: null,
+      refreshData: null,
+      addRecord: null,
+      editRecord: null,
+      updateRecord: null,
+      viewRecord: null,
+      deleteRecord: null,
+      uploadRecord: null
+    }
+
+    if ($scope.page.pageId == 261) {
+      $scope.page.boxOptions.addRecord = _addRecord;
+    }
+
+    $scope.$watch(function () {
+      return $scope.yearRange
+    }, function (newVal, oldVal) {
+      if ($scope.yearRange) {
+        if ($scope.yearRange == 'calc') {
+          $scope.entity.LCROnCalendarYear = true;
+          $scope.entity.LCROnFinanceYear = false;
+          $scope.entity.LCRIsDayWise = false;
+        } else if ($scope.yearRange == 'fiscal') {
+          $scope.entity.LCROnCalendarYear = false;
+          $scope.entity.LCROnFinanceYear = true;
+          $scope.entity.LCRIsDayWise = false;
+        } else if ($scope.yearRange == 'days') {
+          $scope.entity.LCROnCalendarYear = false;
+          $scope.entity.LCROnFinanceYear = false;
+          $scope.entity.LCRIsDayWise = true;
+        }
+      }
+    })
+    function _addRecord() {
+      // $state.go("leave.masters.list", "{action:'create'}");
+      $scope.showEditForm = true;
+    }
+
+    function _validateForm(form) {
+      if (angular.equals($scope.oldEntity, $scope.entity)) {
+        _showToast('info', 'Nothing to save', '');
+        return false;
+      }
+
+      return true;
+    }
+    function _showToast(type, msg, title) {
+      toastOption.type = type;
+      angular.extend(toastrConfig, toastOption);
+      openedToasts.push(toastr[toastOption.type](msg, title));
+    }
+
+    function _saveForm(editForm) {
+      if (_validateForm) {
+        editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
+          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+      }
 
 
-//     var rndValu = Math.round((Math.random() * 10) * 10);
-//     var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
+    }
+    // $scope.saveForm(editForm) = _saveForm(editForm);
+    if ($scope.page.pageId == 261) {
+      $scope.page.boxOptions.editRecord = _editRecord;
+    }
 
-//     var vm = this;
-//     vm.pageId = 109;
-//     vm.table = { rows: [] }
-//     vm.page = {};
-//     $scope.isLoading = true;
-//     $scope.isLoaded = false;
-//     vm.templateUrlPath = '';
-//     vm.tempName = $stateParams.name;
-//     vm.templateUrlPath = "app/pages/loan/masters/templates/"
-//       + vm.tempName + "/" + vm.tempName + "-list.html?" + rndValu2 + "=" + rndValu;
-//     vm.listTemplateUrlPath = 'app/pages/loan/masters/list/table-list.html';
+    function _editRecord(row) {
 
-//     vm.refreshData = function () {
-//       $scope.rows = [];
-//       _getTableData();
-//     }
+      console.log(row)
 
-//     function _loadController() {
-//       pageService.getPagData(vm.pageId).then(_successGetPage, _errorGetPage)
-//     }
-//     function _successGetPage(result) {
-//       console.log(result)
-//       vm.page = result;
-//       // DJWebStore.SetValue('Page_' + vm.pageId, result)
-//       $scope.setPage(vm.page)
-//       _getTableData();
-//     }
-//     function _errorGetPage(err) {
+      $scope.entity = row.entity;
+      $scope.oldEntity = angular.copy(row.entity);
 
-//     }
-//     function _getTableData() {
-//       $scope.isLoaded = false
-//       $scope.isLoading = true
-//       var data = {
-//         searchList: [],
-//         orderByList: []
-//       }
-//       var tableData = pageService.getTableData(
-//         vm.page.pageinfo.tableid,
-//         vm.page.pageinfo.pageid,
-//         '', '',
-//         false, data);
+      $scope.showEditForm = true;
+    }
 
-//       tableData.then(_getTableSuccessResult, _getTableErrorResult)
-//     }
-//     function _getTableErrorResult(err) {
-//       $scope.isLoaded = true
-//       $scope.isLoading = false
-//     }
-//     function _getTableSuccessResult(result) {
-//       $scope.isLoaded = true
-//       $scope.isLoading = false
-//       console.log(result)
-//       if (result == 'NoDataFound') {
-//         // uivm.showMsg('warning', 'No Record Found.');
-//       } else if (result.Errors !== undefined) {
-//         // uivm.showMsg('error', result.Message);
-//         // _startMsgTimer();
-//       }
-//       else {
-//         vm.table.rows = result;
-//         $scope.rows = result;
-//         console.log($scope.rows.length)
-//         // if (uivm.page.gridOptions.data.length == 1)
-//         //   uivm.showMsg('info', result.length + ' Records found.');
-//         // else
-//         //   uivm.showMsg('info', result.length + ' Record found.');
 
-//         // _startMsgTimer();
-//       }
-//     }
-//     _loadController();
 
-//   }
+    function _closeForm(editForm) {
+      $scope.showEditForm = false;
+    }
 
-// })();
+
+    $scope.isLoading = true;
+    $scope.isLoaded = false;
+
+
+    // function _addRecord() {
+    //   if ($scope.page.pageinfo.pageid == 1) {
+
+    //   }
+    //   else {
+    //     var param = {
+    //       action: 'create',
+    //       page: $scope.page,
+    //       linkColumns: []
+    //     };
+    //     var options = {
+    //       param: param
+    //     }
+    //     dialogModal.openFormVertical(options);
+    //   }
+    // }
+
+    // function _editRecord(row) {
+    //   var param = {
+    //     action: 'create',
+    //     page: $scope.page,
+    //     entity: row.entity,
+    //     linkColumns: []
+    //   };
+    //   var options = {
+    //     param: param
+    //   }
+    //   dialogModal.openFormVertical(options);
+    // }
+
+
+  }
+
+})();

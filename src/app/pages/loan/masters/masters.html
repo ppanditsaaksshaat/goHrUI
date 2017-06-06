@@ -1,40 +1,32 @@
-<!--<div class="row mail-client-container transparent">
-  <div class="col-md-12">
-    <div ba-panel ba-panel-class="xmedium-panel mail-panel">
-      <div class="letter-layout">
-        <div class="mail-navigation-container" ng-class="{'expanded' : !tabCtrl.navigationCollapsed}">
-          <div class="text-center">
-            <input type="text" class="form-control" ng-model="tabCtrl.menuFilter" id="input01" placeholder="Search">
-          </div>
-          <div ng-repeat="t in tabCtrl.tabs| filter: {name: tabCtrl.menuFilter}" ui-sref-active="active" class="mail-navigation"
-           ui-sref="organization.masters.list({name:t.name, pageId: t.id})">
-            {{t.text}}<span class="new-mails" ng-show="t.newMails">{{t.newMails}}</span>
-          </div>
-          <div class="labels">
-            <div class="labels-title">
-
+<div class="row">
+  <div class="col-md-3" style="padding-right:0px; margin-right:0px;  ">
+    <div class="panel panel-default bootstrap-panel xmedium-panel">
+      <div class="panel-heading panHead" style="vertical-align: super">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" placeholder="Search Master" ng-model="menuFilter">
+              <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="menuFilter=''">
+                                    <i class="ion-close"></i>
+                                </button>
+                        </span>
             </div>
-            <div class="labels-container">
-              <div class="label-item">
-                <span class="tag label work">Work</span>
-              </div>
-              <div class="label-item">
-                <span class="tag label family">Family</span>
-              </div>
-              <div class="label-item">
-                <span class="tag label friend">Friend</span>
-              </div>
-              <div class="label-item">
-                <span class="tag label study">Study</span>
-              </div>
-            </div>
-          </div>
-          <div class="add-label-container">
-            <i class="ion-plus-round"></i><span class="label-input-stub">Add new label</span>
           </div>
         </div>
-        <ui-view></ui-view>
+      </div>
+
+      <div class="panel-body" style="overflow: scroll">
+        <ul class="list-unstyled side-menu maxHeight450">
+          <li ng-repeat="t in tabCtrl.tabs| filter: {name: menuFilter}" ui-sref-active="active" 
+          ui-sref="loan.masters.list({name:t.name, pageId: t.id})">
+            <a href>{{t.text}}</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
-</div>-->
+  <div class="col-md-9" style="padding-left:0px; margin-left:0px;">
+    <ui-view></ui-view>
+  </div>
+</div>

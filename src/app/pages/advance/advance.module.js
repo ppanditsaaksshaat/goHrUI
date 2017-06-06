@@ -6,7 +6,8 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.advance', [
-    'BlurAdmin.pages.advance.masters'
+    'BlurAdmin.pages.advance.masters',
+    'BlurAdmin.pages.advance.transaction'
     //,
    // 'BlurAdmin.pages.advance.transaction',
     //'BlurAdmin.pages.advance.reports'

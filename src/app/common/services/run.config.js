@@ -273,7 +273,9 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         }
         return gridOptions;
     }
-
+    /**
+     * A rootScope method for creating default page Object
+     */
     $rootScope.createPage = function () {
         var page = { formschema: {}, formsetting: {}, timespan: {} };
         page.gridOptions = $rootScope.getGridSetting();
