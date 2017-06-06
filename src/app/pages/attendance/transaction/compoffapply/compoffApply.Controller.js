@@ -14,8 +14,10 @@
     var pageId = 127;
     var currentState = $state.current;
     // this.uploadRecord = _uploadRecord;
+
+    $scope.attDateChange = _attDateChange;
     $scope.entity = {}
-    $scope.closeForm=_closeForm;
+    $scope.closeForm = _closeForm;
     $scope.page = $scope.createPage();
     $scope.page.pageId = 127;
     $scope.page.boxOptions = {
@@ -43,10 +45,24 @@
     function _addRecord() {
       $scope.showEditForm = true;
     }
-function  _closeForm(){
- 
-  $scope.showEditForm=false;
-}
+    function _closeForm() {
+
+      $scope.showEditForm = false;
+    }
+    /**
+     * handler for attendance date field box on change event
+     * @param {object} event 
+     * @param {object} element 
+     * @param {object} modelCtrl 
+     * @param {object} column 
+     */
+    function _attDateChange(event, element, modelCtrl, column) {
+      var EmpId = $scope.entity.EmpId;
+      var COAttnDate = moment($scope.entity.COAttnDate);
+
+
+    }
+
 
   }
 
