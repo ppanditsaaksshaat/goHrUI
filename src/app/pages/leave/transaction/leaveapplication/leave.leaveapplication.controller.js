@@ -55,13 +55,13 @@
       $scope.entity = {};
     }
 
-    function _editRecord() {
-      $scope.entity = row.entity;
-      // $scope.oldEntity = angular.copy(row.entity);
+    // function _editRecord() {
+    //   $scope.entity = row.entity;
+    //   // $scope.oldEntity = angular.copy(row.entity);
 
-      $scope.showEditForm = true;
-      // $state.go("leave.transaction.add", "{action:'create'}");
-    }
+    //   $scope.showEditForm = true;
+    //   // $state.go("leave.transaction.add", "{action:'create'}");
+    // }
 
     function _showToast(type, msg, title) {
       toastOption.type = type;

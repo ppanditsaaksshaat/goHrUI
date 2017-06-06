@@ -17,7 +17,7 @@
           url: '/masters',
           abstract: true,
           templateUrl: 'app/pages/advance/masters/masters.html?v=1',
-          controller: "advanceMastersController1",
+          controller: "advMastersController1",
           controllerAs: "tabCtrl",
           title: 'Master',
           sidebarMeta: {
@@ -27,10 +27,10 @@
           url: '/:name/:pageId',
           templateUrl: 'app/pages/advance/masters/list/mastersList.html',
           title: 'advance Masters',
-          controller: "advanceMastersController1",
+          controller: "advMastersListController1",
           controllerAs: "listCtrl"
         });
-    $urlRouterProvider.when('/advance/masters','/advance/masters/location/34');
+    $urlRouterProvider.when('/advance/masters','/advance/masters/advancetype/257');
   }
 
 })();

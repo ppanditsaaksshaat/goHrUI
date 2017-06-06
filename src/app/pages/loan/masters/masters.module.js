@@ -30,7 +30,7 @@
           controller: "LoanMastersListController1",
           controllerAs: "listCtrl"
         });
-    $urlRouterProvider.when('/loan/masters','/loan/masters/advancetype/257');
+    $urlRouterProvider.when('/loan/masters','/loan/masters/paymentmode/296');
   }
 
 })();
