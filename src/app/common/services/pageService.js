@@ -1094,6 +1094,19 @@ function ($http, DJWebStore, fileUpload) {
                 });
     };
 
+        var _commonUploder = function (data) {
+        var url = serviceBase + 'api/Upload/CommonUpload';
+        return $http.post(url, JSON.stringify(JSON.stringify(data)),
+               {
+                   headers: {
+                       'Content-Type': 'application/json'
+                   }
+               }).then(function (results) {
+                   return results;
+               });
+    }
+
+
 
     pageServiceFactory.serviceBase = serviceBase;
     pageServiceFactory.getPagData = _getPagData;
@@ -1207,6 +1220,7 @@ pageServiceFactory.getFieldSetting=_getFieldSetting;
     pageServiceFactory.getUserDashboard = _getUserDashBoard;
     pageServiceFactory.getAllSelect = _getAllSelect;
     pageServiceFactory.create = _create;
+    pageServiceFactory.commonUploder=_commonUploder;
 
     return pageServiceFactory;
 
