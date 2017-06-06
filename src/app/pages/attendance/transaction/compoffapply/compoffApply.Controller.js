@@ -60,8 +60,46 @@
       var EmpId = $scope.entity.EmpId;
       var COAttnDate = moment($scope.entity.COAttnDate);
 
+alert ('SK');
+      var searchLists = [];
+      var searchListData = {
+        field: 'EmpId',
+        operand: '=',
+        value: $scope.entity.EmpId
 
+
+        // value: 5
+      }
+      searchLists.push(searchListData)
+
+       searchListData = {
+        field: 'AttDate',
+        operand: '=',
+        value: moment($scope.entity.COAttnDate)
+
+        // value: 5
+      }
+      console.log(searchListData);
+      console.log('SK');
+      searchLists.push(searchListData)
+
+
+      var data = {
+        searchList: searchLists,
+        orderByList: []
+      }
+
+      var queryId = 514;
+      pageService.getCustomQuery(data, queryId).then(function (result) {
+        console.log(result);
+//$scope.entity.COTimeIn=result.;
+
+      })
     }
+
+
+
+
 
 
   }

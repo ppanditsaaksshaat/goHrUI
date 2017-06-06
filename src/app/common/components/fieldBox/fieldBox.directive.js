@@ -26,41 +26,19 @@
                 fbOnChange: '&?fbChange',//optional parameter for on change event
             },
             controller: function ($scope, $timeout) {
-                $scope.data = {
-                    minDate: moment().subtract(24, 'hours').format('LLL'),
-                    maxDate: moment().format('LLL')
-                };
+               
             },
             link: function ($scope, $elm, $attrs, $ctrl) {
-                //console.log($scope, $attrs)
+
+                
                 if (!$scope.col)
                     return;
-                console.log($scope.col.name)
-                if ($scope.col.name == 'PdDateOfBirth') {
-                    console.log($scope.col);
-                }
 
-                //test will be removed
-                $scope.dynamicPopover = {
-                    content: 'Hello, World!',
-                    templateUrl: 'myPopoverTemplate.html',
-                    title: 'Title'
-                };
-
-                // $scope.dtPicker = {};
-                // $scope.dtPicker.maxDate = moment();
-
-                // if ($scope.fbMinDate) {
-                //     if ($scope.fbMinDate == 'today') {
-                //         $scope.dtPicker.minDate = moment();
-                //     }
-                // }
                 $scope.getMaxDate = function () {
                     console.log('calling max date')
-                    return moment().format('LLL');
+                    return moment();
                 }
-                //console.log($scope.dtPicker)
-
+             
                 //a local ngModel variable for implemented control which is set by validText directive
                 $scope.ngModel = {};
 
@@ -182,6 +160,9 @@
                         ////console.log('new val from field', newVal, 'old val', oldVal);
                     });
 
+
+
+
                 /*==================================================
                     A watch for form submit, if anything required which 
                     will act after form sumbit will be work here
@@ -220,10 +201,11 @@
 
                 //func for checking ngModel existance
                 function _validModel() {
-                    if (!$scope.ngModel) {
+                    var controlCtrl = $scope.editForm[$scope.col.name];
+                    if (!controlCtrl) {
                         return false;
                     }
-                    if (!$scope.ngModel.$modelValue) {
+                    if (!controlCtrl.$modelValue) {
                         return false;
                     }
                     return true;
@@ -233,16 +215,17 @@
                 $scope.hasSuccess = function () {
                     if (!_validModel())
                         return false;
-                    return (!$scope.ngModel.$isEmpty($scope.ngModel.$modelValue)
-                        && $scope.ngModel.$valid && $scope.ngModel.$dirty)
+                    var controlCtrl = $scope.editForm[$scope.col.name];
+                    return (!controlCtrl.$isEmpty(controlCtrl.$modelValue)
+                        && controlCtrl.$valid && controlCtrl.$dirty)
                 };
 
                 //func for handling control icon and error class in form-group
                 $scope.hasError = function () {
                     if (!_validModel())
                         return false;
-
-                    return $scope.ngModel.$invalid && !$scope.ngModel.$pristine;
+                    var controlCtrl = $scope.editForm[$scope.col.name];
+                    return controlCtrl.$invalid && !controlCtrl.$pristine;
                 };
 
                 //func for handling control icon and warning class in form-group
@@ -276,8 +259,11 @@
                     var isRequired = false;
                     if ($scope.col)
                         isRequired = $scope.col.required;
-                    var requiredValid = isRequired && !$scope.hasSuccess()
-                        && !$scope.hasError();
+                    var isSuccess = $scope.hasSuccess();
+                    var isError = $scope.hasError();
+                    var requiredValid = isRequired && !isSuccess
+                        && !isError;
+                    var controlCtrl = $scope.editForm[$scope.col.name];
                     return requiredValid;
                 };
 
