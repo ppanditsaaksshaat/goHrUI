@@ -55,13 +55,13 @@
       $scope.entity = {};
     }
 
-    function _editRecord() {
-      $scope.entity = row.entity;
-      // $scope.oldEntity = angular.copy(row.entity);
+    // function _editRecord() {
+    //   $scope.entity = row.entity;
+    //   // $scope.oldEntity = angular.copy(row.entity);
 
-      $scope.showEditForm = true;
-      // $state.go("leave.transaction.add", "{action:'create'}");
-    }
+    //   $scope.showEditForm = true;
+    //   // $state.go("leave.transaction.add", "{action:'create'}");
+    // }
 
     function _showToast(type, msg, title) {
       toastOption.type = type;
@@ -190,6 +190,7 @@
               $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
             console.log($scope.page.pageinfo.pageid, $scope.entity,
               $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+              $scope.showEditForm = false;
             // $scope.showEditForm = false;
             // editFormService.saveForm($scope.pageId, $scope.entity, $scope.oldEntity, $scope.action, $scope.page.pageinfo.tagline)
           }
@@ -234,6 +235,7 @@
       $scope.newEntity.ELSDELAId = $scope.entity.LEADId;
       $scope.newEntity.ELSDSanctionFromDate = $scope.entity.LEADDateFrom;
       $scope.newEntity.ELSDSanctionToDate = $scope.entity.LEADDateTo;
+      $scope.newEntity.ELSDLeaveStatusId = 1;
 
       console.log($scope.entity)
       console.log($scope.newEntity)

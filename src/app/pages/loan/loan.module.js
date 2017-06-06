@@ -5,8 +5,9 @@
 (function () {
   'use strict';
   angular.module('BlurAdmin.pages.loan', [   
-     'BlurAdmin.pages.loan.loanmanagement',
-     'BlurAdmin.pages.loan.masters'
+    //  'BlurAdmin.pages.loan.loanmanagement',
+     'BlurAdmin.pages.loan.masters',
+     'BlurAdmin.pages.loan.transaction'
     
     
   ])

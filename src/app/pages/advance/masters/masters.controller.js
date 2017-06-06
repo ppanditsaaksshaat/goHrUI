@@ -16,10 +16,13 @@
     vm.tabs = _getTabs();
     function _getTabs() {
       var mastersMenu = [];
-      mastersMenu.push({ name: 'Advancetype', text: 'Advance  type ', id: 257 })
-    //  mastersMenu.push({ name: 'shiftdetail', text: 'Shift detail ', id: 128 })
-  
+      mastersMenu.push({ name: 'advancetype', text: 'Advance Type Master', id: 257 })
+      mastersMenu.push({ name: 'advancerule', text: 'Advance Rule Master ', id: 99 })
+      mastersMenu.push({ name: 'advancestatus', text: 'Advance Status Master ', id: 101 })
       
+      
+
+
       return mastersMenu;
 
     }
