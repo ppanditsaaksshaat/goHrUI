@@ -5,11 +5,11 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.attendance.transaction.manual')
-    .controller('attTransManualController', attTransManualController);
+  angular.module('BlurAdmin.pages.attendance.transaction.manualmonth')
+    .controller('attTransmanualmonthController', attTransmanualmonthController);
 
   /** @ngInject */
-  function attTransManualController($scope, $state, $timeout, pageService) {
+  function attTransmanualmonthController($scope, $state, $timeout, pageService) {
 
     var vm = this;
     var currentState = $state.current;
@@ -23,7 +23,7 @@
     // this.uploadRecord = _uploadRecord;
     $scope.entity = {}
     $scope.page = $scope.createPage();
-    $scope.page.pageId = 320;
+    $scope.page.pageId = 155;
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
