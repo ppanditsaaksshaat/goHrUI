@@ -11,7 +11,7 @@
      'BlurAdmin.pages.attendance.transaction.verify',
      'BlurAdmin.pages.attendance.transaction.compoffApply', 
      'BlurAdmin.pages.attendance.transaction.outdoorapply',
-  
+      'BlurAdmin.pages.attendance.transaction.manualmonth',
   ])
     .config(routeConfig);
 
