@@ -60,9 +60,10 @@
      */
     function _attDateChange(event, element, modelCtrl, column) {
       var attDate = modelCtrl.$modelValue;
-      var EmpId = $scope.entity.EmpId;
+      var EmpId = $scope.entity.EmpId
+        ;
       var COAttnDate = moment($scope.entity.COAttnDate);
-<<<<<<< HEAD
+
       console.log(attDate, column, modelCtrl, $scope.entity)
     }
     /**
@@ -76,9 +77,8 @@
       var EmpId = modelCtrl.$modelValue;
       var COAttnDate = moment($scope.entity.COAttnDate);
       console.log(EmpId, column, modelCtrl, $scope.entity)
-=======
 
-alert ('SK');
+      alert('SK');
       var searchLists = [];
       var searchListData = {
         field: 'EmpId',
@@ -90,7 +90,7 @@ alert ('SK');
       }
       searchLists.push(searchListData)
 
-       searchListData = {
+      searchListData = {
         field: 'AttDate',
         operand: '=',
         value: moment($scope.entity.COAttnDate)
@@ -110,10 +110,10 @@ alert ('SK');
       var queryId = 514;
       pageService.getCustomQuery(data, queryId).then(function (result) {
         console.log(result);
-//$scope.entity.COTimeIn=result.;
+        //$scope.entity.COTimeIn=result.;
 
       })
->>>>>>> 7367d7d6e58119b09a67648198fe5c04d6fb0606
+
     }
 
 
