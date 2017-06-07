@@ -190,7 +190,7 @@
               $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
             console.log($scope.page.pageinfo.pageid, $scope.entity,
               $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
-              $scope.showEditForm = false;
+            $scope.showEditForm = false;
             // $scope.showEditForm = false;
             // editFormService.saveForm($scope.pageId, $scope.entity, $scope.oldEntity, $scope.action, $scope.page.pageinfo.tagline)
           }

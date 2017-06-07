@@ -17,6 +17,7 @@
     var tempName = $stateParams.name;
     var currentState = $state.current;
     $scope.oldEntity = {};
+    $scope.entity = {};
 
     $scope.saveForm = _saveForm;
     $scope.page = $scope.createPage();
@@ -80,7 +81,7 @@
     function _addRecord() {
       // $state.go("leave.masters.list", "{action:'create'}");
       $scope.showEditForm = true;
-      $scope.entity = [];
+      $scope.entity = {};
       // if ($scope.entity.LCROnCalendarYear === undefined) {
       //   $scope.entity.LCROnCalendarYear = true;
       // }
@@ -107,11 +108,13 @@
     }
 
     function _saveForm(editForm) {
-      if (_validateForm) {
-        editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
-          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
-          // $scope.showEditForm = false;
-      }
+      // if (_validateForm) {
+      editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
+        $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+
+      console.log($scope.entity)
+      $scope.showEditForm = false;
+      // }
 
 
     }
