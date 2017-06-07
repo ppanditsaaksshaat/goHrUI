@@ -214,7 +214,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                     scope.$parent.$parent.$parent.$parent.ngModel = modelCtrl;
                 }
                 else {
-                    console.error('ngModel form fieldBox is not found at 3rd level, custom.validator:215')
+                    console.error('ngModel from fieldBox is not found even at 3rd level, custom.validator:215', scope)
                 }
                 // modelCtrl.$setDirty();
                 // if (scope.$parent.$parent.listnerFromValidText) {
@@ -223,8 +223,20 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                 // scope.$parent.$parent.ngModel = modelCtrl;
 
                 // console.log('from validText', newVal, scope.$parent.$parent.ngModel)
+
+                //sending change event to controller, if assigned
+                if (scope.$parent.$parent.fbOnChange) {
+                    scope.$parent.$parent.fbOnChange({ event: event, element: element, modelCtrl: modelCtrl, column: column })
+                }
+                else if (scope.$parent.$parent.$parent.fbOnChange) {
+                    scope.$parent.$parent.$parent.fbOnChange({ event: event, element: element, modelCtrl: modelCtrl, column: column })
+                } 
+                else if (scope.$parent.$parent.$parent.$parent.fbOnChange) {
+                    scope.$parent.$parent.$parent.$parent.fbOnChange({ event: event, element: element, modelCtrl: modelCtrl, column: column })
+                }
             });
 
+           
             //textbox|email|mobile|aadharno|pancard|zipcode|placename_alpha|placename_alphanum|name_nospace|name_withspace
 
             switch (column.type) {
