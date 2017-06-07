@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function attTransuploadController($scope, $sce, $filter, $http, uiGridConstants, $interval, $timeout,
-    $uibModal, pageService, $q, DJWebStore, $window, DJWebStoreGlobal) {
+    $uibModal, pageService, $q, DJWebStore, $window, DJWebStoreGlobal, toastr, toastrConfig) {
     console.log('attTransuploadController')
 
     /**Local Variable */
@@ -23,6 +23,42 @@
 
     vm.downloadTemp = _downloadTemp;
     vm.uploadAttendance = _uploadAttendance;
+
+
+
+
+    var toastOption = {};
+    var defaultConfig = angular.copy(toastrConfig);
+    var openedToasts = [];
+    toastOption = {
+      autoDismiss: false,
+      positionClass: 'toast-top-center',
+      type: 'success',
+      timeOut: '5000',
+      extendedTimeOut: '2000',
+      allowHtml: false,
+      closeButton: true,
+      tapToDismiss: true,
+      progressBar: true,
+      newestOnTop: true,
+      maxOpened: 0,
+      preventDuplicates: false,
+      preventOpenDuplicates: false,
+      title: "",
+      msg: ""
+    };
+
+    /**
+     * 
+     * @param {*} type 
+     * @param {*} msg 
+     * @param {*} title 
+     */
+    function _showToast(type, msg, title) {
+      toastOption.type = type;
+      angular.extend(toastrConfig, toastOption);
+      openedToasts.push(toastr[toastOption.type](msg, title));
+    }
 
     /**
      * DownLoad Excel Template for Attendance
@@ -54,6 +90,20 @@
       var compressed = LZString.compressToEncodedURIComponent(postData);
       var data = { lz: true, data: compressed }
       pageService.commonUploder(data).then(function (result) {
+
+        var errorMsg = ""; successMsg="";
+        console.log(result)
+        angular.forEach(result.Table1, function (data,index) {
+          if (data.IsFailed) {
+            errorMsg +="In row "+index+" "+data.RESULT
+          }       
+        })
+        console.log(errorMsg)
+        if (errorMsg != "") {
+          _showToast('error', errorMsg, "")
+        }
+       
+        console.log(result)
       })
     }
   }
