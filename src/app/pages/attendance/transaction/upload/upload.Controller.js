@@ -47,7 +47,7 @@
 
       console.log(vm.gridOptions.data)
       var upload = {
-        uploadData: vm.gridOptions.data,
+        fieldRow: vm.gridOptions.data,
         groupName: 'Attendance'
       }
       var postData = JSON.stringify(upload);

@@ -62,6 +62,7 @@
       var attDate = modelCtrl.$modelValue;
       var EmpId = $scope.entity.EmpId;
       var COAttnDate = moment($scope.entity.COAttnDate);
+<<<<<<< HEAD
       console.log(attDate, column, modelCtrl, $scope.entity)
     }
     /**
@@ -75,7 +76,49 @@
       var EmpId = modelCtrl.$modelValue;
       var COAttnDate = moment($scope.entity.COAttnDate);
       console.log(EmpId, column, modelCtrl, $scope.entity)
+=======
+
+alert ('SK');
+      var searchLists = [];
+      var searchListData = {
+        field: 'EmpId',
+        operand: '=',
+        value: $scope.entity.EmpId
+
+
+        // value: 5
+      }
+      searchLists.push(searchListData)
+
+       searchListData = {
+        field: 'AttDate',
+        operand: '=',
+        value: moment($scope.entity.COAttnDate)
+
+        // value: 5
+      }
+      console.log(searchListData);
+      console.log('SK');
+      searchLists.push(searchListData)
+
+
+      var data = {
+        searchList: searchLists,
+        orderByList: []
+      }
+
+      var queryId = 514;
+      pageService.getCustomQuery(data, queryId).then(function (result) {
+        console.log(result);
+//$scope.entity.COTimeIn=result.;
+
+      })
+>>>>>>> 7367d7d6e58119b09a67648198fe5c04d6fb0606
     }
+
+
+
+
 
 
   }
