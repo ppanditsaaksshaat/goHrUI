@@ -16,7 +16,8 @@
     /**Local Variable */
     var vm = this;
     vm.gridOptions = $scope.getGridSetting();
-
+    vm.uploader = [];
+    $scope.fileResult = undefined;
 
 
 
@@ -45,6 +46,15 @@
     function _uploadAttendance() {
 
       console.log(vm.gridOptions.data)
+      var upload = {
+        fieldRow: vm.gridOptions.data,
+        groupName: 'Attendance'
+      }
+      var postData = JSON.stringify(upload);
+      var compressed = LZString.compressToEncodedURIComponent(postData);
+      var data = { lz: true, data: compressed }
+      pageService.commonUploder(data).then(function (result) {
+      })
     }
   }
 

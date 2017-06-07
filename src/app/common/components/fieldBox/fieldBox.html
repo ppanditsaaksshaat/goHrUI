@@ -39,12 +39,15 @@
                 <i class="glyphicon glyphicon-time"></i>&nbsp; {{ entity[col.name] || "Pick any date" }}
             </div>-->
 
-            <div class="input-group" moment-picker="entity[col.name]" format="DD-MMM-YYYY">
+            <div class="input-group" moment-picker="entity[col.name]" format="DD-MMM-YYYY" start-view="month"
+            max-date="col.maxDate"
+            min-date="col.minDate"
+            >
                 <span class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                 </span>
-                <input valid-text ng-column="col" ng-readonly="true" class="form-control" placeholder="Select a date"
-                 ng-model="entity[col.name]"
+                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                    ng-model="entity[col.name]"
                     ng-model-options="{ updateOn: 'blur' }">
             </div>
 
@@ -52,11 +55,14 @@
         <!--timepicker-->
         <div ng-switch-when="timepicker">
 
-            <div class="input-group" moment-picker="entity[col.name]" format="hh:mm A">
+            <div class="input-group" moment-picker="entity[col.name]" format="hh:mm A"
+            max-date="col.maxDate"
+            min-date="col.minDate"
+            >
                 <span class="input-group-addon">
                     <i class="fa fa-clock-o"></i>
                 </span>
-                <input valid-text ng-column="col" ng-readonly="true" class="form-control" placeholder="Pick any time"
+                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Pick any time"
                      ng-model="entity[col.name]"
                     ng-model-options="{ updateOn: 'blur' }">
             </div>
@@ -172,7 +178,7 @@
     <!--<span ng-show="editForm[col.name]['$error']['blacklist']">
           The phrase "{{entity[col.name]}}" is blacklisted</span>
     <span  ng-show="editForm[col.name]['$error']['required']">required</span>-->
-    <span ng-show="editForm['$submitted'] && ngModel.$error.required" class="help-block" for="col.name">{{col.text}} is required</span>
+    <span ng-show="editForm['$submitted'] && editForm[col.name]['$error']['required']" class="help-block" for="col.name">{{col.text}} is required</span>
     <span ng-show="editForm['$submitted'] && ngModel.$error.emailError" class="help-block" for="col.name">{{col.text}} is not valid</span>
     <span ng-show="editForm['$submitted'] && ngModel.$error.pincode" class="help-block" for="col.name">{{col.text}} must be 6 digit long</span>
     <span ng-show="editForm['$submitted'] && ngModel.$error.zipcode" class="help-block" for="col.name">{{col.text}} must be 5 digit long</span>

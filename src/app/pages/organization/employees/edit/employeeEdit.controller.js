@@ -61,7 +61,7 @@
       mastersMenu.push({ name: 'personal', text: 'Personal', id: 35 })
       mastersMenu.push({ name: 'account', text: 'Account', id: 125 })
       mastersMenu.push({ name: 'experience', text: 'Experience', id: 56 })
-      mastersMenu.push({ name: 'education', text: 'Education', id: 112 })
+      mastersMenu.push({ name: 'Qualification', text: 'Qualification', id: 112 })
       mastersMenu.push({ name: 'skill', text: 'Skill', id: 439 })
       mastersMenu.push({ name: 'salary', text: 'Salary', id: 36 })
       mastersMenu.push({ name: 'immigration', text: 'Immigration', id: 119 })

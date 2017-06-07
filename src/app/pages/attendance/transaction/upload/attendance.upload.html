@@ -29,11 +29,33 @@
                                         style="display: none;">
                                     </label><br/>
                         <span class="">(Only .xls, .xlsx are supported)</span><br>
-                        <input type="button" class="btn btn-success btn-file" value="Upload" ng-click="attCtrl.uploadAttendance()">
-                       
+                        <div class="schema-form-section row" ng-show="attCtrl.gridOptions.data.length > 0">
+                            <div class="schema-form-section col-xs-12">
+                                <div class="form-group schema-form-text  has-feedback">
+                                    <label class="control-label ">
+                                        You have selected {{attCtrl.gridOptions.data.length}} record file
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr ng-show="attCtrl.gridOptions.data.length > 0" />
+                        <div class="row" ng-show="attCtrl.gridOptions.data.length > 0">
+                            <div class="col-md-12">
+                                <label class="checkbox-inline custom-checkbox nowrap">
+                                    <input type="checkbox" id="inlineCheckbox01" ng-model="attCtrl.showPreview">
+                                    <span>Show Preview</span>
+                                </label>
+                            </div>
+                        </div>
+                         <br><br>
+                        <div class="row" ng-show="attCtrl.gridOptions.data.length > 0">
+                            <div class="col-md-12">
+                                <input type="button" class="btn btn-success btn-file" value="Upload" ng-click="attCtrl.uploadAttendance()">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-9">
-                        <div ng-hide="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">
+                        <div ng-hide="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">
                             <h5>Download Template</h5>
                             <button type="button" class="btn btn-warning" ng-click="attCtrl.downloadTemp()">
                            Minimum Requirement Template</button>
@@ -59,12 +81,12 @@
                             <p>We recommend doing a test import with a sample file before importing your actual data.</p>
 
                         </div>
-                        <span ng-show="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">Preview Data</span>
+                        <span ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">Preview Data</span>
                         <div class="row">
                             <div class="col-md-12">
 
-                                <div id="grid1" style="height:auto" ui-grid="tabCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
-                                    ng-show="tabCtrl.gridOptions.data.length > 0 && tabCtrl.showPreview">
+                                <div id="grid1" style="height:auto" ui-grid="attCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
+                                    ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">
                                 </div>
 
                             </div>
@@ -72,7 +94,7 @@
                     </div>
                 </div>
             </div>
-          
+
 
         </uib-tab>
         <uib-tab heading="Import History">
