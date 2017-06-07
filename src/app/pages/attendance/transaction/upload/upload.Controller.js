@@ -91,7 +91,7 @@
       var data = { lz: true, data: compressed }
       pageService.commonUploder(data).then(function (result) {
 
-        var errorMsg = ""; successMsg="";
+        var errorMsg = "";
         console.log(result)
         angular.forEach(result.Table1, function (data,index) {
           if (data.IsFailed) {
