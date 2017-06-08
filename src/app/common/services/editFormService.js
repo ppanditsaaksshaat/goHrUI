@@ -6,14 +6,15 @@
 'use strict';
 
 angular.module('BlurAdmin.common')
-    .factory('editFormService', ['pageService', 'DJWebStore', 'toastr', 'toastrConfig', '$uibModal', '$state', '$rootScope',
+    .factory('editFormService', ['pageService', 'DJWebStore', 'toastr', 'toastrConfig', '$uibModal', '$state',
+        '$rootScope', 'focus',
         editFormService])
     .controller('ModalConfirmCtrl', ['$scope', '$uibModalInstance', 'param',
         ModalConfirmCtrl]);
 
 
 //Controller for save edit form
-function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModal, $state, $rootScope) {
+function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModal, $state, $rootScope, focus) {
 
     var toastOption = {};
     var defaultConfig = angular.copy(toastrConfig);
@@ -79,7 +80,12 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
             _showToast('error', err, title)
         });
     }
-
+    /**
+     * 
+     * @param {*} type 
+     * @param {*} msg 
+     * @param {*} title 
+     */
     function _showToast(type, msg, title) {
         toastOption.type = type;
         angular.extend(toastrConfig, toastOption);
@@ -108,9 +114,73 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
             }
         });
     }
+    function _validateForm(form) {
+        var valid = true;
+        if (!form['$valid']) {
+            if (form['$error'] !== undefined) {
+                var err = form['$error'];
+                if (err.required) {
+                    if (err.required.length > 0) {
+                        var fieldName = err.required[0].$name;
+                        err.required[0].$setTouched();
+                        err.required[0].$setDirty();
+                        ////console.log(err)
+                        focus(fieldName);
+                        valid = false;
+                    }
+                }
 
+                if (err['emailError']) {
+                    if (err.emailError.length > 0) {
+                        var fieldName = err.emailError[0].$name;
+                        err.emailError[0].$setTouched();
+                        err.emailError[0].$setDirty();
+                        ////console.log(err)
+                        focus(fieldName);
+                        valid = false;
+                    }
+                }
+                if (err['email'] !== undefined) {
+                    if (err.email.length > 0) {
+                        var fieldName = err.email[0].$name;
+                        err.email[0].$setTouched();
+                        err.emailError[0].$setDirty();
+                        ////console.log(err)
+                        focus(fieldName);
+                        valid = false;
+                    }
+                }
+                if (err['maxlength'] !== undefined) {
+                    if (err.maxlength.length > 0) {
+                        var fieldName = err.maxlength[0].$name;
+                        err.maxlength[0].$setTouched();
+                        err.maxlength[0].$setDirty();
+                        ////console.log(err)
+                        focus(fieldName);
+                        valid = false;
+                    }
+                }
+                if (err['pattern'] !== undefined) {
+                    if (err.pattern.length > 0) {
+                        var fieldName = err.pattern[0].$name;
+                        err.pattern[0].$setTouched();
+                        err.pattern[0].$setDirty();
+                        ////console.log(err)
+                        focus(fieldName);
+                        valid = false;
+                    }
+                }
+            }
+        }
+
+        if (!valid) {
+            _showToast('error', 'Please clear all errors', "")
+        }
+        return valid;
+    }
     var editForm = {};
     editForm.saveForm = _saveEditForm;
+    editForm.validateForm = _validateForm;
     return editForm;
 }
 //Controller for confirm box

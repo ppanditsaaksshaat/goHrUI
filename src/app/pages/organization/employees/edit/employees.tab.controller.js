@@ -10,7 +10,8 @@
 
     /** @ngInject */
     /** @ngInject */
-    function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal, toastrConfig, toastr, $state) {
+    function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal,
+        toastrConfig, toastr, $state, editFormService) {
         console.log('empTabController')
 
         var toastOption = {};
@@ -428,35 +429,37 @@
 
         }
         //=========================================================== common method
-        function _validateFormCommon() {
+        function _validateFormCommon(form) {
+            var valid = editFormService.validateForm(form);
+            
             if (vm.activeTab === undefined) {
                 if (angular.equals(vm.entity, vm.oldEntity)) {
                     _showToast('info', 'Nothing to save', "")
-                    return false;
+                    valid = false;
                 }
             }
             else if (vm.activeTab == 0) {
 
                 if (angular.equals(vm.entity, vm.oldEntity)) {
                     _showToast('info', 'Nothing to save', "")
-                    return false;
+                    valid = false;
                 }
                 if (angular.equals(vm.empEmgContact, vm.oldEmpEmgContact)) {
                     _showToast('info', 'Nothing to save', "")
-                    return false;
+                    valid = false;
                 }
             }
             else if (vm.activeTab == 1) {
                 if (angular.equals(vm.empContactDetail, vm.oldempContactDetail)) {
                     _showToast('info', 'Nothing to save', "")
-                    return false;
+                    valid = false;
                 }
             }
 
-            return true;
+            return valid;
         }
         function _saveFormCommon(editForm) {
-            if (_validateFormCommon()) {
+            if (_validateFormCommon(editForm)) {
                 if (vm.activeTab === undefined) {
                     _saveForm(editForm);
                 }
