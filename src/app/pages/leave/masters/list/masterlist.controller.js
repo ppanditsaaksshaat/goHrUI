@@ -23,6 +23,7 @@
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.closeForm = _closeForm;
+    
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -51,6 +52,7 @@
 
     $scope.$watch(function () {
       return $scope.yearRange
+
     }, function (newVal, oldVal) {
       if ($scope.yearRange) {
         if ($scope.yearRange == 'calc') {
@@ -75,6 +77,34 @@
           $scope.entity.LCROnCalendarYear = false;
           $scope.entity.LCROnFinanceYear = false;
           $scope.entity.LCRIsDayWise = true;
+        }
+      }
+      if ($scope.absentPresentDays) {
+        if ($scope.absentPresentDays == 'presentD') {
+          $scope.entity.LTRIsPresentDays = true;
+          $scope.entity.LCRIsTreatAsAbsent = false;
+
+        }
+        else if ($scope.absentPresentDays == 'absentD') {
+          $scope.entity.LTRIsPresentDays = false;
+          $scope.entity.LCRIsTreatAsAbsent = true;
+        }
+      }
+    })
+
+    $scope.$watch(function () {
+      return $scope.absentPresentDays
+
+    }, function (newVal, oldVal) {
+      if ($scope.absentPresentDays) {
+        if ($scope.absentPresentDays == 'presentD') {
+          $scope.entity.LTRIsPresentDays = true;
+          $scope.entity.LCRIsTreatAsAbsent = false;
+
+        }
+        else if ($scope.absentPresentDays == 'absentD') {
+          $scope.entity.LTRIsPresentDays = false;
+          $scope.entity.LCRIsTreatAsAbsent = true;
         }
       }
     })
@@ -118,10 +148,12 @@
 
 
     }
-    // $scope.saveForm(editForm) = _saveForm(editForm);
+    
     if ($scope.page.pageId == 261) {
       $scope.page.boxOptions.editRecord = _editRecord;
     }
+
+    
 
     function _editRecord(row) {
 

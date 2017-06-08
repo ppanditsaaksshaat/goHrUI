@@ -12,6 +12,21 @@
 
             <div class="row">
                 <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LocationId.text}}</label>
+                    <field-box ng-column="page.pageinfo.fields.LocationId" ng-entity="entity" form="editForm"></field-box>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.BRId.text}}</label>
+                    <field-box ng-column="page.pageinfo.fields.BRId" ng-entity="entity" form="editForm"></field-box>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LCRSubUnitId.text}}</label>
+                    <field-box ng-column="page.pageinfo.fields.LCRSubUnitId" ng-entity="entity" form="editForm"></field-box>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LCRLTId.text}}</label>
                     <field-box ng-column="page.pageinfo.fields.LCRLTId" ng-entity="entity" form="editForm"></field-box>
                 </div>
@@ -25,20 +40,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LocationId.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LocationId" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.BRId.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.BRId" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRSubUnitId.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRSubUnitId" ng-entity="entity" form="editForm"></field-box>
-                </div>
-            </div>
+
 
             <div class="row">
                 <div class="form-group col-md-4">
@@ -80,69 +82,25 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LCRIsComOff.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsComOff" ng-entity="entity" form="editForm"></field-box>
+                    <field-box ng-column="page.pageinfo.fields.LCRIsComOff"  ng-entity="entity" form="editForm"></field-box>
                 </div>
 
             </div>
 
 
             <div class="row" ng-if="entity.LCRIsComOff">
+
                 <div class="form-group col-md-4">
                     <label for="inputPassword3" clas>{{page.pageinfo.fields.LCRIsCompOffCash.text}}</label>
-                    <input type="radio" name="commonRedioForCompOff" ng-model="$scope.entity.LCRIsCompOffCash">
-                    </div>
+                    <input type="radio" name="commonRedioForCompOff" ng-model="entity.LCRIsCompOffCash">
+                </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LCRIsCompOffLeave.text}}</label>
-                    <input type="radio" name="commonRedioForCompOff" ng-model="$scope.entity.LCRIsCompOffLeave">
-                   </div>
+                    <input type="radio" name="commonRedioForCompOff" ng-model="entity.LCRIsCompOffLeave">
+                </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LCRIsCompOffNone.text}}</label>
-                    <input type="radio" name="commonRedioForCompOff" ng-model="$scope.entity.LCRIsCompOffNone">
-                   </div>
-            </div>
-
-
-
-
-
-
-
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3" clas>{{page.pageinfo.fields.LCROnCalendarYear.text}}</label>
-                    <input type="radio" name="commonRedio" ng-model="yearRange" value="calc">
-                    <!--<field-box ng-column="page.pageinfo.fields.LCROnCalendarYear" ng-entity="entity" form="editForm"></field-box>-->
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCROnFinanceYear.text}}</label>
-                    <input type="radio" name="commonRedio" ng-model="yearRange" value="fiscal">
-                    <!--<field-box ng-column="page.pageinfo.fields.LCROnFinanceYear" ng-entity="entity" form="editForm"></field-box>-->
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsDayWise.text}}</label>
-                    <input type="radio" name="commonRedio" ng-model="yearRange" value="days">
-                    <!--<field-box ng-column="page.pageinfo.fields.LCRIsDayWise" ng-entity="entity" form="editForm"></field-box>-->
-                </div>
-            </div>
-            <!--{{entity.LCROnCalendarYear}}{{entity.LCROnFinanceYear}}{{entity.LCRIsDayWise}}-->
-
-            <div class="row" ng-if="entity.LCRIsDayWise">
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRDayDuration.text}}</label>
-
-                    <field-box ng-column="page.pageinfo.fields.LCRDayDuration" ng-entity="entity" form="editForm"></field-box>
-                </div>
-            </div>
-
-            <!--<div class="row" id="fromDateToDate" ng-if="entity=='onCalenderYear'||entity=='onFinacielYear'">-->
-            <div class="row" ng-if="entity.LCROnFinanceYear || entity.LCROnCalendarYear">
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCREffectedDateFrom.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCREffectedDateFrom" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCREffectedDateTo.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCREffectedDateTo" ng-entity="entity" form="editForm"></field-box>
+                    <input type="radio" name="commonRedioForCompOff" ng-model="entity.LCRIsCompOffNone">
                 </div>
             </div>
 
@@ -150,86 +108,147 @@
 
 
 
+            <div class="row" ng-if="!entity.LCRIsComOff">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3" clas>{{page.pageinfo.fields.LCROnCalendarYear.text}}</label>
+                            <input type="radio" name="commonRedio" ng-model="yearRange" value="calc">
+                            <!--<field-box ng-column="page.pageinfo.fields.LCROnCalendarYear" ng-entity="entity" form="editForm"></field-box>-->
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCROnFinanceYear.text}}</label>
+                            <input type="radio" name="commonRedio" ng-model="yearRange" value="fiscal">
+                            <!--<field-box ng-column="page.pageinfo.fields.LCROnFinanceYear" ng-entity="entity" form="editForm"></field-box>-->
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsDayWise.text}}</label>
+                            <input type="radio" name="commonRedio" ng-model="yearRange" value="days">
+                            <!--<field-box ng-column="page.pageinfo.fields.LCRIsDayWise" ng-entity="entity" form="editForm"></field-box>-->
+                        </div>
+                    </div>
+                    <!--{{entity.LCROnCalendarYear}}{{entity.LCROnFinanceYear}}{{entity.LCRIsDayWise}}-->
 
-            <div class="row">
+                    <div class="row" ng-if="entity.LCRIsDayWise">
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRDayDuration.text}}</label>
 
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsCarryForwardMonthly.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsCarryForwardMonthly" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsLeaveEncashable.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsLeaveEncashable" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsSandwichLeave.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsSandwichLeave" ng-entity="entity" form="editForm"></field-box>
+                            <field-box ng-column="page.pageinfo.fields.LCRDayDuration" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+
+                    <!--<div class="row" id="fromDateToDate" ng-if="entity=='onCalenderYear'||entity=='onFinacielYear'">-->
+                    <div class="row" ng-if="entity.LCROnFinanceYear || entity.LCROnCalendarYear">
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCREffectedDateFrom.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCREffectedDateFrom" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCREffectedDateTo.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCREffectedDateTo" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="row">
+
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsCarryForwardMonthly.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsCarryForwardMonthly" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsLeaveEncashable.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsLeaveEncashable" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsSandwichLeave.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsSandwichLeave" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsPartialLeaveAllowed.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsPartialLeaveAllowed" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsHalfDayAllowed.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsHalfDayAllowed" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsCarryForwardYearly.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsCarryForwardYearly" ng-entity="entity" form="editForm">
+
+                        </div>
+                    </div>
+                    <!--{{entity.LCRIsCarryForwardYearly}}-->
+                    <div class="row" ng-if="entity.LCRIsCarryForwardYearly">
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRNumberOfLeave.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRNumberOfLeave" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsCreditBeforeWork.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsCreditBeforeWork" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsTreatAsAbsent.text}}</label>
+                            <input type="radio" name="commonRedioForPresentOrAbsent" ng-model="absentPresentDays" value="absentD">
+                            <!--<field-box ng-column="page.pageinfo.fields.LCRIsTreatAsAbsent" ng-entity="entity" form="editForm"></field-box>-->
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LTRIsPresentDays.text}}</label>
+                            <input type="radio" name="commonRedioForPresentOrAbsent" ng-model="absentPresentDays" value="presentD">
+
+                            <!--<field-box ng-column="page.pageinfo.fields.LTRIsPresentDays" ng-entity="entity" form="editForm"></field-box>-->
+                        </div>
+                    </div>
+                    <!--{{entity.LTRIsPresentDays}} {{entity.LCRIsTreatAsAbsent}}-->
+                    <div class="row">
+                        <div ng-if="entity.LTRIsPresentDays" class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsTreatHalfDay.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsTreatHalfDay" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsAllowedDailyAllowance.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsAllowedDailyAllowance" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsSeparateFromOffDay.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsSeparateFromOffDay" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsOneTimeApplicable.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsOneTimeApplicable" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+
+
+                        <div ng-if="entity.LCRIsOneTimeApplicable" class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRNextApplicable.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRNextApplicable" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+
+
+
+                    </div>
                 </div>
 
             </div>
 
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsPartialLeaveAllowed.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsPartialLeaveAllowed" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsHalfDayAllowed.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsHalfDayAllowed" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsCarryForwardYearly.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsCarryForwardYearly" ng-entity="entity" form="editForm">
 
-                </div>
-            </div>
-            <!--{{entity.LCRIsCarryForwardYearly}}-->
-            <div class="row" ng-if="entity.LCRIsCarryForwardYearly">
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRNumberOfLeave.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRNumberOfLeave" ng-entity="entity" form="editForm"></field-box>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsCreditBeforeWork.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsCreditBeforeWork" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsTreatAsAbsent.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsTreatAsAbsent" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LTRIsPresentDays.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LTRIsPresentDays" ng-entity="entity" form="editForm"></field-box>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsTreatHalfDay.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsTreatHalfDay" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsAllowedDailyAllowance.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsAllowedDailyAllowance" ng-entity="entity" form="editForm"></field-box>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsSeparateFromOffDay.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsSeparateFromOffDay" ng-entity="entity" form="editForm"></field-box>
-                </div>
-            </div>
-
-
-
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3">{{page.pageinfo.fields.LCRIsOneTimeApplicable.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LCRIsOneTimeApplicable" ng-entity="entity" form="editForm"></field-box>
-                </div>
-
-            </div>
 
 
         </div>

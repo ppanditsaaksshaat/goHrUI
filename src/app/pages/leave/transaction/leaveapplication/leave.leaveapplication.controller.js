@@ -15,11 +15,14 @@
     var vm = this;
     var pageId = 157;
     var sanctionLeavePageId = 285;
+    var leaveControlTableId = 273;
+    var leaveControlPageId = 261;
     var currentState = $state.current;
     // this.uploadRecord = _uploadRecord;
     $scope.entity = {}
     $scope.page = $scope.createPage();
     $scope.closeForm = _closeForm;
+    // $scope.getLeaveTypeAccordingLeaveControl = _getLeaveTypeAccordingLeaveControl;
 
     console.log($scope.page)
     // $scope.selectEmployeeData = $scope.page.pageinfo.selects.LEADEmpId;
@@ -130,7 +133,110 @@
       // debugger;
       // if (_validateForm(editForm)) {
 
-      // if ($scope.entity.LEADEmpId != "" && $scope.entity.LEADEmpId !== undefined) {
+      if ($scope.entity.LEADEmpId != "" && $scope.entity.LEADEmpId !== undefined) {
+        if ($scope.entity.LEADLTId != "" && $scope.entity.LEADLTId !== undefined) {
+
+          console.log($scope.entity.LEADDateFrom)
+          console.log($scope.entity.LEADDateTo)
+          if (($scope.entity.LEADDateFrom != "" && $scope.entity.LEADDateFrom !== undefined) && ($scope.entity.LEADDateTo != "" && $scope.entity.LEADDateTo !== undefined)) {
+            debugger;
+
+            if ($scope.entity.LEADDateFrom === undefined) {
+              $scope.entity.LEADDateFrom = "";
+            }
+            if ($scope.entity.LEADDateTo === undefined) {
+              $scope.entity.LEADDateTo = "";
+            }
+            // var firstdate = $scope.entity.LEADDateFrom;
+            // var seconddate = $scope.entity.LEADDateTo;
+
+            // var one = new Date(firstdate)
+            // var two = new Date(seconddate);
+
+
+
+
+            // if (two >= one) {
+            // var millisecondsPerDay = 1000 * 60 * 60 * 24;
+            // var millisBetween = two.getTime() - one.getTime();
+            // $scope.day = millisBetween / millisecondsPerDay;
+            // console.log(day)
+            // Math.floor(day);
+
+            _getLeaveTypeAccordingLeaveControl()
+            if ($scope.isValiddate) {
+              var balanceLeave = 0;
+              var leaveType = $scope.entity.LEADLTId;
+
+              console.log($scope.entity.LEADLTId)
+
+
+
+              // if ($scope.totalCredit >= $scope.totalDebit) {
+              // debugger;
+              // balanceLeave = $scope.totalCredit - $scope.totalDebit;
+              // if (balanceLeave >= $scope.day) {
+
+              editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
+                $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+              console.log($scope.page.pageinfo.pageid, $scope.entity,
+                $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+              $scope.showEditForm = false;
+              // }
+              // else {
+              //   $scope.showMsg('error', 'You Can Not Apply Leave because your leave is exta leave according to your balance Leave..');
+              //   // alert('You Can Not Apply Leave.')
+              // }
+              // }
+              // else {
+              //   $scope.showMsg('error', 'Your leave is exta leave according to your balance Leave.');
+              //   // alert('Your leave is exta leave according to your balance Leave')
+              // }
+            }
+            else {
+              $scope.showMsg('error', 'you have not apply more than 3 leave.');
+            }
+
+
+
+
+            // }
+            // else {
+            //   // alert('to date should be greater than from date')
+            //   $scope.showMsg('error', 'To date should be greater than from date.');
+            // }
+
+
+
+          }
+          else {
+            $scope.showMsg('error', 'Please Select to date and from Date..');
+
+          }
+
+
+        }
+        else {
+          $scope.showMsg('error', 'Please Select Leave Type.');
+        }
+      }
+
+
+
+
+      else {
+        $scope.showMsg('error', 'Please Select Employee Name And Leave Type.');
+
+        // alert('Please Select Employee Name And Leave Type')
+      }
+
+
+
+      // }
+    }
+
+    function _getLeaveTypeAccordingLeaveControl() {
+      $scope.isValiddate = false;
 
       if ($scope.entity.LEADDateFrom === undefined) {
         $scope.entity.LEADDateFrom = "";
@@ -138,89 +244,57 @@
       if ($scope.entity.LEADDateTo === undefined) {
         $scope.entity.LEADDateTo = "";
       }
-      var firstdate = $scope.entity.LEADDateFrom;
-      var seconddate = $scope.entity.LEADDateTo;
-
-      // var splitFirstDate = firstdate.split(' ')[0];
-      // var splitSecondDate = seconddate.split(' ')[0];
-      // console.log(splitFirstDate, splitSecondDate)
-      // var dt1 = splitFirstDate.split('-')
-      // var dt2 = splitSecondDate.split('-')
-      // var one = new Date(dt1[2], dt1[0] - 1, dt2[1])
-      // var two = new Date(dt2[2], dt2[0] - 1, dt2[1]);
-
-      var one = new Date(firstdate)
-      var two = new Date(seconddate);
+      var one = new Date($scope.entity.LEADDateFrom)
+      var two = new Date($scope.entity.LEADDateTo);
 
       if (two >= one) {
         var millisecondsPerDay = 1000 * 60 * 60 * 24;
         var millisBetween = two.getTime() - one.getTime();
         var days = millisBetween / millisecondsPerDay;
-        console.log(days)
-        Math.floor(days);
+        var balanceLeaves = 0;
 
-        // var totalCredit = 0;
-        // var totalDebit = 0;
-        var balanceLeave = 0;
-        var leaveType = $scope.entity.LEADLTId;
-
-        console.log($scope.entity.LEADLTId)
-        if ($scope.searchEmployeeLeaveTransactionList === undefined) {
-          $scope.searchEmployeeLeaveTransactionList = [];
-
+        var searchLists = [];
+        var searchListData = {
+          field: 'LCRLTId',
+          operand: '=',
+          // value: $scope.entity.LCRLTId
+          value: 1
         }
-        $scope.searchEmployeeLeaveTransactionList = [];
-        // _employeeOnChange()
-        // $scope.searchEmployeeLeaveTransactionList = $scope.leaveTypeDataList;
-        // console.log($scope.searchEmployeeLeaveTransactionList)
-        // var leaveCredit = parseInt(value.ELTLeaveCr);
-        // var leaveDebit = parseInt(value.ELTLeaveDr);
+        searchLists.push(searchListData)
+        var data = {
+          searchList: searchLists,
+          orderByList: []
+        }
+        pageService.getTableData(leaveControlTableId, leaveControlPageId, '', '', true, data).then(function (result) {
+          console.log(result);
+          console.log(result[0].BRId)
+          console.log(result[0].LCRMaxDays)
+          debugger;
+          if (days <= result[0].LCRMaxDays) {
+            console.log(result[0].LCRMaxDays)
+            if ($scope.totalCredit >= $scope.totalDebit) {
 
-        // totalCredit = parseInt($scope.leaveTypeDataList.Creadit);
-        // totalDebit = parseInt($scope.leaveTypeDataList.Debit);
-
-        if ($scope.totalCredit >= $scope.totalDebit) {
-          // debugger;
-          balanceLeave = $scope.totalCredit - $scope.totalDebit;
-          if (balanceLeave >= days) {
-            // $scope.oldEntity = {};
-            // $scope.action = 'create';
-            // console.log($scope.entity, $scope.oldEntity, $scope.action)
-            editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
-              $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
-            console.log($scope.page.pageinfo.pageid, $scope.entity,
-              $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
-            $scope.showEditForm = false;
-            // $scope.showEditForm = false;
-            // editFormService.saveForm($scope.pageId, $scope.entity, $scope.oldEntity, $scope.action, $scope.page.pageinfo.tagline)
+              balanceLeaves = $scope.totalCredit - $scope.totalDebit;
+              if (balanceLeaves >= days) {
+                return $scope.isValiddate = true;
+              }
+              else {
+                alert('No more leave available in your accout');
+              }
+            }
           }
+
           else {
-            $scope.showMsg('error', 'You Can Not Apply Leave because your leave is exta leave according to your balance Leave..');
-            // alert('You Can Not Apply Leave.')
+            alert('You have not permission more than' + result[0].LCRMaxDays + 'leave')
           }
-        }
-        else {
-          $scope.showMsg('error', 'Your leave is exta leave according to your balance Leave.');
-          // alert('Your leave is exta leave according to your balance Leave')
-        }
-        // console.log(totalCredit)
-        // console.log(totalDebit)
+
+        })
       }
       else {
-        // alert('to date should be greater than from date')
-        $scope.showMsg('error', 'To date should be greater than from date.');
+        alert('Your from date should be less than OR equel ')
       }
 
 
-      // else {
-      //   $scope.showMsg('error', 'Please Select Employee Name And Leave Type.');
-
-      //   // alert('Please Select Employee Name And Leave Type')
-      // }
-
-
-
-      // }
     }
 
     function _closeForm(editForm) {
@@ -250,6 +324,9 @@
         $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
       $scope.showEditForm = false;
     }
+
+    // _getLeaveTypeAccordingLeaveControl()
+
   }
 
 })();
