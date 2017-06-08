@@ -1,19 +1,10 @@
-<!--<div class="row">
-    <div class="col-md-3" ng-show="page.showFilter" style="padding-right:0px; margin-right:0px;  ">
-        <filter-box page="page"></filter-box>
-    </div>
-    <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
-        <grid-box page="page" box-options="boxSetting">
-        </grid-box>
-    </div>
-</div>
--->
+
 <div ba-panel ba-panel-class="horizontal-tabs tabs-panel">
     <uib-tabset active="$tabSetStatus.activeTab">
         <uib-tab heading="Import Wizard">
-            <div id="step1">
+            <div ng-show="attCtrl.steps1">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3" ng-if="!gridShow">
                         <label class="control-label ">
                                         Select a file to upload: 
                                     </label>
@@ -38,6 +29,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <hr ng-show="attCtrl.gridOptions.data.length > 0" />
                         <div class="row" ng-show="attCtrl.gridOptions.data.length > 0">
                             <div class="col-md-12">
@@ -47,14 +39,15 @@
                                 </label>
                             </div>
                         </div>
-                         <br><br>
+                        <br><br>
                         <div class="row" ng-show="attCtrl.gridOptions.data.length > 0">
                             <div class="col-md-12">
                                 <input type="button" class="btn btn-success btn-file" value="Upload" ng-click="attCtrl.uploadAttendance()">
                             </div>
                         </div>
+
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-9" ng-show="attCtrl.showUploderResult">
                         <div ng-hide="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">
                             <h5>Download Template</h5>
                             <button type="button" class="btn btn-warning" ng-click="attCtrl.downloadTemp()">
@@ -81,6 +74,7 @@
                             <p>We recommend doing a test import with a sample file before importing your actual data.</p>
 
                         </div>
+
                         <span ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">Preview Data</span>
                         <div class="row">
                             <div class="col-md-12">
@@ -91,7 +85,25 @@
 
                             </div>
                         </div>
+
                     </div>
+                    <div class="col-md-9" ng-hide="attCtrl.showUploderResult">
+                        <a href ng-click="attCtrl.insert();gridShow=true">{{attCtrl.insertedRow}} Inserted</a>
+                        <a href ng-click="attCtrl.update();gridShow=true">{{attCtrl.updatedRow}} Updated</a>
+                        <a href ng-click="attCtrl.fail();gridShow=true">{{attCtrl.failedRow}} Failed</a>
+                        <button ng-show="gridShow" ng-click="gridShow=false;attCtrl.showUploderResult=true" class="pull-right btn btn-success btn-file" >Back</button>
+                        <div ng-show="gridShow">
+                            <br><br>
+                            <span>Preview  Data</span>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="grid1" style="height:auto" ui-grid="attCtrl.commonGridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

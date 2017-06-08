@@ -16,6 +16,8 @@
     // this.uploadRecord = _uploadRecord;
 
     $scope.attDateChange = _attDateChange;
+    $scope.empChange = _empChange;
+
     $scope.entity = {}
     $scope.closeForm = _closeForm;
     $scope.page = $scope.createPage();
@@ -56,11 +58,25 @@
      * @param {object} modelCtrl 
      * @param {object} column 
      */
+    function _empChange(event, element, modelCtrl, column) {
+
+      // var attDate = $scope.entity.COAttnDate;//modelCtrl.$modelValue;
+      var EmpId = $scope.entity.EmpId;
+      var COAttnDate = moment($scope.entity.COAttnDate);
+    }
+    /**
+     * On Change Event for Employee Dropdown
+     * @param {object} event 
+     * @param {object} element 
+     * @param {object} modelCtrl 
+     * @param {object} column 
+     */
     function _attDateChange(event, element, modelCtrl, column) {
       var EmpId = $scope.entity.EmpId;
       var COAttnDate = moment($scope.entity.COAttnDate);
+      // console.log(EmpId, column, modelCtrl, $scope.entity)
 
-alert ('SK');
+
       var searchLists = [];
       var searchListData = {
         field: 'EmpId',
@@ -72,15 +88,12 @@ alert ('SK');
       }
       searchLists.push(searchListData)
 
-       searchListData = {
+      searchListData = {
         field: 'AttDate',
         operand: '=',
-        value: moment($scope.entity.COAttnDate)
+        value: $scope.entity.COAttnDate
 
-        // value: 5
       }
-      console.log(searchListData);
-      console.log('SK');
       searchLists.push(searchListData)
 
 
@@ -90,11 +103,14 @@ alert ('SK');
       }
 
       var queryId = 514;
-      pageService.getCustomQuery(data, queryId).then(function (result) {
+        pageService.getCustomQuery(data, queryId).then(function (result) {
         console.log(result);
-//$scope.entity.COTimeIn=result.;
+        $scope.entity.COTimeIn = result[0].Intime;
+        $scope.entity.COTimeOut = result[0].OutTime;
+        $scope.entity.COTotalWrTmInHour = result[0].TotallHours;
 
       })
+
     }
 
 

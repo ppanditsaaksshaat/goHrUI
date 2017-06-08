@@ -30,6 +30,8 @@
             },
             link: function ($scope, $elm, $attrs, $ctrl) {
 
+                //a local ngModel variable for implemented control which is set by validText directive
+                $scope.ngModel = {};
                 
                 if (!$scope.col)
                     return;
@@ -39,8 +41,7 @@
                     return moment();
                 }
              
-                //a local ngModel variable for implemented control which is set by validText directive
-                $scope.ngModel = {};
+                
 
                 //defining entity if passes undefined from implementation
                 //possible if entity is not defined on the top of the implemented controller
@@ -292,6 +293,7 @@
                     }
                 })
                 $elm.bind('change', function (e) {
+                    debugger;
                     if ($scope.fbOnChange) {
                         $scope.fbOnChange({ event: e, element: $elm, modelCtrl: $scope.ngModel, column: $scope.col })
                     }
