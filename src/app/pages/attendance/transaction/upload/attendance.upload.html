@@ -4,10 +4,11 @@
             <div ng-show="attCtrl.showUploderResult">
                 <div class="row">
                     <div class="col-md-3">
-                        <label class="control-label ">
-                                        Select a file to upload: 
+                        <div ng-show="attCtrl.btnResetBrowse">
+                            <label class="control-label ">
+                                   Select a file to upload: 
                                     </label>
-                        <label class="btn btn-success btn-file">
+                            <label class="btn btn-success btn-file">
                                         Browse
                                         <input type="file" 
                                         accept=".xls,.xlsx,.ods"  
@@ -18,17 +19,20 @@
                                         result="attCtrl.fileResult"
                                         style="display: none;">
                                     </label><br/>
-                        <span class="">(Only .xls, .xlsx are supported)</span><br>
-                        <div class="schema-form-section row" ng-show="attCtrl.gridOptions.data.length > 0">
-                            <div class="schema-form-section col-xs-12">
-                                <div class="form-group schema-form-text  has-feedback">
-                                    <label class="control-label ">
+                            <span class="">(Only .xls, .xlsx are supported)</span><br>
+                            <div class="schema-form-section row" ng-show="attCtrl.gridOptions.data.length > 0">
+                                <div class="schema-form-section col-xs-12">
+                                    <div class="form-group schema-form-text  has-feedback">
+                                        <label class="control-label ">
                                         You have selected {{attCtrl.gridOptions.data.length}} record file
                                     </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
+                        <div ng-hide="attCtrl.btnResetBrowse">
+                            <button type="button" ng-click="attCtrl.resetBrowse();attCtrl.gridOptions.data=[];" class="btn-success btn-file">Reset Browse</button>
+                        </div>
                         <hr ng-show="attCtrl.gridOptions.data.length > 0" />
                         <div class="row" ng-show="attCtrl.gridOptions.data.length > 0">
                             <div class="col-md-12">
@@ -76,8 +80,8 @@
 
                         <span ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">Preview Data</span>
                         <div class="row">
-                           <div class="col-md-12">
-                               <div id="grid1" style="height:auto" ui-grid="attCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
+                            <div class="col-md-12">
+                                <div id="grid1" style="height:auto" ui-grid="attCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
                                     ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">
                                 </div>
                             </div>
@@ -88,10 +92,13 @@
                 </div>
             </div>
             <div class="col-md-9" ng-hide="attCtrl.showUploderResult">
-                <a href ng-click="attCtrl.insert()">{{attCtrl.insertedRow}} Inserted</a>
-                <a href ng-click="attCtrl.update()">{{attCtrl.updatedRow}} Updated</a>
-                <a href ng-click="attCtrl.fail()">{{attCtrl.failedRow}} Failed</a>
-                <button  ng-click="attCtrl.showUploderResult=true;attCtrl.gridOptions.data=[];attCtrl.commonGridOptions.data=[];" class="pull-right btn btn-danger btn-file">Back</button>
+                <div class="btn-group" role="group">
+                    <a href ng-click="attCtrl.insert()">{{attCtrl.insertedRow}} Inserted</a>
+                    <a href ng-click="attCtrl.update()">{{attCtrl.updatedRow}} Updated</a>
+                    <a href ng-click="attCtrl.fail()">{{attCtrl.failedRow}} Failed</a>
+                </div>
+                <button ng-click="attCtrl.showUploderResult=true;attCtrl.gridOptions.data=[];attCtrl.commonGridOptions.data=[];" class="pull-right btn btn-danger btn-file">Back</button>
+
                 <div>
                     <br><br>
                     <label>{{attCtrl.gridUpHeading}}</label>

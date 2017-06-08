@@ -53,6 +53,7 @@
     $scope.clearFormCommon = _clearFormCommon;
     $scope.closeForm = _closeForm;
     $scope.saveForm = _saveForm;
+    
 
 
     function _uploadRecord()

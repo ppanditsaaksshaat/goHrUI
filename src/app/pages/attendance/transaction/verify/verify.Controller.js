@@ -23,7 +23,7 @@
     // this.uploadRecord = _uploadRecord;
     $scope.entity = {}
     $scope.page = $scope.createPage();
-    $scope.page.pageId = 155;
+    $scope.page.pageId = 320;
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
