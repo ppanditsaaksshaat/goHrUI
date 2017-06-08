@@ -16,13 +16,20 @@
     /**Local Variable */
     var vm = this;
     vm.gridOptions = $scope.getGridSetting();
+    vm.commonGridOptions = $scope.getGridSetting();
+    vm.gridUpdatedOptions = $scope.getGridSetting();
+    vm.gridFaliedOptions = $scope.getGridSetting();
     vm.uploader = [];
     $scope.fileResult = undefined;
+    vm.showUploderResult = true;
 
 
 
     vm.downloadTemp = _downloadTemp;
     vm.uploadAttendance = _uploadAttendance;
+    vm.insert = _insert;
+    vm.update = _update
+    vm.fail = _fail;
 
 
 
@@ -59,6 +66,13 @@
       angular.extend(toastrConfig, toastOption);
       openedToasts.push(toastr[toastOption.type](msg, title));
     }
+    vm.steps1 = true;
+    vm.steps2 = false;
+
+    // vm.migrate = {
+    //   step1: true, step2: false
+    // }
+
 
     /**
      * DownLoad Excel Template for Attendance
@@ -79,6 +93,9 @@
     /**
      * Upload Attendance List from Excel
      */
+
+    var insertedGridData = [], updatedGridData = [], failedGridData = [];
+
     function _uploadAttendance() {
 
       console.log(vm.gridOptions.data)
@@ -90,22 +107,39 @@
       var compressed = LZString.compressToEncodedURIComponent(postData);
       var data = { lz: true, data: compressed }
       pageService.commonUploder(data).then(function (result) {
-
-        var errorMsg = ""; successMsg="";
-        console.log(result)
-        angular.forEach(result.Table1, function (data,index) {
-          if (data.IsFailed) {
-            errorMsg +="In row "+index+" "+data.RESULT
-          }       
-        })
-        console.log(errorMsg)
-        if (errorMsg != "") {
-          _showToast('error', errorMsg, "")
+        if (result !== undefined) {
+          vm.showUploderResult = false;
+          angular.forEach(result.Table1, function (data) {
+            if (data.IsInserted) {
+              insertedGridData.push(data)
+            }
+            else if (data.IsUpdated) {
+              updatedGridData.push(data)
+            }
+            else {
+              failedGridData.push(data)
+            }
+          });
+          console.log(result.Table2[0].Inserted)
+          vm.insertedRow = result.Table2[0].Inserted;
+          vm.updatedRow = result.Table2[0].Updated;
+          vm.failedRow = result.Table2[0].Failed;
         }
-       
+
         console.log(result)
       })
     }
+
+    function _insert() {
+      vm.commonGridOptions.data = insertedGridData;
+    }
+    function _update() {
+      vm.commonGridOptions.data = updatedGridData;
+    }
+    function _fail() {
+      vm.commonGridOptions.data = failedGridData;
+    }
+
   }
 
 })();

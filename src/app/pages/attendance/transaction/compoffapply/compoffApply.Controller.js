@@ -58,13 +58,11 @@
      * @param {object} modelCtrl 
      * @param {object} column 
      */
-    function _attDateChange(event, element, modelCtrl, column) {
-      var attDate = modelCtrl.$modelValue;
-      var EmpId = $scope.entity.EmpId
-        ;
-      var COAttnDate = moment($scope.entity.COAttnDate);
+    function _empChange(event, element, modelCtrl, column) {
 
-      console.log(attDate, column, modelCtrl, $scope.entity)
+      // var attDate = $scope.entity.COAttnDate;//modelCtrl.$modelValue;
+      var EmpId = $scope.entity.EmpId;
+      var COAttnDate = moment($scope.entity.COAttnDate);
     }
     /**
      * On Change Event for Employee Dropdown
@@ -73,12 +71,12 @@
      * @param {object} modelCtrl 
      * @param {object} column 
      */
-    function _empChange(event, element, modelCtrl, column) {
-      var EmpId = modelCtrl.$modelValue;
+    function _attDateChange(event, element, modelCtrl, column) {
+      var EmpId = $scope.entity.EmpId;
       var COAttnDate = moment($scope.entity.COAttnDate);
-      console.log(EmpId, column, modelCtrl, $scope.entity)
+      // console.log(EmpId, column, modelCtrl, $scope.entity)
 
-      alert('SK');
+
       var searchLists = [];
       var searchListData = {
         field: 'EmpId',
@@ -93,12 +91,9 @@
       searchListData = {
         field: 'AttDate',
         operand: '=',
-        value: moment($scope.entity.COAttnDate)
+        value: $scope.entity.COAttnDate
 
-        // value: 5
       }
-      console.log(searchListData);
-      console.log('SK');
       searchLists.push(searchListData)
 
 
@@ -108,9 +103,11 @@
       }
 
       var queryId = 514;
-      pageService.getCustomQuery(data, queryId).then(function (result) {
+        pageService.getCustomQuery(data, queryId).then(function (result) {
         console.log(result);
-        //$scope.entity.COTimeIn=result.;
+        $scope.entity.COTimeIn = result[0].Intime;
+        $scope.entity.COTimeOut = result[0].OutTime;
+        $scope.entity.COTotalWrTmInHour = result[0].TotallHours;
 
       })
 
