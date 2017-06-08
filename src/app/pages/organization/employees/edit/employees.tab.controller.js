@@ -373,10 +373,12 @@
                 if (result.entity !== undefined) {
                     if (result.entity.JDId !== undefined) {
                         vm.oldEntity = angular.copy(result.entity);
+                        vm.entity = angular.copy(result.entity);
                     }
 
                     if (result.entity.CDId !== undefined) {
                         vm.oldempContactDetail = angular.copy(result.entity);
+                        vm.emgContactPage = angular.copy(result.entity);
                     }
                     if (result.entity.PdId !== undefined) {
                         isSuccess = false;
@@ -384,7 +386,6 @@
                         if (vm.empEmgContact.ECId === undefined) {
                             vm.empEmgContact.ECEmpId = vm.empPKId;
                             _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'create')
-                            console.log(vm.empEmgContact)
                         }
                         else {
                             _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'edit')
@@ -406,6 +407,7 @@
         }
         function _updateErrorResult(error) {
             console.log(error)
+            $scope.showMsg('error', 'Something went worng', 'Save Error')
         }
         function _resetPersonal() {
             vm.entity = angular.copy(vm.oldEntity);
@@ -430,8 +432,8 @@
         }
         //=========================================================== common method
         function _validateFormCommon(form) {
-            var valid = editFormService.validateForm(form);
-            
+
+            var valid = true;
             if (vm.activeTab === undefined) {
                 if (angular.equals(vm.entity, vm.oldEntity)) {
                     _showToast('info', 'Nothing to save', "")
@@ -455,7 +457,8 @@
                     valid = false;
                 }
             }
-
+            if (valid)
+                valid = editFormService.validateForm(form);
             return valid;
         }
         function _saveFormCommon(editForm) {
@@ -471,8 +474,8 @@
                 }
             }
         }
-        function _resetFormCommon() {
-
+        function _resetFormCommon(editForm) {
+            editForm.$setPristine();
             if (vm.activeTab === undefined) {
                 vm.entity = angular.copy(vm.oldEntity);
             }
