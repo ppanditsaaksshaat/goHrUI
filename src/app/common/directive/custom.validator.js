@@ -453,25 +453,25 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             function keypressOnlyNumericWithDash(e) {
                 var validValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-']
                 var result = validKeypress(e, validValues);
-                modelCtrl.$setValidity('numericDash', !result);
+                //modelCtrl.$setValidity('numericDash', result);
             }
             //Numeric + plus
             function keypressOnlyNumericWithPlus(e) {
                 var validValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+']
                 var result = validKeypress(e, validValues);
-                modelCtrl.$setValidity('numericPlus', !result);
+                //modelCtrl.$setValidity('numericPlus', result);
             }
             //Numeric + plush + dash
             function keypressOnlyNumericWithPlusDash(e) {
                 var validValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+']
                 var result = validKeypress(e, validValues);
-                modelCtrl.$setValidity('numericPlusDash', !result);
+                //modelCtrl.$setValidity('numericPlusDash', result);
             }
             //Numeric + decimal
             function keypressOnlyNumericWithDecimal(e) {
                 var validValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
                 var result = validKeypress(e, validValues);
-                modelCtrl.$setValidity('numericDecimal', !result);
+                //modelCtrl.$setValidity('numericDecimal', result);
             }
             //common keypress
             function validKeypress(e, validValues) {
