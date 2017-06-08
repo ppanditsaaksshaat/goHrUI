@@ -1,10 +1,9 @@
-
 <div ba-panel ba-panel-class="horizontal-tabs tabs-panel">
     <uib-tabset active="$tabSetStatus.activeTab">
         <uib-tab heading="Import Wizard">
-            <div ng-show="attCtrl.steps1">
+            <div ng-show="attCtrl.showUploderResult">
                 <div class="row">
-                    <div class="col-md-3" ng-if="!gridShow">
+                    <div class="col-md-3">
                         <label class="control-label ">
                                         Select a file to upload: 
                                     </label>
@@ -77,37 +76,34 @@
 
                         <span ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">Preview Data</span>
                         <div class="row">
-                            <div class="col-md-12">
-
-                                <div id="grid1" style="height:auto" ui-grid="attCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
+                           <div class="col-md-12">
+                               <div id="grid1" style="height:auto" ui-grid="attCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
                                     ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">
                                 </div>
-
                             </div>
                         </div>
 
-                    </div>
-                    <div class="col-md-9" ng-hide="attCtrl.showUploderResult">
-                        <a href ng-click="attCtrl.insert();gridShow=true">{{attCtrl.insertedRow}} Inserted</a>
-                        <a href ng-click="attCtrl.update();gridShow=true">{{attCtrl.updatedRow}} Updated</a>
-                        <a href ng-click="attCtrl.fail();gridShow=true">{{attCtrl.failedRow}} Failed</a>
-                        <button ng-show="gridShow" ng-click="gridShow=false;attCtrl.showUploderResult=true" class="pull-right btn btn-success btn-file" >Back</button>
-                        <div ng-show="gridShow">
-                            <br><br>
-                            <span>Preview  Data</span>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div id="grid1" style="height:auto" ui-grid="attCtrl.commonGridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
             </div>
-
-
+            <div class="col-md-9" ng-hide="attCtrl.showUploderResult">
+                <a href ng-click="attCtrl.insert()">{{attCtrl.insertedRow}} Inserted</a>
+                <a href ng-click="attCtrl.update()">{{attCtrl.updatedRow}} Updated</a>
+                <a href ng-click="attCtrl.fail()">{{attCtrl.failedRow}} Failed</a>
+                <button  ng-click="attCtrl.showUploderResult=true;attCtrl.gridOptions.data=[];attCtrl.commonGridOptions.data=[];" class="pull-right btn btn-danger btn-file">Back</button>
+                <div>
+                    <br><br>
+                    <label>{{attCtrl.gridUpHeading}}</label>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="grid1" style="height:auto" ui-grid="attCtrl.commonGridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </uib-tab>
         <!--<uib-tab heading="Import History">
             <h3 class="with-line">Import History</h3>

@@ -19,11 +19,10 @@
         templateUrl: 'app/pages/attendance/transaction/upload/attendance.upload.html?v=1',
         controller: "attTransuploadController",
         controllerAs: "attCtrl",
-        title: 'Upload Attendance',
         sidebarMeta: {
           order: 1,
           parent: 'attendance.transaction',
-          pageTitle: 'Att upload'
+          pageTitle: 'Attendance Upload'
         },
       })
   }

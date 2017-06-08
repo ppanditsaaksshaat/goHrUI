@@ -47,7 +47,7 @@
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.boxOptions = angular.copy(boxSetting);
                 else {
-                    $scope.page.boxOptions = angular.extend($scope.page.boxOptions, boxSetting);
+                    $scope.page.boxOptions = angular.extend({}, boxSetting,$scope.page.boxOptions);
                 }
                 if (!$scope.page.boxOptions.showFilter) {
                     $scope.page.showFilter = false;
