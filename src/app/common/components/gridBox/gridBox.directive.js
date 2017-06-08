@@ -32,7 +32,7 @@
                     showRefresh: true,
                     filterOpened: false,
                     requiredFilter: false,
-                    showFilter: false,
+                    showFilter: undefined,
                     showAdd: true,
                     showRowMenu: true,
                     showCustomView: true,
@@ -47,15 +47,16 @@
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.boxOptions = angular.copy(boxSetting);
                 else {
-                    $scope.page.boxOptions = angular.extend($scope.page.boxOptions, boxSetting);
+                    $scope.page.boxOptions = angular.extend({}, boxSetting, $scope.page.boxOptions);
                 }
                 if (!$scope.page.boxOptions.showFilter) {
                     $scope.page.showFilter = false;
                 }
+
                 else if ($scope.page.boxOptions.filterOpened) {
                     $scope.page.showFilter = true;
                 }
-
+                console.log($scope.page)
                 if ($scope.page.gridOptions === undefined) {
                     $scope.page.gridOptions = angular.copy(gridOptions);
                 }
