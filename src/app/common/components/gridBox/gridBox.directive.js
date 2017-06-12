@@ -39,9 +39,11 @@
                     showUpload: false,
                     showDialog: false,
                     showDataOnLoad: true,
-                    gridStyle: { height: '450px' }
+                    gridStyle: { height: '450px' },
+                    customButtons: []
                 }
 
+                //customButtons: text, icon, onClick, type:btn-detault
 
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
@@ -357,8 +359,13 @@
                     });
                 }
                 function _getPageSuccessResult(result) {
+<<<<<<< HEAD
                     //console.log(result)
                     $scope.page = angular.extend({}, $scope.page, result);
+=======
+                    console.log(result)
+                    $scope.page = angular.extend($scope.page, result);
+>>>>>>> 9fadb4b2cd77e13b4b7bc46023267815e6bb5085
                     // $scope.setPage(result)
                     ////console.log('from getpage')
                     //_setGridColumns();
@@ -509,11 +516,12 @@
                     }
                 })
                 $scope.$on('apply-filter', function (successEvent, searchList) {
-                    console.log(searchList)
-                    console.log('from gridbox', $scope.page)
+                    
+                    // console.log(searchList)
+                    // console.log('from gridbox', $scope.page)
                     if (searchList) {
                         $scope.page.searchList = searchList;
-                        console.log(searchList)
+                        // console.log(searchList)
                         _refreshData();
                     }
                 })

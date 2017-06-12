@@ -7,6 +7,9 @@
 
   angular.module('BlurAdmin.pages.leave.transaction', [
      'BlurAdmin.pages.leave.transaction.leaveapplication',
+     'BlurAdmin.pages.leave.transaction.leavestatement',
+     'BlurAdmin.pages.leave.transaction.leavetransactiondetail'
+     
      
   ])
     .config(routeConfig);

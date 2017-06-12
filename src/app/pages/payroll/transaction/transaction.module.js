@@ -6,18 +6,21 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.payroll.transaction', [
-     'BlurAdmin.pages.payroll.transaction.EmployeeIncentive',
-     'BlurAdmin.pages.payroll.transaction.SalaryAttendancecycle',
-     'BlurAdmin.pages.payroll.transaction.Salarypayrollprocess',
-     'BlurAdmin.pages.payroll.transaction.LeaveEncashment',
-     'BlurAdmin.pages.payroll.transaction.LeaveEncashmentHistory',
-     'BlurAdmin.pages.payroll.transaction.FullAndFinalSettlement',
-     'BlurAdmin.pages.payroll.transaction.FullAndFinalDetail',
-     'BlurAdmin.pages.payroll.transaction.SalaryIncrement',
-     'BlurAdmin.pages.payroll.transaction.SalaryIncrementHistory',
-     'BlurAdmin.pages.payroll.transaction.EmployeeBonus'
-     
-                 
+    'BlurAdmin.pages.payroll.transaction.CustomPayrollSetting',
+    'BlurAdmin.pages.payroll.transaction.SalaryAttendance',
+    
+    // 'BlurAdmin.pages.payroll.transaction.EmployeeIncentive',
+    // 'BlurAdmin.pages.payroll.transaction.SalaryAttendancecycle',
+    // // 'BlurAdmin.pages.payroll.transaction.Salarypayrollprocess',
+    // 'BlurAdmin.pages.payroll.transaction.LeaveEncashment',
+    // 'BlurAdmin.pages.payroll.transaction.LeaveEncashmentHistory',
+    // 'BlurAdmin.pages.payroll.transaction.FullAndFinalSettlement',
+    // 'BlurAdmin.pages.payroll.transaction.FullAndFinalDetail',
+    // 'BlurAdmin.pages.payroll.transaction.SalaryIncrement',
+    // 'BlurAdmin.pages.payroll.transaction.SalaryIncrementHistory',
+    // 'BlurAdmin.pages.payroll.transaction.EmployeeBonus'
+
+
   ])
     .config(routeConfig);
 
