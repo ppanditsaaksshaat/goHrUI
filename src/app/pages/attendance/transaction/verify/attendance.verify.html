@@ -1,2 +1,8 @@
-<grid-box ng-model="page" >
-</grid-box>
+<div ng-show="attVerifyCtrl.showVerifyAttendance">
+    <grid-box ng-model="page">
+    </grid-box>
+</div>
+<div ng-hide="attVerifyCtrl.showVerifyAttendance">
+    <grid-box ng-model="editPage">
+    </grid-box>
+</div>

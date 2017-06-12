@@ -47,6 +47,7 @@
     }
 
     this.openFormVertical = function (options) {
+     
       $rootScope.modalInstance = $uibModal.open({
         animation: false,
         templateUrl: 'app/common/forms/formVertical/formVertical.html',
@@ -61,7 +62,24 @@
           }
         }
       });
-      return $rootScope.modalInstance;
+      return $rootScope.modalInstance;    
+    }
+     this.openForm = function (options) {      
+      $rootScope.modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: options.url,
+        // controller: options.controller,
+        // controllerAs: options.controllerAs,
+        size: 'top-center-500',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          param: function () {
+            return options.param;
+          }
+        }
+      });
+      return $rootScope.modalInstance;    
     }
 
   }

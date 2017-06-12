@@ -38,7 +38,7 @@
       gridHeight: 450,
       getPageData: null,
       refreshData: null,
-      addRecord: _addRecord,
+      addRecord: null,
       editRecord: null,
       updateRecord: null,
       viewRecord: null,

@@ -358,10 +358,10 @@
                 }
                 function _getPageSuccessResult(result) {
                     //console.log(result)
-                    $scope.page = angular.extend($scope.page, result);
+                    $scope.page = angular.extend({}, $scope.page, result);
                     // $scope.setPage(result)
                     ////console.log('from getpage')
-                    _setGridColumns();
+                    //_setGridColumns();
                     if ($scope.page.boxOptions.showDataOnLoad)
                         _refreshData();
                 }
