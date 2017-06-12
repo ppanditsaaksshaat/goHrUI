@@ -1,0 +1,168 @@
+<grid-box ng-model="page" ng-hide="showEditForm">
+</grid-box>
+<form name="editForm " novalidate ng-submit="saveForm(editForm) " ng-show="showEditForm ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
+    " show-reset="true " condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+            <div class="row">
+
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.ELTEmpId.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box ng-column="page.pageinfo.fields.ELTEmpId " ng-entity="entity " form="editForm "></field-box>
+                </div>
+
+                <div class="form-group col-md-3 ">
+                </div>
+                <div class="form-group col-md-3 ">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.ELTLCRId.text}}</label>
+                </div>
+
+                <div class="form-group col-md-4 ">
+
+                    <field-box ng-column="page.pageinfo.fields.ELTLCRId " ng-entity="entity " form="editForm "></field-box>
+                </div>
+
+                <div class="form-group col-md-3 ">
+
+                </div>
+                <div class="form-group col-md-3 ">
+
+                </div>
+            </div>
+
+            <div class="row ">
+
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">Credit</label>
+                </div>
+
+
+                <div class="form-group col-md-4 ">
+
+                    <!--<input type="radio" name="commoncreditAndDebit " fb-change="creditAndDebitValue()" id="creaditLeave" ng-model="creditAndDebitCR" value="credits ">-->
+                    <input type="radio" name="commoncreditAndDebit " ng-model="creditAndDebitCR" value="credits">
+
+                </div>
+
+                <div class="form-group col-md-3 ">
+
+                </div>
+
+                <div class="form-group col-md-3 ">
+
+                </div>
+            </div>
+
+            <div class="row " ng-show="creditAndDebitCR=='credits'">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.ELTLeaveCr.text}}</label>
+                </div>
+
+                <div class="form-group col-md-4 ">
+
+                    <field-box ng-column="page.pageinfo.fields.ELTLeaveCr " ng-entity="entity " form="editForm "></field-box>
+                </div>
+
+
+                <div class="form-group col-md-3 ">
+
+                </div>
+                <div class="form-group col-md-3 ">
+
+                </div>
+
+            </div>
+
+            <div class="row ">
+
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">Debit</label>
+                </div>
+
+                <div class="form-group col-md-4 ">
+
+                    <!--<input type="radio" name="commoncreditAndDebit " fb-change="creditAndDebitValue()" ng-model="creditAndDebitDR" id="debitLeave" value="debits ">-->
+                    <input type="radio" name="commoncreditAndDebit " ng-model="creditAndDebitCR" value="debits">
+
+                </div>
+
+
+
+
+                <div class="form-group col-md-3 ">
+
+                </div>
+
+                <div class="form-group col-md-3 ">
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="row" ng-show="creditAndDebitCR=='debits'">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.ELTLeaveDr.text}}</label>
+                </div>
+
+                <div class="form-group col-md-4 ">
+
+                    <field-box ng-column="page.pageinfo.fields.ELTLeaveDr " ng-entity="entity " form="editForm "></field-box>
+                </div>
+
+                <div class="form-group col-md-3 ">
+
+                </div>
+                <div class="form-group col-md-3 ">
+
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.ELTRemark.text}}</label>
+                </div>
+
+                <div class="form-group col-md-4 ">
+
+                    <field-box ng-column="page.pageinfo.fields.ELTRemark " ng-entity="entity " form="editForm "></field-box>
+                </div>
+
+                <div class="form-group col-md-3 ">
+
+                </div>
+                <div class="form-group col-md-3 ">
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+</form>
