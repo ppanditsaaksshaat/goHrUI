@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div ng-hide="attCtrl.btnResetBrowse">
-                            <button type="button" ng-click="attCtrl.resetBrowse();attCtrl.gridOptions.data=[];" class="btn-success btn-file">Reset Browse</button>
+                            <button type="button" ng-click="attCtrl.resetBrowse();attCtrl.gridOptions.data=[];" class="btn btn-success btn-file">Reset</button>
                         </div>
                         <hr ng-show="attCtrl.gridOptions.data.length > 0" />
                         <div class="row" ng-show="attCtrl.gridOptions.data.length > 0">
@@ -69,8 +69,8 @@
                             <p>File size cannot exceed 5 MB.</p>
                             <p>All duplicate records will be ignored when importing.</p>
                             <p>Checkbox value should be 1 or 0.</p>
-                            <p>Date must be in the format MM/DD/YYYY. Records that use other date formats will be ignored.</p>
-                            <p>Date and time values must be in the following format: MM/DD/YYYY hh:mm:ss. Any other format will
+                            <p>Date must be in the format DD/MM/YYYY. Records that use other date formats will be ignored.</p>
+                            <p>Date and time values must be in the following format: DD/MM/YYYY hh:mm:ss. Any other format will
                                 be ignored.</p>
                             <p>By default, the character encoding is UTF-8 (Unicode). Make sure you provide the correct character
                                 encoding if your import file has special characters.</p>
@@ -97,7 +97,7 @@
                     <a href ng-click="attCtrl.update()">{{attCtrl.updatedRow}} Updated</a>
                     <a href ng-click="attCtrl.fail()">{{attCtrl.failedRow}} Failed</a>
                 </div>
-                <button ng-click="attCtrl.showUploderResult=true;attCtrl.gridOptions.data=[];attCtrl.commonGridOptions.data=[];" class="pull-right btn btn-danger btn-file">Back</button>
+                <button ng-click="attCtrl.showUploderResult=true;attCtrl.gridOptions.data=[];attCtrl.commonGridOptions.data=[];attCtrl.btnResetBrowse=true;attCtrl.close();" class="pull-right btn btn-danger btn-file">Close</button>
 
                 <div>
                     <br><br>

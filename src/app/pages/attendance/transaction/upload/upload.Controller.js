@@ -25,13 +25,14 @@
 
 
 
-    /**Privat Function */
+    /**Private Function */
     vm.downloadTemp = _downloadTemp;
     vm.uploadAttendance = _uploadAttendance;
     vm.insert = _insert;
     vm.update = _update
     vm.fail = _fail;
     vm.resetBrowse = _resetBrowse;
+    vm.close = _close;
 
 
 
@@ -71,6 +72,7 @@
 
 
     function _resetBrowse() {
+      vm.showPreview = false;
       if (!vm.btnResetBrowse) {
         vm.btnResetBrowse = true;
         _loadController();
@@ -198,6 +200,11 @@
         }
 
       })
+    }
+    function _close() {
+
+      vm.showPreview = false;
+      _loadController();
     }
     _loadController();
   }
