@@ -45,13 +45,11 @@
                     <!--<select class="form-control " title="Select Employee " ng-model="entity.LEADEmpId " ng-options="opt.value
     as opt.name for opt in page.pageinfo.selects.LEADEmpId " ng-change="employeeOnChange() ">
                     </select>-->
-                    <field-box ng-column="page.pageinfo.fields.LEADEmpId " fb-change="employeeOnChange()"
-    " ng-entity="entity " form="editForm "></field-box>
+                    <field-box ng-column="page.pageinfo.fields.LEADEmpId " fb-change="employeeOnChange()" ng-entity="entity " form="editForm "></field-box>
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADLTId.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LEADLTId "  ng-entity="entity "
-                        form="editForm "></field-box>
+                    <field-box ng-column="page.pageinfo.fields.LEADLTId " ng-entity="entity " form="editForm "></field-box>
                 </div>
 
                 <div class="form-group col-md-1 ">
@@ -78,7 +76,8 @@
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADDateFrom.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LEADDateFrom " ng-entity="entity " form="editForm "></field-box>
+                    <field-box ng-column="page.pageinfo.fields.LEADDateFrom" ng-entity="entity
+                        " form="editForm "></field-box>
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADDateTo.text}}</label>
@@ -94,7 +93,7 @@
                 <div class="form-group col-md-1 ">
 
                 </div>
-                <div class="form-group col-md-10">
+                <div class="form-group col-md-10 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LeadComment.text}}</label>
                     <field-box ng-column="page.pageinfo.fields.LeadComment " ng-entity="entity " form="editForm "></field-box>
                 </div>
@@ -152,19 +151,19 @@
 
 
 
-            <div class="col-md-7" style="padding-top:5px" ng-show="isLeaveApprovedDet">
+            <div class="col-md-7 " style="padding-top:5px " ng-show="isLeaveApprovedDet ">
 
 
 
-                <button type="button" ng-click="approvedLeave()" class="btn btn-sm btn-primary">Approved</button>
-                <!--<button type="button" class="btn btn-sm btn-warning" ng-click="resetForm()">Reset</button>
-                <button type="button" class="btn btn-sm btn-danger" ng-click="clearForm()">Clear</button>
-                 <button type="button" class="btn btn-sm btn-primary" ng-click="employeeList()">List</button>
-                    <button ng-show="showSave" type="submit" class="btn btn-sm btn-primary">Save</button>
-                    <button ng-show="showReset" type="button" class="btn btn-sm btn-warning" ng-click="resetForm()">Reset</button>
-                    <button ng-show="showClear" type="button" class="btn btn-sm btn-info" ng-click="clearForm()">Clear</button>
-                    <button ng-show="showClose" type="button" class="btn btn-sm btn-danger" ng-click="closeForm()">Close</button>
-                    <button ng-show="showList" type="button" class="btn btn-sm btn-primary" ng-click="openList()">List</button>-->
+                <button type="button " ng-click="approvedLeave() " class="btn btn-sm btn-primary ">Approved</button>
+                <!--<button type="button " class="btn btn-sm btn-warning " ng-click="resetForm() ">Reset</button>
+                <button type="button " class="btn btn-sm btn-danger " ng-click="clearForm() ">Clear</button>
+                 <button type="button " class="btn btn-sm btn-primary " ng-click="employeeList() ">List</button>
+                    <button ng-show="showSave " type="submit " class="btn btn-sm btn-primary ">Save</button>
+                    <button ng-show="showReset " type="button " class="btn btn-sm btn-warning " ng-click="resetForm() ">Reset</button>
+                    <button ng-show="showClear " type="button " class="btn btn-sm btn-info " ng-click="clearForm() ">Clear</button>
+                    <button ng-show="showClose " type="button " class="btn btn-sm btn-danger " ng-click="closeForm() ">Close</button>
+                    <button ng-show="showList " type="button " class="btn btn-sm btn-primary " ng-click="openList() ">List</button>-->
 
             </div>
         </div>
