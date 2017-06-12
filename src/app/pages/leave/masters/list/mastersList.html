@@ -240,6 +240,23 @@
                             <label for="inputPassword3">{{page.pageinfo.fields.LCRNextApplicable.text}}</label>
                             <field-box ng-column="page.pageinfo.fields.LCRNextApplicable" ng-entity="entity" form="editForm"></field-box>
                         </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRIsNegativeLeaveAllow.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRIsNegativeLeaveAllow" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="row">
+                        
+
+
+                        <div ng-if="entity.LCRIsNegativeLeaveAllow" class="form-group col-md-4">
+                            <label for="inputPassword3">{{page.pageinfo.fields.LCRNumberOfNegativeLeave.text}}</label>
+                            <field-box ng-column="page.pageinfo.fields.LCRNumberOfNegativeLeave" ng-entity="entity" form="editForm"></field-box>
+                        </div>
 
 
 

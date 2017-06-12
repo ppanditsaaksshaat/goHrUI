@@ -5,7 +5,6 @@
         <edit-panel-head page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
             close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
     " show-reset="true " condition="true "></edit-panel-head>
-
         <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
             <div class="row">
                 <div class="form-group col-md-2 ">
@@ -87,7 +86,7 @@
                 <div class="form-group col-md-3 ">
                 </div>
             </div>
-           
+            {{page.pageinfo.fields.ELTLeaveCr.text}}
             <div class="row ">
                 <div class="form-group col-md-2 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.ELTPeriodFromDate.text}}</label>
@@ -127,11 +126,5 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
-
-
-
 </form>

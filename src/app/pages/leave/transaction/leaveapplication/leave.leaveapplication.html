@@ -42,11 +42,11 @@
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADEmpId.text}}</label>
-                    <select class="form-control " title="Select Employee " ng-model="entity.LEADEmpId " ng-options="opt.value
+                    <!--<select class="form-control " title="Select Employee " ng-model="entity.LEADEmpId " ng-options="opt.value
     as opt.name for opt in page.pageinfo.selects.LEADEmpId " ng-change="employeeOnChange() ">
-                    </select>
-                    <!--<field-box ng-column="page.pageinfo.fields.LEADEmpId " ng-change="employeeOnChange()
-    " ng-entity="entity " form="editForm "></field-box>-->
+                    </select>-->
+                    <field-box ng-column="page.pageinfo.fields.LEADEmpId " fb-change="employeeOnChange()"
+    " ng-entity="entity " form="editForm "></field-box>
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADLTId.text}}</label>
