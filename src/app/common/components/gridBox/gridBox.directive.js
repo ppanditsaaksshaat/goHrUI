@@ -47,7 +47,7 @@
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.boxOptions = angular.copy(boxSetting);
                 else {
-                    $scope.page.boxOptions = angular.extend({}, boxSetting,$scope.page.boxOptions);
+                    $scope.page.boxOptions = angular.extend({}, boxSetting, $scope.page.boxOptions);
                 }
                 if (!$scope.page.boxOptions.showFilter) {
                     $scope.page.showFilter = false;
@@ -509,9 +509,11 @@
                     }
                 })
                 $scope.$on('apply-filter', function (successEvent, searchList) {
-                    //console.log('from gridbox',$scope.page)
+                    console.log(searchList)
+                    console.log('from gridbox', $scope.page)
                     if (searchList) {
                         $scope.page.searchList = searchList;
+                        console.log(searchList)
                         _refreshData();
                     }
                 })

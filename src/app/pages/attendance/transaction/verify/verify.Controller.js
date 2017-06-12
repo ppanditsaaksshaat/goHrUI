@@ -9,7 +9,7 @@
     .controller('attTransverifyController', attTransverifyController);
 
   /** @ngInject */
-  function attTransverifyController($scope, $state, $timeout, pageService) {
+  function attTransverifyController($scope, $state, $timeout, pageService,dialogModal) {
 
     var vm = this;
     var currentState = $state.current;
@@ -23,7 +23,7 @@
     // this.uploadRecord = _uploadRecord;
     $scope.entity = {}
     $scope.page = $scope.createPage();
-    $scope.page.pageId = 320;
+    $scope.page.pageId = 444;
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -43,7 +43,7 @@
       getPageData: null,
       refreshData: null,
       addRecord: null,
-      editRecord: null,
+      editRecord: _editRecord,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
@@ -87,6 +87,8 @@
       $scope.showEditForm = true;
     }
     function _editRecord(row) {
+
+      $scope.openFormVertical()
       var empId = row.entity.EmpId;
       $state.go("organization.employees.edit", { action: 'edit', empId: empId });
     }

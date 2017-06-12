@@ -209,10 +209,14 @@
                                         $scope.page.searchList.push(search)
                                     }
                                 }
+                                else {
+                                    $scope.page.searchList.push(search)
+                                }
                             }
                         })
                     }
                     console.log($scope.page)
+
                     $rootScope.$broadcast('apply-filter', $scope.page.searchList);
                     //parent.applyFilter($scope.page.pageinfo.filters);
                 }
