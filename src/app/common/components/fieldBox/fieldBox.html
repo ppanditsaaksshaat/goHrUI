@@ -1,6 +1,19 @@
-<!--{{col.showError}}-->
-<div popover-animation="true" uib-popover-html="col.errorText" popover-trigger="manual" popover-is-open="col.showError" popover-placement="right"
-    ng-switch="col.type" class="form-group  has-feedback" ng-class="{'has-success':hasSuccess(),'has-error':hasError(),'has-warning':hasWarning(), 'has-error':hasSubmitRequired()}">
+<div ng-show="!editForm.isAllowEdit">
+    <div ng-switch="col.type">
+        <select ng-disabled="true" ng-switch-when="select" ng-switch-when-separator="|" ng-model="entity[col.name]" class="form-control input-disabled hideIcon"
+            ng-options="opt.value as opt.name for opt in col.options"></select>
+
+        <div ng-switch-when="checkbox">
+            <label class="checkbox-inline custom-checkbox nowrap">
+                <input  ng-disabled="true" type="checkbox" value="option1" id="{{col.name}}" ng-model="entity[col.name]" >
+                <span></span>
+            </label>
+        </div>
+        <span ng-switch-default class="form-control">{{entity[col.name]}}</span>
+    </div>
+</div>
+<div ng-show="editForm.isAllowEdit" popover-animation="true" uib-popover-html="col.errorText" popover-trigger="manual" popover-is-open="col.showError"
+    popover-placement="right" ng-switch="col.type" class="form-group  has-feedback" ng-class="{'has-success':hasSuccess(),'has-error':hasError(),'has-warning':hasWarning(), 'has-error':hasSubmitRequired()}">
     <div class="input-group">
         <!--Textbox-->
         <!--<span class="input-group-addon  addon-left" ng-show="col.required">
@@ -39,32 +52,25 @@
                 <i class="glyphicon glyphicon-time"></i>&nbsp; {{ entity[col.name] || "Pick any date" }}
             </div>-->
 
-            <div class="input-group" moment-picker="entity[col.name]" format="DD-MMM-YYYY" start-view="month"
-            max-date="col.maxDate"
-            min-date="col.minDate"
-            >
+            <div class="input-group" moment-picker="entity[col.name]" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                min-date="col.minDate">
                 <span class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                 </span>
                 <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
-                    ng-model="entity[col.name]"
-                    ng-model-options="{ updateOn: 'blur' }">
+                    ng-model="entity[col.name]" ng-model-options="{ updateOn: 'blur' }">
             </div>
 
         </div>
         <!--timepicker-->
         <div ng-switch-when="timepicker">
 
-            <div class="input-group" moment-picker="entity[col.name]" format="hh:mm A"
-            max-date="col.maxDate"
-            min-date="col.minDate"
-            >
+            <div class="input-group" moment-picker="entity[col.name]" format="hh:mm A" max-date="col.maxDate" min-date="col.minDate">
                 <span class="input-group-addon">
                     <i class="fa fa-clock-o"></i>
                 </span>
                 <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Pick any time"
-                     ng-model="entity[col.name]"
-                    ng-model-options="{ updateOn: 'blur' }">
+                    ng-model="entity[col.name]" ng-model-options="{ updateOn: 'blur' }">
             </div>
 
             <!--<div id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" moment-picker="entity[col.name]" 
@@ -173,6 +179,7 @@
             }">
 
     </i>
+
     <!--{{hasRequired()}}-->
     <!--info area-->
     <!--<span id="inputGroupSuccess1Status" class="sr-only">(success)</span>-->
@@ -185,7 +192,8 @@
     <span ng-show="editForm['$submitted'] && ngModel.$error.zipcode" class="help-block" for="col.name">{{col.text}} must be 5 digit long</span>
     <span ng-show="editForm['$submitted'] && ngModel.$error.aadhar" class="help-block" for="col.name">{{col.format}}</span>
 </div>
-<style>
+<!--<style>
+    
     input:-moz-read-only {
         /* For Firefox */
         background-color: white!important;
@@ -220,4 +228,4 @@
     .input-group {
         margin-bottom: 0px;
     }
-</style>
+</style>-->

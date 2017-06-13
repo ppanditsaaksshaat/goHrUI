@@ -283,14 +283,14 @@
             }
             return data;
         }
-        function _saveAddress() {
+        function _saveAddress(editForm) {
             console.log()
             if (vm.empContactDetail.CDId === undefined) {
                 vm.empContactDetail.CDEmpId = vm.empPKId;
-                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create');
+                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create', vm.oldempContactDetail, editForm);
             }
             else {
-                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit');
+                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit', vm.oldempContactDetail, editForm);
             }
 
         }
@@ -334,37 +334,32 @@
                     console.log(vm.entity)
                     if (vm.entity.JDId === undefined) {
                         vm.entity.JDEmpId = vm.empPKId;
-                        _formSave(vm.entity, vm.pageId, 'create');
+                        _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm);
                     }
                     else {
                         console.log(vm.entity);
-                        _formSave(vm.entity, vm.pageId, 'edit');
+                        _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm);
                     }
                 }
                 else if (vm.pageId == 35) {
                     if (vm.entity.PdId === undefined) {
                         vm.entity.PdEmpId = vm.empPKId;
-                        _formSave(vm.entity, vm.pageId, 'create');
+                        _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm);
                     }
                     else {
                         console.log(vm.entity);
-                        _formSave(vm.entity, vm.pageId, 'edit');
+                        _formSave(vm.entity, vm.pageId, 'edit',  vm.oldEntity, editForm);
                     }
                 }
 
             }
         }
-        function _formSave(entity, pageId, action) {
-
-            console.log(entity);
-            var objectData, action;
-            objectData = entity;
-            action = action;
-            var savingObj = _setupSaving(objectData, action, pageId);
-            console.log(savingObj)
-            pageService.editPageData(pageId, JSON.stringify(savingObj)).then(_updateSuccessResult, _updateErrorResult)
-
+        function _formSave(entity, pageId, action, oldEntity, editForm) {
+            debugger;
+            editFormService.saveForm(pageId, entity, (oldEntity === undefined) ? vm.oldEntity : oldEntity, action, $scope.page.pageinfo.title, editForm)
+                .then(_updateSuccessResult, _updateErrorResult)
         }
+
         function _updateSuccessResult(result) {
             console.log(result)
 
@@ -385,10 +380,10 @@
                         vm.oldEntity = angular.copy(result.entity);
                         if (vm.empEmgContact.ECId === undefined) {
                             vm.empEmgContact.ECEmpId = vm.empPKId;
-                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'create')
+                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'create', vm.oldempContactDetail, $scope.editForm)
                         }
                         else {
-                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'edit')
+                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'edit', vm.oldempContactDetail, $scope.editForm)
                         }
                     }
                     else if (result.entity.ECEmpId !== undefined) {
@@ -407,7 +402,7 @@
         }
         function _updateErrorResult(error) {
             console.log(error)
-            $scope.showMsg('error', 'Something went worng', 'Save Error')
+            //$scope.showMsg('error', 'Something went worng', 'Save Error')
         }
         function _resetPersonal() {
             vm.entity = angular.copy(vm.oldEntity);

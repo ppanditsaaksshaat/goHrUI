@@ -156,6 +156,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             };
         },
         link: function (scope, element, attrs, modelCtrl) {
+           
             if (!scope.col)
                 return;
 
@@ -204,38 +205,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                 if (newVal) {
                     modelCtrl.$setDirty();
                 }
-                if (scope.$parent.$parent.ngModel) {
-                    scope.$parent.$parent.ngModel = modelCtrl;
-                }
-                else if (scope.$parent.$parent.$parent.ngModel) {
-                    scope.$parent.$parent.$parent.ngModel = modelCtrl;
-                }
-                else if (scope.$parent.$parent.$parent.$parent.ngModel) {
-                    scope.$parent.$parent.$parent.$parent.ngModel = modelCtrl;
-                }
-                else {
-                    console.error('ngModel from fieldBox is not found even at 3rd level, custom.validator:215', scope)
-                }
-                // modelCtrl.$setDirty();
-                // if (scope.$parent.$parent.listnerFromValidText) {
-                //     scope.$parent.$parent.listnerFromValidText(modelCtrl)
-                // }
-                // scope.$parent.$parent.ngModel = modelCtrl;
-
-                // console.log('from validText', newVal, scope.$parent.$parent.ngModel)
-
-                //sending change event to controller, if assigned
-                if (newVal) {
-                    if (scope.$parent.$parent.fbOnChange) {
-                        scope.$parent.$parent.fbOnChange({ event: event, element: element, modelCtrl: modelCtrl, column: column })
-                    }
-                    else if (scope.$parent.$parent.$parent.fbOnChange) {
-                        scope.$parent.$parent.$parent.fbOnChange({ event: event, element: element, modelCtrl: modelCtrl, column: column })
-                    }
-                    else if (scope.$parent.$parent.$parent.$parent.fbOnChange) {
-                        scope.$parent.$parent.$parent.$parent.fbOnChange({ event: event, element: element, modelCtrl: modelCtrl, column: column })
-                    }
-                }
+                _assignModelToParent();
             });
 
 
@@ -342,8 +312,10 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                             if (!result) {
                                 var cleanInputValue = inputValue.toUpperCase();
                                 if (inputValue.lastIndexOf('.') > 1) {
-                                    if (inputValue.substring(inputValue.lastIndexOf('.') + 1).length > 2) {
-                                        result = true;
+                                    if (inputValue.lastIndexOf('@') < inputValue.lastIndexOf('.')) {
+                                        if (inputValue.substring(inputValue.lastIndexOf('.') + 1).length > 2) {
+                                            result = true;
+                                        }
                                     }
                                 }
                             }
@@ -355,9 +327,11 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                     break;
                 case "mobile"://pk:17
                     modelCtrl.$parsers.push(function (inputValue) {
-                        var mobileResult = (inputValue.length > 17)
+                        var mobileResult = (inputValue.length >= column.minLength && inputValue.length <= column.maxLength)
 
-                        modelCtrl.$setValidity('mobile', !mobileResult);
+                        modelCtrl.$setValidity('mobile', mobileResult);
+                        _assignModelToParent();
+                        
                         return inputValue;
                     });
                     element.bind('keypress', keypressOnlyNumericWithPlus);
@@ -397,11 +371,50 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                         element[0].value = modelCtrl.$modelValue * 100;
                         element.priceFormat(format);
                         //console.log('formatters', element[0].value);
-                        return elem[0].value;
+                        return element[0].value;
                     })
                     break;
 
             }
+
+            /**
+             * Assiging current model controller to parent 
+             */
+            function _assignModelToParent() {
+                if (scope.$parent.$parent.ngModel) {
+                    scope.$parent.$parent.ngModel = modelCtrl;
+                }
+                else if (scope.$parent.$parent.$parent.ngModel) {
+                    scope.$parent.$parent.$parent.ngModel = modelCtrl;
+                }
+                else if (scope.$parent.$parent.$parent.$parent.ngModel) {
+                    scope.$parent.$parent.$parent.$parent.ngModel = modelCtrl;
+                }
+                else {
+                    console.error('ngModel from fieldBox is not found even at 3rd level, custom.validator:215', scope)
+                }
+                // modelCtrl.$setDirty();
+                // if (scope.$parent.$parent.listnerFromValidText) {
+                //     scope.$parent.$parent.listnerFromValidText(modelCtrl)
+                // }
+                // scope.$parent.$parent.ngModel = modelCtrl;
+
+                // console.log('from validText', newVal, scope.$parent.$parent.ngModel)
+
+                //sending change event to controller, if assigned
+                if (modelCtrl.$viewValue) {
+                    if (scope.$parent.$parent.fbOnChange) {
+                        scope.$parent.$parent.fbOnChange({ event: event, element: element, modelCtrl: modelCtrl, column: column })
+                    }
+                    else if (scope.$parent.$parent.$parent.fbOnChange) {
+                        scope.$parent.$parent.$parent.fbOnChange({ event: event, element: element, modelCtrl: modelCtrl, column: column })
+                    }
+                    else if (scope.$parent.$parent.$parent.$parent.fbOnChange) {
+                        scope.$parent.$parent.$parent.$parent.fbOnChange({ event: event, element: element, modelCtrl: modelCtrl, column: column })
+                    }
+                }
+            }
+
             //Alpha + Numeric + No Space
             function keypressAlphaNumNoSpace(e) {
                 var char = String.fromCharCode(e.which || e.charCode || e.keyCode);

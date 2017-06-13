@@ -11,6 +11,7 @@
 
     function editPanelHead($location, $state) {
         return {
+            require: '^form',
             restrict: 'E',
             templateUrl: 'app/common/components/panelHead/panelHead.html',
             scope: {
@@ -18,7 +19,7 @@
                 // ngSaveForm: '&saveForm',
                 ngResetForm: '&resetForm',
                 ngClearForm: '&clearForm',
-                ngCondition: '=condition',             
+                ngCondition: '=condition',
                 ngCloseForm: '&closeForm',
                 ngOpenList: '&openList',
                 showSave: '=?showSave',
@@ -28,6 +29,15 @@
                 showList: '=?showList',
             },
             link: function ($scope, elm, attrs, parent) {
+                console.log(parent)
+                if (parent) {
+                    $scope.$watch(function () {
+                        return parent.isAllowEdit;
+                    }, function (newVal) {
+                        $scope.isAllowEdit = parent.isAllowEdit;
+                    })
+                }
+
                 if ($scope.showSave === undefined)
                     $scope.showSave = true;
 
@@ -49,20 +59,42 @@
                     }
                 })
 
-                // $scope.saveForm = _saveForm;
+                $scope.editForm = _editForm;
                 $scope.resetForm = _resetForm;
                 $scope.clearForm = _clearForm;
                 $scope.closeForm = _closeForm;
                 $scope.openList = _openList;
 
-                // function _saveForm() {
-                //     if ($scope.ngSaveForm !== undefined) {
-                //         $scope.ngSaveForm();
-                //     }
-                //     else {
-                //         alert('Not Implemented')
-                //     }
-                // }
+                $scope.isShowEdit = _isShowEdit;
+                $scope.isShowSave = _isShowSave;
+                $scope.isShowReset = _isShowReset;
+                $scope.isShowClear = _isShowClear;
+                $scope.isShowClose = _isShowClose;
+                $scope.isShowList = _isShowList;
+
+                function _isShowEdit() {
+                    return !$scope.isAllowEdit;
+                }
+                function _isShowSave() {
+                    return $scope.showSave && $scope.isAllowEdit;
+                }
+                function _isShowReset() {
+                    return $scope.showReset && $scope.isAllowEdit;
+                }
+                function _isShowClear() {
+                    return $scope.showClear && $scope.isAllowEdit;
+                }
+                function _isShowClose() {
+                    return $scope.showClose;
+                }
+                function _isShowList() {
+                    return $scope.showList;
+                }
+
+                function _editForm() {
+                    parent.isAllowEdit = true;
+                    $scope.isAllowEdit = true;
+                }
 
                 function _resetForm() {
                     if ($scope.ngResetForm !== undefined) {
