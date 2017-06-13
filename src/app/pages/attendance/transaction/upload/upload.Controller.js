@@ -17,23 +17,26 @@
     var vm = this;
     vm.gridOptions = $scope.getGridSetting();
     vm.commonGridOptions = $scope.getGridSetting();
-    vm.gridUpdatedOptions = $scope.getGridSetting();
-    vm.gridFaliedOptions = $scope.getGridSetting();
     vm.uploader = [];
     $scope.fileResult = undefined;
+    var insertedGridData = [], updatedGridData = [], failedGridData = [];
     vm.showUploderResult = true;
+    vm.btnResetBrowse = true;
 
 
 
+    /**Private Function */
     vm.downloadTemp = _downloadTemp;
     vm.uploadAttendance = _uploadAttendance;
     vm.insert = _insert;
     vm.update = _update
     vm.fail = _fail;
+    vm.resetBrowse = _resetBrowse;
+    vm.close = _close;
 
 
 
-
+    /**Toaster Option Setting */
     var toastOption = {};
     var defaultConfig = angular.copy(toastrConfig);
     var openedToasts = [];
@@ -66,13 +69,34 @@
       angular.extend(toastrConfig, toastOption);
       openedToasts.push(toastr[toastOption.type](msg, title));
     }
-    vm.steps1 = true;
-    vm.steps2 = false;
 
-    // vm.migrate = {
-    //   step1: true, step2: false
-    // }
 
+    function _resetBrowse() {
+      vm.showPreview = false;
+      if (!vm.btnResetBrowse) {
+        vm.btnResetBrowse = true;
+        _loadController();
+      }
+      //listen watch on gridOptions.data and assign to variable for destroy
+      var dataListner = $scope.$watch(function () {
+        //returning the object changes occurred
+        return vm.gridOptions.data;
+      }, function (newVal, oldVal) {
+        //comairing for undefined, on first load this will be undefined
+        if (newVal) {
+          if (vm.gridOptions.data.length > 0) {
+            //comairing our required condition
+            if (vm.gridOptions.data[0].EmployeeCode == "EmpCode" || vm.gridOptions.data[0].AttendanceDate == "dd-MMM-yyyy") {
+              //removing required row
+              vm.gridOptions.data.splice(0, 1)
+            }
+            dataListner();//distroy $watch after requirement furnished
+          }
+        }
+
+      })
+
+    }
 
     /**
      * DownLoad Excel Template for Attendance
@@ -81,9 +105,9 @@
       var tempColumns = [];
       var row = {
         EmployeeCode: 'EmpCode',
-        AttendanceDate: 'MM/dd/yyyy',
-        InTime: '(hh:mm)(24 Hr Format)',
-        OutTime: '(hh:mm)(24 Hr Format)',
+        AttendanceDate: 'dd-MMM-yyyy',
+        InTime: '(HH:mm)(24 Hr Format)',
+        OutTime: '(HH:mm)(24 Hr Format)',
         Remarks: '',
       }
       tempColumns.push(row)
@@ -93,12 +117,8 @@
     /**
      * Upload Attendance List from Excel
      */
-
-    var insertedGridData = [], updatedGridData = [], failedGridData = [];
-
     function _uploadAttendance() {
-
-      console.log(vm.gridOptions.data)
+     
       var upload = {
         fieldRow: vm.gridOptions.data,
         groupName: 'Attendance'
@@ -107,6 +127,7 @@
       var compressed = LZString.compressToEncodedURIComponent(postData);
       var data = { lz: true, data: compressed }
       pageService.commonUploder(data).then(function (result) {
+        insertedGridData = []; updatedGridData = []; failedGridData = [];
         if (result !== undefined) {
           vm.showUploderResult = false;
           angular.forEach(result.Table1, function (data) {
@@ -120,26 +141,73 @@
               failedGridData.push(data)
             }
           });
-          console.log(result.Table2[0].Inserted)
+
           vm.insertedRow = result.Table2[0].Inserted;
           vm.updatedRow = result.Table2[0].Updated;
           vm.failedRow = result.Table2[0].Failed;
+          if (vm.failedRow != 0) {
+            vm.gridUpHeading = "Failed Preview Data"
+            vm.commonGridOptions.data = failedGridData;
+          }
+          else {
+            if (vm.insertedRow != 0) {
+              vm.gridUpHeading = "Inserted Preview Data"
+              vm.commonGridOptions.data = insertedGridData;
+            }
+            else {
+              vm.gridUpHeading = "Updated Preview Data"
+              vm.commonGridOptions.data = updatedGridData;
+            }
+          }
         }
+        _showToast("success", "Data Uploaded Successfully", "")
 
         console.log(result)
       })
     }
 
+    /**Show How Many Attendance Data Inserted   */
     function _insert() {
+      vm.gridUpHeading = "Inserted Preview Data"
       vm.commonGridOptions.data = insertedGridData;
     }
+    /**Show How Many Attendance Data Updated   */
     function _update() {
+      vm.gridUpHeading = "Updated Preview Data"
       vm.commonGridOptions.data = updatedGridData;
     }
+    /**Show How Many Attendance Data Failed   */
     function _fail() {
+      vm.gridUpHeading = "Failed Preview Data"
       vm.commonGridOptions.data = failedGridData;
     }
 
+    function _loadController() {
+      var dataListner = $scope.$watch(function () {
+        //returning the object changes occurred
+        return vm.gridOptions.data;
+      }, function (newVal, oldVal) {
+        //comairing for undefined, on first load this will be undefined
+        if (newVal) {
+          if (vm.gridOptions.data.length > 0) {
+            vm.btnResetBrowse = false;
+            //comairing our required condition
+            if (vm.gridOptions.data[0].EmployeeCode == "EmpCode" || vm.gridOptions.data[0].AttendanceDate == "dd-MMM-yyyy") {
+              //removing required row
+              vm.gridOptions.data.splice(0, 1)
+            }
+            dataListner();//distroy $watch after requirement furnished
+          }
+        }
+
+      })
+    }
+    function _close() {
+
+      vm.showPreview = false;
+      _loadController();
+    }
+    _loadController();
   }
 
 })();

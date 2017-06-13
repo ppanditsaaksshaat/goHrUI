@@ -238,7 +238,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
             }
 
 
-            return gridOptions;
+
         }
 
         //adding default columns at and
@@ -249,6 +249,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         gridOptions.columnDefs.push(colCreatedBy);
         gridOptions.columnDefs.push(colAssignedUser);
 
+        return gridOptions;
     }
 
     $rootScope.getGridSetting = function () {

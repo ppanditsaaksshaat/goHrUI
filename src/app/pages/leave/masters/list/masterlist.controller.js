@@ -23,7 +23,7 @@
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.closeForm = _closeForm;
-    
+
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -123,14 +123,22 @@
       // }
     }
 
-    function _validateForm(form) {
-      if (angular.equals($scope.oldEntity, $scope.entity)) {
-        _showToast('info', 'Nothing to save', '');
-        return false;
-      }
+    // function _validateForm(form) {
+    //   if (angular.equals($scope.oldEntity, $scope.entity)) {
+    //     _showToast('info', 'Nothing to save', '');
+    //     return false;
+    //   }
 
-      return true;
+    //   return true;
+    // }
+
+    function _validateForm(editForm) {
+
+      var valid = editFormService.validateForm(editForm)
+      return valid;
+
     }
+
     function _showToast(type, msg, title) {
       toastOption.type = type;
       angular.extend(toastrConfig, toastOption);
@@ -138,22 +146,41 @@
     }
 
     function _saveForm(editForm) {
-      // if (_validateForm) {
-      editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
-        $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
-
-      console.log($scope.entity)
-      $scope.showEditForm = false;
-      // }
 
 
+      if (_validateForm(editForm)) {
+
+        editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
+          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+
+        console.log($scope.page.pageinfo.pageid, )
+        console.log($scope.entity)
+        console.log($scope.oldEntity, )
+        console.log($scope.page.action)
+        console.log($scope.page.pageinfo.tagline)
+        // $scope.showEditForm = false;
+      }
     }
-    
+    $scope.$on('form-success', function (successEvent, result) {
+      if (result.success_message == 'Added New Record.') {
+        console.log(result.success_message)
+        $scope.showEditForm = false;
+      }
+      else if (result.success_message == 'Record Updated.') {
+        $scope.showEditForm = false;
+      }
+      else {
+        $scope.showEditForm = true;
+      }
+      console.log(result)
+
+    })
+
     if ($scope.page.pageId == 261) {
       $scope.page.boxOptions.editRecord = _editRecord;
     }
 
-    
+
 
     function _editRecord(row) {
 

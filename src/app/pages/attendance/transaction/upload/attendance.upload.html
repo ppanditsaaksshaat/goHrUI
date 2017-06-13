@@ -1,14 +1,14 @@
-
 <div ba-panel ba-panel-class="horizontal-tabs tabs-panel">
     <uib-tabset active="$tabSetStatus.activeTab">
         <uib-tab heading="Import Wizard">
-            <div ng-show="attCtrl.steps1">
+            <div ng-show="attCtrl.showUploderResult">
                 <div class="row">
-                    <div class="col-md-3" ng-if="!gridShow">
-                        <label class="control-label ">
-                                        Select a file to upload: 
+                    <div class="col-md-3">
+                        <div ng-show="attCtrl.btnResetBrowse">
+                            <label class="control-label ">
+                                   Select a file to upload: 
                                     </label>
-                        <label class="btn btn-success btn-file">
+                            <label class="btn btn-success btn-file">
                                         Browse
                                         <input type="file" 
                                         accept=".xls,.xlsx,.ods"  
@@ -19,17 +19,20 @@
                                         result="attCtrl.fileResult"
                                         style="display: none;">
                                     </label><br/>
-                        <span class="">(Only .xls, .xlsx are supported)</span><br>
-                        <div class="schema-form-section row" ng-show="attCtrl.gridOptions.data.length > 0">
-                            <div class="schema-form-section col-xs-12">
-                                <div class="form-group schema-form-text  has-feedback">
-                                    <label class="control-label ">
+                            <span class="">(Only .xls, .xlsx are supported)</span><br>
+                            <div class="schema-form-section row" ng-show="attCtrl.gridOptions.data.length > 0">
+                                <div class="schema-form-section col-xs-12">
+                                    <div class="form-group schema-form-text  has-feedback">
+                                        <label class="control-label ">
                                         You have selected {{attCtrl.gridOptions.data.length}} record file
                                     </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
+                        <div ng-hide="attCtrl.btnResetBrowse">
+                            <button type="button" ng-click="attCtrl.resetBrowse();attCtrl.gridOptions.data=[];" class="btn btn-success btn-file">Reset</button>
+                        </div>
                         <hr ng-show="attCtrl.gridOptions.data.length > 0" />
                         <div class="row" ng-show="attCtrl.gridOptions.data.length > 0">
                             <div class="col-md-12">
@@ -66,8 +69,8 @@
                             <p>File size cannot exceed 5 MB.</p>
                             <p>All duplicate records will be ignored when importing.</p>
                             <p>Checkbox value should be 1 or 0.</p>
-                            <p>Date must be in the format MM/DD/YYYY. Records that use other date formats will be ignored.</p>
-                            <p>Date and time values must be in the following format: MM/DD/YYYY hh:mm:ss. Any other format will
+                            <p>Date must be in the format DD/MM/YYYY. Records that use other date formats will be ignored.</p>
+                            <p>Date and time values must be in the following format: DD/MM/YYYY hh:mm:ss. Any other format will
                                 be ignored.</p>
                             <p>By default, the character encoding is UTF-8 (Unicode). Make sure you provide the correct character
                                 encoding if your import file has special characters.</p>
@@ -78,36 +81,36 @@
                         <span ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">Preview Data</span>
                         <div class="row">
                             <div class="col-md-12">
-
                                 <div id="grid1" style="height:auto" ui-grid="attCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
                                     ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">
                                 </div>
-
                             </div>
                         </div>
 
-                    </div>
-                    <div class="col-md-9" ng-hide="attCtrl.showUploderResult">
-                        <a href ng-click="attCtrl.insert();gridShow=true">{{attCtrl.insertedRow}} Inserted</a>
-                        <a href ng-click="attCtrl.update();gridShow=true">{{attCtrl.updatedRow}} Updated</a>
-                        <a href ng-click="attCtrl.fail();gridShow=true">{{attCtrl.failedRow}} Failed</a>
-                        <button ng-show="gridShow" ng-click="gridShow=false;attCtrl.showUploderResult=true" class="pull-right btn btn-success btn-file" >Back</button>
-                        <div ng-show="gridShow">
-                            <br><br>
-                            <span>Preview  Data</span>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div id="grid1" style="height:auto" ui-grid="attCtrl.commonGridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
             </div>
+            <div class="col-md-9" ng-hide="attCtrl.showUploderResult">
+                <div class="btn-group" role="group">
+                    <a href ng-click="attCtrl.insert()">{{attCtrl.insertedRow}} Inserted</a>
+                    <a href ng-click="attCtrl.update()">{{attCtrl.updatedRow}} Updated</a>
+                    <a href ng-click="attCtrl.fail()">{{attCtrl.failedRow}} Failed</a>
+                </div>
+                <button ng-click="attCtrl.showUploderResult=true;attCtrl.gridOptions.data=[];attCtrl.commonGridOptions.data=[];attCtrl.btnResetBrowse=true;attCtrl.close();" class="pull-right btn btn-danger btn-file">Close</button>
 
-
+                <div>
+                    <br><br>
+                    <label>{{attCtrl.gridUpHeading}}</label>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="grid1" style="height:auto" ui-grid="attCtrl.commonGridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </uib-tab>
         <!--<uib-tab heading="Import History">
             <h3 class="with-line">Import History</h3>

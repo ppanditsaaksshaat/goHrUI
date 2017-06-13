@@ -131,81 +131,100 @@
                 function _applyBoxFilter() {
                     $scope.page.searchList = [];
                     if ($scope.page.pageinfo.filters) {
+                        var isRequiredFailed = false;
                         angular.forEach($scope.page.pageinfo.filters, function (filter) {
-                            if (filter.showFilter) {
-                                var search = {};
-                                search.field = filter.name;
-                                search.operand = filter.operator;
-                                search.value = filter.value;
-                                if (filter.controlType == "datepicker") {
-                                    //if date mod is month and Year then dates should be changed in first and last day of selected month or year
-
-                                    var value1, value2;
-                                    value1 = moment(filter.value).format('YYYY-MM-DD');
-                                    value2 = moment(filter.value2).format('YYYY-MM-DD');
-                                    if (filter.datePicker.option1.minMode == 'month' || filter.datePicker.option1.minMode == 'year') {
-                                        //finding month starting and ending
-                                        value1 = moment(filter.value).startOf('month').format('YYYY-MM-DD');
-
-                                        if (filter.operator == "/b")
-                                            value2 = moment(filter.value2).endOf('month').format('YYYY-MM-DD');
+                            if (!isRequiredFailed) {
+                                if (filter.required) {
+                                    if (filter.value === undefined) {
+                                        isRequiredFailed = true;
+                                        if (filter.controlType == 'textbox')
+                                            $rootScope.showMsg('warning', 'Please enter value in ' + filter.displayName)
+                                        else if (filter.controlType == 'select')
+                                            $rootScope.showMsg('warning', 'Please choose option from ' + filter.displayName)
                                         else
-                                            value2 = moment(filter.value1).endOf('month').format('YYYY-MM-DD');
-
-                                    } else if (filter.datePicker.option1.minMode == 'year') {
-                                        //finding year starting and ending dates
-                                        value1 = moment(filter.value).startOf('year').format('YYYY-MM-DD');
-                                        if (filter.operator == "/b")
-                                            value2 = moment(filter.value2).endOf('year').format('YYYY-MM-DD');
-                                        else
-                                            value2 = moment(filter.value1).endOf('year').format('YYYY-MM-DD');
-                                    }
-
-
-                                    if (filter.operator == "/b" || (filter.operator == '=' && filter.datePicker.option1.minMode != 'day')) {
-                                        search.value = value1;
-                                        search.operand = '>=';
-                                        $scope.page.searchList.push(search)
-
-                                        search = {};
-                                        search.field = filter.name;
-                                        search.operand = '<=';
-                                        search.value = value2;
-                                        $scope.page.searchList.push(search)
-                                    }
-                                    else {
-                                        if (filter.operator == '/c')
-                                            search.operand = '=';
-                                        else
-                                            search.operand = filter.operator;
-
-                                        if (filter.operator == '/<=')
-                                            search.value = value1;
-                                        else if (filter.operator == '/>=')
-                                            search.value = value2;
-                                        search.operand = filter.operator;
-                                        $scope.page.searchList.push(search)
+                                            $rootScope.showMsg('warning', 'Please enter value in ' + filter.displayName)
+                                        console.log(filter);
                                     }
                                 }
-                                else if (filter.controlType == "timepicker") {
-                                    if (filter.operator == "/b") {
-                                        search.value = moment(filter.value).format('HH:mm:ss')
-                                        search.operand = '>=';
-                                        $scope.page.searchList.push(search)
 
-                                        search = {};
-                                        search.field = filter.name;
-                                        search.operand = '<=';
-                                        search.value = moment(filter.value2).format('HH:mm:ss')
-                                        $scope.page.searchList.push(search)
+                                if (filter.showFilter && !isRequiredFailed) {
+                                    var search = {};
+                                    search.field = filter.name;
+                                    search.operand = filter.operator;
+                                    search.value = filter.value;
+                                    if (filter.controlType == "datepicker") {
+                                        //if date mod is month and Year then dates should be changed in first and last day of selected month or year
+
+                                        var value1, value2;
+                                        value1 = moment(filter.value).format('YYYY-MM-DD');
+                                        value2 = moment(filter.value2).format('YYYY-MM-DD');
+                                        if (filter.datePicker.option1.minMode == 'month' || filter.datePicker.option1.minMode == 'year') {
+                                            //finding month starting and ending
+                                            value1 = moment(filter.value).startOf('month').format('YYYY-MM-DD');
+
+                                            if (filter.operator == "/b")
+                                                value2 = moment(filter.value2).endOf('month').format('YYYY-MM-DD');
+                                            else
+                                                value2 = moment(filter.value1).endOf('month').format('YYYY-MM-DD');
+
+                                        } else if (filter.datePicker.option1.minMode == 'year') {
+                                            //finding year starting and ending dates
+                                            value1 = moment(filter.value).startOf('year').format('YYYY-MM-DD');
+                                            if (filter.operator == "/b")
+                                                value2 = moment(filter.value2).endOf('year').format('YYYY-MM-DD');
+                                            else
+                                                value2 = moment(filter.value1).endOf('year').format('YYYY-MM-DD');
+                                        }
+
+
+                                        if (filter.operator == "/b" || (filter.operator == '=' && filter.datePicker.option1.minMode != 'day')) {
+                                            search.value = value1;
+                                            search.operand = '>=';
+                                            $scope.page.searchList.push(search)
+
+                                            search = {};
+                                            search.field = filter.name;
+                                            search.operand = '<=';
+                                            search.value = value2;
+                                            $scope.page.searchList.push(search)
+                                        }
+                                        else {
+                                            if (filter.operator == '/c')
+                                                search.operand = '=';
+                                            else
+                                                search.operand = filter.operator;
+
+                                            if (filter.operator == '/<=')
+                                                search.value = value1;
+                                            else if (filter.operator == '/>=')
+                                                search.value = value2;
+                                            search.operand = filter.operator;
+                                            $scope.page.searchList.push(search)
+                                        }
+                                    }
+                                    else if (filter.controlType == "timepicker") {
+                                        if (filter.operator == "/b") {
+                                            search.value = moment(filter.value).format('HH:mm:ss')
+                                            search.operand = '>=';
+                                            $scope.page.searchList.push(search)
+
+                                            search = {};
+                                            search.field = filter.name;
+                                            search.operand = '<=';
+                                            search.value = moment(filter.value2).format('HH:mm:ss')
+                                            $scope.page.searchList.push(search)
+                                        }
+                                        else {
+                                            if (filter.operator == '/c')
+                                                search.operand = '=';
+                                            else
+                                                search.operand = filter.operator;
+                                            search.value = moment(filter.value).format('HH:mm:ss')
+                                            search.operand = filter.operator;
+                                            $scope.page.searchList.push(search)
+                                        }
                                     }
                                     else {
-                                        if (filter.operator == '/c')
-                                            search.operand = '=';
-                                        else
-                                            search.operand = filter.operator;
-                                        search.value = moment(filter.value).format('HH:mm:ss')
-                                        search.operand = filter.operator;
                                         $scope.page.searchList.push(search)
                                     }
                                 }
@@ -213,7 +232,8 @@
                         })
                     }
                     console.log($scope.page)
-                    $rootScope.$broadcast('apply-filter', $scope.page.searchList);
+                    if (!isRequiredFailed)
+                        $rootScope.$broadcast('apply-filter', $scope.page.searchList);
                     //parent.applyFilter($scope.page.pageinfo.filters);
                 }
                 /**

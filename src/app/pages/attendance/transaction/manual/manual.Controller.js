@@ -45,6 +45,7 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
+      uploadRecord:_uploadRecord
      // readonlyColumns: ['col1', 'col2']
     }
 
@@ -52,7 +53,13 @@
     $scope.clearFormCommon = _clearFormCommon;
     $scope.closeForm = _closeForm;
     $scope.saveForm = _saveForm;
+    
 
+
+    function _uploadRecord()
+    {
+     $state.go("attendance.transaction.upload");
+    }
     function _validateForm(editForm) {
       return true;
     }

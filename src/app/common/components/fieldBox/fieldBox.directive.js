@@ -293,7 +293,7 @@
                     }
                 })
                 $elm.bind('change', function (e) {
-                    debugger;
+                   
                     if ($scope.fbOnChange) {
                         $scope.fbOnChange({ event: e, element: $elm, modelCtrl: $scope.ngModel, column: $scope.col })
                     }
