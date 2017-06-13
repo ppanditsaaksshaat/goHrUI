@@ -129,11 +129,13 @@
                  * convert filter option for searchList and call parent function for refresh data
                  */
                 function _applyBoxFilter() {
+                    $scope.page.filterData = {};
                     $scope.page.searchList = [];
                     if ($scope.page.pageinfo.filters) {
                         var isRequiredFailed = false;
                         angular.forEach($scope.page.pageinfo.filters, function (filter) {
                             if (!isRequiredFailed) {
+
                                 if (filter.required) {
                                     if (filter.value === undefined) {
                                         isRequiredFailed = true;
@@ -152,6 +154,7 @@
                                     search.field = filter.name;
                                     search.operand = filter.operator;
                                     search.value = filter.value;
+                                    $scope.page.filterData[filter.name] = search;
                                     if (filter.controlType == "datepicker") {
                                         //if date mod is month and Year then dates should be changed in first and last day of selected month or year
 
@@ -232,8 +235,11 @@
                         })
                     }
                     console.log($scope.page)
-                    if (!isRequiredFailed)
+                    if (isRequiredFailed)
+                        $scope.page.filterData = undefined;
+                    else
                         $rootScope.$broadcast('apply-filter', $scope.page.searchList);
+
                     //parent.applyFilter($scope.page.pageinfo.filters);
                 }
                 /**

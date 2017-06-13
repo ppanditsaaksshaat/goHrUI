@@ -62,7 +62,7 @@
 
     $scope.editPage.boxOptions = {
       selfLoading: true,
-      showRefresh: true,
+      showRefresh: false,
       showFilter: false,
       filterOpened: true,
       requiredFilter: false,
@@ -74,6 +74,7 @@
       enableRefreshAfterUpdate: true,
       enableAutoRefresh: true,
       showDataOnLoad: true,
+      customButtons: [{ text: "Close", icon: '', onClick: _close, type: "btn-danger" }],
       linkColumns: null,
       gridHeight: 450,
       getPageData: null,
@@ -93,31 +94,9 @@
     $scope.closeForm = _closeForm;
     $scope.saveForm = _saveForm;
 
-
-    function _loadController() {
-      // var searchList = [];
-      // var orderList = [];
-      // var search = {};
-      // search.field = "VAMonth";
-      // search.operand = "=";
-      // search.value = 6;
-
-      // searchList.push(search)
-      // search = {};
-      // search.field = "VAYear";
-      // search.operand = "=";
-      // search.value = 2017;
-      // searchList.push(search)
-
-      // var a = { searchList: searchList, orderByList: orderList }
-      // pageService.getTableData(vm.tableId, vm.pageId, undefined, false, undefined, searchList).then(_getTableDataSuccessResult, _getTableDataErrorResult)
-    }
-
-    function _getTableDataSuccessResult(result) {
-      alert(JSON.stringify(result))
-    }
-    function _getTableDataErrorResult(error) {
-      alert(JSON.stringify(error))
+    /**Close edit list */
+    function _close() {
+      vm.showVerifyAttendance = true;
     }
 
     /**
@@ -157,8 +136,21 @@
     function _editRecord(row) {
       /**For list of edit verify attendance grid setting */
       vm.showVerifyAttendance = false
-      $scope.editPage.searchList = [{ field: "EmpId", operand: "=", value: row.entity.EmpId }];
-      $scope.editPage.orderByList=[{column:'AttDate',isDesc:false}]
+      var startDate = "", endDate = "";
+      if ($scope.page.filterData === undefined) {
+        startDate = moment().startOf('month').format('YYYY-MM-DD');
+        endDate = moment().endOf('month').format('YYYY-MM-DD');
+
+      }
+      else {
+        console.log($scope.page.filterData);
+        var sDate = $scope.page.filterData.VAMonth.value + "-" + 1 + "-" + $scope.page.filterData.VAYear.value;
+        startDate = moment(sDate).startOf('month').format('YYYY-MM-DD');
+        endDate = moment(sDate).endOf('month').format('YYYY-MM-DD');
+      }
+
+      $scope.editPage.searchList = [{ field: "EmpId", operand: "=", value: row.entity.EmpId }, { field: "AttDate", operand: ">=", value: startDate }, { field: "AttDate", operand: "<=", value: endDate }];
+      $scope.editPage.orderByList = [{ column: 'AttDate', isDesc: false }]
       $scope.editPage.refreshData();
     }
     function _updateRecord(row) {
@@ -200,7 +192,7 @@
       $scope.page.refreshData();
 
     }
-    _loadController();
+
   }
 
 })();
