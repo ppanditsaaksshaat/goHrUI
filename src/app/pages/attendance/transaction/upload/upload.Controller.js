@@ -118,6 +118,7 @@
      * Upload Attendance List from Excel
      */
     function _uploadAttendance() {
+     
       var upload = {
         fieldRow: vm.gridOptions.data,
         groupName: 'Attendance'

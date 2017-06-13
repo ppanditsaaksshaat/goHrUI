@@ -158,6 +158,7 @@
       /**For list of edit verify attendance grid setting */
       vm.showVerifyAttendance = false
       $scope.editPage.searchList = [{ field: "EmpId", operand: "=", value: row.entity.EmpId }];
+      $scope.editPage.orderByList=[{column:'AttDate',isDesc:false}]
       $scope.editPage.refreshData();
     }
     function _updateRecord(row) {
