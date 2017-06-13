@@ -371,7 +371,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                         element[0].value = modelCtrl.$modelValue * 100;
                         element.priceFormat(format);
                         //console.log('formatters', element[0].value);
-                        return elem[0].value;
+                        return element[0].value;
                     })
                     break;
 

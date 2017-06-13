@@ -7,15 +7,16 @@
 
 angular.module('BlurAdmin.common')
     .factory('editFormService', ['pageService', 'DJWebStore', 'toastr', 'toastrConfig', '$uibModal', '$state',
-        '$rootScope', 'focus',
+        '$rootScope', 'focus', '$q',
         editFormService])
     .controller('ModalConfirmCtrl', ['$scope', '$uibModalInstance', 'param',
         ModalConfirmCtrl]);
 
 
 //Controller for save edit form
-function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModal, $state, $rootScope, focus) {
-
+function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModal, $state, $rootScope, focus, $q) {
+    var defer = $q.defer()
+    var localForm = undefined;
     var toastOption = {};
     var defaultConfig = angular.copy(toastrConfig);
     var openedToasts = [];
@@ -38,45 +39,93 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
     };
     //calling func from outer side of factory
     function _saveEditForm(pageId, newEntity, oldEntity, action, title, pageForm) {
-
+        localForm = pageForm;
         var data = {
             oldEntity: oldEntity,
             newEntity: newEntity,
             pageCode: pageId,
             activity: action
         };
-        console.log(data)
-        if (angular.equals(data.newEntity, data.oldEntity)) {
+        
+        var dataObject = angular.copy(data)
+
+        if (angular.equals(dataObject.newEntity, dataObject.oldEntity)) {
             _showToast('info', 'Nothing to save', title)
         }
         else {
-            _showConfirm('Do you want to save ' + title + '?', _confirmClick, pageId, data, title)
+            _showConfirm('Do you want to save ' + title + '?', _confirmClick, pageId, dataObject, title)
         }
+        return defer.promise
     }
 
     function _confirmClick(pageId, data, title) {
+        if (localForm) {
+            localForm.isSavingForm = true;
 
+            localForm.isErrorOnSaved = false;
+            localForm.saveResult = undefined;
+            localForm.isSaved = false;
+        }
         pageService.editPageData(pageId, JSON.stringify(data)).then(function (result) {
+
+
+            var isErrorOnSaved = false;
+            var saveResult = result;
+            var isSavingForm = false;
+            var isSaved = true;
+            var isAllowEdit = false;
+
+
             if (result.error_message === undefined) {
                 if (result.success_message === undefined) {
+                    defer.reject(result)
                     _showToast('error', 'Something went wrong', title)
                 }
                 else {
-                    _showToast('success', result.success_message, title)
+
+                    isSaved = true;
+
+                    // _showToast('success', result.success_message, title)
                     //$rootScope.back();
-                    $rootScope.$broadcast('form-success', result);
+                    //$rootScope.$broadcast('form-success', result);
+                    defer.resolve(result)
                 }
             }
             else if (result.error_message.Message == 'Record Already Added.') {
 
+
+
+                defer.reject(result)
                 _showToast('error', 'Record Already Added', title)
             }
             else {
+
+
+
+                defer.reject(result)
                 _showToast('error', result.error_message, title)
             }
 
+            if (localForm) {
+                localForm.isSaved = isSaved;
+
+                localForm.isErrorOnSaved = false;
+                localForm.saveResult = result;
+                localForm.isSavingForm = false;
+                localForm.isAllowEdit = false;
+            }
+
         }, function (err) {
-            console.log(err)
+
+            if (localForm) {
+                localForm.isErrorOnSaved = true;
+                localForm.saveResult = result;
+                localForm.isSavingForm = false;
+                localForm.isSaved = false;
+                localForm.isAllowEdit = false;
+            }
+
+            defer.reject(err)
             _showToast('error', err, title)
         });
     }

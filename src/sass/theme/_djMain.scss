@@ -119,7 +119,15 @@ input:focus, select:foucs {
 // //   display: inline-block;
 // // }
 
-
+.input-disabled{
+  background-color: white!important;
+        color: black!important;
+        cursor: pointer;
+}
+.hideIcon::-ms-expand {
+    display: none;
+    -moz-appearance:none;
+}
  input:-moz-read-only {
         /* For Firefox */
         background-color: white!important;
