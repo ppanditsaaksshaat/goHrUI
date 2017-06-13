@@ -359,16 +359,7 @@
                     });
                 }
                 function _getPageSuccessResult(result) {
-<<<<<<< HEAD
-                    //console.log(result)
-                    $scope.page = angular.extend({}, $scope.page, result);
-=======
-                    console.log(result)
-                    $scope.page = angular.extend($scope.page, result);
->>>>>>> 9fadb4b2cd77e13b4b7bc46023267815e6bb5085
-                    // $scope.setPage(result)
-                    ////console.log('from getpage')
-                    //_setGridColumns();
+                    $scope.page = angular.extend({}, $scope.page, result);                 
                     if ($scope.page.boxOptions.showDataOnLoad)
                         _refreshData();
                 }
