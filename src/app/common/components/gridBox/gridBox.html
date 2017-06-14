@@ -17,7 +17,7 @@
                                 <button ng-show="page.boxOptions.showBack" type="button" class="btn btn-xs btn-default" ng-click="page.goBack()"><i class="ion-backspace"></i>Back</button>
                                 <button ng-show="page.boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="page.refreshData()"><i 
                                 class="ion-refresh"></i>Refresh</button>                                &nbsp;
-                                <button ng-show="page.boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="page.addRecord()">
+                                <button ng-show="page.boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="page.addRecord(editForm)">
                                  <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>                                &nbsp;
                                 <button ng-show="page.boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="page.uploadRecord()">
                                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>                                &nbsp;
@@ -89,7 +89,7 @@
             </div>
             <form ng-show="page.showAddRecord" ng-submit="saveForm(editForm)" name="editForm" novalidate>
                 <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
-                    <div class="panel-heading clearfix" style="padding-top:0px;">
+                    <!--<div class="panel-heading clearfix" style="padding-top:0px;">
                         <div class="row">
                             <div class="col-md-5" style="padding-top:15px">
                                 <button type="button" class="btn btn-xs btn-default" ng-click="closeForm()"><i class="ion-back"></i>Back</button>                                {{page.pageinfo.tagline}}
@@ -102,7 +102,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
+                    <edit-panel-head page-title="page.pageinfo.tagline" 
+                                    show-save="editForm.untouch"
+                                    reset-form="resetForm(editForm)" 
+                                    clear-form="clearForm(editForm)" 
+                                    condition="true" 
+                                    show-list="false"
+                                    show-close="true"
+                                    close-form="closeForm(editForm)"
+                                    ></edit-panel-head>
+
                     <div class="panel-body">
                         <div class="row">
                             <div ng-class="{'col-md-7':page.isVerticalForm,'col-md-12':!page.isVerticalForm}">

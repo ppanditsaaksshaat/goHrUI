@@ -8,6 +8,7 @@
     <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
       <uib-tabset active="empTabCtrl.activeTab">
         <uib-tab heading="Personal">
+          <form name="_personalForm">
           <div style="max-height: 420px" ng-scrollbars ng-scrollbars-config="config">
             <div class="row">
               <div class="col-sm-4">
@@ -185,8 +186,10 @@
               </div>
             </div>
           </div>
+          </form>
         </uib-tab>
         <uib-tab heading="Address">
+          <form name="_addressForm">
           <div style="max-height: 420px" ng-scrollbars ng-scrollbars-config="config">
             <h3 class="">Current Address</h3>
             <hr>
@@ -368,6 +371,7 @@
               </div>
             </div>
           </div>
+          </form>
         </uib-tab>
         <uib-tab heading="Family">
           <grid-box ng-model="familyPage">

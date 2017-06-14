@@ -110,6 +110,7 @@
                 $scope.saveForm = _saveForm;
                 $scope.resetForm = _resetForm;
                 $scope.closeForm = _closeForm;
+                $scope.clearForm = _clearForm;
 
                 function _loadDirective() {
                     if ($scope.page.boxOptions.selfLoading) {
@@ -139,8 +140,8 @@
                 }
                 //====================================================================
                 //button functions
-                function _addRecord() {
-
+                function _addRecord(editForm) {
+                    editForm.isAllowEdit = true;
                     $scope.entity = {};
 
                     angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
@@ -276,6 +277,7 @@
                     _closeForm();
                 }
                 function _closeForm(editForm) {
+                    editForm.isAllowEdit = false;
                     $scope.page.showAddRecord = false;
                     $scope.page.showViewRecord = false;
                     $scope.entity = {};
@@ -283,7 +285,11 @@
                         editForm.$setPristine();
                     }
                 }
-                
+
+                function _clearForm(editForm) {
+
+                }
+
                 //END: button function  
                 //====================================================================
                 //setup grid columns from pageinfo
@@ -464,11 +470,28 @@
                     return valid;
                 }
                 function _saveForm(form) {
-
+                    $scope.currentForm = form;
                     if (_validateForm(form)) {
                         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
                             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+                            .then(_saveFormSuccess, _saveFormError)
                     }
+                }
+
+                function _saveFormSuccess(result) {
+                    if (result.entity[$scope.page.pageinfo.idencolname] !== undefined) {
+                        if ($scope.page.boxOptions !== undefined) {
+                            if ($scope.page.boxOptions.enableAutoRefresh !== undefined) {
+                                if ($scope.page.boxOptions.enableAutoRefresh) {
+                                    _refreshData()
+                                }
+                            }
+                        }
+                        _closeForm($scope.currentForm);
+                    }
+                }
+                function _saveFormError(err) {
+                    console.log(err)
                 }
                 function _resetForm(editForm) {
                     if (editForm) {
@@ -498,16 +521,7 @@
                     $scope.form.isLoading = false;
                 }
                 $scope.$on('form-success', function (successEvent, result) {
-                    if (result.entity[$scope.page.pageinfo.idencolname] !== undefined) {
-                        if ($scope.page.boxOptions !== undefined) {
-                            if ($scope.page.boxOptions.enableAutoRefresh !== undefined) {
-                                if ($scope.page.boxOptions.enableAutoRefresh) {
-                                    _refreshData()
-                                }
-                            }
-                        }
-                        _closeForm();
-                    }
+
                 })
                 $scope.$on('apply-filter', function (successEvent, searchList) {
 

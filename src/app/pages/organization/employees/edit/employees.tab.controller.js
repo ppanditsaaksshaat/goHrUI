@@ -287,10 +287,10 @@
             console.log()
             if (vm.empContactDetail.CDId === undefined) {
                 vm.empContactDetail.CDEmpId = vm.empPKId;
-                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create', vm.oldempContactDetail, editForm);
+                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create', vm.oldempContactDetail, editForm, true);
             }
             else {
-                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit', vm.oldempContactDetail, editForm);
+                _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit', vm.oldempContactDetail, editForm, true);
             }
 
         }
@@ -308,12 +308,12 @@
                     if (vm.entity.ADId === undefined) {
                         console.log("test")
                         vm.entity.ADEmpId = vm.empPKId;
-                        _formSave(vm.entity, vm.pageId, 'create');
+                        _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
                     }
                     else {
                         console.log("test1")
                         console.log(vm.entity);
-                        _formSave(vm.entity, vm.pageId, 'edit');
+                        _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
                 }
                 else if (vm.pageId == 114) {
@@ -334,29 +334,29 @@
                     console.log(vm.entity)
                     if (vm.entity.JDId === undefined) {
                         vm.entity.JDEmpId = vm.empPKId;
-                        _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm);
+                        _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
                     }
                     else {
                         console.log(vm.entity);
-                        _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm);
+                        _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
                 }
                 else if (vm.pageId == 35) {
                     if (vm.entity.PdId === undefined) {
                         vm.entity.PdEmpId = vm.empPKId;
-                        _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm);
+                        _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
                     }
                     else {
                         console.log(vm.entity);
-                        _formSave(vm.entity, vm.pageId, 'edit',  vm.oldEntity, editForm);
+                        _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
                 }
 
             }
         }
-        function _formSave(entity, pageId, action, oldEntity, editForm) {
-            debugger;
-            editFormService.saveForm(pageId, entity, (oldEntity === undefined) ? vm.oldEntity : oldEntity, action, $scope.page.pageinfo.title, editForm)
+        function _formSave(entity, pageId, action, oldEntity, editForm, showConfirmation) {
+            editFormService.saveForm(pageId, entity, (oldEntity === undefined) ? vm.oldEntity : oldEntity,
+                action, $scope.page.pageinfo.title, editForm, showConfirmation)
                 .then(_updateSuccessResult, _updateErrorResult)
         }
 
@@ -380,10 +380,10 @@
                         vm.oldEntity = angular.copy(result.entity);
                         if (vm.empEmgContact.ECId === undefined) {
                             vm.empEmgContact.ECEmpId = vm.empPKId;
-                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'create', vm.oldempContactDetail, $scope.editForm)
+                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'create', vm.oldempContactDetail, $scope.editForm, false)
                         }
                         else {
-                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'edit', vm.oldempContactDetail, $scope.editForm)
+                            _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'edit', vm.oldempContactDetail, $scope.editForm, false)
                         }
                     }
                     else if (result.entity.ECEmpId !== undefined) {
@@ -427,7 +427,7 @@
         }
         //=========================================================== common method
         function _validateFormCommon(form) {
-
+            var localForm = form;
             var valid = true;
             if (vm.activeTab === undefined) {
                 if (angular.equals(vm.entity, vm.oldEntity)) {
@@ -436,7 +436,20 @@
                 }
             }
             else if (vm.activeTab == 0) {
-
+                if (form.personalForm)
+                    localForm = form.personalForm;
+                if (localForm.$error.required !== undefined) {
+                    if (localForm.$error.required.length) {
+                        angular.forEach(localForm.$error.required, function (errCtrl) {
+                            if (!errCtrl.hasOwnProperty('$modelValue')) {
+                                localForm.$removeControl(errCtrl)
+                            }
+                            else if (errCtrl.$name == "") {
+                                localForm.$removeControl(errCtrl);
+                            }
+                        })
+                    }
+                }
                 if (angular.equals(vm.entity, vm.oldEntity)) {
                     _showToast('info', 'Nothing to save', "")
                     valid = false;
@@ -447,13 +460,14 @@
                 }
             }
             else if (vm.activeTab == 1) {
+                localForm = form.addressForm;
                 if (angular.equals(vm.empContactDetail, vm.oldempContactDetail)) {
                     _showToast('info', 'Nothing to save', "")
                     valid = false;
                 }
             }
             if (valid)
-                valid = editFormService.validateForm(form);
+                valid = editFormService.validateForm(localForm);
             return valid;
         }
         function _saveFormCommon(editForm) {
