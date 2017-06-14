@@ -30,6 +30,7 @@
                 $scope.dateModeChanged = _dateModeChanged;
                 $scope.firstDateChange = _firstDateChange;
                 $scope.getFilterOpt = _getFilterOpt;
+                $scope.selectChange = _selectChange;
                 /**END Public Function */
 
                 var resourse = {
@@ -289,6 +290,7 @@
                         filter.datePicker.option2.minDate = filter.value;
                         filter.value2 = filter.value;
                     }
+                    _selectChange(filter)
                 }
 
                 /**
@@ -312,6 +314,20 @@
 
                 }
 
+                function _selectChange(filter) {
+
+                    if (!$scope.page.filterData)
+                        $scope.page.filterData = {};
+                    var search = {};
+                    search.field = filter.name;
+                    search.operand = filter.operator;
+                    search.value = filter.value;
+                    $scope.page.filterData[filter.name] = search;
+
+                    if ($scope.page.boxOptions.filterOnChange !== undefined) {
+                        $scope.page.boxOptions.filterOnChange(filter);
+                    }
+                }
 
                 /**
                  * A lister for pageinfo object from gdm
