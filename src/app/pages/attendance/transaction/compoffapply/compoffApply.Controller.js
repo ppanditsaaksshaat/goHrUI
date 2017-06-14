@@ -95,8 +95,6 @@
 
       }
       searchLists.push(searchListData)
-
-
       var data = {
         searchList: searchLists,
         orderByList: []

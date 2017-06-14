@@ -20,7 +20,7 @@
                                 <button ng-show="page.boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="page.addRecord()">
                                  <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>                                &nbsp;
                                 <button ng-show="page.boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="page.uploadRecord()">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>                                &nbsp;
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>                                &nbsp;
 
                                 <select ng-show="page.boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
                                     ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
@@ -39,7 +39,7 @@
                         <div class="col-md-9">
                             <div class="dropdown" uib-dropdown dropdown-append-to-body>
                                 <button class="btn btn-xs btn-default dropdown-toggle" type="button" uib-dropdown-toggle>
-                          <span class="glyphicon glyphicon-tasks"></span></button>
+                             <span class="glyphicon glyphicon-tasks"></span></button>
                                 <ul uib-dropdown-menu>
                                     <li ng-show="page.selectedRows.length==1"><a href ng-click="page.editRecord(row)">Edit</a></li>
                                     <li><a href ng-click="page.viewRecord(page.selectedRows[0])">View</a></li>
@@ -47,6 +47,9 @@
                                     <li class="divider"></li>
                                     <li><a href ng-click="page.deleteRecord(page.selectedRows)">Delete</a></li>
                                 </ul>
+                            </div>
+                            <div class="pull-right" ng-show="page.boxOptions.selectedRowButtons.length>0">
+                                <button ng-repeat="button in page.boxOptions.selectedRowButtons" type="button" class="btn btn-xs" ng-class="button.type" ng-click="button.onClick()"><i ng-class="button.icon"></i>{{button.text}}</button>
                             </div>
                         </div>
                     </div>

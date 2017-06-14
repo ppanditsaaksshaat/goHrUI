@@ -40,10 +40,11 @@
                     showDialog: false,
                     showDataOnLoad: true,
                     gridStyle: { height: '450px' },
-                    customButtons: []
+                    customButtons: [],
+                    selectedRowButtons: []
                 }
 
-                //customButtons: text, icon, onClick, type:btn-detault
+                //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
 
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
@@ -359,7 +360,7 @@
                     });
                 }
                 function _getPageSuccessResult(result) {
-                    $scope.page = angular.extend({}, $scope.page, result);                 
+                    $scope.page = angular.extend({}, $scope.page, result);
                     if ($scope.page.boxOptions.showDataOnLoad)
                         _refreshData();
                 }
@@ -507,7 +508,7 @@
                     }
                 })
                 $scope.$on('apply-filter', function (successEvent, searchList) {
-                    
+
                     // console.log(searchList)
                     // console.log('from gridbox', $scope.page)
                     if (searchList) {

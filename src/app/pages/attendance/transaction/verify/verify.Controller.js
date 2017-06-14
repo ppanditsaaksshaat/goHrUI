@@ -18,6 +18,7 @@
     vm.orderByList = [];
     vm.pageId = 444;
     vm.tableId = 419;
+    vm.queryId = 514;
     vm.showVerifyAttendance = true;
 
     this.applyFilter = _applyFilter;
@@ -44,6 +45,7 @@
       enableRefreshAfterUpdate: true,
       enableAutoRefresh: true,
       showDataOnLoad: true,
+      selectedRowButtons: [{ text: "Verify", icon: '', onClick: _verifyAttendance, type: "btn-default" }],
       linkColumns: null,
       gridHeight: 450,
       getPageData: null,
@@ -193,6 +195,61 @@
 
     }
 
+
+    /**Verify attendance according to row selection */
+    function _verifyAttendance() {
+      console.log($scope.page.selectedRows)
+      var searchLists = [];
+      var empIds = {};
+      var startDate = "";
+      var endDate = "";
+      angular.forEach($scope.page.selectedRows, function (data) {
+      empIds.push(data.EmpId)
+      });
+      if ($scope.page.filterData === undefined) {
+        startDate = moment().startOf('month').format('YYYY-MM-DD');
+        endDate = moment().endOf('month').format('YYYY-MM-DD');
+      }
+      else {
+        console.log($scope.page.filterData);
+        var sDate = $scope.page.filterData.VAMonth.value + "-" + 1 + "-" + $scope.page.filterData.VAYear.value;
+        startDate = moment(sDate).startOf('month').format('YYYY-MM-DD');
+        endDate = moment(sDate).endOf('month').format('YYYY-MM-DD');
+      }
+      var searchListData = {
+        field: 'EmpIds',
+        operand: '=',
+        value: empIds
+      }
+      searchLists.push(searchListData)
+      searchListData = {
+        field: 'FromDate',
+        operand: '=',
+        value: startDate
+
+      }
+      searchLists.push(searchListData)
+      searchListData = {
+        field: 'EndDate',
+        operand: '=',
+        value: endDate
+      }
+      searchLists.push(searchListData)
+      var data = {
+        searchList: searchLists,
+        orderByList: []
+      }
+      console.log(data);
+     
+      // pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+    }
+    // function _getCustomQuerySuccessResult(result) {
+
+    // }
+    // function _getCustomQueryErrorResult(err) {
+
+    // }
+    /**End of Verify attendance according to row selection */
   }
 
 })();
