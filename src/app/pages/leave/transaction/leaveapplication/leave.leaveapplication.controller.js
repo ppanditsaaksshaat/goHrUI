@@ -59,6 +59,7 @@
       $scope.entity = {};
       $scope.isLeaveTransactionTable = false;
 
+
     }
 
     function _showToast(type, msg, title) {
@@ -202,16 +203,16 @@
     //   // }
     // }
 
-    function _saveForm(editForm) {
-      if (_onChangeDate()) {
-        //save
+    // function _saveForm(editForm) {
+    //   if (_onChangeDate()) {
+    //     //save
 
-      }
-      else {
-        //not save
-      }
+    //   }
+    //   else {
+    //     //not save
+    //   }
 
-    }
+    // }
 
 
     function _saveForm(editForm) {
@@ -255,10 +256,13 @@
               pageService.getCustomQuery(data, queryId).then(function (result) {
                 console.log(result)
                 if (result[0].Massage == 'Valid Leave Apply') {
-                  $scope.showMsg('success', result[0].Massage);
-                  $scope.showEditForm = true;
-                  // if (_validateForm(editForm))
-                  //   editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+                  // $scope.showMsg('success', result[0].Massage);
+                  // $scope.showEditForm = true;
+                  if (_validateForm(editForm)) {
+                    editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+                    editForm.$setPristine();
+                  }
+
                 }
                 else if (result[0].Massage != 'Valid Leave Apply') {
                   $scope.showMsg('error', result[0].Massage);
@@ -286,10 +290,13 @@
     }
 
     $scope.$on('form-success', function (successEvent, result) {
-      if (result.success_message == 'Added New Record.')
+      if (result.success_message == 'Added New Record.') {
         $scope.showEditForm = false;
-      else if (result.success_message == 'Record Updated.')
+        // editForm.$setPristine();
+      }
+      else if (result.success_message == 'Record Updated.') {
         $scope.showEditForm = false;
+      }
       else
         $scope.showEditForm = true;
     })
@@ -360,6 +367,7 @@
     }
 
     function _approvedLeave() {
+      debugger;
       // $scope.entity.LEADId
       $scope.newEntity = {};
 
@@ -368,11 +376,17 @@
       $scope.newEntity.ELSDSanctionFromDate = $scope.entity.LEADDateFrom;
       $scope.newEntity.ELSDSanctionToDate = $scope.entity.LEADDateTo;
       $scope.newEntity.ELSDLeaveStatusId = 1;
-      console.log($scope.entity)
+      // console.log($scope.entity)
       console.log($scope.newEntity)
       $scope.page.action = 'create';
-      editFormService.saveForm(sanctionLeavePageId, $scope.newEntity,
-        $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+      if (_validateForm(editForm)) {
+        editFormService.saveForm(sanctionLeavePageId, $scope.newEntity,
+          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+      }
+
+      // editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, 
+      // $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+
       // $scope.showEditForm = false;
     }
 

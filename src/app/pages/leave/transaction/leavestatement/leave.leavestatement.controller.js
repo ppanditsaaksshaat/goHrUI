@@ -31,6 +31,7 @@
     $scope.page.pageId = 270;
 
     $scope.saveForm = _saveForm;
+   
 
 
 
@@ -39,6 +40,7 @@
       selfLoading: true,
       showRefresh: true,
       showFilter: true,
+      filterOpened: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
