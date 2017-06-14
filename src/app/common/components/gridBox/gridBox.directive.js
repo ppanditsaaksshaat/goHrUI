@@ -479,6 +479,7 @@
                 }
 
                 function _saveFormSuccess(result) {
+                    $rootScope.showMsg('success', $scope.page.pageinfo.tagline + " saved successfully.")
                     if (result.entity[$scope.page.pageinfo.idencolname] !== undefined) {
                         if ($scope.page.boxOptions !== undefined) {
                             if ($scope.page.boxOptions.enableAutoRefresh !== undefined) {
