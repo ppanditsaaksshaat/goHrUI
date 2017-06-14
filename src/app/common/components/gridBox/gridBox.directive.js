@@ -39,6 +39,7 @@
                     showUpload: false,
                     showDialog: false,
                     showDataOnLoad: true,
+                    filterOnChange: null,//an event for filter box
                     gridStyle: { height: '450px' },
                     customButtons: [],
                     selectedRowButtons: []
@@ -282,6 +283,7 @@
                         editForm.$setPristine();
                     }
                 }
+                
                 //END: button function  
                 //====================================================================
                 //setup grid columns from pageinfo
