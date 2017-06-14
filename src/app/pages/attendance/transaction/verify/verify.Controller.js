@@ -18,7 +18,7 @@
     vm.orderByList = [];
     vm.pageId = 444;
     vm.tableId = 419;
-    vm.queryId = 514;
+    vm.queryId = 520;
     vm.showVerifyAttendance = true;
 
     this.applyFilter = _applyFilter;
@@ -200,12 +200,15 @@
     function _verifyAttendance() {
       console.log($scope.page.selectedRows)
       var searchLists = [];
-      var empIds = {};
+      var empIds = "";
       var startDate = "";
       var endDate = "";
+
       angular.forEach($scope.page.selectedRows, function (data) {
-      empIds.push(data.EmpId)
+        empIds += data.EmpId + ",";
       });
+     
+      var empId=empIds.substring(0,empIds.length-1)        
       if ($scope.page.filterData === undefined) {
         startDate = moment().startOf('month').format('YYYY-MM-DD');
         endDate = moment().endOf('month').format('YYYY-MM-DD');
@@ -219,7 +222,7 @@
       var searchListData = {
         field: 'EmpIds',
         operand: '=',
-        value: empIds
+        value: empId
       }
       searchLists.push(searchListData)
       searchListData = {
@@ -240,15 +243,15 @@
         orderByList: []
       }
       console.log(data);
-     
-      // pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+
+      pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
     }
-    // function _getCustomQuerySuccessResult(result) {
+    function _getCustomQuerySuccessResult(result) {
+        alert(JSON.stringify(result))
+    }
+    function _getCustomQueryErrorResult(err) {
 
-    // }
-    // function _getCustomQueryErrorResult(err) {
-
-    // }
+    }
     /**End of Verify attendance according to row selection */
   }
 
