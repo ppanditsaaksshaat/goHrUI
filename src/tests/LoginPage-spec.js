@@ -22,7 +22,8 @@ describe("Check The Login Fuctionality By VSCode", function () {
            // click()
         
         element(by.cssContainingText('.ng-binding', 'Organization')).click();
-        element(by.cssContainingText('.ng-binding', 'Employee')).click();; 
+        browser.sleep(2000);
+        element(by.cssContainingText('.ng-binding', 'Employee')).click();
         element(by.css('[href*="#/organization/employees/list"]')).click();
         element(by.buttonText('Add')).click();
         element(by.id('inputTitle')).sendKeys('Er.');
@@ -31,10 +32,16 @@ describe("Check The Login Fuctionality By VSCode", function () {
         element(by.model('addCtrl.empAdd.EmpLastName')).sendKeys('Paras');
         element(by.id('inputGender')).sendKeys('Male');
         element(by.model('addCtrl.empAdd.JDDate')).sendKeys('10-04-1990');
+        
+        element(by.id('inputMobile')).sendKeys('8800962965');
+        selectDropdownbyNum(element(by.id("inputDepartment")), 2);
+        selectDropdownbyNum(element(by.id("inputDesignation")), 3);
+        selectDropdownbyNum(element(by.id("inputEmployeeType")), 1);
+        selectDropdownbyNum(element(by.id('inputGrade')), 1);
+        selectDropdownbyNum(element(by.id('inputLevel')),1);             
+        element(by.buttonText('Save')).click;
         browser.sleep(8000);
-        element(by.model('inputMobile')).sendKeys('8800962965');
-  
-        browser.sleep(8000);
+        
        
     
         // element(by.id('input01')).sendKeys('Satyendra');
@@ -43,7 +50,7 @@ describe("Check The Login Fuctionality By VSCode", function () {
         // element(by.cssContainingText('.ng-binding', 'Form Layouts')).click();
         // element(by.buttonText('Submit')).click();
 
-        browser.sleep(8000);
+      
         // //$('#userName').sendKeys('Itsl_Test')
         // //$('#userPassword').sendKeys('Password1!')
         // //$('#btnlogin').click();

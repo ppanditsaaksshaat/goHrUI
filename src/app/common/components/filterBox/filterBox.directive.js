@@ -324,7 +324,6 @@
                     search.value = filter.value;
                     $scope.page.filterData[filter.name] = search;
 
-                    console.log($scope.page.boxOptions.filterOnChange)
                     if ($scope.page.boxOptions.filterOnChange !== undefined) {
                         $scope.page.boxOptions.filterOnChange(filter);
                     }
