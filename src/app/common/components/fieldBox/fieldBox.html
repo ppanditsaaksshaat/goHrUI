@@ -1,4 +1,4 @@
-<div ng-show="!editForm.isAllowEdit">
+<div ng-show="!editForm.isAllowEdit" class="form-group">
     <div ng-switch="col.type">
         <select ng-disabled="true" ng-switch-when="select" ng-switch-when-separator="|" ng-model="entity[col.name]" class="form-control input-disabled hideIcon"
             ng-options="opt.value as opt.name for opt in col.options"></select>
