@@ -1,6 +1,6 @@
 <form ng-submit="empTabCtrl.saveFormCommon(editForm)" name="editForm" novalidate>
   <div class="panel panel-default xmedium-panel">
-    <edit-panel-head page-title="page.pageinfo.title" 
+    <edit-panel-head   page="page" page-title="page.pageinfo.title" 
     show-save="editForm.untouch"
     reset-form="empTabCtrl.resetFormCommon()" open-List="empTabCtrl.goToEmployeeList()"
       clear-form="empTabCtrl.clearFormCommon()" condition="(empTabCtrl.activeTab==0 || empTabCtrl.activeTab==1)"></edit-panel-head>
