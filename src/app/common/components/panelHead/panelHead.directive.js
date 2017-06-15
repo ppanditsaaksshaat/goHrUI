@@ -15,6 +15,7 @@
             restrict: 'E',
             templateUrl: 'app/common/components/panelHead/panelHead.html',
             scope: {
+                page: '=page',
                 ngPageTitle: '=pageTitle',
                 // ngSaveForm: '&saveForm',
                 ngResetForm: '&resetForm',
@@ -29,14 +30,7 @@
                 showList: '=?showList',
             },
             link: function ($scope, elm, attrs, parent) {
-                console.log(parent)
-                if (parent) {
-                    $scope.$watch(function () {
-                        return parent.isAllowEdit;
-                    }, function (newVal) {
-                        $scope.isAllowEdit = parent.isAllowEdit;
-                    })
-                }
+
 
                 if ($scope.showSave === undefined)
                     $scope.showSave = true;
@@ -73,16 +67,16 @@
                 $scope.isShowList = _isShowList;
 
                 function _isShowEdit() {
-                    return !$scope.isAllowEdit;
+                    return !$scope.page.isAllowEdit;
                 }
                 function _isShowSave() {
-                    return $scope.showSave && $scope.isAllowEdit;
+                    return $scope.showSave && $scope.page.isAllowEdit;
                 }
                 function _isShowReset() {
-                    return $scope.showReset && $scope.isAllowEdit;
+                    return $scope.showReset && $scope.page.isAllowEdit;
                 }
                 function _isShowClear() {
-                    return $scope.showClear && $scope.isAllowEdit;
+                    return $scope.showClear && $scope.page.isAllowEdit;
                 }
                 function _isShowClose() {
                     return $scope.showClose;
@@ -92,8 +86,7 @@
                 }
 
                 function _editForm() {
-                    parent.isAllowEdit = true;
-                    $scope.isAllowEdit = true;
+                    $scope.page.isAllowEdit = true;
                 }
 
                 function _resetForm() {
@@ -113,6 +106,9 @@
                     }
                 }
                 function _closeForm() {
+                    //hiding editable fields
+                    $scope.page.isAllowEdit = false;
+
                     if ($scope.ngCloseForm !== undefined) {
                         $scope.ngCloseForm();
                     }
