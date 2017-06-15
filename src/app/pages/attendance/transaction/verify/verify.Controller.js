@@ -9,7 +9,7 @@
     .controller('attTransverifyController', attTransverifyController);
 
   /** @ngInject */
-  function attTransverifyController($scope, $state, $timeout, pageService, dialogModal) {
+  function attTransverifyController($scope, $state, $timeout, pageService, dialogModal, toastr, toastrConfig) {
 
     var vm = this;
     var currentState = $state.current;
@@ -23,6 +23,30 @@
 
     this.applyFilter = _applyFilter;
     // this.uploadRecord = _uploadRecord;
+
+    /**Toaster Option Setting */
+    var toastOption = {};
+    var defaultConfig = angular.copy(toastrConfig);
+    var openedToasts = [];
+    toastOption = {
+      autoDismiss: false,
+      positionClass: 'toast-top-center',
+      type: 'success',
+      timeOut: '5000',
+      extendedTimeOut: '2000',
+      allowHtml: false,
+      closeButton: true,
+      tapToDismiss: true,
+      progressBar: true,
+      newestOnTop: true,
+      maxOpened: 0,
+      preventDuplicates: false,
+      preventOpenDuplicates: false,
+      title: "",
+      msg: ""
+    };
+
+
 
     /**For all list of verify attendance grid setting */
     $scope.entity = {}
@@ -95,6 +119,19 @@
     $scope.clearFormCommon = _clearFormCommon;
     $scope.closeForm = _closeForm;
     $scope.saveForm = _saveForm;
+
+    /**
+        * 
+        * @param {*} type 
+        * @param {*} msg 
+        * @param {*} title 
+        */
+    function _showToast(type, msg, title) {
+      toastOption.type = type;
+      angular.extend(toastrConfig, toastOption);
+      openedToasts.push(toastr[toastOption.type](msg, title));
+    }
+
 
     /**Close edit list */
     function _close() {
@@ -207,8 +244,8 @@
       angular.forEach($scope.page.selectedRows, function (data) {
         empIds += data.EmpId + ",";
       });
-     
-      var empId=empIds.substring(0,empIds.length-1)        
+
+      var empId = empIds.substring(0, empIds.length - 1)
       if ($scope.page.filterData === undefined) {
         startDate = moment().startOf('month').format('YYYY-MM-DD');
         endDate = moment().endOf('month').format('YYYY-MM-DD');
@@ -247,7 +284,8 @@
       pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
     }
     function _getCustomQuerySuccessResult(result) {
-        alert(JSON.stringify(result))
+      _showToast("success", "Verify Successfully")
+      refreshData();
     }
     function _getCustomQueryErrorResult(err) {
 
