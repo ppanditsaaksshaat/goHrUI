@@ -8,7 +8,8 @@
     angular.module('BlurAdmin.common.components')
         .directive('gridBox', gridBox);
     /** @ngInject */
-    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService, editFormService, focus) {
+    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService, 
+        editFormService, focus) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/gridBox/gridBox.html',
@@ -141,6 +142,7 @@
                 //====================================================================
                 //button functions
                 function _addRecord(editForm) {
+                    $scope.page.isAllowEdit = true;
                     editForm.isAllowEdit = true;
                     $scope.entity = {};
 

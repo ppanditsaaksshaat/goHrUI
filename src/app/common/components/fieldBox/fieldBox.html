@@ -1,6 +1,6 @@
-<div ng-show="!editForm.isAllowEdit" class="form-group">
+<div ng-show="!page.isAllowEdit" class="form-group">
     <div ng-switch="col.type">
-        <select ng-disabled="true" ng-switch-when="select" ng-switch-when-separator="|" ng-model="entity[col.name]" class="form-control input-disabled hideIcon"
+        <select ng-disabled="true" ng-switch-when="select|strapselect|uiselect" ng-switch-when-separator="|" ng-model="entity[col.name]" class="form-control input-disabled hideIcon"
             ng-options="opt.value as opt.name for opt in col.options"></select>
 
         <div ng-switch-when="checkbox">
@@ -12,7 +12,7 @@
         <span ng-switch-default class="form-control">{{entity[col.name]}}</span>
     </div>
 </div>
-<div ng-show="editForm.isAllowEdit" popover-animation="true" uib-popover-html="col.errorText" popover-trigger="manual" popover-is-open="col.showError"
+<div ng-show="page.isAllowEdit" popover-animation="true" uib-popover-html="col.errorText" popover-trigger="manual" popover-is-open="col.showError"
     popover-placement="right" ng-switch="col.type" class="form-group  has-feedback" ng-class="{'has-success':hasSuccess(),'has-error':hasError(),'has-warning':hasWarning(), 'has-error':hasSubmitRequired()}">
     <div class="input-group">
         <!--Textbox-->

@@ -1,7 +1,7 @@
 <div >
 <form ng-submit="empTabCtrl.saveFormCommon(editForm)" name="editForm" >
   <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
-    <edit-panel-head page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon(editForm)"
+    <edit-panel-head   page="page" page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon(editForm)"
      open-List="empTabCtrl.goToEmployeeList()"
      clear-form="empTabCtrl.clearFormCommon(editForm)"
       condition="true"></edit-panel-head>
@@ -11,7 +11,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label ng-bind="page.pageinfo.fields.ADSalaryModeId.text"></label>
-            <field-box ng-column="page.pageinfo.fields.ADSalaryModeId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+            <field-box page="page" ng-column ="page.pageinfo.fields.ADSalaryModeId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
             <!--<label for="inputDepartment">Salary Mode*</label>
           <select id="empSalaryMode_{{$index}}" name="empSalaryMode_{{$index}}" ng-column="empTabCtrl.entity.ADSalaryModeId" class="form-control"
@@ -31,7 +31,7 @@
             <div class="form-group">
 
               <label ng-bind="page.pageinfo.fields.ADSalaryID.text"></label>
-              <field-box ng-column="page.pageinfo.fields.ADSalaryID" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.ADSalaryID" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
               <!--<label for="inputDepartment">Salary*</label>
             <select id="empSalary_{{$index}}" name="empSalary_{{$index}}" ng-column="empTabCtrl.entity.ADSalaryID" class="form-control"
@@ -45,7 +45,7 @@
             <div class="form-group">
 
               <label ng-bind="page.pageinfo.fields.BankId.text"></label>
-              <field-box ng-column="page.pageinfo.fields.BankId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.BankId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
               <!--<label for="inputDepartment">Bank Name*</label>
             <select id="empBankName_{{$index}}" name="empBankName_{{$index}}" ng-column="empTabCtrl.entity.BankId" class="form-control"
               ng-options="bankName.value as bankName.name for bankName in page.pageinfo.selects.BankId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
@@ -57,7 +57,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.BankAccountNo.text"></label>
-              <field-box ng-column="page.pageinfo.fields.BankAccountNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.BankAccountNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
               <!--<label for="inputDepartment">Account No.*</label>
             <input type="text" class="form-control" ng-column="empTabCtrl.entity.BankAccountNo" ng-required="empTabCtrl.entity.ADSalaryModeId=='3'" numeric-Only>-->
             </div>
@@ -67,7 +67,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.ADBranchName.text"></label>
-              <field-box ng-column="page.pageinfo.fields.ADBranchName" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.ADBranchName" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
               <!--<label for="inputDepartment">Branch Name*</label>
             <input type="text" class="form-control" ng-column="empTabCtrl.entity.ADBranchName" ng-required="empTabCtrl.entity.ADSalaryModeId=='3'" text-Only maxlength="50">-->
@@ -76,7 +76,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.ADIFSCCode.text"></label>
-              <field-box ng-column="page.pageinfo.fields.ADIFSCCode" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.ADIFSCCode" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
               <!--<label for="inputDepartment">IFSC*</label>
             <input type="text" class="form-control" ng-column="empTabCtrl.entity.ADIFSCCode" ng-required="empTabCtrl.entity.ADSalaryModeId=='3'">-->
@@ -85,7 +85,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.ADChequeNo.text"></label>
-              <field-box ng-column="page.pageinfo.fields.ADChequeNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.ADChequeNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
               <!--<label for="inputDepartment">Cheque</label>
             <input type="text" class="form-control" ng-column="empTabCtrl.entity.ADChequeNo" >-->
             </div>
@@ -95,7 +95,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.PFPPFIsActive.text"></label>
-              <field-box ng-column="page.pageinfo.fields.PFPPFIsActive" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.PFPPFIsActive" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
             <!--<div class="checkbox">
             <label class="custom-checkbox">      
@@ -107,7 +107,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.ESIIsActive.text"></label>
-              <field-box ng-column="page.pageinfo.fields.ESIIsActive" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.ESIIsActive" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
             <!--<div class="checkbox">
             <label class="custom-checkbox">      
@@ -126,7 +126,7 @@
               <div class="form-group">
 
                     <label ng-bind="page.pageinfo.fields.PFPPFAccountNo.text"></label>
-              <field-box ng-column="page.pageinfo.fields.PFPPFAccountNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.PFPPFAccountNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 <!--
                 <label for="inputDepartment">PF Account No.*</label>
                 <input type="text" class="form-control" ng-column="empTabCtrl.entity.PFPPFAccountNo" ng-required="empTabCtrl.entity.PFPPFIsActive"
@@ -138,7 +138,7 @@
 
                 
                 <label ng-bind="page.pageinfo.fields.PFPPFMemberDate.text"></label>
-              <field-box ng-column="page.pageinfo.fields.PFPPFMemberDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.PFPPFMemberDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
                 <!--<label for="inputDepartment">PF Start Date*</label>
                 <input type="text" class="form-control"  ng-column="empTabCtrl.entity.PFPPFMemberDate">
@@ -158,7 +158,7 @@
             <div class="col-sm-4">
               <div class="form-group">
                     <label ng-bind="page.pageinfo.fields.ESIMemeberNo.text"></label>
-              <field-box ng-column="page.pageinfo.fields.ESIMemeberNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.ESIMemeberNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
       
                 <!--<label for="inputDepartment">ESI Account No.*</label>
@@ -170,7 +170,7 @@
               <div class="form-group">
 
                    <label ng-bind="page.pageinfo.fields.ESIMemeberDate.text"></label>
-              <field-box ng-column="page.pageinfo.fields.ESIMemeberDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.ESIMemeberDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
                 <!--<label for="inputDepartment">ESI Start Date*</label>
                 <input type="text" class="form-control"  ng-column="empTabCtrl.entity.ESIMemeberDate">

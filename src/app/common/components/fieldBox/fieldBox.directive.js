@@ -17,6 +17,7 @@
                 col: '=ngColumn',//a database side column setting provided by pageinfo will be passed here
                 entity: '=ngEntity',//an entity of entire form will be passed from this attribute
                 editForm: '=form',//a form tag name will be passed through this attribute
+                page: '=page',//a page object of current request
                 fbMaxDate: '@?fbMaxDate',//max date for date picker
                 fbOnKeypress: '&?fbKeypress',//an optional parameter for keypress event
                 fbOnkeydown: '&?fbkeydown',//optional parameter for keyup event
@@ -26,22 +27,15 @@
                 fbOnChange: '&?fbChange',//optional parameter for on change event
             },
             controller: function ($scope, $timeout) {
-               
+
             },
             link: function ($scope, $elm, $attrs, $ctrl) {
-
+                console.log($scope)
                 //a local ngModel variable for implemented control which is set by validText directive
                 $scope.ngModel = {};
-                
+
                 if (!$scope.col)
                     return;
-
-                $scope.getMaxDate = function () {
-                    console.log('calling max date')
-                    return moment();
-                }
-             
-                
 
                 //defining entity if passes undefined from implementation
                 //possible if entity is not defined on the top of the implemented controller
@@ -293,7 +287,7 @@
                     }
                 })
                 $elm.bind('change', function (e) {
-                   
+
                     if ($scope.fbOnChange) {
                         $scope.fbOnChange({ event: e, element: $elm, modelCtrl: $scope.ngModel, column: $scope.col })
                     }
