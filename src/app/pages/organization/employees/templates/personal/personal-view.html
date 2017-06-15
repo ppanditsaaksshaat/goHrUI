@@ -14,7 +14,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PdDateOfBirth.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PdDateOfBirth" ng-entity="empTabCtrl.entity" form="editForm" fb-max-date="today"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PdDateOfBirth" ng-entity="empTabCtrl.entity" form="editForm" fb-max-date="today"></field-box>
                   <!--<label for="inputDOB">Date Of Birth*</label>
 
                 <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
@@ -25,7 +25,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PdMaritalId.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PdMaritalId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PdMaritalId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
                   <!--<label for="inputDesignation">Marital Status*</label>
                 <select id="empMaritalStatus_{{$index}}" name="empMaritalStatus_{{$index}}" ng-model="empTabCtrl.entity.PdMaritalId" class="form-control"
@@ -38,7 +38,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PdGenderId.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PdGenderId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PdGenderId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
                   <!--<label for="inputEmployeeType">Gender*</label>
                 <select id="empGender_{{$index}}" name="empGender_{{$index}}" ng-model="empTabCtrl.entity.PdGenderId" class="form-control"
@@ -53,7 +53,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PdMobileNo.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PdMobileNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PdMobileNo" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                   <!--
                 <label for="inputMobile">Mobile*</label>
                 <input type="text" class="form-control"  minlength="10" maxlength="17" numeric-Only id="inputMobile" ng-model="empTabCtrl.entity.PdMobileNo" required>-->
@@ -63,7 +63,7 @@
                 <div class="form-group">
 
                   <label ng-bind="page.pageinfo.fields.PdEmail.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PdEmail" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PdEmail" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                   <!--<input type="email" class="form-control" id="inputEmail" maxlength="50" ng-model="empTabCtrl.entity.PdEmail" required>-->
                 </div>
               </div>
@@ -71,7 +71,7 @@
                 <div class="form-group">
 
                   <label ng-bind="page.pageinfo.fields.PDAnniversaryDate.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PDAnniversaryDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PDAnniversaryDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                   <!--<label for="inputAnniversaryDate">Anniversary Date</label>
 
                 <datepicker date-format="dd-MMMM-yyyy" selector="form-control">
@@ -84,7 +84,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PdNationalityId.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PdNationalityId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PdNationalityId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                   <!--<label for="inputFacebook">Nationality*</label>
                 <select id="empNationality_{{$index}}" name="empNationality_{{$index}}" ng-model="empTabCtrl.entity.PdNationalityId" class="form-control"
                   ng-options="nationality.value as nationality.name for nationality in page.pageinfo.selects.PdNationalityId"
@@ -96,13 +96,13 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PDReligionId.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PDReligionId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PDReligionId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PDOtherNumber.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PDOtherNumber" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PDOtherNumber" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                   <!--<label for="inputOtherNo">Other Identity</label>
                 <input type="text" class="form-control" id="inputOtherNo" ng-model="empTabCtrl.entity.PDOtherNumber">-->
                 </div>
@@ -112,7 +112,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PDFacebook.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PDFacebook" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PDFacebook" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                   <!--<label for="inputFacebook">Facebook</label>
                 <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.entity.PDFacebook">-->
                 </div>
@@ -120,7 +120,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PDTwitter.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PDTwitter" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PDTwitter" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                   <!--<label for="inputTwitter">Twitter</label>
                 <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.entity.PDTwitter">-->
                 </div>
@@ -128,7 +128,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PDLinkedIn.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PDLinkedIn" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PDLinkedIn" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                   <!--<label for="inputAnniversaryDate">Linked In</label>
                 <input type="text" class="form-control" id="inputAnniversaryDate" ng-model="empTabCtrl.entity.PDLinkedIn">-->
                 </div>
@@ -138,7 +138,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PDAdhar.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PDAdhar" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PDAdhar" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                   <!--<label for="inputFacebook">Adhaar</label>
                 <input type="text" class="form-control" id="inputFacebook" ng-model="empTabCtrl.entity.PDAdhar">-->
                 </div>
@@ -146,7 +146,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="page.pageinfo.fields.PDPanCard.text"></label>
-                  <field-box ng-column="page.pageinfo.fields.PDPanCard" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="page.pageinfo.fields.PDPanCard" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
                   <!--<label for="inputTwitter">PAN</label>
                 <input type="text" class="form-control" id="inputTwitter" ng-model="empTabCtrl.entity.PDPanCard">-->
                 </div>
@@ -160,7 +160,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="emgContactPage.pageinfo.fields.ECPersonName.text"></label>
-                  <field-box ng-column="emgContactPage.pageinfo.fields.ECPersonName" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="emgContactPage.pageinfo.fields.ECPersonName" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
 
                   <!--<label for="inputEmgName">Name</label>
                 <input type="text" class="form-control" id="inputEmgName" text-Only-With-Space ng-model="empTabCtrl.empEmgContact.ECPersonName">-->
@@ -169,7 +169,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="emgContactPage.pageinfo.fields.ECContactNo.text"></label>
-                  <field-box ng-column="emgContactPage.pageinfo.fields.ECContactNo" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="emgContactPage.pageinfo.fields.ECContactNo" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
 
                   <!--<label for="inputEmgMobile">Mobile</label>
                 <input type="text" class="form-control" id="inputEmgMobile" numeric-Only minlength="10" maxlength="17" ng-model="empTabCtrl.empEmgContact.ECContactNo" required>-->
@@ -178,7 +178,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="emgContactPage.pageinfo.fields.ECAddress.text"></label>
-                  <field-box ng-column="emgContactPage.pageinfo.fields.ECAddress" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="emgContactPage.pageinfo.fields.ECAddress" ng-entity="empTabCtrl.empEmgContact" form="editForm"></field-box>
 
                   <!--<label for="inputEmgAddress">Address</label>
                 <input type="text" class="form-control" id="inputEmgAddress" maxlength="50" ng-model="empTabCtrl.empEmgContact.ECAddress">-->
@@ -197,7 +197,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="contactPage.pageinfo.fields.CDAddLine1.text"></label>
-                  <field-box ng-column="contactPage.pageinfo.fields.CDAddLine1" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDAddLine1" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
                   <!--<label for="inputLine1">Line1</label>
                 <input type="text" class="form-control" id="inputLine1" ng-model="empTabCtrl.empContactDetail.CDAddLine1">-->
                 </div>
@@ -205,7 +205,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="contactPage.pageinfo.fields.CDAddLine2.text"></label>
-                  <field-box ng-column="contactPage.pageinfo.fields.CDAddLine2" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDAddLine2" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                   <!--<label for="inputLine2">Line2</label>
                 <input type="text" class="form-control" id="inputLine2" ng-model="empTabCtrl.empContactDetail.CDAddLine2">-->
@@ -214,7 +214,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="contactPage.pageinfo.fields.CountryId.text"></label>
-                  <field-box ng-column="contactPage.pageinfo.fields.CountryId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CountryId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                   <!--<label for="inputEmgAddress">Country</label>
                 <select id="empCmpCountry_{{$index}}" name="empCmpCountry_{{$index}}" ng-model="empTabCtrl.empContactDetail.CountryId" class="form-control"
@@ -228,7 +228,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="contactPage.pageinfo.fields.StateId.text"></label>
-                  <field-box ng-column="contactPage.pageinfo.fields.StateId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.StateId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                   <!--<label for="empCmpState_{{$index}}">State</label>
                 <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.StateId" class="form-control"
@@ -240,7 +240,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="contactPage.pageinfo.fields.CityId.text"></label>
-                  <field-box ng-column="contactPage.pageinfo.fields.CityId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CityId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                   <!--<label for="empCmpCity_{{$index}}">City</label>
                 <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.CityId" class="form-control"
@@ -252,7 +252,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="contactPage.pageinfo.fields.CDAreaId.text"></label>
-                  <field-box ng-column="contactPage.pageinfo.fields.CDAreaId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDAreaId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                   <!--<label for="empCmpCity_{{$index}}">City</label>
                 <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.CityId" class="form-control"
@@ -267,7 +267,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label ng-bind="contactPage.pageinfo.fields.CDPincode.text"></label>
-                  <field-box ng-column="contactPage.pageinfo.fields.CDPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
                   <!--
                 <label for="inputZip">Zip</label>
                 <input type="text" class="form-control" id="inputZip" ng-model="empTabCtrl.empContactDetail.CDPincode">-->
@@ -291,7 +291,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.CDPAddLine1.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.CDPAddLine1" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDPAddLine1" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                     <!--<label for="inputPerLine1">Line1</label>
                   <input type="text" class="form-control" id="inputPerLine1" ng-model="empTabCtrl.empContactDetail.CDPAddLine1">-->
@@ -300,7 +300,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.CDPAddLine2.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.CDPAddLine2" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDPAddLine2" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
                     <!--
                   <label for="inputPerLine2">Line2</label>
                   <input type="text" class="form-control" id="inputPerLine2" ng-model="empTabCtrl.empContactDetail.CDPAddLine2">-->
@@ -309,7 +309,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.PCountryId.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.PCountryId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.PCountryId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
                   </div>
                   <!--<div class="form-group">
                   <label for="inputPerCountry">Country</label>
@@ -324,7 +324,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.PStateId.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.PStateId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.PStateId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                     <!--<label for="empPerState_{{$index}}">State</label>
                   <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.PStateId" class="form-control"
@@ -336,7 +336,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.PCityId.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.PCityId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.PCityId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                     <!--<label for="empPerCity_{{$index}}">City</label>
                   <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.PCityId" class="form-control"
@@ -348,7 +348,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.CDPAreaId.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.CDPAreaId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDPAreaId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                     <!--<label for="inputPerZip">Zip</label>
                   <input type="text" class="form-control" id="inputPerZip" ng-model="empTabCtrl.empContactDetail.CDPPincode">-->
@@ -361,7 +361,7 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label ng-bind="contactPage.pageinfo.fields.CDPPincode.text"></label>
-                    <field-box ng-column="contactPage.pageinfo.fields.CDPPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDPPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
 
                     <!--<label for="inputPerZip">Zip</label>
                   <input type="text" class="form-control" id="inputPerZip" ng-model="empTabCtrl.empContactDetail.CDPPincode">-->
