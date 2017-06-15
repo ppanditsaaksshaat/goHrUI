@@ -31,7 +31,7 @@
     $scope.page.pageId = 270;
 
     $scope.saveForm = _saveForm;
-   
+
 
 
 
@@ -55,6 +55,7 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
+      showDataOnLoad:false
     }
 
     function _addRecord() {
@@ -188,8 +189,11 @@
       $scope.showEditForm = false;
     }
 
+    $scope.$watch('page.gridOptions.data', function (data) {
+      console.log($scope.page.gridOptions)
+    })
 
-
+    
 
   }
 

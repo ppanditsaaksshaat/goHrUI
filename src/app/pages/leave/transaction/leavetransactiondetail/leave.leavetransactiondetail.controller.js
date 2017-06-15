@@ -19,14 +19,14 @@
     $scope.entity = {}
     $scope.page = $scope.createPage();
     // $scope.closeForm = _closeForm;
-   
+
 
     console.log($scope.page)
     // $scope.selectEmployeeData = $scope.page.pageinfo.selects.LEADEmpId;
     // console.log($scope.selectEmployeeData)
     $scope.page.pageId = 284;
 
-    
+
 
 
 
@@ -35,6 +35,7 @@
       selfLoading: true,
       showRefresh: true,
       showFilter: true,
+      filterOpened: true,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
@@ -49,14 +50,17 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
+      showDataOnLoad: true
     }
 
-   
+
     // function _closeForm(editForm) {
     //   $scope.showEditForm = false;
     // }
 
-
+    $scope.$watch('page.gridOptions.data', function (data) {
+      console.log($scope.page.gridOptions)
+    })
 
 
   }
