@@ -153,11 +153,11 @@
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
           $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
 
-        console.log($scope.page.pageinfo.pageid, )
-        console.log($scope.entity)
-        console.log($scope.oldEntity, )
-        console.log($scope.page.action)
-        console.log($scope.page.pageinfo.tagline)
+        // console.log($scope.page.pageinfo.pageid, )
+        // console.log($scope.entity)
+        // console.log($scope.oldEntity, )
+        // console.log($scope.page.action)
+        // console.log($scope.page.pageinfo.tagline)
         // $scope.showEditForm = false;
       }
     }
