@@ -1,0 +1,196 @@
+<form ng-submit="empTabCtrl.saveFormCommon(editForm)" name="editForm" novalidate>
+    <div class="panel panel-default xmedium-panel">
+        <edit-panel-head page="page" 
+        page-title="page.pageinfo.title" 
+        show-save="editForm.untouch" 
+        reset-form="empTabCtrl.resetFormCommon()"
+        open-List="empTabCtrl.goToEmployeeList()"
+        clear-form="empTabCtrl.clearFormCommon()"
+        condition="true">
+        </edit-panel-head>
+
+        <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+           <div style="max-height: 420px" ng-scrollbars ng-scrollbars-config="config">
+            <h3 class="">Current Address</h3>
+            <hr>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CDAddLine1.text"></label>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDAddLine1" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <!--<label for="inputLine1">Line1</label>
+                <input type="text" class="form-control" id="inputLine1" ng-model="empTabCtrl.empContactDetail.CDAddLine1">-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CDAddLine2.text"></label>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDAddLine2" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                  <!--<label for="inputLine2">Line2</label>
+                <input type="text" class="form-control" id="inputLine2" ng-model="empTabCtrl.empContactDetail.CDAddLine2">-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CountryId.text"></label>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CountryId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                  <!--<label for="inputEmgAddress">Country</label>
+                <select id="empCmpCountry_{{$index}}" name="empCmpCountry_{{$index}}" ng-model="empTabCtrl.empContactDetail.CountryId" class="form-control"
+                  ng-options="country.value as country.name for country in contactPage.pageinfo.selects.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                  data-placeholder="Select Nav Menu" ng-required="true">
+               </select>-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.StateId.text"></label>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.StateId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                  <!--<label for="empCmpState_{{$index}}">State</label>
+                <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.StateId" class="form-control"
+                  ng-options="state.value as state.name for state in contactPage.pageinfo.selects.StateId | filter:{CountryId:empTabCtrl.empContactDetail.CountryId}"
+                  ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CityId.text"></label>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CityId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                  <!--<label for="empCmpCity_{{$index}}">City</label>
+                <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.CityId" class="form-control"
+                  ng-options="city.value as city.name for city in contactPage.pageinfo.selects.CityId |filter:{StateId:empTabCtrl.empContactDetail.StateId}"
+                  ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CDAreaId.text"></label>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDAreaId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                  <!--<label for="empCmpCity_{{$index}}">City</label>
+                <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.CityId" class="form-control"
+                  ng-options="city.value as city.name for city in contactPage.pageinfo.selects.CityId |filter:{StateId:empTabCtrl.empContactDetail.StateId}"
+                  ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>-->
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label ng-bind="contactPage.pageinfo.fields.CDPincode.text"></label>
+                  <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  <!--
+                <label for="inputZip">Zip</label>
+                <input type="text" class="form-control" id="inputZip" ng-model="empTabCtrl.empContactDetail.CDPincode">-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="checkbox">
+                  <label class="custom-checkbox">      
+              <input type="checkbox" ng-click="empTabCtrl.permanentAddress()"  ng-model="empTabCtrl.CDPermanent" >   
+                <span>Permanent Address Same as Current Address</span>
+              </label>
+                </div>
+              </div>
+            </div>
+            <h3 class="">Permanent Address</h3>
+            <hr>
+            <div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.CDPAddLine1.text"></label>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDPAddLine1" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                    <!--<label for="inputPerLine1">Line1</label>
+                  <input type="text" class="form-control" id="inputPerLine1" ng-model="empTabCtrl.empContactDetail.CDPAddLine1">-->
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.CDPAddLine2.text"></label>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDPAddLine2" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                    <!--
+                  <label for="inputPerLine2">Line2</label>
+                  <input type="text" class="form-control" id="inputPerLine2" ng-model="empTabCtrl.empContactDetail.CDPAddLine2">-->
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.PCountryId.text"></label>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.PCountryId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+                  </div>
+                  <!--<div class="form-group">
+                  <label for="inputPerCountry">Country</label>
+                  <select id="empCmpCountry_{{$index}}" name="empCmpCountry_{{$index}}" ng-model="empTabCtrl.empContactDetail.PCountryId" class="form-control"
+                    ng-options="country.value as country.name for country in contactPage.pageinfo.selects.CountryId" ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                    data-placeholder="Select Nav Menu" ng-required="true">
+               </select>
+                </div>-->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.PStateId.text"></label>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.PStateId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                    <!--<label for="empPerState_{{$index}}">State</label>
+                  <select id="empCmpState_{{$index}}" name="empCmpState_{{$index}}" ng-model="empTabCtrl.empContactDetail.PStateId" class="form-control"
+                    ng-options="state.value as state.name for state in contactPage.pageinfo.selects.StateId | filter:{CountryId:empTabCtrl.empContactDetail.PCountryId}"
+                    ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>-->
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.PCityId.text"></label>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.PCityId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                    <!--<label for="empPerCity_{{$index}}">City</label>
+                  <select id="empCmpCity_{{$index}}" name="empCmpCity_{{$index}}" ng-model="empTabCtrl.empContactDetail.PCityId" class="form-control"
+                    ng-options="city.value as city.name for city in contactPage.pageinfo.selects.CityId |filter:{StateId:empTabCtrl.empContactDetail.PStateId}"
+                    ng-change="vm.typeOnChange(vm.section.SecType,'Add')" data-placeholder="Select Nav Menu" ng-required="true">
+               </select>-->
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.CDPAreaId.text"></label>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDPAreaId" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                    <!--<label for="inputPerZip">Zip</label>
+                  <input type="text" class="form-control" id="inputPerZip" ng-model="empTabCtrl.empContactDetail.CDPPincode">-->
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label ng-bind="contactPage.pageinfo.fields.CDPPincode.text"></label>
+                    <field-box page="page" ng-column ="contactPage.pageinfo.fields.CDPPincode" ng-entity="empTabCtrl.empContactDetail" form="editForm"></field-box>
+
+                    <!--<label for="inputPerZip">Zip</label>
+                  <input type="text" class="form-control" id="inputPerZip" ng-model="empTabCtrl.empContactDetail.CDPPincode">-->
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</form>

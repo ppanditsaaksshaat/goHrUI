@@ -68,7 +68,7 @@
             var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
             vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
 
-            if (vm.pageId == 114 || vm.pageId == 35 || vm.pageId == 125) {
+            if (vm.pageId == 114 || vm.pageId == 35 || vm.pageId == 125 || vm.pageId == 36) {
 
                 $timeout(function () {
                     pageService.getPagData(vm.pageId).then(
@@ -76,13 +76,13 @@
                     pageService.getPagData(vm.pageIds.emgContactPageId).then(
                         _getPageDataSuccessResult, _getPageDataErrorResult);
                 });
-                if (vm.pageId == 35) {
-                    $scope.familyPage = _getLocalPageObject(52);
-                    $scope.nomineePage = _getLocalPageObject(438);
-                    $scope.identityPage = _getLocalPageObject(442);
-                    pageService.getPagData(vm.pageIds.contactPageId).then(
-                        _getPageDataSuccessResult, _getPageDataErrorResult);
-                }
+                // if (vm.pageId == 36) {
+                //     // $scope.familyPage = _getLocalPageObject(52);
+                //     // $scope.nomineePage = _getLocalPageObject(438);
+                //     // $scope.identityPage = _getLocalPageObject(442);
+                //     // pageService.getPagData(vm.pageIds.contactPageId).then(
+                //     //     _getPageDataSuccessResult, _getPageDataErrorResult);
+                // }
             }
             else {
                 vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
@@ -94,6 +94,7 @@
             }
         }
         function _getPageDataSuccessResult(result) {
+
             //console.log(result)
             if (result) {
                 if (result.pageinfo) {
@@ -108,7 +109,7 @@
             }
 
             if (result.pageinfo.pageid == 36) {
-                $scope.contactPage = result;
+                $scope.empContactDetail = result;
             }
             else if (result.pageinfo.pageid == 53) {
                 $scope.emgContactPage = result;
@@ -342,6 +343,7 @@
                     }
                 }
                 else if (vm.pageId == 35) {
+
                     if (vm.entity.PdId === undefined) {
                         vm.entity.PdEmpId = vm.empPKId;
                         _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
@@ -349,6 +351,15 @@
                     else {
                         console.log(vm.entity);
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
+                    }
+                }
+                if (vm.pageId == 36) {
+                    if (vm.empContactDetail.CDId === undefined) {
+                        vm.empContactDetail.CDEmpId = vm.empPKId;
+                        _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create', vm.oldempContactDetail, editForm, true);
+                    }
+                    else {
+                        _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit', vm.oldempContactDetail, editForm, true);
                     }
                 }
 
@@ -404,7 +415,7 @@
             console.log(error)
             //$scope.showMsg('error', 'Something went worng', 'Save Error')
         }
-        function _resetPersonal() {
+        function _resetPersonal() {         
             vm.entity = angular.copy(vm.oldEntity);
             vm.empEmgContact = angular.copy(vm.oldEmpEmgContact);
         }
@@ -472,28 +483,21 @@
         }
         function _saveFormCommon(editForm) {
             if (_validateFormCommon(editForm)) {
-                if (vm.activeTab === undefined) {
-                    _saveForm(editForm);
-                }
-                else if (vm.activeTab == 0) {
-                    _saveForm(editForm);
-                }
-                else if (vm.activeTab == 1) {
-                    _saveAddress(editForm);
-                }
+                _saveForm(editForm);
             }
         }
         function _resetFormCommon(editForm) {
-            editForm.$setPristine();
-            if (vm.activeTab === undefined) {
-                vm.entity = angular.copy(vm.oldEntity);
-            }
-            else if (vm.activeTab == 0) {
+          
+           // editForm.$setPristine();           
+            if (vm.pageId == 35) {
                 _resetPersonal();
             }
-            else if (vm.activeTab == 1) {
+            else if (vm.pageId == 36) {
                 vm.CDPermanent = true;
                 _resetAddress();
+            }
+            else {
+                vm.entity = angular.copy(vm.oldEntity);
             }
         }
         function _clearFormCommon() {
