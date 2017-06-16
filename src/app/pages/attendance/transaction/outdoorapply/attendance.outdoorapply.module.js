@@ -19,7 +19,7 @@
         templateUrl: 'app/pages/attendance/transaction/outdoorapply/attendance.outdoorapply.html?v=1',
         controller: "attTransoutdoorapplyController",
         controllerAs: "attCtrl",
-        title: 'OutDoor Apply',
+        title: 'OutDoor Application',
         sidebarMeta: {
           order: 3,
           parent: 'attendance.transaction',

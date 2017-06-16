@@ -326,6 +326,7 @@
                         vm.entity.JDDoubleOT = false;
                         vm.entity.JDSingleOTRate = '';
                         vm.entity.DoubleOTRate = '';
+                        
 
                     }
                     else if (vm.entity.SingleOT == false) {
@@ -337,10 +338,12 @@
                     console.log(vm.entity)
                     if (vm.entity.JDId === undefined) {
                         vm.entity.JDEmpId = vm.empPKId;
+                        vm.entity.JDSubUnitID=2;
                         _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
                     }
                     else {
                         console.log(vm.entity);
+                         vm.entity.JDSubUnitID=2;
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
                 }
