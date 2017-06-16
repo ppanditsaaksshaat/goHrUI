@@ -284,8 +284,8 @@
       pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
     }
     function _getCustomQuerySuccessResult(result) {
-      _showToast("success", "Verify Successfully")
-      refreshData();
+     $scope.shwowMsg("success", "Verify Successfully",)
+      $scope.page.refreshData();
     }
     function _getCustomQueryErrorResult(err) {
 
