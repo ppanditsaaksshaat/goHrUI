@@ -18,7 +18,7 @@
     vm.tableid = 30;
     vm.tempFile = "profile";
     vm.empBasicDetail = {};
-    
+
     function _loadController() {
 
       $timeout(function () {
@@ -56,6 +56,10 @@
       var mastersMenu = [];
       mastersMenu.push({ name: 'job', text: 'Job', id: 114 })
       mastersMenu.push({ name: 'personal', text: 'Personal', id: 35 })
+      mastersMenu.push({ name: 'address', text: 'Address', id: 36 })
+      mastersMenu.push({ name: 'family', text: 'Family', id: 52 })
+      mastersMenu.push({ name: 'nominee', text: 'Nominee', id: 438 })
+      mastersMenu.push({ name: 'identity', text: 'Identity', id: 442 })
       mastersMenu.push({ name: 'account', text: 'Account', id: 125 })
       mastersMenu.push({ name: 'experience', text: 'Experience', id: 56 })
       mastersMenu.push({ name: 'qualification', text: 'Qualification', id: 112 })
