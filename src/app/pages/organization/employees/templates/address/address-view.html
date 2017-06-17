@@ -94,10 +94,10 @@
             <div class="row">
               <div class="col-sm-5">
                 <div class="checkbox">
-                  <label class="custom-checkbox">      
-              <input type="checkbox" ng-click="empTabCtrl.permanentAddress()"  ng-model="empTabCtrl.CDPermanent" >   
-                <span>Permanent Address Same as Current Address</span>
-              </label>
+                  <label class="custom-checkbox" >      
+                      <input ng-disabled="!page.isAllowEdit" type="checkbox" ng-click="empTabCtrl.permanentAddress()"  ng-model="empTabCtrl.CDPermanent" >   
+                      <span>Permanent Address Same as Current Address</span>
+                  </label>
                 </div>
               </div>
             </div>

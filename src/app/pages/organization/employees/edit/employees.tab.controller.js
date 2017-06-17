@@ -59,6 +59,29 @@
         vm.permanentAddress = _permanentAddress;
 
 
+        $scope.onOTChange = function () {
+            if (!vm.entity.JDIsOT) {
+                vm.entity.SingleOT = false;
+                vm.entity.JDDoubleOT = false;
+                vm.entity.JDSingleOTRate = 0;
+                vm.entity.DoubleOTRate = 0;
+            }
+        }
+
+        $scope.onSingleOTChange = function () {
+            if (!vm.entity.SingleOT) {
+                vm.entity.SingleOT = false;
+                vm.entity.JDSingleOTRate = 0;
+            }
+        }
+
+        $scope.onDoubleOTChange = function () {
+            if (!vm.entity.JDDoubleOT) {
+                vm.entity.JDDoubleOT = false;
+                vm.entity.DoubleOTRate = 0;
+            }
+        }
+
         function _goToEmployeeList() {
             $state.go("organization.employees.list");
         }
@@ -242,11 +265,11 @@
                 showBack: true,
                 selfLoading: true,
                 showRefresh: true,
-                showFilter: true,
+                showFilter: false,
                 showAdd: true,
                 showRowMenu: true,
                 showCustomView: true,
-                showUpload: true,
+                showUpload: false,
                 showDialog: false,
                 enableRefreshAfterUpdate: true,
                 enableAutoRefresh: true,
@@ -539,7 +562,7 @@
                 vm.empEmgContact = {};
                 vm.empEmgContact[$scope.emgContactPage.pageinfo.idencolname] = oldEmgPkId;
             }
-            
+
             vm.entity = {};
             vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
         }

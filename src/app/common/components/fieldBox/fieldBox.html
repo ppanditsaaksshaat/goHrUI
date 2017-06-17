@@ -9,14 +9,14 @@
                 <span></span>
             </label>
         </div>
+        <span ng-switch-when="currency" class="form-control">{{entity[col.name]| currency : currencySymbol }}</span>
+        <span ng-switch-when="currency_3decimal" class="form-control">{{entity[col.name]| currency : currencySymbol : 3 }}</span>
+        <span ng-switch-when="currency_2decimal" class="form-control">{{entity[col.name]| currency : currencySymbol : 2 }}</span>
         <span ng-switch-default class="form-control">{{entity[col.name]}}</span>
     </div>
 </div>
-<div ng-show="page.isAllowEdit" 
-    popover-animation="true" uib-popover-html="col.errorText" popover-trigger="manual" 
-    popover-is-open="col.showError"
-    popover-placement="right" ng-switch="col.type" class="form-group  has-feedback" 
-    ng-class="{'has-success': !editForm[col.name].$isEmpty(editForm[col.name]['$modelValue']) && (editForm[col.name]['$valid'] && editForm[col.name]['$dirty']),
+<div ng-show="page.isAllowEdit" popover-animation="true" uib-popover-html="col.errorText" popover-trigger="manual" popover-is-open="col.showError"
+    popover-placement="right" ng-switch="col.type" class="form-group  has-feedback" ng-class="{'has-success': !editForm[col.name].$isEmpty(editForm[col.name]['$modelValue']) && (editForm[col.name]['$valid'] && editForm[col.name]['$dirty']),
         'has-error': editForm[col.name].$isEmpty(editForm[col.name]['$modelValue']) && (editForm[col.name]['$invalid'] && !editForm[col.name]['$pristine'])}">
     <div class="input-group">
         <!--Textbox-->
@@ -41,10 +41,15 @@
             <i class="glyphicon glyphicon-calendar"></i>
         </span>-->
 
-        <input valid-text ng-column="col" ng-switch-when="textbox|email|mobile|zipcode|pincode|number_nodecimal|number_decimal|number_dash|number_dash_plus|number_plus|number_plus_dash_dot|alphanum_nospace|alphanum_space|alpha_nospace|alpha_space"
+        <input valid-text ng-column="col" ng-switch-when="textbox|email|zipcode|pincode|number_nodecimal|number_decimal|number_dash|number_dash_plus|number_plus|number_plus_dash_dot|alphanum_nospace|alphanum_space|alpha_nospace|alpha_space"
             ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" ng-model="entity[col.name]"
             type="text" class="form-control" ng-minlength="col.minLength" ng-maxlength="col.maxLength" ng-required="col.required"
             class="form-control" />
+
+        <input valid-text ng-column="col" ng-switch-when="mobile" ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}"
+            placeholder="{{col.place}}" ng-model="entity[col.name]" type="text" class="form-control" ng-minlength="col.minLength"
+            ng-maxlength="col.maxLength" ng-required="col.required" class="form-control" ui-br-phone-number/>
+
 
         <input valid-text ng-column="col" ng-switch-when="currency_2decimal|currency_2decimal|currency" ng-switch-when-separator="|"
             name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" ng-model="entity[col.name]" type="number" class="form-control"
