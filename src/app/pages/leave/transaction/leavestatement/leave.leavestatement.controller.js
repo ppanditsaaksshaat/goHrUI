@@ -55,7 +55,7 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      showDataOnLoad:false
+      showDataOnLoad: false
     }
 
     function _addRecord() {
@@ -149,7 +149,7 @@
       if (_validateForm(editForm)) {
 
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.newEntity,
-          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLeaveApp, _errorLeaveApp);
       }
 
 
@@ -168,20 +168,38 @@
       return valid;
 
     }
-    $scope.$on('form-success', function (successEvent, result) {
+
+    function _successLeaveApp(result) {
+      console.log(result)
       if (result.success_message == 'Added New Record.') {
-        console.log(result.success_message)
         $scope.showEditForm = false;
+        // editForm.$setPristine();
       }
       else if (result.success_message == 'Record Updated.') {
         $scope.showEditForm = false;
       }
-      else {
+      else
         $scope.showEditForm = true;
-      }
-      console.log(result)
+    }
 
-    })
+    function _errorLeaveApp() {
+
+    }
+
+    // $scope.$on('form-success', function (successEvent, result) {
+    //   if (result.success_message == 'Added New Record.') {
+    //     console.log(result.success_message)
+    //     $scope.showEditForm = false;
+    //   }
+    //   else if (result.success_message == 'Record Updated.') {
+    //     $scope.showEditForm = false;
+    //   }
+    //   else {
+    //     $scope.showEditForm = true;
+    //   }
+    //   console.log(result)
+
+    // })
 
 
 
@@ -193,7 +211,7 @@
       console.log($scope.page.gridOptions)
     })
 
-    
+
 
   }
 
