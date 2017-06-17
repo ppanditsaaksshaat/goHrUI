@@ -144,7 +144,8 @@
       if (_validateForm(editForm)) {
 
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
-          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLeaveApp, _errorLeaveApp);
+
 
         // console.log($scope.page.pageinfo.pageid, )
         // console.log($scope.entity)
@@ -155,21 +156,38 @@
       }
     }
 
-    $scope.$on('form-success', function (successEvent, result) {
+    function _successLeaveApp(result) {
       console.log(result)
       if (result.success_message == 'Added New Record.') {
-        console.log(result.success_message)
         $scope.showEditForm = false;
+        // editForm.$setPristine();
       }
       else if (result.success_message == 'Record Updated.') {
         $scope.showEditForm = false;
       }
-      else {
+      else
         $scope.showEditForm = true;
-      }
-      console.log(result)
+    }
 
-    })
+    function _errorLeaveApp() {
+
+    }
+
+    // $scope.$on('form-success', function (successEvent, result) {
+    //   console.log(result)
+    //   if (result.success_message == 'Added New Record.') {
+    //     console.log(result.success_message)
+    //     $scope.showEditForm = false;
+    //   }
+    //   else if (result.success_message == 'Record Updated.') {
+    //     $scope.showEditForm = false;
+    //   }
+    //   else {
+    //     $scope.showEditForm = true;
+    //   }
+    //   console.log(result)
+
+    // })
 
     if ($scope.page.pageId == 261) {
       $scope.page.boxOptions.editRecord = _editRecord;
