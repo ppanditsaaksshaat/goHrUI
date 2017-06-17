@@ -367,6 +367,8 @@
                 //====================================================================
                 //get page data
                 function _getPage() {
+                    $scope.page.pageIsLoaded = false;
+                    $scope.page.pageIsLoading = true;
                     $timeout(function () {
                         ////console.log($scope.page);
                         pageService.getPagData($scope.page.pageId).then(_getPageSuccessResult, _getPageErrorResult)
@@ -374,11 +376,14 @@
                 }
                 function _getPageSuccessResult(result) {
                     $scope.page = angular.extend({}, $scope.page, result);
+                    $scope.page.pageIsLoaded = true;
+                    $scope.page.pageIsLoading = false;
                     if ($scope.page.boxOptions.showDataOnLoad)
                         _refreshData();
                 }
                 function _getPageErrorResult(err) {
-
+                    $scope.page.pageIsLoaded = true;
+                    $scope.page.pageIsLoading = false;
                 }
                 //end get page data
                 //====================================================================
@@ -411,18 +416,18 @@
                         $scope.page.pageinfo.pageid,
                         '', '',
                         false, data);
-                    $scope.page.isLoaded = false
-                    $scope.page.isLoading = true
+                    $scope.page.dataIsLoaded = false
+                    $scope.page.dataIsLoading = true
                     $scope.page.gridOptions.data = []
                     tableData.then(_getTableSuccessResult, _getTableErrorResult)
                 }
                 function _getTableErrorResult(err) {
-                    $scope.page.isLoaded = true
-                    $scope.page.isLoading = false
+                    $scope.page.dataIsLoaded = true;
+                    $scope.page.dataIsLoading = false;
                 }
                 function _getTableSuccessResult(result) {
-                    $scope.page.isLoaded = true
-                    $scope.page.isLoading = false
+                    $scope.page.dataIsLoaded = true;
+                    $scope.page.dataIsLoading = false;
                     if (result == 'NoDataFound') {
                         // uivm.showMsg('warning', 'No Record Found.');
                     } else if (result.Errors !== undefined) {
