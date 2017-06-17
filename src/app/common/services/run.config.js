@@ -242,9 +242,9 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         }
 
         //adding default columns at and
-        var colCreatedOn = { name: 'CreatedOn', field: 'CreatedOn', displayName: 'Date', width: 100, visible: true, cellFilter: 'date:\'dd-MMM-yyyy\'' };
-        var colCreatedBy = { name: 'CreatedBy', field: 'CreatedBy', displayName: 'User', width: 100, visible: true };
-        var colAssignedUser = { name: 'AssignedUser', field: 'AssignedUser', displayName: 'Assigned User', width: 100, visible: true };
+        var colCreatedOn = { name: 'CreatedOn', field: 'CreatedOn', displayName: 'Date', width: 100, visible: false, cellFilter: 'date:\'dd-MMM-yyyy\'' };
+        var colCreatedBy = { name: 'CreatedBy', field: 'CreatedBy', displayName: 'User', width: 100, visible: false };
+        var colAssignedUser = { name: 'AssignedUser', field: 'AssignedUser', displayName: 'Assigned User', width: 100, visible: false };
         gridOptions.columnDefs.push(colCreatedOn);
         gridOptions.columnDefs.push(colCreatedBy);
         gridOptions.columnDefs.push(colAssignedUser);
