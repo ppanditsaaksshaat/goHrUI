@@ -30,7 +30,7 @@
 
             },
             link: function ($scope, $elm, $attrs, $ctrl) {
-                console.log($scope)
+//                console.log($scope)
                 //a local ngModel variable for implemented control which is set by validText directive
                 $scope.ngModel = {};
 

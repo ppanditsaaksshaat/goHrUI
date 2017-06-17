@@ -156,7 +156,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             };
         },
         link: function (scope, element, attrs, modelCtrl) {
-           
+
             if (!scope.col)
                 return;
 
@@ -306,19 +306,29 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                 case "email"://pk:13
                     modelCtrl.$parsers.push(function (inputValue) {
                         if (regexPattern) {
+                            var cleanInputValue = inputValue;
+                            if (inputValue.length > column.maxLength) {
+                                cleanInputValue = inputValue.substring(0, column.maxLength)
+                            }
+
+                            if (cleanInputValue != inputValue) {
+                                modelCtrl.$setViewValue(cleanInputValue);
+                                modelCtrl.$render();
+                            }
+
                             // var cleanInputValue = inputValue.replace(regexPattern, '');
                             // var re = regexPattern
-                            var result = regexPattern.test(inputValue);
-                            if (!result) {
-                                var cleanInputValue = inputValue.toUpperCase();
-                                if (inputValue.lastIndexOf('.') > 1) {
-                                    if (inputValue.lastIndexOf('@') < inputValue.lastIndexOf('.')) {
-                                        if (inputValue.substring(inputValue.lastIndexOf('.') + 1).length > 2) {
-                                            result = true;
-                                        }
-                                    }
-                                }
-                            }
+                            var result = regexPattern.test(cleanInputValue);
+                            // if (!result) {
+                            //     var cleanInputValue = inputValue.toUpperCase();
+                            //     if (inputValue.lastIndexOf('.') > 1) {
+                            //         if (inputValue.lastIndexOf('@') < inputValue.lastIndexOf('.')) {
+                            //             if (inputValue.substring(inputValue.lastIndexOf('.') + 1).length > 2) {
+                            //                 result = true;
+                            //             }
+                            //         }
+                            //     }
+                            // }
                             modelCtrl.$setValidity('emailError', result);
                         }
 
@@ -327,12 +337,25 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
                     break;
                 case "mobile"://pk:17
                     modelCtrl.$parsers.push(function (inputValue) {
-                        var mobileResult = (inputValue.length >= column.minLength && inputValue.length <= column.maxLength)
+                        var cleanInputValue = inputValue;
+                        if (inputValue.length > column.maxLength) {
+                            cleanInputValue = inputValue.substring(0, column.maxLength)
+                        }
+                        if (cleanInputValue.indexOf('+') > -1) {
+
+                        }
+                        if (cleanInputValue != inputValue) {
+                            modelCtrl.$setViewValue(cleanInputValue);
+                            modelCtrl.$render();
+                        }
+
+                        var mobileResult = (cleanInputValue.length >= column.minLength && cleanInputValue.length <= column.maxLength)
+
 
                         modelCtrl.$setValidity('mobile', mobileResult);
                         _assignModelToParent();
-                        
-                        return inputValue;
+
+                        return cleanInputValue;
                     });
                     element.bind('keypress', keypressOnlyNumericWithPlus);
                     break;
