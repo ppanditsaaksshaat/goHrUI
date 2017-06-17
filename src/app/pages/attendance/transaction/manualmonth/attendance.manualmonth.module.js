@@ -19,7 +19,7 @@
         templateUrl: 'app/pages/attendance/transaction/manualmonth/attendance.manualmonth.html?v=1',
         controller: "attTransmanualmonthController",
         controllerAs: "attCtrl",
-        title: 'Month Att ',
+        title: 'Month By Attendance ',
         sidebarMeta: {
           order: 10,
           parent: 'attendance.transaction',
