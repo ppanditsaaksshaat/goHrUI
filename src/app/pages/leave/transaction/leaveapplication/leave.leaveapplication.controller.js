@@ -277,7 +277,7 @@
               });
             }
             else
-              $scope.showMsg('error', 'Your from date should be less than OR equel..');
+              $scope.showMsg('error', 'Your from date should be less than or equal..');
           }
           else
             $scope.showMsg('error', 'Please Select to date and from Date..');
