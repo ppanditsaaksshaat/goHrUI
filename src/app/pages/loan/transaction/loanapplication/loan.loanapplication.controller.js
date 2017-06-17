@@ -19,6 +19,7 @@
     $scope.page = $scope.createPage();
     console.log($scope.page)
     $scope.page.pageId = 105;
+    $scope.closeForm = _closeForm;
 
     var sanctionLoanPageId = 144;
 
@@ -118,10 +119,10 @@
        */
 
       $scope.newEntity = {};
-      $scope.newEntity.LADLAId = $scope.entity.LEADId;
+      $scope.newEntity.LADLAId = $scope.entity.LAId;
       $scope.newEntity.LADApprovedAmount = $scope.entity.LAApplyAmount;
       $scope.newEntity.LADApprovedAmountWithPercentage = $scope.entity.LAAmount;
-      $scope.newEntity.LADApprovedInstallmentAmount = $scope.entity.LAInstallment;
+      $scope.newEntity.LADInstalmentAmount = $scope.entity.LAInstallment;
       $scope.newEntity.LADAprvdNoOfInstamt = $scope.entity.LANoOfInstallment;
       $scope.newEntity.LADApprovalLoanClDate = $scope.entity.LADate;
       $scope.newEntity.LADApprovedOn = $scope.entity.LADate;

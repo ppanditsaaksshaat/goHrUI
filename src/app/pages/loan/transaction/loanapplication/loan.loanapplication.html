@@ -2,9 +2,13 @@
 </grid-box>
 <form name="editForm " novalidate ng-submit="saveForm(editForm) " ng-show="showEditForm ">
     <div class="panel panel-default xmedium-panel ">
-        <edit-panel-head page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
             close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
     " show-reset="true " condition="true "></edit-panel-head>
+
+  
+
+
 
         <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
             <div class="row">
@@ -69,7 +73,7 @@
             </div>
 
             <div class="col-md-7 " style="padding-top:5px " ng-show="isLeaveApprovedDet ">
-                <button type="button" ng-click="approvedLeave() " class="btn btn-sm btn-primary ">Approved</button>
+                <button type="button" ng-click="approvedLoan() " class="btn btn-sm btn-primary ">Approved</button>
             </div>
 
         </div>
