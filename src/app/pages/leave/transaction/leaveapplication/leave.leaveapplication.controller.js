@@ -242,7 +242,7 @@
     }
 
     function _approvedLeave() {
-      debugger;
+ 
       // $scope.entity.LEADId
       $scope.newEntity = {};
 
