@@ -80,7 +80,7 @@
           $scope.entity.LCRIsDayWise = true;
         }
       }
-    
+
     })
 
     // $scope.$watch(function () {
@@ -154,7 +154,9 @@
         // $scope.showEditForm = false;
       }
     }
+
     $scope.$on('form-success', function (successEvent, result) {
+      console.log(result)
       if (result.success_message == 'Added New Record.') {
         console.log(result.success_message)
         $scope.showEditForm = false;
