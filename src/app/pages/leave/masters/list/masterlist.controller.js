@@ -23,6 +23,7 @@
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.closeForm = _closeForm;
+    console.log($scope.page)
 
     $scope.page.boxOptions = {
       selfLoading: true,
@@ -79,35 +80,27 @@
           $scope.entity.LCRIsDayWise = true;
         }
       }
-      if ($scope.absentPresentDays) {
-        if ($scope.absentPresentDays == 'presentD') {
-          $scope.entity.LTRIsPresentDays = true;
-          $scope.entity.LCRIsTreatAsAbsent = false;
 
-        }
-        else if ($scope.absentPresentDays == 'absentD') {
-          $scope.entity.LTRIsPresentDays = false;
-          $scope.entity.LCRIsTreatAsAbsent = true;
-        }
-      }
     })
 
-    $scope.$watch(function () {
-      return $scope.absentPresentDays
+    // $scope.$watch(function () {
+    //   return $scope.absentPresentDays
 
-    }, function (newVal, oldVal) {
-      if ($scope.absentPresentDays) {
-        if ($scope.absentPresentDays == 'presentD') {
-          $scope.entity.LTRIsPresentDays = true;
-          $scope.entity.LCRIsTreatAsAbsent = false;
+    // }, function (newVal, oldVal) {
+    //   if ($scope.absentPresentDays) {
+    //     if ($scope.absentPresentDays == 'presentD') {
+    //       $scope.entity.LTRIsPresentDays = true;
+    //       $scope.entity.LCRIsTreatAsAbsent = false;
 
-        }
-        else if ($scope.absentPresentDays == 'absentD') {
-          $scope.entity.LTRIsPresentDays = false;
-          $scope.entity.LCRIsTreatAsAbsent = true;
-        }
-      }
-    })
+    //     }
+    //     else if ($scope.absentPresentDays == 'absentD') {
+    //       $scope.entity.LTRIsPresentDays = false;
+    //       $scope.entity.LCRIsTreatAsAbsent = true;
+    //     }
+    //   }
+    // })
+
+
     function _addRecord() {
       // $state.go("leave.masters.list", "{action:'create'}");
       $scope.showEditForm = true;
@@ -161,7 +154,9 @@
         // $scope.showEditForm = false;
       }
     }
+
     $scope.$on('form-success', function (successEvent, result) {
+      console.log(result)
       if (result.success_message == 'Added New Record.') {
         console.log(result.success_message)
         $scope.showEditForm = false;
