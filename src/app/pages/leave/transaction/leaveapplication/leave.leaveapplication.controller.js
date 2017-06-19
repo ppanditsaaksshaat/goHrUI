@@ -94,7 +94,8 @@
           // _showToast('info', ' Any leave type not avaible.', '');
           //  alert('No Leave Type Avaible')
 
-          $scope.showMsg('success', 'No leave type avaible.', '');
+          // $scope.showMsg('success', 'No leave type avaible.', '');
+          alert('No leave type avaible.')
           $scope.isLeaveTransactionTable = false;
         }
         else {
