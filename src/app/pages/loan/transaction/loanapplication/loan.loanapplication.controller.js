@@ -32,6 +32,7 @@
     $scope.loanApplyAmount = _loanApplyAmount;
     $scope.intallmentAmount = _intallmentAmount;
     $scope.onChangeLoanEmployee = _onChangeLoanEmployee;
+    $scope.onChangeInstallmentDate = _onChangeInstallmentDate;
 
     $scope.oldEntity = {};
     $scope.page.boxOptions = {
@@ -120,6 +121,7 @@
         }
         else {
           alert('Please Provide this employee Grade,Level and Subunit from employee job description')
+          $scope.isEmployeeGradeLevelSubUnit = false;
           $scope.entity.LPId = '';
           $scope.entity.LALTId = '';
           $scope.entity.LAInterest = '';
@@ -129,6 +131,21 @@
         }
 
       });
+    }
+
+    function _onChangeInstallmentDate() {
+      if ($scope.entity.LANoOfInstallment !== undefined) {
+        if ($scope.entity.LANoOfInstallment != null) {
+          var installmentDate = moment($scope.entity.LALoanInstallmetDate)
+          $scope.entity.LALastLoanCheckDate = installmentDate.add($scope.entity.LANoOfInstallment, 'M')
+        }
+        else {
+          alert('please provide no. of installment')
+        }
+      }
+      else {
+        alert('please provide no. of installment')
+      }
     }
 
 
@@ -162,11 +179,20 @@
         if ($scope.entity.LAAmount != null) {
           if (parseFloat($scope.entity.LAAmount) >= parseFloat($scope.entity.LAInstallment)) {
             var installNumber = parseFloat($scope.entity.LAAmount) / parseFloat($scope.entity.LAInstallment)
-            $scope.entity.LANoOfInstallment = parseInt(installNumber);
+            var installIntremain = installNumber - parseInt(installNumber);
+            if (installIntremain > 0) {
+              $scope.entity.LANoOfInstallment = parseInt(installNumber) + 1;
+            }
+            else {
+              $scope.entity.LANoOfInstallment = parseInt(installNumber);
+            }
+
+
+
           }
           else {
-            alert('your amount should less then or equal to ' + $scope.entity.LAAmount)
-            $scope.entity.LAInstallment = $scope.entity.LAAmount;
+            alert('your installment amount should less then or equal to ' + $scope.entity.LAAmount)
+            $scope.entity.LAInstallment = '';
           }
         }
         else {
@@ -222,6 +248,7 @@
             // $scope.maxAmount = parseFloat(result[0].LTRMaxLimit);
             $scope.maxAmount = parseFloat(result[0].LTRMaxLimit);
             $scope.entity.LAInterest = result[0].LTRInstallmentPercentage;
+            $scope.maxInstallmentNumber = result[0].LTRMaxDuration;
             if (result[0].LTRInstallmentPercentage == '') {
               $scope.entity.LAInterest = 0;
             }
@@ -287,10 +314,16 @@
     }
 
     function _saveForm(editForm) {
+      // if ($scope.isEmployeeGradeLevelSubUnit == false) {
+      //   alert('Please Provide this employee Grade,Level and Subunit from employee job description')
+      // }
+      // else {
       if (_validateForm(editForm)) {
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLoanApp, _errorLoanApp);
         editForm.$setPristine();
+        // }
       }
+
     }
 
     function _successLoanApp(result) {
@@ -321,6 +354,7 @@
 
 
     function _validateForm(editForm) {
+      //
       var valid = editFormService.validateForm(editForm)
       return valid;
     }
