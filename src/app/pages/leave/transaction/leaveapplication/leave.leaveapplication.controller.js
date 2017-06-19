@@ -94,7 +94,7 @@
           // _showToast('info', ' Any leave type not avaible.', '');
           //  alert('No Leave Type Avaible')
 
-          $scope.showMsg('error', 'Any leave type not avaible.');
+          $scope.showMsg('success', 'No leave type avaible.', '');
           $scope.isLeaveTransactionTable = false;
         }
         else {
@@ -235,14 +235,14 @@
     }
 
 
-   
+
 
     function _closeForm(editForm) {
       $scope.showEditForm = false;
     }
 
     function _approvedLeave() {
- 
+
       // $scope.entity.LEADId
       $scope.newEntity = {};
 
@@ -282,7 +282,7 @@
 
     }
 
-    
+
 
     // _getLeaveTypeAccordingLeaveControl()
   }
