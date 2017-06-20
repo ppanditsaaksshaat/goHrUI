@@ -30,9 +30,12 @@
 
             },
             link: function ($scope, $elm, $attrs, $ctrl) {
-//                console.log($scope)
+                //                console.log($scope)
                 //a local ngModel variable for implemented control which is set by validText directive
                 $scope.ngModel = {};
+
+                $scope.currencySymbol = 'Rs.';
+                $scope.currencyDecimal = 3;
 
                 if (!$scope.col)
                     return;
@@ -48,7 +51,7 @@
                         return $scope.ngModel.$viewValue;
                     },
                     function (newVal, oldVal) {
-                        console.log('field box', $scope.ngModel)
+                        //console.log('field box', $scope.ngModel)
                         if (newVal) {
                             $scope.ngModel.$setDirty();
                         }

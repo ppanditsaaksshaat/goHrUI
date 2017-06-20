@@ -18,7 +18,7 @@
       var mastersMenu = [];
       
       
-      mastersMenu.push({ name: 'loanprovider', text: 'Loan Prvider Master', id: 103 })
+      mastersMenu.push({ name: 'loanprovider', text: 'Loan Provider Master', id: 103 })
       mastersMenu.push({ name: 'loantype', text: 'Loan Type Master', id: 102 })
       mastersMenu.push({ name: 'loanstatus', text: 'Loan Status Master', id: 256 })
       mastersMenu.push({ name: 'loancategoryrulemaster', text: 'Loan Category Rule Master', id: 104 })

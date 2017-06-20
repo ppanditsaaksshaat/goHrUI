@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function LeaveAppController($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr) {
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr, $filter) {
 
     var vm = this;
     var pageId = 157;
@@ -34,6 +34,8 @@
     $scope.approvedLeave = _approvedLeave;
     $scope.employeeOnChange = _employeeOnChange;
     $scope.oldEntity = {};
+    var leaveTableId = 163;
+
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -58,6 +60,7 @@
       $scope.showEditForm = true;
       $scope.entity = {};
       $scope.isLeaveTransactionTable = false;
+      $scope.isLeaveApprovedDet = false;
 
 
     }
@@ -204,10 +207,12 @@
       console.log(result)
       if (result.success_message == 'Added New Record.') {
         $scope.showEditForm = false;
+        $scope.page.refreshData()
         // editForm.$setPristine();
       }
       else if (result.success_message == 'Record Updated.') {
         $scope.showEditForm = false;
+        $scope.page.refreshData()
       }
       else
         $scope.showEditForm = true;
@@ -248,16 +253,22 @@
       $scope.newEntity = {};
 
       // alert('APPROVED');
-      $scope.newEntity.ELSDELAId = $scope.entity.LEADId;
-      $scope.newEntity.ELSDSanctionFromDate = $scope.entity.LEADDateFrom;
-      $scope.newEntity.ELSDSanctionToDate = $scope.entity.LEADDateTo;
-      $scope.newEntity.ELSDLeaveStatusId = 1;
-      // console.log($scope.entity)
-      console.log($scope.newEntity)
-      $scope.page.action = 'create';
-      if (_validateForm(editForm)) {
+
+      var selectedStatus = $filter('findObj')($scope.page.pageinfo.statuslist, $scope.entity.StatusId, 'value')
+      console.log(selectedStatus.isApproved)
+      if ($scope.entity.StatusId == 44) {
+        $scope.newEntity.ELSDELAId = $scope.entity.LEADId;
+        $scope.newEntity.ELSDSanctionFromDate = $scope.entity.LEADDateFrom;
+        $scope.newEntity.ELSDSanctionToDate = $scope.entity.LEADDateTo;
+
+        // console.log($scope.entity)
+        console.log($scope.newEntity)
+        $scope.page.action = 'create';
         editFormService.saveForm(sanctionLeavePageId, $scope.newEntity,
           $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLeaveApproved, _errorLeaveApproved);
+      }
+      else {
+        _updateForm()
       }
 
       // editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, 
@@ -267,13 +278,16 @@
     }
 
     function _successLeaveApproved(result) {
+      _updateForm();
       console.log(result)
       if (result.success_message == 'Added New Record.') {
         $scope.showEditForm = false;
+        $scope.page.refreshData()
         // editForm.$setPristine();
       }
       else if (result.success_message == 'Record Updated.') {
         $scope.showEditForm = false;
+        $scope.page.refreshData()
       }
       else
         $scope.showEditForm = true;
@@ -281,6 +295,20 @@
 
     function _errorLeaveApproved() {
 
+    }
+
+    function _updateForm(entity, editForm) {
+      pageService.updateField(leaveTableId, $scope.page.pageinfo.idencolname, $scope.entity.LEADId, "StatusId", $scope.entity.StatusId).then(_updateSuccessResult, _updateErrorResult)
+    }
+
+    function _updateSuccessResult(result) {
+
+      if (result.success_message == "Updated")
+        $scope.showMsg("success", "Record Updated")
+
+    }
+    function _updateErrorResult(err) {
+      alert(err)
     }
 
 

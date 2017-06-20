@@ -127,7 +127,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDIsOT.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDIsOT" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.JDIsOT" ng-entity="empTabCtrl.entity" form="editForm" fb-change="onOTChange()"></field-box>
             </div>
             <!--<div class="checkbox">
               <label class="custom-checkbox">      
@@ -139,7 +139,7 @@
           <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.SingleOT.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.SingleOT" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.SingleOT" ng-entity="empTabCtrl.entity" form="editForm"  fb-change="onSingleOTChange()"></field-box>
             </div>
 
           </div>
@@ -147,7 +147,7 @@
           <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDDoubleOT.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDDoubleOT" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column ="page.pageinfo.fields.JDDoubleOT" ng-entity="empTabCtrl.entity" form="editForm"   fb-change="onDoubleOTChange()"></field-box>
             </div>
 
           </div>

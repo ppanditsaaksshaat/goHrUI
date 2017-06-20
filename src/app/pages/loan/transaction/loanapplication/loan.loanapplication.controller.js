@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function LoanAppController($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr) {
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr, $filter) {
 
     var vm = this;
     var pageId = 105;
@@ -25,6 +25,7 @@
     $scope.showEditForm = true;
 
     var sanctionLoanPageId = 144;
+    var loanTableId = 109;
 
     $scope.saveForm = _saveForm;
     $scope.approvedLoan = _approvedLoan;
@@ -33,6 +34,7 @@
     $scope.intallmentAmount = _intallmentAmount;
     $scope.onChangeLoanEmployee = _onChangeLoanEmployee;
     $scope.onChangeInstallmentDate = _onChangeInstallmentDate;
+    $scope.onControlClick = _onControlClick;
 
     $scope.oldEntity = {};
     $scope.page.boxOptions = {
@@ -85,13 +87,19 @@
       // readonlyColumns: ['col1', 'col2']
     }
 
+    function _onControlClick() {
+      $scope.userClicked = true;
+    }
     function _closeInstallment() {
       $scope.showEditForm = true;
       $scope.showEditLv = false;
       $scope.showEditGrid = true;
     }
 
-    function _onChangeLoanEmployee() {
+    function _onChangeLoanEmployee(e, elm, ctrl, col) {
+      if (!$scope.userClicked && $scope.page.action != 'create') {
+        return;
+      }
       $scope.entity.LPId = '';
       $scope.entity.LALTId = '';
       $scope.entity.LAInterest = '';
@@ -134,6 +142,12 @@
     }
 
     function _onChangeInstallmentDate() {
+      if (!$scope.userClicked && $scope.page.action != 'create') {
+        return;
+      }
+      if ($scope.editOpening) {
+        return;
+      }
       if ($scope.entity.LANoOfInstallment !== undefined) {
         if ($scope.entity.LANoOfInstallment != null) {
           var installmentDate = moment($scope.entity.LALoanInstallmetDate)
@@ -150,6 +164,9 @@
 
 
     function _loanApplyAmount() {
+      if (!$scope.userClicked && $scope.page.action != 'create') {
+        return;
+      }
       if ($scope.entity.LAEmpId !== undefined && $scope.entity.LPId !== undefined && $scope.entity.LALTId !== undefined) {
         if ($scope.entity.LAEmpId != null && $scope.entity.LPId != null && $scope.entity.LALTId != null) {
           var interest = parseFloat($scope.entity.LAInterest)
@@ -175,6 +192,9 @@
     }
 
     function _intallmentAmount() {
+      if (!$scope.userClicked && $scope.page.action != 'create') {
+        return;
+      }
       if ($scope.entity.LAAmount !== undefined) {
         if ($scope.entity.LAAmount != null) {
           if (parseFloat($scope.entity.LAAmount) >= parseFloat($scope.entity.LAInstallment)) {
@@ -207,6 +227,9 @@
     }
 
     function _onLoanTypeChange() {
+      if (!$scope.userClicked && $scope.page.action != 'create') {
+        return;
+      }
       var searchLists = [];
       var searchListData = {
         field: 'LTRLTId',
@@ -267,22 +290,6 @@
       });
     }
 
-    // function _onLoanTypeChange() {
-    //   if ($scope.entity.LAEmpId !== undefined && $scope.entity.LPId) {
-    //     if ($scope.entity.LAEmpId != null && $scope.entity.LPId != null) {
-    //       // $scope.maxAmount = parseFloat(result[0].LTRMaxLimit);
-    //       $scope.entity.LAInterest = $scope.LAInterestPercentage;
-    //     }
-    //     else {
-    //       alert('please select emp name and loan provider')
-    //       $scope.entity.LALTId = '';
-    //     }
-    //   }
-    //   else {
-    //     alert('please select emp name and loan provider')
-    //     $scope.entity.LALTId = '';
-    //   }
-    // }
 
     function _viewRecord(row) {
       console.log(row)
@@ -300,13 +307,16 @@
       $scope.showEditForm = false;
       $scope.showEditLv = true;
       $scope.showEditGrid = true;
+      $scope.isLeaveApprovedDet = false;
       $scope.entity = {};
     }
 
     function _editRecord(row) {
       console.log(row)
-      $scope.entity = row.entity;
+      $scope.editOpening = true
       $scope.showEditForm = false;
+      $scope.entity = row.entity;
+      $scope.editOpening = false
       $scope.showEditLv = true;
       $scope.showEditGrid = true;
       $scope.isLeaveApprovedDet = true;
@@ -333,12 +343,14 @@
         $scope.showEditForm = true;
         $scope.showEditLv = false;
         $scope.showEditGrid = true;
+        $scope.page.refreshData()
         // editForm.$setPristine();
       }
       else if (result.success_message == 'Record Updated.') {
         $scope.showEditForm = true;
         $scope.showEditLv = false;
         $scope.showEditGrid = true;
+        $scope.page.refreshData()
       }
       else {
         $scope.showEditForm = false;
@@ -395,40 +407,67 @@
        LADLoanStausId 
        LADIsInterestCalc
        */
+      var selectedStatus = $filter('findObj')($scope.page.pageinfo.statuslist, $scope.entity.StatusId, 'value')
+      console.log(selectedStatus.isApproved)
+      if ($scope.entity.StatusId == 41) {
 
-      $scope.newEntity = {};
-      $scope.newEntity.LADLAId = $scope.entity.LAId;
-      $scope.newEntity.LADApprovedAmount = $scope.entity.LAApplyAmount;
-      $scope.newEntity.LADApprovedAmountWithPercentage = $scope.entity.LAAmount;
-      $scope.newEntity.LADInstalmentAmount = $scope.entity.LAInstallment;
-      $scope.newEntity.LADAprvdNoOfInstamt = $scope.entity.LANoOfInstallment;
-      $scope.newEntity.LADApprovalLoanClDate = $scope.entity.LADate;
-      $scope.newEntity.LADApprovedOn = $scope.entity.LADate;
-      $scope.newEntity.LADLoanStausId = 1;
-      // console.log($scope.entity)
-      console.log($scope.newEntity)
-      $scope.page.action = 'create';
-      if (_validateForm(editForm)) {
+        $scope.newEntity = {};
+        $scope.newEntity.LADLAId = $scope.entity.LAId;
+        $scope.newEntity.LADApprovedAmount = $scope.entity.LAApplyAmount;
+        $scope.newEntity.LADApprovedAmountWithPercentage = $scope.entity.LAAmount;
+        $scope.newEntity.LADInstalmentAmount = $scope.entity.LAInstallment;
+        $scope.newEntity.LADAprvdNoOfInstamt = $scope.entity.LANoOfInstallment;
+        $scope.newEntity.LADApprovalLoanClDate = $scope.entity.LADate;
+        $scope.newEntity.LADApprovedOn = $scope.entity.LADate;
+
+        // console.log($scope.entity)
+        console.log($scope.newEntity)
+        $scope.page.action = 'create';
+
         editFormService.saveForm(sanctionLoanPageId, $scope.newEntity,
           $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLoanApproved, _errorLoanApproved);
+
       }
+      else {
+        _updateForm()
+      }
+
+
       // editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, 
       // $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
       // $scope.showEditForm = false;
     }
+
+    function _updateForm(entity, editForm) {
+
+      pageService.updateField(loanTableId, $scope.page.pageinfo.idencolname, $scope.entity.LAId, "StatusId", $scope.entity.StatusId).then(_updateSuccessResult, _updateErrorResult)
+    }
+
+    function _updateSuccessResult(result) {
+
+      if (result.success_message == "Updated")
+        $scope.showMsg("success", "Record Updated")
+
+    }
+    function _updateErrorResult(err) {
+      alert(err)
+    }
     function _successLoanApproved(result) {
+      _updateForm()
       console.log(result)
       if (result.success_message == 'Added New Record.') {
 
         $scope.showEditForm = true;
         $scope.showEditLv = false;
         $scope.showEditGrid = true;
+        $scope.page.refreshData()
         // editForm.$setPristine();
       }
       else if (result.success_message == 'Record Updated.') {
         $scope.showEditForm = true;
         $scope.showEditLv = false;
         $scope.showEditGrid = true;
+        $scope.page.refreshData()
       }
       else {
         $scope.showEditForm = false;
@@ -441,6 +480,8 @@
     function _errorLoanApproved() {
 
     }
+
+
 
 
     // _onLoanCategory();
