@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LAEmpId.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.LAEmpId" fb-change="onChangeLoanEmployee()" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LAEmpId" ng-entity="entity" fb-change="onChangeLoanEmployee()" form="editForm"></field-box>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LPId.text}}</label>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LALTId.text}}</label>
-                    <field-box page="page" fb-change="onLoanTypeChange()" ng-column="page.pageinfo.fields.LALTId" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LALTId" ng-entity="entity" fb-change="onLoanTypeChange()" form="editForm"></field-box>
                 </div>
             </div>
 
@@ -39,18 +39,18 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LAApplyAmount.text}}</label>
-                    <field-box page="page" fb-change="loanApplyAmount()" ng-column="page.pageinfo.fields.LAApplyAmount" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LAApplyAmount" ng-entity="entity" fb-change="loanApplyAmount()" form="editForm"></field-box>
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LAAmount.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.LAAmount" fb-change="onLoanTypeChange()" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LAAmount" ng-entity="entity" fb-change="onLoanTypeChange()" form="editForm"></field-box>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LAInstallment.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.LAInstallment" fb-change="intallmentAmount()" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LAInstallment" ng-entity="entity" fb-change="intallmentAmount()" form="editForm"></field-box>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LANoOfInstallment.text}}</label>
@@ -75,10 +75,28 @@
                 </div>
             </div>
 
-            <div class="col-md-7 " style="padding-top:5px " ng-show="isLeaveApprovedDet ">
-                <button type="button" ng-click="approvedLoan() " class="btn btn-sm btn-primary ">Approved</button>
-            </div>
 
+            <div class="row" ng-show="isLeaveApprovedDet ">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="inputPassword3">Status</label>
+                            <select class="form-control" ng-options="status.value as status.name for status in page.pageinfo.statuslist" ng-model="entity.StatusId"
+                                name="editForm"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <button type="button" ng-click="approvedLoan() " class=" btn btn-sm btn-primary ">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
+    </div>
     </div>
 </form>
