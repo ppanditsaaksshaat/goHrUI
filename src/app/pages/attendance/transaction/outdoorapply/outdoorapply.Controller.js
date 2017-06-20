@@ -12,8 +12,12 @@
   function attTransoutdoorapplyController($scope, $state, $timeout, pageService) {
     var vm = this;
     var pageId = 294;
+    vm.tableId=305
     var currentState = $state.current;
+    $scope.showEditForm = false;
     // this.uploadRecord = _uploadRecord;
+    $scope.close = _close;
+    $scope.updateForm=_updateForm;
     $scope.entity = {}
     $scope.page = $scope.createPage();
     $scope.page.pageId = 294;
@@ -36,13 +40,30 @@
       addRecord: null,
       editRecord: null,
       updateRecord: null,
-      viewRecord: null,
+      viewRecord: _viewRecord,
       deleteRecord: null,
     }
-    function _addRecord() {
+    /**View OutDoor Record */
+    function _viewRecord(row) {
       $scope.showEditForm = true;
+      $scope.entity = row.entity
+    }
+    /**Close View OutDoor Record */
+    function _close() {
+      $scope.showEditForm = false;
+    }
+ function _updateForm(entity) {
+      pageService.updateField(vm.tableId, $scope.page.pageinfo.idencolname, entity.FDAId,"StatusId",entity.StatusId).then(_updateSuccessResult, _updateErrorResult)
     }
 
+    function _updateSuccessResult(result) {
+      if(result.success_message=="Updated")
+       $scope.showMsg("success", "Record Updated")
+
+    }
+    function _updateErrorResult(err) {
+
+    }
 
   }
 
