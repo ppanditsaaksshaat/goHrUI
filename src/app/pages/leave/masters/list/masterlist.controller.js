@@ -149,6 +149,8 @@
 
       if (_validateForm(editForm)) {
 
+        console.log($scope.entity)
+
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
           $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLeaveApp, _errorLeaveApp);
 

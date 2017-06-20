@@ -286,7 +286,7 @@
     function _getCustomQuerySuccessResult(result) {
       console.log(result)
       if (result[0].emp == 1 && result[0].sum == 1) {
-        $scope.showMsg("success", "Verify Successfully",)
+        $scope.showMsg("success", "Verify Successfully")
         $scope.page.refreshData();
       }
     }
