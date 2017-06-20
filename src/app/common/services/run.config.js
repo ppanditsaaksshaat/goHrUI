@@ -1,4 +1,5 @@
-angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParams, $filter, DJWebStore, toastr, toastrConfig) {
+angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParams, $filter, DJWebStore,
+    toastr, toastrConfig, pageService, $timeout) {
 
     var toastOption = {};
     var defaultConfig = angular.copy(toastrConfig);
@@ -48,6 +49,58 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         $rootScope.previousState_name = fromState.name;
         $rootScope.previousState_params = fromParams;
     });
+
+    pageService.getBGClass().then(function (result) {
+        var bgClass = result;//angular.fromJson(response.data);
+        DJWebStore.SetBGClass(bgClass);
+        console.log(bgClass);
+    }, function (err) {
+        console.log(err);
+    });
+
+
+    var sheet = (function () {
+        // Create the <style> tag
+        var style = document.createElement("style");
+
+        // Add a media (and/or media query) here if you'd like!
+        // style.setAttribute("media", "screen")
+        // style.setAttribute("media", "only screen and (max-width : 1024px)")
+
+        // WebKit hack :(
+        style.appendChild(document.createTextNode(""));
+
+        // Add the <style> element to the page
+        document.head.appendChild(style);
+
+        return style.sheet;
+    })();
+
+    $rootScope.setupColorClass = function () {
+
+        $timeout(function () {
+            var bgClasses = DJWebStore.GetBGClass();
+            if (bgClasses == null) {
+
+            }
+            angular.forEach(bgClasses, function (k, v) {
+
+                var className = k.BGCssClass;
+                var bgColorCode = "background: " + k.BGClassBG + " !important; ";
+                var fontColorCode = "color: " + k.BGClassFont + "; ";
+
+                if (k.BGClassFont == "") {
+                    fontColorCode = "";
+                }
+
+                if (k.BGClassBG == "") {
+                    bgColorCode = "";
+                }
+                sheet.addRule("." + className, bgColorCode + fontColorCode, 0);
+            });
+        })
+    }
+
     //back button function called from back button's ng-click="back()"
     $rootScope.back = function (prevState) {
         if ($rootScope.previousState_name != '')
@@ -155,7 +208,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     }
     $rootScope.gridSetupColumns = function (gridOptions, columns, page, isEdit, isDelete, isView, isUpdate) {
         gridOptions.columnDefs = [];
-
+        console.log(columns)
         // var colRowHeader = {
         //     name: 'RowHeader', field: 'RowHeader',
         //     displayName: '', width: 30, visible: true,
@@ -221,6 +274,14 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                 }
                 else if (colEndWith != "id") {
                     var cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + "}}</div>"
+
+                    if (column.editable.controltype == 'checkbox') {
+                        cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
+                        cellTemplate += "<i class=\"fa fa-check-square-o  fa-lg font-green\" aria-hidden=\"true\" ng-show=\"row.entity." + colName + "\" ></i>";
+                        cellTemplate += "</div>"
+                    }
+                    // if(column.controltype)
+
                     columns[i].cellTemplate = '';
                     columns[i]['cellTemplate'] = cellTemplate;
                     columns[i]["cellClass"] = function (grid, row, col, rowRenderIndex, colRenderIndex) {
@@ -311,4 +372,6 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
 
         return page;
     }
+
+    $rootScope.setupColorClass();
 });

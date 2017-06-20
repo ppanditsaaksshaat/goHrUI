@@ -175,7 +175,7 @@ angular.module('BlurAdmin.common').directive('noSpecialChar', function () {
             if (column.pattern) {
                 regexPattern = new RegExp(column.pattern, 'g')
             }
-            console.log(column)
+            //console.log(column)
 
             function ValidatePAN(panNo) {
                 var strPanNo = panNo.toString().toUpperCase();

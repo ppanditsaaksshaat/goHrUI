@@ -28,7 +28,7 @@
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
-      showFilter: true,
+      showFilter: false,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
@@ -51,6 +51,15 @@
       $scope.page.boxOptions.addRecord = _addRecord;
     }
 
+    $scope.page.boxOptions.customColumns = [];
+    $scope.page.boxOptions.customColumns.push({
+      text: 'Approve', click: _rowApprove, type: 'a', pin: true, name: 'approve', width: 80
+    });
+
+    function _rowApprove(row) {
+      alert('row clicked')
+      console.log(row)
+    }
     $scope.$watch(function () {
       return $scope.yearRange
 
@@ -102,18 +111,15 @@
 
 
     function _addRecord() {
-      // $state.go("leave.masters.list", "{action:'create'}");
+      // var options = {
+      //   url: 'app/pages/leave/masters/templates/leavecontrol/leavecontrol-add.html',
+      //   controller: 'LeaveControlMasterAddController',
+      //   controlerAs: 'leaveCtrl',
+      //   size: 'top-center-800',
+      //   param: { page: $scope.page }
+      // }
+      // dialogModal.open(options)
       $scope.showEditForm = true;
-      $scope.entity = {};
-      // if ($scope.entity.LCROnCalendarYear === undefined) {
-      //   $scope.entity.LCROnCalendarYear = true;
-      // }
-      // if ($scope.entity.LCROnFinanceYear === undefined) {
-      //   $scope.entity.LCROnFinanceYear = true;
-      // }
-      // if ($scope.entity.LCRIsDayWise === undefined) {
-      //   $scope.entity.LCRIsDayWise = true;
-      // }
     }
 
     // function _validateForm(form) {

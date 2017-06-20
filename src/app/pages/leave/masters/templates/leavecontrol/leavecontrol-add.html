@@ -1,19 +1,21 @@
-<grid-box ng-model="page" ng-hide="showEditForm">
-</grid-box>
-
-<div class="widgets" ng-show="showEditForm">
+<div class="widgets">
     <div class="row">
         <div class="col-md-12">
             <div ba-panel ba-panel-title="Leave Control" ba-panel-class="with-scroll">
                 <ba-wizard>
-                    <ba-wizard-step title="Leave Type" form="formLeaveType">
-                        <form name="formLeaveType" novalidate>
+                    <ba-wizard-step title="Leave Type" form="editForm">
+                        <form name="editForm" novalidate>
                             <div class="row">
                                 <div class="col-md-6">
                                     
                                     <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LCRLTId.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LCRLTId" ng-entity="entity" form="editForm"></field-box>
-                                   
+                                    <!--<div class="form-group has-feedback"
+                                         ng-class="{'has-error': vm.personalInfoForm.username.$invalid && (vm.personalInfoForm.username.$dirty || vm.personalInfoForm.$submitted)}">
+                                        <label for="exampleUsername1">Username</label>
+                                        <input type="text" class="form-control" id="exampleUsername1" name="username" placeholder="Username" ng-model="vm.personalInfo.username" required>
+                                        <span class="help-block error-block basic-block">Required</span>
+                                    </div>-->
                                     <label ng-bind="page.pageinfo.fields.LCRWEFDate.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LCRWEFDate" ng-entity="entity" form="editForm"></field-box>
                                     
@@ -31,12 +33,21 @@
                             </div>
                         </form>
                     </ba-wizard-step>
-                    <ba-wizard-step title="Leave Cycle" form="formLeaveCycle">
-                        <form name="formLeaveCycle" novalidate>
+                    <ba-wizard-step title="Product Info" form="vm.productInfoForm">
+                        <form name="vm.productInfoForm" novalidate>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LCRNoOfDaysInCycle.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LCRNoOfDaysInCycle" ng-entity="entity" form="editForm"></field-box>
+                                    <div class="form-group has-feedback"
+                                         ng-class="{'has-error': vm.productInfoForm.productName.$invalid && (vm.productInfoForm.productName.$dirty || vm.productInfoForm.$submitted)}">
+                                        <label for="productName">Product name</label>
+                                        <input type="text" class="form-control" id="productName" name="productName" placeholder="Product name" ng-model="vm.productInfo.productName" required>
+                                        <span class="help-block error-block basic-block">Required</span>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error': vm.productInfoForm.productId.$invalid && (vm.productInfoForm.productId.$dirty || vm.productInfoForm.$submitted)}">
+                                        <label for="productId">Product id</label>
+                                        <input type="text" class="form-control" id="productId" name="productId" placeholder="productId" ng-model="vm.productInfo.productId" required>
+                                        <span class="help-block error-block basic-block">Required</span>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">

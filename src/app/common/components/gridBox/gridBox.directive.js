@@ -46,11 +46,15 @@
                     filterOnChange: null,//an event for filter box
                     gridStyle: { height: '450px' },
                     customButtons: [],
-                    selectedRowButtons: []
+                    selectedRowButtons: [],
+                    customColumns: [],
+                    pageResult: null,
+                    dataResult: null,
+                    saveResult: null
                 }
 
                 //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
-
+                //customColumns:text,click,type:a|button|text|dd,pin:true|false,
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.boxOptions = angular.copy(boxSetting);
@@ -69,11 +73,18 @@
                     $scope.page.gridOptions = angular.copy(gridOptions);
                 }
                 $scope.oldEntity = {};
-                $scope.$watch('page.pageinfo', function () {
+                var pageInfoWach = $scope.$watch('page.pageinfo', function () {
                     // //console.log($scope.page.pageinfo)
                     _setGridColumns();
                     _setupVerticalForm();
-                    ////console.log('from watch')
+
+
+                    if ($scope.page.pageinfo) {
+                        if ($scope.page.pageinfo.idencolname) {
+                            pageInfoWach();
+                        }
+                    }
+
                 });
                 $scope.form = {};
                 _loadDirective();
@@ -322,8 +333,38 @@
                             }
                             $scope.page.gridOptions = $rootScope.gridSetupColumns($scope.page.gridOptions,
                                 $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit);
-                            console.log($scope.page.gridOptions)
+                            //console.log($scope.page.gridOptions)
+                            if ($scope.page.boxOptions.customColumns) {
+                                if ($scope.page.boxOptions.customColumns != null) {
+                                    angular.forEach($scope.page.boxOptions.customColumns, function (col) {
 
+                                        $scope.page[col.name + "_click"] = col.click;
+
+                                        var custColumn = {};
+                                        var cellTemplate = "<div class='ui-grid-cell-contents' title='" + col.text + "'><a ng-click='grid.appScope.page." + col.name + "_click(row)' style='cursor:pointer'>" + col.text + "</a></div>"
+                                        custColumn.name = col.name
+                                        custColumn.field = col.name
+                                        custColumn.cellTemplate = '';
+                                        custColumn['cellTemplate'] = cellTemplate;
+                                        custColumn['visible'] = true;
+                                        custColumn["cellClass"] = function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                                            if (row.entity.StatusBGClass !== undefined) {
+                                                return 'status-bg ' + row.entity.StatusBGClass;
+                                            }
+                                        }
+                                        if (col.pin)
+                                            custColumn.pinnedRight = true;
+                                        if (col.width)
+                                            custColumn.width = col.width;
+                                        else
+                                            custColumn.width = 100;
+
+                                        console.log($scope.page.gridOptions.columnDefs);
+                                        $scope.page.gridOptions.columnDefs.push(custColumn);
+
+                                    })
+                                }
+                            }
                         }
                     }
                 }
@@ -375,9 +416,15 @@
                     });
                 }
                 function _getPageSuccessResult(result) {
+                    console.log(result)
                     $scope.page = angular.extend({}, $scope.page, result);
                     $scope.page.pageIsLoaded = true;
                     $scope.page.pageIsLoading = false;
+                    if ($scope.page.boxOptions.pageResult) {
+                        if ($scope.page.boxOptions.pageResult != null) {
+                            $scope.page.boxOptions.pageResult(result);
+                        }
+                    }
                     if ($scope.page.boxOptions.showDataOnLoad)
                         _refreshData();
                 }
@@ -428,6 +475,11 @@
                 function _getTableSuccessResult(result) {
                     $scope.page.dataIsLoaded = true;
                     $scope.page.dataIsLoading = false;
+                    if ($scope.page.boxOptions.dataResult) {
+                        if ($scope.page.boxOptions.dataResult != null) {
+                            $scope.page.boxOptions.dataResult(result);
+                        }
+                    }
                     if (result == 'NoDataFound') {
                         // uivm.showMsg('warning', 'No Record Found.');
                     } else if (result.Errors !== undefined) {

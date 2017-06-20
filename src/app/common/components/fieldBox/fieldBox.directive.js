@@ -51,7 +51,7 @@
                         return $scope.ngModel.$viewValue;
                     },
                     function (newVal, oldVal) {
-                        console.log('field box', $scope.ngModel)
+                        //console.log('field box', $scope.ngModel)
                         if (newVal) {
                             $scope.ngModel.$setDirty();
                         }
