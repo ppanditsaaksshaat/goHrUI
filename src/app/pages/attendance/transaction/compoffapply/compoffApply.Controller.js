@@ -9,19 +9,23 @@
     .controller('attTranscompoffApplyController', attTranscompoffApplyController);
 
   /** @ngInject */
-  function attTranscompoffApplyController($scope, $state, $timeout, pageService) {
+  function attTranscompoffApplyController($scope, $state, $timeout, pageService, editFormService) {
     var vm = this;
-    var pageId = 127;
+    vm.pageId = 127;
+    vm.tableId = 134;
     var currentState = $state.current;
+    $scope.showEditForm = false;
     // this.uploadRecord = _uploadRecord;
 
     $scope.attDateChange = _attDateChange;
     $scope.empChange = _empChange;
+    $scope.close = _close;
+    $scope.udateForm = _updateForm;
 
     $scope.entity = {}
     $scope.closeForm = _closeForm;
     $scope.page = $scope.createPage();
-    $scope.page.pageId = 127;
+    $scope.page.pageId = vm.pageId;
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -41,7 +45,7 @@
       addRecord: null,
       editRecord: null,
       updateRecord: null,
-      viewRecord: null,
+      viewRecord: _viewRecord,
       deleteRecord: null,
     }
     function _addRecord() {
@@ -101,7 +105,7 @@
       }
 
       var queryId = 514;
-        pageService.getCustomQuery(data, queryId).then(function (result) {
+      pageService.getCustomQuery(data, queryId).then(function (result) {
         console.log(result);
         $scope.entity.COTimeIn = result[0].Intime;
         $scope.entity.COTimeOut = result[0].OutTime;
@@ -110,12 +114,33 @@
       })
 
     }
+    /** View Compensentory Record */
+    function _viewRecord(row) {
+     
+      console.log(row.entity)
+      $scope.showEditForm = true;
+      $scope.entity = row.entity
 
+    }
+    /**Close View Compensentory Record */
+    function _close() {
 
+      $scope.showEditForm = false;
+    }
 
+    function _updateForm(entity, editForm) {
+      pageService.updateField(vm.tableId, $scope.page.pageinfo.idencolname, entity.COId, "StatusId", entity.StatusId).then(_updateSuccessResult, _updateErrorResult)
+    }
 
+    function _updateSuccessResult(result) {
 
+      if (result.success_message == "Updated")
+        $scope.showMsg("success", "Record Updated")
 
+    }
+    function _updateErrorResult(err) {
+      alert(err)
+    }
   }
 
 })();

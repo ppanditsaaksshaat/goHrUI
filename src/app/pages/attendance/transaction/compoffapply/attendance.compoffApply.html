@@ -1,0 +1,98 @@
+<grid-box ng-model="page" ng-hide="showEditForm">
+</grid-box>
+<form name="editForm" novalidate ng-submit="udateForm(entity,editForm)" ng-show="showEditForm">
+    <div class="panel panel-default xmedium-panel">
+        <edit-panel-head page="page" page-title="page.pageinfo.title" reset-form="resetFormCommon(editForm)" clear-form="clearFormCommon(editForm)"
+            close-form="closeForm(editForm)"></edit-panel-head>
+
+        <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="col-md-2">{{page.pageinfo.fields.EmpId.text}}</label>
+                    <div class="col-md-6">
+                        <span class="control-form" ng-bind="entity.EmpName" name="editForm"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="col-md-2">{{page.pageinfo.fields.COAttnDate.text}}</label>
+                    <div class="col-md-6">
+                        <span class="control-form" ng-bind="entity.COAttnDate" name="editForm"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="col-md-2">{{page.pageinfo.fields.COTimeIn.text}}</label>
+                    <div class="col-md-6">
+                        <span class="control-form" ng-bind="entity.COTimeIn | date : 'HH:mm'" name="editForm"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="col-md-2">{{page.pageinfo.fields.COTimeOut.text}}</label>
+                    <div class="col-md-6">
+                        <span class="control-form" ng-bind="entity.COTimeOut | date : 'HH:mm'" name="editForm"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="col-md-2">{{page.pageinfo.fields.COTotalWrTmInHour.text}}</label>
+                    <div class="col-md-6">
+                        <span class="control-form" ng-bind="entity.COTotalWrTmInHour | date : 'HH:mm'" name="editForm"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="col-md-2">{{page.pageinfo.fields.COReson.text}}</label>
+                    <div class="col-md-6">
+                        <span class="control-form" ng-bind="entity.COReson" name="editForm"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="col-md-2">{{page.pageinfo.fields.COIsApplyHalfDay.text}}</label>
+                    <div class="col-md-2">
+                        <span class="control-form" ng-bind="entity.COIsApplyHalfDay" name="editForm"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="col-md-2">{{page.pageinfo.fields.COIsApplyFullDay.text}}</label>
+                    <div class="col-md-2">
+                        <span class="control-form" ng-bind="entity.COIsApplyFullDay" name="editForm"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label class="col-md-2">Status</label>
+                    <div class="col-md-2">
+                        <select class="form-control" ng-options="status.value as status.name for status in page.pageinfo.statuslist" ng-model="entity.StatusId"
+                            name="editForm">
+                            <option value="">Select</option>
+                       </select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-8">
+                <div class="col-md-2"></div>
+                <div class="">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-danger" ng-click="close()">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>
