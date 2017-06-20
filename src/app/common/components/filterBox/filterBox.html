@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <label class="checkbox-inline custom-checkbox nowrap">
-                            <input type="checkbox" id="inlineCheckbox01" ng-model="filter.showFilter" ng-init="filter.showFilter=filter.required" ng-disabled="filter.required">
+                            <input type="checkbox" id="inlineCheckbox01" ng-model="filter.showFilter" ng-init="filter.showFilter=filter.required;filter.operator='='" ng-disabled="filter.required">
                             <span>{{filter.displayName}}</span>
                         </label>
                     </div>
