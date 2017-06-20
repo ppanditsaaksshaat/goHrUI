@@ -28,7 +28,7 @@
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
-      showFilter: true,
+      showFilter: false,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
@@ -142,6 +142,8 @@
 
 
       if (_validateForm(editForm)) {
+
+        console.log($scope.entity)
 
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
           $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLeaveApp, _errorLeaveApp);
