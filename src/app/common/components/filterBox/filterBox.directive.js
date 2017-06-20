@@ -153,7 +153,10 @@
                                 if (filter.showFilter && !isRequiredFailed) {
                                     var search = {};
                                     search.field = filter.name;
-                                    search.operand = filter.operator;
+                                    if (filter.operator)
+                                        search.operand = filter.operator;
+                                    else
+                                        search.operand = "=";
                                     search.value = filter.value;
                                     $scope.page.filterData[filter.name] = search;
                                     if (filter.controlType == "datepicker") {
@@ -320,7 +323,10 @@
                         $scope.page.filterData = {};
                     var search = {};
                     search.field = filter.name;
-                    search.operand = filter.operator;
+                    if (filter.operator)
+                        search.operand = filter.operator;
+                    else
+                        search.operand = "=";
                     search.value = filter.value;
                     $scope.page.filterData[filter.name] = search;
 

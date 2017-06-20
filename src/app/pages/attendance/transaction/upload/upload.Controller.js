@@ -121,7 +121,7 @@
       angular.forEach(vm.gridOptions.data, function (data, index) {
         vm.gridOptions.data[index].AttDataBaseType = 5;
       })
-      alert(JSON.stringify(vm.gridOptions.data))
+    
       var upload = {
         fieldRow: vm.gridOptions.data,
         groupName: 'Attendance'
