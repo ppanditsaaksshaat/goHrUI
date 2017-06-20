@@ -280,6 +280,16 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                         cellTemplate += "<i class=\"fa fa-check-square-o  fa-lg font-green\" aria-hidden=\"true\" ng-show=\"row.entity." + colName + "\" ></i>";
                         cellTemplate += "</div>"
                     }
+                    else if (column.editable.controltype == 'datepicker') {
+                        cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'dd-MMM-yyyy'}}</div>"
+                    }
+                    else if (column.editable.controltype == 'datetimepicker') {
+                        cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'dd-MMM-yyyy hh:mm'}}</div>"
+                    }
+                    else if (column.editable.controltype == 'timepicker') {
+                        console.log(column)
+                        cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'hh:mm a'}}</div>"
+                    }
                     // if(column.controltype)
 
                     columns[i].cellTemplate = '';
