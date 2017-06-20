@@ -36,6 +36,10 @@
         };
         var vm = this;
         $scope.entity = {}
+        $scope.page = { isAllowEdit: false };
+        $scope.contactPage = { isAllowEdit: false };
+        $scope.emgContactPage = { isAllowEdit: false };
+
         vm.empContactDetail = {};
         vm.pageIds = {
             familyPageId: "52", nomineePageId: "438", experiencPageId: "56", contactPageId: "36",
@@ -67,6 +71,9 @@
             var rndValu = Math.round((Math.random() * 10) * 10);
             var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
             vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
+
+            $scope.page.pageIsLoaded = false;
+            $scope.page.pageIsLoading = true;
 
             if (vm.pageId == 114 || vm.pageId == 35 || vm.pageId == 125 || vm.pageId == 36) {
                 if (vm.pageId == 114 || vm.pageId == 36 || vm.pageId == 125) {
@@ -109,12 +116,20 @@
             }
 
             if (result.pageinfo.pageid == 36) {
-                $scope.contactPage = result;
+
+                $scope.contactPage = angular.extend({}, $scope.contactPage, result);
+                $scope.contactPage.pageIsLoaded = true;
+                $scope.contactPage.pageIsLoading = false;
             }
             if (result.pageinfo.pageid == 53) {
-                $scope.emgContactPage = result;
+
+                $scope.emgContactPage = angular.extend({}, $scope.emgContactPage, result);
+                $scope.emgContactPage.pageIsLoaded = true;
+                $scope.emgContactPage.pageIsLoading = false;
             }
-            $scope.page = result;
+            $scope.page = angular.extend({}, $scope.page, result);
+            $scope.page.pageIsLoaded = true;
+            $scope.page.pageIsLoading = false;
             var linkFieldName;
             if (result.pageinfo.pageid == 114) {
                 linkFieldName = 'JDEmpId';
@@ -183,6 +198,8 @@
             })
         }
         function _getPageDataErrorResult(error) {
+            $scope.page.pageIsLoaded = true;
+            $scope.page.pageIsLoading = false;
         }
         function _getLocalPageObject(pageId) {
 
@@ -326,7 +343,7 @@
                         vm.entity.JDDoubleOT = false;
                         vm.entity.JDSingleOTRate = '';
                         vm.entity.DoubleOTRate = '';
-                        
+
 
                     }
                     else if (vm.entity.SingleOT == false) {
@@ -338,12 +355,12 @@
                     console.log(vm.entity)
                     if (vm.entity.JDId === undefined) {
                         vm.entity.JDEmpId = vm.empPKId;
-                        vm.entity.JDSubUnitID=2;
+                        vm.entity.JDSubUnitID = 2;
                         _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
                     }
                     else {
                         console.log(vm.entity);
-                         vm.entity.JDSubUnitID=2;
+                        vm.entity.JDSubUnitID = 2;
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
                 }
@@ -359,7 +376,7 @@
                     }
                 }
                 if (vm.pageId == 36) {
-                  
+
                     if (vm.empContactDetail.CDId === undefined) {
                         vm.empContactDetail.CDEmpId = vm.empPKId;
                         _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create', vm.oldempContactDetail, editForm, true);
@@ -413,8 +430,10 @@
                 isSuccess = false;
                 $scope.showMsg('error', result.error_message.Message);
             }
-            if (isSuccess)
+            if (isSuccess) {
+                $scope.page.isAllowEdit = false;
                 $scope.showMsg('success', 'Record Saved Successfully');
+            }
 
         }
         function _updateErrorResult(error) {
@@ -435,6 +454,8 @@
 
             vm.empEmgContact = {};
             vm.empEmgContact[$scope.page.pageinfo.idencolname] = oldPkId;
+            vm.empContactDetail = {};
+            vm.empContactDetail[$scope.page.pageinfo.idencolname] = oldPkId;
         }
         function _clearAddress() {
             var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
@@ -447,8 +468,6 @@
             var localForm = form;
             var valid = true;
             if (vm.pageId == 35) {
-                if (form.personalForm)
-                    localForm = form.personalForm;
                 if (localForm.$error.required !== undefined) {
                     if (localForm.$error.required.length) {
                         angular.forEach(localForm.$error.required, function (errCtrl) {
@@ -462,12 +481,10 @@
                     }
                 }
                 if (angular.equals(vm.entity, vm.oldEntity)) {
-                    _showToast('info', 'Nothing to save', "")
-                    valid = false;
-                }
-                if (angular.equals(vm.empEmgContact, vm.oldEmpEmgContact)) {
-                    _showToast('info', 'Nothing to save', "")
-                    valid = false;
+                    if (angular.equals(vm.empEmgContact, vm.oldEmpEmgContact)) {
+                        _showToast('info', 'Nothing to save', "")
+                        valid = false;
+                    }
                 }
             }
             else if (vm.pageId == 36) {
@@ -508,19 +525,23 @@
         }
         function _clearFormCommon() {
 
-            if (vm.activeTab === undefined) {
-                var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
-                vm.entity = {};
-                vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
-                console.log(vm.entity)
+
+            var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
+
+            if ($scope.contactPage.pageinfo) {
+                var oldContPkId = vm.empEmgContact[$scope.contactPage.pageinfo.idencolname]
+                vm.empContactDetail = {};
+                vm.empContactDetail[$scope.contactPage.pageinfo.idencolname] = oldContPkId;
             }
-            else if (vm.activeTab == 0) {
-                _clearPersonal();
+
+            if ($scope.emgContactPage.pageinfo) {
+                var oldEmgPkId = vm.empEmgContact[$scope.emgContactPage.pageinfo.idencolname]
+                vm.empEmgContact = {};
+                vm.empEmgContact[$scope.emgContactPage.pageinfo.idencolname] = oldEmgPkId;
             }
-            else if (vm.activeTab == 1) {
-                vm.CDPermanent = false;
-                _clearAddress();
-            }
+            
+            vm.entity = {};
+            vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
         }
         function _permanentAddress() {
             if (vm.CDPermanent) {

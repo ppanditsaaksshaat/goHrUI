@@ -2,9 +2,8 @@
 </grid-box>
 <form name="editForm " novalidate ng-submit="saveForm(editForm) " ng-show="showEditForm ">
     <div class="panel panel-default xmedium-panel ">
-        <edit-panel-head page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
-            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
-    " show-reset="true " condition="true "></edit-panel-head>
+        <edit-panel-head  page="page"  page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false" show-reset="true " condition="true "></edit-panel-head>
 
         <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
 
@@ -45,12 +44,12 @@
                     <select class="form-control " title="Select Employee " ng-model="entity.LEADEmpId " ng-options="opt.value
     as opt.name for opt in page.pageinfo.selects.LEADEmpId " ng-change="employeeOnChange() ">
                     </select>
-                    <!--<field-box ng-column="page.pageinfo.fields.LEADEmpId " ng-change="employeeOnChange()
+                    <!--<field-box page="page" ng-column ="page.pageinfo.fields.LEADEmpId " ng-change="employeeOnChange()
     " ng-entity="entity " form="editForm "></field-box>-->
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADLTId.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LEADLTId " ng-entity="entity " form="editForm "></field-box>
+                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADLTId " ng-entity="entity " form="editForm "></field-box>
                 </div>
 
                 <div class="form-group col-md-1 ">
@@ -77,11 +76,11 @@
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADDateFrom.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LEADDateFrom " ng-entity="entity " form="editForm "></field-box>
+                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADDateFrom " ng-entity="entity " form="editForm "></field-box>
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADDateTo.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LEADDateTo " ng-entity="entity " form="editForm "></field-box>
+                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADDateTo " ng-entity="entity " form="editForm "></field-box>
                 </div>
                 <div class="form-group col-md-1 ">
 
@@ -95,7 +94,7 @@
                 </div>
                 <div class="form-group col-md-10">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LeadComment.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LeadComment " ng-entity="entity " form="editForm "></field-box>
+                    <field-box page="page" ng-column ="page.pageinfo.fields.LeadComment " ng-entity="entity " form="editForm "></field-box>
                 </div>
 
                 <div class="form-group col-md-1 ">
@@ -107,7 +106,7 @@
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LeadHalfDay.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LeadHalfDay " ng-entity="entity " form="editForm "></field-box>
+                    <field-box page="page" ng-column ="page.pageinfo.fields.LeadHalfDay " ng-entity="entity " form="editForm "></field-box>
                 </div>
             </div>
 
@@ -118,11 +117,11 @@
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADContactName.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LEADContactName " ng-entity="entity " form="editForm "></field-box>
+                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADContactName " ng-entity="entity " form="editForm "></field-box>
                 </div>
                 <div class="form-group col-md-5 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADContactNo.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LEADContactNo " ng-entity="entity " form="editForm "></field-box>
+                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADContactNo " ng-entity="entity " form="editForm "></field-box>
                 </div>
                 <div class="form-group col-md-1 ">
 
@@ -135,7 +134,7 @@
                 </div>
                 <div class="form-group col-md-10 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.LEADAddress.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.LEADAddress " ng-entity="entity " form="editForm "></field-box>
+                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADAddress " ng-entity="entity " form="editForm "></field-box>
                 </div>
                 <div class="form-group col-md-1 ">
 
@@ -145,7 +144,7 @@
             <div class="row ">
                 <div class="form-group col-md-4 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.ELSDSanctionFromDate.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.ELSDSanctionFromDate " ng-entity="entity " form="editForm "></field-box>
+                    <field-box page="page" ng-column ="page.pageinfo.fields.ELSDSanctionFromDate " ng-entity="entity " form="editForm "></field-box>
                 </div>
             </div>
 

@@ -16,6 +16,7 @@
     vm.tabs = _getTabs();
     function _getTabs() {
       var mastersMenu = [];
+      mastersMenu.push({ name: 'paymentmode', text: 'Payment Mode Master', id: 296 })
       mastersMenu.push({ name: 'daycriteria', text: 'Day Criteria Master ', id: 262 })
       mastersMenu.push({ name: 'leavetype', text: 'Leave Type ', id: 260 })
       mastersMenu.push({ name: 'leavecontrol', text: 'Leave Control Master', id: 261 })

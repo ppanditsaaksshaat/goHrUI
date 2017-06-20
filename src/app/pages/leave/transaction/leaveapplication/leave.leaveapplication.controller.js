@@ -94,7 +94,8 @@
           // _showToast('info', ' Any leave type not avaible.', '');
           //  alert('No Leave Type Avaible')
 
-          $scope.showMsg('error', 'Any leave type not avaible.');
+          // $scope.showMsg('success', 'No leave type avaible.', '');
+          alert('No leave type avaible.')
           $scope.isLeaveTransactionTable = false;
         }
         else {
@@ -107,13 +108,6 @@
       });
     }
 
-    // function _validateForm(form) {
-    //   if (angular.equals($scope.oldEntity, $scope.entity)) {
-    //     _showToast('info', 'Nothing to save', '');
-    //     return false;
-    //   }
-    //   return true;
-    // }
 
     function _editRecord(row) {
 
@@ -127,92 +121,6 @@
       $scope.showSave = false;
 
     }
-
-    // function _saveForm(editForm) {
-    //   // alert('save')
-    //   // debugger;
-    //   // if (_validateForm(editForm)) {
-    //   if ($scope.entity.LEADEmpId != "" && $scope.entity.LEADEmpId !== undefined) {
-    //     if ($scope.entity.LEADLTId != "" && $scope.entity.LEADLTId !== undefined) {
-    //       console.log($scope.entity.LEADDateFrom)
-    //       console.log($scope.entity.LEADDateTo)
-    //       if (($scope.entity.LEADDateFrom != "" && $scope.entity.LEADDateFrom !== undefined) && ($scope.entity.LEADDateTo != "" && $scope.entity.LEADDateTo !== undefined)) {
-    //         debugger;
-    //         if ($scope.entity.LEADDateFrom === undefined) {
-    //           $scope.entity.LEADDateFrom = "";
-    //         }
-    //         if ($scope.entity.LEADDateTo === undefined) {
-    //           $scope.entity.LEADDateTo = "";
-    //         }
-    //         // // var firstdate = $scope.entity.LEADDateFrom;
-    //         // // var seconddate = $scope.entity.LEADDateTo;
-    //         // // var one = new Date(firstdate)
-    //         // // var two = new Date(seconddate);
-    //         // // if (two >= one) {
-    //         // // var millisecondsPerDay = 1000 * 60 * 60 * 24;
-    //         // // var millisBetween = two.getTime() - one.getTime();
-    //         // // $scope.day = millisBetween / millisecondsPerDay;
-    //         // // console.log(day)
-    //         // // Math.floor(day);
-    //         // _getLeaveTypeAccordingLeaveControl()
-    //         // // if ($scope.isValiddate) {
-    //         //   var balanceLeave = 0;
-    //         //   var leaveType = $scope.entity.LEADLTId;
-    //         //   console.log($scope.entity.LEADLTId)
-    //         //   // if ($scope.totalCredit >= $scope.totalDebit) {
-    //         //   // debugger;
-    //         //   // balanceLeave = $scope.totalCredit - $scope.totalDebit;
-    //         //   // if (balanceLeave >= $scope.day) {
-    //           editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
-    //             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
-    //           console.log($scope.page.pageinfo.pageid, $scope.entity,
-    //             $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
-    //         //   $scope.showEditForm = false;
-    //         //   // }
-    //         //   // else {
-    //         //   //   $scope.showMsg('error', 'You Can Not Apply Leave because your leave is exta leave according to your balance Leave..');
-    //         //   //   // alert('You Can Not Apply Leave.')
-    //         //   // }
-    //         //   // }
-    //         //   // else {
-    //         //   //   $scope.showMsg('error', 'Your leave is exta leave according to your balance Leave.');
-    //         //   //   // alert('Your leave is exta leave according to your balance Leave')
-    //         //   // }
-    //         // // }
-    //         // // else {
-    //         // //   $scope.showMsg('error', 'you have not apply more than 3 leave.');
-    //         // // }
-    //         // // }
-    //         // // else {
-    //         // //   // alert('to date should be greater than from date')
-    //         // //   $scope.showMsg('error', 'To date should be greater than from date.');
-    //         // // }
-    //       }
-    //       else {
-    //         $scope.showMsg('error', 'Please Select to date and from Date..');
-    //       }
-    //     }
-    //     else {
-    //       $scope.showMsg('error', 'Please Select Leave Type.');
-    //     }
-    //   }
-    //   else {
-    //     $scope.showMsg('error', 'Please Select Employee Name And Leave Type.');
-    //     // alert('Please Select Employee Name And Leave Type')
-    //   }
-    //   // }
-    // }
-
-    // function _saveForm(editForm) {
-    //   if (_onChangeDate()) {
-    //     //save
-
-    //   }
-    //   else {
-    //     //not save
-    //   }
-
-    // }
 
 
     function _saveForm(editForm) {
@@ -259,7 +167,8 @@
                   // $scope.showMsg('success', result[0].Massage);
                   // $scope.showEditForm = true;
                   if (_validateForm(editForm)) {
-                    editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+                    editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action,
+                      $scope.page.pageinfo.tagline).then(_successLeaveApp, _errorLeaveApp);
                     editForm.$setPristine();
                   }
 
@@ -267,17 +176,19 @@
                 else if (result[0].Massage != 'Valid Leave Apply') {
                   $scope.showMsg('error', result[0].Massage);
                   $scope.showEditForm = true;
+                  console.log(result[0].Massage)
                 }
                 else {
                   $scope.showEditForm = true;
                   console.log(result[0].Massage)
                   $scope.showMsg('error', 'this leave is not valid ..');
+
                 }
 
               });
             }
             else
-              $scope.showMsg('error', 'Your from date should be less than OR equel..');
+              $scope.showMsg('error', 'Your from date should be less than or equal..');
           }
           else
             $scope.showMsg('error', 'Please Select to date and from Date..');
@@ -289,7 +200,8 @@
         $scope.showMsg('error', 'Please Select Employee Name And Leave Type.');
     }
 
-    $scope.$on('form-success', function (successEvent, result) {
+    function _successLeaveApp(result) {
+      console.log(result)
       if (result.success_message == 'Added New Record.') {
         $scope.showEditForm = false;
         // editForm.$setPristine();
@@ -299,7 +211,23 @@
       }
       else
         $scope.showEditForm = true;
-    })
+    }
+
+    function _errorLeaveApp() {
+
+    }
+
+    // $scope.$on('form-success', function (successEvent, result) {
+    //   if (result.success_message == 'Added New Record.') {
+    //     $scope.showEditForm = false;
+    //     // editForm.$setPristine();
+    //   }
+    //   else if (result.success_message == 'Record Updated.') {
+    //     $scope.showEditForm = false;
+    //   }
+    //   else
+    //     $scope.showEditForm = true;
+    // })
 
 
     function _validateForm(editForm) {
@@ -308,66 +236,14 @@
     }
 
 
-    // function _getLeaveTypeAccordingLeaveControl() {
-    //   $scope.isValiddate = false;
-    //   if ($scope.entity.LEADDateFrom === undefined) {
-    //     $scope.entity.LEADDateFrom = "";
-    //   }
-    //   if ($scope.entity.LEADDateTo === undefined) {
-    //     $scope.entity.LEADDateTo = "";
-    //   }
-    //   var one = new Date($scope.entity.LEADDateFrom)
-    //   var two = new Date($scope.entity.LEADDateTo);
-    //   if (two >= one) {
-    //     var millisecondsPerDay = 1000 * 60 * 60 * 24;
-    //     var millisBetween = two.getTime() - one.getTime();
-    //     var days = millisBetween / millisecondsPerDay;
-    //     var balanceLeaves = 0;
-    //     var searchLists = [];
-    //     var searchListData = {
-    //       field: 'LCRLTId',
-    //       operand: '=',
-    //       // value: $scope.entity.LCRLTId
-    //       value: 1
-    //     }
-    //     searchLists.push(searchListData)
-    //     var data = {
-    //       searchList: searchLists,
-    //       orderByList: []
-    //     }
-    //     pageService.getTableData(leaveControlTableId, leaveControlPageId, '', '', true, data).then(function (result) {
-    //       console.log(result);
-    //       console.log(result[0].BRId)
-    //       console.log(result[0].LCRMaxDays)
-    //       // debugger;
-    //       if (days <= result[0].LCRMaxDays) {
-    //         console.log(result[0].LCRMaxDays)
-    //         if ($scope.totalCredit >= $scope.totalDebit) {
-    //           balanceLeaves = $scope.totalCredit - $scope.totalDebit;
-    //           if (balanceLeaves >= days) {
-    //             return $scope.isValiddate = true;
-    //           }
-    //           else {
-    //             alert('No more leave available in your accout');
-    //           }
-    //         }
-    //       }
-    //       else {
-    //         alert('You have not permission more than' + result[0].LCRMaxDays + 'leave')
-    //       }
-    //     })
-    //   }
-    //   else {
-    //     alert('Your from date should be less than OR equel ')
-    //   }
-    // }
+
 
     function _closeForm(editForm) {
       $scope.showEditForm = false;
     }
 
     function _approvedLeave() {
-      debugger;
+
       // $scope.entity.LEADId
       $scope.newEntity = {};
 
@@ -381,7 +257,7 @@
       $scope.page.action = 'create';
       if (_validateForm(editForm)) {
         editFormService.saveForm(sanctionLeavePageId, $scope.newEntity,
-          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLeaveApproved, _errorLeaveApproved);
       }
 
       // editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, 
@@ -389,6 +265,25 @@
 
       // $scope.showEditForm = false;
     }
+
+    function _successLeaveApproved(result) {
+      console.log(result)
+      if (result.success_message == 'Added New Record.') {
+        $scope.showEditForm = false;
+        // editForm.$setPristine();
+      }
+      else if (result.success_message == 'Record Updated.') {
+        $scope.showEditForm = false;
+      }
+      else
+        $scope.showEditForm = true;
+    }
+
+    function _errorLeaveApproved() {
+
+    }
+
+
 
     // _getLeaveTypeAccordingLeaveControl()
   }

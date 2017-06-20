@@ -1,12 +1,14 @@
-<grid-box ng-model="page" ng-hide="showEditForm">
+<grid-box ng-model="page" ng-hide="showEditLv">
 </grid-box>
-<form name="editForm " novalidate ng-submit="saveForm(editForm) " ng-show="showEditForm ">
+<grid-box ng-model="editPage" ng-hide="showEditGrid">
+</grid-box>
+<form name="editForm " novalidate ng-submit="saveForm(editForm) " ng-hide="showEditForm ">
     <div class="panel panel-default xmedium-panel ">
         <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
             close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
     " show-reset="true " condition="true "></edit-panel-head>
 
-  
+
 
 
 
@@ -14,7 +16,7 @@
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LAEmpId.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.LAEmpId" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LAEmpId" fb-change="onChangeLoanEmployee()" ng-entity="entity" form="editForm"></field-box>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LPId.text}}</label>
@@ -22,7 +24,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LALTId.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.LALTId" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" fb-change="onLoanTypeChange()" ng-column="page.pageinfo.fields.LALTId" ng-entity="entity" form="editForm"></field-box>
                 </div>
             </div>
 
@@ -37,30 +39,31 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LAApplyAmount.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.LAApplyAmount" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" fb-change="loanApplyAmount()" ng-column="page.pageinfo.fields.LAApplyAmount" ng-entity="entity" form="editForm"></field-box>
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LAAmount.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.LAAmount" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LAAmount" fb-change="onLoanTypeChange()" ng-entity="entity" form="editForm"></field-box>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LAInstallment.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.LAInstallment" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LAInstallment" fb-change="intallmentAmount()" ng-entity="entity" form="editForm"></field-box>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LANoOfInstallment.text}}</label>
                     <field-box page="page" ng-column="page.pageinfo.fields.LANoOfInstallment" ng-entity="entity" form="editForm"></field-box>
                 </div>
-                
+
             </div>
 
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LALoanInstallmetDate.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.LALoanInstallmetDate" ng-entity="entity" form="editForm"></field-box>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LALoanInstallmetDate" ng-entity="entity" fb-change="onChangeInstallmentDate()"
+                        form="editForm"></field-box>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPassword3">{{page.pageinfo.fields.LALastLoanCheckDate.text}}</label>

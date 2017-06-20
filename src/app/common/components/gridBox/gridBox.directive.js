@@ -8,7 +8,7 @@
     angular.module('BlurAdmin.common.components')
         .directive('gridBox', gridBox);
     /** @ngInject */
-    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService, 
+    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
         editFormService, focus) {
         return {
             restrict: 'E',
@@ -29,17 +29,20 @@
             link: function ($scope, elm, attrs, ctrl) {
 
                 var boxSetting = {
-                    selfLoading: true,
-                    showRefresh: true,
-                    filterOpened: false,
-                    requiredFilter: false,
-                    showFilter: undefined,
-                    showAdd: true,
-                    showRowMenu: true,
-                    showCustomView: true,
-                    showUpload: false,
-                    showDialog: false,
+                    selfLoading: true,//gridBox will fetch data from api on its own
+                    showRefresh: true,//show refresh button
+                    showFilter: true,//show filter toggle button
+                    filterOpened: true,//filter box opened on load
+                    requiredFilter: false,//filter is required
+                    showAdd: true,//show add button
+                    showRowMenu: true,//show row click menu
+                    showCustomView: true,//enable show custom html view
+                    showUpload: false,//show upload button
+                    showDialog: false,//show edit box on dialog mode
+                    enableRefreshAfterUpdate: true,
+                    enableAutoRefresh: true,
                     showDataOnLoad: true,
+                    showApplyFilter: true,
                     filterOnChange: null,//an event for filter box
                     gridStyle: { height: '450px' },
                     customButtons: [],
@@ -364,6 +367,8 @@
                 //====================================================================
                 //get page data
                 function _getPage() {
+                    $scope.page.pageIsLoaded = false;
+                    $scope.page.pageIsLoading = true;
                     $timeout(function () {
                         ////console.log($scope.page);
                         pageService.getPagData($scope.page.pageId).then(_getPageSuccessResult, _getPageErrorResult)
@@ -371,11 +376,14 @@
                 }
                 function _getPageSuccessResult(result) {
                     $scope.page = angular.extend({}, $scope.page, result);
+                    $scope.page.pageIsLoaded = true;
+                    $scope.page.pageIsLoading = false;
                     if ($scope.page.boxOptions.showDataOnLoad)
                         _refreshData();
                 }
                 function _getPageErrorResult(err) {
-
+                    $scope.page.pageIsLoaded = true;
+                    $scope.page.pageIsLoading = false;
                 }
                 //end get page data
                 //====================================================================
@@ -408,18 +416,18 @@
                         $scope.page.pageinfo.pageid,
                         '', '',
                         false, data);
-                    $scope.page.isLoaded = false
-                    $scope.page.isLoading = true
+                    $scope.page.dataIsLoaded = false
+                    $scope.page.dataIsLoading = true
                     $scope.page.gridOptions.data = []
                     tableData.then(_getTableSuccessResult, _getTableErrorResult)
                 }
                 function _getTableErrorResult(err) {
-                    $scope.page.isLoaded = true
-                    $scope.page.isLoading = false
+                    $scope.page.dataIsLoaded = true;
+                    $scope.page.dataIsLoading = false;
                 }
                 function _getTableSuccessResult(result) {
-                    $scope.page.isLoaded = true
-                    $scope.page.isLoading = false
+                    $scope.page.dataIsLoaded = true;
+                    $scope.page.dataIsLoading = false;
                     if (result == 'NoDataFound') {
                         // uivm.showMsg('warning', 'No Record Found.');
                     } else if (result.Errors !== undefined) {
