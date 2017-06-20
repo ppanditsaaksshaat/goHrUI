@@ -51,10 +51,11 @@
       $scope.page.boxOptions.addRecord = _addRecord;
     }
 
-    $scope.page.boxOptions.customColumns = [];
     $scope.page.boxOptions.customColumns.push({
       text: 'Approve', click: _rowApprove, type: 'a', pin: true, name: 'approve', width: 80
     });
+    
+
 
     function _rowApprove(row) {
       alert('row clicked')
@@ -148,8 +149,6 @@
 
 
       if (_validateForm(editForm)) {
-
-        console.log($scope.entity)
 
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
           $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLeaveApp, _errorLeaveApp);
