@@ -151,13 +151,15 @@
                                 }
 
                                 if (filter.showFilter && !isRequiredFailed) {
+                                    
                                     var search = {};
                                     search.field = filter.name;
+                                    search.value = filter.value;
                                     if (filter.operator)
                                         search.operand = filter.operator;
                                     else
                                         search.operand = "=";
-                                    search.value = filter.value;
+
                                     $scope.page.filterData[filter.name] = search;
                                     if (filter.controlType == "datepicker") {
                                         //if date mod is month and Year then dates should be changed in first and last day of selected month or year
@@ -165,6 +167,7 @@
                                         var value1, value2;
                                         value1 = moment(filter.value).format('YYYY-MM-DD');
                                         value2 = moment(filter.value2).format('YYYY-MM-DD');
+                                        search.value = value1;
                                         if (filter.datePicker.option1.minMode == 'month' || filter.datePicker.option1.minMode == 'year') {
                                             //finding month starting and ending
                                             value1 = moment(filter.value).startOf('month').format('YYYY-MM-DD');
@@ -260,7 +263,7 @@
 
                 function _filterOperatorChange(filter) {
                     if (filter.operator == '=')
-                        filter.value = moment();
+                        filter.value = moment().format('YYYY-MM-DD');
                     else if (filter.operator == 'between') {
 
                     }
@@ -281,7 +284,7 @@
                         filter.datePicker.format = $scope.dateCal.yearFormat
                     }
                     // filter.operator = '/=';
-                    filter.value = moment()
+                    filter.value = moment();
                     filter.datePicker.option2.minDate = filter.value;
                 }
                 /**
@@ -360,8 +363,8 @@
                                     filter.timePicker = {};
                                     filter.timePicker.option1 = angular.copy($scope.timeCal)
                                     filter.timePicker.option2 = angular.copy($scope.timeCal)
-                                    filter.value = moment();
-                                    filter.value2 = moment();
+                                    filter.value = moment().format('YYYY-MM-DD');
+                                    filter.value2 = moment().format('YYYY-MM-DD');
                                 }
 
                             })

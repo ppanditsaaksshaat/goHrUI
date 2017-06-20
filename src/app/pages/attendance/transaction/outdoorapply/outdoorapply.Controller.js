@@ -12,7 +12,7 @@
   function attTransoutdoorapplyController($scope, $state, $timeout, pageService) {
     var vm = this;
     var pageId = 294;
-    vm.tableId=305
+    vm.tableId=305;
     var currentState = $state.current;
     $scope.showEditForm = false;
     // this.uploadRecord = _uploadRecord;
