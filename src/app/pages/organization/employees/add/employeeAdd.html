@@ -13,7 +13,7 @@
   
     <div class="col-sm-1">
         <div class="form-group">
-          <label for="inputTitle">Title*</label>
+          <label>Title*</label>
           <select id="inputTitle" required
                   ng-model="addCtrl.empAdd.EmpTitleId"
                   class="form-control" ng-options="title.value as title.name for title in addCtrl.dropDownList[0]"
@@ -25,21 +25,21 @@
       </div>
       <div class="col-sm-3">
         <div class="form-group">
-          <label for="inputFirstName">First Name*</label>
+          <label>First Name*</label>
           <input text-Only type="text" class="form-control css-form" name="inputFirstName" maxlength="50" ng-model="addCtrl.empAdd.EmpFirstName"
             placeholder="First Name" required>
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputMiddleName">Middle Name</label>
+          <label>Middle Name</label>
           <input text-Only type="text" class="form-control" id="inputMiddleName" maxlength="50" ng-model="addCtrl.empAdd.EmpMiddleName"
             placeholder="Middle Name">
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputLastName">Last Name</label>
+          <label>Last Name</label>
           <input text-Only type="text" class="form-control" id="inputLastName" maxlength="50" ng-model="addCtrl.empAdd.EmpLastName"
             placeholder="Last Name">
         </div>
@@ -48,7 +48,7 @@
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputGender">Gender*</label>
+          <label>Gender*</label>
           <select id="inputGender" 
                   ng-model="addCtrl.empAdd.PdGenderId"
                   class="form-control" 
@@ -62,17 +62,28 @@
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputDOB">Date Of Joining*</label>      
-          <datepicker date-format="dd/MMMM/yyyy" selector="form-control">           
+          <label>Date Of Joining*</label>    
+           <div class="input-group" moment-picker="addCtrl.empAdd.JDDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                min-date="col.minDate">
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                    ng-model="addCtrl.empAdd.JDDate" ng-model-options="{ updateOn: 'blur' }">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" ng-click="addCtrl.empAdd.JDDate=''" type="button"><i class="fa fa-close"></i></button>
+                </span>
+            </div>  
+          <!--<datepicker date-format="dd/MMMM/yyyy" selector="form-control">           
             <input ng-model="addCtrl.empAdd.JDDate" name="doj" type="text" class="form-control"   placeholder="dd-mm-yyyy" required >         
            
-          </datepicker>
+          </datepicker>-->
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputMobile">Mobile*</label>
-          <input numeric-Only type="text" class="form-control" id="inputMobile" minlength="10" maxlength="17" ng-model="addCtrl.empAdd.PdMobileNo"
+          <label>Mobile*</label>
+          <input numeric-Only type="text" class="form-control"  minlength="10" maxlength="17" ng-model="addCtrl.empAdd.PdMobileNo"
             placeholder="Mobile" required>
         </div>
       </div>
@@ -80,7 +91,7 @@
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputDepartment">Department*</label>
+          <label>Department*</label>
           <select id="inputDepartment" 
                   ng-model="addCtrl.empAdd.JDDeptId" 
                   class="form-control" 
@@ -93,7 +104,7 @@
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputDesignation">Designation*</label>
+          <label>Designation*</label>
           <select id="inputDesignation" 
                   ng-model="addCtrl.empAdd.JDDesgId"
                   class="form-control" 
@@ -106,7 +117,7 @@
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputEmployeeType">Employment Type*</label>
+          <label>Employment Type*</label>
           <select id="inputEmployeeType" 
                   ng-model="addCtrl.empAdd.JDEmploymentId"
                   class="form-control"
@@ -121,7 +132,7 @@
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputGrade">Grade*</label>
+          <label>Grade*</label>
           <select  id="inputGrade" 
                    ng-model="addCtrl.empAdd.JDEmpGradeId" 
                    class="form-control" 
@@ -134,7 +145,7 @@
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputLevel">Level*</label>
+          <label>Level*</label>
           <select id="inputLevel" 
                   ng-model="addCtrl.empAdd.JDEmpLevelId" 
                   class="form-control" 
@@ -148,8 +159,8 @@
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputEmployeeCode">Employee Code*</label>
-          <input type="text" class="form-control text_type_bold" disabled="disabled" id="inputEmployeeCode" ng-model="addCtrl.EmpCode"
+          <label>Employee Code*</label>
+          <input type="text" class="form-control text_type_bold" disabled="disabled"  ng-model="addCtrl.EmpCode"
             placeholder="Employee Code">
         </div>
       </div>
@@ -158,8 +169,8 @@
  
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="inputOtherCode">Other Code</label>
-          <input type="text" class="form-control" id="inputOtherCode" ng-model="addCtrl.empAdd.PDOtherNumber" placeholder="Other Code">
+          <label>Other Identity</label>
+          <input type="text" class="form-control" ng-model="addCtrl.empAdd.PDOtherNumber" placeholder="Other Identity">
         </div>
       </div>
 
