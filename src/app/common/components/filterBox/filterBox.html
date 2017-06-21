@@ -1,25 +1,27 @@
 <div class="panel panel-default bootstrap-panel xmedium-panel side-filters">
     <div class="panel-heading panHead">
-        <div class="row" ng-hide="showSearchFilter">
-            <div class="col-md-9">Filter data by</div>
-            <div class="col-md-3"><button type="button" class="btn btn-default btn-sm" ng-click="openSearchFilter()">
+        <div ng-hide="page.showAddRecord">
+            <div class="row" ng-hide="showSearchFilter">
+                <div class="col-md-9">Filter data by</div>
+                <div class="col-md-3"><button type="button" class="btn btn-default btn-sm" ng-click="openSearchFilter()">
                         <i class="ion-search"></i> </button></div>
-        </div>
-        <div class="row" ng-show="showSearchFilter">
-            <div class="col-md-12">
-                <div class="input-group input-group-sm">
-                    <input type="text" class="form-control" placeholder="Search Filter" ng-model="filterSearchText">
-                    <span class="input-group-btn">
+            </div>
+            <div class="row" ng-show="showSearchFilter">
+                <div class="col-md-12">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" placeholder="Search Filter" ng-model="filterSearchText">
+                        <span class="input-group-btn">
                         <button class="btn btn-default" type="button" ng-click="showSearchFilter=false">
                             <i class="ion-close"></i>
                         </button>
                     </span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="panel-body" style="overflow: scroll">
+    <div class="panel-body" style="overflow: scroll" ng-hide="page.showAddRecord">
 
         <ul class="list-unstyled filters filter-panel">
             <li ng-repeat="filter in page.pageinfo.filters|filter: {displayName: filterSearchText}">
@@ -30,7 +32,7 @@
                             <span>{{filter.displayName}}</span>
                         </label>
                     </div>
-                    <div class="col-md-4" ng-show="filter.showFilter">
+                    <div class="col-md-4" ng-show="filter.showFilter && filter.isAllowChangeOperator">
                         <a ng-show="(filter.operator)" href class="pull-left" title="{{filter.selectedOpt.name}}" popover-animation="true" uib-popover-html="filter.selectedOpt.name"
                             popover-trigger="manual" popover-is-open="filter.showPop" popover-placement="{{($index==0)?'bottom': ($index==page.pageinfo.filters.length-1)?'top':'left'}}"
                             ng-mouseover="filter.showPop=true" ng-mouseleave="filter.showPop=false">[{{filter.operator}}]</a>
@@ -44,10 +46,10 @@
                         <div ng-switch-when="textbox">
                             <select ng-options="opt.value as opt.name for opt in filterOpt.textbox" ng-model="filter.operator">
                                     </select>
-                            <input type="text" placeholder="Enter Value" ng-model="filter.value" ng-change="selectChange(filter)"/>
+                            <input type="text" placeholder="Enter Value" ng-model="filter.value" ng-change="selectChange(filter)" />
                         </div>
                         <div ng-switch-when="select">
-                            <div class="row">
+                            <div class="row" ng-show="filter.isMultiAllow">
                                 <div class="col-md-offset-1">
                                     <label class="checkbox-inline custom-checkbox nowrap">
                                     <input type="checkbox" id="inlineCheckbox01"  
@@ -56,8 +58,7 @@
                                 </label>
                                 </div>
                             </div>
-                            <select ng-options="opt.value as opt.name for opt in filter.titleMap"
-                             ng-model="filter.value" ng-change="selectChange(filter)">
+                            <select ng-options="opt.value as opt.name for opt in filter.titleMap" ng-model="filter.value" ng-change="selectChange(filter)">
                                     </select>
                         </div>
                         <div ng-switch-when="datepicker">
@@ -136,7 +137,7 @@
             </li>
         </ul>
         <div class="nav" ng-show="page.boxOptions.showApplyFilter">
-            <button type="button" class="btn btn-info" ng-click="applyBoxFilter()">Apply Filter</button>
+            <button type="button" class="btn btn-info" ng-click="applyBoxFilter()">Search</button>
             <a href ng-click="clearFilter()">Clear</a>
         </div>
 

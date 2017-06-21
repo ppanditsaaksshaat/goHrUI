@@ -151,7 +151,7 @@
                                 }
 
                                 if (filter.showFilter && !isRequiredFailed) {
-                                    
+
                                     var search = {};
                                     search.field = filter.name;
                                     search.value = filter.value;
@@ -159,6 +159,9 @@
                                         search.operand = filter.operator;
                                     else
                                         search.operand = "=";
+                                    
+                                    if (search.spfield)
+                                        search.nosp = (row.spfield == '')
 
                                     $scope.page.filterData[filter.name] = search;
                                     if (filter.controlType == "datepicker") {
