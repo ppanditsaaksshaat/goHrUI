@@ -419,6 +419,9 @@
         $scope.newEntity.LADAprvdNoOfInstamt = $scope.entity.LANoOfInstallment;
         $scope.newEntity.LADApprovalLoanClDate = $scope.entity.LADate;
         $scope.newEntity.LADApprovedOn = $scope.entity.LADate;
+        $scope.newEntity.LADApprovedInstallmentAmount = $scope.entity.LAInstallment;
+
+
 
         // console.log($scope.entity)
         console.log($scope.newEntity)
