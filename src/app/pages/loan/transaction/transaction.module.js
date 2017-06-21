@@ -6,10 +6,10 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.loan.transaction', [
-     
-     'BlurAdmin.pages.loan.transaction.loaninstallment',
-     'BlurAdmin.pages.loan.transaction.loanapplication'
-     
+
+    //  'BlurAdmin.pages.loan.transaction.loaninstallment',
+    'BlurAdmin.pages.loan.transaction.loanapplication'
+
   ])
     .config(routeConfig);
 

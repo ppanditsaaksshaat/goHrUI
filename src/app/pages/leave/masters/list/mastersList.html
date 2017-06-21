@@ -10,23 +10,20 @@
                         <form name="formLeaveType" novalidate>
                             <div class="row">
                                 <div class="col-md-6">
-                                    
-                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LCRLTId.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LCRLTId" ng-entity="entity" form="editForm"></field-box>
-                                   
-                                    <label ng-bind="page.pageinfo.fields.LCRWEFDate.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LCRWEFDate" ng-entity="entity" form="editForm"></field-box>
-                                    
+
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCLeaveTypeId.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCLeaveTypeId" ng-entity="entity" form="editForm"></field-box>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group" ng-class="{'has-error': vm.personalInfoForm.password.$invalid && (vm.personalInfoForm.password.$dirty || vm.personalInfoForm.$submitted)}">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" ng-model="vm.personalInfo.password" required>
-                                        <span class="help-block error-block basic-block">Required</span>
-                                    </div>
-                                     <label ng-bind="page.pageinfo.fields.LCRToDate.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LCRToDate" ng-entity="entity" form="editForm"></field-box>
-                                 
+                                    <label ng-bind="page.pageinfo.fields.LRCWEFDate.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCWEFDate" ng-entity="entity" form="editForm"></field-box>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <label ng-bind="page.pageinfo.fields.LRCToDate.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCToDate" ng-entity="entity" form="editForm"></field-box>
+
                                 </div>
                             </div>
                         </form>
@@ -35,53 +32,111 @@
                         <form name="formLeaveCycle" novalidate>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LCRNoOfDaysInCycle.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LCRNoOfDaysInCycle" ng-entity="entity" form="editForm"></field-box>
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCNoOfDaysInCycle.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCNoOfDaysInCycle" ng-entity="entity" form="editForm"></field-box>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="productName">Category</label>
-                                        <select class="form-control" title="Category" selectpicker>
-                                            <option selected>Electronics</option>
-                                            <option>Toys</option>
-                                            <option>Accessories</option>
-                                        </select>
-                                    </div>
+                                    <label ng-bind="page.pageinfo.fields.LRCCycleIntervalDays.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCycleIntervalDays" ng-entity="entity" form="editForm"></field-box>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCCycle.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCycle" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                                <div class="col-md-6">
+                                    <label ng-bind="page.pageinfo.fields.LRCCRDaysInInterval.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCRDaysInInterval" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+
                             </div>
                         </form>
                     </ba-wizard-step>
-                    <ba-wizard-step title="Shipment"  form="vm.addressForm">
+                    <ba-wizard-step title="Policy" form="vm.addressForm">
                         <form name="vm.addressForm" novalidate>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group has-feedback"
-                                         ng-class="{'has-error': vm.addressForm.address.$invalid && (vm.addressForm.address.$dirty || vm.addressForm.$submitted)}">
-                                        <label for="productName">Shipment address</label>
-                                        <input type="text" class="form-control" id="address" name="address" placeholder="Shipment address" ng-model="vm.shipment.address" required>
-                                        <span class="help-block error-block basic-block">Required</span>
-                                    </div>
+
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsCheckCreditPolicy.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCIsCheckCreditPolicy" ng-entity="entity" form="editForm"></field-box>
+
+                                    <label ng-bind="page.pageinfo.fields.LRCMinPresentDays.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCMinPresentDays" ng-entity="entity" form="editForm"></field-box>
+
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="productName">Shipment method</label>
-                                        <select class="form-control" title="Category" selectpicker>
-                                            <option selected>Fast & expensive</option>
-                                            <option>Cheap & free</option>
-                                        </select>
-                                    </div>
+
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsCRInProbation.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCIsCRInProbation" ng-entity="entity" form="editForm"></field-box>
+
+                                    <label ng-bind="page.pageinfo.fields.LRCIsDRInProbation.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCIsDRInProbation" ng-entity="entity" form="editForm"></field-box>
+
                                 </div>
+
                             </div>
-                            <div class="checkbox">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox">
-                                    <span>Save shipment info</span>
-                                </label>
+                        </form>
+                    </ba-wizard-step>
+                    <ba-wizard-step title="Allow Days" form="vm.addressForm">
+                        <form name="vm.addressForm" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCDrMaxDays.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCDrMaxDays" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                                <div class="col-md-6">
+                                    <label ng-bind="page.pageinfo.fields.LRCDRMinDays.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCDRMinDays" ng-entity="entity" form="editForm"></field-box>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsNegativeAllowed.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCIsNegativeAllowed" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                                <div class="col-md-6">
+                                    <label ng-bind="page.pageinfo.fields.LRCIsHalfDayAllowed.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCIsHalfDayAllowed" ng-entity="entity" form="editForm"></field-box>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsPartialAlowed.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCIsPartialAlowed" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                                <div class="col-md-6">
+                                    <label ng-bind="page.pageinfo.fields.LRCCarryFwdMonthly.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCarryFwdMonthly" ng-entity="entity" form="editForm"></field-box>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCCarryFwdYearly.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCarryFwdYearly" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                                <div class="col-md-6">
+                                    <label ng-bind="page.pageinfo.fields.LRCMaxCarryDays.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCMaxCarryDays" ng-entity="entity" form="editForm"></field-box>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsEncashable.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCIsEncashable" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                                <div class="col-md-6">
+                                    <label ng-bind="page.pageinfo.fields.LRCPayMode.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCPayMode" ng-entity="entity" form="editForm"></field-box>
+
+                                </div>
+
                             </div>
                         </form>
                     </ba-wizard-step>
                     <ba-wizard-step title="Finish">
                         <form class="form-horizontal" name="vm.finishForm" novalidate>
+
                             Congratulations! You have successfully filled the form!
                         </form>
                     </ba-wizard-step>
