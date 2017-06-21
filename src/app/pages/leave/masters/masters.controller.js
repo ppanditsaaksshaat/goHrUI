@@ -19,7 +19,7 @@
       mastersMenu.push({ name: 'paymentmode', text: 'Payment Mode Master', id: 296 })
       mastersMenu.push({ name: 'daycriteria', text: 'Day Criteria Master ', id: 262 })
       mastersMenu.push({ name: 'leavetype', text: 'Leave Type ', id: 260 })
-      mastersMenu.push({ name: 'leavecontrol', text: 'Leave Control Master', id: 261 })
+      mastersMenu.push({ name: 'leavecontrol', text: 'Leave Control Master', id: 445 })
       // mastersMenu.push({ name: 'leavetransaction', text: 'Leave Transaction Detail', id: 270 })
       // mastersMenu.push({ name: 'employeeleavedetail', text: 'Employee Leave Transaction', id: 284 })
       // mastersMenu.push({ name: 'leavestatement', text: 'Leave Statement', id: 443 })

@@ -47,13 +47,13 @@
       uploadRecord: null
     }
 
-    if ($scope.page.pageId == 261) {
+    if ($scope.page.pageId == 445) {
       $scope.page.boxOptions.addRecord = _addRecord;
     }
 
-    $scope.page.boxOptions.customColumns.push({
-      text: 'Approve', click: _rowApprove, type: 'a', pin: true, name: 'approve', width: 80
-    });
+    // $scope.page.boxOptions.customColumns.push({
+    //   text: 'Approve', click: _rowApprove, type: 'a', pin: true, name: 'approve', width: 80
+    // });
     
 
 
