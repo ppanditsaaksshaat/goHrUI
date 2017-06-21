@@ -174,6 +174,9 @@
             var loanApplyAmount = parseFloat($scope.entity.LAApplyAmount);
             var percentageAmount = (loanApplyAmount * interest) / 100
             $scope.entity.LAAmount = percentageAmount + loanApplyAmount;
+            $scope.entity.LANoOfInstallment='';
+            $scope.entity.LAInstallment='';
+            
           }
           else {
             alert('Your max amount limit' + $scope.maxAmount)
