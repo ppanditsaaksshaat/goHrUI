@@ -23,7 +23,7 @@
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
-      showFilter: true,
+      showFilter: false,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,

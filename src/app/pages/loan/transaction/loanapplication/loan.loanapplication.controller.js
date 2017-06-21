@@ -299,7 +299,7 @@
 
       $scope.editPage.searchList = [{ field: "LILoanId", operand: "=", value: row.entity.LAId }];
       console.log($scope.editPage.searchList)
-      $scope.editPage.orderByList = [{ column: 'LIInstallmentDate', isDesc: false }]
+      $scope.editPage.orderByList = [{ column: 'LIInstallmentDate', isDesc: true }]
       $scope.editPage.refreshData();
     }
 
