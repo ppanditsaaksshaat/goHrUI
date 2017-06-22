@@ -20,6 +20,7 @@
     $scope.entity = {};
 
     $scope.saveForm = _saveForm;
+    $scope.getTotalTenure = _getTotalTenure;
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.closeForm = _closeForm;
@@ -54,11 +55,11 @@
     // $scope.page.boxOptions.customColumns.push({
     //   text: 'Approve', click: _rowApprove, type: 'a', pin: true, name: 'approve', width: 80
     // });
-    
+
 
 
     function _rowApprove(row) {
-      alert('row clicked')
+   
       console.log(row)
     }
     $scope.$watch(function () {
@@ -252,8 +253,35 @@
     //   }
     //   dialogModal.openFormVertical(options);
     // }
+    function _getTotalTenure() {
+      console.log(isNaN($scope.entity.LRCCRDaysInInterval))
+      if ($scope.entity.LRCNoOfDaysInCycle != undefined && $scope.entity.LRCCycleIntervalDays != undefined && $scope.entity.LRCCRDaysInInterval != undefined) {
+
+        var value = $scope.entity.LRCNoOfDaysInCycle / $scope.entity.LRCCycleIntervalDays;
+        if (!isNaN($scope.entity.LRCCRDaysInInterval))
+          $scope.totalTenure = parseInt(value) * $scope.entity.LRCCRDaysInInterval;
+        else
+          $scope.showMsg("error", "Please enter numeric value in Number Of Leave Field");
+      }
+      else if ($scope.totalTenure != undefined) {
+        $scope.totalTenure = "";
+      }
+    }
 
 
+    $scope.saveWizardForm = function (entity,editForm) {
+      vm.oldEntity = {};
+      editFormService.saveForm(pageId, entity, vm.oldEntity,
+        "create", $scope.page.pageinfo.title, editForm, true)
+        .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+    }
+
+    function _saveWizardFormSuccessResult(result) {
+     $scope.showMsg("success", "Record Saved Successfully");
+    }
+    function _saveWizardFormErrorResult(err) {
+
+    }
   }
 
 })();

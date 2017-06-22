@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('BlurAdmin.theme.components')
@@ -12,13 +12,13 @@
     vm.tabNum = 0;
     vm.progress = 0;
 
-    vm.addTab = function(tab) {
+    vm.addTab = function (tab) {
       tab.setPrev(vm.tabs[vm.tabs.length - 1]);
       vm.tabs.push(tab);
       vm.selectTab(0);
     };
 
-    $scope.$watch(angular.bind(vm, function () {return vm.tabNum;}), calcProgress);
+    $scope.$watch(angular.bind(vm, function () { return vm.tabNum; }), calcProgress);
 
     vm.selectTab = function (tabNum) {
       vm.tabs[vm.tabNum].submit();
@@ -35,7 +35,7 @@
     };
 
     vm.isLastTab = function () {
-      return vm.tabNum == vm.tabs.length - 1 ;
+      return vm.tabNum == vm.tabs.length - 1;
     };
 
     vm.nextTab = function () {
@@ -46,6 +46,11 @@
       vm.selectTab(vm.tabNum - 1)
     };
 
+    vm.saveWizard = function () {
+      if ($scope.saveWizard) {
+        $scope.saveWizard(editForm)
+      }
+    }
     function calcProgress() {
       vm.progress = ((vm.tabNum + 1) / vm.tabs.length) * 100;
     }

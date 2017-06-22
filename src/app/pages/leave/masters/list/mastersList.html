@@ -5,22 +5,22 @@
     <div class="row">
         <div class="col-md-12">
             <div ba-panel ba-panel-title="Leave Control" ba-panel-class="with-scroll">
-                <ba-wizard>
+                <ba-wizard ba-save-wizard="saveWizardForm(entity,editForm)">
                     <ba-wizard-step title="Leave Type" form="formLeaveType">
                         <form name="formLeaveType" novalidate>
                             <div class="row">
                                 <div class="col-md-6">
-
                                     <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCLeaveTypeId.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCLeaveTypeId" ng-entity="entity" form="editForm"></field-box>
                                 </div>
-                                <div class="col-md-6">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
                                     <label ng-bind="page.pageinfo.fields.LRCWEFDate.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCWEFDate" ng-entity="entity" form="editForm"></field-box>
-
                                 </div>
-                                <div class="col-md-6">
-
+                                <div class="col-md-3">
                                     <label ng-bind="page.pageinfo.fields.LRCToDate.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCToDate" ng-entity="entity" form="editForm"></field-box>
 
@@ -33,11 +33,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCNoOfDaysInCycle.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCNoOfDaysInCycle" ng-entity="entity" form="editForm"></field-box>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCNoOfDaysInCycle" ng-entity="entity" form="editForm" fb-change="getTotalTenure()"></field-box>
                                 </div>
                                 <div class="col-md-6">
                                     <label ng-bind="page.pageinfo.fields.LRCCycleIntervalDays.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCycleIntervalDays" ng-entity="entity" form="editForm"></field-box>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCycleIntervalDays" ng-entity="entity" form="editForm" fb-change="getTotalTenure()"></field-box>
                                 </div>
 
                                 <div class="col-md-6">
@@ -46,29 +46,39 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label ng-bind="page.pageinfo.fields.LRCCRDaysInInterval.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCRDaysInInterval" ng-entity="entity" form="editForm"></field-box>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCRDaysInInterval" ng-entity="entity" form="editForm" fb-change="getTotalTenure()"></field-box>
                                 </div>
-
+                                <div ng-if="totalTenure!=undefined" class="col-md-6">
+                                    <label>Total Tenure</label>
+                                    <span ng-bind="totalTenure"></span>
+                                </div>
                             </div>
                         </form>
                     </ba-wizard-step>
                     <ba-wizard-step title="Policy" form="vm.addressForm">
                         <form name="vm.addressForm" novalidate>
+                            <h2>Policy</h2>
                             <div class="row">
-                                <div class="col-md-6">
-
+                                <div class="col-md-3">
                                     <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsCheckCreditPolicy.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCIsCheckCreditPolicy" ng-entity="entity" form="editForm"></field-box>
-
+                                </div>
+                                <div ng-if="entity.LRCIsCheckCreditPolicy" class="col-md-3">
                                     <label ng-bind="page.pageinfo.fields.LRCMinPresentDays.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCMinPresentDays" ng-entity="entity" form="editForm"></field-box>
 
                                 </div>
-                                <div class="col-md-6">
+
+                            </div>
+                            <h2>Probation</h2>
+
+                            <div class="row">
+                                <div class="col-md-3">
 
                                     <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsCRInProbation.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCIsCRInProbation" ng-entity="entity" form="editForm"></field-box>
-
+                                </div>
+                                <div class="col-md-3">
                                     <label ng-bind="page.pageinfo.fields.LRCIsDRInProbation.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCIsDRInProbation" ng-entity="entity" form="editForm"></field-box>
 
@@ -100,26 +110,36 @@
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCIsHalfDayAllowed" ng-entity="entity" form="editForm"></field-box>
 
                                 </div>
-                                <div class="col-md-6">
-
+                                <div class="col-md-12">
                                     <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsPartialAlowed.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCIsPartialAlowed" ng-entity="entity" form="editForm"></field-box>
                                 </div>
-                                <div class="col-md-6">
-                                    <label ng-bind="page.pageinfo.fields.LRCCarryFwdMonthly.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCarryFwdMonthly" ng-entity="entity" form="editForm"></field-box>
+                                <div class="col-md-12">
+                                    <div class="checkbox">
+                                        <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="allowCarryForward" > 
+                                          <span>Allow Carry Forward</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div ng-if="allowCarryForward">
+
+                                    <div class="col-md-3">
+                                        <label ng-bind="page.pageinfo.fields.LRCCarryFwdMonthly.text"></label>
+                                        <field-box page="page" ng-column="page.pageinfo.fields.LRCCarryFwdMonthly" ng-entity="entity" form="editForm"></field-box>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCCarryFwdYearly.text"></label>
+                                        <field-box page="page" ng-column="page.pageinfo.fields.LRCCarryFwdYearly" ng-entity="entity" form="editForm"></field-box>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label ng-bind="page.pageinfo.fields.LRCMaxCarryDays.text"></label>
+                                        <field-box page="page" ng-column="page.pageinfo.fields.LRCMaxCarryDays" ng-entity="entity" form="editForm"></field-box>
+                                    </div>
+
 
                                 </div>
-                                <div class="col-md-6">
 
-                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCCarryFwdYearly.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCCarryFwdYearly" ng-entity="entity" form="editForm"></field-box>
-                                </div>
-                                <div class="col-md-6">
-                                    <label ng-bind="page.pageinfo.fields.LRCMaxCarryDays.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCMaxCarryDays" ng-entity="entity" form="editForm"></field-box>
-
-                                </div>
                                 <div class="col-md-6">
 
                                     <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsEncashable.text"></label>
@@ -136,8 +156,101 @@
                     </ba-wizard-step>
                     <ba-wizard-step title="Finish">
                         <form class="form-horizontal" name="vm.finishForm" novalidate>
+                            <div class="row">
 
-                            Congratulations! You have successfully filled the form!
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCLeaveTypeId.text"></label>
+                                    <select ng-disabled="true" class="form-control" ng-model="entity.LRCLeaveTypeId" ng-options="leavetype.value as leavetype.name for  leavetype in page.pageinfo.selects.LRCLeaveTypeId"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCWEFDate.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCWEFDate"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCToDate.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCToDate"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCNoOfDaysInCycle.text"></label>
+                                    <select ng-disabled="true" class="form-control" ng-model="entity.LRCNoOfDaysInCycle" ng-options="leavetype.value as leavetype.name for  leavetype in page.pageinfo.selects.LRCNoOfDaysInCycle"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCCycleIntervalDays.text"></label>
+                                    <select ng-disabled="true" class="form-control" ng-model="entity.LRCCycleIntervalDays" ng-options="leavetype.value as leavetype.name for  leavetype in page.pageinfo.selects.LRCCycleIntervalDays"></select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="" for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCCycle.text"></label>
+                                    <select ng-disabled="true" class="form-control" ng-model="entity.LRCCycle" ng-options="leavetype.value as leavetype.name for  leavetype in page.pageinfo.selects.LRCCycle"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCCRDaysInInterval.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCCRDaysInInterval"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class=""  ng-bind="page.pageinfo.fields.LRCIsCheckCreditPolicy.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCIsCheckCreditPolicy"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCMinPresentDays.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCMinPresentDays"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCIsCRInProbation.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCIsCRInProbation"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCIsDRInProbation.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCIsDRInProbation"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCDrMaxDays.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCDrMaxDays"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="" for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCDRMinDays.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCDRMinDays"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCIsNegativeAllowed.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCIsNegativeAllowed"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCIsHalfDayAllowed.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCIsHalfDayAllowed"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCIsPartialAlowed.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCIsPartialAlowed"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCCarryFwdMonthly.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCCarryFwdMonthly"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="" for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCCarryFwdYearly.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCCarryFwdYearly"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCMaxCarryDays.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCMaxCarryDays"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsEncashable.text"></label>
+                                    <span class="form-control" ng-bind="entity.LRCIsEncashable"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCPayMode.text"></label>
+                                    <select ng-disabled="true" class="form-control" ng-model="entity.LRCPayMode" ng-options="leavetype.value as leavetype.name for  leavetype in page.pageinfo.selects.LRCPayMode"></select>
+                                </div>
+
+                            </div>
                         </form>
                     </ba-wizard-step>
                 </ba-wizard>
