@@ -9,8 +9,8 @@
     .controller('payPayregisterController', payPayregisterController);
 
   /** @ngInject */
-  function payPayregisterController() {
-   console.log('payPayregisterController')
+  function payPayregisterController($scope) {
+    $scope.page = { reportId: 19 }
   }
 
 })();

@@ -51,7 +51,7 @@
     $scope.page.boxOptions.customButtons.push({ text: 'Save & Generate Salary', icon: 'btn-primary', onClick: _saveAndGenerateSalaryClick, type: 'btn-warning' })
 
     function _pendingClick() {
-
+      // alert('pending');
       console.log($scope.page)
       // if ($scope.page.filterData.SubUnitId !== undefined && $scope.page.filterData.SalMonth !== undefined && $scope.page.filterData.SalYear !== undefined) {
       // if ($scope.page.filterData.SubUnitId.value !== undefined && $scope.page.filterData.SalMonth.value !== undefined && $scope.page.filterData.SalYear.value !== undefined) {
@@ -329,7 +329,7 @@
 
     function _getSelectedDateSuccessResult(result) {
       console.log(result)
-      debugger;
+      // debugger;
       if (result !== undefined && result != null) {
         if (result.LSInBetMonthId == true) {
           var ACMonth = ($scope.page.filterData.SalMonth.value) - 1;
@@ -450,10 +450,14 @@
       console.log(filterData)
       pageService.generateSalary(filterData).then(function (result) {
         if (result.success_message == 'Salary Generate And Save') {
-          alert(result.success_message)
+          // alert(result.success_message)
+          $scope.showMsg('success', 'Salary generate and save.','');
         }
-        var empData = result;
-        console.log(empData)
+        else {
+          var empData = result;
+          alert(result)
+          console.log(empData)
+        }
       });
     }
 

@@ -50,7 +50,7 @@
         //   controller: "attMastersAddController1",
         //   controllerAs: "addCtrl"
         // });
-    $urlRouterProvider.when('/payroll/masters','/payroll/masters/location/34');
+    $urlRouterProvider.when('/payroll/masters','/payroll/masters/epfRule/344');
   }
 
 })();

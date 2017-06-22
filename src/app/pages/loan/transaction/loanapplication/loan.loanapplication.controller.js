@@ -174,6 +174,9 @@
             var loanApplyAmount = parseFloat($scope.entity.LAApplyAmount);
             var percentageAmount = (loanApplyAmount * interest) / 100
             $scope.entity.LAAmount = percentageAmount + loanApplyAmount;
+            $scope.entity.LANoOfInstallment='';
+            $scope.entity.LAInstallment='';
+            
           }
           else {
             alert('Your max amount limit' + $scope.maxAmount)
@@ -299,7 +302,7 @@
 
       $scope.editPage.searchList = [{ field: "LILoanId", operand: "=", value: row.entity.LAId }];
       console.log($scope.editPage.searchList)
-      $scope.editPage.orderByList = [{ column: 'LIInstallmentDate', isDesc: false }]
+      $scope.editPage.orderByList = [{ column: 'LIInstallmentDate', isDesc: true }]
       $scope.editPage.refreshData();
     }
 
@@ -419,6 +422,9 @@
         $scope.newEntity.LADAprvdNoOfInstamt = $scope.entity.LANoOfInstallment;
         $scope.newEntity.LADApprovalLoanClDate = $scope.entity.LADate;
         $scope.newEntity.LADApprovedOn = $scope.entity.LADate;
+        $scope.newEntity.LADApprovedInstallmentAmount = $scope.entity.LAInstallment;
+
+
 
         // console.log($scope.entity)
         console.log($scope.newEntity)
