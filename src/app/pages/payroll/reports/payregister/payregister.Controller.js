@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function payPayregisterController($scope) {
-    $scope.page = { reportId: 19 }
+    $scope.page = { reportId: 20 }
   }
 
 })();
