@@ -59,7 +59,7 @@
 
 
     function _rowApprove(row) {
-      alert('row clicked')
+   
       console.log(row)
     }
     $scope.$watch(function () {
@@ -277,7 +277,7 @@
     }
 
     function _saveWizardFormSuccessResult(result) {
-      alert(JSON.stringify(result));
+     $scope.showMsg("success", "Record Saved Successfully");
     }
     function _saveWizardFormErrorResult(err) {
 
