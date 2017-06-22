@@ -2,177 +2,65 @@
 </grid-box>
 <form name="editForm " novalidate ng-submit="saveForm(editForm) " ng-show="showEditForm ">
     <div class="panel panel-default xmedium-panel ">
-        <edit-panel-head  page="page"  page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
-            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false" show-reset="true " condition="true "></edit-panel-head>
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false" show-reset="true "
+            condition="true "></edit-panel-head>
 
         <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
-
-            <div class="row " ng-show="isLeaveTransactionTable ">
-                <div class="form-group col-md-1 ">
-
+            <div class="row">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.AAEmpId.text}}</label>
                 </div>
-                <div class="form-group col-md-10 ">
-                    <table class="table table-bordered table-hover table-condensed ">
-                        <thead>
-                            <tr>
-                                <td>Leave Type</td>
-                                <th ng-repeat="transactionList in leaveTypeDataList ">{{transactionList.LTName}}
-                                </th>
-                            </tr>
-                            <tr>
-                                <td>Balance Leave</td>
-                                <th ng-repeat="transactionList in leaveTypeDataList ">{{transactionList.Balance}}
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="form-group col-md-1 ">
-
-                </div>
-
-            </div>
-
-
-
-            <div class="row ">
-                <div class="form-group col-md-1 ">
-
-                </div>
-                <div class="form-group col-md-5 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.LEADEmpId.text}}</label>
-                    <select class="form-control " title="Select Employee " ng-model="entity.LEADEmpId " ng-options="opt.value
-    as opt.name for opt in page.pageinfo.selects.LEADEmpId " ng-change="employeeOnChange() ">
-                    </select>
-                    <!--<field-box page="page" ng-column ="page.pageinfo.fields.LEADEmpId " ng-change="employeeOnChange()
-    " ng-entity="entity " form="editForm "></field-box>-->
-                </div>
-                <div class="form-group col-md-5 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.LEADLTId.text}}</label>
-                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADLTId " ng-entity="entity " form="editForm "></field-box>
-                </div>
-
-                <div class="form-group col-md-1 ">
-
-                </div>
-
-
-
-
-
-            </div>
-
-
-
-
-
-
-
-
-
-            <div class="row ">
-                <div class="form-group col-md-1 ">
-
-                </div>
-                <div class="form-group col-md-5 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.LEADDateFrom.text}}</label>
-                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADDateFrom " ng-entity="entity " form="editForm "></field-box>
-                </div>
-                <div class="form-group col-md-5 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.LEADDateTo.text}}</label>
-                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADDateTo " ng-entity="entity " form="editForm "></field-box>
-                </div>
-                <div class="form-group col-md-1 ">
-
-                </div>
-
-            </div>
-
-            <div class="row ">
-                <div class="form-group col-md-1 ">
-
-                </div>
-                <div class="form-group col-md-10">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.LeadComment.text}}</label>
-                    <field-box page="page" ng-column ="page.pageinfo.fields.LeadComment " ng-entity="entity " form="editForm "></field-box>
-                </div>
-
-                <div class="form-group col-md-1 ">
-
-                </div>
-            </div>
-            <div class="row ">
-                <div class="form-group col-md-1 ">
-                </div>
-                <div class="form-group col-md-5 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.LeadHalfDay.text}}</label>
-                    <field-box page="page" ng-column ="page.pageinfo.fields.LeadHalfDay " ng-entity="entity " form="editForm "></field-box>
-                </div>
-            </div>
-
-            <h3 class="with-line ">Contact Detail On Leave Time</h3>
-            <div class="row ">
-                <div class="form-group col-md-1 ">
-
-                </div>
-                <div class="form-group col-md-5 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.LEADContactName.text}}</label>
-                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADContactName " ng-entity="entity " form="editForm "></field-box>
-                </div>
-                <div class="form-group col-md-5 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.LEADContactNo.text}}</label>
-                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADContactNo " ng-entity="entity " form="editForm "></field-box>
-                </div>
-                <div class="form-group col-md-1 ">
-
-                </div>
-
-            </div>
-            <div class="row ">
-                <div class="form-group col-md-1 ">
-
-                </div>
-                <div class="form-group col-md-10 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.LEADAddress.text}}</label>
-                    <field-box page="page" ng-column ="page.pageinfo.fields.LEADAddress " ng-entity="entity " form="editForm "></field-box>
-                </div>
-                <div class="form-group col-md-1 ">
-
-                </div>
-            </div>
-
-            <div class="row ">
                 <div class="form-group col-md-4 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.ELSDSanctionFromDate.text}}</label>
-                    <field-box page="page" ng-column ="page.pageinfo.fields.ELSDSanctionFromDate " ng-entity="entity " form="editForm "></field-box>
+                    <field-box page="page" ng-column="page.pageinfo.fields.AAEmpId " ng-entity="entity " form="editForm "></field-box>
                 </div>
             </div>
 
+            <div class="row">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.AAAdvanceTypeId.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.AAAdvanceTypeId " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.AADate.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.AADate " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
 
-            <div class="col-md-7" style="padding-top:5px" ng-show="isLeaveApprovedDet">
+            <div class="row ">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.AAAmount.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.AAAmount " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.ELTPeriodToDate.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.ELTPeriodToDate " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
 
-
-                <button type="button" ng-click="approvedLeave()" class="btn btn-sm btn-primary">Approved</button>
-                <!--<button type="button" class="btn btn-sm btn-warning" ng-click="resetForm()">Reset</button>
-                <button type="button" class="btn btn-sm btn-danger" ng-click="clearForm()">Clear</button>
-                 <button type="button" class="btn btn-sm btn-primary" ng-click="employeeList()">List</button>
-                    <button ng-show="showSave" type="submit" class="btn btn-sm btn-primary">Save</button>
-                    <button ng-show="showReset" type="button" class="btn btn-sm btn-warning" ng-click="resetForm()">Reset</button>
-                    <button ng-show="showClear" type="button" class="btn btn-sm btn-info" ng-click="clearForm()">Clear</button>
-                    <button ng-show="showClose" type="button" class="btn btn-sm btn-danger" ng-click="closeForm()">Close</button>
-                    <button ng-show="showList" type="button" class="btn btn-sm btn-primary" ng-click="openList()">List</button>-->
-
+            <div class="row ">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.ELTRemark.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.ELTRemark " ng-entity="entity " form="editForm "></field-box>
+                </div>
             </div>
         </div>
-        <div class="row ">
 
-        </div>
-
-
-
-
-
-
+    </div>
 </form>
