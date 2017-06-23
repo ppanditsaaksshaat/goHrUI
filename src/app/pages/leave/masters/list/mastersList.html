@@ -4,7 +4,7 @@
 <div class="widgets" ng-show="showEditForm">
     <div class="row">
         <div class="col-md-12">
-            <div ba-panel ba-panel-title="Leave Control" ba-panel-class="with-scroll">
+            <div ba-panel ba-panel-title="Leave Control" ba-panel-class="with-scroll" >
                 <ba-wizard ba-save-wizard="saveWizardForm(entity,editForm)">
                     <ba-wizard-step title="Leave Type" form="formLeaveType">
                         <form name="formLeaveType" novalidate>
@@ -16,11 +16,11 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <label ng-bind="page.pageinfo.fields.LRCWEFDate.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCWEFDate" ng-entity="entity" form="editForm"></field-box>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <label ng-bind="page.pageinfo.fields.LRCToDate.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCToDate" ng-entity="entity" form="editForm"></field-box>
 
@@ -154,6 +154,25 @@
                             </div>
                         </form>
                     </ba-wizard-step>
+                    <ba-wizard-step title="Grouping" form="vm.addressForm">
+                        <form name="vm.GroupingForm" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <ul style="list-style-type:none" ng-repeat="value in groupList">
+                                        <li>
+                                            <div class="checkbox">
+                                                <label class="custom-checkbox">      
+                                                <input  type="checkbox"  ng-model="value.isSelected"> 
+                                                <span ng-bind="value.GMCName"></span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+                    </ba-wizard-step>
                     <ba-wizard-step title="Finish">
                         <form class="form-horizontal" name="vm.finishForm" novalidate>
                             <div class="row">
@@ -189,7 +208,7 @@
                                     <span class="form-control" ng-bind="entity.LRCCRDaysInInterval"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class=""  ng-bind="page.pageinfo.fields.LRCIsCheckCreditPolicy.text"></label>
+                                    <label class="" ng-bind="page.pageinfo.fields.LRCIsCheckCreditPolicy.text"></label>
                                     <span class="form-control" ng-bind="entity.LRCIsCheckCreditPolicy"></span>
                                 </div>
                                 <div class="col-md-6">
