@@ -24,7 +24,7 @@
 
             },
             link: function ($scope, elm, attrs, ctrl) {
-                var reportBaseURL = 'http://web300.com';
+                var reportBaseURL = 'http://web400.hrms';
                 var boxSetting = {
                     selfLoading: true,//gridBox will fetch data from api on its own
                     showRefresh: true,//show refresh button

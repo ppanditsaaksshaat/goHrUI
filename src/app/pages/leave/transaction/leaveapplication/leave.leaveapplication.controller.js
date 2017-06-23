@@ -163,7 +163,7 @@
                 orderByList: []
               }
               console.log(searchLists)
-              var queryId = 519;
+              var queryId = 533;
               pageService.getCustomQuery(data, queryId).then(function (result) {
                 console.log(result)
                 if (result[0].Massage == 'Valid Leave Apply') {
