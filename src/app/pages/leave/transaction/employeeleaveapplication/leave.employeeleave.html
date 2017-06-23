@@ -1,0 +1,103 @@
+<grid-box ng-model="page" ng-hide="showEditForm">
+</grid-box>
+<div ng-show="showEditForm">
+    <div class="row">
+        <div class="panel panel-default xmedium-panel">
+            <edit-panel-head page="page" page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon(editForm)" open-List="empTabCtrl.goToEmployeeList()"
+                clear-form="empTabCtrl.clearFormCommon(editForm)" condition="true" show-close="true"></edit-panel-head>
+
+            <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+                <div style="max-height: 420px" ng-scrollbars ng-scrollbars-config="config">
+                    <form name="editForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
+                                <select class="form-control" ng-model="entity.selectedEmp" ng-options="employee.name for employee in page.pageinfo.selects.LEADEmpId">
+                                </select>
+                                <!--<field-box page="page" ng-column="page.pageinfo.fields.LEADEmpId" ng-entity="entity" form="editForm"></field-box>-->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.LEADDateFrom.text"></label>
+                                <field-box page="page" ng-column="page.pageinfo.fields.LEADDateFrom" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.LEADDateTo.text"></label>
+                                <field-box page="page" ng-column="page.pageinfo.fields.LEADDateTo" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.LEADFromHalfDayId.text"></label>
+                                <field-box page="page" ng-column="page.pageinfo.fields.LEADFromHalfDayId" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.LEADToHalfDayId.text"></label>
+                                <field-box page="page" ng-column="page.pageinfo.fields.LEADToHalfDayId" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Leave Type :</label>
+                            </div>
+                            <div>
+                                <label class="col-md-1" ng-bind="page.pageinfo.fields.LEADPaidLeave.text"></label>
+                                <div class="col-md-1">
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LEADPaidLeave" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="col-md-1" ng-bind="page.pageinfo.fields.LEADUnPaidLeave.text"></label>
+                                <div class="col-md-1">
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LEADUnPaidLeave" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+
+                            <div ng-if="leaveCtrl.appliedDays!=undefined" class="col-md-6">
+                                <label> No. Of Days Applied</label>
+                                <span class="form-control" ng-bind="leaveCtrl.appliedDays"></span>
+                            </div>
+
+                        </div>
+                        <div ng-if="entity.LEADPaidLeave" class="row">
+                            <div class="col-md-3">
+                                <input type="button" class="btn btn-primary" value="Validate" ng-click="validate();leaveCtrl.validateEmployee=true">
+                            </div>
+                        </div>
+                        <div ng-if="leaveCtrl.validateEmployee" class="row">
+                            <div class="col-md-6">
+                                <table class="table table-responsive table-bordered table-hover table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-1">Type</th>
+                                            <th class="col-md-1">Balance</th>
+                                            <th class="col-md-4">Leave Debit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="value in showLeave">
+                                            <td class="col-md-1" ng-bind="value.LTName"></td>
+                                            <td class="col-md-1" ng-bind="value.LeaveBalance"></td>
+                                            <td class="col-md-4"><input type="text" ng-model="value.leaveDr" /></td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
