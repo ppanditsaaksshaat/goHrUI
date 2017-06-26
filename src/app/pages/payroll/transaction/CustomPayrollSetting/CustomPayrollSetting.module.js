@@ -19,11 +19,11 @@
         templateUrl: 'app/pages/payroll/transaction/CustomPayrollSetting/CustomPayrollSetting.html?v=1',
         controller: "CustomPayrollSettingController",
         controllerAs: "payCtrl",
-        title: 'PayrollSetting',
+        title: 'Payroll Process',
         sidebarMeta: {
           order: 2,
           parent: 'payroll.transaction',
-          pageTitle: 'PayrollSetting'
+          pageTitle: 'Payroll Process'
         },
       })
   }
