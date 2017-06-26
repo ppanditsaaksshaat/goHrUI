@@ -19,12 +19,12 @@
     // this.uploadRecord = _uploadRecord;
     $scope.entity = {}
     $scope.page = $scope.createPage();
-    
+
 
     console.log($scope.page)
     $scope.page.pageId = 96;
 
-    
+
 
     $scope.oldEntity = {};
     $scope.page.boxOptions = {
@@ -40,12 +40,21 @@
       gridHeight: 450,
       getPageData: null,
       refreshData: null,
-      addRecord: null,
+      addRecord: _addRecord,
       editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
     }
+
+    function _addRecord() {
+      $scope.showEditForm = true;
+      $scope.entity = {};
+      $scope.newEntity = {};
+    }
+
+
+
 
 
   }

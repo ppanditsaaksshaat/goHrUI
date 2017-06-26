@@ -6,13 +6,20 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.payroll.reports', [
-     'BlurAdmin.pages.payroll.reports.payregister' ,
-     'BlurAdmin.pages.payroll.reports.monthlychallan', 
-     'BlurAdmin.pages.payroll.reports.OnlineECR',
-      'BlurAdmin.pages.payroll.reports.OnlineESIC',
-      'BlurAdmin.pages.payroll.reports.yearlychallan'
-    
-       ])
+    'BlurAdmin.pages.payroll.reports.paySlips',
+    'BlurAdmin.pages.payroll.reports.payregister',
+    'BlurAdmin.pages.payroll.reports.coveringLetter',
+    'BlurAdmin.pages.payroll.reports.empSalaryType',
+
+    'BlurAdmin.pages.payroll.reports.pfForm5',
+    'BlurAdmin.pages.payroll.reports.pfForm10',
+    'BlurAdmin.pages.payroll.reports.pfMonthlyReturn',
+    'BlurAdmin.pages.payroll.reports.12ARevised',
+    'BlurAdmin.pages.payroll.reports.combinedChallan',
+    'BlurAdmin.pages.payroll.reports.pfContribution',
+
+    'BlurAdmin.pages.payroll.reports.eSIChallanForm'
+  ])
     .config(routeConfig);
 
 

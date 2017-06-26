@@ -6,24 +6,24 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.payroll.reports.OnlineESIC', [])
+  angular.module('BlurAdmin.pages.payroll.reports.pfForm5', [])
     .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($stateProvider, $urlRouterProvider) {
 
     $stateProvider
-      .state('payroll.reports.OnlineESIC', {
-        url: '/OnlineESIC',
+      .state('payroll.reports.pfForm5', {
+        url: '/pfForm5',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/OnlineESIC/payroll.OnlineESIC.html?v=1',
-        controller: "payOnlineESICController",
+        templateUrl: 'app/pages/payroll/reports/pfForm5/payroll.pfForm5.html?v=1',
+        controller: "pfForm5Controller",
         controllerAs: "payCtrl",
-        title: 'Online ESIC',
+        title: 'PF Form 5',
         sidebarMeta: {
-          order: 4,
+          order: 3,
           parent: 'payroll.reports',
-          pageTitle: 'Online ESIC'
+          pageTitle: 'PF Form 5'
         },
       })
   }

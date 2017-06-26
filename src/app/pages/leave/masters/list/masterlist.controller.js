@@ -14,12 +14,18 @@
 
     var vm = this;
     var pageId = $stateParams.pageId;
+    vm.queryId = 528;
+    var groupIds = [];
     var tempName = $stateParams.name;
     var currentState = $state.current;
-    $scope.oldEntity = {};
+    vm.oldEntity = {};
     $scope.entity = {};
 
     $scope.saveForm = _saveForm;
+    $scope.getTotalTenure = _getTotalTenure;
+    $scope.selectGroup = _selectGroup;
+
+
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.closeForm = _closeForm;
@@ -49,16 +55,30 @@
 
     if ($scope.page.pageId == 445) {
       $scope.page.boxOptions.addRecord = _addRecord;
+      $scope.page.boxOptions.editRecord = _editRecord;
     }
 
     // $scope.page.boxOptions.customColumns.push({
     //   text: 'Approve', click: _rowApprove, type: 'a', pin: true, name: 'approve', width: 80
     // });
-    
 
+
+    function _loadController() {
+      var data = {
+        searchList: [],
+        orderByList: []
+      }
+      pageService.getCustomQuery(data, vm.queryId).then(getCustomQuerySuccessResult, getCustomQueryErrorResult)
+    }
+    function getCustomQuerySuccessResult(result) {
+      $scope.groupList = result;
+    }
+    function getCustomQueryErrorResult(eerr) {
+
+    }
 
     function _rowApprove(row) {
-      alert('row clicked')
+
       console.log(row)
     }
     $scope.$watch(function () {
@@ -112,15 +132,31 @@
 
 
     function _addRecord() {
-      // var options = {
-      //   url: 'app/pages/leave/masters/templates/leavecontrol/leavecontrol-add.html',
-      //   controller: 'LeaveControlMasterAddController',
-      //   controlerAs: 'leaveCtrl',
-      //   size: 'top-center-800',
-      //   param: { page: $scope.page }
-      // }
-      // dialogModal.open(options)
+      $scope.entity = {};
       $scope.showEditForm = true;
+    }
+    function _editRecord(row) {
+      $scope.showEditForm = true;
+      $scope.page.isAllowEdit = true;
+      if (row.entity.LRCGroupIds != undefined) {
+        var ids = row.entity.LRCGroupIds.split(",");
+
+        angular.forEach(ids, function (id) {
+          angular.forEach($scope.groupList, function (group) {
+            if (group.GMCId == id)
+              group.isSelected = true;
+          })
+        })
+      }
+      if (row.entity.LRCCarryFwdMonthly == true || row.entity.LRCCarryFwdYearly == true || row.entity.LRCMaxCarryDays != undefined) {
+        $scope.allowCarryForward = true;
+      }
+      else {
+        $scope.allowCarryForward = false;
+      }
+
+      vm.oldEntity = angular.copy(row.entity)
+      $scope.entity = row.entity;
     }
 
     // function _validateForm(form) {
@@ -146,8 +182,6 @@
     }
 
     function _saveForm(editForm) {
-
-
       if (_validateForm(editForm)) {
 
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
@@ -202,15 +236,15 @@
 
 
 
-    function _editRecord(row) {
+    // function _editRecord(row) {
 
-      console.log(row)
+    //   console.log(row)
 
-      $scope.entity = row.entity;
-      $scope.oldEntity = angular.copy(row.entity);
+    //   $scope.entity = row.entity;
+    //   $scope.oldEntity = angular.copy(row.entity);
 
-      $scope.showEditForm = true;
-    }
+    //   $scope.showEditForm = true;
+    // }
 
 
 
@@ -253,7 +287,54 @@
     //   dialogModal.openFormVertical(options);
     // }
 
+    function _selectGroup(groupId) {
+      groupIds.push(groupId);
 
+      alert(groupIds)
+    }
+
+    function _getTotalTenure() {
+      console.log(isNaN($scope.entity.LRCCRDaysInInterval))
+      if ($scope.entity.LRCNoOfDaysInCycle != undefined && $scope.entity.LRCCycleIntervalDays != undefined && $scope.entity.LRCCRDaysInInterval != undefined) {
+
+        var value = $scope.entity.LRCNoOfDaysInCycle / $scope.entity.LRCCycleIntervalDays;
+        if (!isNaN($scope.entity.LRCCRDaysInInterval))
+          $scope.totalTenure = parseInt(value) * $scope.entity.LRCCRDaysInInterval;
+        else
+          $scope.showMsg("error", "Please enter numeric value in Number Of Leave Field");
+      }
+      else if ($scope.totalTenure != undefined) {
+        $scope.totalTenure = "";
+      }
+    }
+
+
+    $scope.saveWizardForm = function (entity, editForm) {
+      var selectedGroups = '';
+      angular.forEach($scope.groupList, function (group) {
+        if (group.isSelected) {
+          selectedGroups += group.GMCId + ',';
+        }
+      })
+      if (selectedGroups.length > 1) {
+        selectedGroups = selectedGroups.substring(0, selectedGroups.length - 1);
+        entity.LRCGroupIds = selectedGroups;
+      }
+      editFormService.saveForm(pageId, entity, vm.oldEntity,
+        entity.LRCId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
+        .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+    }
+
+    function _saveWizardFormSuccessResult(result) {
+      $scope.page.refreshData();
+      $scope.showEditForm = false;
+      $scope.showMsg("success", "Record Saved Successfully");
+    }
+    function _saveWizardFormErrorResult(err) {
+
+    }
+
+    _loadController();
   }
 
 })();
