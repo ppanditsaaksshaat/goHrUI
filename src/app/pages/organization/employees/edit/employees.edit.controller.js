@@ -67,6 +67,7 @@
       mastersMenu.push({ name: 'salary', text: 'Salary', id: 36 })
       mastersMenu.push({ name: 'immigration', text: 'Immigration', id: 119 })
       mastersMenu.push({ name: 'document', text: 'Document', id: 360 })
+      mastersMenu.push({ name: 'leave', text: 'Leave Detail', id: 36 })
       return mastersMenu;
 
     }
