@@ -6,6 +6,7 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.leave.transaction', [
+     'BlurAdmin.pages.leave.transaction.employeeleaveapplication',
      'BlurAdmin.pages.leave.transaction.leaveapplication',
      'BlurAdmin.pages.leave.transaction.leavestatement',
      'BlurAdmin.pages.leave.transaction.leavetransactiondetail'

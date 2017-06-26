@@ -22,29 +22,9 @@
     vm.showVerifyAttendance = true;
 
     this.applyFilter = _applyFilter;
-    // this.uploadRecord = _uploadRecord;
 
-    /**Toaster Option Setting */
-    var toastOption = {};
-    var defaultConfig = angular.copy(toastrConfig);
-    var openedToasts = [];
-    toastOption = {
-      autoDismiss: false,
-      positionClass: 'toast-top-center',
-      type: 'success',
-      timeOut: '5000',
-      extendedTimeOut: '2000',
-      allowHtml: false,
-      closeButton: true,
-      tapToDismiss: true,
-      progressBar: true,
-      newestOnTop: true,
-      maxOpened: 0,
-      preventDuplicates: false,
-      preventOpenDuplicates: false,
-      title: "",
-      msg: ""
-    };
+
+    // this.uploadRecord = _uploadRecord;
 
 
 
@@ -79,9 +59,14 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
+      pageResult: _pageResult
       // readonlyColumns: ['col1', 'col2']
     }
     /**End of For all list of verify attendance grid setting */
+
+    // $scope.page.boxOptions.customColumns = [];
+    // $scope.page.boxOptions.customColumns.push({ text: 'Verify', name:'verify', click: _verifyRow, type: 'a', pin: false })
+
 
     $scope.editPage = $scope.createPage();
     $scope.editPage.pageId = 320;
@@ -120,18 +105,26 @@
     $scope.closeForm = _closeForm;
     $scope.saveForm = _saveForm;
 
-    /**
-        * 
-        * @param {*} type 
-        * @param {*} msg 
-        * @param {*} title 
-        */
-    function _showToast(type, msg, title) {
-      toastOption.type = type;
-      angular.extend(toastrConfig, toastOption);
-      openedToasts.push(toastr[toastOption.type](msg, title));
-    }
+    function _pageResult(result){
+      if($scope.page.pageinfo){
+        if(!$scope.page.pageinfo.buttons.edit)
+          $scope.page.pageinfo.buttons.edit={};
+        
+        if(!$scope.page.pageinfo.buttons.update)
+          $scope.page.pageinfo.buttons.update={};
 
+        if(!$scope.page.pageinfo.buttons.view)
+          $scope.page.pageinfo.buttons.view={};
+        
+        if(!$scope.page.pageinfo.buttons.delete)
+          $scope.page.pageinfo.buttons.delete={};
+
+        $scope.page.pageinfo.buttons.edit.isvisible=false;
+        $scope.page.pageinfo.buttons.delete.isvisible=false;
+        $scope.page.pageinfo.buttons.view.isvisible=false;
+        $scope.page.pageinfo.buttons.update.isvisible=false;
+      }
+    }
 
     /**Close edit list */
     function _close() {
@@ -232,7 +225,9 @@
 
     }
 
-
+    function _verifyRow(row) {
+      console.log(row)
+    }
     /**Verify attendance according to row selection */
     function _verifyAttendance() {
       console.log($scope.page.selectedRows)
