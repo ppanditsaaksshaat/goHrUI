@@ -37,18 +37,11 @@
                     <div class="row">
                         <div class="col-md-3">{{page.selectedRows.length}} Rows Selected [<a href ng-click="page.clearSelected()">Clear</a>]</div>
                         <div class="col-md-9">
-                            <div class="dropdown" uib-dropdown dropdown-append-to-body>
-                                <button class="btn btn-xs btn-default dropdown-toggle" type="button" uib-dropdown-toggle>
-                             <span class="glyphicon glyphicon-tasks"></span></button>
-                                <ul uib-dropdown-menu>
-                                    <li ng-show="page.selectedRows.length==1"><a href ng-click="page.editRecord(row)">Edit</a></li>
-                                    <li><a href ng-click="page.viewRecord(page.selectedRows[0])">View</a></li>
-                                    <li><a href ng-click="page.updateRecord(page.selectedRows)">Update</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href ng-click="page.deleteRecord(page.selectedRows)">Delete</a></li>
-                                </ul>
-                            </div>
                             <div class="pull-right" ng-show="page.boxOptions.selectedRowButtons.length>0">
+                                <button type="button" ng-show="page.selectedRows.length==1 && page.pageinfo.buttons.edit.isvisible" class="btn btn-xs btn-primary" ng-click="page.editRecord(page.selectedRows[0])"><i ng-class="button.icon"></i>Edit</button>
+                                <button type="button" ng-show="page.pageinfo.buttons.view.isvisible" class="btn btn-xs" ng-click="page.viewRecord(page.selectedRows[0])"><i ng-class="button.icon"></i>View</button>
+                                <button type="button" ng-show="page.pageinfo.buttons.update.isvisible" class="btn btn-xs" ng-click="page.updateRecord(page.selectedRows)"><i ng-class="button.icon"></i>Update</button>
+                                <button type="button" ng-show="page.pageinfo.buttons.delete.isvisible" class="btn btn-xs btn-danger" ng-click="page.deleteRecord(page.selectedRows)"><i ng-class="button.icon"></i>Delete</button>
                                 <button ng-repeat="button in page.boxOptions.selectedRowButtons" type="button" class="btn btn-xs" ng-class="button.type" ng-click="button.onClick()"><i ng-class="button.icon"></i>{{button.text}}</button>
                             </div>
                         </div>
