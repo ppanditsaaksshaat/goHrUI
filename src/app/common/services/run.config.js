@@ -16,7 +16,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         progressBar: true,
         newestOnTop: true,
         maxOpened: 0,
-        preventDuplicates: true,
+        preventDuplicates: false,
         preventOpenDuplicates: true,
         title: "",
         msg: ""

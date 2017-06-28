@@ -12,9 +12,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
-                                <select class="form-control" ng-model="entity.selectedEmp" ng-options="employee.name for employee in page.pageinfo.selects.LEADEmpId">
+                                <select class="form-control" ng-model="entity.selectedEmp" ng-change="fetchDetail();leaveCtrl.validateLeave=true" ng-options="employee.name for employee in page.pageinfo.selects.LEADEmpId">
                                 </select>
-                                <!--<field-box page="page" ng-column="page.pageinfo.fields.LEADEmpId" ng-entity="entity" form="editForm"></field-box>-->
                             </div>
                         </div>
 
@@ -56,40 +55,74 @@
                                     <field-box page="page" ng-column="page.pageinfo.fields.LEADUnPaidLeave" ng-entity="entity" form="editForm"></field-box>
                                 </div>
                             </div>
-
                             <div ng-if="leaveCtrl.appliedDays!=undefined" class="col-md-6">
                                 <label> No. Of Days Applied</label>
                                 <span class="form-control" ng-bind="leaveCtrl.appliedDays"></span>
                             </div>
-
                         </div>
-                        <div ng-if="entity.LEADPaidLeave" class="row">
-                            <div class="col-md-3">
-                                <input type="button" class="btn btn-primary" value="Validate" ng-click="validate();leaveCtrl.validateEmployee=true">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="checkbox">
+                                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="leaveCtrl.isConditiaonal" > 
+                                          <span>Condtional Leave</span>
+                                        </label>
+                                </div>
+                            </div>
+                            <div ng-if="leaveCtrl.isConditiaonal" class="col-md-6">
+                                <label>Conditional Leave Type</label>
+                                <select class="form-control" ng-model="entity" ng-options="leaveType.value as leaveType.name for leaveType in page.pageinfo.selects.LEADLTId  | filter:leaveType.Conditional==True">
+                                </select>
                             </div>
                         </div>
-                        <div ng-if="leaveCtrl.validateEmployee" class="row">
+                        <!--<div ng-if="entity.LEADPaidLeave" class="row">
+                            <div class="col-md-3">
+                                <input type="button" class="btn btn-primary" value="Validate" ng-click="validate();leaveCtrl.validateLeave=true">
+                            </div>
+                        </div>-->
+                        <div ng-if="leaveCtrl.validateLeave" class="row">
                             <div class="col-md-6">
                                 <table class="table table-responsive table-bordered table-hover table-condensed">
                                     <thead>
                                         <tr>
-                                            <th class="col-md-1">Type</th>
+                                            <th class="col-md-2">Type</th>
                                             <th class="col-md-1">Balance</th>
-                                            <th class="col-md-4">Leave Debit</th>
+                                            <th class="col-md-2">Leave Debit</th>
+                                            <th class="col-md-1">Half Day</th>
+                                            <th class="col-md-2">Min</th>
+                                            <th class="col-md-2">Max</th>
+                                            <th class="col-md-2">-</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="value in showLeave">
-                                            <td class="col-md-1" ng-bind="value.LTName"></td>
-                                            <td class="col-md-1" ng-bind="value.LeaveBalance"></td>
-                                            <td class="col-md-4"><input type="text" ng-model="value.leaveDr" /></td>
+                                            <td ng-bind="value.LTName"></td>
+                                            <td ng-bind="value.LeaveBalance"></td>
+                                            <td>
+                                                <select ng-if="!value.isUnpaid" ng-model="value.leaveDr" ng-options="opt.id as opt.name for opt in getOptions(value)" ng-change="onLeaveDrChange(value,'{{value.leaveDr}}' )"></select>
+                                                <div ng-if="value.isUnpaid">{{value.leaveDr}} Days</div>
+                                            </td>
+                                            <td>
+                                                <div class="checkbox" ng-if="!value.isUnpaid">
+                                                    <label class="custom-checkbox">      
+                                                        <input  type="checkbox" ng-model="value.isHalfDay" ng-change="onHalfDayChange(value,'{{value.isHalfDay}}')"/> 
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td ng-bind="value.minDays"></td>
+                                            <td ng-bind="value.maxDays"></td>
+                                            <td></td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <td>Total</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td>{{getTotal('LeaveBalance')}}</td>
+                                            <td>{{getTotal('leaveDr')}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                     </tfoot>
                                 </table>
