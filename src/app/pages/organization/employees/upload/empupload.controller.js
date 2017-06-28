@@ -739,7 +739,10 @@
 
         vm.importDataUpload = function () {
 
-
+            // angular.forEach(vm.gridOptions.data, function (data) {
+            //     data.AttendanceDate = moment(data.AttendanceDate).format("DD/MM/YYYY");
+            //     console.log(data.AttendanceDate)
+            // })
 
             var mappedFieldsList = {};
             vm.selectedHeader = []
@@ -1054,22 +1057,22 @@
 
                 var err_data = angular.fromJson(err.data);
                 console.log(err_data)
-                if (err_data.InnerException) 
+                if (err_data.InnerException)
                     $scope.showMsg('error', err_data.InnerException.ExceptionMessage, err_data.ExceptionMessage)
-                    // vm.migrate.currentStep = 4;
-                    // vm.migrate.step4 = false;
-                    // vm.migrate.step3 = true;
-                
+                // vm.migrate.currentStep = 4;
+                // vm.migrate.step4 = false;
+                // vm.migrate.step3 = true;
 
 
 
 
-                else 
+
+                else
                     $scope.showMsg('error', err_data.ExceptionMessage, 'Error Message')
-                    // vm.migrate.currentStep = 4;
-                    // vm.migrate.step4 = false;
-                    // vm.migrate.step3 = true;
-                
+                // vm.migrate.currentStep = 4;
+                // vm.migrate.step4 = false;
+                // vm.migrate.step3 = true;
+
 
 
 
@@ -1243,7 +1246,7 @@
 
 
 
-            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, true, false);
+            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeList', false, true, true);
         }
 
         vm.downloadExportSkipData = function () {
