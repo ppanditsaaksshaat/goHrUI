@@ -51,6 +51,7 @@
         vm.tempName = $stateParams.name;
         vm.saveForm = _saveForm;
         vm.saveAddress = _saveAddress;
+        vm.queryId = 187;
 
         vm.saveFormCommon = _saveFormCommon;
         vm.resetFormCommon = _resetFormCommon;
@@ -115,13 +116,41 @@
                 }
             }
             else {
-                vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
-                console.log(vm.empPKId)
+
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
-                if (vm.pageId != 360 && vm.pageId != 36)
+                if (vm.pageId != 360 && vm.pageId != 'EntitleMent') {
+                    vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                     $scope.page = _getLocalPageObject(vm.pageId)
-                console.log($scope.page);
+                    console.log($scope.page);
+                }
+                else {
+                   _getSalaryEntitleMent();
+                }
+
             }
+        }
+        function _getSalaryEntitleMent() {
+            var searchLists = [];
+            var searchListData = {
+                field: 'EmpId',
+                operand: '=',
+                value: vm.empPKId
+            }
+            searchLists.push(searchListData)
+            var data = {
+                searchList: searchLists,
+                orderByList: []
+            }
+            pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+        }
+        function _getCustomQuerySuccessResult(result) {
+            console.log(result)
+            if(result!=="NoDataFound"){
+                 $scope.salaryEntitleMent = result;
+            }
+        }
+        function _getCustomQueryErrorResult(err) {
+
         }
         function _getPageDataSuccessResult(result) {
 
