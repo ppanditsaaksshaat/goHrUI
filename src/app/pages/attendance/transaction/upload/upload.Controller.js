@@ -33,6 +33,7 @@
     vm.fail = _fail;
     vm.resetBrowse = _resetBrowse;
     vm.close = _close;
+    vm.showPreviewClick = _showPreviewClick;
 
 
 
@@ -119,9 +120,10 @@
      */
     function _uploadAttendance() {
       angular.forEach(vm.gridOptions.data, function (data, index) {
-        vm.gridOptions.data[index].AttDataBaseType = 5;
+        data.AttDataBaseType = 5;
       })
-    
+      console.log(vm.gridOptions.data)
+
       var upload = {
         fieldRow: vm.gridOptions.data,
         groupName: 'Attendance'
@@ -206,9 +208,16 @@
       })
     }
     function _close() {
-
       vm.showPreview = false;
       _loadController();
+    }
+
+    function _showPreviewClick(){
+      angular.forEach(vm.gridOptions.data,function(data){
+           data.AttendanceDate= moment(data.AttendanceDate).format("DD/MMM/YYYY");
+           console.log(data.AttendanceDate)
+      })
+       console.log(vm.gridOptions.data)
     }
     _loadController();
   }

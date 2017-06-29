@@ -37,7 +37,7 @@
                         <div class="row" ng-show="attCtrl.gridOptions.data.length > 0">
                             <div class="col-md-12">
                                 <label class="checkbox-inline custom-checkbox nowrap">
-                                    <input type="checkbox" id="inlineCheckbox01" ng-model="attCtrl.showPreview">
+                                    <input type="checkbox" id="inlineCheckbox01" ng-model="attCtrl.showPreview" ng-change="attCtrl.showPreviewClick()">
                                     <span>Show Preview</span>
                                 </label>
                             </div>
