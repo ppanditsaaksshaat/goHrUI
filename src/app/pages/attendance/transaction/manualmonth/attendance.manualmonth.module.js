@@ -21,7 +21,7 @@
         controllerAs: "attCtrl",
         title: 'Month By Attendance ',
         sidebarMeta: {
-          order: 10,
+          order: 1,
           parent: 'attendance.transaction',
           pageTitle: 'Month Att'
         },

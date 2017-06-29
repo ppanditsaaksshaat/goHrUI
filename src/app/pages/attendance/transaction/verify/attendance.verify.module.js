@@ -21,7 +21,7 @@
         controllerAs: "attVerifyCtrl",
         title: 'Verify Attendance',
         sidebarMeta: {
-          order: 2,
+          order: 3,
           parent: 'attendance.transaction',
           pageTitle: 'Att verify'
         },

@@ -44,6 +44,7 @@
                     showDataOnLoad: true,
                     showApplyFilter: true,
                     filterOnChange: null,//an event for filter box
+                    defaultEntity: {},//providing default values to add form
                     gridStyle: { height: '450px' },
                     customButtons: [],
                     selectedRowButtons: [],
@@ -159,6 +160,8 @@
                     $scope.page.isAllowEdit = true;
                     editForm.isAllowEdit = true;
                     $scope.entity = {};
+                //attaching default values form local controller if any
+                    $scope.entity = angular.extend({}, $scope.page.boxOptions.defaultEntity, $scope.entity)
 
                     angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
                         $scope.entity[link.name] = link.value;

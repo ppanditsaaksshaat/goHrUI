@@ -67,7 +67,7 @@
                     <i class="fa fa-calendar"></i>
                 </span>
                 <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
-                    ng-model="entity[col.name]" ng-model-options="{ updateOn: 'blur' }">
+                    ng-model="entity[col.name]"  ng1-model-options="{ updateOn: 'blur' }">
                 <span class="input-group-btn">
                     <button class="btn btn-secondary" ng-click="entity[col.name]=''" type="button"><i class="fa fa-close"></i></button>
                 </span>
@@ -92,7 +92,7 @@
         </div>
         <!--datetimepicker-->
         <div ng-switch-when="datetimepicker" ng-switch-when-separator="|">
-            <div id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" moment-picker="entity[col.name]" format="dd-MMM-yyyy hh:mm A">
+            <div id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]"  moment-picker="entity[col.name]" format="dd-MMM-yyyy hh:mm A">
                 <i class="glyphicon glyphicon-time"></i>&nbsp; {{ entity[col.name] || "Pick any date/time" }}
             </div>
         </div>

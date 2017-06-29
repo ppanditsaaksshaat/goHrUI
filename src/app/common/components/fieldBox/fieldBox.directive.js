@@ -34,6 +34,8 @@
                 //a local ngModel variable for implemented control which is set by validText directive
                 $scope.ngModel = {};
 
+                
+
                 $scope.currencySymbol = 'Rs.';
                 $scope.currencyDecimal = 3;
 
@@ -296,6 +298,7 @@
                     }
                 })
                 $elm.bind('blur', function (e) {
+                   
                     if ($scope.fbOnBlur) {
                         $scope.fbOnBlur({ event: e, element: $elm, modelCtrl: $scope.ngModel, column: $scope.col })
                     }

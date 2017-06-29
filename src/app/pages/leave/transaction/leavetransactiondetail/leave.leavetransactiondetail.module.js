@@ -21,7 +21,7 @@
         controllerAs: "attCtrl",
         title: 'Leave Transaction',
         sidebarMeta: {
-          order: 0,
+          order: 4,
           parent: 'leave.transaction',
           pageTitle: 'Leave Transaction'
         },

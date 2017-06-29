@@ -21,7 +21,7 @@
         controllerAs: "attCtrl",
         title: 'OutDoor Application',
         sidebarMeta: {
-          order: 3,
+          order: 2,
           parent: 'attendance.transaction',
           pageTitle: 'OutDoor Apply'
         },

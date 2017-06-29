@@ -14,6 +14,17 @@
         toastrConfig, toastr, $state, editFormService) {
         console.log('empTabController')
 
+        $scope.gridOptions = $scope.getGridSetting();
+        $scope.gridOptions.onRegisterApi = _onRegisterApi;
+        $scope.gridOptions.columnDefs = [];
+        $scope.gridOptions.data = [];
+
+
+
+        function _onRegisterApi(gridApi) {
+
+        }
+
         var toastOption = {};
         var defaultConfig = angular.copy(toastrConfig);
         var openedToasts = [];
@@ -124,7 +135,7 @@
                     console.log($scope.page);
                 }
                 else {
-                   _getSalaryEntitleMent();
+                    _getSalaryEntitleMent();
                 }
 
             }
@@ -145,8 +156,15 @@
         }
         function _getCustomQuerySuccessResult(result) {
             console.log(result)
-            if(result!=="NoDataFound"){
-                 $scope.salaryEntitleMent = result;
+            if (result !== "NoDataFoundemp") {
+                var colCreatedOn = { name: 'SHName', field: 'SHName', displayName: 'SHName', width: 100, visible: true };
+                var colCreatedBy = { name: 'PaybandRule', field: 'PaybandRule', displayName: 'Payband Rule', width: 100, visible: true };
+                var colAssignedUser = { name: 'SalAmount', field: 'SalAmount', displayName: 'Salary Amount', width: 100, visible: true };
+                $scope.gridOptions.columnDefs.push(colCreatedOn);
+                $scope.gridOptions.columnDefs.push(colCreatedBy);
+                $scope.gridOptions.columnDefs.push(colAssignedUser);
+
+                $scope.gridOptions.data = result;
             }
         }
         function _getCustomQueryErrorResult(err) {

@@ -45,8 +45,10 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-     // readonlyColumns: ['col1', 'col2']
+      defaultEntity: { 'AEADAPPDate': moment(), 'AEADAttDateFrom': moment(),'AEADAttDateTo': moment(),'AEADAttInTime': moment('1/1/2017 09:30').format('HH:mm'),'AEADAttOutTime': moment('1/1/2017 18:00').format('H:mm') }
+      // readonlyColumns: ['col1', 'col2']
     }
+
 
     $scope.resetFormCommon = _resetFormCommon;
     $scope.clearFormCommon = _clearFormCommon;
