@@ -41,6 +41,7 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
+      showApplyFilter: false,
       filterOnChange: _filterChange
     }
 
@@ -51,6 +52,7 @@
     $scope.page.boxOptions.customButtons.push({ text: 'Save & Generate Salary', icon: 'btn-primary', onClick: _saveAndGenerateSalaryClick, type: 'btn-warning' })
 
     function _pendingClick() {
+      $scope.page.searchList = [];
       // alert('pending');
       console.log($scope.page)
       // if ($scope.page.filterData.SubUnitId !== undefined && $scope.page.filterData.SalMonth !== undefined && $scope.page.filterData.SalYear !== undefined) {
@@ -376,6 +378,7 @@
 
     function _readyClick() {
       var colList = [];
+      $scope.page.searchList = [];
       angular.forEach($scope.page.pageinfo.filters, function (col, cdx) {
         colList = {
           field: col.name,
@@ -399,10 +402,12 @@
         operand: '=',
         value: $scope.acToDate
       })
+      console.log($scope.page.searchList)
       $scope.page.refreshData()
       console.log($scope.page)
     }
     function _reGenerateClick() {
+      $scope.page.searchList = [];
       var colList = [];
       angular.forEach($scope.page.pageinfo.filters, function (col, cdx) {
         colList = {
@@ -428,6 +433,7 @@
         operand: '=',
         value: $scope.acToDate
       })
+      console.log($scope.page.searchList)
       $scope.page.refreshData()
       console.log($scope.page)
     }
@@ -451,7 +457,7 @@
       pageService.generateSalary(filterData).then(function (result) {
         if (result.success_message == 'Salary Generate And Save') {
           // alert(result.success_message)
-          $scope.showMsg('success', 'Salary generate and save.','');
+          $scope.showMsg('success', 'Salary generate and save.', '');
         }
         else {
           var empData = result;
