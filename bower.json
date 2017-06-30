@@ -73,7 +73,8 @@
     "angular-ui-bootstrap-datetimepicker": "^2.5.0",
     "bootstrap-datepicker": "^1.6.4",
     "angular-moment-picker": "moment-picker#^0.10.1",
-    "angular-input-masks": "^2.6.0"
+    "angular-input-masks": "^2.6.0",
+    "angularjs-slider": "^6.2.2"
   },
   "resolutions": {
     "angular": "~1.5.9",
