@@ -14,17 +14,6 @@
         toastrConfig, toastr, $state, editFormService) {
         console.log('empTabController')
 
-        $scope.gridOptions = $scope.getGridSetting();
-        $scope.gridOptions.onRegisterApi = _onRegisterApi;
-        $scope.gridOptions.columnDefs = [];
-        $scope.gridOptions.data = [];
-
-
-
-        function _onRegisterApi(gridApi) {
-
-        }
-
         var toastOption = {};
         var defaultConfig = angular.copy(toastrConfig);
         var openedToasts = [];
@@ -129,47 +118,16 @@
             else {
 
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
-                if (vm.pageId != 360 && vm.pageId != 'EntitleMent') {
+                if (vm.pageId != 360 && vm.pageId != 'entitlement') {
                     vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page);
                 }
-                else {
-                    _getSalaryEntitleMent();
-                }
+
 
             }
         }
-        function _getSalaryEntitleMent() {
-            var searchLists = [];
-            var searchListData = {
-                field: 'EmpId',
-                operand: '=',
-                value: vm.empPKId
-            }
-            searchLists.push(searchListData)
-            var data = {
-                searchList: searchLists,
-                orderByList: []
-            }
-            pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
-        }
-        function _getCustomQuerySuccessResult(result) {
-            console.log(result)
-            if (result !== "NoDataFoundemp") {
-                var colCreatedOn = { name: 'SHName', field: 'SHName', displayName: 'SHName', width: 100, visible: true };
-                var colCreatedBy = { name: 'PaybandRule', field: 'PaybandRule', displayName: 'Payband Rule', width: 100, visible: true };
-                var colAssignedUser = { name: 'SalAmount', field: 'SalAmount', displayName: 'Salary Amount', width: 100, visible: true };
-                $scope.gridOptions.columnDefs.push(colCreatedOn);
-                $scope.gridOptions.columnDefs.push(colCreatedBy);
-                $scope.gridOptions.columnDefs.push(colAssignedUser);
 
-                $scope.gridOptions.data = result;
-            }
-        }
-        function _getCustomQueryErrorResult(err) {
-
-        }
         function _getPageDataSuccessResult(result) {
 
             console.log(result)
