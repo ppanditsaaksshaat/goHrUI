@@ -51,7 +51,8 @@
                     customColumns: [],
                     pageResult: null,
                     dataResult: null,
-                    saveResult: null
+                    saveResult: null,
+                    afterCellEdit: null//external cell edit event
                 }
 
                 //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
@@ -160,7 +161,7 @@
                     $scope.page.isAllowEdit = true;
                     editForm.isAllowEdit = true;
                     $scope.entity = {};
-                //attaching default values form local controller if any
+                    //attaching default values form local controller if any
                     $scope.entity = angular.extend({}, $scope.page.boxOptions.defaultEntity, $scope.entity)
 
                     angular.forEach($scope.page.boxOptions.linkColumns, function (link) {
@@ -214,6 +215,20 @@
                         else {
                             $scope.page.showAddRecord = true;
                             $scope.entity = row.entity;
+
+                            angular.forEach($scope.page.pageinfo.columns, function (col, idx) {
+                                if (col.editable.controltype == 'datepicker') {
+                                    $scope.entity[col.name] = moment(row.entity[col.name]).format('DD-MMM-YYYY')
+                                }
+                                if (col.editable.controltype == 'datetimepicker') {
+                                    $scope.entity[col.name] = moment(row.entity[col.name]).format('DD-MMM-YYYY')
+                                }
+                                if (col.editable.controltype == 'timepicker') {
+                                    $scope.entity[col.name] = moment(row.entity[col.name]).format('HH:mm')
+                                }
+                            })
+
+                            // $scope.entity.InTime = moment(row.entity.InTime).format('HH:mm')
                             $scope.oldEntity = angular.copy(row.entity);
                             $scope.page.pkId = row.entity[$scope.page.pageinfo.idencolname];
                             _findEntity();
@@ -288,6 +303,16 @@
                             //DJWebStoreGlobal.ClearPageMenu();
                         }
                     });
+
+                    //allow editing event
+                    gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+
+                        if ($scope.page.boxOptions.afterCellEdit) {
+                            //calling external change event
+                            $scope.page.boxOptions.afterCellEdit(rowEntity, colDef, newValue, oldValue)
+                        }
+
+                    })
                 }
                 function _closeViewRecord() {
                     _closeForm();
@@ -570,10 +595,10 @@
                 function _findEntity() {
                     $scope.form.isLoaded = false;
                     $scope.form.isLoading = true;
-                    $timeout(function () {
-                        pageService.findEntity($scope.page.pageinfo.tableid, $scope.page.pkId, undefined).then(
-                            _findEntitySuccessResult, _findEntityErrorResult);
-                    });
+                    // $timeout(function () {
+                    //     pageService.findEntity($scope.page.pageinfo.tableid, $scope.page.pkId, undefined).then(
+                    //         _findEntitySuccessResult, _findEntityErrorResult);
+                    // });
                 }
                 function _findEntitySuccessResult(result) {
                     $scope.form.isLoaded = true;
