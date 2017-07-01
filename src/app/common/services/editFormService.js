@@ -40,7 +40,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
     };
     //calling func from outer side of factory
     function _saveEditForm(pageId, newEntity, oldEntity, action, title, pageForm, isShowConfirmation) {
-        
+
         defer = $q.defer();
 
         localForm = pageForm;
@@ -59,7 +59,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
                 _showToast('info', 'Nothing to save', title)
             }
             else {
-                _showConfirm('Do you want to save ' + title + '?', _confirmClick, pageId, dataObject, title)
+                _showConfirm('Do you want to save ' + title + '?', _confirmClick, _rejectClick, pageId, dataObject, title)
             }
         }
         else {
@@ -67,7 +67,9 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
         }
         return defer.promise
     }
-
+    function _rejectClick(pageId, data, title) {
+        defer.reject({ data: data, msg: 'Cancelled' })
+    }
     function _confirmClick(pageId, data, title) {
         if (localForm) {
             localForm.isSavingForm = true;
@@ -151,7 +153,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
         openedToasts.push(toastr[toastOption.type](msg, title));
     }
 
-    function _showConfirm(msg, funcConfirm, pageId, data, title) {
+    function _showConfirm(msg, funcConfirm, funcReject, pageId, data, title) {
 
         console.log(data)
         var para = {
@@ -159,6 +161,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
             data: data,
             title: title,
             confirmClick: funcConfirm,
+            rejectClick: funcReject,
             confirmMessge: msg
         }
         var modalInstance = $uibModal.open({
@@ -246,7 +249,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
 function ModalConfirmCtrl($scope, $uibModalInstance, param) {
 
     var confirmClick = param.confirmClick, confirmMessge = param.confirmMessge;
-
+    var rejectClick = param.rejectClick;
     console.log(param, confirmMessge)
     $scope.confirmMessage = confirmMessge;
     function closeModal() {
@@ -259,6 +262,7 @@ function ModalConfirmCtrl($scope, $uibModalInstance, param) {
     }
 
     $scope.cancel = function () {
+        rejectClick(param.pageId, param.data, param.title);
         closeModal();
     }
 }

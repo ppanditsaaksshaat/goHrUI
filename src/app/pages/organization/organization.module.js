@@ -7,11 +7,13 @@
 
   angular.module('BlurAdmin.pages.organization', [
     'BlurAdmin.pages.organization.employees',
+    'BlurAdmin.pages.organization.payRoll',
     // 'BlurAdmin.pages.organization.employee',
     // 'BlurAdmin.pages.organization.empupload',
     // 'BlurAdmin.pages.organization.masters',
     'BlurAdmin.pages.organization.general',
     'BlurAdmin.pages.organization.employees.reports'
+    
     
     // 'BlurAdmin.pages.organization.empadd',
     // 'BlurAdmin.pages.organization.empedit',

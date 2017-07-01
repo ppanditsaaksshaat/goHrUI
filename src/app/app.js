@@ -26,7 +26,7 @@ angular.module('BlurAdmin', [
   'ui.timepicker',
   'ngScrollbars',
   'jQueryScrollbar',
-  // 'angular.chosen',
+  'rzModule',
   'BlurAdmin.theme',
   'BlurAdmin.pages',
   'BlurAdmin.common'

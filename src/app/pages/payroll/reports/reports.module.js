@@ -18,7 +18,8 @@
     'BlurAdmin.pages.payroll.reports.combinedChallan',
     'BlurAdmin.pages.payroll.reports.pfContribution',
 
-    'BlurAdmin.pages.payroll.reports.eSIChallanForm'
+    'BlurAdmin.pages.payroll.reports.eSIChallanForm',
+    // 'BlurAdmin.pages.payroll.reports.test'
   ])
     .config(routeConfig);
 

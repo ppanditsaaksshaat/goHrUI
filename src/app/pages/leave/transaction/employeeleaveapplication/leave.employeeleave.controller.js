@@ -10,8 +10,80 @@
 
   /** @ngInject */
   function EmpLeaveAppController($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr, $filter) {
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr, $filter, $timeout) {
 
+    $scope.fromSlider = {
+      minValue: 1,
+      maxValue: 3,
+      options: {
+        floor: 1,
+        ceil: 3,
+        step: 1,
+        minRange: 1,
+        maxRange: 3,
+        pushRange: true,
+        showTicks: true,
+        translate: function (value, sliderId, label) {
+          if (label == 'high') {
+            var labelText = '';
+            if ($scope.fromSlider.minValue == 1 && $scope.fromSlider.maxValue == 2) {
+              $scope.entity.LEADFromHalfDayId = 0;
+              labelText = 'First Half'
+            } else if ($scope.fromSlider.minValue == 2 && $scope.fromSlider.maxValue == 3) {
+              $scope.entity.LEADFromHalfDayId = 1;
+              labelText = 'Second Half'
+            }
+            else if ($scope.fromSlider.minValue == 1 && $scope.fromSlider.maxValue == 3) {
+              $scope.entity.LEADFromHalfDayId = 2;
+              labelText = 'Full day';
+            }
+            _appliedDays();
+            return labelText;
+
+          }
+          else {
+            return '';
+          }
+        }
+      }
+    };
+    $scope.toSlider = {
+      minValue: 1,
+      maxValue: 3,
+      options: {
+        floor: 1,
+        ceil: 3,
+        step: 1,
+        minRange: 1,
+        maxRange: 3,
+        pushRange: true,
+        showTicks: true,
+        translate: function (value, sliderId, label) {
+          if (label == 'high') {
+            var labelText = '';
+            if ($scope.toSlider.minValue == 1 && $scope.toSlider.maxValue == 2) {
+              $scope.entity.LEADToHalfDayId = 0;
+              labelText = 'First Half'
+            } else if ($scope.toSlider.minValue == 2 && $scope.toSlider.maxValue == 3) {
+              $scope.entity.LEADToHalfDayId = 1;
+              labelText = 'Second Half'
+            }
+            else if ($scope.toSlider.minValue == 1 && $scope.toSlider.maxValue == 3) {
+              $scope.entity.LEADToHalfDayId = 2;
+              labelText = 'Full day';
+            }
+            _appliedDays();
+            return labelText;
+
+          }
+          else {
+            return '';
+          }
+        }
+      }
+    };
+    $scope.value = 150;
+    $scope.showToSlider = true;
     var vm = this;
     var pageId = 157;
     var queryId = 530;
@@ -22,7 +94,7 @@
     // this.uploadRecord = _uploadRecord;
     $scope.showLeave = []
     $scope.leaveRuleList = [];
-    $scope.entity = { LEADToHalfDayId: 0, LEADFromHalfDayId: 0 }
+    $scope.entity = { LEADToHalfDayId: 2, LEADFromHalfDayId: 2 }
     $scope.page = $scope.createPage();
     $scope.fetchDetail = _fetchLeaveDetail;
     $scope.appliedDays = _appliedDays;
@@ -32,6 +104,9 @@
     $scope.calculateDays = _calculateDays;
     $scope.onLeaveDrChange = _onLeaveDrChange;
     $scope.onHalfDayChange = _onHalfDayChange;
+    $scope.onConditionalLeaveTypeChange = _onConditionalLeaveTypeChange;
+    $scope.onConditionalCheckbox = _onConditionalCheckbox;
+    $scope.closeForm = _closeForm;
     // $scope.getLeaveTypeAccordingLeaveControl = _getLeaveTypeAccordingLeaveControl;
 
     console.log($scope.page)
@@ -39,7 +114,7 @@
     // console.log($scope.selectEmployeeData)
     $scope.page.pageId = 157;
 
-    // $scope.saveForm = _saveForm;
+    $scope.saveForm = _saveForm;
     // $scope.approvedLeave = _approvedLeave;
     // $scope.employeeOnChange = _employeeOnChange;
     $scope.oldEntity = {};
@@ -65,12 +140,51 @@
       deleteRecord: null,
     }
 
+    $scope.$watch('entity.LEADDateFrom', function (newVal, oldVal) {
+      if (newVal) {
+        if (!$scope.entity.LEADDateTo) {
+          $scope.entity.LEADDateTo = $scope.entity.LEADDateFrom
+          _appliedDays();
+        }
+        else {
+          var daysDiff = _getDateDiff();
+          if (daysDiff < 0) {
+            $scope.entity.LEADDateTo = $scope.entity.LEADDateFrom
+            _appliedDays();
+          }
+        }
+      }
+    })
+    $scope.$watch('entity.LEADDateTo', function (newVal, oldVal) {
+      if (newVal) {
+
+        if ($scope.entity.LEADDateFrom) {
+          var daysDiff = _getDateDiff();
+          if (daysDiff < 0) {
+            $scope.showMsg('warning', 'To date can not be less than from date.')
+            $scope.entity.LEADDateTo = $scope.entity.LEADDateFrom
+            _appliedDays();
+          }
+          else if (daysDiff == 0) {
+            $scope.showToSlider = false;
+          }
+          else {
+            $scope.showToSlider = true;
+          }
+        }
+      }
+    })
+
+    function _getDateDiff() {
+      var fromDate = moment($scope.entity.LEADDateFrom);
+      var toDate = moment($scope.entity.LEADDateTo);
+      var daysDiff = toDate.diff(fromDate, 'days');
+      return daysDiff;
+    }
     function _loadController() {
       $scope.entity.LEADFromHalfDayId = 2;
       $scope.entity.LEADToHalfDayId = 2;
-
     }
-
     function _appliedDays() {
       var appliedDays = 0;
       var isFromHalfDay = false;
@@ -105,17 +219,26 @@
       _calculateDays();
     }
     function _addRecord() {
+      $scope.isSavingLeave = false;
       $scope.showEditForm = true;
-      $scope.entity = {};
       $scope.isLeaveTransactionTable = false;
       $scope.isLeaveApprovedDet = false;
-
-
+      $scope.entity = { LEADToHalfDayId: 2, LEADFromHalfDayId: 2 }
     }
-
+    function _closeForm() {
+      $scope.showEditForm = false;
+    }
     function _fetchLeaveDetail() {
-      queryId = 530;
 
+      $scope.entity.LEADEmpId = $scope.entity.selectedEmp.value;
+
+      $timeout(function () {
+        $scope.$broadcast('rzSliderForceRender');
+      });
+
+      $scope.showSlider = true;
+      queryId = 530;
+      vm.validateLeave = true;
       var searchLists = [];
       var searchListData = {
         field: 'ELTEmpId',
@@ -139,8 +262,9 @@
       angular.forEach(leaveBalList, function (leave, index) {
         leave.leaveDr = 0;
         leave.isDisabled = false;
+        var leaveRule = $filter('findObj')($scope.leaveRuleList, leave.LRCLeaveTypeId, 'LRCLeaveTypeId')
         if (leave.LeaveBalance > 0 && balLeave > 0) {
-          var leaveRule = $filter('findObj')($scope.leaveRuleList, leave.LRCLeaveTypeId, 'LRCLeaveTypeId')
+
           if (leaveRule != null) {
             leave.minDays = leaveRule.LRCDRMinDays;
             leave.maxDays = leaveRule.LRCDrMaxDays;
@@ -192,6 +316,41 @@
             leave.isHalfDay = (leave.halfDay > 0);
           }
         }
+
+        //calculating days for dropdown
+
+        var optList = [];
+
+        if (leave && $scope.leaveRuleList) {
+
+          if (leaveRule !== null) {
+            var maxCounter = 0;
+            if (leave.LeaveBalance < leaveRule.LRCDrMaxDays) {
+              maxCounter = leave.LeaveBalance;
+            }
+            else if (leave.LeaveBalance >= leaveRule.LRCDrMaxDays) {
+              maxCounter = leaveRule.LRCDrMaxDays;
+            }
+
+            if (vm.appliedDays < maxCounter) {
+
+              maxCounter = vm.appliedDays
+            }
+
+            for (var i = 0; i <= maxCounter; i++) {
+              if (i == 0 || i >= leaveRule.LRCDRMinDays) {
+                optList.push({ id: i, name: i.toString() + ' Days' })
+              }
+            }
+          }
+          else {
+            optList.push({ id: 0, name: '0 Day' })
+            optList.push({ id: 1, name: '1 Day' })
+          }
+        }
+        leave.days = optList;
+
+
       })
       //compairing and updating unpaid leave
       var unpaidLeave = $filter('findObj')(leaveBalList, true, 'isUnpaid')
@@ -202,6 +361,7 @@
 
       leaveBalList.push(unpaid);
       $scope.showLeave = angular.copy(leaveBalList);
+
 
     }
     function _getCustomQueryErrorResult(err) {
@@ -230,7 +390,6 @@
         vm.validateEmployee = false;
       }
     }
-
     function _getLeaveDebitSuccessResult(result) {
       // console.log(result)
       // console.log($scope.showLeave)
@@ -368,7 +527,140 @@
         $scope.showLeave.push(unpaid);
       }
     }
+
+    function _onConditionalLeaveTypeChange() {
+      var leaveRule = $filter('findObj')($scope.leaveRuleList, $scope.entity.conditinalLeaveTypeId, 'LRCLeaveTypeId')
+      console.log(leaveRule)
+      if (leaveRule == null) {
+        $scope.showMsg('err', 'No leave rule defined.')
+      }
+      else {
+
+        var leave = {
+          leaveDr: 0, LeaveBalance: leaveRule.LRCDrMaxDays, LTName: leaveRule.LTName, isUnpaid: false, halfDay: 0,
+          minDays: leaveRule.LRCDRMinDays, maxDays: leaveRule.LRCDrMaxDays, isCondLeave: true, LRCLeaveTypeId: $scope.entity.conditinalLeaveTypeId
+        }
+
+        var optList = [];
+
+        if (leave && $scope.leaveRuleList) {
+
+          if (leaveRule !== null) {
+            var maxCounter = 0;
+            if (leave.LeaveBalance < leaveRule.LRCDrMaxDays) {
+              maxCounter = leave.LeaveBalance;
+            }
+            else if (leave.LeaveBalance >= leaveRule.LRCDrMaxDays) {
+              maxCounter = leaveRule.LRCDrMaxDays;
+            }
+
+            if (vm.appliedDays < maxCounter) {
+
+              maxCounter = vm.appliedDays
+            }
+
+            for (var i = 0; i <= maxCounter; i++) {
+              if (i == 0 || i >= leaveRule.LRCDRMinDays) {
+                optList.push({ id: i, name: i.toString() + ' Days' })
+              }
+            }
+          }
+          else {
+            optList.push({ id: 0, name: '0 Day' })
+            optList.push({ id: 1, name: '1 Day' })
+          }
+        }
+        leave.days = optList;
+
+        var found = $filter('findObj')($scope.showLeave, true, 'isCondLeave')
+        if (found != null) {
+          $scope.showLeave.splice(0, 1)
+        }
+
+        $scope.showLeave.splice(0, 0, leave)
+
+      }
+      _calculateDays();
+    }
+
+    function _onConditionalCheckbox() {
+      if ($scope.entity.isConditiaonal) {
+
+      }
+      else {
+        var found = $filter('findObj')($scope.showLeave, true, 'isCondLeave')
+        if (found != null) {
+          $scope.showLeave.splice(0, 1)
+        }
+        _calculateDays();
+      }
+    }
+    function _validateForm(form) {
+
+      var cQueryId = 536;
+
+      var searchList = [];
+
+      searchList.push({
+        field: 'empId',
+        operand: '=',
+        value: $scope.entity.LEADEmpId
+      })
+
+      searchList.push({
+        field: 'from',
+        operand: '<=',
+        value: moment($scope.entity.LEADDateFrom).format('YYYY-MM-DD')
+      })
+
+      searchList.push({
+        field: 'to',
+        operand: '>=',
+        value: moment($scope.entity.LEADDateTo).format('YYYY-MM-DD')
+      })
+      var data = {
+        searchList: searchList,
+        orderByList: []
+      }
+      console.log(data)
+      var tableData = pageService.getCustomQuery(data, cQueryId);
+      tableData.then(_getLeaveCountSuccess, _getLeaveCountError)
+      return true;
+    }
+    function _getLeaveCountSuccess(result) {
+      if (result == "NoDataFound") {
+        $scope.isSavingLeave = true;
+        editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
+          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+          .then(_saveFormSuccess, _saveFormError)
+      }
+      else {
+        $scope.showMsg('info', 'You have already applied leave for given date.')
+      }
+    }
+    function _getLeaveCountError(err) {
+      console.log(err)
+    }
+    function _saveForm(form) {
+
+      if (_validateForm(form)) {
+
+      }
+    }
+    function _saveFormSuccess(result) {
+      $scope.isSavingLeave = false;
+      $scope.isLeaveSaved = true;
+      $scope.showMsg('success', $scope.page.pageinfo.tagline + " saved successfully.")
+      $scope.showEditForm = false;
+      $scope.page.refreshData();
+    }
+    function _saveFormError(err) {
+      console.log(err)
+      $scope.isSavingLeave = false;
+    }
+
     _loadController();
+
 
   }
 })();
