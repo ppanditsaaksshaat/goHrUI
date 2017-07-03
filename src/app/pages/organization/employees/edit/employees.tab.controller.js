@@ -95,11 +95,14 @@
                 vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                 console.log(vm.empPKId)
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
+
                 if (vm.pageId != 360 && vm.pageId != 36)
                     $scope.page = _getLocalPageObject(vm.pageId)
                 console.log($scope.page);
             }
         }
+
+
         function _getPageDataSuccessResult(result) {
 
             console.log(result)
@@ -508,60 +511,6 @@
             if (_validateFormCommon(editForm)) {
                 _saveForm(editForm);
             }
-+
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
         function _resetFormCommon(editForm) {
 

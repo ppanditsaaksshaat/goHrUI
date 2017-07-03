@@ -35,6 +35,7 @@
     $scope.page.searchList = [];
     $scope.page.searchList.push({ field: 'VAMonth', operand: '=', value: moment().format('MM') })
     $scope.page.searchList.push({ field: 'VAYear', operand: '=', value: moment().format('YYYY') })
+    $scope.page.searchList.push({ field: 'VADepartmentId', operand: '=', value: -1 })
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -105,25 +106,26 @@
     $scope.closeForm = _closeForm;
     $scope.saveForm = _saveForm;
 
-    function _pageResult(result){
-      if($scope.page.pageinfo){
-        if(!$scope.page.pageinfo.buttons.edit)
-          $scope.page.pageinfo.buttons.edit={};
-        
-        if(!$scope.page.pageinfo.buttons.update)
-          $scope.page.pageinfo.buttons.update={};
+    function _pageResult(result) {
+      console.log(result)
 
-        if(!$scope.page.pageinfo.buttons.view)
-          $scope.page.pageinfo.buttons.view={};
-        
-        if(!$scope.page.pageinfo.buttons.delete)
-          $scope.page.pageinfo.buttons.delete={};
+      angular.forEach(result.pageinfo.filters, function (filter) {
+        if (filter.name == 'VAMonth') {
+          filter.value = parseInt(moment().format('MM'));
+          console.log(moment().format('MM'))
+        }
+        if (filter.name == 'VAYear') {
+          filter.value = parseInt(moment().format('YYYY'));
+          console.log(moment().format('YYYY'))
+        }
+        if (filter.name == 'VADepartmentId') {
+          filter.value = -1;
+          filter.disabled = true;
+        }
+        console.log(result)
+      })
 
-        $scope.page.pageinfo.buttons.edit.isvisible=false;
-        $scope.page.pageinfo.buttons.delete.isvisible=false;
-        $scope.page.pageinfo.buttons.view.isvisible=false;
-        $scope.page.pageinfo.buttons.update.isvisible=false;
-      }
+
     }
 
     /**Close edit list */
