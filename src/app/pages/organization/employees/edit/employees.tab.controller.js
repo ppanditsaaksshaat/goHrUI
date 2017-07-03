@@ -14,17 +14,6 @@
         toastrConfig, toastr, $state, editFormService) {
         console.log('empTabController')
 
-        $scope.gridOptions = $scope.getGridSetting();
-        $scope.gridOptions.onRegisterApi = _onRegisterApi;
-        $scope.gridOptions.columnDefs = [];
-        $scope.gridOptions.data = [];
-
-
-
-        function _onRegisterApi(gridApi) {
-
-        }
-
         var toastOption = {};
         var defaultConfig = angular.copy(toastrConfig);
         var openedToasts = [];
@@ -62,7 +51,6 @@
         vm.tempName = $stateParams.name;
         vm.saveForm = _saveForm;
         vm.saveAddress = _saveAddress;
-        vm.queryId = 187;
 
         vm.saveFormCommon = _saveFormCommon;
         vm.resetFormCommon = _resetFormCommon;
@@ -70,29 +58,6 @@
         vm.goToEmployeeList = _goToEmployeeList;
         vm.permanentAddress = _permanentAddress;
 
-
-        $scope.onOTChange = function () {
-            if (!vm.entity.JDIsOT) {
-                vm.entity.SingleOT = false;
-                vm.entity.JDDoubleOT = false;
-                vm.entity.JDSingleOTRate = 0;
-                vm.entity.DoubleOTRate = 0;
-            }
-        }
-
-        $scope.onSingleOTChange = function () {
-            if (!vm.entity.SingleOT) {
-                vm.entity.SingleOT = false;
-                vm.entity.JDSingleOTRate = 0;
-            }
-        }
-
-        $scope.onDoubleOTChange = function () {
-            if (!vm.entity.JDDoubleOT) {
-                vm.entity.JDDoubleOT = false;
-                vm.entity.DoubleOTRate = 0;
-            }
-        }
 
         function _goToEmployeeList() {
             $state.go("organization.employees.list");
@@ -127,48 +92,13 @@
                 }
             }
             else {
-
+                vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
+                console.log(vm.empPKId)
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
-                if (vm.pageId != 360 && vm.pageId != 'EntitleMent') {
-                    vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
+                if (vm.pageId != 360 && vm.pageId != 36)
                     $scope.page = _getLocalPageObject(vm.pageId)
-                    console.log($scope.page);
-                }
-                else {
-                    _getSalaryEntitleMent();
-                }
-
+                console.log($scope.page);
             }
-        }
-        function _getSalaryEntitleMent() {
-            var searchLists = [];
-            var searchListData = {
-                field: 'EmpId',
-                operand: '=',
-                value: vm.empPKId
-            }
-            searchLists.push(searchListData)
-            var data = {
-                searchList: searchLists,
-                orderByList: []
-            }
-            pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
-        }
-        function _getCustomQuerySuccessResult(result) {
-            console.log(result)
-            if (result !== "NoDataFoundemp") {
-                var colCreatedOn = { name: 'SHName', field: 'SHName', displayName: 'SHName', width: 100, visible: true };
-                var colCreatedBy = { name: 'PaybandRule', field: 'PaybandRule', displayName: 'Payband Rule', width: 100, visible: true };
-                var colAssignedUser = { name: 'SalAmount', field: 'SalAmount', displayName: 'Salary Amount', width: 100, visible: true };
-                $scope.gridOptions.columnDefs.push(colCreatedOn);
-                $scope.gridOptions.columnDefs.push(colCreatedBy);
-                $scope.gridOptions.columnDefs.push(colAssignedUser);
-
-                $scope.gridOptions.data = result;
-            }
-        }
-        function _getCustomQueryErrorResult(err) {
-
         }
         function _getPageDataSuccessResult(result) {
 
@@ -312,11 +242,11 @@
                 showBack: true,
                 selfLoading: true,
                 showRefresh: true,
-                showFilter: false,
+                showFilter: true,
                 showAdd: true,
                 showRowMenu: true,
                 showCustomView: true,
-                showUpload: false,
+                showUpload: true,
                 showDialog: false,
                 enableRefreshAfterUpdate: true,
                 enableAutoRefresh: true,
@@ -578,6 +508,60 @@
             if (_validateFormCommon(editForm)) {
                 _saveForm(editForm);
             }
++
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
         function _resetFormCommon(editForm) {
 
@@ -609,7 +593,7 @@
                 vm.empEmgContact = {};
                 vm.empEmgContact[$scope.emgContactPage.pageinfo.idencolname] = oldEmgPkId;
             }
-
+            
             vm.entity = {};
             vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
         }
