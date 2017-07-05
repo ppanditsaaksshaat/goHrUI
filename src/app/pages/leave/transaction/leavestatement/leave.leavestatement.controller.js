@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function LeaveStatementController($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormeditFormService, toastr) {
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr) {
 
     var vm = this;
     var pageId = 270;

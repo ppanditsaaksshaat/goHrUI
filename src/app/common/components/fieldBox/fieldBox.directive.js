@@ -11,6 +11,7 @@
     function fieldBox($location, $state, $compile, $rootScope) {
         return {
             restrict: 'E',
+            
             require: ['^form'],//injecting ngForm in $ctrl variable in link function
             templateUrl: 'app/common/components/fieldBox/fieldBox.html',
             scope: {
