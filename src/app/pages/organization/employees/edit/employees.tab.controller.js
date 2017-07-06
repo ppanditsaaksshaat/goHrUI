@@ -96,19 +96,11 @@
                 }
             }
             else {
-<<<<<<< HEAD
-                vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
-                console.log(vm.empPKId)
-                // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
-
-               if (vm.pageId != 360 && vm.pageId != 'entitlement') {
-=======
                 // vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                 // console.log(vm.empPKId)
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.guempPKId)
 
                 if (vm.pageId != 360 && vm.pageId != 'entitlement') {
->>>>>>> bb887faaad51d905d21b09f7fbee3402dca591fb
                     vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page);
