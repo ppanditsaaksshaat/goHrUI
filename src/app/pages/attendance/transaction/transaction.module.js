@@ -9,6 +9,7 @@
     'BlurAdmin.pages.attendance.transaction.manual',
     'BlurAdmin.pages.attendance.transaction.upload',
     'BlurAdmin.pages.attendance.transaction.verify',
+    'BlurAdmin.pages.attendance.transaction.verified',
     'BlurAdmin.pages.attendance.transaction.compoffApply',
     'BlurAdmin.pages.attendance.transaction.outdoorapply',
     'BlurAdmin.pages.attendance.transaction.manualmonth',

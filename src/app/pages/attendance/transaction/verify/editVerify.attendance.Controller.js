@@ -10,11 +10,9 @@
 
     /** @ngInject */
     function attTranseditverifyController($scope, $state, $timeout, pageService, param) {
-        console.log(param);
         var vm = this;
         var currentState = $state.current;
-
-
+       
         vm.filterOpt = {};
         vm.searchList = [];
         vm.orderByList = [];

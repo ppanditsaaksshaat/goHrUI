@@ -58,7 +58,7 @@
                                 </label>
                                 </div>
                             </div>
-                            <select ng-options="opt.value as opt.name for opt in filter.titleMap" ng-model="filter.value" ng-change="selectChange(filter)">
+                            <select ng-options="opt.value as opt.name for opt in filter.titleMap" ng-disabled="filter.disabled" ng-model="filter.value" ng-change="selectChange(filter)">
                                     </select>
                         </div>
                         <div ng-switch-when="datepicker">

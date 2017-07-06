@@ -11,19 +11,12 @@
     /** @ngInject */
     /** @ngInject */
     function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal,
-        toastrConfig, toastr, $state, editFormService) {
+        toastrConfig, toastr, $state, editFormService, $filter) {
         console.log('empTabController')
 
-        $scope.gridOptions = $scope.getGridSetting();
-        $scope.gridOptions.onRegisterApi = _onRegisterApi;
-        $scope.gridOptions.columnDefs = [];
-        $scope.gridOptions.data = [];
 
-
-
-        function _onRegisterApi(gridApi) {
-
-        }
+        var benefintSavecount = 0;//for counting saving record of benefits
+        var totalSavingRecord = 0;//for totaling of saving record of benefits
 
         var toastOption = {};
         var defaultConfig = angular.copy(toastrConfig);
@@ -62,7 +55,6 @@
         vm.tempName = $stateParams.name;
         vm.saveForm = _saveForm;
         vm.saveAddress = _saveAddress;
-        vm.queryId = 187;
 
         vm.saveFormCommon = _saveFormCommon;
         vm.resetFormCommon = _resetFormCommon;
@@ -70,29 +62,6 @@
         vm.goToEmployeeList = _goToEmployeeList;
         vm.permanentAddress = _permanentAddress;
 
-
-        $scope.onOTChange = function () {
-            if (!vm.entity.JDIsOT) {
-                vm.entity.SingleOT = false;
-                vm.entity.JDDoubleOT = false;
-                vm.entity.JDSingleOTRate = 0;
-                vm.entity.DoubleOTRate = 0;
-            }
-        }
-
-        $scope.onSingleOTChange = function () {
-            if (!vm.entity.SingleOT) {
-                vm.entity.SingleOT = false;
-                vm.entity.JDSingleOTRate = 0;
-            }
-        }
-
-        $scope.onDoubleOTChange = function () {
-            if (!vm.entity.JDDoubleOT) {
-                vm.entity.JDDoubleOT = false;
-                vm.entity.DoubleOTRate = 0;
-            }
-        }
 
         function _goToEmployeeList() {
             $state.go("organization.employees.list");
@@ -127,49 +96,19 @@
                 }
             }
             else {
+                // vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
+                // console.log(vm.empPKId)
+                // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.guempPKId)
 
-                // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
-                if (vm.pageId != 360 && vm.pageId != 'EntitleMent') {
+                if (vm.pageId != 360 && vm.pageId != 'entitlement') {
                     vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page);
                 }
-                else {
-                    _getSalaryEntitleMent();
-                }
+            }
+        }
 
-            }
-        }
-        function _getSalaryEntitleMent() {
-            var searchLists = [];
-            var searchListData = {
-                field: 'EmpId',
-                operand: '=',
-                value: vm.empPKId
-            }
-            searchLists.push(searchListData)
-            var data = {
-                searchList: searchLists,
-                orderByList: []
-            }
-            pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
-        }
-        function _getCustomQuerySuccessResult(result) {
-            console.log(result)
-            if (result !== "NoDataFoundemp") {
-                var colCreatedOn = { name: 'SHName', field: 'SHName', displayName: 'SHName', width: 100, visible: true };
-                var colCreatedBy = { name: 'PaybandRule', field: 'PaybandRule', displayName: 'Payband Rule', width: 100, visible: true };
-                var colAssignedUser = { name: 'SalAmount', field: 'SalAmount', displayName: 'Salary Amount', width: 100, visible: true };
-                $scope.gridOptions.columnDefs.push(colCreatedOn);
-                $scope.gridOptions.columnDefs.push(colCreatedBy);
-                $scope.gridOptions.columnDefs.push(colAssignedUser);
 
-                $scope.gridOptions.data = result;
-            }
-        }
-        function _getCustomQueryErrorResult(err) {
-
-        }
         function _getPageDataSuccessResult(result) {
 
             console.log(result)
@@ -208,6 +147,7 @@
             } else if (result.pageinfo.pageid == 125) {
                 linkFieldName = 'ADEmpId';
             }
+
 
 
 
@@ -304,6 +244,10 @@
                 case 442://identity
                     linkFieldName = 'IEmpId'
                     break;
+                case 448://identity
+                    linkFieldName = 'EBDEmpId'
+                    break;
+
             }
 
             var pageObject = $scope.createPage();
@@ -312,11 +256,11 @@
                 showBack: true,
                 selfLoading: true,
                 showRefresh: true,
-                showFilter: false,
+                showFilter: true,
                 showAdd: true,
                 showRowMenu: true,
                 showCustomView: true,
-                showUpload: false,
+                showUpload: true,
                 showDialog: false,
                 enableRefreshAfterUpdate: true,
                 enableAutoRefresh: true,
@@ -332,7 +276,105 @@
                 deleteRecord: null,
                 uploadRecord: null
             }
+            if (pageId == 448) {
+                pageObject.boxOptions.pageResult = _pageResultForBenefit;
+                pageObject.boxOptions.dataResult = _dataResultForBenefit;
+                pageObject.boxOptions.afterCellEdit = _afterCellEdit;
+                pageObject.boxOptions.customButtons = [
+                    { text: 'Save', icon: '', onClick: _saveBenefit, type: 'btn btn-primary' }
+                ]
+            }
+
             return pageObject;
+        }
+        function _saveBenefit() {
+
+            totalSavingRecord = $scope.page.gridOptions.data.length - 1;
+
+            if ($scope.page.gridOptions.data.length > 0) {
+                angular.forEach($scope.page.gridOptions.data, function (row) {
+                    //                    console.log(row)
+
+                    var data = {
+                        EBDId: row.EBDId == null ? undefined : row.EBDId,
+                        EBDAccountNumber: row.EBDAccountNumber,
+                        EBDBenefitId: row.EBDBenefitId,
+                        EBDEmpId: row.EBDEmpId,
+                        EBDIsOnPercentage: row.EBDIsOnPercentage,
+                        EBDFiexedAmount: row.EBDFiexedAmount,
+                        EBDPercentage: row.EBDPercentage,
+                        EBDIsCalOnBasic: row.EBDIsCalOnBasic
+                    }
+                    var form = {}
+                    if (data.EBDId == undefined) {
+                        editFormService.saveForm(vm.pageId, data,
+                            {}, 'create', 'Benefit', form, false).then(_successBenefitResult, _errorBenefitResult);
+                    }
+                    else { 
+                        editFormService.saveForm(vm.pageId, data,
+                            {}, 'edit', 'Benefit', form, false).then(_successBenefitResult, _errorBenefitResult);
+                    }
+                })
+            }
+            else {
+                $scope.showMsg("error", "Please select any row before save");
+            }
+        }
+        function _successBenefitResult(result) {
+            console.log(result)
+            benefintSavecount++;
+            console.log(benefintSavecount + ' of ' + totalSavingRecord)
+            if (benefintSavecount == totalSavingRecord) {
+                $scope.showMsg("success", "Employee Benefit Saved Successfully");
+                $scope.page.refreshData();
+            }
+
+        }
+        function _errorBenefitResult(err) {
+            alert(JSON.stringify(err))
+        }
+
+        function _afterCellEdit(rowEntity, colDef, newValue, oldValue, page) {
+            console.log(rowEntity, colDef, newValue, oldValue, page)
+
+            if (colDef.name == 'EBDIsOnPercentage') {
+                if (newValue) {
+                    rowEntity.EBDFiexedAmount = '';
+                }
+                else {
+                    rowEntity.EBDPercentage = '';
+                }
+            }
+            else if (colDef.name == 'EBDFiexedAmount') {
+                if (rowEntity.EBDIsOnPercentage) {
+                    rowEntity.EBDFiexedAmount = '';
+                    $scope.showMsg("error","If you want to fill fixed field than unchecked the Onpercentage")
+                }
+            }
+            else if (colDef.name == 'EBDPercentage') {
+                if (!rowEntity.EBDIsOnPercentage) {
+                    rowEntity.EBDPercentage = '';
+                     $scope.showMsg("error","If you want to fill percentage field than checked the Onpercentage")
+                }
+                else {
+                    var percentage = parseFloat(rowEntity.EBDPercentage)
+                    if (percentage > 100) {
+                        rowEntity.EBDPercentage = '100.00'
+                    }
+                }
+            }
+        }
+        function _pageResultForBenefit(result) {
+            console.log(result)
+        }
+        function _dataResultForBenefit(result) {
+            // angular.forEach(result, function (data, index) {
+            //     var EBDFiexedAmount = parseFloat(data.EBDFiexedAmount)
+            //     var EBDPercentage = parseFloat(data.EBDPercentage)
+            //     if (EBDFiexedAmount > 0 || EBDPercentage > 0) {
+            //         $scope.page.gridApi.selection.selectRow($scope.page.gridOptions.data[index]);
+            //     }
+            // })
         }
         function _findEntitySuccessResult(result) {
 
@@ -609,7 +651,7 @@
                 vm.empEmgContact = {};
                 vm.empEmgContact[$scope.emgContactPage.pageinfo.idencolname] = oldEmgPkId;
             }
-
+            
             vm.entity = {};
             vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
         }

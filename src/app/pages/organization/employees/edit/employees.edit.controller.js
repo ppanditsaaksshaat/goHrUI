@@ -64,10 +64,11 @@
       mastersMenu.push({ name: 'experience', text: 'Experience', id: 56 })
       mastersMenu.push({ name: 'qualification', text: 'Qualification', id: 112 })
       mastersMenu.push({ name: 'skill', text: 'Skill', id: 439 })
-      mastersMenu.push({ name: 'salary', text: 'Salary', id: 'EntitleMent' })
+      mastersMenu.push({ name: 'salary', text: 'Salary', id: 'entitlement' })
       mastersMenu.push({ name: 'immigration', text: 'Immigration', id: 119 })
       mastersMenu.push({ name: 'document', text: 'Document', id: 360 })
       mastersMenu.push({ name: 'leave', text: 'Leave Detail', id: 36 })
+      mastersMenu.push({ name: 'benefit', text: 'Benefit', id: 448 })
       return mastersMenu;
 
     }

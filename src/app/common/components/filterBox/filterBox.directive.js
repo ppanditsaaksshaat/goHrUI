@@ -159,7 +159,7 @@
                                         search.operand = filter.operator;
                                     else
                                         search.operand = "=";
-                                    
+
                                     if (search.spfield)
                                         search.nosp = (row.spfield == '')
 
@@ -256,11 +256,20 @@
                  * Clear All Fiters Values
                  */
                 function _clearFilter() {
+                    
+                    $scope.page.searchList = {};
                     $scope.filterData = undefined;
-                    angular.forEach($scope.page.pageinfo.filters, function (filter) {
-                        filter.showFilter = false;
-                        filter.value = undefined;
-                        filter.operator = '=';
+                    angular.forEach($scope.page.pageinfo.filters, function (filter) {                     
+                        if (filter.required) {
+                            filter.showFilter = true;
+                            filter.value = undefined;
+                            filter.operator = '=';
+                        }
+                        else {
+                            filter.showFilter = false;
+                            filter.value = undefined;
+                            filter.operator = '=';
+                        }
                     })
                 }
 
