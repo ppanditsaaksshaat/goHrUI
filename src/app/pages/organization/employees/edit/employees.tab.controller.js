@@ -96,21 +96,15 @@
                 }
             }
             else {
-                vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
-                console.log(vm.empPKId)
-                // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
-<<<<<<< HEAD
+                // vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
+                // console.log(vm.empPKId)
+                // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.guempPKId)
 
-                if (vm.pageId != 360 && vm.pageId != 36)
-                    $scope.page = _getLocalPageObject(vm.pageId)
-                console.log($scope.page);
-=======
                 if (vm.pageId != 360 && vm.pageId != 'entitlement') {
                     vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page);
                 }
->>>>>>> 1ac1a777cc46ac5bf91f6bee65e595229a6663f6
             }
         }
 
