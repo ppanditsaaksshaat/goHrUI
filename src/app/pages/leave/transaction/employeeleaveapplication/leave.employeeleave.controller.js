@@ -397,7 +397,7 @@
         var searchListData = {
           field: 'LRCGroupIds',
           operand: '=',
-          value: $scope.entity.selectedEmp.EmpGroupId
+          value: $scope.entity.selectedEmp.JDGroupId
         }
         searchLists.push(searchListData)
         var data = {
@@ -416,6 +416,10 @@
       if (result != "NoDataFound") {
         var balLeave = vm.appliedDays;
         $scope.leaveRuleList = result;
+      }
+      else
+      {
+        $scope.showMsg('error', 'No Leave Rule Found.')
       }
     }
     function _getLeaveCreditErrorResult(err) {
@@ -718,6 +722,7 @@
     }
     function _fetchPendingLeaveSuccess(result) {
       console.log(result)
+      //ADD CONDITION FOR NODATAFOUND
       $scope.prevLeaveList = [];
       angular.forEach(result, function (leave) {
         var prev = {

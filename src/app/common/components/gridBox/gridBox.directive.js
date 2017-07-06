@@ -38,7 +38,8 @@
                     showRowMenu: true,//show row click menu
                     showCustomView: true,//enable show custom html view
                     showUpload: false,//show upload button
-                    showDialog: false,//show edit box on dialog mode
+                    showDialog: false,//show edit box on dialog mode,
+                    enableSelection: true,//enable selection on grid
                     enableRefreshAfterUpdate: true,
                     enableAutoRefresh: true,
                     showDataOnLoad: true,
@@ -74,6 +75,14 @@
                 if ($scope.page.gridOptions === undefined) {
                     $scope.page.gridOptions = angular.copy(gridOptions);
                 }
+
+                //setting up conditional grid options
+                if (!$scope.page.boxOptions.enableSelection) {
+                    $scope.page.gridOptions.enableRowSelection = false;
+                    $scope.page.gridOptions.enableRowHeaderSelection = false;
+                }
+
+
                 $scope.oldEntity = {};
                 var pageInfoWach = $scope.$watch('page.pageinfo', function () {
                     console.log($scope.page.pageinfo)
@@ -360,7 +369,8 @@
                                     isColSetting = buttons.colsetting.isvisible;
                             }
                             $scope.page.gridOptions = $rootScope.gridSetupColumns($scope.page.gridOptions,
-                                $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit);
+                                $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit,
+                                $scope.page.boxOptions.showRowMenu);
                             console.log($scope.page)
                             if ($scope.page.boxOptions.customColumns) {
                                 if ($scope.page.boxOptions.customColumns != null) {
