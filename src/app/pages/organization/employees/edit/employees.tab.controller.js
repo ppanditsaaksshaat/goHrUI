@@ -96,11 +96,19 @@
                 }
             }
             else {
+<<<<<<< HEAD
                 vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                 console.log(vm.empPKId)
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
 
                if (vm.pageId != 360 && vm.pageId != 'entitlement') {
+=======
+                // vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
+                // console.log(vm.empPKId)
+                // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.guempPKId)
+
+                if (vm.pageId != 360 && vm.pageId != 'entitlement') {
+>>>>>>> bb887faaad51d905d21b09f7fbee3402dca591fb
                     vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page);
@@ -281,7 +289,7 @@
                 pageObject.boxOptions.dataResult = _dataResultForBenefit;
                 pageObject.boxOptions.afterCellEdit = _afterCellEdit;
                 pageObject.boxOptions.customButtons = [
-                    { text: 'Save', icon: '', onClick: _saveBenefit, type: 'btn-detault' }
+                    { text: 'Save', icon: '', onClick: _saveBenefit, type: 'btn btn-primary' }
                 ]
             }
 
@@ -348,11 +356,13 @@
             else if (colDef.name == 'EBDFiexedAmount') {
                 if (rowEntity.EBDIsOnPercentage) {
                     rowEntity.EBDFiexedAmount = '';
+                    $scope.showMsg("error","If you want to fill fixed field than unchecked the Onpercentage")
                 }
             }
             else if (colDef.name == 'EBDPercentage') {
                 if (!rowEntity.EBDIsOnPercentage) {
                     rowEntity.EBDPercentage = '';
+                     $scope.showMsg("error","If you want to fill percentage field than checked the Onpercentage")
                 }
                 else {
                     var percentage = parseFloat(rowEntity.EBDPercentage)
