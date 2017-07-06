@@ -40,6 +40,8 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
     };
     //calling func from outer side of factory
     function _saveEditForm(pageId, newEntity, oldEntity, action, title, pageForm, isShowConfirmation) {
+        if (pageForm == undefined)
+            pageForm = {};
         pageForm.defer = $q.defer();
         defer = $q.defer();
 
