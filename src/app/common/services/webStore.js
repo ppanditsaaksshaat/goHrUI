@@ -79,10 +79,13 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         window.location.href = 'Login.aspx';
     }
     var _getServiceBase = function () {
-        //  var serviceBase = 'http://localhost:51877/';
+
+         //var serviceBase = 'http://localhost:51877/';
 
 
-        var serviceBase = 'http://web400.hrms/api/';// _getValue('serviceBase');
+
+        //var serviceBase = 'http://web400.hrms/api/';// _getValue('serviceBase');
+         var serviceBase = 'http://rudraitsl.com/api/';// _getValue('serviceBase');
 
         // var serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
 
