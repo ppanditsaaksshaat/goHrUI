@@ -91,53 +91,84 @@
                                 </div>
                                 <div class="row" ng-if="leaveCtrl.validateLeave">
                                     <div class="col-md-6">
-                                        <label>Leave days distribution as per leave type</label>
-                                        <table class="table table-responsive table-bordered table-hover table-condensed">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-md-2">Type</th>
-                                                    <th class="col-md-1">Balance</th>
-                                                    <th class="col-md-2">Leave Debit</th>
-                                                    <th class="col-md-1">Half Day</th>
-                                                    <th class="col-md-2">Min</th>
-                                                    <th class="col-md-2">Max</th>
-                                                    <th class="col-md-2">-</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr ng-repeat="value in showLeave">
-                                                    <td ng-bind="value.LTName"></td>
-                                                    <td ng-bind="value.LeaveBalance"></td>
-                                                    <td>
-                                                        <select ng-if="!value.isUnpaid && value.days.length>0" ng-model="value.leaveDr" ng-options="opt.id as opt.name for opt in value.days"
-                                                            ng-change="onLeaveDrChange(value,'{{value.leaveDr}}' )"></select>
-                                                        <div ng-if="value.isUnpaid">{{value.leaveDr}} Days</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="checkbox" ng-if="!value.isUnpaid">
-                                                            <label class="custom-checkbox">      
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>Leave days distribution as per leave type</label>
+                                                <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Type</th>
+                                                            <th class="col-md-1">Available Balance</th>
+                                                            <th class="col-md-2">Leave Debit</th>
+                                                            <th class="col-md-1">Half Day</th>
+                                                            <th class="col-md-2">Min</th>
+                                                            <th class="col-md-2">Max</th>
+                                                            <th class="col-md-2">Unclear Balance</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="value in showLeave">
+                                                            <td ng-bind="value.LTName"></td>
+                                                            <td ng-bind="value.LeaveBalance"></td>
+                                                            <td>
+                                                                <select ng-if="!value.isUnpaid && value.days.length>0" ng-model="value.leaveDr" ng-options="opt.id as opt.name for opt in value.days"
+                                                                    ng-change="onLeaveDrChange(value,'{{value.leaveDr}}' )"></select>
+                                                                <div ng-if="value.isUnpaid">{{value.leaveDr}} Days</div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="checkbox" ng-if="!value.isUnpaid">
+                                                                    <label class="custom-checkbox">      
                                                         <input  type="checkbox" ng-model="value.isHalfDay" ng-change="onHalfDayChange(value,'{{value.isHalfDay}}')"/> 
                                                         <span></span>
                                                     </label>
-                                                        </div>
-                                                    </td>
-                                                    <td ng-bind="value.minDays"></td>
-                                                    <td ng-bind="value.maxDays"></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td>Total</td>
-                                                    <td>{{getTotal('LeaveBalance')}}</td>
-                                                    <td>{{getTotal('leaveDr')}}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
+                                                                </div>
+                                                            </td>
+                                                            <td ng-bind="value.minDays"></td>
+                                                            <td ng-bind="value.maxDays"></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td>Total</td>
+                                                            <td>{{getTotal('LeaveBalance')}}</td>
+                                                            <td>{{getTotal('leaveDr')}}</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>Previous Applications</label>
+                                                <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Status</th>
+                                                            <th>Application Date</th>
+                                                            <th>Leave From</th>
+                                                            <th>Leave To</th>
+                                                            <th>Days</th>
+                                                            <th>-</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="leave in prevLeaveList">
+                                                            <td ng-bind="leave.status"></td>
+                                                            <td ng-bind="leave.appDate"></td>
+                                                            <td ng-bind="leave.from"></td>
+                                                            <td ng-bind="leave.to"></td>
+                                                            <td ng-bind="leave.days"></td>
+                                                            <td ng-bind="leave.distribution"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -145,10 +176,10 @@
                         <!--<div class="row">
                             <div class="col-md-4"><label for=""></label></div>
                         </div>-->
-                        <div class="row" ng-if="leaveCtrl.validateLeave">
+                        <div class="row">
                             <div class="col-md-4"></div>
                             <div class="col-md-6">
-                                <button type="submit" class="btn btn-info btn-lg" ng-disabled="isSavingLeave">
+                                <button type="submit" class="btn btn-info btn-lg" ng-disabled="isSavingLeave || !leaveCtrl.validateLeave">
                                     <i ng-show="isSavingLeave" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
                                     <span ng-hide="isSavingLeave">Apply Leave</span>
                                     <span ng-show="isSavingLeave">Applying..</span>

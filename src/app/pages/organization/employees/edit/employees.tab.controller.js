@@ -55,7 +55,6 @@
         vm.tempName = $stateParams.name;
         vm.saveForm = _saveForm;
         vm.saveAddress = _saveAddress;
-        vm.queryId = 187;
 
         vm.saveFormCommon = _saveFormCommon;
         vm.resetFormCommon = _resetFormCommon;
@@ -63,29 +62,6 @@
         vm.goToEmployeeList = _goToEmployeeList;
         vm.permanentAddress = _permanentAddress;
 
-
-        $scope.onOTChange = function () {
-            if (!vm.entity.JDIsOT) {
-                vm.entity.SingleOT = false;
-                vm.entity.JDDoubleOT = false;
-                vm.entity.JDSingleOTRate = 0;
-                vm.entity.DoubleOTRate = 0;
-            }
-        }
-
-        $scope.onSingleOTChange = function () {
-            if (!vm.entity.SingleOT) {
-                vm.entity.SingleOT = false;
-                vm.entity.JDSingleOTRate = 0;
-            }
-        }
-
-        $scope.onDoubleOTChange = function () {
-            if (!vm.entity.JDDoubleOT) {
-                vm.entity.JDDoubleOT = false;
-                vm.entity.DoubleOTRate = 0;
-            }
-        }
 
         function _goToEmployeeList() {
             $state.go("organization.employees.list");
@@ -120,15 +96,24 @@
                 }
             }
             else {
-
+                vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
+                console.log(vm.empPKId)
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
+<<<<<<< HEAD
+
+                if (vm.pageId != 360 && vm.pageId != 36)
+                    $scope.page = _getLocalPageObject(vm.pageId)
+                console.log($scope.page);
+=======
                 if (vm.pageId != 360 && vm.pageId != 'entitlement') {
                     vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page);
                 }
+>>>>>>> 1ac1a777cc46ac5bf91f6bee65e595229a6663f6
             }
         }
+
 
         function _getPageDataSuccessResult(result) {
 
@@ -277,11 +262,11 @@
                 showBack: true,
                 selfLoading: true,
                 showRefresh: true,
-                showFilter: false,
+                showFilter: true,
                 showAdd: true,
                 showRowMenu: true,
                 showCustomView: true,
-                showUpload: false,
+                showUpload: true,
                 showDialog: false,
                 enableRefreshAfterUpdate: true,
                 enableAutoRefresh: true,
@@ -672,7 +657,7 @@
                 vm.empEmgContact = {};
                 vm.empEmgContact[$scope.emgContactPage.pageinfo.idencolname] = oldEmgPkId;
             }
-
+            
             vm.entity = {};
             vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
         }
