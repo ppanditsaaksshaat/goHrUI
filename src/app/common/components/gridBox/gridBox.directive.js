@@ -9,7 +9,7 @@
         .directive('gridBox', gridBox);
     /** @ngInject */
     function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
-        editFormService, focus) {
+        editFormService, focus, $filter) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/gridBox/gridBox.html',
@@ -76,7 +76,7 @@
                 }
                 $scope.oldEntity = {};
                 var pageInfoWach = $scope.$watch('page.pageinfo', function () {
-                    // //console.log($scope.page.pageinfo)
+                    console.log($scope.page.pageinfo)
                     _setGridColumns();
                     _setupVerticalForm();
 
@@ -309,7 +309,7 @@
 
                         if ($scope.page.boxOptions.afterCellEdit) {
                             //calling external change event
-                            $scope.page.boxOptions.afterCellEdit(rowEntity, colDef, newValue, oldValue)
+                            $scope.page.boxOptions.afterCellEdit(rowEntity, colDef, newValue, oldValue, $scope.page)
                         }
 
                     })
@@ -361,7 +361,7 @@
                             }
                             $scope.page.gridOptions = $rootScope.gridSetupColumns($scope.page.gridOptions,
                                 $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit);
-                            //console.log($scope.page.gridOptions)
+                            console.log($scope.page)
                             if ($scope.page.boxOptions.customColumns) {
                                 if ($scope.page.boxOptions.customColumns != null) {
                                     angular.forEach($scope.page.boxOptions.customColumns, function (col) {
@@ -479,7 +479,9 @@
                             search.field = link.name;
                             search.operand = '=';
                             search.value = link.value;
-                            $scope.page.searchList.push(search)
+                            var oldSearch = $filter('findObj')($scope.page.searchList, link.name, 'field')
+                            if (oldSearch == null)
+                                $scope.page.searchList.push(search)
                         })
                     }
                     var data = {
@@ -497,17 +499,15 @@
                     tableData.then(_getTableSuccessResult, _getTableErrorResult)
                 }
                 function _getTableErrorResult(err) {
+                    console.log(err)
                     $scope.page.dataIsLoaded = true;
                     $scope.page.dataIsLoading = false;
                 }
                 function _getTableSuccessResult(result) {
+                    console.log(result)
                     $scope.page.dataIsLoaded = true;
                     $scope.page.dataIsLoading = false;
-                    if ($scope.page.boxOptions.dataResult) {
-                        if ($scope.page.boxOptions.dataResult != null) {
-                            $scope.page.boxOptions.dataResult(result);
-                        }
-                    }
+
                     if (result == 'NoDataFound') {
                         // uivm.showMsg('warning', 'No Record Found.');
                     } else if (result.Errors !== undefined) {
@@ -516,6 +516,12 @@
                     }
                     else {
                         $scope.page.gridOptions.data = result;
+                    }
+
+                    if ($scope.page.boxOptions.dataResult) {
+                        if ($scope.page.boxOptions.dataResult != null) {
+                            $scope.page.boxOptions.dataResult(result);
+                        }
                     }
                 }
                 //end get table data 

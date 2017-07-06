@@ -207,6 +207,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         })
     }
     $rootScope.gridSetupColumns = function (gridOptions, columns, page, isEdit, isDelete, isView, isUpdate) {
+        page.columnDefs = [];
         gridOptions.columnDefs = [];
         console.log(columns)
         // var colRowHeader = {
@@ -240,7 +241,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                 pinnedLeft: true,
                 width: 30
             }
-            gridOptions.columnDefs.push(optMenu);
+            page.columnDefs.push(optMenu);
 
             for (var i = 0; i < columns.length; i++) {
 
@@ -258,7 +259,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                             return 'status-bg ' + row.entity.StatusBGClass;
                         }
                     }
-                    gridOptions.columnDefs.push(columns[i]);
+                    page.columnDefs.push(columns[i]);
                 }
                 else if (page.pageinfo.titlecolname == colName) {
                     var cellTemplate = "<div class='ui-grid-cell-contents' title='View Detail'><a ng-click='grid.appScope.page.viewRecord(row)' style='cursor:pointer'>{{row.entity." + colName + "}}</a></div>"
@@ -270,7 +271,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                             return 'status-bg ' + row.entity.StatusBGClass;
                         }
                     }
-                    gridOptions.columnDefs.push(columns[i]);
+                    page.columnDefs.push(columns[i]);
                 }
                 else if (colEndWith != "id") {
                     var cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + "}}</div>"
@@ -300,7 +301,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                         }
                     }
 
-                    gridOptions.columnDefs.push(columns[i]);
+                    page.columnDefs.push(columns[i]);
                     // page.multiselectlist.push({ id: colName, label: displayName });
                     // if (columns[i].visible) {
                     //     page.columnselectormodal.push({ columnname: colName });
@@ -316,9 +317,14 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         var colCreatedOn = { name: 'CreatedOn', field: 'CreatedOn', displayName: 'Date', width: 100, visible: false, cellFilter: 'date:\'dd-MMM-yyyy\'' };
         var colCreatedBy = { name: 'CreatedBy', field: 'CreatedBy', displayName: 'User', width: 100, visible: false };
         var colAssignedUser = { name: 'AssignedUser', field: 'AssignedUser', displayName: 'Assigned User', width: 100, visible: false };
-        gridOptions.columnDefs.push(colCreatedOn);
-        gridOptions.columnDefs.push(colCreatedBy);
-        gridOptions.columnDefs.push(colAssignedUser);
+        var colStatus = { name: 'StatusName', field: 'StatusName', displayName: 'Status', width: 100, visible: false, cellFilter: '' };
+
+        page.columnDefs.push(colCreatedOn);
+        page.columnDefs.push(colCreatedBy);
+        page.columnDefs.push(colAssignedUser);
+        page.columnDefs.push(colStatus);
+
+        gridOptions.columnDefs = page.columnDefs;
 
         return gridOptions;
     }

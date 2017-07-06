@@ -37,6 +37,7 @@
       mastersMenu.push({ name: 'qualification', text: 'Qualification ', id: 38 })
       mastersMenu.push({ name: 'other-qualification', text: 'Other Qualification ', id: 43 })
       mastersMenu.push({ name: 'skill', text: 'Skill ', id: 45 })
+     
       return mastersMenu;
 
     }
