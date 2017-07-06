@@ -302,7 +302,7 @@
                 pageObject.boxOptions.dataResult = _dataResultForBenefit;
                 pageObject.boxOptions.afterCellEdit = _afterCellEdit;
                 pageObject.boxOptions.customButtons = [
-                    { text: 'Save', icon: '', onClick: _saveBenefit, type: 'btn-detault' }
+                    { text: 'Save', icon: '', onClick: _saveBenefit, type: 'btn btn-primary' }
                 ]
             }
 
@@ -369,11 +369,13 @@
             else if (colDef.name == 'EBDFiexedAmount') {
                 if (rowEntity.EBDIsOnPercentage) {
                     rowEntity.EBDFiexedAmount = '';
+                    $scope.showMsg("error","If you want to fill fixed field than unchecked the Onpercentage")
                 }
             }
             else if (colDef.name == 'EBDPercentage') {
                 if (!rowEntity.EBDIsOnPercentage) {
                     rowEntity.EBDPercentage = '';
+                     $scope.showMsg("error","If you want to fill percentage field than checked the Onpercentage")
                 }
                 else {
                     var percentage = parseFloat(rowEntity.EBDPercentage)
