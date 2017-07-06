@@ -277,6 +277,9 @@
                 uploadRecord: null
             }
             if (pageId == 448) {
+                pageObject.boxOptions.showFilter = false;
+                pageObject.boxOptions.enableSelection = false;
+                pageObject.boxOptions.showRowMenu = false;
                 pageObject.boxOptions.pageResult = _pageResultForBenefit;
                 pageObject.boxOptions.dataResult = _dataResultForBenefit;
                 pageObject.boxOptions.afterCellEdit = _afterCellEdit;
@@ -310,7 +313,7 @@
                         editFormService.saveForm(vm.pageId, data,
                             {}, 'create', 'Benefit', form, false).then(_successBenefitResult, _errorBenefitResult);
                     }
-                    else { 
+                    else {
                         editFormService.saveForm(vm.pageId, data,
                             {}, 'edit', 'Benefit', form, false).then(_successBenefitResult, _errorBenefitResult);
                     }
@@ -348,13 +351,13 @@
             else if (colDef.name == 'EBDFiexedAmount') {
                 if (rowEntity.EBDIsOnPercentage) {
                     rowEntity.EBDFiexedAmount = '';
-                    $scope.showMsg("error","If you want to fill fixed field than unchecked the Onpercentage")
+                    $scope.showMsg("error", "If you want to fill fixed field than unchecked the Onpercentage")
                 }
             }
             else if (colDef.name == 'EBDPercentage') {
                 if (!rowEntity.EBDIsOnPercentage) {
                     rowEntity.EBDPercentage = '';
-                     $scope.showMsg("error","If you want to fill percentage field than checked the Onpercentage")
+                    $scope.showMsg("error", "If you want to fill percentage field than checked the Onpercentage")
                 }
                 else {
                     var percentage = parseFloat(rowEntity.EBDPercentage)
@@ -651,7 +654,7 @@
                 vm.empEmgContact = {};
                 vm.empEmgContact[$scope.emgContactPage.pageinfo.idencolname] = oldEmgPkId;
             }
-            
+
             vm.entity = {};
             vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
         }

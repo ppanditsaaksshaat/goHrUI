@@ -206,7 +206,11 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
             row.IsSelected = false;
         })
     }
-    $rootScope.gridSetupColumns = function (gridOptions, columns, page, isEdit, isDelete, isView, isUpdate) {
+    $rootScope.gridSetupColumns = function (gridOptions, columns, page, isEdit, isDelete, isView, isUpdate, showRowMenu) {
+       
+        if (showRowMenu == undefined) {
+            showRowMenu = true;
+        }
         page.columnDefs = [];
         gridOptions.columnDefs = [];
         console.log(columns)
@@ -220,28 +224,30 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         // gridOptions.columnDefs.push(colRowHeader);
         if (columns !== undefined) {
 
-            var optMenu = {
-                name: 'actions2',
-                displayName: ' ',
-                cellClass: "overflow-visible",
-                cellTemplate: [
-                    '<div class="ui-grid-cell-contents" ng-mouseover="row.isMouseOver=true" ng-mouseleave="row.isMouseOver=false">',
-                    '  <div ng-show="row.isMouseOver"   class="dropdown" uib-dropdown dropdown-append-to-body>',
-                    '    <button class="btn btn-xs btn-default dropdown-toggle" type="button" uib-dropdown-toggle><span class="glyphicon glyphicon-tasks"></span></button>',
-                    '    <ul uib-dropdown-menu>',
-                    (isEdit) ? '      <li><a href ng-click="grid.appScope.page.editRecord(row)">Edit</a></li>' : '',
-                    (isView) ? '      <li><a href ng-click="grid.appScope.page.viewRecord(row)">View</a></li>' : '',
-                    (isUpdate) ? '      <li><a href ng-click="grid.appScope.page.updateRecord(row)">Update</a></li>' : '',
-                    (isDelete) ? '       <li class="divider"></li>' : '',
-                    (isDelete) ? '      <li><a href ng-click="grid.appScope.page.deleteRecord(row)">Delete</a></li>' : '',
-                    '    </ul>',
-                    '  </div>',
-                    '</div>'
-                ].join(''),
-                pinnedLeft: true,
-                width: 30
+            if (showRowMenu) {
+                var optMenu = {
+                    name: 'actions2',
+                    displayName: ' ',
+                    cellClass: "overflow-visible",
+                    cellTemplate: [
+                        '<div class="ui-grid-cell-contents" ng-mouseover="row.isMouseOver=true" ng-mouseleave="row.isMouseOver=false">',
+                        '  <div ng-show="row.isMouseOver"   class="dropdown" uib-dropdown dropdown-append-to-body>',
+                        '    <button class="btn btn-xs btn-default dropdown-toggle" type="button" uib-dropdown-toggle><span class="glyphicon glyphicon-tasks"></span></button>',
+                        '    <ul uib-dropdown-menu>',
+                        (isEdit) ? '      <li><a href ng-click="grid.appScope.page.editRecord(row)">Edit</a></li>' : '',
+                        (isView) ? '      <li><a href ng-click="grid.appScope.page.viewRecord(row)">View</a></li>' : '',
+                        (isUpdate) ? '      <li><a href ng-click="grid.appScope.page.updateRecord(row)">Update</a></li>' : '',
+                        (isDelete) ? '       <li class="divider"></li>' : '',
+                        (isDelete) ? '      <li><a href ng-click="grid.appScope.page.deleteRecord(row)">Delete</a></li>' : '',
+                        '    </ul>',
+                        '  </div>',
+                        '</div>'
+                    ].join(''),
+                    pinnedLeft: true,
+                    width: 30
+                }
+                page.columnDefs.push(optMenu);
             }
-            page.columnDefs.push(optMenu);
 
             for (var i = 0; i < columns.length; i++) {
 
