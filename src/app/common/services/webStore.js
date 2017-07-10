@@ -80,7 +80,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     }
     var _getServiceBase = function () {
 
-         //var serviceBase = 'http://localhost:51877/';
+        // var serviceBase = 'http://localhost:51877/';
 
 
 
