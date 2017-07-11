@@ -8,7 +8,9 @@
   angular.module('BlurAdmin.pages.payroll', [
     'BlurAdmin.pages.payroll.masters',
     'BlurAdmin.pages.payroll.transaction',
-     'BlurAdmin.pages.payroll.reports'
+     'BlurAdmin.pages.payroll.reports',
+     'BlurAdmin.pages.payroll.tax',
+     'BlurAdmin.pages.payroll.service'
   ])
       .config(routeConfig);
       

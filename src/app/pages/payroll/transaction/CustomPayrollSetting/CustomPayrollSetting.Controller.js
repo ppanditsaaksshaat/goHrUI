@@ -42,7 +42,115 @@
       viewRecord: null,
       deleteRecord: null,
       showApplyFilter: false,
-      filterOnChange: _filterChange
+      filterOnChange: _filterChange,
+      afterCellEdit: _afterCellEdit,
+      pageResult: _pageResult
+    }
+
+    function _pageResult(result) {
+      console.log(result)
+    }
+
+    function _afterCellEdit(rowEntity, colDef, newValue, oldValue) {
+      console.log(rowEntity, colDef, newValue, oldValue)
+      var presentDays = parseInt(rowEntity.SADPresentDays);
+      console.log(presentDays)
+      var salaryDays = parseInt(rowEntity.SADSalaryDays)
+      var leaveDays = parseInt(rowEntity.SADLeaveDays)
+      var absent = parseInt(rowEntity.SADLwpDays)
+      console.log(absent)
+      var weekOff = parseInt(rowEntity.SADHolidays)
+      var workingHoliday = parseInt(rowEntity.SADPresentOnHolidays)
+      var singleOT = parseInt(rowEntity.SADSingleOTHours)
+      var onHold = parseInt(rowEntity.SADOnHold)
+      var doubleOT = parseInt(rowEntity.SADDoubleOTHours)
+      var incentiveOTHour = parseInt(rowEntity.SADIncentiveOTHour)
+
+
+      //================Update Present Days ========================
+      if (colDef.name == 'SADPresentDays') {
+
+
+        if (presentDays < salaryDays || presentDays < 24) {
+          //update field
+          var salaryDay = presentDays + weekOff + workingHoliday + leaveDays;
+          console.log(salaryDay);
+          console.log(salaryDays);
+
+          var updateAbsent = salaryDay - salaryDays;
+          console.log(updateAbsent)
+          if (updateAbsent <= absent) {
+            var minusLeave = absent - updateAbsent;
+            console.log(minusLeave)
+            rowEntity.SADLwpDays = minusLeave;
+            rowEntity.SADSalaryDays = salaryDay;
+
+            var tableId = 195;
+            var pkName = 'SADId';
+            pkId = rowEntity.SADId;
+            var fieldList = [];
+            fieldList.push({ SADSalaryDays: rowEntity.SADSalaryDays })
+            fieldList.push({ SADLwpDays: rowEntity.SADLwpDays })
+            fieldList.push({ SADPresentDays: rowEntity.SADPresentDays })
+
+            console.log(fieldList)
+
+            pageService.updateMultiField(tableId, pkName, pkId, fieldList).then(function (result) {
+              console.log(result)
+            })
+
+          }
+          else {
+            rowEntity.SADPresentDays = oldValue;
+          }
+        }
+        else {
+          rowEntity.SADPresentDays = oldValue;
+        }
+      }
+
+      //=============Update Holiday=============
+      if (colDef.name == 'SADHolidays') {
+        if (weekOff < salaryDays) {
+          //Update Field
+          var salaryDay = presentDays + weekOff + workingHoliday + leaveDays;
+          console.log(salaryDay)
+          var updateSalaryDays = salaryDay - salaryDays;
+          console.log(updateSalaryDays)
+          var totalSalaryDays = salaryDays + updateSalaryDays;
+          console.log(totalSalaryDays)
+          if (updateSalaryDays <= absent) {
+            var addAbsent = salaryDay - salaryDays;
+
+            var totalAbsent = absent - addAbsent;
+            rowEntity.SADLwpDays = totalAbsent;
+            rowEntity.SADSalaryDays = totalSalaryDays;
+            var tableId = 195;
+            var pkName = 'SADId';
+            var pkId = rowEntity.SADId;
+            var fieldList = [];
+            fieldList.push({ SADLwpDays: rowEntity.SADLwpDays })
+            fieldList.push({ SADSalaryDays: rowEntity.SADSalaryDays })
+            fieldList.push({ SADHolidays: rowEntity.SADHolidays })
+
+
+
+            console.log(fieldList)
+
+            pageService.updateMultiField(tableId, pkName, pkId, fieldList).then(function (result) {
+              console.log(result)
+            })
+          }
+          else {
+            rowEntity.SADHolidays = oldValue;
+          }
+
+        }
+        else {
+          rowEntity.SADHolidays = oldValue;
+        }
+
+      }
     }
 
     $scope.page.boxOptions.customButtons = [];
@@ -53,6 +161,8 @@
 
     function _pendingClick() {
       $scope.page.searchList = [];
+
+
       // alert('pending');
       console.log($scope.page)
       // if ($scope.page.filterData.SubUnitId !== undefined && $scope.page.filterData.SalMonth !== undefined && $scope.page.filterData.SalYear !== undefined) {
@@ -85,6 +195,30 @@
         operand: '=',
         value: $scope.acToDate
       })
+
+      
+      // angular.forEach($scope.page.searchList, function (col, cdx) {
+      //   if (col.field == "SubUnitId") {
+      //     if (col.value === undefined) {
+      //       alert('select subunit')
+
+      //     }
+      //   }
+      //   else if (col.field == "SalMonth") {
+      //     if (col.value === undefined) {
+      //       alert('select month')
+
+      //     }
+      //   }
+      //   else if (col.field == "SalYear") {
+      //     if (col.value === undefined) {
+      //       alert('select year')
+
+      //     }
+      //   }
+      // })
+
+      console.log($scope.page.searchList);
       $scope.page.refreshData()
       console.log($scope.page)
       console.log($scope.page.searchList)

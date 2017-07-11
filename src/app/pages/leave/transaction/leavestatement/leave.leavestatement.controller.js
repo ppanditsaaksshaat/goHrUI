@@ -117,7 +117,7 @@
       console.log(row)
 
       $scope.entity = row.entity;
-      // $scope.oldEntity = angular.copy(row.entity);
+      $scope.oldEntity = angular.copy(row.entity);
 
       $scope.showEditForm = true;
       $scope.isLeaveApprovedDet = true;
@@ -125,8 +125,10 @@
     }
 
     function _saveForm(editForm) {
+      $scope.newEntity.ELTId = $scope.entity.ELTId === undefined ? undefined : $scope.entity.ELTId;
       if ($scope.creditAndDebitCR == 'credits') {
         $scope.entity.ELTLeaveDr = 0;
+
         $scope.newEntity.ELTEmpId = $scope.entity.ELTEmpId;
         $scope.newEntity.ELTLCRId = $scope.entity.ELTLCRId;
         $scope.newEntity.ELTLeaveCr = $scope.entity.ELTLeaveCr;
@@ -146,16 +148,23 @@
         $scope.newEntity.ELTPeriodToDate = $scope.entity.ELTPeriodToDate;
 
       }
+
       if (_validateForm(editForm)) {
+
+        console.log($scope.page.pageinfo.pageid, $scope.newEntity,
+          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
 
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.newEntity,
           $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLeaveApp, _errorLeaveApp);
+
+        console.log($scope.page.pageinfo.pageid, $scope.newEntity,
+          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
       }
 
 
 
-      console.log($scope.page.pageinfo.pageid, $scope.entity,
-        $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+      // console.log($scope.page.pageinfo.pageid, $scope.entity,
+      //   $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
       // $scope.showEditForm = false;
       // $scope.entity = {};
 

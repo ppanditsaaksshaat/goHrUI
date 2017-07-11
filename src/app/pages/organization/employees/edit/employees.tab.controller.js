@@ -11,8 +11,12 @@
     /** @ngInject */
     /** @ngInject */
     function empTabController($scope, $stateParams, pageService, $timeout, $uibModal, dialogModal,
-        toastrConfig, toastr, $state, editFormService) {
+        toastrConfig, toastr, $state, editFormService, $filter) {
         console.log('empTabController')
+
+
+        var benefintSavecount = 0;//for counting saving record of benefits
+        var totalSavingRecord = 0;//for totaling of saving record of benefits
 
         var toastOption = {};
         var defaultConfig = angular.copy(toastrConfig);
@@ -39,6 +43,8 @@
         $scope.page = { isAllowEdit: false };
         $scope.contactPage = { isAllowEdit: false };
         $scope.emgContactPage = { isAllowEdit: false };
+        $scope.showResignation = true;
+
 
         vm.empContactDetail = {};
         vm.pageIds = {
@@ -51,37 +57,18 @@
         vm.tempName = $stateParams.name;
         vm.saveForm = _saveForm;
         vm.saveAddress = _saveAddress;
-        vm.queryId = 187;
-
         vm.saveFormCommon = _saveFormCommon;
         vm.resetFormCommon = _resetFormCommon;
         vm.clearFormCommon = _clearFormCommon;
         vm.goToEmployeeList = _goToEmployeeList;
         vm.permanentAddress = _permanentAddress;
+        $scope.manageNoticeDayOnResignDate = _manageNoticeDayOnResignDate;
+        $scope.changeNoticeDayOnFromDate = _changeNoticeDayOnFromDate;
+        $scope.saveResignation = _saveResignation;
+        $scope.resignList = _resignList;
+        $scope.payByEmpOnChange = _payByEmpOnChange;
 
 
-        $scope.onOTChange = function () {
-            if (!vm.entity.JDIsOT) {
-                vm.entity.SingleOT = false;
-                vm.entity.JDDoubleOT = false;
-                vm.entity.JDSingleOTRate = 0;
-                vm.entity.DoubleOTRate = 0;
-            }
-        }
-
-        $scope.onSingleOTChange = function () {
-            if (!vm.entity.SingleOT) {
-                vm.entity.SingleOT = false;
-                vm.entity.JDSingleOTRate = 0;
-            }
-        }
-
-        $scope.onDoubleOTChange = function () {
-            if (!vm.entity.JDDoubleOT) {
-                vm.entity.JDDoubleOT = false;
-                vm.entity.DoubleOTRate = 0;
-            }
-        }
 
         function _goToEmployeeList() {
             $state.go("organization.employees.list");
@@ -116,17 +103,23 @@
                 }
             }
             else {
+                // vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
+                // console.log(vm.empPKId)
+                // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.guempPKId)
 
-                // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.empPKId)
                 if (vm.pageId != 360 && vm.pageId != 'entitlement') {
                     vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page);
                 }
+                else {
 
-
+                    $scope.page = _getLocalPageObject(vm.pageId)
+                    console.log($scope.page)
+                }
             }
         }
+
 
         function _getPageDataSuccessResult(result) {
 
@@ -166,6 +159,7 @@
             } else if (result.pageinfo.pageid == 125) {
                 linkFieldName = 'ADEmpId';
             }
+
 
 
 
@@ -247,8 +241,8 @@
                 case 119://immigration
                     linkFieldName = 'EmpId'
                     break;
-                case 360://documents
-                    linkFieldName = ''
+                case 360://regination
+                    linkFieldName = 'RDEmpId'
                     break;
                 case 36://salary
                     linkFieldName = ''
@@ -262,6 +256,10 @@
                 case 442://identity
                     linkFieldName = 'IEmpId'
                     break;
+                case 448://benefit
+                    linkFieldName = 'EBDEmpId'
+                    break;
+
             }
 
             var pageObject = $scope.createPage();
@@ -270,11 +268,11 @@
                 showBack: true,
                 selfLoading: true,
                 showRefresh: true,
-                showFilter: false,
+                showFilter: true,
                 showAdd: true,
                 showRowMenu: true,
                 showCustomView: true,
-                showUpload: false,
+                showUpload: true,
                 showDialog: false,
                 enableRefreshAfterUpdate: true,
                 enableAutoRefresh: true,
@@ -290,7 +288,183 @@
                 deleteRecord: null,
                 uploadRecord: null
             }
+            if (pageId == 448) {
+                pageObject.boxOptions.showFilter = false;
+                pageObject.boxOptions.pageResult = _pageResultForBenefit;
+                pageObject.boxOptions.dataResult = _dataResultForBenefit;
+                pageObject.boxOptions.afterCellEdit = _afterCellEdit;
+                pageObject.boxOptions.customButtons = [
+                    { text: 'Save', icon: '', onClick: _saveBenefit, type: 'btn btn-primary' }
+                ]
+            }
+            if (pageId == 360) {
+                pageObject.boxOptions.addRecord = _addRecord;
+                pageObject.boxOptions.editRecord = _editRecord;
+                pageObject.boxOptions.showFilter = false;
+                pageObject.boxOptions.showUpload = false;
+
+            }
+
             return pageObject;
+        }
+        //Resignation Edit
+        function _editRecord(row) {
+            console.log(row.entity)
+            vm.oldEntity = angular.copy(row.entity)
+            $scope.entity = row.entity;
+            $scope.showResignation = false;
+        }
+        //Resignation Add
+        function _addRecord() {
+            $scope.entity = {};
+            $scope.entity.RDResignationDate = moment().format('DD/MMMM/YYYY');
+            $scope.showResignation = false;
+        }
+        function _resignList() {
+            $scope.showResignation = true;
+            $scope.page.refreshData();
+        }
+
+        function _payByEmpOnChange() {
+
+        }
+        function _manageNoticeDayOnResignDate() {
+            $scope.entity.RDFromDate = moment($scope.entity.RDResignationDate).format('DD/MMMM/YYYY');
+            $scope.entity.RDTodate = moment($scope.entity.RDResignationDate).add(45, 'days').format('DD/MMMM/YYYY');
+            $scope.entity.RDRelievingDate = moment($scope.entity.RDResignationDate).add(45, 'days').format('DD/MMMM/YYYY');
+            $scope.entity.RDNotice = 45;
+            $scope.entity.RDIsCountResignSameDay = true;
+        }
+        function checkDate(fromDate, toDate) {
+            var fromDt = moment(fromDate);
+            var toDt = moment(toDate);
+            var diff = toDt.diff(fromDt, 'days');
+            return diff;
+        }
+        function _changeNoticeDayOnFromDate() {
+            var diff = checkDate($scope.entity.RDFromDate, $scope.entity.RDTodate)
+            if (parseInt(diff) >= 0) {
+                $scope.entity.RDNotice = diff;
+                $scope.entity.RDRelievingDate = toDate;
+            }
+            else {
+                $scope.showMsg("error", "Fromdate is less than or equal to ToDate")
+            }
+        }
+
+        //Employee Resination Detail Saved 
+        function _saveResignation(entity, editForm) {
+
+            $scope.page.pageinfo = {};
+            $scope.page.pageinfo.title = 'Resignation';
+            entity.RDEmpId = vm.empPKId;
+
+            var diff = checkDate(entity.RDFromDate, entity.RDTodate)
+            if (parseInt(diff) >= 0) {
+
+                if (entity.RDId == undefined) {
+                    _formSave(entity, vm.pageId, 'create', vm.oldEntity == undefined ? {} : vm.oldEntity, editForm, false);
+                }
+                else {
+                    _formSave(entity, vm.pageId, 'edit', vm.oldEntity == undefined ? {} : vm.oldEntity, editForm, false);
+                }
+                // $scope.showResignation = true;
+                // $scope.page.refreshData();
+            }
+            else {
+                $scope.showMsg("error", "Fromdate is less than or equal to ToDate")
+            }
+        }
+
+        //Employee Benefit Detail Saved 
+        function _saveBenefit() {
+
+            totalSavingRecord = $scope.page.gridOptions.data.length - 1;
+
+            if ($scope.page.gridOptions.data.length > 0) {
+                angular.forEach($scope.page.gridOptions.data, function (row) {
+                    //                    console.log(row)
+
+                    var data = {
+                        EBDId: row.EBDId == null ? undefined : row.EBDId,
+                        EBDAccountNumber: row.EBDAccountNumber,
+                        EBDBenefitId: row.EBDBenefitId,
+                        EBDEmpId: row.EBDEmpId,
+                        EBDIsOnPercentage: row.EBDIsOnPercentage,
+                        EBDFiexedAmount: row.EBDFiexedAmount,
+                        EBDPercentage: row.EBDPercentage,
+                        EBDIsCalOnBasic: row.EBDIsCalOnBasic
+                    }
+                    var form = {}
+                    if (data.EBDId == undefined) {
+                        editFormService.saveForm(vm.pageId, data,
+                            {}, 'create', 'Benefit', form, false).then(_successBenefitResult, _errorBenefitResult);
+                    }
+                    else {
+                        editFormService.saveForm(vm.pageId, data,
+                            {}, 'edit', 'Benefit', form, false).then(_successBenefitResult, _errorBenefitResult);
+                    }
+                })
+            }
+            else {
+                $scope.showMsg("error", "Please select any row before save");
+            }
+        }
+        function _successBenefitResult(result) {
+            console.log(result)
+            benefintSavecount++;
+            console.log(benefintSavecount + ' of ' + totalSavingRecord)
+            if (benefintSavecount == totalSavingRecord) {
+                $scope.showMsg("success", "Employee Benefit Saved Successfully");
+                $scope.page.refreshData();
+            }
+
+        }
+        function _errorBenefitResult(err) {
+            alert(JSON.stringify(err))
+        }
+
+        function _afterCellEdit(rowEntity, colDef, newValue, oldValue, page) {
+            console.log(rowEntity, colDef, newValue, oldValue, page)
+
+            if (colDef.name == 'EBDIsOnPercentage') {
+                if (newValue) {
+                    rowEntity.EBDFiexedAmount = '';
+                }
+                else {
+                    rowEntity.EBDPercentage = '';
+                }
+            }
+            else if (colDef.name == 'EBDFiexedAmount') {
+                if (rowEntity.EBDIsOnPercentage) {
+                    rowEntity.EBDFiexedAmount = '';
+                    $scope.showMsg("error", "If you want to fill fixed field than unchecked the Onpercentage")
+                }
+            }
+            else if (colDef.name == 'EBDPercentage') {
+                if (!rowEntity.EBDIsOnPercentage) {
+                    rowEntity.EBDPercentage = '';
+                    $scope.showMsg("error", "If you want to fill percentage field than checked the Onpercentage")
+                }
+                else {
+                    var percentage = parseFloat(rowEntity.EBDPercentage)
+                    if (percentage > 100) {
+                        rowEntity.EBDPercentage = '100.00'
+                    }
+                }
+            }
+        }
+        function _pageResultForBenefit(result) {
+            console.log(result)
+        }
+        function _dataResultForBenefit(result) {
+            // angular.forEach(result, function (data, index) {
+            //     var EBDFiexedAmount = parseFloat(data.EBDFiexedAmount)
+            //     var EBDPercentage = parseFloat(data.EBDPercentage)
+            //     if (EBDFiexedAmount > 0 || EBDPercentage > 0) {
+            //         $scope.page.gridApi.selection.selectRow($scope.page.gridOptions.data[index]);
+            //     }
+            // })
         }
         function _findEntitySuccessResult(result) {
 
@@ -418,7 +592,7 @@
         }
         function _formSave(entity, pageId, action, oldEntity, editForm, showConfirmation) {
             editFormService.saveForm(pageId, entity, (oldEntity === undefined) ? vm.oldEntity : oldEntity,
-                action, $scope.page.pageinfo.title, editForm, showConfirmation)
+                action, ($scope.page.pageinfo.title === undefined) ? 'Resination' : $scope.page.pageinfo.title, editForm, showConfirmation)
                 .then(_updateSuccessResult, _updateErrorResult)
         }
 
@@ -428,6 +602,11 @@
             var isSuccess = true;
             if (result.error_message === undefined) {
                 if (result.entity !== undefined) {
+
+                    if (result.entity.RDId !== undefined) {
+                        $scope.page.refreshData();
+                        $scope.showResignation = true;
+                    }
                     if (result.entity.JDId !== undefined) {
                         vm.oldEntity = angular.copy(result.entity);
                         vm.entity = angular.copy(result.entity);
@@ -459,6 +638,7 @@
                 $scope.showMsg('error', result.error_message.Message);
             }
             if (isSuccess) {
+
                 $scope.page.isAllowEdit = false;
                 $scope.showMsg('success', 'Record Saved Successfully');
             }

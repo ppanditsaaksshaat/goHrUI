@@ -8,8 +8,9 @@
   angular.module('BlurAdmin.pages.payroll.transaction', [
     'BlurAdmin.pages.payroll.transaction.CustomPayrollSetting',
     'BlurAdmin.pages.payroll.transaction.SalaryAttendance',
+
     
-    // 'BlurAdmin.pages.payroll.transaction.EmployeeIncentive',
+    'BlurAdmin.pages.payroll.transaction.EmployeeIncentive',
     // 'BlurAdmin.pages.payroll.transaction.SalaryAttendancecycle',
     // // 'BlurAdmin.pages.payroll.transaction.Salarypayrollprocess',
     // 'BlurAdmin.pages.payroll.transaction.LeaveEncashment',

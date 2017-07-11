@@ -40,7 +40,9 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
     };
     //calling func from outer side of factory
     function _saveEditForm(pageId, newEntity, oldEntity, action, title, pageForm, isShowConfirmation) {
-
+        if (pageForm == undefined)
+            pageForm = {};
+        pageForm.defer = $q.defer();
         defer = $q.defer();
 
         localForm = pageForm;
@@ -59,18 +61,19 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
                 _showToast('info', 'Nothing to save', title)
             }
             else {
-                _showConfirm('Do you want to save ' + title + '?', _confirmClick, _rejectClick, pageId, dataObject, title)
+                _showConfirm('Do you want to save ' + title + '?', _confirmClick, _rejectClick, pageId, dataObject, title, pageForm)
             }
         }
         else {
-            _confirmClick(pageId, dataObject, title)
+            _confirmClick(pageId, dataObject, title, pageForm)
         }
-        return defer.promise
+
+        return pageForm.defer.promise
     }
-    function _rejectClick(pageId, data, title) {
-        defer.reject({ data: data, msg: 'Cancelled' })
+    function _rejectClick(pageId, data, title, pageForm) {
+        pageForm.defer.reject({ data: data, msg: 'Cancelled' })
     }
-    function _confirmClick(pageId, data, title) {
+    function _confirmClick(pageId, data, title, pageForm) {
         if (localForm) {
             localForm.isSavingForm = true;
 
@@ -90,7 +93,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
 
             if (result.error_message === undefined) {
                 if (result.success_message === undefined) {
-                    defer.reject(result)
+                    pageForm.defer.reject(result)
                     _showToast('error', 'Something went wrong', title)
                 }
                 else {
@@ -100,21 +103,21 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
                     // _showToast('success', result.success_message, title)
                     //$rootScope.back();
                     //$rootScope.$broadcast('form-success', result);
-                    defer.resolve(result)
+                    pageForm.defer.resolve(result)
                 }
             }
             else if (result.error_message.Message == 'Record Already Added.') {
 
 
 
-                defer.reject(result)
+                pageForm.defer.reject(result)
                 _showToast('error', 'Record Already Added', title)
             }
             else {
 
 
 
-                defer.reject(result)
+                pageForm.defer.reject(result)
                 _showToast('error', result.error_message, title)
             }
 
@@ -137,7 +140,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
                 localForm.isAllowEdit = false;
             }
 
-            defer.reject(err)
+            pageForm.defer.reject(err)
             _showToast('error', err, title)
         });
     }
@@ -153,7 +156,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
         openedToasts.push(toastr[toastOption.type](msg, title));
     }
 
-    function _showConfirm(msg, funcConfirm, funcReject, pageId, data, title) {
+    function _showConfirm(msg, funcConfirm, funcReject, pageId, data, title, pageForm) {
 
         console.log(data)
         var para = {
@@ -162,7 +165,8 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
             title: title,
             confirmClick: funcConfirm,
             rejectClick: funcReject,
-            confirmMessge: msg
+            confirmMessge: msg,
+            pageForm: pageForm
         }
         var modalInstance = $uibModal.open({
             template: '<div class="modal-header"><h3 class="modal-title">{{confirmMessage}}</h3></div><div class="modal-footer"><button class="btn btn-primary" type="button" ng-click="ok()">Yes</button><button class="btn btn-warning" type="button" ng-click="cancel()">No</button></div>',
@@ -248,7 +252,7 @@ function editFormService(pageService, DJWebStore, toastr, toastrConfig, $uibModa
 //Controller for confirm box
 function ModalConfirmCtrl($scope, $uibModalInstance, param) {
 
-    var confirmClick = param.confirmClick, confirmMessge = param.confirmMessge;
+    var confirmClick = param.confirmClick, confirmMessge = param.confirmMessge, pageForm = param.pageForm;
     var rejectClick = param.rejectClick;
     console.log(param, confirmMessge)
     $scope.confirmMessage = confirmMessge;
@@ -257,12 +261,12 @@ function ModalConfirmCtrl($scope, $uibModalInstance, param) {
     }
 
     $scope.ok = function () {
-        confirmClick(param.pageId, param.data, param.title);
+        confirmClick(param.pageId, param.data, param.title, pageForm);
         closeModal();
     }
 
     $scope.cancel = function () {
-        rejectClick(param.pageId, param.data, param.title);
+        rejectClick(param.pageId, param.data, param.title, pageForm);
         closeModal();
     }
 }

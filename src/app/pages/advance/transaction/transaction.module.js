@@ -6,11 +6,12 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.advance.transaction', [
-     
-     'BlurAdmin.pages.advance.transaction.advancestatus',
-     'BlurAdmin.pages.advance.transaction.advanceapplication'
-     
-     
+
+    //  'BlurAdmin.pages.advance.transaction.advancestatus',
+    'BlurAdmin.pages.advance.transaction.advanceapplication',
+    'BlurAdmin.pages.advance.transaction.midMonth'
+
+
   ])
     .config(routeConfig);
 
