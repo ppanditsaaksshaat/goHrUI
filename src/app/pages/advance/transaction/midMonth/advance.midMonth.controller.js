@@ -5,14 +5,15 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.payroll.transaction.EmployeeIncentive')
-    .controller('payEmployeeIncentiveController', payEmployeeIncentiveController);
+  angular.module('BlurAdmin.pages.advance.transaction.midMonth')
+    .controller('midMonthController', midMonthController);
 
   /** @ngInject */
-  function payEmployeeIncentiveController($scope, $state, $stateParams,
+  function midMonthController($scope, $state, $stateParams,
     pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr) {
+
     var vm = this;
-    // var pageId = 96;
+    var pageId = 96;
 
     var currentState = $state.current;
     // this.uploadRecord = _uploadRecord;
@@ -21,9 +22,10 @@
 
 
     console.log($scope.page)
-    $scope.page.pageId = 452;
-    var incentivePageId = 452;
-    var entitlementHeadPageId = 178;
+    $scope.page.pageId = 451;
+    var advancePageId = 96;
+
+
 
     $scope.oldEntity = {};
 
@@ -48,7 +50,25 @@
       deleteRecord: null,
       showDataOnLoad: false
     }
-
+    // $scope.page.boxOptions = {
+    //   selfLoading: true,
+    //   showRefresh: true,
+    //   showFilter: true,
+    //   showAdd: true,
+    //   showRowMenu: true,
+    //   showCustomView: true,
+    //   showUpload: false,
+    //   showDialog: false,
+    //   enableRefreshAfterUpdate: true,
+    //   gridHeight: 450,
+    //   getPageData: null,
+    //   refreshData: null,
+    //   addRecord: _addRecord,
+    //   editRecord: null,
+    //   updateRecord: null,
+    //   viewRecord: null,
+    //   deleteRecord: null,
+    // }
     $scope.page.boxOptions.customButtons = [];
     $scope.page.boxOptions.customButtons.push({ text: 'Save', icon: 'ion-refresh', onClick: _saveMidMonthClick, type: 'btn-danger' })
 
@@ -68,7 +88,14 @@
         //                    console.log(row)
 
         var data = {
-
+          // EBDId: row.EBDId == null ? undefined : row.EBDId,
+          // EBDAccountNumber: row.EBDAccountNumber,
+          // EBDBenefitId: row.EBDBenefitId,
+          // EBDEmpId: row.EBDEmpId,
+          // EBDIsOnPercentage: row.EBDIsOnPercentage,
+          // EBDFiexedAmount: row.EBDFiexedAmount,
+          // EBDPercentage: row.EBDPercentage,
+          // EBDIsCalOnBasic: row.EBDIsCalOnBasic
 
           AAId: row.AAId == null ? undefined : row.AAId,
           AAEmpId: row.EBDEmpId,
@@ -78,13 +105,15 @@
         console.log(data)
         var form = {}
 
+        // editFormService.saveForm(advancePageId, data,
+        //   {}, 'create', 'Benefit', form, false).then(_successMidMonthResult, _errorMidMonthResult);
 
         if (data.AAId == undefined) {
-          editFormService.saveForm(incentivePageId, data,
+          editFormService.saveForm(advancePageId, data,
             {}, 'create', 'MidNonth', form, false).then(_successMidMonthResult, _errorMidMonthResult);
         }
         else {
-          editFormService.saveForm(incentivePageId, data,
+          editFormService.saveForm(advancePageId, data,
             {}, 'edit', 'MidNonth', form, false).then(_successMidMonthResult, _errorMidMonthResult);
         }
       })
@@ -109,6 +138,11 @@
       // alert(JSON.stringify(err))
       console.log(err);
     }
+
+
+
+
+
   }
 
 })();

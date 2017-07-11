@@ -161,6 +161,8 @@
 
     function _pendingClick() {
       $scope.page.searchList = [];
+
+
       // alert('pending');
       console.log($scope.page)
       // if ($scope.page.filterData.SubUnitId !== undefined && $scope.page.filterData.SalMonth !== undefined && $scope.page.filterData.SalYear !== undefined) {
@@ -193,6 +195,28 @@
         operand: '=',
         value: $scope.acToDate
       })
+
+      
+      // angular.forEach($scope.page.searchList, function (col, cdx) {
+      //   if (col.field == "SubUnitId") {
+      //     if (col.value === undefined) {
+      //       alert('select subunit')
+
+      //     }
+      //   }
+      //   else if (col.field == "SalMonth") {
+      //     if (col.value === undefined) {
+      //       alert('select month')
+
+      //     }
+      //   }
+      //   else if (col.field == "SalYear") {
+      //     if (col.value === undefined) {
+      //       alert('select year')
+
+      //     }
+      //   }
+      // })
 
       console.log($scope.page.searchList);
       $scope.page.refreshData()
