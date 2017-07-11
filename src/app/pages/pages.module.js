@@ -21,7 +21,7 @@
     'BlurAdmin.pages.attendance',
     'BlurAdmin.pages.payroll',
     'BlurAdmin.pages.loan',
-      'BlurAdmin.pages.advance',
+    'BlurAdmin.pages.advance',
     'BlurAdmin.pages.mis'
     
   ])
