@@ -83,7 +83,7 @@
 
       totalSavingRecord = $scope.page.gridOptions.data.length - 1;
 
-      // if ($scope.page.gridOptions.data.length >= 0) {
+      if ($scope.page.gridOptions.data.length > 0) {
       angular.forEach($scope.page.gridOptions.data, function (row) {
         //                    console.log(row)
 
@@ -117,10 +117,10 @@
             {}, 'edit', 'MidNonth', form, false).then(_successMidMonthResult, _errorMidMonthResult);
         }
       })
-      // }
-      // else {
-      //   $scope.showMsg("error", "Please select any row before save");
-      // }
+      }
+      else {
+        $scope.showMsg("error", "Please search data then save");
+      }
     }
     function _successMidMonthResult(result) {
       console.log(result)

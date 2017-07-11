@@ -1,5 +1,6 @@
 'use strict';
 
+
 angular.module('BlurAdmin', [
   'ngAnimate',
   'ui.bootstrap',
@@ -13,6 +14,7 @@ angular.module('BlurAdmin', [
   'ui.bootstrap.datetimepicker',
   'moment-picker',
   'ngTouch',
+  'ngIdle',
   'toastr',
   'smart-table',
   "xeditable",
