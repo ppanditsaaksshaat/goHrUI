@@ -1,0 +1,152 @@
+<div ng-show="showResignation">
+  <grid-box ng-model="page">
+  </grid-box>
+</div>
+<div ng-hide="showResignation">
+  <form ng-submit="saveResignation(entity,editForm)" name="editForm" novalidate>
+    <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
+      <edit-panel-head page="page" page-title="page.pageinfo.title" reset-form="resetFormCommon(editForm)" clear-form="clearFormCommon()"
+        open-List="resignList()" condition="(true)" show-close="true"></edit-panel-head>
+      <div class="panel-body" style="padding:5px;" ng-scrollbars ng-scrollbars-config="config">
+        <div style="min-height: 450px;" ng-show="page.pageIsLoaded">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputDepartment" ng-bind="page.pageinfo.fields.RDLeavingTypeId.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.RDLeavingTypeId" ng-entity="entity" form="editForm"></field-box>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.RDResignationDate.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.RDResignationDate" ng-entity="entity" form="editForm" fb-change="manageNoticeDayOnResignDate()"></field-box>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.RDIsNoticePeriodServe.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.RDIsNoticePeriodServe" ng-entity="entity" form="editForm"></field-box>
+              </div>
+            </div>
+
+            <div class="col-sm-3" ng-if="!entity.RDIsNoticePeriodServe">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.RDIsPayByEmployee.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.RDIsPayByEmployee" ng-entity="entity" form="editForm" fb-change="payByEmpOnChange()"></field-box>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" ng-if="entity.RDIsNoticePeriodServe">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.RDFromDate.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.RDFromDate" ng-entity="entity" form="editForm" fb-change="changeNoticeDayOnFromDate()"></field-box>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.RDTodate.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.RDTodate" ng-entity="entity" form="editForm" fb-change="changeNoticeDayOnFromDate()"></field-box>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" ng-if="entity.RDIsNoticePeriodServe">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.RDNotice.text"></label>
+                <input type="text" class="form-control" ng-disabled="true" ng-model="entity.RDNotice">
+                <!--<field-box page="page" ng-column="page.pageinfo.fields.RDNotice" ng-entity="entity" form="editForm" fb-change="manageResignDay()"></field-box>-->
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.RDRelievingDate.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.RDRelievingDate" ng-entity="entity" form="editForm"></field-box>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.Reason.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.Reason" ng-entity="entity" form="editForm"></field-box>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <form>
+</div>
+
+
+
+<!--<div>
+
+    <h3 class="">Employee Resignaton Detail</h3>
+<hr>
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-sm-3 control-label">LeavingType</label>
+
+          <div class="col-sm-9">
+              <select id="empLeavingType_{{$index}}"
+                      name="empLeavingType_{{$index}}"
+                      ng-model="empPersonalDetail.RDLeavingType"
+                      class="form-control"
+                      ng-options="leavingType.value as leavingType.name for leavingType in leavingType"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+          </div>
+        </div>
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-lg-3 control-label">NoticePeriod</label>
+
+          <div class="col-lg-9">
+            <input type="text" class="form-control" id="inputFirstName"ng-model="empResignDetail.RDNotice">
+          </div>
+        </div>
+     </div>
+      <div class="col-md-12">
+        
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">ResignatonDate</label>
+
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputLastName" ng-model="empResignDetail.RDResignatonDate">
+          </div>
+        </div>
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-lg-3 control-label">RelievingDate</label>
+
+          <div class="col-lg-9">
+            <input type="text" class="form-control" id="inputFirstName" ng-model="empResignDetail.RDRelievingDate">
+          </div>
+        </div>
+      </div>
+       <div class="col-md-12">
+        
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">Reason</label>
+
+          <div class="col-sm-9">
+           <textarea ng-model="empResignDetail.Reason"></textarea>
+          </div>
+        </div>
+        
+      </div>
+    <button type="button" class="btn btn-primary btn-with-icon save-profile">
+      <i class="ion-android-checkmark-circle"></i>Update Profile
+    </button>
+
+</div>-->
