@@ -91,9 +91,12 @@
     var leaveControlTableId = 273;
     var leaveControlPageId = 261;
     var currentState = $state.current;
+
+
     // this.uploadRecord = _uploadRecord;
     $scope.showLeave = []
     $scope.leaveRuleList = [];
+    $scope.leaveDetails = [];
     $scope.entity = { LEADToHalfDayId: 2, LEADFromHalfDayId: 2 }
     $scope.page = $scope.createPage();
     $scope.fetchDetail = _fetchLeaveDetail;
@@ -138,8 +141,56 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
+      customColumns: [{ text: 'Sanction Leave', type: 'a', name: 'sectionLeave', click: _leaveSanction }]
     }
 
+    function _leaveSanction(row) {
+      $scope.leaveDetails = [];
+      $scope.entity = [];
+      $scope.showSanctionForm = true;
+      console.log(row)
+      var transaction = row.entity.LEADTransation;
+      if (transaction != null && transaction != undefined) {
+        var rows = transaction.split(',');
+        // console.log($scope.page.pageinfo.selects.LEADLTId)
+        angular.forEach(rows, function (row) {
+          var data = row.split('|');
+          var leaveDetail = {
+            type: $filter('findObj')($scope.page.pageinfo.selects.LEADLTId, parseInt(data[0]), 'value').name,
+            balance: data[1]
+          }
+          $scope.leaveDetails.push(leaveDetail)
+        })
+      }
+      if (row.entity.LEADDateFrom != undefined)
+        row.entity.LEADDateFrom = moment(row.entity.LEADDateFrom).format("DD/MMMM/YYYY");
+      if (row.entity.LEADDateTo != undefined)
+        row.entity.LEADDateTo = moment(row.entity.LEADDateTo).format("DD/MMMM/YYYY");
+      if (row.entity.LEADFromHalfDayId != null && row.entity.LEADFromHalfDayId != undefined) {
+        if (row.entity.LEADFromHalfDayId == 0) {
+          row.entity.fromHalf = 'First Half';
+        }
+        else if (row.entity.LEADFromHalfDayId == 1) {
+          row.entity.fromHalf = 'Second Half';
+        }
+        else {
+          row.entity.fromHalf = '';
+        }
+      }
+      if (row.entity.LEADToHalfDayId != null && row.entity.LEADToHalfDayId != undefined) {
+        if (row.entity.LEADToHalfDayId == 0) {
+          row.entity.toHalf = 'First Half'
+        }
+        else if (row.entity.LEADFromHalfDayId == 1) {
+          row.entity.toHalf = 'Second Half';
+        }
+        else {
+          row.entity.toHalf = '';
+        }
+      }
+      $scope.entity = row.entity;
+
+    }
     $scope.$watch('entity.LEADDateFrom', function (newVal, oldVal) {
       if (newVal) {
         if (!$scope.entity.LEADDateTo) {
@@ -219,6 +270,7 @@
       _calculateDays();
     }
     function _addRecord() {
+      $scope.entity = [];
       $scope.showLeave = [];
       vm.validateLeave = false;
       $scope.showSlider = true;
@@ -388,6 +440,7 @@
       alert(err)
     }
     function _getCustomQuerySuccessResult(result) {
+
       queryId = 534;
       $scope.showLeave = result;
       console.log(result)
@@ -417,8 +470,7 @@
         var balLeave = vm.appliedDays;
         $scope.leaveRuleList = result;
       }
-      else
-      {
+      else {
         $scope.showMsg('error', 'No Leave Rule Found.')
       }
     }
