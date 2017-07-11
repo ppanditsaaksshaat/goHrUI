@@ -1,5 +1,10 @@
 angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParams, $filter, DJWebStore,
-    toastr, toastrConfig, pageService, $timeout) {
+    toastr, toastrConfig, pageService, $timeout, $location, Idle, dialogModal) {
+
+
+
+    $rootScope.user = DJWebStore.ValidateUser();
+    console.log($rootScope.user)
 
     var toastOption = {};
     var defaultConfig = angular.copy(toastrConfig);
@@ -53,7 +58,6 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     pageService.getBGClass().then(function (result) {
         var bgClass = result;//angular.fromJson(response.data);
         DJWebStore.SetBGClass(bgClass);
-        console.log(bgClass);
     }, function (err) {
         console.log(err);
     });
@@ -207,7 +211,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         })
     }
     $rootScope.gridSetupColumns = function (gridOptions, columns, page, isEdit, isDelete, isView, isUpdate, showRowMenu) {
-       
+
         if (showRowMenu == undefined) {
             showRowMenu = true;
         }
@@ -396,4 +400,83 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     }
 
     $rootScope.setupColorClass();
+
+    //idle setting
+    $rootScope.started = false;
+
+    if ($location.absUrl().indexOf('auth.html') < 0) {
+        Idle.watch();
+        $rootScope.started = true;
+    }
+
+
+    function closeModals() {
+        if ($rootScope.warning) {
+            $rootScope.warning.close();
+            $rootScope.warning = null;
+        }
+
+        if ($rootScope.timedout) {
+            $rootScope.timedout.close();
+            $rootScope.timedout = null;
+        }
+    }
+
+    $rootScope.$on('IdleStart', function () {
+        // console.log('idlestart')
+        // the user appears to have gone idle
+
+        closeModals();
+
+        $rootScope.warning = dialogModal.openIdleWarning()
+    });
+
+    $rootScope.$on('IdleWarn', function (e, countdown) {
+        $rootScope.countdown = countdown;
+        // console.log('IdleWarn', countdown, e)
+        // follows after the IdleStart event, but includes a countdown until the user is considered timed out
+        // the countdown arg is the number of seconds remaining until then.
+        // you can change the title or display a warning dialog from here.
+        // you can let them resume their session by calling Idle.watch()
+    });
+
+    $rootScope.$on('IdleTimeout', function () {
+        // console.log('IdleTimeout')
+        // the user has timed out (meaning idleDuration + timeout has passed without any activity)
+        // this is where you'd log them
+        closeModals();
+        $rootScope.timedout = dialogModal.openIdleTimeout()
+        // $rootScope.timedout = $uibModal.open({
+        //     templateUrl: 'timedout-dialog.html',
+        //     windowClass: 'modal-danger'
+        // });
+    });
+
+    $rootScope.$on('IdleEnd', function () {
+        // console.log('IdleEnd')
+        closeModals();
+        // the user has come back from AFK and is doing stuff. if you are warning them, you can use this to hide the dialog
+    });
+
+    $rootScope.$on('Keepalive', function () {
+        // console.log('Keepalive')
+        // do something to keep the user's session alive
+    });
+
+    $rootScope.unlockSession = function (pwd) {
+        if ($rootScope.user.auth.userPwd == pwd) {
+            Idle.watch();
+            $rootScope.started = true;
+            closeModals();
+        }
+    }
+    $rootScope.logoutSession = function () {
+        DJWebStore.Logout();
+    }
+
+    //page top functions
+    $rootScope.openUserProfile = function () {
+        dialogModal.openUserProfile();
+    }
+
 });

@@ -634,7 +634,7 @@
         $scope.showMsg('error', 'No more balance.')
         leave.leaveDr = parseInt(oldDays)
       }
-      else if (leaveRule.LRCDrMaxDays <= leave.leaveDr) {
+      else if (leaveRule.LRCDrMaxDays < leave.leaveDr) {
         $scope.showMsg('error', 'No more leave allowed in ' + leaveRule.LTName)
         leave.leaveDr = parseInt(oldDays)
       }
