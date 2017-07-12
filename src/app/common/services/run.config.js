@@ -3,7 +3,8 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
 
 
 
-    $rootScope.auth = DJWebStore.ValidateUser();
+    $rootScope.user = DJWebStore.ValidateUser();
+    console.log($rootScope.user)
 
     var toastOption = {};
     var defaultConfig = angular.copy(toastrConfig);
@@ -57,7 +58,6 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     pageService.getBGClass().then(function (result) {
         var bgClass = result;//angular.fromJson(response.data);
         DJWebStore.SetBGClass(bgClass);
-        console.log(bgClass);
     }, function (err) {
         console.log(err);
     });
@@ -472,6 +472,11 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     }
     $rootScope.logoutSession = function () {
         DJWebStore.Logout();
+    }
+
+    //page top functions
+    $rootScope.openUserProfile = function () {
+        dialogModal.openUserProfile();
     }
 
 });

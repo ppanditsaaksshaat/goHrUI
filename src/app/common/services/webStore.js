@@ -127,7 +127,6 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         var localTime = moment()
         var timeSpan = expiresLocal.diff(localTime, 'minute')
         // var timeSpan2 = expires.diff(moment(authData.issued))
-        console.log(expiresLocal, localTime, timeSpan)
 
         if (timeSpan < 0) {
             //token expired 

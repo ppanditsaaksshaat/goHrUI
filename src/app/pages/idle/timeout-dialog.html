@@ -8,19 +8,21 @@
     </h3>
     <span>Please enter your password to unlock your session.</span>
     <br/>
-    <div class="form-group">
-      <label for="userPassword" class="col-sm-2 control-label">Password</label>
+    <form name="unlock" ng-submit="unlockSession(userPassword)">
+      <div class="form-group">
+        <label for="userPassword" class="col-sm-2 control-label">Password</label>
 
-      <div class="col-sm-10">
-        <input type="password" class="form-control" id="userPassword" placeholder="Password" ng-model="userPassword">
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="userPassword" placeholder="Password" ng-model="userPassword">
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button id="btnlogin" type="button" class="btn btn-primary btn-auth" ng-click="unlockSession(userPassword)">Sign in</button>
-        <a href class="forgot-pass" ng-click="logoutSession()">Logout</a>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button id="btnlogin" type="submit" class="btn btn-primary btn-auth">Sign in</button>
+          <a href class="forgot-pass" ng-click="logoutSession()">Logout</a>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
   <div class="modal-footer">
   </div>

@@ -105,6 +105,17 @@
       return $rootScope.modalInstance;
     }
 
+    this.openUserProfile = function () {
+      $rootScope.modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: 'app/pages/pageTop/profile.html',
+        size: 'left-top-center',
+        backdrop: 'static',
+        keyboard: false
+      });
+      return $rootScope.modalInstance;
+    }
+
   }
 
 })();

@@ -23,7 +23,6 @@ angular.module('BlurAdmin.common').config(function(IdleProvider, KeepaliveProvid
 	IdleProvider.idle(10*60); // in seconds
 	IdleProvider.timeout(60); // in seconds
 	KeepaliveProvider.interval(2); // in seconds
-  console.log(IdleProvider, KeepaliveProvider)
 }) 
 
 
