@@ -50,7 +50,9 @@
     }
 
     $scope.page.boxOptions.customButtons = [];
-    $scope.page.boxOptions.customButtons.push({ text: 'Save', icon: 'ion-refresh', onClick: _saveMidMonthClick, type: 'btn-danger' })
+    $scope.page.boxOptions.customButtons.push({ text: 'Save', icon: 'ion-refresh', onClick: _saveIncentiveClick, type: 'btn-success' })
+    $scope.page.boxOptions.customButtons.push({ text: 'Reset', icon: 'ion-refresh', onClick: _updateEmployeeEntitlementClick, type: 'btn-danger' })
+
 
     function _addRecord() {
       $scope.showEditForm = true;
@@ -59,55 +61,125 @@
     }
 
     var totalSavingRecord = 0;
-    function _saveMidMonthClick() {
+    function _saveIncentiveClick() {
 
       totalSavingRecord = $scope.page.gridOptions.data.length - 1;
 
-      // if ($scope.page.gridOptions.data.length >= 0) {
-      angular.forEach($scope.page.gridOptions.data, function (row) {
-        //                    console.log(row)
+      if ($scope.page.gridOptions.data.length > 0) {
+        angular.forEach($scope.page.gridOptions.data, function (row) {
+          console.log(row)
 
-        var data = {
-
-
-          AAId: row.AAId == null ? undefined : row.AAId,
-          AAEmpId: row.EBDEmpId,
-          AAAmount: row.MidMonth,
-          AAIsGiven: 1
-        }
-        console.log(data)
-        var form = {}
+          var entitleData = {
+            EEHId: row.EEHId == null ? undefined : row.EEHId,
+            EEHEmpId: row.EEHEmpId,
+            EEHSHId: row.EEHSHId,
+            EEHFixedAmount: row.EEHFixedAmount
+          }
 
 
-        if (data.AAId == undefined) {
-          editFormService.saveForm(incentivePageId, data,
-            {}, 'create', 'MidNonth', form, false).then(_successMidMonthResult, _errorMidMonthResult);
-        }
-        else {
-          editFormService.saveForm(incentivePageId, data,
-            {}, 'edit', 'MidNonth', form, false).then(_successMidMonthResult, _errorMidMonthResult);
-        }
-      })
-      // }
-      // else {
-      //   $scope.showMsg("error", "Please select any row before save");
-      // }
+          console.log(entitleData)
+          var form = {}
+          if (entitleData.EEHId == undefined) {
+            editFormService.saveForm(entitlementHeadPageId, entitleData,
+              {}, 'create', 'Entitlement', form, false).then(_successEntitlementResult, _errorEntitlementResult);
+          }
+          else {
+            editFormService.saveForm(entitlementHeadPageId, entitleData,
+              {}, 'edit', 'Entitlement', form, false).then(_successEntitlementResult, _errorEntitlementResult);
+          }
+
+          var incentiveData = {
+            SIDEmpId: row.EEHEmpId,
+            SIDSHId: row.EEHSHId,
+            SIDAmount: row.EEHFixedAmount
+          }
+          console.log(incentiveData)
+          editFormService.saveForm(incentivePageId, incentiveData,
+            {}, 'create', 'Entitlement', form, false).then(_successIncentiveResult, _errorIncentivetResult);
+        })
+      }
+      else
+        $scope.showMsg("success", "Please filter data and then save record");
     }
-    function _successMidMonthResult(result) {
+    function _successEntitlementResult(result) {
       console.log(result)
       $scope.showMsg("success", "Advance Saved Successfully");
-      $scope.page.refreshData();
-      // benefintSavecount++;
-      // console.log(benefintSavecount + ' of ' + totalSavingRecord)
-      // if (benefintSavecount == totalSavingRecord) {
-      //   $scope.showMsg("success", "Employee Benefit Saved Successfully");
-      //   $scope.page.refreshData();
-      // }
+      // $scope.page.refreshData();
+
 
     }
-    function _errorMidMonthResult(err) {
+    function _errorEntitlementResult(err) {
       // alert(JSON.stringify(err))
       console.log(err);
+    }
+
+    function _successIncentiveResult(result) {
+      console.log(result)
+      $scope.showMsg("success", "Advance Saved Successfully");
+      // $scope.page.refreshData();
+    }
+
+    function _errorIncentivetResult(err) {
+      console.log(err);
+    }
+
+    function _updateEmployeeEntitlementClick() {
+      var searchLists = [];
+      console.log($scope.entity);
+      console.log($scope.page.pageinfo.filters);
+      console.log($scope.page.pageinfo.filters[0].name)
+
+      angular.forEach($scope.page.pageinfo.filters, function (col, cdx) {
+        if (col.name == 'SIDMonth')
+          $scope.page.searchList.push({
+            field: col.name,
+            operand: '=',
+            value: col.value,
+          })
+        if (col.name == 'SIDYear')
+          $scope.page.searchList.push({
+            field: col.name,
+            operand: '=',
+            value: col.value,
+          })
+        if (col.name == 'SIDSHId')
+          $scope.page.searchList.push({
+            field: col.name,
+            operand: '=',
+            value: col.value,
+          })
+      })
+
+
+      // var searchListData = {
+      //   field: $scope.page.pageinfo.filters[0].name,
+      //   operand: '=',
+      //   value: $scope.page.pageinfo.filters[0].value
+      // }
+      // searchLists.push(searchListData)
+      // searchListData = {
+      //   field: $scope.page.pageinfo.filters[1].name,
+      //   operand: '=',
+      //   value: $scope.page.pageinfo.filters[1].value
+      // }
+      // searchLists.push(searchListData)
+      // searchListData = {
+      //   field: $scope.page.pageinfo.filters[2].name,
+      //   operand: '=',
+      //   value: $scope.page.pageinfo.filters[2].value
+      // }
+      
+      // searchLists.push(searchListData)
+      var data = {
+        searchList: searchLists,
+        orderByList: []
+      }
+      console.log(searchLists)
+      var queryId = 545;
+      pageService.getCustomQuery(data, queryId).then(function (result) {
+        console.log(result)
+        $scope.page.refreshData();
+      });
     }
   }
 

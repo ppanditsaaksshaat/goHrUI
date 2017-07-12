@@ -309,6 +309,14 @@ input:focus, select:foucs {
   left: 478px;
   overflow: scroll;
 }
+.modal .modal-dialog.modal-left-top-center{
+  width: 500px;
+  height: 565px;
+  position: fixed;
+  top: 65px;
+  left: 450px;
+  overflow: scroll;
+}
 .overflow-visible,
 .overflow-visible .ui-grid-cell-contents {
   overflow: visible;
