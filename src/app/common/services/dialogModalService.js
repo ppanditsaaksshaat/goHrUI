@@ -47,7 +47,7 @@
     }
 
     this.openFormVertical = function (options) {
-     
+
       $rootScope.modalInstance = $uibModal.open({
         animation: false,
         templateUrl: 'app/common/forms/formVertical/formVertical.html',
@@ -62,9 +62,10 @@
           }
         }
       });
-      return $rootScope.modalInstance;    
+      return $rootScope.modalInstance;
     }
-     this.openForm = function (options) {      
+
+    this.openForm = function (options) {
       $rootScope.modalInstance = $uibModal.open({
         animation: false,
         templateUrl: options.url,
@@ -79,7 +80,29 @@
           }
         }
       });
-      return $rootScope.modalInstance;    
+      return $rootScope.modalInstance;
+    }
+
+    this.openIdleWarning = function () {
+      $rootScope.modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: 'app/pages/idle/warning-dialog.html',
+        size: 'top-center-500',
+        backdrop: 'static',
+        keyboard: false
+      });
+      return $rootScope.modalInstance;
+    }
+
+    this.openIdleTimeout = function () {
+      $rootScope.modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: 'app/pages/idle/timeout-dialog.html',
+        size: 'top-center-500',
+        backdrop: 'static',
+        keyboard: false
+      });
+      return $rootScope.modalInstance;
     }
 
   }

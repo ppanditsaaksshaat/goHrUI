@@ -76,11 +76,11 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     var _logout = function () {
         console.log('Logout from system');
         _removeAllKey();
-        window.location.href = 'Login.aspx';
+        window.location.href = 'auth.html';
     }
     var _getServiceBase = function () {
 
-         //var serviceBase = 'http://localhost:51877/';
+        //var serviceBase = 'http://localhost:51877/';
 
 
 
@@ -103,17 +103,47 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         return serviceBase;
     }
 
+    var _getBaseUrl = function () {
+        var host = $location.host();
+        var absUrl = $location.absUrl().replace('#/', '');
+        var lastIdx = absUrl.lastIndexOf('/');
+        var firstIdx = absUrl.indexOf('/');
+        var hostIdx = absUrl.indexOf(host);
+        var baseUrl = absUrl.substring(hostIdx + host.length, lastIdx);
+        return baseUrl;
+    }
     function _validateUser() {
+        var urlPath = $location.absUrl();
         var authData = _getAuthorization();
         if (authData == null) {
-            _logout();
+            if (urlPath.indexOf('auth.html') < 0) {
+                _logout();
+            }
+            return;
+        }
+
+        var expiresLocal = moment(moment.utc(authData.expires).toDate());
+        // console.log(moment())
+        var localTime = moment()
+        var timeSpan = expiresLocal.diff(localTime, 'minute')
+        // var timeSpan2 = expires.diff(moment(authData.issued))
+        console.log(expiresLocal, localTime, timeSpan)
+
+        if (timeSpan < 0) {
+            //token expired 
+            if (urlPath.indexOf('auth.html') < 0) {
+                _logout();
+            }   
             return;
         }
 
         var profileData = _getUserProfile();
         var appData = _getAppData();
 
-        var data = { app: appData, profile: profileData }
+        var data = { app: appData, profile: profileData, auth: authData }
+        
+        $rootScope.user = data;
+
         return data;
     }
 
