@@ -203,128 +203,166 @@
     <div class="row">
         <div class="panel panel-default xmedium-panel">
             <h3>Sanction Leave</h3>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Employee Name:-</label>
-                                        <span class="form-control" ng-bind="entity.EmpName"></span>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>From Date:-</label>
-                                        <span class="form-control" ng-bind="entity.LEADDateFrom"></span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label>To Date:-</label>
-                                        <span class="form-control" ng-bind="entity.LEADDateTo"></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>From HalfDay:-</label>
-                                        <span class="form-control" ng-bind="entity.fromHalf"></span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label>To HalfDay:-</label>
-                                        <span class="form-control" ng-bind="entity.toHalf"></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Applied Days:-</label>
-                                        <span class="form-control" ng-bind="entity.TotalLeaveDays123"></span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label>Comment:-</label>
-                                        <span class="form-control" ng-bind="entity.LeadComment"></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Address:-</label>
-                                        <span class="form-control" ng-bind="entity.LEADAddress"></span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label>Contact Person Name:-</label>
-                                        <span class="form-control" ng-bind="entity.LEADContactName"></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Contact Number:-</label>
-                                        <span class="form-control" ng-bind="entity.LEADContactNo"></span>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class "col-md-6">
-                                        <table class="table table-responsive table-bordered table-hover table-condensed">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-md-2">Type</th>
-                                                    <th class="col-md-1">Balance</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr ng-repeat="leaveDetail in leaveDetails">
-                                                    <td ng-bind="leaveDetail.type"></td>
-                                                    <td ng-bind="leaveDetail.balance"></td>
-
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Sanction From Date:-</label>
-                                        <div class="input-group" moment-picker="addCtrl.empAdd.JDDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
-                                            min-date="col.minDate">
-                                            <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                            </span>
-                                            <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
-                                                ng-model="addCtrl.empAdd.JDDate" ng-model-options="{ updateOn: 'blur' }">
-                                            <span class="input-group-btn">
-                                            <button class="btn btn-secondary" ng-click="addCtrl.empAdd.JDDate=''" type="button"><i class="fa fa-close"></i></button>
-                                         </span>
+            <form ng-submit="leaveSanction()" name="editForm">
+                <div class="panel-body">
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
+                                                <span class="form-control" ng-bind="entity.EmpName"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label>Sanction To Date:-</label>
-                                        <div class="input-group" moment-picker="addCtrl.empAdd.JDDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
-                                            min-date="col.minDate">
-                                            <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                            </span>
-                                            <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
-                                                ng-model="addCtrl.empAdd.JDDate" ng-model-options="{ updateOn: 'blur' }">
-                                            <span class="input-group-btn">
-                                            <button class="btn btn-secondary" ng-click="addCtrl.empAdd.JDDate=''" type="button"><i class="fa fa-close"></i></button>
-                                           </span>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LEADDateFrom.text"></label>
+                                                <span class="form-control" ng-bind="entity.LEADDateFrom"></span>
+                                            </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LEADDateTo.text"></label>
+                                                <span class="form-control" ng-bind="entity.LEADDateTo"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LEADFromHalfDayId.text"></label>
+                                                <span class="form-control" ng-bind="entity.fromHalf"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LEADToHalfDayId.text"></label>
+                                                <span class="form-control" ng-bind="entity.toHalf"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.TotalLeaveDays123.text"></label>
+                                                <span class="form-control" ng-bind="entity.TotalLeaveDays123"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LeadComment.text"></label>
+                                                <span class="form-control" ng-bind="entity.LeadComment"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LEADAddress.text"></label>
+                                                <span class="form-control" ng-bind="entity.LEADAddress"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LEADContactName.text"></label>
+                                                <span class="form-control" ng-bind="entity.LEADContactName"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LEADContactNo.text"></label>
+                                                <span class="form-control" ng-bind="entity.LEADContactNo"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="row" ng-if="leaveDetails!=undefined">
+                                        <div class "col-md-6">
+                                            <div class="form-group">
+                                                <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Type</th>
+                                                            <th class="col-md-1">Balance</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="leaveDetail in leaveDetails">
+                                                            <td ng-bind="leaveDetail.type"></td>
+                                                            <td ng-bind="leaveDetail.balance"></td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="sanctionPage.fields.ELSDSanctionFromDate.text"></label>
+                                                <div class="input-group" moment-picker="entity.ELSDSanctionFromDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                                    min-date="col.minDate">
+                                                    <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                </span>
+                                                    <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                                        ng-model="entity.ELSDSanctionFromDate" ng-model-options="{ updateOn: 'blur' }">
+                                                    <span class="input-group-btn">
+                                                <button class="btn btn-secondary" ng-click="entity.ELSDSanctionFromDate=''" type="button"><i class="fa fa-close"></i></button>
+                                                 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="sanctionPage.fields.ELSDSanctionToDate.text"></label>
+                                                <div class="input-group" moment-picker="entity.ELSDSanctionToDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                                    min-date="col.minDate">
+                                                    <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                </span>
+                                                    <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                                        ng-model="entity.ELSDSanctionToDate" ng-model-options="{ updateOn: 'blur' }">
+                                                    <span class="input-group-btn">
+                                                <button class="btn btn-secondary" ng-click="entity.ELSDSanctionToDate=''" type="button"><i class="fa fa-close"></i></button>
+                                                 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                <select class="form-control" ng-model="entity.StatusId" ng-options="status.value as status.name for status in sanctionPage.statuslist"></select>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-info btn-lg">Sanction</button>
-                    <button type="button" class="btn btn-danger btn-lg" ng-click="showSanctionForm=false">Cancel</button>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info btn-lg">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="showSanctionForm=false">Cancel</button>
+                    </div>
                 </div>
-            </div>
-
+            </form>
         </div>
     </div>
 </div>
