@@ -4,8 +4,8 @@
     <div ng-show="showEditForm">
 
         <div class="row">
-            <div class="panel panel-default xmedium-panel">
-                <h3>{{page.pageinfo.tagline}}</h3>
+            <div ba-panel ba-panel-class="x-medium" ba-panel-title="{{page.pageinfo.tagline}}">
+                <!--<h3>{{page.pageinfo.tagline}}</h3>-->
                 <div class="panel-body">
                     <div>
                         <form name="editForm" ng-submit="saveForm(editForm)">
@@ -13,21 +13,27 @@
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
-                                            <select class="form-control" ng-model="entity.selectedEmp" ng-change="fetchDetail();leaveCtrl.validateLeave=true" ng-options="employee.name for employee in page.pageinfo.selects.LEADEmpId">
-                                        </select>
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
+                                                <select class="form-control" ng-model="entity.selectedEmp" ng-change="fetchDetail();leaveCtrl.validateLeave=true" ng-options="employee.name for employee in page.pageinfo.selects.LEADEmpId">
+                                            </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div ng-if="showSlider">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label ng-bind="page.pageinfo.fields.LEADDateFrom.text"></label>
+                                                <div class="form-group">
+                                                    <label ng-bind="page.pageinfo.fields.LEADDateFrom.text"></label>
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-5">
                                                         <field-box page="page" ng-column="page.pageinfo.fields.LEADDateFrom" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
                                                     </div>
                                                     <div class="col-md-1" ng-if="entity.LEADDateFrom">
-                                                        <label ng-bind="page.pageinfo.fields.LEADDateTo.text"></label>
+                                                        <div class="form-group">
+                                                            <label ng-bind="page.pageinfo.fields.LEADDateTo.text"></label>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-5" ng-if="entity.LEADDateFrom">
                                                         <field-box page="page" ng-column="page.pageinfo.fields.LEADDateTo" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
@@ -37,146 +43,159 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6" ng-if="entity.LEADDateFrom">
-                                                <rzslider rz-slider-model="fromSlider.minValue" rz-slider-high="fromSlider.maxValue" rz-slider-options="fromSlider.options"></rzslider>
+                                                <div class="form-group">
+                                                    <rzslider rz-slider-model="fromSlider.minValue" rz-slider-high="fromSlider.maxValue" rz-slider-options="fromSlider.options"></rzslider>
+                                                </div>
                                             </div>
                                             <div class="col-md-6" ng-if="entity.LEADDateTo && showToSlider">
-                                                <rzslider rz-slider-model="toSlider.minValue" rz-slider-high="toSlider.maxValue" rz-slider-options="toSlider.options"></rzslider>
+                                                <div class="form-group">
+                                                    <rzslider rz-slider-model="toSlider.minValue" rz-slider-high="toSlider.maxValue" rz-slider-options="toSlider.options"></rzslider>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <label></label>
-                                            <div ng-if="leaveCtrl.appliedDays!=undefined" class="col-md-6">
-                                                <div class="row">
-                                                    <label class="col-md-9"> No. Of Days Applied</label>
-                                                    <span class="col-md-6" ng-bind="leaveCtrl.appliedDays"></span>
+
+                                        <div class="row" ng-if="leaveCtrl.appliedDays!=undefined">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>No. Of Days Applied</label>
+                                                    <span ng-bind="leaveCtrl.appliedDays"></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label ng-bind="page.pageinfo.fields.LeadComment.text"></label>
-                                                <field-box page="page" ng-column="page.pageinfo.fields.LeadComment" ng-entity="entity" form="editForm"></field-box>
+                                                <div class="form-group">
+                                                    <label ng-bind="page.pageinfo.fields.LeadComment.text"></label>
+                                                    <field-box page="page" ng-column="page.pageinfo.fields.LeadComment" ng-entity="entity" form="editForm"></field-box>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <label ng-bind="page.pageinfo.fields.LEADAddress.text"></label>
-                                                <field-box page="page" ng-column="page.pageinfo.fields.LEADAddress" ng-entity="entity" form="editForm"></field-box>
+                                                <div class="form-group">
+                                                    <label ng-bind="page.pageinfo.fields.LEADAddress.text"></label>
+                                                    <field-box page="page" ng-column="page.pageinfo.fields.LEADAddress" ng-entity="entity" form="editForm"></field-box>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label ng-bind="page.pageinfo.fields.LEADContactName.text"></label>
-                                                <field-box page="page" ng-column="page.pageinfo.fields.LEADContactName" ng-entity="entity" form="editForm"></field-box>
+                                                <div class="form-group">
+                                                    <label ng-bind="page.pageinfo.fields.LEADContactName.text"></label>
+                                                    <field-box page="page" ng-column="page.pageinfo.fields.LEADContactName" ng-entity="entity" form="editForm"></field-box>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <label ng-bind="page.pageinfo.fields.LEADContactNo.text"></label>
-                                                <field-box page="page" ng-column="page.pageinfo.fields.LEADContactNo" ng-entity="entity" form="editForm"></field-box>
+                                                <div class="form-group">
+                                                    <label ng-bind="page.pageinfo.fields.LEADContactNo.text"></label>
+                                                    <field-box page="page" ng-column="page.pageinfo.fields.LEADContactNo" ng-entity="entity" form="editForm"></field-box>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="row" ng-if="leaveCtrl.validateLeave">
+                                    <div class="row" ng-if="leaveCtrl.appliedDays>0">
                                         <div class="col-md-5">
                                             <div class="checkbox">
                                                 <label class="custom-checkbox">      
-                                         <input  type="checkbox"  ng-model="entity.isConditiaonal" ng-change="onConditionalCheckbox()"> 
-                                          <span>Apply for Condtional Leave</span>
-                                        </label>
+                                                <input  type="checkbox"  ng-model="entity.isConditiaonal" ng-change="onConditionalCheckbox()"> 
+                                                <span>Apply for Condtional Leave</span>
+                                               </label>
                                             </div>
                                         </div>
                                         <div ng-if="entity.isConditiaonal" class="col-md-2">
                                             <select class="form-control" ng-model="entity.conditinalLeaveTypeId" ng-options="leaveType.value as leaveType.name for leaveType in page.pageinfo.selects.LEADLTId  | filter:leaveType.Conditional==True"
                                                 ng-change="onConditionalLeaveTypeChange()">
-                                        </select>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="row" ng-if="leaveCtrl.validateLeave">
+                                    <div class="row" ng-if="leaveCtrl.appliedDays>0">
                                         <div class="col-md-6">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <label>Leave days distribution as per leave type</label>
-                                                    <table class="table table-responsive table-bordered table-hover table-condensed">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="col-md-2">Type</th>
-                                                                <th class="col-md-1">Available Balance</th>
-                                                                <th class="col-md-2">Leave Debit</th>
-                                                                <th class="col-md-1">Half Day</th>
-                                                                <th class="col-md-2">Min</th>
-                                                                <th class="col-md-2">Max</th>
-                                                                <th class="col-md-2">Unclear Balance</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr ng-repeat="value in showLeave">
-                                                                <td ng-bind="value.LTName"></td>
-                                                                <td ng-bind="value.LeaveBalance"></td>
-                                                                <td>
-                                                                    <select ng-if="!value.isUnpaid && value.days.length>0" ng-model="value.leaveDr" ng-options="opt.id as opt.name for opt in value.days"
-                                                                        ng-change="onLeaveDrChange(value,'{{value.leaveDr}}' )"></select>
-                                                                    <div ng-if="value.isUnpaid">{{value.leaveDr}} Days</div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="checkbox" ng-if="!value.isUnpaid">
-                                                                        <label class="custom-checkbox">      
-                                                        <input  type="checkbox" ng-model="value.isHalfDay" ng-change="onHalfDayChange(value,'{{value.isHalfDay}}')"/> 
-                                                        <span></span>
-                                                    </label>
-                                                                    </div>
-                                                                </td>
-                                                                <td ng-bind="value.minDays"></td>
-                                                                <td ng-bind="value.maxDays"></td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </tbody>
-                                                        <tfoot>
-                                                            <tr>
-                                                                <td>Total</td>
-                                                                <td>{{getTotal('LeaveBalance')}}</td>
-                                                                <td>{{getTotal('leaveDr')}}</td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </tfoot>
-                                                    </table>
+                                                    <div class="form-group">
+                                                        <label>Leave days distribution as per leave type</label>
+                                                        <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="col-md-2">Type</th>
+                                                                    <th class="col-md-1">Available Balance</th>
+                                                                    <th class="col-md-2">Leave Debit</th>
+                                                                    <th class="col-md-1">Half Day</th>
+                                                                    <th class="col-md-2">Min</th>
+                                                                    <th class="col-md-2">Max</th>
+                                                                    <th class="col-md-2">Unclear Balance</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="value in showLeave">
+                                                                    <td ng-bind="value.LTName"></td>
+                                                                    <td ng-bind="value.LeaveBalance"></td>
+                                                                    <td>
+                                                                        <select ng-if="!value.isUnpaid && value.days.length>0" ng-model="value.leaveDr" ng-options="opt.id as opt.name for opt in value.days"
+                                                                            ng-change="onLeaveDrChange(value,'{{value.leaveDr}}' )"></select>
+                                                                        <div ng-if="value.isUnpaid">{{value.leaveDr}} Days</div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="checkbox" ng-if="!value.isUnpaid">
+                                                                            <label class="custom-checkbox">      
+                                                                        <input  type="checkbox" ng-model="value.isHalfDay" ng-change="onHalfDayChange(value,'{{value.isHalfDay}}')"/> 
+                                                                        <span></span>
+                                                                        </label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td ng-bind="value.minDays"></td>
+                                                                    <td ng-bind="value.maxDays"></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td>Total</td>
+                                                                    <td>{{getTotal('LeaveBalance')}}</td>
+                                                                    <td>{{getTotal('leaveDr')}}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-12" ng-hide="true">
-                                                    <label>Previous Applications</label>
-                                                    <table class="table table-responsive table-bordered table-hover table-condensed">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Status</th>
-                                                                <th>Application Date</th>
-                                                                <th>Leave From</th>
-                                                                <th>Leave To</th>
-                                                                <th>Days</th>
-                                                                <th>-</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr ng-repeat="leave in prevLeaveList">
-                                                                <td ng-bind="leave.status"></td>
-                                                                <td ng-bind="leave.appDate"></td>
-                                                                <td ng-bind="leave.from"></td>
-                                                                <td ng-bind="leave.to"></td>
-                                                                <td ng-bind="leave.days"></td>
-                                                                <td ng-bind="leave.distribution"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                <div class="col-md-12" ng-hide="false">
+                                                    <div class="form-group">
+                                                        <label>Previous Applications</label>
+                                                        <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Status</th>
+                                                                    <th>Application Date</th>
+                                                                    <th>Leave From</th>
+                                                                    <th>Leave To</th>
+                                                                    <th>Days</th>
+                                                                    <th>-</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="leave in prevLeaveList">
+                                                                    <td ng-bind="leave.status"></td>
+                                                                    <td ng-bind="leave.appDate"></td>
+                                                                    <td ng-bind="leave.from"></td>
+                                                                    <td ng-bind="leave.to"></td>
+                                                                    <td ng-bind="leave.days"></td>
+                                                                    <td ng-bind="leave.distribution"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="row">
-                            <div class="col-md-4"><label for=""></label></div>
-                        </div>-->
                             <div class="row">
                                 <div class="col-md-4"></div>
                                 <div class="col-md-6">
@@ -201,11 +220,9 @@
 
 <div ng-show="showSanctionForm">
     <div class="row">
-        <div class="panel panel-default xmedium-panel">
-            <h3>Sanction Leave</h3>
+         <div ba-panel ba-panel-class="x-medium" ba-panel-title="Sanction Leave">
             <form ng-submit="leaveSanction()" name="editForm">
                 <div class="panel-body">
-                    
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
@@ -359,7 +376,7 @@
 
                     <div class="text-center">
                         <button type="submit" class="btn btn-info btn-lg">Save</button>
-                        <button type="button" class="btn btn-danger btn-lg" ng-click="showSanctionForm=false">Cancel</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeSanction()">Cancel</button>
                     </div>
                 </div>
             </form>

@@ -113,6 +113,7 @@
     $scope.onConditionalCheckbox = _onConditionalCheckbox;
     $scope.closeForm = _closeForm;
     $scope.leaveSanction = _leaveSanction;
+    $scope.closeSanction = _closeSanction;
     // $scope.getLeaveTypeAccordingLeaveControl = _getLeaveTypeAccordingLeaveControl;
 
     console.log($scope.page)
@@ -144,30 +145,40 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _leaveVerify }]
+      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _leaveVerify, pin: true }]
     }
 
     function _leaveVerify(row) {
       $scope.leaveDetails = [];
       $scope.entity = [];
       $scope.showSanctionForm = true;
-      console.log(row)
+      //Get page of SanctionLeave 
+      pageService.getPagData(sanctionLeavePageId).then(_getPageDataSuccessResult, _getPageDataErrorResult)
       var transaction = row.entity.LEADTransation;
       if (transaction != null && transaction != undefined && transaction != '') {
         var rows = transaction.split(',');
         // console.log($scope.page.pageinfo.selects.LEADLTId)
         angular.forEach(rows, function (row) {
+
           var data = row.split('|');
-          var leaveType = $filter('findObj')($scope.page.pageinfo.selects.LEADLTId, parseInt(data[0]), 'value').name;
-          var leaveDetail = {
-            type: leaveType == null ? "" : leaveType,
-            balance: data[1]
+          if (parseInt(data[0]) != 0) {
+            var leaveType = $filter('findObj')($scope.page.pageinfo.selects.LEADLTId, parseInt(data[0]), 'value').name;
+            var leaveDetail = {
+              type: leaveType == null ? "" : leaveType,
+              balance: data[1]
+            }
+          }
+          else {
+            var leaveDetail = {
+              type: "LWP",
+              balance: data[1]
+            }
           }
           $scope.leaveDetails.push(leaveDetail)
         })
       }
-      else{
-         $scope.leaveDetails=undefined;
+      else {
+        $scope.leaveDetails = undefined;
       }
       if (row.entity.LEADDateFrom != undefined)
         row.entity.LEADDateFrom = moment(row.entity.LEADDateFrom).format("DD/MMMM/YYYY");
@@ -196,9 +207,13 @@
         }
       }
       $scope.entity = row.entity;
-      //Get page of SanctionLeave 
-      pageService.getPagData(sanctionLeavePageId).then(_getPageDataSuccessResult, _getPageDataErrorResult)
+    }
 
+    function _getPageDataSuccessResult(result) {
+
+      $scope.sanctionPage = result.pageinfo;
+      $scope.entity.ELSDSanctionFromDate = $scope.entity.LEADDateFrom;
+      $scope.entity.ELSDSanctionToDate = $scope.entity.LEADDateTo;
       //Get entity of sanctionleave  
       var searchList = [];
       var searchFields = {
@@ -209,33 +224,26 @@
       searchList.push(searchFields);
       pageService.findEntity(sanctinLeaveTableId, undefined, searchList).then(_findEntitySuccessResult, _findEntityErrorResult)
       //End entity of sanctionleave 
-
-
-    }
-    function _findEntitySuccessResult(result) {
-
-      console.log(result)
-      $scope.sectionOldEntity = angular.copy(result);
-      $scope.entity.ELSDId = result.ELSDId;
-      $scope.entity.ELSDSanctionFromDate = result.ELSDSanctionFromDate;
-      $scope.entity.ELSDSanctionToDate = result.ELSDSanctionToDate;
-      $scope.entity.StatusId = parseInt(result.StatusId);
-    }
-    function _findEntityErrorResult(err) {
-
-    }
-    function _getPageDataSuccessResult(result) {
-
-      $scope.sanctionPage = result.pageinfo;
-      // $scope.entity.ELSDSanctionFromDate = $scope.entity.LEADDateFrom;
-      // $scope.entity.ELSDSanctionToDate = $scope.entity.LEADDateTo;
       // $scope.entity.StatusId = $scope.sanctionPage.statuslist[0].value;
     }
     function _getPageDataErrorResult(err) {
 
     }
+    function _findEntitySuccessResult(result) {
+      $scope.sectionOldEntity = angular.copy(result);
+      console.log(result)
+      if (result.ELSDId != undefined) {
+        $scope.entity.ELSDId = result.ELSDId;
+        $scope.entity.ELSDSanctionFromDate = result.ELSDSanctionFromDate;
+        $scope.entity.ELSDSanctionToDate = result.ELSDSanctionToDate;
+        $scope.entity.StatusId = parseInt(result.StatusId);
+      }
+    }
+    function _findEntityErrorResult(err) {
+
+    }
     function _validateSanctionForm() {
-    
+
       if ($scope.entity.ELSDSanctionFromDate == undefined && $scope.entity.ELSDSanctionToDate == null) {
         $scope.showMsg("error", "Please Enter Sanction FromDate");
         return true;
@@ -254,7 +262,7 @@
 
     function _leaveSanction() {
       console.log($scope.entity)
-       if (!_validateSanctionForm()) {
+      if (!_validateSanctionForm()) {
         var santionLeave = {
           ELSDId: $scope.entity.ELSDId == undefined ? undefined : $scope.entity.ELSDId,
           ELSDELAId: $scope.entity.LEADId,
@@ -275,6 +283,7 @@
         action, $scope.sanctionPage.title, editForm, showConfirmation)
         .then(_saveSuccessResult, _saveErrorResult)
     }
+
     function _saveSuccessResult(result) {
 
       if (result.success_message == 'Added New Record.') {
@@ -283,10 +292,17 @@
       else {
         $scope.showMsg("success", "Leave Sanction")
       }
+      $scope.showSanctionForm = false;
+      $scope.page.refreshData();
     }
     function _saveErrorResult(err) {
       $scope.showMsg("error", err)
     }
+    function _closeSanction() {
+      $scope.page.refreshData();
+      $scope.showSanctionForm = false;
+    }
+
     $scope.$watch('entity.LEADDateFrom', function (newVal, oldVal) {
       if (newVal) {
         if (!$scope.entity.LEADDateTo) {
@@ -363,6 +379,7 @@
         }
         vm.appliedDays = appliedDays;
       }
+
       _calculateDays();
     }
     function _addRecord() {
@@ -392,6 +409,7 @@
       _fetchLeaveDetail(); vm.validateLeave = true
     }
     function _closeForm() {
+
       $scope.showEditForm = false;
     }
     function _fetchLeaveDetail() {
@@ -428,15 +446,17 @@
       //loop on current leave balance 
       var leaveBalList = angular.copy($scope.showLeave);
       angular.forEach(leaveBalList, function (leave, index) {
+
         leave.leaveDr = 0;
         leave.isDisabled = false;
         var leaveRule = $filter('findObj')($scope.leaveRuleList, leave.LRCLeaveTypeId, 'LRCLeaveTypeId')
+        leave.minDays = leaveRule.LRCDRMinDays;
+        leave.maxDays = leaveRule.LRCDrMaxDays;
+        leave.isUnpaid = false;
         if (leave.LeaveBalance > 0 && balLeave > 0) {
 
           if (leaveRule != null) {
-            leave.minDays = leaveRule.LRCDRMinDays;
-            leave.maxDays = leaveRule.LRCDrMaxDays;
-            leave.isUnpaid = false;
+
             if (vm.appliedDays < leaveRule.LRCDRMinDays) {
               leave.isDisabled = true;
             }
@@ -474,8 +494,8 @@
                 balLeave = balLeave - leave.LeaveBalance;
               }
               else if (leave.LeaveBalance > balLeave) {
-                var halfDay = (leave.LRCDrMaxDays % 1);
-                leave.leaveDr = leave.LRCDrMaxDays - halfDay;
+                var halfDay = (leave.maxDays % 1);
+                leave.leaveDr = leave.maxDays - halfDay;
                 leave.halfDay = halfDay;
                 balLeave = balLeave - leaveRule.LRCDrMaxDays;
               }
@@ -565,6 +585,7 @@
       if (result != "NoDataFound") {
         var balLeave = vm.appliedDays;
         $scope.leaveRuleList = result;
+        _calculateDays();
       }
       else {
         $scope.showMsg('error', 'No Leave Rule Found.')
@@ -767,13 +788,18 @@
       }
     }
     function _validateForm(form) {
+
       var valid = editFormService.validateForm(form)
       if (valid) {
         $scope.entity.LEADTransation = ''
         angular.forEach($scope.showLeave, function (leave, idx) {
+
           if (leave.leaveDr) {
             if (leave.leaveDr > 0 || leave.isHalfDay) {
-              var strLeave = leave.LRCLeaveTypeId + '|' + leave.leaveDr + ((leave.isHalfDay) ? .5 : 0)
+              if (leave.LTName == "LWP" && leave.leaveDr != 0) {
+                leave.LRCLeaveTypeId = 0;
+              }
+              var strLeave = leave.LRCLeaveTypeId + '|' + leave.leaveDr + ((leave.isHalfDay) ? .5 : '')
               $scope.entity.LEADTransation += strLeave + ',';
             }
           }
@@ -815,6 +841,7 @@
       return valid;
     }
     function _getLeaveCountSuccess(result) {
+      alert(JSON.stringify($scope.entity))
       if (result == "NoDataFound") {
         $scope.isSavingLeave = true;
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
@@ -862,6 +889,7 @@
         searchList: searchList,
         orderByList: []
       }
+
       var tableData = pageService.getTableData($scope.page.pageinfo.tableid,
         $scope.page.pageinfo.pageid,
         '', '',

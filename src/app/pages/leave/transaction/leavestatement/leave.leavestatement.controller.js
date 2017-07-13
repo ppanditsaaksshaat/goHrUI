@@ -65,8 +65,8 @@
     }
 
     function _creditAndDebitValue() {
-      alert('sfsd')
-      debugger;
+
+
       if ($scope.creaditLeave) {
         $scope.creditAndDebitCR = true;
 
