@@ -841,7 +841,7 @@
       return valid;
     }
     function _getLeaveCountSuccess(result) {
-      alert(JSON.stringify($scope.entity))
+   
       if (result == "NoDataFound") {
         $scope.isSavingLeave = true;
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
