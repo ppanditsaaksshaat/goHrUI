@@ -103,6 +103,7 @@
     $scope.leaveDetails = [];
     $scope.entity = { LEADToHalfDayId: 2, LEADFromHalfDayId: 2 }
     $scope.page = $scope.createPage();
+    $scope.page.orderByList = [{ column: 'LEADDateFrom', isDesc: false }]
     $scope.fetchDetail = _fetchLeaveDetail;
     $scope.appliedDays = _appliedDays;
     $scope.getTotal = _getTotal;
@@ -901,7 +902,8 @@
               if (leave.LTName == "LWP" && leave.leaveDr != 0) {
                 leave.LRCLeaveTypeId = 0;
               }
-              var strLeave = leave.LRCLeaveTypeId + '|' + leave.leaveDr + ((leave.isHalfDay) ? .5 : '')
+             
+              var strLeave = leave.LRCLeaveTypeId + '|' + (parseInt(leave.leaveDr) + ((leave.isHalfDay) ? 0.5 : ''))
               $scope.entity.LEADTransation += strLeave + ',';
             }
           }
@@ -970,7 +972,7 @@
 
       _commonSaveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, 'delete', $scope.page.pageinfo.tagline)
     }
-    function _commonSaveForm(pageId, newEntity, oldEntity, action, pageTagLine ) {
+    function _commonSaveForm(pageId, newEntity, oldEntity, action, pageTagLine) {
       editFormService.saveForm(pageId, newEntity,
         oldEntity, action, pageTagLine)
         .then(_saveFormSuccess, _saveFormError)
