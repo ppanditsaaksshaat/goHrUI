@@ -127,7 +127,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
             //token expired 
             if (urlPath.indexOf('auth.html') < 0) {
                 _logout();
-            }   
+            }
             return;
         }
 
@@ -135,7 +135,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         var appData = _getAppData();
 
         var data = { app: appData, profile: profileData, auth: authData }
-        
+
         $rootScope.user = data;
 
         return data;
