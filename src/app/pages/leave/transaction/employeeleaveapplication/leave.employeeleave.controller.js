@@ -154,7 +154,7 @@
     }
 
     function _leaveVerify(row) {
-      console.log(row)
+      console.log($scope.entity)
       $scope.leaveDetails = [];
       $scope.entity = [];
       $scope.showSanctionForm = true;
@@ -168,7 +168,7 @@
 
           var data = row.split('|');
           if (parseInt(data[0]) != 0) {
-            var leaveType = $filter('findObj')($scope.page.pageinfo.selects.LEADLTId, parseInt(data[0]), 'value').name;
+            // ?|            var leaveType = $filter('findObj')($scope.page.pageinfo.selects.LEADLTId, parseInt(data[0]), 'value').name;
             var leaveDetail = {
               type: leaveType == null ? "" : leaveType,
               balance: data[1]
@@ -969,7 +969,7 @@
 
       _commonSaveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, 'delete', $scope.page.pageinfo.tagline)
     }
-    function _commonSaveForm(pageId, newEntity, oldEntity, action, pageTagLine, ) {
+    function _commonSaveForm(pageId, newEntity, oldEntity, action, pageTagLine) {
       editFormService.saveForm(pageId, newEntity,
         oldEntity, action, pageTagLine)
         .then(_saveFormSuccess, _saveFormError)
