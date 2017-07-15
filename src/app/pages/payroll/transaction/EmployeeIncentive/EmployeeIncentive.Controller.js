@@ -131,24 +131,25 @@
 
       angular.forEach($scope.page.pageinfo.filters, function (col, cdx) {
         if (col.name == 'SIDMonth')
-          $scope.page.searchList.push({
+          searchLists.push({
             field: col.name,
             operand: '=',
             value: col.value,
           })
         if (col.name == 'SIDYear')
-          $scope.page.searchList.push({
+          searchLists.push({
             field: col.name,
             operand: '=',
             value: col.value,
           })
         if (col.name == 'SIDSHId')
-          $scope.page.searchList.push({
+          searchLists.push({
             field: col.name,
             operand: '=',
             value: col.value,
           })
       })
+      console.log($scope.page.searchList)
 
 
       // var searchListData = {
@@ -168,7 +169,7 @@
       //   operand: '=',
       //   value: $scope.page.pageinfo.filters[2].value
       // }
-      
+
       // searchLists.push(searchListData)
       var data = {
         searchList: searchLists,
