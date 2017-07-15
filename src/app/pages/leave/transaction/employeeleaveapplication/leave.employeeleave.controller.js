@@ -154,6 +154,7 @@
     }
 
     function _leaveVerify(row) {
+      console.log($scope.entity)
       console.log(row)
       $scope.leaveDetails = [];
       $scope.entity = [];
