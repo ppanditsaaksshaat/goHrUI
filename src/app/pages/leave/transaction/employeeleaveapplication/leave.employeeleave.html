@@ -205,8 +205,8 @@
                                     <span ng-hide="isSavingLeave">Apply Leave</span>
                                     <span ng-show="isSavingLeave">Applying..</span>
                                     </button>
-                                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeForm()">Cancel</button>
-                                        <button type="button" class="btn btn-danger btn-lg" ng-click="deleteForm()">Delete</button>
+                                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeForm()">Close</button>
+                                        <button ng-if="entity.LEADId!=undefined" type="button" class="btn btn-danger btn-lg" ng-click="deleteForm()">Delete</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -478,9 +478,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Comment</label>
-                               <textarea class="form-control" ng-model="entity.CRComment"></textarea>
+                                <textarea class="form-control" ng-model="entity.CRComment"></textarea>
                             </div>
-                        </div>            
+                        </div>
                     </div>
 
 
