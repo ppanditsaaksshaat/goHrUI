@@ -401,7 +401,7 @@
     <div ng-show="verifySanctionForm">
         <div class="row">
             <div ba-panel ba-panel-class="x-medium" ba-panel-title="View Leave">
-                <form ng-submit="cancelRequest()" name="editForm">
+                <form ng-submit="cancelLeave()" name="editForm">
                     <div class="panel-body">
 
                         <div class="row">
@@ -501,7 +501,7 @@
 <div ng-show="verifyCancelRequestForm">
     <div class="row">
         <div ba-panel ba-panel-class="x-medium" ba-panel-title="View Leave">
-            <form ng-submit="cancelRequest()" name="editForm">
+            <form ng-submit="replyOnCancelLeave(cancelRequestEntity)" name="editForm">
                 <div class="panel-body">
 
                     <div class="row">
@@ -566,28 +566,28 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Remarks</label>
-                                <span class="form-control" ng-bind="cancelRequestEntity.LeadComment"></span>
+                                <span class="form-control" ng-bind="cancelRequestEntity.CRComment"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Status</label>
-                                <select ng-disabled="true" class="form-control" ng-model="cancelRequestEntity.StatusId" ng-options="status.value as status.name for status in page.pageinfo.statuslist"></select>
+                                <select class="form-control" ng-model="cancelRequestEntity.StatusId" ng-options="status.value as status.name for status in cancelRequestPage.pageinfo.statuslist"></select>
                             </div>
                         </div>
                     </div>
-                    <div ng-if="!status.isRejected" class="row">
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Comment</label>
-                                <textarea class="form-control" ng-model="cancelRequestEntity.CRComment"></textarea>
+                                <textarea class="form-control" ng-model="cancelRequestEntity.CRFinalComment"></textarea>
                             </div>
                         </div>
                     </div>
 
 
                     <div class="text-center">
-                        <button ng-if="!status.isRejected" type="submit" class="btn btn-info btn-lg">Cancel Leave</button>
+                        <button type="submit" class="btn btn-info btn-lg">Save</button>
                         <button type="button" class="btn btn-danger btn-lg" ng-click="closeVerifyCancelRequestForm()">Close</button>
                     </div>
                 </div>

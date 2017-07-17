@@ -381,8 +381,21 @@
 
                             })
                             if ($scope.page.pageinfo.statuslist.length > 0) {
-
-                                //  var filter= $scope.page.pageinfo.filters;
+                                $scope.page.pageinfo.statuslist.push({
+                                    isApproved: false,
+                                    isCancelApprove: false,
+                                    isCancelOnHold: false,
+                                    isCancelRejected: false,
+                                    isCancelRequest: false,
+                                    isCancelled: false,
+                                    isOnHold: false,
+                                    isPending: true,
+                                    isRejected: false,
+                                    name: "Pending",
+                                    perc: "0",
+                                    rank: "0",
+                                    value: 0
+                                })
                                 $scope.page.pageinfo.filters.push({
                                     name: 'StatusId',
                                     controlType: 'select',
@@ -391,8 +404,6 @@
                                     titleMap: $scope.page.pageinfo.statuslist
                                 })
                             }
-
-                            console.log($scope.page.pageinfo)
                             pageInfoListner();
                         }
                     }

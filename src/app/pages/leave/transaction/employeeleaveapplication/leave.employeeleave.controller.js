@@ -128,8 +128,9 @@
     $scope.closeSanction = _closeSanction;
     $scope.deleteForm = _deleteForm;
     $scope.closeViewSanctionForm = _closeViewSanctionForm;
-    $scope.cancelRequest = _cancelRequest;
+    $scope.cancelLeave = _cancelLeave;
     $scope.closeVerifyCancelRequestForm = _closeVerifyCancelRequestForm;
+    $scope.replyOnCancelLeave = _replyOnCancelLeave;
     // $scope.getLeaveTypeAccordingLeaveControl = _getLeaveTypeAccordingLeaveControl;
     // $scope.selectEmployeeData = $scope.page.pageinfo.selects.LEADEmpId;
     // console.log($scope.selectEmployeeData)
@@ -589,7 +590,7 @@
         status = {};
         status.isRejected = false;
         status.isCancelRequest = false;
-      } 
+      }
       if (!status.isRejected) {
         if (!status.isCancelRequest) {
           $scope.leaveDetails = [];
@@ -652,7 +653,23 @@
           $scope.entity = row.entity;
         }
         else {
+
           $scope.verifyCancelRequestForm = true;
+          pageService.getPagData(cancelRequestPageId).then(_getPageDataSuccessResult, _getPageDataErrorResult)
+          $scope.cancelRequestEntity.EmpName = row.entity.EmpName;
+          $scope.cancelRequestEntity.TotalLeaveDays123 = row.entity.TotalLeaveDays123;
+          $scope.cancelRequestEntity.LEADDateFrom = moment(row.entity.LEADDateFrom).format("DD/MMMM/YYYY");
+          $scope.cancelRequestEntity.LEADDateTo = moment(row.entity.LEADDateTo).format("DD/MMMM/YYYY");
+          $scope.cancelRequestEntity.ELSDSanctionFromDate = moment(row.entity.ELSDSanctionFromDate).format("DD/MMMM/YYYY");
+          $scope.cancelRequestEntity.ELSDSanctionToDate = moment(row.entity.ELSDSanctionToDate).format("DD/MMMM/YYYY");
+          var searchList = [];
+          var searchFields = {
+            field: 'CREmpId',
+            operand: '=',
+            value: row.entity.LEADEmpId
+          }
+          searchList.push(searchFields)
+          _commonFindEntity(cancelRequestTableId, searchList)
         }
       }
       else {
@@ -661,21 +678,23 @@
     }
 
     function _getPageDataSuccessResult(result) {
-
-      $scope.sanctionPage = result;
-      $scope.sanctionEntity.ELSDSanctionFromDate = $scope.entity.LEADDateFrom;
-      $scope.sanctionEntity.ELSDSanctionToDate = $scope.entity.LEADDateTo;
-      //Get entity of sanctionleave  
-      var searchList = [];
-      var searchFields = {
-        field: 'ELSDELAId',
-        operand: '=',
-        value: $scope.entity.LEADId
+      if (parseInt(result.pageinfo.pageid) == parseInt(cancelRequestPageId)) {
+        $scope.cancelRequestPage = result;
       }
-      searchList.push(searchFields);
-      pageService.findEntity(sanctinLeaveTableId, undefined, searchList).then(_findEntitySuccessResult, _findEntityErrorResult)
-      //End entity of sanctionleave 
-      // $scope.entity.StatusId = $scope.sanctionPage.statuslist[0].value;
+      if (parseInt(result.pageinfo.pageid) == parseInt(sanctionLeavePageId)) {
+        $scope.sanctionPage = result;
+        $scope.sanctionEntity.ELSDSanctionFromDate = $scope.entity.LEADDateFrom;
+        $scope.sanctionEntity.ELSDSanctionToDate = $scope.entity.LEADDateTo;
+        //Get entity of sanctionleave  
+        var searchList = [];
+        var searchFields = {
+          field: 'ELSDELAId',
+          operand: '=',
+          value: $scope.entity.LEADId
+        }
+        searchList.push(searchFields);
+        pageService.findEntity(sanctinLeaveTableId, undefined, searchList).then(_findEntitySuccessResult, _findEntityErrorResult)
+      }
     }
     function _getPageDataErrorResult(err) {
 
@@ -819,7 +838,7 @@
     }
 
     function _addRecord() {
-       console.log($scope.page.pageinfo.filters)
+      console.log($scope.page.pageinfo.filters)
       vm.appliedDays = undefined;
       $scope.disabledEmp = false;
       $scope.entity = [];
@@ -864,7 +883,7 @@
       else {
 
         $scope.status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
-     
+
         if (!$scope.status.isCancelRequest) {
           var searchList = [];
           var searchFields = {
@@ -873,8 +892,7 @@
             value: row.entity.LEADEmpId
           }
           searchList.push(searchFields)
-
-          pageService.findEntity(cancelRequestTableId, undefined, searchList).then(_cancelRequestSuccessResult, _cancelRequestErrorResult)
+          _commonFindEntity(cancelRequestTableId, searchList, row.entity);
           $scope.verifySanctionForm = true;
           $scope.cancelRequestEntity.CREmpId = row.entity.LEADEmpId;
           $scope.cancelRequestEntity.CRLEADId = row.entity.LEADId;
@@ -897,9 +915,12 @@
       }
 
     }
+    function _commonFindEntity(tableId, searchList) {
+      pageService.findEntity(tableId, undefined, searchList).then(_cancelRequestSuccessResult, _cancelRequestErrorResult)
+    }
     function _cancelRequestSuccessResult(result) {
-      console.log(result)
       $scope.cancelRequestOldEntity = angular.copy(result);
+      debugger
       if (result.CRId != undefined) {
         $scope.cancelRequestEntity.CRId = result.CRId;
         $scope.cancelRequestEntity.CRComment = result.CRComment;
@@ -917,7 +938,8 @@
       $scope.verifyCancelRequestForm = false;
       $scope.page.refreshData();
     }
-    function _cancelRequest() {
+    $scope.cancelLeave = _cancelLeave;
+    function _cancelLeave() {
 
       if ($scope.cancelRequestEntity.CRComment != undefined) {
         var cancelRequest = {
@@ -933,7 +955,6 @@
           CRLEADId: $scope.cancelRequestEntity.CRLEADId,
 
         }
-        alert(JSON.stringify(cancelRequest))
         if ($scope.entity.CRId == undefined) {
           _formSave(cancelRequest, cancelRequestPageId, 'create', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, true, 'Cancel Request');
         }
@@ -946,7 +967,9 @@
       }
     }
 
+    function _replyOnCancelLeave() {
 
+    }
 
 
     function _onLeaveChange(leave) {
