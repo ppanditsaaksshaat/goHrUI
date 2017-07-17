@@ -256,10 +256,10 @@
                  * Clear All Fiters Values
                  */
                 function _clearFilter() {
-                    
+
                     $scope.page.searchList = {};
                     $scope.filterData = undefined;
-                    angular.forEach($scope.page.pageinfo.filters, function (filter) {                     
+                    angular.forEach($scope.page.pageinfo.filters, function (filter) {
                         if (filter.required) {
                             filter.showFilter = true;
                             filter.value = undefined;
@@ -380,6 +380,19 @@
                                 }
 
                             })
+                            if ($scope.page.pageinfo.statuslist.length > 0) {
+
+                                //  var filter= $scope.page.pageinfo.filters;
+                                $scope.page.pageinfo.filters.push({
+                                    name: 'StatusId',
+                                    controlType: 'select',
+                                    displayName: 'Status',
+                                    operator: '=',
+                                    titleMap: $scope.page.pageinfo.statuslist
+                                })
+                            }
+
+                            console.log($scope.page.pageinfo)
                             pageInfoListner();
                         }
                     }

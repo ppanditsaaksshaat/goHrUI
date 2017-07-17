@@ -290,7 +290,7 @@
     function _selectGroup(groupId) {
       groupIds.push(groupId);
 
-      alert(groupIds)
+     
     }
 
     function _getTotalTenure() {
