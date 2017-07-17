@@ -31,6 +31,7 @@
         //page load 
         function _loadController() {
             $timeout(function () {
+                vm.empAdd.JDDate = moment();
                 pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
                 pageService.getFieldSetting(vm.pageId).then(_getFieldSettingSuccessResult, _getFieldSettingErrorResult)
                 var data = {
@@ -41,9 +42,10 @@
             });
         }
         function _getCustomQuerySuccessResult(result) {
-
-            vm.groupList = result;
-            vm.empAdd.JDGroupId = result[0].GMCId;
+            if (result != "NoDataFound") {
+                vm.groupList = result;
+                vm.empAdd.JDGroupId = result[0].GMCId;
+            }
         }
         function _getCustomQueryErrorResult(err) {
 
