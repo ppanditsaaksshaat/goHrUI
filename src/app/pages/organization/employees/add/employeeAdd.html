@@ -173,6 +173,19 @@
           <input type="text" class="form-control" ng-model="addCtrl.empAdd.PDOtherNumber" placeholder="Other Identity">
         </div>
       </div>
+       <div class="col-sm-4">
+        <div class="form-group">
+          <label>Group</label>
+             <select id="inputEmployeeType" 
+                  ng-model="addCtrl.empAdd.JDGroupId"
+                  class="form-control"
+                  ng-options="group.GMCId as group.GMCName for group in addCtrl.groupList"
+                  data-placeholder="Select Nav Menu"
+                  required>
+                  <option></option>
+               </select>
+        </div>
+      </div>
 
     </div>
     <div class="text-center">
