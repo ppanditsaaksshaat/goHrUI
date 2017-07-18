@@ -4,7 +4,7 @@
 <div class="widgets" ng-show="showEditForm">
     <div class="row">
         <div class="col-md-12">
-            <div ba-panel ba-panel-title="Leave Control" ba-panel-class="with-scroll" >
+            <div ba-panel ba-panel-title="Leave Control" ba-panel-class="with-scroll">
                 <ba-wizard ba-save-wizard="saveWizardForm(entity,editForm)">
                     <ba-wizard-step title="Leave Type" form="formLeaveType">
                         <form name="formLeaveType" novalidate>
@@ -18,11 +18,16 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label ng-bind="page.pageinfo.fields.LRCWEFDate.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCWEFDate" ng-entity="entity" form="editForm"></field-box>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCWEFDate" ng-entity="entity" form="editForm" fb-change="daysDiff()"></field-box>
                                 </div>
                                 <div class="col-md-6">
                                     <label ng-bind="page.pageinfo.fields.LRCToDate.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCToDate" ng-entity="entity" form="editForm"></field-box>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCToDate" ng-entity="entity" form="editForm" fb-change="daysDiff()" ></field-box>
+
+                                </div>
+                                <div ng-if="entity.calculateDays !=undefined" class="col-md-6">
+                                    <label >Calculate Days</label>
+                                   <span ng-bind="entity.calculateDays"></span>
 
                                 </div>
                             </div>
@@ -48,9 +53,9 @@
                                     <label ng-bind="page.pageinfo.fields.LRCCRDaysInInterval.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCCRDaysInInterval" ng-entity="entity" form="editForm" fb-change="getTotalTenure()"></field-box>
                                 </div>
-                                <div ng-if="totalTenure!=undefined" class="col-md-6">
+                                <div ng-if="entity.totalTenure!=undefined" class="col-md-6">
                                     <label>Total Tenure</label>
-                                    <span ng-bind="totalTenure"></span>
+                                    <span ng-bind="entity.totalTenure"></span>
                                 </div>
                             </div>
                         </form>
@@ -94,7 +99,7 @@
 
                                     <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCDrMaxDays.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCDrMaxDays" ng-entity="entity" form="editForm"></field-box>
-                                </div> 
+                                </div>
                                 <div class="col-md-6">
                                     <label ng-bind="page.pageinfo.fields.LRCMaxDrLimitDays.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCMaxDrLimitDays" ng-entity="entity" form="editForm"></field-box>
@@ -115,10 +120,20 @@
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCIsHalfDayAllowed" ng-entity="entity" form="editForm"></field-box>
 
                                 </div>
-                                <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">
                                     <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsPartialAlowed.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCIsPartialAlowed" ng-entity="entity" form="editForm"></field-box>
                                 </div>
+                                <div ng-if="entity.LRCIsPartialAlowed" class="col-md-6">
+                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCPartialDaysAllowed.text"></label>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCPartialDaysAllowed" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                        </div>
+
+
                                 <div class="col-md-12">
                                     <div class="checkbox">
                                         <label class="custom-checkbox">      
@@ -144,16 +159,26 @@
 
 
                                 </div>
-
+                                <div class="row">
                                 <div class="col-md-6">
+                                    <div class="col-md-6">
 
-                                    <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsEncashable.text"></label>
-                                    <field-box page="page" ng-column="page.pageinfo.fields.LRCIsEncashable" ng-entity="entity" form="editForm"></field-box>
+                                        <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsEncashable.text"></label>
+                                        <field-box page="page" ng-column="page.pageinfo.fields.LRCIsEncashable" ng-entity="entity" form="editForm"></field-box>
+                                    </div>
+                                    <div ng-if="entity.LRCIsEncashable" class="col-md-6">
+
+                                        <label for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCEncashableDaysAllowed.text"></label>
+                                        <field-box page="page" ng-column="page.pageinfo.fields.LRCEncashableDaysAllowed" ng-entity="entity" form="editForm"></field-box>
+                                    </div>
                                 </div>
+                                
+
                                 <div class="col-md-6">
                                     <label ng-bind="page.pageinfo.fields.LRCPayMode.text"></label>
                                     <field-box page="page" ng-column="page.pageinfo.fields.LRCPayMode" ng-entity="entity" form="editForm"></field-box>
 
+                                </div>
                                 </div>
 
                             </div>
@@ -168,7 +193,7 @@
                                         <li>
                                             <div class="checkbox">
                                                 <label class="custom-checkbox">      
-                                                <input  type="checkbox"  ng-model="value.isSelected"> 
+                                                <input ng-change="groupOnChange(value.GMCId,value.isSelected)" type="checkbox"  ng-model="value.isSelected"> 
                                                 <span ng-bind="value.GMCName"></span>
                                                 </label>
                                             </div>
@@ -269,7 +294,7 @@
                                     <label class="" for="exampleUsername1" ng-bind="page.pageinfo.fields.LRCIsEncashable.text"></label>
                                     <span class="form-control" ng-bind="entity.LRCIsEncashable"></span>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label class="" ng-bind="page.pageinfo.fields.LRCPayMode.text"></label>
                                     <select ng-disabled="true" class="form-control" ng-model="entity.LRCPayMode" ng-options="leavetype.value as leavetype.name for  leavetype in page.pageinfo.selects.LRCPayMode"></select>
                                 </div>
