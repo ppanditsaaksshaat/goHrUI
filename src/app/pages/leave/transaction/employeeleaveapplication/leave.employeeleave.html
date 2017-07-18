@@ -14,7 +14,8 @@
                                         <div class="col-md-6">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <div class="form-group">
+                                                   
+                                                    <div class="form-group"> 
                                                         <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
                                                         <select ng-disabled="disabledEmp" class="form-control" ng-model="entity.selectedEmp" ng-change="fetchDetail();leaveCtrl.validateLeave=true"
                                                             ng-options="employee.name for employee in page.pageinfo.selects.LEADEmpId">
@@ -547,7 +548,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -561,11 +562,11 @@
                                 <span class="form-control" ng-bind="cancelRequestEntity.LEADContactNo"></span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Remarks</label>
+                                <label>Employee Comment</label>
                                 <span class="form-control" ng-bind="cancelRequestEntity.CRComment"></span>
                             </div>
                         </div>
@@ -580,7 +581,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Comment</label>
-                                <textarea class="form-control" ng-model="cancelRequestEntity.CRFinalComment"></textarea>
+                                <textarea class="form-control" ng-model="cancelRequestEntity.CRCommentAfterCanReq"></textarea>
                             </div>
                         </div>
                     </div>

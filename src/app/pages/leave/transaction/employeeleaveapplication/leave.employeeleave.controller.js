@@ -166,6 +166,8 @@
 
     /**Fetching  credit,debit and LWP leave for employee */
     function _fetchLeaveDetail() {
+
+      $scope.employeeJoiningDate = $scope.entity.selectedEmp.JDDate;
       $scope.entity.LEADEmpId = $scope.entity.selectedEmp.value;
       $timeout(function () {
         $scope.$broadcast('rzSliderForceRender');
@@ -498,7 +500,21 @@
 
     /**Save Leave */
     function _saveLeaveForm(form) {
-      if (_validateForm(form)) {
+    
+      if ($scope.employeeJoiningDate != null && $scope.employeeJoiningDate != undefined && $scope.employeeJoiningDate != '') {
+        var joiningDate = moment($scope.employeeJoiningDate);
+        var fromDate = moment($scope.entity.LEADDateFrom);
+        var diff = joiningDate.diff(fromDate, 'days')
+        if (diff > 0) {
+          if (_validateForm(form)) {
+          }
+        }
+        else {
+          $scope.showMsg("error", "From date is greater than to Joining Date");
+        }
+      }
+      else {
+        $scope.showMsg("error", "Please contact admin to provide your Joining date")
       }
     }
     function _validateForm(form) {
@@ -780,6 +796,7 @@
       }
       $scope.showSanctionForm = false;
       $scope.verifySanctionForm = false;
+      $scope.verifyCancelRequestForm = false;
       $scope.page.refreshData();
     }
     function _saveErrorResult(err) {
@@ -938,7 +955,8 @@
       $scope.verifyCancelRequestForm = false;
       $scope.page.refreshData();
     }
-    $scope.cancelLeave = _cancelLeave;
+
+
     function _cancelLeave() {
 
       if ($scope.cancelRequestEntity.CRComment != undefined) {
@@ -967,7 +985,32 @@
       }
     }
 
-    function _replyOnCancelLeave() {
+    function _replyOnCancelLeave(cancelRequestEntity) {
+
+      if (cancelRequestEntity.StatusId != undefined && cancelRequestEntity.CRCommentAfterCanReq != undefined) {
+        var cancelRequest = {
+          CREmpId: cancelRequestEntity.CREmpId,
+          CRTotalLeave: cancelRequestEntity.TotalLeaveDays123,
+          CRLeaveFromDate: cancelRequestEntity.LEADDateFrom,
+          CRLeaveToDate: cancelRequestEntity.LEADDateTo,
+          CRSactionFromDate: cancelRequestEntity.ELSDSanctionFromDate,
+          CRSanctionToDate: cancelRequestEntity.ELSDSanctionToDate,
+          CRComment: cancelRequestEntity.CRComment,
+          CRLEADId: cancelRequestEntity.CRLEADId,
+          CRId: cancelRequestEntity.CRId,
+          StatusId: cancelRequestEntity.StatusId,
+          CRCommentAfterCanReq: cancelRequestEntity.CRCommentAfterCanReq,
+
+        }
+        _formSave(cancelRequest, cancelRequestPageId, 'edit', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, false, 'Cancel Request');
+      }
+      else {
+        if (cancelRequestEntity.StatusId == undefined) {
+          $scope.showMsg("error", "Please select status");
+        } else if (cancelRequestEntity.CRCommentAfterCanReq == undefined) {
+          $scope.showMsg("error", "Please enter comment");
+        }
+      }
 
     }
 
