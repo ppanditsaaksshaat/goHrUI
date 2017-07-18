@@ -9,7 +9,8 @@
      'BlurAdmin.pages.leave.transaction.employeeleaveapplication',
      'BlurAdmin.pages.leave.transaction.leaveapplication',
      'BlurAdmin.pages.leave.transaction.leavestatement',
-     'BlurAdmin.pages.leave.transaction.leavetransactiondetail'
+     'BlurAdmin.pages.leave.transaction.leavetransactiondetail',
+     'BlurAdmin.pages.leave.transaction.upload',
      
      
   ])
