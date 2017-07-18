@@ -116,7 +116,7 @@
         CLConsume: '',
         ELConsume: '',
         Year: '',
-        Remarks: '',
+        Remark: '',
       }
       tempColumns.push(row)
       DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'LeaveList', false, true, true);
