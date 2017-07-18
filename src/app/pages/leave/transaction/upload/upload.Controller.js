@@ -110,7 +110,8 @@
     function _downloadTemp() {
       var tempColumns = [];
       var row = {
-        CLOpening: 'EmpCode',
+        EmpCode:'',
+        CLOpening: '',
         ELOpening: '',
         CLConsume: '',
         ELConsume: '',
