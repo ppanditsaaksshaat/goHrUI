@@ -192,6 +192,7 @@
     function _fetchLeaveDetail() {
 
       $scope.entity.LEADEmpId = $scope.entity.selectedEmp.value;
+      $scope.employeeJoiningDate = $scope.entity.selectedEmp.JDDate;
       if ($scope.entity.selectedEmp.JDDate != null && $scope.entity.selectedEmp.JDDate != undefined && $scope.entity.selectedEmp.JDDate != '') {
         $timeout(function () {
           $scope.$broadcast('rzSliderForceRender');
@@ -446,6 +447,7 @@
       tableData.then(_fetchPendingLeaveSuccess, _fetchPendingLeaveError)
     }
     function _fetchPendingLeaveSuccess(result) {
+      console.log(result)
 
       //ADD CONDITION FOR NODATAFOUND
       $scope.prevLeaveList = [];
@@ -474,7 +476,6 @@
 
     /**Get How many day of leave apply */
     function _appliedDays() {
-
 
       var joiningDate = moment($scope.employeeJoiningDate);
       var fromDate = moment($scope.entity.LEADDateFrom);
