@@ -133,7 +133,7 @@
     $scope.replyOnCancelLeave = _replyOnCancelLeave;
     // $scope.getLeaveTypeAccordingLeaveControl = _getLeaveTypeAccordingLeaveControl;
     // $scope.selectEmployeeData = $scope.page.pageinfo.selects.LEADEmpId;
-    // console.log($scope.selectEmployeeData)
+    //
     // $scope.approvedLeave = _approvedLeave;
     // $scope.employeeOnChange = _employeeOnChange;
 
@@ -160,41 +160,72 @@
       updateRecord: null,
       viewRecord: _viewRecord,
       deleteRecord: _deleteForm,
-      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _leaveVerify, pin: true }]
+      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _leaveVerify, pin: true }],
+      pageResult: _pageResult
     }
     /** End Of Grid Intialization */
 
+
+    function _pageResult(result) {
+
+      angular.forEach(result.pageinfo.filters, function (filter) {
+        if (filter.name == 'StatusId') {
+          filter.value = 0;
+
+        }
+        if (filter.name == 'VAYear') {
+          filter.value = parseInt(moment().format('YYYY'));
+
+        }
+        if (filter.name == 'VADepartmentId') {
+          filter.value = -1;
+          filter.disabled = true;
+        }
+
+      })
+
+    }
+
     /**Fetching  credit,debit and LWP leave for employee */
+
+
     function _fetchLeaveDetail() {
 
-      $scope.employeeJoiningDate = $scope.entity.selectedEmp.JDDate;
       $scope.entity.LEADEmpId = $scope.entity.selectedEmp.value;
-      $timeout(function () {
-        $scope.$broadcast('rzSliderForceRender');
-      }, 5000);
-      $scope.showSlider = true;
-      queryId = 530;
-      vm.validateLeave = true;
-      var searchLists = [];
-      var searchListData = {
-        field: 'ELTEmpId',
-        operand: '=',
-        value: $scope.entity.selectedEmp.value
+      if ($scope.entity.selectedEmp.JDDate != null && $scope.entity.selectedEmp.JDDate != undefined && $scope.entity.selectedEmp.JDDate != '') {
+        $timeout(function () {
+          $scope.$broadcast('rzSliderForceRender');
+        }, 5000);
+        $scope.isSavingLeave = false;
+        $scope.showSlider = true;
+        queryId = 530;
+        vm.validateLeave = true;
+        var searchLists = [];
+        var searchListData = {
+          field: 'ELTEmpId',
+          operand: '=',
+          value: $scope.entity.selectedEmp.value
+        }
+        searchLists.push(searchListData)
+        var data = {
+          searchList: searchLists,
+          orderByList: []
+        }
+        pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+        _fetchPendingLeave();
       }
-      searchLists.push(searchListData)
-      var data = {
-        searchList: searchLists,
-        orderByList: []
+      else {
+
+        $scope.isSavingLeave = true;
+        $scope.showMsg("error", "Please contact admin to provide your Joining date")
       }
-      pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
-      _fetchPendingLeave();
     }
 
     function _getCustomQuerySuccessResult(result) {
       queryId = 534;
       $scope.showLeave = result;
 
-      console.log(result)
+
       if (result != "NoDataFound") {
         var searchLists = [];
         var searchListData = {
@@ -415,7 +446,7 @@
       tableData.then(_fetchPendingLeaveSuccess, _fetchPendingLeaveError)
     }
     function _fetchPendingLeaveSuccess(result) {
-      console.log(result)
+
       //ADD CONDITION FOR NODATAFOUND
       $scope.prevLeaveList = [];
       angular.forEach(result, function (leave) {
@@ -443,38 +474,56 @@
 
     /**Get How many day of leave apply */
     function _appliedDays() {
-      var appliedDays = 0;
-      var isFromHalfDay = false;
-      var isToHalfDay = false;
-      if ($scope.entity.LEADDateFrom != undefined && $scope.entity.LEADDateTo != undefined && $scope.entity.LEADFromHalfDayId != undefined && $scope.entity.LEADToHalfDayId != undefined) {
 
-        var fromDate = moment($scope.entity.LEADDateFrom);
-        var toDate = moment($scope.entity.LEADDateTo);
-        appliedDays = toDate.diff(fromDate, 'days') + 1;
-        if ($scope.entity.LEADFromHalfDayId == 0 || $scope.entity.LEADFromHalfDayId == 1) {
-          appliedDays = appliedDays - 0.5;
-          isFromHalfDay = true;
-        }
-        else {
-          if (isFromHalfDay) {
-            appliedDays = appliedDays + 0.5;
-            isFromHalfDay = false;
+
+      var joiningDate = moment($scope.employeeJoiningDate);
+      var fromDate = moment($scope.entity.LEADDateFrom);
+      var diff = fromDate.diff(joiningDate, 'days')
+      if (diff > 0) {
+        vm.validateLeave = true;
+        $scope.isgreaterJoinDate = false;
+        var appliedDays = 0;
+        var isFromHalfDay = false;
+        var isToHalfDay = false;
+        if ($scope.entity.LEADDateFrom != undefined && $scope.entity.LEADDateTo != undefined && $scope.entity.LEADFromHalfDayId != undefined && $scope.entity.LEADToHalfDayId != undefined) {
+
+          var fromDate = moment($scope.entity.LEADDateFrom);
+          var toDate = moment($scope.entity.LEADDateTo);
+          appliedDays = toDate.diff(fromDate, 'days') + 1;
+          if ($scope.entity.LEADFromHalfDayId == 0 || $scope.entity.LEADFromHalfDayId == 1) {
+            appliedDays = appliedDays - 0.5;
+            isFromHalfDay = true;
           }
-        }
-        if ($scope.entity.LEADToHalfDayId == 0 || $scope.entity.LEADToHalfDayId == 1) {
-          appliedDays = appliedDays - 0.5;
-          isToHalfDay = true;
-        }
-        else {
-          if (isToHalfDay) {
-            appliedDays = appliedDays + 0.5;
-            isToHalfDay = false;
+          else {
+            if (isFromHalfDay) {
+              appliedDays = appliedDays + 0.5;
+              isFromHalfDay = false;
+            }
           }
+          if ($scope.entity.LEADToHalfDayId == 0 || $scope.entity.LEADToHalfDayId == 1) {
+            appliedDays = appliedDays - 0.5;
+            isToHalfDay = true;
+          }
+          else {
+            if (isToHalfDay) {
+              appliedDays = appliedDays + 0.5;
+              isToHalfDay = false;
+            }
+          }
+          vm.appliedDays = appliedDays;
         }
-        vm.appliedDays = appliedDays;
+
+        _calculateDays();
+
+      }
+      else {
+        vm.validateLeave = false;
+        $scope.isSavingLeave = false;
+        $scope.isgreaterJoinDate = true;
+        $scope.showMsg("error", "From date is greater than to Joining Date");
       }
 
-      _calculateDays();
+
     }
     /**End of how many leave apply */
 
@@ -500,21 +549,8 @@
 
     /**Save Leave */
     function _saveLeaveForm(form) {
-    
-      if ($scope.employeeJoiningDate != null && $scope.employeeJoiningDate != undefined && $scope.employeeJoiningDate != '') {
-        var joiningDate = moment($scope.employeeJoiningDate);
-        var fromDate = moment($scope.entity.LEADDateFrom);
-        var diff = joiningDate.diff(fromDate, 'days')
-        if (diff > 0) {
-          if (_validateForm(form)) {
-          }
-        }
-        else {
-          $scope.showMsg("error", "From date is greater than to Joining Date");
-        }
-      }
-      else {
-        $scope.showMsg("error", "Please contact admin to provide your Joining date")
+
+      if (_validateForm(form)) {
       }
     }
     function _validateForm(form) {
@@ -538,7 +574,7 @@
           if ($scope.entity.LEADTransation.length > 2)
             $scope.entity.LEADTransation = $scope.entity.LEADTransation.substr(0, $scope.entity.LEADTransation.length - 1)
         }
-        console.log($scope.entity)
+
         var cQueryId = 536;
 
         var searchList = [];
@@ -564,7 +600,7 @@
           searchList: searchList,
           orderByList: []
         }
-        console.log(data)
+
         var tableData = pageService.getCustomQuery(data, cQueryId);
         tableData.then(_getLeaveCountSuccess, _getLeaveCountError)
       }
@@ -573,13 +609,11 @@
     function _getLeaveCountSuccess(result) {
 
       if (result == "NoDataFound") {
-
         $scope.isSavingLeave = true;
         _commonSaveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
       }
       else {
         if ($scope.entity.LEADId != undefined) {
-          console.log($scope.page.action)
           $scope.isSavingLeave = true;
           _commonSaveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
         }
@@ -598,17 +632,16 @@
 
 
     function _leaveVerify(row) {
+
       console.log(row)
-      console.log($scope.page.pageinfo.statuslist);
       var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
-      console.log(status)
       if (status == null) {
         status = {};
         status.isRejected = false;
         status.isCancelRequest = false;
       }
       if (!status.isRejected) {
-        if (!status.isCancelRequest) {
+        if (!status.isCancelRequest && !status.isCancelApproved && !status.isCancelRejected && !status.isCancelOnHold) {
           $scope.leaveDetails = [];
           $scope.entity = [];
           $scope.showSanctionForm = true;
@@ -617,7 +650,7 @@
           var transaction = row.entity.LEADTransation;
           if (transaction != null && transaction != undefined && transaction != '') {
             var rows = transaction.split(',');
-            // console.log($scope.page.pageinfo.selects.LEADLTId)
+
             angular.forEach(rows, function (row) {
 
               var data = row.split('|');
@@ -680,9 +713,9 @@
           $scope.cancelRequestEntity.ELSDSanctionToDate = moment(row.entity.ELSDSanctionToDate).format("DD/MMMM/YYYY");
           var searchList = [];
           var searchFields = {
-            field: 'CREmpId',
+            field: 'CRLEADId',
             operand: '=',
-            value: row.entity.LEADEmpId
+            value: row.entity.LEADId
           }
           searchList.push(searchFields)
           _commonFindEntity(cancelRequestTableId, searchList)
@@ -717,7 +750,7 @@
     }
     function _findEntitySuccessResult(result) {
       $scope.sectionOldEntity = angular.copy(result);
-      console.log(result)
+
 
       if (result.ELSDId != undefined) {
         $scope.sanctionEntity.ELSDId = result.ELSDId;
@@ -737,11 +770,11 @@
     }
     function _validateSanctionForm() {
 
-      if ($scope.sanctionEntity.ELSDSanctionFromDate == undefined && $scope.sanctionEntity.ELSDSanctionToDate == null) {
+      if ($scope.sanctionEntity.ELSDSanctionFromDate == undefined || $scope.sanctionEntity.ELSDSanctionToDate == null) {
         $scope.showMsg("error", "Please Enter Sanction FromDate");
         return true;
       }
-      if ($scope.sanctionEntity.ELSDSanctionToDate == undefined && $scope.sanctionEntity.ELSDSanctionToDate == null) {
+      if ($scope.sanctionEntity.ELSDSanctionToDate == undefined || $scope.sanctionEntity.ELSDSanctionToDate == null) {
         $scope.showMsg("error", "Please Enter Sanction ToDate");
         return true;
       }
@@ -749,7 +782,7 @@
         $scope.showMsg("error", "Please Select Status");
         return true;
       }
-      if ($scope.sanctionEntity.ELSDComment == undefined && $scope.sanctionEntity.ELSDComment == null) {
+      if ($scope.sanctionEntity.ELSDComment == undefined || $scope.sanctionEntity.ELSDComment == null || $scope.sanctionEntity.ELSDComment == '') {
         $scope.showMsg("error", "Please Enter Comment");
         return true;
       }
@@ -759,7 +792,7 @@
 
 
     function _leaveSanction() {
-      console.log($scope.entity)
+
       if (!_validateSanctionForm()) {
         var santionLeave = {
           ELSDId: $scope.sanctionEntity.ELSDId == undefined ? undefined : $scope.sanctionEntity.ELSDId,
@@ -855,7 +888,7 @@
     }
 
     function _addRecord() {
-      console.log($scope.page.pageinfo.filters)
+
       vm.appliedDays = undefined;
       $scope.disabledEmp = false;
       $scope.entity = [];
@@ -879,9 +912,9 @@
         $scope.entity.LEADDateTo = moment(row.entity.LEADDateTo)
         $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.LEADEmpId, row.entity.LEADEmpId, 'value')
         $scope.transation = $scope.entity.LEADTransation.split(',');
-        //  console.log(transation);
+
         _fetchLeaveDetail();
-        console.log($scope.showLeave)
+
         vm.validateLeave = true
       }
       else {
@@ -894,19 +927,18 @@
     }
     function _viewRecord(row) {
       console.log(row)
+
       if (row.entity.StatusId == 0) {
         _editRecord(row);
       }
       else {
-
         $scope.status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
-
-        if (!$scope.status.isCancelRequest) {
+        if (!$scope.status.isCancelRequest && !$scope.status.isCancelApproved && !$scope.status.isCancelRejected && !$scope.status.isCancelOnHold) {
           var searchList = [];
           var searchFields = {
-            field: 'CREmpId',
+            field: 'CRLEADId',
             operand: '=',
-            value: row.entity.LEADEmpId
+            value: row.entity.LEADId
           }
           searchList.push(searchFields)
           _commonFindEntity(cancelRequestTableId, searchList, row.entity);
@@ -922,25 +954,38 @@
           $scope.cancelRequestEntity.LEADContactName = row.entity.LEADContactName;
           $scope.cancelRequestEntity.LEADContactNo = row.entity.LEADContactNo;
           $scope.cancelRequestEntity.LeadComment = row.entity.LeadComment;
+          $scope.cancelRequestEntity.LEADAdminComment = row.entity.LEADAdminComment;
           $scope.cancelRequestEntity.StatusId = row.entity.StatusId;
-          // $scope.cancelRequestEntity.CreatedBy = row.entity.CreatedBy;
-          // $scope.cancelRequestEntity.CreatedOn = row.entity.CreatedOn;
+          $scope.cancelRequestEntity.CreatedBy = row.entity.CreatedBy;
+          $scope.cancelRequestEntity.CreatedOn = moment(row.entity.CreatedOn).format("DD/MMMM/YYYY");;
         }
         else {
-          $scope.showMsg("error", "You are not allowed to view this leave application beacause this leave application is already in processing for approval")
+          if ($scope.isCancelRequest) {
+            $scope.showMsg("error", "You are not allowed to view this leave application beacause this leave application is already in processing for approval")
+          }
+          else {
+            $scope.showMsg("error", "Your application already sanctioned/rejected/onhold")
+          }
         }
       }
 
     }
     function _commonFindEntity(tableId, searchList) {
+
       pageService.findEntity(tableId, undefined, searchList).then(_cancelRequestSuccessResult, _cancelRequestErrorResult)
     }
     function _cancelRequestSuccessResult(result) {
+
       $scope.cancelRequestOldEntity = angular.copy(result);
-      debugger
+
       if (result.CRId != undefined) {
         $scope.cancelRequestEntity.CRId = result.CRId;
         $scope.cancelRequestEntity.CRComment = result.CRComment;
+        $scope.cancelRequestEntity.StatusId = parseInt(result.StatusId);
+        $scope.cancelRequestEntity.CRCommentAfterCanReq = result.CRCommentAfterCanReq;
+      }
+      else {
+        $scope.cancelRequestEntity.CRComment = '';
       }
     }
     function _cancelRequestErrorResult(err) {
@@ -959,7 +1004,7 @@
 
     function _cancelLeave() {
 
-      if ($scope.cancelRequestEntity.CRComment != undefined) {
+      if ($scope.cancelRequestEntity.CRComment != undefined && $scope.cancelRequestEntity.CRComment != '') {
         var cancelRequest = {
           CREmpId: $scope.cancelRequestEntity.CREmpId,
           CRTotalLeave: $scope.cancelRequestEntity.TotalLeaveDays123,
@@ -1016,7 +1061,7 @@
 
 
     function _onLeaveChange(leave) {
-      console.log(leave)
+
     }
     function _getOptions(leave) {
       var optList = [];
@@ -1049,7 +1094,7 @@
           optList.push({ id: 1, name: '1 Day' })
         }
       }
-      // console.log(optList)
+
       return optList;
     }
     function _onLeaveDrChange(leave, oldDays) {
@@ -1127,7 +1172,7 @@
     }
     function _onConditionalLeaveTypeChange() {
       var leaveRule = $filter('findObj')($scope.leaveRuleList, $scope.entity.conditinalLeaveTypeId, 'LRCLeaveTypeId')
-      console.log(leaveRule)
+
       if (leaveRule == null) {
         $scope.showMsg('err', 'No leave rule defined.')
       }
@@ -1214,7 +1259,7 @@
       $scope.page.refreshData();
     }
     function _saveFormError(err) {
-      console.log(err)
+
       $scope.isSavingLeave = false;
     }
 
