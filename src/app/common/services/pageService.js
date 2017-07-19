@@ -1106,6 +1106,18 @@ function ($http, DJWebStore, fileUpload) {
                });
     }
 
+    var _leaveTypeUpload = function (data) {
+        var url = serviceBase + 'api/Upload/LeaevTypeUpload';
+        return $http.post(url, JSON.stringify(JSON.stringify(data)),
+               {
+                   headers: {
+                       'Content-Type': 'application/json'
+                   }
+               }).then(function (results) {
+                   return results;
+               });
+    }
+
 
 
     pageServiceFactory.serviceBase = serviceBase;
@@ -1221,6 +1233,8 @@ pageServiceFactory.getFieldSetting=_getFieldSetting;
     pageServiceFactory.getAllSelect = _getAllSelect;
     pageServiceFactory.create = _create;
     pageServiceFactory.commonUploder=_commonUploder;
+    pageServiceFactory.leaveTypeUpload=_leaveTypeUpload;
+    
 
     return pageServiceFactory;
 
