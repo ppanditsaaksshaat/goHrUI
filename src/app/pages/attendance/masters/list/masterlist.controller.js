@@ -17,7 +17,8 @@
     var tempName = $stateParams.name;
     var currentState = $state.current;
 
-
+    $scope.showWeeklyOffList = false;
+    $scope.weekClick = _weekClick;
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.page.boxOptions = {
@@ -41,7 +42,26 @@
       deleteRecord: null,
       uploadRecord: null
     }
+    if (pageId == 290) {
+      $scope.page.boxOptions.addRecord = _addRecord;
+    }
+    function _weekClick(id){
+      alert(id)
+    }
+    function _addRecord() {
+      $scope.showWeeklyOffList = true;
 
+      var mastersMenu = [];
+      mastersMenu.push({ name: 'Sunday', id: 0 })
+      mastersMenu.push({ name: 'Monday', id: 1 })
+      mastersMenu.push({ name: 'Tuesday', id: 2 })
+      mastersMenu.push({ name: 'Wednesday', id: 3 })
+      mastersMenu.push({ name: 'Thursday', id: 4 })
+      mastersMenu.push({ name: 'Friday', id: 5 })
+      mastersMenu.push({ name: 'Saturday', id: 6 })
+
+      $scope.week = mastersMenu;
+    }
     vm.ucvOnChange = _ucvOnChange;
 
     $scope.isLoading = true;
@@ -100,34 +120,34 @@
       }
     }
 
-    function _addRecord() {
-      if ($scope.page.pageinfo.pageid == 1) {
+    // function _addRecord() {
+    //   if ($scope.page.pageinfo.pageid == 1) {
 
-      }
-      else {
-        var param = {
-          action: 'create',
-          page: $scope.page,
-          linkColumns: []
-        };
-        var options = {
-          param: param
-        }
-        dialogModal.openFormVertical(options);
-      }
-    }
-    function _editRecord(row) {
-      var param = {
-        action: 'create',
-        page: $scope.page,
-        entity: row.entity,
-        linkColumns: []
-      };
-      var options = {
-        param: param
-      }
-      dialogModal.openFormVertical(options);
-    }
+    //   }
+    //   else {
+    //     var param = {
+    //       action: 'create',
+    //       page: $scope.page,
+    //       linkColumns: []
+    //     };
+    //     var options = {
+    //       param: param
+    //     }
+    //     dialogModal.openFormVertical(options);
+    //   }
+    // }
+    // function _editRecord(row) {
+    //   var param = {
+    //     action: 'create',
+    //     page: $scope.page,
+    //     entity: row.entity,
+    //     linkColumns: []
+    //   };
+    //   var options = {
+    //     param: param
+    //   }
+    //   dialogModal.openFormVertical(options);
+    // }
 
     function _ucvOnChange(item) {
 

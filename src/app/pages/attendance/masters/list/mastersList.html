@@ -1,2 +1,71 @@
-<grid-box ng-model="page">
-</grid-box>
+<div ng-hide="showWeeklyOffList">
+    <grid-box ng-model="page">
+    </grid-box>
+</div>
+
+<div ng-show="showWeeklyOffList">
+
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="weekOff">
+            <div class="col-md-3">
+                <div class="panel-body" style="overflow: scroll">
+                    <ul class="list-unstyled side-menu maxHeight450">
+                        <li ng-repeat="w in week| filter: {name: menuFilter}" ui-sref-active="active">
+                            <a href ng-model="w.id" ng-click="weekClick(w.id)">{{w.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
