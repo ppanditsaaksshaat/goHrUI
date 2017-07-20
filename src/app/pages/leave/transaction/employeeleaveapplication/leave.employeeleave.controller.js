@@ -428,6 +428,11 @@
         operand: '<=',
         value: moment().format('YYYY-MM-DD')
       })
+      searchList.push({
+        field: 'CreatedOn',
+        operand: '<',
+        value: moment().format()
+      })
 
       searchList.push({
         field: 'IsRejected',
@@ -457,7 +462,7 @@
           appDate: moment(leave.CreatedOn).format('DD-MMM-YYYY'),
           from: moment(leave.LEADDateFrom).format('DD-MMM-YYYY'),
           to: moment(leave.LEADDateTo).format('DD-MMM-YYYY'),
-          days: moment(leave.LEADDateFrom).diff(moment(leave.LEADDateTo), 'days' + 1),
+          days: leave.TotalLeaveDays123,
           distribution: leave.transation
         }
         $scope.prevLeaveList.push(prev);
