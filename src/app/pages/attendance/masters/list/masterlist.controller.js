@@ -45,9 +45,11 @@
     if (pageId == 290) {
       $scope.page.boxOptions.addRecord = _addRecord;
     }
-    function _weekClick(id){
+    
+    function _weekClick(id) {
       alert(id)
     }
+    
     function _addRecord() {
       $scope.showWeeklyOffList = true;
 
@@ -72,6 +74,14 @@
     }
 
     function _loadController() {
+      $scope.days=[];
+      $scope.days.push({id:1,name:'Sunday'});
+      $scope.days.push({id:2,name:'Monday'});
+      $scope.days.push({id:3,name:'Tuesday'});
+      $scope.days.push({id:4,name:'Wednesday'});
+      $scope.days.push({id:5,name:'Thursday'});
+      $scope.days.push({id:6,name:'Friday'});
+      $scope.days.push({id:7,name:'Saturday'});
       pageService.getPagData(pageId).then(_successGetPage, _errorGetPage)
     }
     function _successGetPage(result) {
