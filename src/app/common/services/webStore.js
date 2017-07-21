@@ -80,17 +80,19 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     }
     var _getServiceBase = function () {
 
-        //var serviceBase = 'http://localhost:51877/';
+        var serviceBase = _getValue('serviceBase');
+
+        //uncomment for your choice
+
+        serviceBase = 'http://localhost:51877/';
+        //serviceBase = 'http://rudraitsl.com/api/';// _getValue('serviceBase');
+        //serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
+        //serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
+        // serviceBase = 'http://web400.hrms/api/';
+        // serviceBase = 'http://localhost/api/';
 
 
 
-        var serviceBase = 'http://web400.hrms/api/';// _getValue('serviceBase');
-        // var serviceBase = 'http://rudraitsl.com/api/';// _getValue('serviceBase');
-
-        // var serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
-
-
-        //    var serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
         if (serviceBase == null) {
             var host = $location.host();
             var absUrl = $location.absUrl().replace('#/', '');
@@ -132,7 +134,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
             //token expired 
             if (urlPath.indexOf('auth.html') < 0) {
                 _logout();
-            }   
+            }
             return;
         }
 
@@ -140,7 +142,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         var appData = _getAppData();
 
         var data = { app: appData, profile: profileData, auth: authData }
-        
+
         $rootScope.user = data;
 
         return data;

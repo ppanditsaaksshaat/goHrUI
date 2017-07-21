@@ -53,7 +53,8 @@
                     pageResult: null,
                     dataResult: null,
                     saveResult: null,
-                    afterCellEdit: null//external cell edit event
+                    afterCellEdit: null,//external cell edit event
+                    onRegisterApi: null
                 }
 
                 //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
@@ -292,6 +293,9 @@
                 function _onRegisterApi(gridApi) {
                     ////console.log('register grid api')
                     $scope.page.gridApi = gridApi;
+                    if ($scope.page.boxOptions.onRegisterApi) {
+                        $scope.page.boxOptions.onRegisterApi(gridApi)
+                    }
 
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                         $scope.page.selectedRows = gridApi.selection.getSelectedRows();
@@ -455,16 +459,25 @@
                 }
                 function _getPageSuccessResult(result) {
                     console.log(result)
-                    $scope.page = angular.extend({}, $scope.page, result);
-                    $scope.page.pageIsLoaded = true;
-                    $scope.page.pageIsLoading = false;
-                    if ($scope.page.boxOptions.pageResult) {
-                        if ($scope.page.boxOptions.pageResult != null) {
-                            $scope.page.boxOptions.pageResult(result);
+                    var isErrored = false;
+                    if (result.error_message) {
+                        $scope.isErrorOccured = true;
+                        if (result.error_message.Message) {
+                            $scope.errorText = result.error_message.Message
                         }
                     }
-                    if ($scope.page.boxOptions.showDataOnLoad)
-                        _refreshData();
+                    else {
+                        $scope.page = angular.extend({}, $scope.page, result);
+                        $scope.page.pageIsLoaded = true;
+                        $scope.page.pageIsLoading = false;
+                        if ($scope.page.boxOptions.pageResult) {
+                            if ($scope.page.boxOptions.pageResult != null) {
+                                $scope.page.boxOptions.pageResult(result);
+                            }
+                        }
+                        if ($scope.page.boxOptions.showDataOnLoad)
+                            _refreshData();
+                    }
                 }
                 function _getPageErrorResult(err) {
                     $scope.page.pageIsLoaded = true;
