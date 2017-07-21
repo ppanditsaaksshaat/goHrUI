@@ -14,6 +14,7 @@
                                         <div class="col-md-6">
                                             <div class="row">
                                                 <div class="col-md-12">
+
                                                     <div class="form-group">
                                                         <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
                                                         <select ng-disabled="disabledEmp" class="form-control" ng-model="entity.selectedEmp" ng-change="fetchDetail();leaveCtrl.validateLeave=true"
@@ -32,19 +33,19 @@
                                                             <div class="col-md-5">
                                                                 <field-box page="page" ng-column="page.pageinfo.fields.LEADDateFrom" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
                                                             </div>
-                                                            <div class="col-md-1" ng-if="entity.LEADDateFrom">
+                                                            <div class="col-md-1" ng-if="entity.LEADDateFrom && !isgreaterJoinDate">
                                                                 <div class="form-group">
                                                                     <label ng-bind="page.pageinfo.fields.LEADDateTo.text"></label>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-5" ng-if="entity.LEADDateFrom">
+                                                            <div class="col-md-5" ng-if="entity.LEADDateFrom  && !isgreaterJoinDate">
                                                                 <field-box page="page" ng-column="page.pageinfo.fields.LEADDateTo" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6" ng-if="entity.LEADDateFrom">
+                                                    <div class="col-md-6" ng-if="entity.LEADDateFrom && !isgreaterJoinDate">
                                                         <div class="form-group">
                                                             <rzslider rz-slider-model="fromSlider.minValue" rz-slider-high="fromSlider.maxValue" rz-slider-options="fromSlider.options"></rzslider>
                                                         </div>
@@ -129,7 +130,7 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-        
+
                                                                         <tr ng-repeat="value in showLeave">
                                                                             <td ng-bind="value.LTName"></td>
                                                                             <td ng-bind="value.LeaveBalance"></td>
@@ -148,7 +149,7 @@
                                                                             </td>
                                                                             <td ng-bind="value.minDays"></td>
                                                                             <td ng-bind="value.maxDays"></td>
-                                                                            <td></td>
+                                                                            <td ng-bind="value.unClearBal"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                     <tfoot>
@@ -167,7 +168,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-12" ng-hide="true">
+                                                        <div class="col-md-12" ng-hide="pendingLeave">
                                                             <div class="form-group">
                                                                 <label>Previous Applications</label>
                                                                 <table class="table table-responsive table-bordered table-hover table-condensed">
@@ -224,7 +225,7 @@
 
         <div ng-show="showSanctionForm">
             <div class="row">
-                <div ba-panel ba-panel-class="x-medium" ba-panel-title="Sanction Leave">
+                <div ba-panel ba-panel-class="x-medium" ba-panel-title="Sanction Leave Application">
                     <form ng-submit="leaveSanction()" name="editForm">
                         <div class="panel-body">
                             <div class="row">
@@ -326,7 +327,6 @@
                                                                 <tr ng-repeat="leaveDetail in leaveDetails">
                                                                     <td ng-bind="leaveDetail.type"></td>
                                                                     <td ng-bind="leaveDetail.balance"></td>
-
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -370,13 +370,13 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>Status</label>
+                                                        <label>Status<span style="color:red">*</span></label>
                                                         <select class="form-control" ng-model="sanctionEntity.StatusId" ng-options="status.value as status.name for status in sanctionPage.pageinfo.statuslist"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>Comment</label>
+                                                        <label>Comment<span style="color:red">* </label>
                                                         <textarea class="form-control" ng-model="sanctionEntity.ELSDComment"></textarea>
                                                     </div>
                                                 </div>
@@ -400,7 +400,7 @@
     </div>
     <div ng-show="verifySanctionForm">
         <div class="row">
-            <div ba-panel ba-panel-class="x-medium" ba-panel-title="View Leave">
+            <div ba-panel ba-panel-class="x-medium" ba-panel-title="Cancel Leave Application">
                 <form ng-submit="cancelLeave()" name="editForm">
                     <div class="panel-body">
 
@@ -452,34 +452,41 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Created By</label>
-                                    <span class="form-control" ng-bind="cancelRequestEntity.LEADContactName"></span>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.CreatedBy"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Created On</label>
-                                    <span class="form-control" ng-bind="cancelRequestEntity.LEADContactNo"></span>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.CreatedOn"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Remarks</label>
+                                    <label>Employee Comment</label>
                                     <span class="form-control" ng-bind="cancelRequestEntity.LeadComment"></span>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Admin Comment</label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.LEADAdminComment"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div ng-if="!status.isRejected" class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Status</label>
                                     <select ng-disabled="true" class="form-control" ng-model="cancelRequestEntity.StatusId" ng-options="status.value as status.name for status in page.pageinfo.statuslist"></select>
                                 </div>
                             </div>
-                        </div>
-                        <div ng-if="!status.isRejected" class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Comment</label>
+                                    <label>Comment<span style="color:red">* </label>
                                     <textarea class="form-control" ng-model="cancelRequestEntity.CRComment"></textarea>
                                 </div>
                             </div>
@@ -500,7 +507,7 @@
 
 <div ng-show="verifyCancelRequestForm">
     <div class="row">
-        <div ba-panel ba-panel-class="x-medium" ba-panel-title="View Leave">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Cancel Request Approval Application">
             <form ng-submit="replyOnCancelLeave(cancelRequestEntity)" name="editForm">
                 <div class="panel-body">
 
@@ -547,7 +554,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -561,17 +568,17 @@
                                 <span class="form-control" ng-bind="cancelRequestEntity.LEADContactNo"></span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Remarks</label>
+                                <label>Employee Comment</label>
                                 <span class="form-control" ng-bind="cancelRequestEntity.CRComment"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Status</label>
+                                <label>Status<span style="color:red">*</label>
                                 <select class="form-control" ng-model="cancelRequestEntity.StatusId" ng-options="status.value as status.name for status in cancelRequestPage.pageinfo.statuslist"></select>
                             </div>
                         </div>
@@ -579,8 +586,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Comment</label>
-                                <textarea class="form-control" ng-model="cancelRequestEntity.CRFinalComment"></textarea>
+                                <label>Comment <span style="color:red">* </label>
+                                <textarea class="form-control" ng-model="cancelRequestEntity.CRCommentAfterCanReq"></textarea>
                             </div>
                         </div>
                     </div>
