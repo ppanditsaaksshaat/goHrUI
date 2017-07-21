@@ -1,2 +1,149 @@
-<grid-box ng-model="page">
-</grid-box>
+<div ng-hide="showWeeklyOffList">
+    <grid-box ng-model="page">
+    </grid-box>
+</div>
+
+<div ng-show="showWeeklyOffList">
+
+    <!-- <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="weekOff"> 
+            <div class="col-md-3">
+                <div class="panel-body" style="overflow: scroll">
+                    <ul class="list-unstyled side-menu maxHeight450">
+                        <li ng-repeat="w in week| filter: {name: menuFilter}" ui-sref-active="active">
+                            <a href ng-model="w.id" ng-click="weekClick(w.id)">{{w.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="custom-checkbox">      
+                                         <input  type="checkbox"  ng-model="Checked" > 
+                                          <span>Checked Week Off</span>
+                                        </label>
+                </div>
+            </div>
+
+        </div>
+    </div> 
+     -->
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="weekOff">
+            <table class="table table-responsive table-bordered  table-condensed">
+                <thead>
+                    <tr>
+
+                        <th class="col-md-1">Days</th>
+                        <th class="col-md-1">First</th>
+                        <th class="col-md-1">Second</th>
+                        <th class="col-md-1">Third</th>
+                        <th class="col-md-1">Fourth</th>
+                        <th class="col-md-1">Fifth</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr ng-repeat="value in days">
+                        <td ng-bind="value.name"></td>
+                        <td>
+                            <select class="form-control">
+                             <option value="0">--Select--</option>
+                              <option value="0">Full</option>
+                              <option value="1">First Half</option>
+                              <option value="2">Second Half</option>
+  
+                            </select>
+                        </td>
+                        <td> <select class="form-control">
+                             <option value="0">--Select--</option>
+                              <option value="0">Full</option>
+                              <option value="1">First Half</option>
+                              <option value="2">Second Half</option>
+  
+                            </select></td>
+                        <td> <select class="form-control">
+                             <option value="0">--Select--</option>
+                              <option value="0">Full</option>
+                              <option value="1">First Half</option>
+                              <option value="2">Second Half</option>
+  
+                            </select></td>
+                        <td> <select class="form-control">
+                             <option value="0">--Select--</option>
+                              <option value="0">Full</option>
+                              <option value="1">First Half</option>
+                              <option value="2">Second Half</option>
+  
+                            </select></td>
+                            <td> <select class="form-control">
+                             <option value="0">--Select--</option>
+                              <option value="0">Full</option>
+                              <option value="1">First Half</option>
+                              <option value="2">Second Half</option>
+  
+                            </select></td>
+
+                        <!-- <td>
+                                                                                <select ng-if="!value.isUnpaid && value.days.length>0" ng-model="value.leaveDr" ng-options="opt.id as opt.name for opt in value.days"
+                                                                                    ng-change="onLeaveDrChange(value,'{{value.leaveDr}}' )"></select>
+                                                                                <div ng-if="value.isUnpaid">{{value.leaveDr}} Days</div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="checkbox" ng-if="!value.isUnpaid">
+                                                                                    <label class="custom-checkbox">      
+                                                                        <input  type="checkbox" ng-model="value.isHalfDay" ng-change="onHalfDayChange(value,'{{value.isHalfDay}}')"/> 
+                                                                        <span></span>
+                                                                        </label>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td ng-bind="value.minDays"></td>
+                                                                            <td ng-bind="value.maxDays"></td>
+                                                                            <td></td> -->
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
