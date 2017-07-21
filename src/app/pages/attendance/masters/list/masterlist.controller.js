@@ -10,12 +10,21 @@
 
   /** @ngInject */
   function attMastersListController1($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal) {
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService) {
 
     var vm = this;
     var pageId = $stateParams.pageId;
     var tempName = $stateParams.name;
     var currentState = $state.current;
+    vm.queryId = 528;
+    $scope.saveForm = _saveForm;
+    vm.oldEntity = {};
+    $scope.entity = {};
+    $scope.shiftDuration = _shiftDuration;
+    $scope.lunchDuration = _lunchDuration;
+    $scope.closeForm = _closeForm;
+    $scope.resetShiftDuration = _resetShiftDuration;
+    $scope.resetLunchDuration = _resetLunchDuration;
 
 
     $scope.page = $scope.createPage();
@@ -23,7 +32,7 @@
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
-      showFilter: true,
+      showFilter: false,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
@@ -34,164 +43,132 @@
       linkColumns: [],
       getPageData: null,
       refreshData: null,
-      addRecord: null,
-      editRecord: null,
+      addRecord: _addRecord,
+      editRecord: _editRecord,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null
     }
 
-    vm.ucvOnChange = _ucvOnChange;
+    function _addRecord() {
+      $scope.entity = {};
+      $scope.showEditForm = true;
+    }
 
-    $scope.isLoading = true;
-    $scope.isLoaded = false;
+    function _editRecord(row) {
+      $scope.showEditForm = true;
 
-    function _refreshData() {
-      _getTableData([], [])
+      if (row.entity.SHGroupId != undefined) {
+        var ids = row.entity.SHGroupId.split(",");
+
+        angular.forEach(ids, function (id) {
+          angular.forEach($scope.groupList, function (group) {
+            if (group.GMCId == id)
+              group.isSelected = true;
+          })
+        })
+      }
+
+      console.log(row.entity)
+      vm.oldEntity = angular.copy(row.entity)
+      $scope.entity = row.entity;
+    }
+
+    function _shiftDuration(entity) {
+      var shiftFrom = moment(entity.SMFromTime, "HH:mm:ss a")
+      var shiftTo = moment(entity.SMToTime, "HH:mm:ss a")
+      // var duration = shiftTo.diff(shiftFrom, 'hours')
+      var duration = moment.duration(shiftTo.diff(shiftFrom))
+      var hours = parseInt(duration.asHours())
+      var minutes = parseInt(duration.asMinutes()) - hours * 60;
+      console.log(hours + ' hour and ' + minutes + ' minutes')
+      console.log(duration, hours)
+
+      var minute = shiftTo.diff(shiftFrom, 'minutes')
+      var timeDuration = minute / 60;
+      var durations = moment(duration, "HH:mm:ss a")
+      $scope.shiftDurations = hours + ' hour and ' + minutes + ' minutes';
+      // $scope.shiftDurations = '0' + hours + ':' + minutes + ':00';
+
+      console.log(duration, durations, minute, timeDuration)
+    }
+
+    function _resetShiftDuration(entity) {
+      entity.SMFromTime = entity.SMFromTime
+      entity.SMToTime = entity.SMFromTime;
+    }
+
+    function _resetLunchDuration(entity) {
+      entity.SMLunchTime = entity.SMLunchTime
+      entity.SMLunchToTime = entity.SMLunchTime;
+    }
+
+    function _lunchDuration(entity) {
+      var lunchFrom = moment(entity.SMLunchTime, "HH:mm:ss a")
+      var lunchTo = moment(entity.SMLunchToTime, "HH:mm:ss a")
+
+
+      var duration = moment.duration(lunchTo.diff(lunchFrom))
+      var hours = parseInt(duration.asHours())
+      var minutes = parseInt(duration.asMinutes()) - hours * 60;
+      var minute = lunchTo.diff(lunchFrom, 'minutes')
+      var timeDuration = minute / 60;
+      var durations = moment(duration, "HH:mm:ss a")
+      $scope.lunchDurations = hours + ' hour and ' + minutes + ' minutes';
+    }
+
+    function _saveForm(editForm, entity) {
+      console.log(entity)
+      var selectedGroups = '';
+      angular.forEach($scope.groupList, function (group) {
+        if (group.isSelected) {
+          selectedGroups += group.GMCId + ',';
+          console.log(selectedGroups)
+        }
+      })
+      if (selectedGroups.length > 0) {
+        selectedGroups = selectedGroups.substring(0, selectedGroups.length - 1);
+        entity.SHGroupId = selectedGroups;
+      }
+      editFormService.saveForm(pageId, entity, vm.oldEntity,
+        entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
+        .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+    }
+
+    function _saveWizardFormSuccessResult(result) {
+      $scope.page.refreshData();
+      $scope.showEditForm = false;
+      $scope.showMsg("success", "Record Saved Successfully");
+    }
+    function _saveWizardFormErrorResult(err) {
+
     }
 
     function _loadController() {
-      pageService.getPagData(pageId).then(_successGetPage, _errorGetPage)
-    }
-    function _successGetPage(result) {
-      console.log(result)
-      $scope.page = angular.extend($scope.page, result);
-      $scope.setPage(result)
-      $scope.page.gridOptions = $scope.gridSetupColumns($scope.page.gridOptions, result.pageinfo.columns, result, true, true, true, true);
-      _getTableData([], []);
-    }
-    function _errorGetPage(err) {
+      $scope.shiftDurations = '00:00:00';
+      $scope.lunchDurations = '00:00:00'
 
-    }
-    function _getTableData(searchList, orderByList) {
-      $scope.isLoaded = false
-      $scope.isLoading = true
+
       var data = {
-        searchList: searchList,
-        orderByList: orderByList
+        searchList: [],
+        orderByList: []
       }
-      var tableData = pageService.getTableData(
-        $scope.page.pageinfo.tableid,
-        $scope.page.pageinfo.pageid,
-        '', '',
-        false, data);
-
-      tableData.then(_getTableSuccessResult, _getTableErrorResult)
+      pageService.getCustomQuery(data, vm.queryId).then(getCustomQuerySuccessResult, getCustomQueryErrorResult)
     }
-    function _getTableErrorResult(err) {
-      $scope.isLoaded = true
-      $scope.isLoading = false
-    }
-    function _getTableSuccessResult(result) {
-      $scope.isLoaded = true
-      $scope.isLoading = false
+    function getCustomQuerySuccessResult(result) {
+      $scope.groupList = result;
       console.log(result)
-      if (result == 'NoDataFound') {
-        // uivm.showMsg('warning', 'No Record Found.');
-      } else if (result.Errors !== undefined) {
-        // uivm.showMsg('error', result.Message);
-        // _startMsgTimer();
-      }
-      else {
-
-        $scope.page.gridOptions.data = result;
-
-      }
     }
+    function getCustomQueryErrorResult(eerr) {
+      console.log(eerr)
 
-    function _addRecord() {
-      if ($scope.page.pageinfo.pageid == 1) {
-
-      }
-      else {
-        var param = {
-          action: 'create',
-          page: $scope.page,
-          linkColumns: []
-        };
-        var options = {
-          param: param
-        }
-        dialogModal.openFormVertical(options);
-      }
-    }
-    function _editRecord(row) {
-      var param = {
-        action: 'create',
-        page: $scope.page,
-        entity: row.entity,
-        linkColumns: []
-      };
-      var options = {
-        param: param
-      }
-      dialogModal.openFormVertical(options);
-    }
-
-    function _ucvOnChange(item) {
-
-      console.log(item)
-      var searchList = [], orderbyList = [];
-
-      var comData = LZString.decompressFromEncodedURIComponent(item.data);
-      var userData = angular.fromJson(comData);
-      console.log(userData)
-      // SettingVisibleColumns(item)
-      angular.forEach(userData.filters, function (filter, fdx) {
-        var operator = '=';
-        var userValue = ''
-        if (filter.selectedOperator.value == '=') {
-          operator = '=';
-        }
-        else if (filter.selectedOperator.value == 'notempty') {
-          operator = '<>';
-        }
-        else if (filter.selectedOperator.value == 'empty') {
-          operator = '=';
-        }
-        else {
-          operator = filter.selectedOperator.value;
-        }
-
-        if (filter.userValue == 'self') {
-          userValue = uivm.auth.profile.userId;
-        }
-        else if (filter.userValue == 'notempty') {
-          userValue = ''
-        }
-        else if (filter.userValue == 'empty') {
-          userValue = ''
-        }
-        else if (filter.userValue === undefined) {
-          userValue = '';
-        }
-        else {
-          userValue = filter.userValue;
-        }
-
-        var searchFields = {
-          field: filter.selectedColumn.name, operand: operator, value: userValue
-        };
-        //console.log(searchFields)
-        searchList.push(searchFields)
-      })
-      //console.log(userData.orderby)
-      userData.orderby.forEach(function (order) {
-        if (order.selectedColumn !== undefined) {
-          var orderitem = {
-            column: order.selectedColumn.name,
-            isDesc: order.isDesc
-          }
-
-          orderbyList.push(orderitem)
-        }
-      })
-
-      _getTableData(searchList, orderbyList)
     }
     _loadController();
 
+    function _closeForm(editForm) {
+      $scope.showEditForm = false;
+    }
   }
 
 })();
