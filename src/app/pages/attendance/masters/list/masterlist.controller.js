@@ -16,6 +16,14 @@
     var pageId = $stateParams.pageId;
     var tempName = $stateParams.name;
     var currentState = $state.current;
+    var shiftWeekOffPageId = 141;
+    var groupQueryId = 528;
+    $scope.gridOptions = {};
+    $scope.entity = {};
+
+
+
+    $scope.weekOffSave = _weekOffSave;
 
     $scope.showWeeklyOffList = false;
     $scope.weekClick = _weekClick;
@@ -45,24 +53,31 @@
     if (pageId == 290) {
       $scope.page.boxOptions.addRecord = _addRecord;
     }
-    
+
     function _weekClick(id) {
       alert(id)
     }
-    
+
     function _addRecord() {
+
       $scope.showWeeklyOffList = true;
+      $scope.gridOptions.columnDefs = [
+        { name: 'name', displayName: 'Name', width: '20%' },
+        {
+          name: 'gender', displayName: 'Gender', editableCellTemplate: 'ui-grid/dropdownEditor', width: '20%',
+          cellFilter: 'mapGender', editDropdownValueLabel: 'gender', editDropdownOptionsArray: [
+            { id: 1, gender: 'male' },
+            { id: 2, gender: 'female' }
+          ]
+        },
+        { name: 'company', displayName: 'Company', width: '30%' },
+        {
+          name: 'size', displayName: 'Clothes Size', width: '20%', editableCellTemplate: 'ui-grid/dropdownEditor',
+          cellFilter: 'mapSize', editDropdownValueLabel: 'size', editDropdownRowEntityOptionsArrayPath: 'sizeOptions'
+        }
+      ];
 
-      var mastersMenu = [];
-      mastersMenu.push({ name: 'Sunday', id: 0 })
-      mastersMenu.push({ name: 'Monday', id: 1 })
-      mastersMenu.push({ name: 'Tuesday', id: 2 })
-      mastersMenu.push({ name: 'Wednesday', id: 3 })
-      mastersMenu.push({ name: 'Thursday', id: 4 })
-      mastersMenu.push({ name: 'Friday', id: 5 })
-      mastersMenu.push({ name: 'Saturday', id: 6 })
 
-      $scope.week = mastersMenu;
     }
     vm.ucvOnChange = _ucvOnChange;
 
@@ -74,15 +89,31 @@
     }
 
     function _loadController() {
-      $scope.days=[];
-      $scope.days.push({id:1,name:'Sunday'});
-      $scope.days.push({id:2,name:'Monday'});
-      $scope.days.push({id:3,name:'Tuesday'});
-      $scope.days.push({id:4,name:'Wednesday'});
-      $scope.days.push({id:5,name:'Thursday'});
-      $scope.days.push({id:6,name:'Friday'});
-      $scope.days.push({id:7,name:'Saturday'});
+
+
+      var data = {
+        searchList: [],
+        orderByList: []
+      }
+      pageService.getPagData(shiftWeekOffPageId).then(_successShiftWeekOffCustomQuery, _errorShiftWeekOffCustomQuery)
       pageService.getPagData(pageId).then(_successGetPage, _errorGetPage)
+      pageService.getCustomQuery(data, groupQueryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+    }
+    function _successShiftWeekOffCustomQuery(result) {
+      console.log(result)
+      result.pageinfo.selects.SGWDWeekDayId.splice(0, 1);
+      result.pageinfo.selects.SGWDFirst.splice(0, 0, { id: -1, name: "--Select--" });
+      $scope.weekDays = result.pageinfo.selects.SGWDWeekDayId;
+      angular.forEach($scope.weekDays, function (data) {
+        data.dayType = result.pageinfo.selects.SGWDFirst;
+      })
+      console.log($scope.weekDays)
+
+      // alert(JSON.stringify($scope.days))
+
+    }
+    function _errorShiftWeekOffCustomQuery(err) {
+      $scope.showMsg("error", err);
     }
     function _successGetPage(result) {
       console.log(result)
@@ -92,6 +123,13 @@
       _getTableData([], []);
     }
     function _errorGetPage(err) {
+
+    }
+    function _getCustomQuerySuccessResult(result) {
+      $scope.groups = result;
+
+    }
+    function _getCustomQueryErrorResult(err) {
 
     }
     function _getTableData(searchList, orderByList) {
@@ -220,6 +258,11 @@
 
       _getTableData(searchList, orderbyList)
     }
+
+    function _weekOffSave(editForm, entity) {
+      console.log(entity)
+    }
+
     _loadController();
 
   }
