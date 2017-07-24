@@ -35,7 +35,7 @@
             onRegisterApi: _onRegisterApi,
             showGridFooter: true,
             showColumnFooter: false,
-            gridFooterTemplate: '<div> <div class="pull-right">button ng-click="addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div>'
+            gridFooterTemplate: '<div class="row"> <div class="col-md-8"> <div class="pull-left">  Diffrences of earning to be added in <select ng-model="grid.appScope.selectedOtherHead" ng-options="opt.name for opt in grid.appScope.rulePage.pageinfo.fields.PBRSHId.options"></select></div><div class="pull-right"><button ng-click="grid.appScope.addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button></div></div><div class="col-md-4"><div class="pull-right"><button ng-click="grid.appScope.addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div></div>'
             // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
         }
 
@@ -133,6 +133,14 @@
             //adding current state total row at last
             if ($scope.selectedOtherHead) {
                 if ($scope.payGridOptions.data.length) {
+
+                    var shFound = $filter('findObj')($scope.payGridOptions.data, $scope.selectedOtherHead.value, 'PBRSHId')
+                    if (shFound != null) {
+                        $scope.showMsg('warning', 'Selected Head already added in List')
+                        return;
+                    }
+
+
                     var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsGross')
                     var grossId = 0;
                     if (shGross != null) {
@@ -197,8 +205,20 @@
 
                 }
             }
-
+            _addDependentHeadList();
             _getNetPayable();
+        }
+        function _addDependentHeadList() {
+            //update dependent dropdown
+            var dependList = [];
+            for (var v = 0; v < $scope.payGridOptions.data.length; v++) {
+                var shead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, $scope.payGridOptions.data[v].PBRSHId, 'value')
+                if (shead != null) {
+                    dependList.push(shead);
+                }
+            }
+
+            $scope.payGridOptions.columnDefs[2].editDropdownOptionsArray = dependList;
         }
         //adding new row to rule grid
         function _addNewRule(row) {
@@ -233,18 +253,39 @@
             $scope.payGridOptions.data.splice(index, 1);
         }
 
+        $scope.$watch(function () {
+            return $scope.entity.PBBasicPerctange;
+        }, function (newVal, oldValue) {
+            _calculateBasicOnGross();
+        })
+        $scope.$watch(function () {
+            return $scope.entity.PBGrossSalary;
+        }, function (newVal, oldValue) {
+            _calculateBasicOnGross();
+        })
+
         //calculating basic on gross percentage
         function _calculateBasicOnGross() {
+            console.log($scope.entity.PBGrossSalary, $scope.entity.PBBasicPerctange)
             if ($scope.entity.PBBasicPerctange && $scope.entity.PBGrossSalary) {
                 if ($scope.entity.PBBasicPerctange == '' && $scope.entity.PBGrossSalary == '') {
+                    $scope.payGridOptions.data = [];
+                    _getNetPayable();
                     return;
                 }
             }
             else {
+                $scope.payGridOptions.data = [];
+                _getNetPayable();
                 return;
             }
-            var basicPerct = parseFloat($scope.entity.PBBasicPerctange);
-            var PBGrossSalary = parseFloat($scope.entity.PBGrossSalary);
+            var basicPerct = Math.abs(parseFloat($scope.entity.PBBasicPerctange));
+            var PBGrossSalary = Math.abs(parseFloat($scope.entity.PBGrossSalary))
+            if (basicPerct <= 0 || PBGrossSalary <= 0) {
+                $scope.payGridOptions.data = [];
+                _getNetPayable();
+                return;
+            }
             if (!isNaN(PBGrossSalary) && !isNaN(PBGrossSalary)) {
                 //finding basic head in dropdown list
                 var shBasic = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsBasic')
@@ -334,6 +375,7 @@
                     $scope.payGridOptions.data.splice(1, 1, basicHead)
                 }
             }
+            _getNetPayable();
         }
 
         function _loadController() {
@@ -517,12 +559,15 @@
                 editableCellTemplate: 'uiSelectMulti',
                 // editDropdownIdLabel: 'value',
                 // editDropdownValueLabel: 'name',
-                editDropdownOptionsArray: $scope.rulePage.pageinfo.fields.PBRCalcOnSHId.options,
+                editDropdownOptionsArray: $scope.payGridOptions.data,
                 cellFilter: "mapMultiDropdown:grid.appScope.rulePage.pageinfo.fields.PBRCalcOnSHId.options:'value':'name'",
                 cellClass: _cellClass,
                 cellEditableCondition: _cellEditableCondition,
                 colIndex: 2
             })
+
+            // editDropdownOptionsArray: $scope.rulePage.pageinfo.fields.PBRCalcOnSHId.options,
+            // cellFilter: "mapMultiDropdown:grid.appScope.rulePage.pageinfo.fields.PBRCalcOnSHId.options:'value':'name'",
 
             $scope.payGridOptions.columnDefs.push(
                 {
@@ -934,25 +979,46 @@
 
                 var dependTotalAmt = 0
                 for (var i = 0; i < rowEntity.PBRCalcOnSHId.length; i++) {
-                    var amt = _getHeadAmount(rowEntity.PBRCalcOnSHId[i].value)
-                    dependTotalAmt += parseFloat(amt)
+                    if (rowEntity.PBRCalcOnSHId[i].value == rowEntity.PBRSHId) {
+                        rowEntity.PBRCalcOnSHId = [];
+                        $scope.showMsg('warning', 'Head can not depend on to itself')
+                        return;
+                    }
+                    else {
+                        var amt = _getHeadAmount(rowEntity.PBRCalcOnSHId[i].value)
+                        dependTotalAmt += parseFloat(amt)
+                    }
                 }
 
                 if (colDef.colIndex == 0) {
-                    var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, rowEntity.PBRSHId, 'value')
-                    if (foundPB != null) {
-                        if (foundPB.SHIsForEmployer) {
-                            rowEntity.SHeadType = 'Employer';
+                    //find existing in list
+                    rowEntity.PBRSHId = oldValue;
+                    var existingHead = $filter('findObj')($scope.payGridOptions.data, newValue, 'PBRSHId')
+                    if (existingHead != null) {
+                        $scope.showMsg('warning', 'Heads can not be duplicate.')
+                        rowEntity.PBRSHId = 0;
+                    }
+                    else {
+                        rowEntity.PBRSHId = newValue;
+                        var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, rowEntity.PBRSHId, 'value')
+                        if (foundPB != null) {
+                            if (foundPB.SHIsForEmployer) {
+                                rowEntity.SHeadType = 'Employer';
+                            }
+                            else if (foundPB.SHIsDeduction == "False") {
+                                rowEntity.SHeadType = 'Earning';
+                            }
+                            else {
+                                rowEntity.SHeadType = 'Deduction';
+                            }
                         }
-                        else if (foundPB.SHIsDeduction == "False") {
-                            rowEntity.SHeadType = 'Earning';
-                        }
-                        else {
-                            rowEntity.SHeadType = 'Deduction';
-                        }
+
+                        _addDependentHeadList();
                     }
                 }
                 else if (colDef.colIndex == 2 || colDef.colIndex == 3) {
+
+
                     //calculate amount and Percentage on depend col and percentage
 
                     //updating amount field as per percentage
@@ -978,17 +1044,28 @@
                             $scope.showMsg('error', 'Netpayble can not more than Gross')
                             rowEntity.PBRAmount = remainingAmount.toFixed(2)
                         }
-                        else{
+                        else {
                             rowEntity.PBRAmount = parseFloat(newValue).toFixed(2);
                         }
-
+                        //avoiding 
                         var expectedPer = Math.round((rowEntity.PBRAmount * 100) / grossAmt, 2)
-                        //updating % field as per amount
-                        if (rowEntity.PBRPercantage) {
-                            if (rowEntity.PBRPercantage > 0) {
-                                rowEntity.PBRPercantage = expectedPer;
+                        if (dependTotalAmt > 0) {
+                            expectedPer = Math.round((rowEntity.PBRAmount * 100) / dependTotalAmt, 2)
+                            if (expectedPer > 100) {
+                                rowEntity.PBRPercantage = 100.00;
+                                rowEntity.PBRAmount = Math.round(dependTotalAmt).toFixed(2);
+                            }
+                            else {
+                                rowEntity.PBRPercantage = Math.round(expectedPer, 2).toFixed(2);
                             }
                         }
+                        else
+                            //updating % field as per amount
+                            if (rowEntity.PBRPercantage) {
+                                if (rowEntity.PBRPercantage > 0) {
+                                    rowEntity.PBRPercantage = expectedPer;
+                                }
+                            }
 
                         rowEntity.GrossPercentage = Math.round((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt).toFixed(2)
                     }
