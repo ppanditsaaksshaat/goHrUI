@@ -380,7 +380,7 @@
       $scope.showLeave = angular.copy(leaveBalList);
 
       if ($scope.transation != undefined) {
-
+        console.log($scope.showLeave)
         angular.forEach($scope.transation, function (leaveApply) {
           angular.forEach($scope.showLeave, function (leave) {
             var lp = leaveApply.split("|")
@@ -407,6 +407,7 @@
     /**Fetching Previous leave application */
     function _fetchPendingLeave() {
 
+
       var cQueryId = 536;
 
       var searchList = [];
@@ -417,28 +418,34 @@
         value: $scope.entity.LEADEmpId
       })
 
-      searchList.push({
-        field: 'CreatedOn',
-        operand: '>=',
-        value: moment().add(-1, 'year').format('YYYY-MM-DD')
-      })
+      // searchList.push({
+      //   field: 'CreatedOn',
+      //   operand: '>=',
+      //   value: moment().add(-1, 'year').format('YYYY-MM-DD')
+      // })
 
-      searchList.push({
-        field: 'CreatedOn',
-        operand: '<=',
-        value: moment().format('YYYY-MM-DD')
-      })
-      searchList.push({
-        field: 'CreatedOn',
-        operand: '<',
-        value: moment().format()
-      })
+      // searchList.push({
+      //   field: 'CreatedOn',
+      //   operand: '<=',
+      //   value: moment().format('YYYY-MM-DD')
+      // })
+
 
       searchList.push({
         field: 'IsRejected',
         operand: '<>',
         value: 1
       })
+      // searchList.push({
+      //   field: 'IsOnHold',
+      //   operand: '=',
+      //   value: 1
+      // })
+      //  searchList.push({
+      //   field: 'IsCancelApproved',
+      //   operand: '<>',
+      //   value: 1
+      // })
 
       var data = {
         searchList: searchList,
@@ -453,26 +460,51 @@
     }
     function _fetchPendingLeaveSuccess(result) {
       console.log(result)
+      console.log($scope.showLeave)
 
       //ADD CONDITION FOR NODATAFOUND
-      $scope.prevLeaveList = [];
-      angular.forEach(result, function (leave) {
-        var prev = {
-          status: leave.ApplicationStatus,
-          appDate: moment(leave.CreatedOn).format('DD-MMM-YYYY'),
-          from: moment(leave.LEADDateFrom).format('DD-MMM-YYYY'),
-          to: moment(leave.LEADDateTo).format('DD-MMM-YYYY'),
-          days: leave.TotalLeaveDays123,
-          distribution: leave.transation
-        }
-        $scope.prevLeaveList.push(prev);
+      if (result != "NoDataFound") {
 
-        if (leave.IsPending) {
-          var leaveDest = leave.transation.splice(',')
-        }
-      })
+        $scope.pendingLeave = false;
+        $scope.prevLeaveList = [];
+        angular.forEach(result, function (leave) {
+          var applyLeave = 0;
+          var prev = {
+            status: leave.ApplicationStatus,
+            appDate: moment(leave.CreatedOn).format('DD-MMM-YYYY'),
+            from: moment(leave.LEADDateFrom).format('DD-MMM-YYYY'),
+            to: moment(leave.LEADDateTo).format('DD-MMM-YYYY'),
+            days: leave.TotalLeaveDays123,
+            distribution: leave.transation
+          }
+          $scope.prevLeaveList.push(prev);
+          var transaction = leave.LEADTransation.split(',')
 
+          angular.forEach(transaction, function (applyLeave) {
+            var leaveType = applyLeave.split("|");
+            angular.forEach($scope.showLeave, function (crLeave) {
+              if (parseInt(leaveType[0]) == parseInt(crLeave.LRCLeaveTypeId)) {
+                crLeave.unClearBal = (crLeave.unClearBal == undefined ? 0 : crLeave.unClearBal) + parseInt(leaveType[1])
+                crLeave.LeaveBalance = crLeave.LeaveBalance - parseInt(leaveType[1]);
+              }
+              if (parseInt(leaveType[0]) == 0) {
+                if (crLeave.LTName == "LWP") {
+                  crLeave.unClearBal = parseInt(leaveType[1]);
+                }
+              }
+            })
+          })
 
+          if (leave.IsPending) {
+            var leaveDest = leave.transation.splice(',')
+          }
+
+        })
+
+      }
+      else {
+        $scope.pendingLeave = true;
+      }
     }
     function _fetchPendingLeaveError(err) {
       $scope.showMsg("error", err);

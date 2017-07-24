@@ -88,7 +88,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         //serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
         //serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
         serviceBase = 'http://web400.hrms/api/';
-        // serviceBase = 'http://localhost/api/';
+
 
 
 

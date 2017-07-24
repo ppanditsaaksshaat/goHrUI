@@ -149,7 +149,7 @@
                                                                             </td>
                                                                             <td ng-bind="value.minDays"></td>
                                                                             <td ng-bind="value.maxDays"></td>
-                                                                            <td></td>
+                                                                            <td ng-bind="value.unClearBal"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                     <tfoot>
@@ -168,7 +168,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-12" ng-hide="true">
+                                                        <div class="col-md-12" ng-hide="pendingLeave">
                                                             <div class="form-group">
                                                                 <label>Previous Applications</label>
                                                                 <table class="table table-responsive table-bordered table-hover table-condensed">
