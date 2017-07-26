@@ -54,7 +54,20 @@
       editRecord: _editRecord,
       updateRecord: null,
       viewRecord: _viewRecord,
+      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _leaveVerify, pin: true }],
       deleteRecord: null,
+    }
+
+    function _leaveVerify(row) {
+      console.log(row)
+      var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
+      console.log(status)
+      if (status == null) {
+        status = {};
+        status.isRejected = false;
+        status.isCancelRequest = false;
+      }
+
     }
 
     $scope.editPage = $scope.createPage();
@@ -174,9 +187,9 @@
             var loanApplyAmount = parseFloat($scope.entity.LAApplyAmount);
             var percentageAmount = (loanApplyAmount * interest) / 100
             $scope.entity.LAAmount = percentageAmount + loanApplyAmount;
-            $scope.entity.LANoOfInstallment='';
-            $scope.entity.LAInstallment='';
-            
+            $scope.entity.LANoOfInstallment = '';
+            $scope.entity.LAInstallment = '';
+
           }
           else {
             alert('Your max amount limit' + $scope.maxAmount)

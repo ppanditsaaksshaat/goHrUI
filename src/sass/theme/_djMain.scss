@@ -261,6 +261,15 @@ input:focus, select:foucs {
   height: 400px;
   width: 100%;
 }
+.djSubGrid
+{
+  height: 100px;
+  width: 100%;
+}
+.paybandgrid{
+  height: 350px;
+  width: 100%;
+}
 
 .pnl100{
   height: 200px;
@@ -1278,4 +1287,11 @@ abbr[title] {
 }
 .ui-grid-render-container-middle:hover + .ui-grid-pinned-container-right .scroll-bar {
   opacity: 0.7 !important;
+}
+
+.custom-radio span, .radio-inline span{
+  color: black;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
 }
