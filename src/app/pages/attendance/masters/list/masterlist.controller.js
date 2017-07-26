@@ -1,3 +1,4 @@
+
 /**
  * @author a.demeshko
  * created on 28.12.2015
@@ -10,33 +11,55 @@
 
   /** @ngInject */
   function attMastersListController1($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal) {
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService) {
 
     var vm = this;
     var pageId = $stateParams.pageId;
     var tempName = $stateParams.name;
     var currentState = $state.current;
-    var shiftWeekOffPageId = 141;
-    var groupQueryId = 528;
-    var weekOffSetDetailPageId = 455;
-
-
-
-
+    vm.queryId = 528;
+    $scope.saveForm = _saveForm;
+    vm.oldEntity = {};
     $scope.entity = {};
+    $scope.shiftDuration = _shiftDuration;
+    $scope.lunchDuration = _lunchDuration;
+    $scope.closeForm = _closeForm;
+    $scope.resetShiftDuration = _resetShiftDuration;
+    $scope.resetLunchDuration = _resetLunchDuration;
+    $scope.isResetShifAndLunch = false;
+    $scope.entity.SMCOffAllowed = 'true';
 
-    $scope.weekOffSave = _weekOffSave;
-    $scope.showWeeklyOffList = false;
-    $scope.weekClick = _weekClick;
-    $scope.closeWeekOffAdd = _closeWeekOffAdd;
+    $scope.hideNumberOfLeave = _hideNumberOfLeave;
 
-    $scope.weekGridOptions = { enableCellEditOnFocus: true }
+    function _hideNumberOfLeave() {
+      $scope.numberOfLV = false;
+      console.log($scope.numberOfLV)
+    }
+
+
+    // if ($scope.isResetShifAndLunch) {
+    //   $scope.resetShiftDuration = _resetShiftDuration;
+    // }
+
+    // if ($scope.isResetShifAndLunch) {
+    //   $scope.resetLunchDuration = _resetLunchDuration;
+    // }
+
+    // if ($scope.isResetShifAndLunch) {
+    //   $scope.shiftDuration = _shiftDuration;
+    // }
+
+    // if ($scope.isResetShifAndLunch) {  
+    //   $scope.lunchDuration = _lunchDuration;
+    // }
+
+
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
-      showFilter: true,
+      showFilter: false,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
@@ -47,323 +70,317 @@
       linkColumns: [],
       getPageData: null,
       refreshData: null,
-      addRecord: null,
-      editRecord: null,
+      addRecord: _addRecord,
+      editRecord: _editRecord,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null
     }
-    if (pageId == 455) {
-      $scope.page.boxOptions.addRecord = _addRecord;
-      $scope.page.boxOptions.editRecord = _editRecord;
+
+    $scope.$watch('entity.SMFromTime', function (newVal, oldVal) {
+      // debugger;
+      if (newVal) {
+        if (!$scope.entity.SMToTime) {
+          $scope.entity.SMToTime = $scope.entity.SMFromTime
+        }
+        else {
+          var shiftFrom = moment($scope.entity.SMFromTime, "HH:mm:ss a")
+          var shiftTo = moment($scope.entity.SMToTime, "HH:mm:ss a")
+          var timeDiff = shiftTo.diff(shiftFrom);
+          if (timeDiff < 0) {
+            $scope.entity.SMToTime = $scope.entity.SMFromTime
+          }
+        }
+      }
+    })
+
+    $scope.$watch('entity.SMToTime', function (newVal, oldVal) {
+      // debugger;
+      if (newVal) {
+
+        if ($scope.entity.SMFromTime) {
+          var shiftFrom = moment($scope.entity.SMFromTime, "HH:mm:ss a")
+          var shiftTo = moment($scope.entity.SMToTime, "HH:mm:ss a")
+
+          var timeDiff = shiftTo.diff(shiftFrom);
+          if (timeDiff < 0) {
+            $scope.showMsg('warning', 'To time can not be less than from time.')
+            $scope.entity.SMToTime = oldVal;
+          }
+        }
+      }
+    })
+
+    //from lunch time
+    $scope.$watch('entity.SMLunchTime', function (newVal, oldVal) {
+      if (newVal) {
+        var shiftFrom = moment($scope.entity.SMFromTime, "HH:mm:ss a")
+        var shiftTo = moment($scope.entity.SMToTime, "HH:mm:ss a")
+        var fromLunchTime = moment($scope.entity.SMLunchTime, "HH:mm:ss a")
+        var fromDiff = fromLunchTime.diff(shiftFrom);
+        var toDiff = shiftTo.diff(fromLunchTime);
+        //checking whether lunch from time is greather than from shift time and less than shift to time by compairing miliseconds diff
+        //
+        if (toDiff > 0 && fromDiff > 0) {
+          if (!$scope.entity.SMLunchToTime) {
+            $scope.entity.SMLunchToTime = $scope.entity.SMLunchTime
+          }
+          else {
+            var toLunchTime = moment($scope.entity.SMLunchToTime, "HH:mm:ss a")
+            var lunchDiff = toLunchTime.diff(fromLunchTime);
+            if (lunchDiff < 0) {
+              $scope.entity.SMLunchToTime = $scope.entity.SMLunchTime
+            }
+          }
+        }
+        else {
+          $scope.showMsg('warning', 'Lunch from time must be between shift timings.')
+          $scope.entity.SMLunchTime = oldVal;
+        }
+      }
+    })
+
+
+    $scope.$watch('entity.SMLunchToTime', function (newVal, oldVal) {
+      if (newVal) {
+        var shiftFrom = moment($scope.entity.SMFromTime, "HH:mm:ss a")
+        var shiftTo = moment($scope.entity.SMToTime, "HH:mm:ss a")
+        var toLunchTime = moment($scope.entity.SMLunchToTime, "HH:mm:ss a")
+        var fromDiff = toLunchTime.diff(shiftFrom);
+        var toDiff = shiftTo.diff(toLunchTime);
+        //checking whether lunch from time is greather than from shift time and less than shift to time by compairing miliseconds diff
+        //
+        if (toDiff > 0 && fromDiff > 0) {
+          if (!$scope.entity.SMLunchTime) {
+            //updating lunch from time if undefined or not selected
+            $scope.entity.SMLunchTime = $scope.entity.SMLunchToTime
+          }
+          else {
+            var fromLunchTime = moment($scope.entity.SMLunchTime, "HH:mm:ss a")
+            var lunchDiff = toLunchTime.diff(fromLunchTime);
+            if (lunchDiff < 0) {
+              //checking lunch timing with miliseconds, 
+              $scope.showMsg('warning', 'Lunch To time can not be less than Lunch from time.')
+              $scope.entity.SMLunchToTime = oldVal;
+            }
+          }
+        }
+        else {
+          $scope.showMsg('warning', 'Lunch from time must be between shift timings.')
+          $scope.entity.SMLunchToTime = oldVal;
+        }
+      }
+    })
+
+    function _getDateDiff() {
+      var shiftFrom = moment(entity.SMFromTime, "HH:mm:ss a")
+      var shiftTo = moment(entity.SMToTime, "HH:mm:ss a")
+      var duration = moment.duration(shiftTo.diff(shiftFrom))
+      var hours = parseInt(duration.asHours())
+
+      var timeDiff = shiftTo.diff(shiftFrom, 'hours');
+      console.log(daysDiff)
+      return timeDiff;
     }
 
-    function _weekClick(id) {
-
-    }
 
     function _addRecord() {
-      $scope.showWeeklyOffList = true;
-
+      $scope.entity.SMCOffAllowed = true;
+      $scope.entity = {};
+      $scope.showEditForm = true;
+      $scope.isResetShifAndLunch = true;
     }
+
     function _editRecord(row) {
-      $scope.showWeeklyOffList = true;
-      var multiSelect = {
-        lz: false,
-        parent: {tableid:'',pkValue:row.entity.WOSId}
+      $scope.showEditForm = true;
+      // $scope.isResetShifAndLunch = true;
+      console.log(row)
+      var formatMaxHour = row.entity.SMMinimumHourForHalfDay;
+      var formatMinHour = row.entity.SMMinimumHourForFullDay;
+
+      var formatMaxHourMinute = parseInt(formatMaxHour);
+      var formatMinHourMinute = parseInt(formatMinHour);
+
+      var formatMaxHourSecond = formatMaxHourMinute * 60;
+      var formatMinHourSecond = formatMinHourMinute * 60;
+
+      var parseMaxHourMinute = parseInt(formatMaxHourSecond);
+      var parseMinHourMinute = parseInt(formatMinHourSecond);
+      console.log(parseMaxHourMinute, parseMinHourMinute);
+
+      var formatMinTimeHHMM = Math.floor(moment.duration(parseMaxHourMinute, 'seconds').asHours()) + ':' + moment.duration(parseMaxHourMinute, 'seconds').minutes();
+      var formatMaxTimeHHMM = Math.floor(moment.duration(parseMinHourMinute, 'seconds').asHours()) + ':' + moment.duration(parseMinHourMinute, 'seconds').minutes();
+
+
+      console.log(formatMinTimeHHMM, formatMaxTimeHHMM);
+
+      row.entity.SMMinimumHourForHalfDay = formatMinTimeHHMM;
+      row.entity.SMMinimumHourForFullDay = formatMaxTimeHHMM;
+
+      var seconds = 2000; // or "2000"
+      seconds = parseInt(seconds) //because moment js dont know to handle number in string format
+      var format = Math.floor(moment.duration(seconds, 'seconds').asHours()) + ':' + moment.duration(seconds, 'seconds').minutes();
+      console.log(format)
+
+      if (row.entity.SHGroupId != undefined) {
+        var ids = row.entity.SHGroupId.split(",");
+
+        angular.forEach(ids, function (id) {
+          angular.forEach($scope.groupList, function (group) {
+            if (group.GMCId == id)
+              group.isSelected = true;
+          })
+        })
       }
+
+      console.log(row.entity)
+      vm.oldEntity = angular.copy(row.entity)
+      $scope.entity = row.entity;
+      $scope.isResetShifAndLunch = false;
     }
-    vm.ucvOnChange = _ucvOnChange;
 
-    $scope.isLoading = true;
-    $scope.isLoaded = false;
+    function _shiftDuration(entity) {
+      $scope.isResetShifAndLunch = true;
 
-    function _refreshData() {
-      _getTableData([], [])
+      var shiftFrom = moment(entity.SMFromTime, "HH:mm:ss a")
+      var shiftTo = moment(entity.SMToTime, "HH:mm:ss a")
+      // var duration = shiftTo.diff(shiftFrom, 'hours')
+      var duration = moment.duration(shiftTo.diff(shiftFrom))
+      console.log(duration)
+      var hours = parseInt(duration.asHours())
+      var minutes = parseInt(duration.asMinutes()) - hours * 60;
+      console.log(hours + ' hour and ' + minutes + ' minutes')
+      console.log(duration, hours)
+
+      var minute = shiftTo.diff(shiftFrom, 'minutes')
+      var timeDuration = minute / 60;
+      var durations = moment(duration, "HH:mm:ss a")
+      $scope.shiftDurations = hours + ' hour and ' + minutes + ' minutes';
+
+
+      // duration time for minimum hour for full day
+      $scope.durationTime = moment(hours + ':' + minutes, 'HH:mm:ss a');
+      console.log($scope.durationTime.format("HH:mm"))
+      $scope.entity.SMMinimumHourForFullDay = $scope.durationTime.format("HH:mm");
+
+
+
+      // duration time for minimum hour for half day
+      // var halfMinutes = hours / 2;
+      // var halfHours = minutes / 2;
+      // var durationTimeForHalfDay = moment(halfMinutes + ':' + minutes, 'HH:mm:ss a');
+      // $scope.entity.SMMinimumHourForHalfDay = durationTimeForHalfDay.format("HH:mm");
+      // console.log(durationTimeForHalfDay,halfMinutes,halfHours)
+
+
+
+
+
+      console.log(duration, durations, minute, timeDuration)
+    }
+
+    function _resetShiftDuration(entity) {
+      $scope.isResetShifAndLunch = true;
+
+      entity.SMFromTime = entity.SMFromTime
+      entity.SMToTime = entity.SMFromTime;
+
+      // var testdurt = moment.duration("12:10").asSeconds();
+      // var testdurts = moment.duration("12:10").asMinutes();
+      // console.log(testdurt,testdurts)
+
+    }
+
+    function _resetLunchDuration(entity) {
+      $scope.isResetShifAndLunch = true;
+
+      entity.SMLunchTime = entity.SMLunchTime
+      entity.SMLunchToTime = entity.SMLunchTime;
+    }
+
+    function _lunchDuration(entity) {
+      $scope.isResetShifAndLunch = true;
+
+      var lunchFrom = moment(entity.SMLunchTime, "HH:mm:ss a")
+      var lunchTo = moment(entity.SMLunchToTime, "HH:mm:ss a")
+
+
+      var duration = moment.duration(lunchTo.diff(lunchFrom))
+      var hours = parseInt(duration.asHours())
+      var minutes = parseInt(duration.asMinutes()) - hours * 60;
+      var minute = lunchTo.diff(lunchFrom, 'minutes')
+      var timeDuration = minute / 60;
+      var durations = moment(duration, "HH:mm:ss a")
+      $scope.lunchDurations = hours + ' hour and ' + minutes + ' minutes';
+    }
+
+    function _saveForm(editForm, entity) {
+
+      var splitValMinimumHourForHalfDay = entity.SMMinimumHourForHalfDay.split(' ');
+      var spMinHour = splitValMinimumHourForHalfDay[0];
+
+      var splitValMinimumHourForFullDay = entity.SMMinimumHourForFullDay.split(' ');
+      var spMaxHour = splitValMinimumHourForFullDay[0];
+
+      console.log(spMinHour, spMaxHour)
+      var SMMinimumHourForHalfDays = moment.duration(spMinHour).asMinutes();
+      var SMMinimumHourForFullDays = moment.duration(spMaxHour).asMinutes();
+      console.log(SMMinimumHourForHalfDays, SMMinimumHourForFullDays)
+
+      entity.SMMinimumHourForHalfDay = SMMinimumHourForHalfDays;
+      entity.SMMinimumHourForFullDay = SMMinimumHourForFullDays;
+
+      console.log(entity)
+      var selectedGroups = '';
+      angular.forEach($scope.groupList, function (group) {
+        if (group.isSelected) {
+          selectedGroups += group.GMCId + ',';
+          console.log(selectedGroups)
+        }
+      })
+      if (selectedGroups.length > 0) {
+        selectedGroups = selectedGroups.substring(0, selectedGroups.length - 1);
+        entity.SHGroupId = selectedGroups;
+      }
+      editFormService.saveForm(pageId, entity, vm.oldEntity,
+        entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
+        .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+    }
+
+    function _saveWizardFormSuccessResult(result) {
+      $scope.page.refreshData();
+      $scope.showEditForm = false;
+      $scope.showMsg("success", "Record Saved Successfully");
+    }
+    function _saveWizardFormErrorResult(err) {
+
     }
 
     function _loadController() {
+      $scope.shiftDurations = '00:00:00';
+      $scope.lunchDurations = '00:00:00'
+
+
       var data = {
         searchList: [],
         orderByList: []
       }
-      pageService.getPagData(shiftWeekOffPageId).then(_successShiftWeekOffCustomQuery, _errorShiftWeekOffCustomQuery)
-      pageService.getPagData(weekOffSetDetailPageId).then(_successWeekOffSetCustomQuery, _errorweekOffSetCustomQuery)
-      pageService.getPagData(pageId).then(_successGetPage, _errorGetPage)
-      pageService.getCustomQuery(data, groupQueryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+      pageService.getCustomQuery(data, vm.queryId).then(getCustomQuerySuccessResult, getCustomQueryErrorResult)
     }
-    function _successShiftWeekOffCustomQuery(result) {
+    function getCustomQuerySuccessResult(result) {
+      $scope.groupList = result;
       console.log(result)
-      $scope.weekOffPage = result;
-      result.pageinfo.selects.SGWDWeekDayId.splice(0, 1);
-      // result.pageinfo.selects.SGWDFirst.splice(0, 0, { id: -1, name: "--Select--" });
-      $scope.weekGridOptions.columnDefs = [
-        { name: 'name', displayName: 'Day', width: 150 },
-        {
-          name: result.pageinfo.fields.SGWDFirst.name, displayName: result.pageinfo.fields.SGWDFirst.text, width: 150,
-          editableCellTemplate: 'ui-grid/dropdownEditor',
-          editDropdownIdLabel: 'value',
-          editDropdownValueLabel: 'name',
-          editDropdownOptionsArray: result.pageinfo.selects.SGWDFirst,
-          cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'"
-        },
-        {
-          name: result.pageinfo.fields.SGWDSecond.name, displayName: result.pageinfo.fields.SGWDSecond.text, width: 150,
-          editableCellTemplate: 'ui-grid/dropdownEditor',
-          editDropdownIdLabel: 'value',
-          editDropdownValueLabel: 'name',
-          editDropdownOptionsArray: result.pageinfo.selects.SGWDFirst,
-          cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'"
-        },
-        {
-          name: result.pageinfo.fields.SGWDThird.name, displayName: result.pageinfo.fields.SGWDThird.text, width: 150,
-          editableCellTemplate: 'ui-grid/dropdownEditor',
-          editDropdownIdLabel: 'value',
-          editDropdownValueLabel: 'name',
-          editDropdownOptionsArray: result.pageinfo.selects.SGWDFirst,
-          cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
-        },
-        {
-          name: result.pageinfo.fields.SGWDFourth.name, displayName: result.pageinfo.fields.SGWDFourth.text, width: 150,
-          editableCellTemplate: 'ui-grid/dropdownEditor',
-          editDropdownIdLabel: 'value',
-          editDropdownValueLabel: 'name',
-          editDropdownOptionsArray: result.pageinfo.selects.SGWDFirst,
-          cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
-        },
-        {
-          name: result.pageinfo.fields.SGWDFifth.name, displayName: result.pageinfo.fields.SGWDFifth.text, width: 150,
-          editableCellTemplate: 'ui-grid/dropdownEditor',
-          editDropdownIdLabel: 'value',
-          editDropdownValueLabel: 'name',
-          editDropdownOptionsArray: result.pageinfo.selects.SGWDFirst,
-          cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
-        }
-      ];
-      $scope.weekGridOptions.data = result.pageinfo.selects.SGWDWeekDayId;
-
-      // $scope.weekDays = result.pageinfo.selects.SGWDWeekDayId;
-      // angular.forEach($scope.weekDays, function (data) {
-      //   data.dayType = result.pageinfo.selects.SGWDFirst;
-      // })
-      console.log($scope.weekDays)
-
-      // alert(JSON.stringify($scope.days))
+    }
+    function getCustomQueryErrorResult(eerr) {
+      console.log(eerr)
 
     }
-    function _errorShiftWeekOffCustomQuery(err) {
-      $scope.showMsg("error", err);
-    }
-    function _successWeekOffSetCustomQuery(result) {
-      console.log(result)
-      $scope.weekOffSetPage = result;
-    }
-    function _errorweekOffSetCustomQuery(err) {
-
-    }
-    function _successGetPage(result) {
-      console.log(result)
-      $scope.page = angular.extend($scope.page, result);
-      $scope.setPage(result)
-      $scope.page.gridOptions = $scope.gridSetupColumns($scope.page.gridOptions, result.pageinfo.columns, result, true, true, true, true);
-      _getTableData([], []);
-    }
-    function _errorGetPage(err) {
-
-    }
-    function _getCustomQuerySuccessResult(result) {
-      $scope.groups = result;
-
-    }
-    function _getCustomQueryErrorResult(err) {
-
-    }
-    function _getTableData(searchList, orderByList) {
-      $scope.isLoaded = false
-      $scope.isLoading = true
-      var data = {
-        searchList: searchList,
-        orderByList: orderByList
-      }
-      var tableData = pageService.getTableData(
-        $scope.page.pageinfo.tableid,
-        $scope.page.pageinfo.pageid,
-        '', '',
-        false, data);
-
-      tableData.then(_getTableSuccessResult, _getTableErrorResult)
-    }
-    function _getTableErrorResult(err) {
-      $scope.isLoaded = true
-      $scope.isLoading = false
-    }
-    function _getTableSuccessResult(result) {
-      $scope.isLoaded = true
-      $scope.isLoading = false
-      console.log(result)
-      if (result == 'NoDataFound') {
-        // uivm.showMsg('warning', 'No Record Found.');
-      } else if (result.Errors !== undefined) {
-        // uivm.showMsg('error', result.Message);
-        // _startMsgTimer();
-      }
-      else {
-
-        $scope.page.gridOptions.data = result;
-
-      }
-    }
-
-    // function _addRecord() {
-    //   if ($scope.page.pageinfo.pageid == 1) {
-
-    //   }
-    //   else {
-    //     var param = {
-    //       action: 'create',
-    //       page: $scope.page,
-    //       linkColumns: []
-    //     };
-    //     var options = {
-    //       param: param
-    //     }
-    //     dialogModal.openFormVertical(options);
-    //   }
-    // }
-    // function _editRecord(row) {
-    //   var param = {
-    //     action: 'create',
-    //     page: $scope.page,
-    //     entity: row.entity,
-    //     linkColumns: []
-    //   };
-    //   var options = {
-    //     param: param
-    //   }
-    //   dialogModal.openFormVertical(options);
-    // }
-
-    function _ucvOnChange(item) {
-
-      console.log(item)
-      var searchList = [], orderbyList = [];
-
-      var comData = LZString.decompressFromEncodedURIComponent(item.data);
-      var userData = angular.fromJson(comData);
-      console.log(userData)
-      // SettingVisibleColumns(item)
-      angular.forEach(userData.filters, function (filter, fdx) {
-        var operator = '=';
-        var userValue = ''
-        if (filter.selectedOperator.value == '=') {
-          operator = '=';
-        }
-        else if (filter.selectedOperator.value == 'notempty') {
-          operator = '<>';
-        }
-        else if (filter.selectedOperator.value == 'empty') {
-          operator = '=';
-        }
-        else {
-          operator = filter.selectedOperator.value;
-        }
-
-        if (filter.userValue == 'self') {
-          userValue = uivm.auth.profile.userId;
-        }
-        else if (filter.userValue == 'notempty') {
-          userValue = ''
-        }
-        else if (filter.userValue == 'empty') {
-          userValue = ''
-        }
-        else if (filter.userValue === undefined) {
-          userValue = '';
-        }
-        else {
-          userValue = filter.userValue;
-        }
-
-        var searchFields = {
-          field: filter.selectedColumn.name, operand: operator, value: userValue
-        };
-        //console.log(searchFields)
-        searchList.push(searchFields)
-      })
-      //console.log(userData.orderby)
-      userData.orderby.forEach(function (order) {
-        if (order.selectedColumn !== undefined) {
-          var orderitem = {
-            column: order.selectedColumn.name,
-            isDesc: order.isDesc
-          }
-
-          orderbyList.push(orderitem)
-        }
-      })
-
-      _getTableData(searchList, orderbyList)
-    }
-
-    function _weekOffSave(editForm, entity) {
-      console.log($scope.weekGridOptions)
-      console.log($scope.weekGridOptions.data)
-      var groupIds = "";
-      angular.forEach($scope.entity.WOSGroupId, function (group) {
-        groupIds += group.GMCId + ",";
-      })
-      groupIds = groupIds.substring(0, groupIds.length - 1);
-      var weekOffSet = {
-        WOSName: $scope.entity.WOSName,
-        WOSGroupId: groupIds
-      }
-      $scope.multiEntity = {};
-      $scope.multiEntity.parent = {
-        newEntity: weekOffSet,
-        oldEntity: {},
-        action: 'create',
-        tableid: $scope.weekOffSetPage.pageinfo.tableid,
-        pageid: $scope.weekOffSetPage.pageinfo.pageid
-      }
-      $scope.multiEntity.child = [];
-      var child = {
-        tableid: $scope.weekOffPage.pageinfo.tableid,
-        pageid: $scope.weekOffPage.pageinfo.pageid,
-        parentColumn: $scope.weekOffSetPage.pageinfo.idencolname,
-        linkColumn: 'SGWDWOSId',
-        idenColName: $scope.weekOffPage.pageinfo.idencolname,
-        rows: []
-      }
-      for (var i = 0; i < $scope.weekGridOptions.data.length; i++) {
-        var col = {
-          SGWDId: 0,
-          SGWDWeekDayId: $scope.weekGridOptions.data[i].value == undefined ? -1 : $scope.weekGridOptions.data[i].value,
-          SGWDFirst: $scope.weekGridOptions.data[i].SGWDFirst == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFirst,
-          SGWDSecond: $scope.weekGridOptions.data[i].SGWDSecond == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDSecond,
-          SGWDThird: $scope.weekGridOptions.data[i].SGWDThird == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDThird,
-          SGWDFourth: $scope.weekGridOptions.data[i].SGWDFourth == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFourth,
-          SGWDFifth: $scope.weekGridOptions.data[i].SGWDFifth == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFifth,
-        }
-        child.rows.push(col);
-      }
-
-      $scope.multiEntity.child.push(child);
-      $scope.multiEntity.lz = false;
-      pageService.multiSave($scope.multiEntity).then(function (result) {
-        console.log(result)
-      }, function (err) {
-        console.log(err)
-      })
-
-    }
-
-    function _closeWeekOffAdd() {
-      $scope.showWeeklyOffList = false;
-    }
-
     _loadController();
 
+    function _closeForm(editForm) {
+      $scope.showEditForm = false;
+    }
   }
 
 })();
