@@ -19,6 +19,7 @@
     var shiftWeekOffPageId = 141;
     var groupQueryId = 528;
     var weekOffSetDetailPageId = 455;
+    var weekOffSetDetailTableId = 435;
 
     // if ($scope.isResetShifAndLunch) {
     //   $scope.resetLunchDuration = _resetLunchDuration;
@@ -73,12 +74,28 @@
       $scope.showWeeklyOffList = true;
     }
     function _editRecord(row) {
+
       $scope.showWeeklyOffList = true;
       var multiSelect = {
         lz: false,
-        parent: { tableid: '', pkValue: row.entity.WOSId }
+        parent: { tableid: $scope.weekOffSetPage.pageinfo.tableid, pkValue: row.entity.WOSId },
+        child: [{
+          tableid: $scope.weekOffPage.pageinfo.tableid,
+          linkColumn: 'SGWDWeekOffSetId',
+          orderByList: []
+        }]
       }
+      console.log(multiSelect)
+      pageService.getMultiEntity(multiSelect).then(_getMultiEntitySuccessResult, _getMultiEntityErrorResult);
     }
+
+    function _getMultiEntitySuccessResult(result) {
+      console.log(result)
+    }
+    function _getMultiEntityErrorResult(err) {
+      console.log(err)
+    }
+
     // vm.ucvOnChange = _ucvOnChange;
 
 
@@ -211,81 +228,7 @@
     function _getCustomQueryErrorResult(er) {
 
     }
-    function _resetShiftDuration(entity) {
-      $scope.isResetShifAndLunch = true;
-
-      entity.SMFromTime = entity.SMFromTime
-      entity.SMToTime = entity.SMFromTime;
-
-      // var testdurt = moment.duration("12:10").asSeconds();
-      // var testdurts = moment.duration("12:10").asMinutes();
-      // console.log(testdurt,testdurts)
-
-    }
-
-    function _resetLunchDuration(entity) {
-      $scope.isResetShifAndLunch = true;
-
-      entity.SMLunchTime = entity.SMLunchTime
-      entity.SMLunchToTime = entity.SMLunchTime;
-    }
-
-    function _lunchDuration(entity) {
-      $scope.isResetShifAndLunch = true;
-
-      var lunchFrom = moment(entity.SMLunchTime, "HH:mm:ss a")
-      var lunchTo = moment(entity.SMLunchToTime, "HH:mm:ss a")
-
-
-      var duration = moment.duration(lunchTo.diff(lunchFrom))
-      var hours = parseInt(duration.asHours())
-      var minutes = parseInt(duration.asMinutes()) - hours * 60;
-      var minute = lunchTo.diff(lunchFrom, 'minutes')
-      var timeDuration = minute / 60;
-      var durations = moment(duration, "HH:mm:ss a")
-      $scope.lunchDurations = hours + ' hour and ' + minutes + ' minutes';
-    }
-
-    function _saveForm(editForm, entity) {
-
-      var splitValMinimumHourForHalfDay = entity.SMMinimumHourForHalfDay.split(' ');
-      var spMinHour = splitValMinimumHourForHalfDay[0];
-
-      var splitValMinimumHourForFullDay = entity.SMMinimumHourForFullDay.split(' ');
-      var spMaxHour = splitValMinimumHourForFullDay[0];
-
-      console.log(spMinHour, spMaxHour)
-      var SMMinimumHourForHalfDays = moment.duration(spMinHour).asMinutes();
-      var SMMinimumHourForFullDays = moment.duration(spMaxHour).asMinutes();
-      console.log(SMMinimumHourForHalfDays, SMMinimumHourForFullDays)
-
-      entity.SMMinimumHourForHalfDay = SMMinimumHourForHalfDays;
-      entity.SMMinimumHourForFullDay = SMMinimumHourForFullDays;
-
-      console.log(entity)
-      var selectedGroups = '';
-      angular.forEach($scope.groupList, function (group) {
-        if (group.isSelected) {
-          selectedGroups += group.GMCId + ',';
-          console.log(selectedGroups)
-        }
-      })
-      if (selectedGroups.length > 0) {
-        selectedGroups = selectedGroups.substring(0, selectedGroups.length - 1);
-        entity.SHGroupId = selectedGroups;
-      }
-      editFormService.saveForm(pageId, entity, vm.oldEntity,
-        entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
-        .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
-    }
-
-    function _saveWizardFormSuccessResult(result) {
-      $scope.page.refreshData();
-      $scope.showEditForm = false;
-      $scope.showMsg("success", "Record Saved Successfully");
-    }
-
-
+    
     function _weekOffSave(editForm, entity) {
       console.log($scope.weekGridOptions)
       console.log($scope.weekGridOptions.data)
@@ -311,7 +254,7 @@
         tableid: $scope.weekOffPage.pageinfo.tableid,
         pageid: $scope.weekOffPage.pageinfo.pageid,
         parentColumn: $scope.weekOffSetPage.pageinfo.idencolname,
-        linkColumn: 'SGWDWOSId',
+        linkColumn: 'SGWDWeekOffSetId',
         idenColName: $scope.weekOffPage.pageinfo.idencolname,
         rows: []
       }
@@ -327,7 +270,7 @@
         }
         child.rows.push(col);
       }
-
+      console.log($scope.multiEntity)
       $scope.multiEntity.child.push(child);
       $scope.multiEntity.lz = false;
       pageService.multiSave($scope.multiEntity).then(function (result) {
