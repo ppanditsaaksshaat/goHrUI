@@ -94,7 +94,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
             var hostIdx = absUrl.indexOf(host);
             serviceBase = absUrl.substring(hostIdx + host.length, lastIdx) + '/api/';
             _setValue('serviceBase', serviceBase);
-        }
+        } 
         return serviceBase;
     }
 
