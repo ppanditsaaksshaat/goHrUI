@@ -17,7 +17,7 @@
         url: '/shiftmaster',
         // abstract: true,
         templateUrl: 'app/pages/attendance/shiftmaster/shiftmaster.html?v=1',
-        controller: "attMastersListController1",
+        controller: "shiftMasterController",
         controllerAs: "attCtrl",
         title: 'Shift Master',
         sidebarMeta: {

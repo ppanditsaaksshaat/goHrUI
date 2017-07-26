@@ -7,10 +7,10 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.attendance.shiftmaster')
-    .controller('attMastersListController1', attMastersListController1);
+    .controller('shiftMasterController', shiftMasterController);
 
   /** @ngInject */
-  function attMastersListController1($scope, $state, $stateParams,
+  function shiftMasterController($scope, $state, $stateParams,
     pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService) {
 
     var vm = this;
