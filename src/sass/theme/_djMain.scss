@@ -1279,3 +1279,10 @@ abbr[title] {
 .ui-grid-render-container-middle:hover + .ui-grid-pinned-container-right .scroll-bar {
   opacity: 0.7 !important;
 }
+
+.custom-radio span, .radio-inline span{
+  color: black;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
+}

@@ -8,16 +8,10 @@
 
         <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
             <div class="row">
-
-
-
                 <div class="form-group col-md-4 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMName.text}}</label>
                     <field-box page="page" ng-column="page.pageinfo.fields.SMName " ng-entity="entity " form="editForm "></field-box>
                 </div>
-
-
-
                 <div class="form-group col-md-4 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMSSId.text}}</label>
                     <field-box page="page" ng-column="page.pageinfo.fields.SMSSId " ng-entity="entity " form="editForm "></field-box>
@@ -25,13 +19,11 @@
             </div>
 
             <div class="row">
-
                 <div class="form-group col-md-4">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMFromTime.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.SMFromTime " fb-change="resetShiftDoration(entity)" ng-entity="entity "
+                    <field-box page="page" ng-column="page.pageinfo.fields.SMFromTime " fb-change="shiftDuration(entity)" ng-entity="entity "
                         form="editForm "></field-box>
                 </div>
-
                 <div class="form-group col-md-4 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMToTime.text}}</label>
                     <field-box page="page" ng-column="page.pageinfo.fields.SMToTime " fb-change="shiftDuration(entity)" ng-entity="entity " form="editForm "></field-box>
@@ -40,17 +32,14 @@
                     <label for="inputPassword3 ">Duration</label>
                     <input readonly class="form-control" type="text" ng-model="shiftDurations">
                 </div>
-
             </div>
 
             <div class="row">
-
                 <div class="form-group col-md-4">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMLunchTime.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.SMLunchTime " fb-change="resetShiftDoration(entity)" ng-entity="entity "
+                    <field-box page="page" ng-column="page.pageinfo.fields.SMLunchTime " fb-change="lunchDuration(entity)" ng-entity="entity "
                         form="editForm "></field-box>
                 </div>
-
                 <div class="form-group col-md-4 ">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMLunchToTime.text}}</label>
                     <field-box page="page" ng-column="page.pageinfo.fields.SMLunchToTime " fb-change="lunchDuration(entity)" ng-entity="entity "
@@ -63,172 +52,262 @@
 
             </div>
 
+
+            <h3 class="with-line ">Exemptions (Margin Timings)</h3>
+
+
             <div class="row">
-                <div class="form-group col-md-4 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMLateMarginTime.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.SMLateMarginTime " ng-entity="entity " form="editForm "></field-box>
-                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-4 ">
+                            <label for="inputPassword3 ">{{page.pageinfo.fields.SMLateMarginTime.text}}</label>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <field-box page="page" ng-column="page.pageinfo.fields.SMLateMarginTime " ng-entity="entity " form="editForm "></field-box>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="inputPassword3 ">Minutes</label>
+                        </div>
+                    </div>
+                    <div class="row">
 
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMEarlyMarginInTime.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.SMEarlyMarginInTime " ng-entity="entity " form="editForm "></field-box>
-                </div>
-
-                <div class="form-group col-md-4 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMHalfDayMarginInMinute.text}}</label>
-
-                    <field-box page="page" ng-column="page.pageinfo.fields.SMHalfDayMarginInMinute " ng-entity="entity " form="editForm "></field-box>
+                    </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-md-4">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-4 ">
+                            <label for="inputPassword3 ">{{page.pageinfo.fields.SMEarlyMarginInTime.text}}</label>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <field-box page="page" ng-column="page.pageinfo.fields.SMEarlyMarginInTime " ng-entity="entity " form="editForm "></field-box>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="inputPassword3 ">Minutes</label>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-8 ">
+                            <label for="inputPassword3 ">{{page.pageinfo.fields.SMNumberOfTimeForLateAllow.text}}</label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <field-box page="page" ng-column="page.pageinfo.fields.SMNumberOfTimeForLateAllow " ng-entity="entity " form="editForm "></field-box>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="inputPassword3 ">Times</label>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-8 ">
+                            <label for="inputPassword3 ">{{page.pageinfo.fields.SMsetMaxWorkingTimeForHalfDay.text}}</label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <field-box page="page" ng-column="page.pageinfo.fields.SMsetMaxWorkingTimeForHalfDay " ng-entity="entity " form="editForm "></field-box>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="inputPassword3 ">Times</label>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="with-line ">Minimum Working Criteria </h3>
+            <div class="checkbox">
+                <label class="custom-checkbox"> 
+                        <input type="checkbox" ng-model="entity.SMMinimumDurationForHalfOrFullDay"> 
+                         <span style="font:bold">{{page.pageinfo.fields.SMMinimumDurationForHalfOrFullDay.place}}</span>
+                     </label>
+            </div>
+
+
+            <div class="row" ng-if="entity.SMMinimumDurationForHalfOrFullDay">
+                <div class="form-group col-md-5 col-md-offset-1">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinimumHourForHalfDay.text}}</label>
-                    <input class="form-control" type="text" ng-model="entity.SMMinimumHourForHalfDay">
-                    <!--<field-box ng-disabled="!entity.SMShiftFlexibility" page="page" ng-column="page.pageinfo.fields.SMMinimumHourForHalfDay "
- ng-entity="entity " form="editForm "></field-box>-->
+                    <!--<input class="form-control" type="text" ng-model="entity.SMMinimumHourForHalfDay">-->
                 </div>
-
-                <div class="form-group col-md-4 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinimumHourForFullDay.text}}</label>
-                    <input class="form-control" type="text" ng-model="entity.SMMinimumHourForFullDay">
-                    <!--<field-box ng-disabled="!entity.SMShiftFlexibility" page="page" ng-column="page.pageinfo.fields.SMMinimumHourForFullDay "
- ng-entity="entity " form="editForm "></field-box>-->
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="form-group col-md-4">
-                    <label><input type="checkbox" ng-model="entity.SMLateAllowed" value="true"></label>
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMLateAllowed.place}}</label>
-                </div>
-
-                <div ng-show="entity.SMLateAllowed" class="form-group col-md-1">
-                    <input ng-disabled="!entity.SMLateAllowed" class="form-control" type="text" ng-model="entity.SMNumberOfTimeForLateAllow">
-                </div>
-                <div ng-show="entity.SMLateAllowed" class="form-group col-md-4">
-
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMNumberOfTimeForLateAllow.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.SMMinimumHourForHalfDay " ng-entity="entity " form="editForm "></field-box>
                 </div>
             </div>
 
-            <!--<div class="row" ng-show="entity.SMLateAllowed">
-
-
-
-            </div>-->
-
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label><input type="checkbox" ng-model="entity.SMShiftFlexibility" value="true"></label>
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMShiftFlexibility.place}}</label>
-                </div>
-            </div>
-
-
-            <h3 class="with-line ">Add Compensatory Off Rule</h3>
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label><input type="checkbox" ng-model="entity.SMCOffAllowed" value="true"></label>
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMCOffAllowed.place}}</label>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div ng-show="entity.SMCOffAllowed" class="form-group col-md-3 col-md-offset-1">
-                    <label><input ng-disabled="!entity.SMCOffAllowed" type="radio" name="forCompOff" ng-model="entity.SMIsCompOffLeave"></label>
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMIsCompOffLeave.place}}</label>
-
-
-                </div>
-
-                <div ng-show="entity.SMCOffAllowed" class="form-group col-md-1">
-                    <input class="form-control" type="text" ng-model="entity.SMNumberOfLeaveForCompOffLeave">
-                </div>
-                <div class="form-group col-md-3" ng-show="entity.SMCOffAllowed">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMNumberOfLeaveForCompOffLeave.text}}</label>
-                </div>
-
-
-
-                <div ng-show="entity.SMCOffAllowed" class="form-group col-md-3">
-                    <label><input type="radio" ng-disabled="!entity.SMCOffAllowed" name="forCompOff" ng-model="entity.SMIsCompOffCash"></label>
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMIsCompOffCash.place}}</label>
-
-
-                    <!--<field-box page="page" ng-column="page.pageinfo.fields.SMMinimumHourForFullDay " ng-entity="entity " form="editForm "></field-box>-->
-                </div>
-            </div>
-
-            <!--<div class="row" ng-show="entity.SMCOffAllowed">
-                <div class="form-group col-md-1 col-md-offset-2">
-                    <input class="form-control" type="text" ng-model="entity.SMNumberOfLeaveForCompOffLeave">
-                </div>
-                <div class="form-group col-md-9">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMNumberOfLeaveForCompOffLeave.text}}</label>
-                </div>
-            </div>-->
-
-            <h3 class="with-line ">Add Over Time Rule</h3>
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label><input type="checkbox" ng-model="entity.SMOverTimeAllowed" value="true"></label>
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMOverTimeAllowed.place}}</label>
-                </div>
-            </div>
-            <div class="row" ng-show="entity.SMOverTimeAllowed">
-                <div class="form-group col-md-3 col-md-offset-1">
-                    <label><input ng-disabled="!entity.SMOverTimeAllowed" type="checkbox" ng-model="entity.SMIsCalulatedAfterLeaveDuration" value="true"></label>
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMIsCalulatedAfterLeaveDuration.place}}</label>
-                </div>
-
+            <div class="row" ng-if="entity.SMMinimumDurationForHalfOrFullDay">
+                <div class="form-group col-md-5 col-md-offset-1">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinimumHourForFullDay.text}}</label> </div>
                 <div class="form-group col-md-4">
-                    <label><input type="checkbox" ng-disabled="!entity.SMOverTimeAllowed" ng-model="entity.SMIsAllowOverTimeMargin" value="true"></label>
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMIsAllowOverTimeMargin.place}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.SMMinimumHourForFullDay " ng-entity="entity " form="editForm "></field-box>
                 </div>
+            </div>
 
-                <div class="form-group col-md-1">
-                    <input class="form-control" ng-disabled="!entity.SMIsAllowOverTimeMargin" type="text" ng-model="entity.SHApplicableOverTimeAfterMinute">
+
+
+            <div class="checkbox">
+                <label class="custom-checkbox"> 
+                        <input type="checkbox" ng-model="entity.SMShiftFlexibility"> 
+                         <span style="font:bold">{{page.pageinfo.fields.SMShiftFlexibility.place}}</span>
+                     </label>
+            </div>
+
+
+
+
+
+
+            <h3 class="with-line ">Compensatory Off</h3>
+            <div class="checkbox">
+                <label class="custom-checkbox"> 
+                        <input type="checkbox"   ng-show="numberOfLV" ng-model="entity.SMCOffAllowed" ng-click="entity.SMIsCompOffCash=false;entity.SMCompOffLeaveValidAsEndOfSameMonth=false;entity.SMIsCompOffLeave=false;entity.SMIsCompOffCash=false;"> 
+                         <span style="font:bold">{{page.pageinfo.fields.SMCOffAllowed.place}}</span>
+                     </label>
+            </div>
+
+
+            <div class="row">
+                <div ng-if="entity.SMCOffAllowed" class="form-group col-md-10 col-md-offset-1">
+                    Compensatory off will be converted as &nbsp;
+                    <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="compoffconversion" id="compoffconversion1" value="true" ng-click="entity.SMIsCompOffLeave = false" ng-model="entity.SMIsCompOffCash">
+                        <span>{{page.pageinfo.fields.SMIsCompOffCash.place}}</span>
+                    </label>
+                    <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="compoffconversion" id="compoffconversion2" value="false" ng-click="entity.SMIsCompOffLeave = true;entity.SMCompOffLeaveValidAsInDays = false; entity.SMNumberOfLeaveForCompOffLeave = 0"  ng-model="entity.SMIsCompOffCash">
+                        <span>{{page.pageinfo.fields.SMIsCompOffLeave.place}}</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div ng-show="entity.SMIsCompOffLeave && entity.SMCOffAllowed" class="form-group col-md-10 col-md-offset-1">
+                    Validity of Leave against Compensatory off will be &nbsp;
+                    <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="validitytype" id="validitytype1" value="true" ng-click="entity.SMCompOffLeaveValidAsInDays = false; entity.SMNumberOfLeaveForCompOffLeave = 0"
+                         ng-model="entity.SMCompOffLeaveValidAsEndOfSameMonth">
+                        <span>{{page.pageinfo.fields.SMCompOffLeaveValidAsEndOfSameMonth.place}}</span>
+                    </label>
+                    <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="validitytype" id="validitytype2" value="false" ng-click="entity.SMCompOffLeaveValidAsInDays = true"  
+                        ng-model="entity.SMCompOffLeaveValidAsEndOfSameMonth">
+                        <span>{{page.pageinfo.fields.SMCompOffLeaveValidAsInDays.place}}</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row" ng-if="entity.SMCompOffLeaveValidAsInDays && entity.SMCOffAllowed && entity.SMIsCompOffLeave">
+                <div class="form-group col-md-5 col-md-offset-1 ">
+                    <label class="bold-text" for="inputPassword3 ">{{page.pageinfo.fields.SMNumberOfLeaveForCompOffLeave.text}}</label>
                 </div>
                 <div class="form-group col-md-3">
+                    <field-box page="page" ng-column="page.pageinfo.fields.SMNumberOfLeaveForCompOffLeave " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
+
+            <h3 class="with-line ">Over Time</h3>
+            <div class="checkbox">
+                <label class="custom-checkbox"> 
+                        <input type="checkbox" ng-model="entity.SMOverTimeAllowed"  ng-click="entity.SMIsCalulatedAfterLeaveDuration=false;entity.SMIsOTCalculatedOnBasicSalary=false;entity.SHApplicableOverTimeAfterMinute=0;entity.SMIsAllowOverTimeMargin=false"> 
+                         <span style="font:bold">{{page.pageinfo.fields.SMOverTimeAllowed.place}}</span>
+                     </label>
+            </div>
+            <!--<div class="form-group col-md-12">
+                    <label><input type="checkbox" ng-model="entity.SMOverTimeAllowed" value="true"></label>
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMOverTimeAllowed.place}}</label>
+                </div>-->
+
+
+            <div class="row" ng-if="entity.SMOverTimeAllowed">
+                <div class="form-group col-md-10 col-md-offset-1">
+                    Calculation of overtime after &nbsp;
+                    <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="forBasicOrGross" id="basicORGross1" value="true" ng-click="entity.SMIsAllowOverTimeMargin = false"
+                         ng-model="entity.SMIsCalulatedAfterLeaveDuration">
+                        <span>{{page.pageinfo.fields.SMIsCalulatedAfterLeaveDuration.place}}</span>
+                    </label>
+                    <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="forBasicOrGross" id="basicORGross2" value="false" ng-click="entity.SMIsAllowOverTimeMargin=true"  
+                        ng-model="entity.SMIsCalulatedAfterLeaveDuration">
+                        <span>{{page.pageinfo.fields.SMIsAllowOverTimeMargin.place}}</span>
+                    </label>
+
+                </div>
+            </div>
+
+
+            <div class="row" ng-if="entity.SMIsAllowOverTimeMargin && entity.SMOverTimeAllowed">
+                <div class="form-group col-md-5 col-md-offset-1">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SHApplicableOverTimeAfterMinute.text}}</label>
                 </div>
+                <div class="form-group col-md-3">
+                    <!--<input class="form-control" ng-disabled="!entity.SMIsAllowOverTimeMargin" type="text" ng-model="entity.SHApplicableOverTimeAfterMinute">-->
+                    <field-box page="page" ng-column="page.pageinfo.fields.SHApplicableOverTimeAfterMinute " ng-entity="entity " form="editForm "></field-box>
+                </div>
+                <div class="form-group col-md-1">
+                    Minutes
+                </div>
             </div>
 
-            <!--<div class="row" ng-show="entity.SMOverTimeAllowed">
-                
+
+            <div class="row" ng-if="entity.SMOverTimeAllowed">
+                <div ng-if="entity.SMOverTimeAllowed" class="form-group col-md-10 col-md-offset-1">
+                    Amount Calculation on the basis of &nbsp;
+                    <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross1" value="true" ng-click="entity.SMIsOTCalculatedOnGrossSalary = false"
+                         ng-model="entity.SMIsOTCalculatedOnBasicSalary">
+                        <span>{{page.pageinfo.fields.SMIsOTCalculatedOnBasicSalary.place}}</span>
+                    </label>
+                    <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross1" value="false" ng-click="entity.SMIsOTCalculatedOnGrossSalary = true"  
+                        ng-model="entity.SMIsOTCalculatedOnBasicSalary">
+                        <span>{{page.pageinfo.fields.SMIsOTCalculatedOnGrossSalary.place}}</span>
+                    </label>
+                </div>
             </div>
 
-            <div class="row" ng-show="entity.SMOverTimeAllowed">
-                
-
-            </div>-->
-
-
-
-            <div class="row" ng-show="entity.SMOverTimeAllowed">
-                <div class="form-group col-md-3 col-md-offset-1">
-                    <!--<label><input type="checkbox" ng-model="entity.SMSalaryHeadId" value=""></label>-->
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMSalaryHeadId.text}}</label>
-                    <field-box page="page" ng-column="page.pageinfo.fields.SMSalaryHeadId " ng-entity="entity " form="editForm "></field-box>
+            <div class="row" ng-if="entity.SMOverTimeAllowed">
+                <div class="form-group col-md-11 col-md-offset-1">
+                    <label for="inputPassword3 ">What are the calculation rate for Overtime?</label>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SHOTSingleRate.text}}</label>
-                    <!--<input class="form-control" ng-disabled="!entity.IsOTCalculatedOnSalaryHead" type="text" ng-model="entity.SHOTSingleRate">-->
+            </div>
 
-                    <field-box ng-disabled="!entity.IsOTCalculatedOnSalaryHead" page="page" ng-column="page.pageinfo.fields.SHOTSingleRate "
-                        ng-entity="entity " form="editForm "></field-box>
+            <div class="row" ng-if="entity.SMOverTimeAllowed">
+                <div class="form-group col-md-4 col-md-offset-2">
+                    <label style="font:bold" for="inputPassword3 ">{{page.pageinfo.fields.SHOTSingleRate.text}}</label>
                 </div>
+                <div class="form-group col-md-3">
+                    <!--<input class="form-control" ng-disabled="!entity.SMIsAllowOverTimeMargin" type="text" ng-model="entity.SHApplicableOverTimeAfterMinute">-->
+                    <field-box page="page" ng-column="page.pageinfo.fields.SHOTSingleRate " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
 
-                <div class="form-group col-md-4 ">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SHOTDoubleRate.text}}</label>
-                    <!--<input class="form-control" ng-disabled="!entity.IsOTCalculatedOnSalaryHead" type="text" ng-model="entity.SHOTDoubleRate">-->
-
+            <div class="row" ng-if="entity.SMOverTimeAllowed">
+                <div class="form-group col-md-4 col-md-offset-2">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.SHOTDoubleRate.text}}</label> </div>
+                <div class="form-group col-md-3">
                     <field-box page="page" ng-column="page.pageinfo.fields.SHOTDoubleRate " ng-entity="entity " form="editForm "></field-box>
                 </div>
             </div>
-            <h3 class="with-line ">Grouping</h3>
+
+            <h3 class="with-line ">Grouping (Shift Rule Apply On Group Of Employee)</h3>
             <div class="row">
                 <div class="form-group col-md-4">
                     <ul style="list-style-type:none" ng-repeat="value in groupList">
