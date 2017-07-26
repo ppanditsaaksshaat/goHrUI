@@ -12,6 +12,7 @@
     'BlurAdmin.pages.attendance.synctable',
     'BlurAdmin.pages.attendance.shiftmaster'
   ])
+  
     .config(routeConfig);
 
   /** @ngInject */

@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function attMastersListController1($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService) {
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, $filter) {
 
     var vm = this;
     var pageId = $stateParams.pageId;
@@ -91,6 +91,21 @@
 
     function _getMultiEntitySuccessResult(result) {
       console.log(result)
+
+      var _groupIds = result.WOSGroupId;
+      var groupIds = _groupIds.split(',');
+      result.WOSGroupId = [];
+      for (var c = 0; c < groupIds.length; c++) {
+        var selectedGroup = $filter('findObj')($scope.groups, groupIds[c], 'GMCId');
+        if (selectedGroup != null) {
+          result.WOSGroupId.push(selectedGroup);
+        }
+      }
+      $scope.entity = result;
+      angular.forEach(result.child, function (child) {
+        $scope.weekGridOptions.data = child.rows;
+      })
+
     }
     function _getMultiEntityErrorResult(err) {
       console.log(err)
@@ -228,7 +243,7 @@
     function _getCustomQueryErrorResult(er) {
 
     }
-    
+
     function _weekOffSave(editForm, entity) {
       console.log($scope.weekGridOptions)
       console.log($scope.weekGridOptions.data)

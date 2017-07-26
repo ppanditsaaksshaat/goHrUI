@@ -13,6 +13,7 @@
   function shiftMasterController($scope, $state, $stateParams,
     pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService) {
 
+      
     var vm = this;
     // var pageId = $stateParams.pageId;
     var pageId = 128;

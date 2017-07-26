@@ -26,6 +26,7 @@
           pageTitle: 'Shift Master'
         },
       })
+      
   }
 
 })();
