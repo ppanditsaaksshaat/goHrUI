@@ -16,11 +16,12 @@
 
 
         //local variable
-        var vm = this;  
+        var vm = this;
         var columnIds = ['132', '667', '674', '192', '668', '743', '744'];
         vm.pageId = 25;
         vm.empAdd = {};
-        //end of local variable
+        var queryId = 528;
+        //end o local variable
 
         //private function
         vm.saveForm = _saveForm;
@@ -30,9 +31,24 @@
         //page load 
         function _loadController() {
             $timeout(function () {
+                vm.empAdd.JDDate = moment();
                 pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
                 pageService.getFieldSetting(vm.pageId).then(_getFieldSettingSuccessResult, _getFieldSettingErrorResult)
+                var data = {
+                    searchList: [],
+                    orderByList: []
+                }
+                pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
             });
+        }
+        function _getCustomQuerySuccessResult(result) {
+            if (result != "NoDataFound") {
+                vm.groupList = result;
+                vm.empAdd.JDGroupId = result[0].GMCId;
+            }
+        }
+        function _getCustomQueryErrorResult(err) {
+
         }
         function _getAllSelectSuccessResult(result) {
             vm.dropDownList = result;
@@ -52,7 +68,7 @@
 
         // save employee form
         function _saveForm(data) {
-        
+
             var basic = {
                 EmpTitleId: vm.empAdd.EmpTitleId,
                 EmpFirstName: vm.empAdd.EmpFirstName,
@@ -69,6 +85,7 @@
                 JDEmploymentId: vm.empAdd.JDEmploymentId,
                 JDEmpGradeId: vm.empAdd.JDEmpGradeId,
                 JDEmpLevelId: vm.empAdd.JDEmpLevelId,
+                JDGroupId: vm.empAdd.JDGroupId
             }
             var personal = {
                 PdGenderId: vm.empAdd.PdGenderId,
