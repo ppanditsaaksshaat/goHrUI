@@ -380,29 +380,31 @@
                                 }
 
                             })
-                            if ($scope.page.pageinfo.statuslist.length > 0) {
-                                $scope.page.pageinfo.statuslist.push({
-                                    isApproved: false,
-                                    isCancelApprove: false,
-                                    isCancelOnHold: false,
-                                    isCancelRejected: false,
-                                    isCancelRequest: false,
-                                    isCancelled: false,
-                                    isOnHold: false,
-                                    isPending: true,
-                                    isRejected: false,
-                                    name: "Pending",
-                                    perc: "0",
-                                    rank: "0",
-                                    value: 0
-                                })
-                                $scope.page.pageinfo.filters.push({
-                                    name: 'StatusId',
-                                    controlType: 'select',
-                                    displayName: 'Status',
-                                    operator: '=',
-                                    titleMap: $scope.page.pageinfo.statuslist
-                                })
+                            if ($scope.page.pageinfo.statuslist != null) {
+                                if ($scope.page.pageinfo.statuslist.length > 0) {
+                                    $scope.page.pageinfo.statuslist.push({
+                                        isApproved: false,
+                                        isCancelApprove: false,
+                                        isCancelOnHold: false,
+                                        isCancelRejected: false,
+                                        isCancelRequest: false,
+                                        isCancelled: false,
+                                        isOnHold: false,
+                                        isPending: true,
+                                        isRejected: false,
+                                        name: "Pending",
+                                        perc: "0",
+                                        rank: "0",
+                                        value: 0
+                                    })
+                                    $scope.page.pageinfo.filters.push({
+                                        name: 'StatusId',
+                                        controlType: 'select',
+                                        displayName: 'Status',
+                                        operator: '=',
+                                        titleMap: $scope.page.pageinfo.statuslist
+                                    })
+                                }
                             }
                             pageInfoListner();
                         }
