@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-12">
+        <div ba-panel ba-panel-title="{{companyPage.pageinfo.title}}" ba-panel-class="with-scroll">
+            <form name="editForm" ng-submit='saveCompany(entity,editForm)' novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label ng-bind="companyPage.pageinfo.fields.CCOName.text"></label>
+                            <field-box page="companyPage" ng-column="companyPage.pageinfo.fields.CCOName" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label ng-bind="companyPage.pageinfo.fields.CCOCompanyPFAccount.text"></label>
+                            <field-box page="companyPage" ng-column="companyPage.pageinfo.fields.CCOCompanyPFAccount" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label ng-bind="companyPage.pageinfo.fields.CCOCompanyESIAccount.text"></label>
+                            <field-box page="companyPage" ng-column="companyPage.pageinfo.fields.CCOCompanyESIAccount" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label ng-bind=companyPage.pageinfo.fields.CCOAddress.text ""></label>
+                            <field-box page="companyPage" ng-column="companyPage.pageinfo.fields.CCOAddress" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" ng-click="addCtrl.entity=[]" class="btn btn-primary">Clear</button>
+                    <button type="button" ng-click="back('organization.company.list')" class="btn btn-primary">Back</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
