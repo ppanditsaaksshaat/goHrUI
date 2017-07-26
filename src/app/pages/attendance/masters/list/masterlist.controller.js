@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function attMastersListController1($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal) {
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService) {
 
     var vm = this;
     var pageId = $stateParams.pageId;
@@ -20,14 +20,24 @@
     var groupQueryId = 528;
     var weekOffSetDetailPageId = 455;
 
+    // if ($scope.isResetShifAndLunch) {
+    //   $scope.resetLunchDuration = _resetLunchDuration;
+    // }
 
+    // if ($scope.isResetShifAndLunch) {
+    //   $scope.shiftDuration = _shiftDuration;
+    // }
+
+    // if ($scope.isResetShifAndLunch) {  
+    //   $scope.lunchDuration = _lunchDuration;
+    // }
 
 
     $scope.entity = {};
 
     $scope.weekOffSave = _weekOffSave;
     $scope.showWeeklyOffList = false;
-    $scope.weekClick = _weekClick;
+    // $scope.weekClick = _weekClick;
     $scope.closeWeekOffAdd = _closeWeekOffAdd;
 
     $scope.weekGridOptions = { enableCellEditOnFocus: true }
@@ -36,7 +46,7 @@
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
-      showFilter: true,
+      showFilter: false,
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
@@ -59,29 +69,29 @@
       $scope.page.boxOptions.editRecord = _editRecord;
     }
 
-    function _weekClick(id) {
-
-    }
-
     function _addRecord() {
       $scope.showWeeklyOffList = true;
-
     }
     function _editRecord(row) {
       $scope.showWeeklyOffList = true;
       var multiSelect = {
         lz: false,
-        parent: {tableid:'',pkValue:row.entity.WOSId}
+        parent: { tableid: '', pkValue: row.entity.WOSId }
       }
     }
-    vm.ucvOnChange = _ucvOnChange;
+    // vm.ucvOnChange = _ucvOnChange;
 
-    $scope.isLoading = true;
-    $scope.isLoaded = false;
 
-    function _refreshData() {
-      _getTableData([], [])
-    }
+    // function _addRecord() {
+    //   $scope.entity.SMCOffAllowed = true;
+    //   $scope.entity = {};
+    //   $scope.showEditForm = true;
+    //   $scope.isResetShifAndLunch = true;
+
+    //   var timeDiff = shiftTo.diff(shiftFrom, 'hours');
+    //   console.log(daysDiff)
+    //   return timeDiff;
+    // }
 
     function _loadController() {
       var data = {
@@ -148,9 +158,6 @@
       //   data.dayType = result.pageinfo.selects.SGWDFirst;
       // })
       console.log($scope.weekDays)
-
-      // alert(JSON.stringify($scope.days))
-
     }
     function _errorShiftWeekOffCustomQuery(err) {
       $scope.showMsg("error", err);
@@ -167,144 +174,117 @@
       $scope.page = angular.extend($scope.page, result);
       $scope.setPage(result)
       $scope.page.gridOptions = $scope.gridSetupColumns($scope.page.gridOptions, result.pageinfo.columns, result, true, true, true, true);
-      _getTableData([], []);
+      // _getTableData([], []);
     }
     function _errorGetPage(err) {
 
+      var minute = shiftTo.diff(shiftFrom, 'minutes')
+      var timeDuration = minute / 60;
+      var durations = moment(duration, "HH:mm:ss a")
+      $scope.shiftDurations = hours + ' hour and ' + minutes + ' minutes';
+
+
+      // duration time for minimum hour for full day
+      $scope.durationTime = moment(hours + ':' + minutes, 'HH:mm:ss a');
+      console.log($scope.durationTime.format("HH:mm"))
+      $scope.entity.SMMinimumHourForFullDay = $scope.durationTime.format("HH:mm");
+
+
+
+      // duration time for minimum hour for half day
+      // var halfMinutes = hours / 2;
+      // var halfHours = minutes / 2;
+      // var durationTimeForHalfDay = moment(halfMinutes + ':' + minutes, 'HH:mm:ss a');
+      // $scope.entity.SMMinimumHourForHalfDay = durationTimeForHalfDay.format("HH:mm");
+      // console.log(durationTimeForHalfDay,halfMinutes,halfHours)
+
+
+
+
+
+      console.log(duration, durations, minute, timeDuration)
     }
+
     function _getCustomQuerySuccessResult(result) {
       $scope.groups = result;
+    }
+    function _getCustomQueryErrorResult(er) {
 
     }
-    function _getCustomQueryErrorResult(err) {
+    function _resetShiftDuration(entity) {
+      $scope.isResetShifAndLunch = true;
+
+      entity.SMFromTime = entity.SMFromTime
+      entity.SMToTime = entity.SMFromTime;
+
+      // var testdurt = moment.duration("12:10").asSeconds();
+      // var testdurts = moment.duration("12:10").asMinutes();
+      // console.log(testdurt,testdurts)
 
     }
-    function _getTableData(searchList, orderByList) {
-      $scope.isLoaded = false
-      $scope.isLoading = true
-      var data = {
-        searchList: searchList,
-        orderByList: orderByList
-      }
-      var tableData = pageService.getTableData(
-        $scope.page.pageinfo.tableid,
-        $scope.page.pageinfo.pageid,
-        '', '',
-        false, data);
 
-      tableData.then(_getTableSuccessResult, _getTableErrorResult)
-    }
-    function _getTableErrorResult(err) {
-      $scope.isLoaded = true
-      $scope.isLoading = false
-    }
-    function _getTableSuccessResult(result) {
-      $scope.isLoaded = true
-      $scope.isLoading = false
-      console.log(result)
-      if (result == 'NoDataFound') {
-        // uivm.showMsg('warning', 'No Record Found.');
-      } else if (result.Errors !== undefined) {
-        // uivm.showMsg('error', result.Message);
-        // _startMsgTimer();
-      }
-      else {
+    function _resetLunchDuration(entity) {
+      $scope.isResetShifAndLunch = true;
 
-        $scope.page.gridOptions.data = result;
-
-      }
+      entity.SMLunchTime = entity.SMLunchTime
+      entity.SMLunchToTime = entity.SMLunchTime;
     }
 
-    // function _addRecord() {
-    //   if ($scope.page.pageinfo.pageid == 1) {
+    function _lunchDuration(entity) {
+      $scope.isResetShifAndLunch = true;
 
-    //   }
-    //   else {
-    //     var param = {
-    //       action: 'create',
-    //       page: $scope.page,
-    //       linkColumns: []
-    //     };
-    //     var options = {
-    //       param: param
-    //     }
-    //     dialogModal.openFormVertical(options);
-    //   }
-    // }
-    // function _editRecord(row) {
-    //   var param = {
-    //     action: 'create',
-    //     page: $scope.page,
-    //     entity: row.entity,
-    //     linkColumns: []
-    //   };
-    //   var options = {
-    //     param: param
-    //   }
-    //   dialogModal.openFormVertical(options);
-    // }
+      var lunchFrom = moment(entity.SMLunchTime, "HH:mm:ss a")
+      var lunchTo = moment(entity.SMLunchToTime, "HH:mm:ss a")
 
-    function _ucvOnChange(item) {
 
-      console.log(item)
-      var searchList = [], orderbyList = [];
+      var duration = moment.duration(lunchTo.diff(lunchFrom))
+      var hours = parseInt(duration.asHours())
+      var minutes = parseInt(duration.asMinutes()) - hours * 60;
+      var minute = lunchTo.diff(lunchFrom, 'minutes')
+      var timeDuration = minute / 60;
+      var durations = moment(duration, "HH:mm:ss a")
+      $scope.lunchDurations = hours + ' hour and ' + minutes + ' minutes';
+    }
 
-      var comData = LZString.decompressFromEncodedURIComponent(item.data);
-      var userData = angular.fromJson(comData);
-      console.log(userData)
-      // SettingVisibleColumns(item)
-      angular.forEach(userData.filters, function (filter, fdx) {
-        var operator = '=';
-        var userValue = ''
-        if (filter.selectedOperator.value == '=') {
-          operator = '=';
-        }
-        else if (filter.selectedOperator.value == 'notempty') {
-          operator = '<>';
-        }
-        else if (filter.selectedOperator.value == 'empty') {
-          operator = '=';
-        }
-        else {
-          operator = filter.selectedOperator.value;
-        }
+    function _saveForm(editForm, entity) {
 
-        if (filter.userValue == 'self') {
-          userValue = uivm.auth.profile.userId;
-        }
-        else if (filter.userValue == 'notempty') {
-          userValue = ''
-        }
-        else if (filter.userValue == 'empty') {
-          userValue = ''
-        }
-        else if (filter.userValue === undefined) {
-          userValue = '';
-        }
-        else {
-          userValue = filter.userValue;
-        }
+      var splitValMinimumHourForHalfDay = entity.SMMinimumHourForHalfDay.split(' ');
+      var spMinHour = splitValMinimumHourForHalfDay[0];
 
-        var searchFields = {
-          field: filter.selectedColumn.name, operand: operator, value: userValue
-        };
-        //console.log(searchFields)
-        searchList.push(searchFields)
-      })
-      //console.log(userData.orderby)
-      userData.orderby.forEach(function (order) {
-        if (order.selectedColumn !== undefined) {
-          var orderitem = {
-            column: order.selectedColumn.name,
-            isDesc: order.isDesc
-          }
+      var splitValMinimumHourForFullDay = entity.SMMinimumHourForFullDay.split(' ');
+      var spMaxHour = splitValMinimumHourForFullDay[0];
 
-          orderbyList.push(orderitem)
+      console.log(spMinHour, spMaxHour)
+      var SMMinimumHourForHalfDays = moment.duration(spMinHour).asMinutes();
+      var SMMinimumHourForFullDays = moment.duration(spMaxHour).asMinutes();
+      console.log(SMMinimumHourForHalfDays, SMMinimumHourForFullDays)
+
+      entity.SMMinimumHourForHalfDay = SMMinimumHourForHalfDays;
+      entity.SMMinimumHourForFullDay = SMMinimumHourForFullDays;
+
+      console.log(entity)
+      var selectedGroups = '';
+      angular.forEach($scope.groupList, function (group) {
+        if (group.isSelected) {
+          selectedGroups += group.GMCId + ',';
+          console.log(selectedGroups)
         }
       })
-
-      _getTableData(searchList, orderbyList)
+      if (selectedGroups.length > 0) {
+        selectedGroups = selectedGroups.substring(0, selectedGroups.length - 1);
+        entity.SHGroupId = selectedGroups;
+      }
+      editFormService.saveForm(pageId, entity, vm.oldEntity,
+        entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
+        .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
     }
+
+    function _saveWizardFormSuccessResult(result) {
+      $scope.page.refreshData();
+      $scope.showEditForm = false;
+      $scope.showMsg("success", "Record Saved Successfully");
+    }
+
 
     function _weekOffSave(editForm, entity) {
       console.log($scope.weekGridOptions)
@@ -362,8 +342,25 @@
       $scope.showWeeklyOffList = false;
     }
 
+    // function _loadController() {
+    //   $scope.shiftDurations = '00:00:00';
+    //   $scope.lunchDurations = '00:00:00'
+
+
+    //   var data = {
+    //     searchList: [],
+    //     orderByList: []
+    //   }
+    //   pageService.getCustomQuery(data, vm.queryId).then(getCustomQuerySuccessResult, getCustomQueryErrorResult)
+    // }
+    // function getCustomQuerySuccessResult(result) {
+    //   $scope.groupList = result;
+    //   console.log(result)
+    // }
+    // function getCustomQueryErrorResult(eerr) {
+    //   console.log(eerr)
+
+    // }
     _loadController();
-
   }
-
 })();

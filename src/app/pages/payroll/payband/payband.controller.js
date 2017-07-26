@@ -11,10 +11,12 @@
     /** @ngInject */
     function paybandController($scope, $state, $stateParams,
         pageService, DJWebStore, dialogModal, editFormService, $timeout, $filter, $http) {
+
         $scope.salary = { grossAmt: 0, earningAmt: 0, deductionAmt: 0, netPayableAmt: 0, employerAmt: 0, ctcAmt: 0 }
         $scope.payGridOptions = {
-            expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" ui-grid-edit ng-style=\"getSubgridHeight(row.entity.subGridOptions)\"></div>',
+            expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" ui-grid-edit class="djSubGrid" ></div>',
             expandableRowHeight: 150,
+            enableExpandableRowHeader: false,
             //subGridVariable will be available in subGrid scope
             expandableRowScope: {
                 subGridVariable: 'subGridScopeVariable'
@@ -29,13 +31,13 @@
             enableVerticalScrollbar: false,
             enableHighlighting: false,
             enablePinning: false,
-            enableCellEditOnFocus: true,
+            editableOnFocus: true,
             data: [],
             columnDefs: [],
             onRegisterApi: _onRegisterApi,
             showGridFooter: true,
             showColumnFooter: false,
-            gridFooterTemplate: '<div> <div class="pull-right">button ng-click="addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div>'
+            gridFooterTemplate: '<div class="row"> <div class="col-md-8"> <div class="pull-left">  Diffrences of earning to be added in <select ng-model="grid.appScope.selectedOtherHead" ng-options="opt.name for opt in grid.appScope.rulePage.pageinfo.fields.PBRSHId.options"></select></div><div class="pull-right"><button ng-click="grid.appScope.addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button></div></div><div class="col-md-4"><div class="pull-right"><button ng-click="grid.appScope.addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div></div>'
             // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
         }
 
@@ -77,6 +79,7 @@
         $scope.addNewRule = _addNewRule;
         $scope.removeRuleSlab = _removeRuleSlab;
         $scope.changeFormula = _changeFormula;
+        $scope.changeSlab = _changeSlab;
         $scope.addTotal = _addTotal;
 
         $scope.getNetPayable = _getNetPayable;
@@ -85,6 +88,32 @@
 
         $scope.saveForm = _saveForm;
 
+        function CalculatePercentageOnAmount(amount, totalAmount, decimalPlaces) {
+
+            var floatAmount = parseFloat(amount);
+            var floatTotal = parseFloat(totalAmount);
+            var intDecimal = parseInt(decimalPlaces);
+
+            if (isNaN(floatAmount) || isNaN(floatTotal) || isNaN(intDecimal)) {
+                return 0.00;
+            }
+            else {
+                var result = (floatAmount * 100) / floatTotal;
+                if (intDecimal) {
+                    if (intDecimal > 0)
+                        result = result.toFixed(intDecimal);
+                }
+                return result;
+            }
+        }
+        function CalculateAmountOnPercentage(percentageValue, totalAmount, decimalPlaces) {
+            var result = (parseFloat(percentageValue) / 100) * totalAmount
+            if (decimalPlaces) {
+                if (decimalPlaces > 0)
+                    result = result.toFixed(decimalPlaces);
+            }
+            return result;
+        }
         function _pageResult(result) {
         }
 
@@ -107,6 +136,7 @@
             }
             var rowHeight = 35; // your row height
             var headerHeight = 35; // your header height
+            console.log(length * rowHeight + headerHeight)
             return {
 
                 height: (length * rowHeight + headerHeight) + "px"
@@ -133,6 +163,14 @@
             //adding current state total row at last
             if ($scope.selectedOtherHead) {
                 if ($scope.payGridOptions.data.length) {
+
+                    var shFound = $filter('findObj')($scope.payGridOptions.data, $scope.selectedOtherHead.value, 'PBRSHId')
+                    if (shFound != null) {
+                        $scope.showMsg('warning', 'Selected Head already added in List')
+                        return;
+                    }
+
+
                     var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsGross')
                     var grossId = 0;
                     if (shGross != null) {
@@ -155,7 +193,7 @@
                     }
 
                     var diffAmt = Math.round(grossAmt - totAmt);
-                    var grossPer = Math.round((diffAmt * 100) / grossAmt);
+                    var grossPer = CalculatePercentageOnAmount(diffAmt, grossAmt);
                     $scope.payGridOptions.data.push({
                         PBRId: 0,
                         PBSId: 0,
@@ -197,8 +235,20 @@
 
                 }
             }
-
+            _addDependentHeadList();
             _getNetPayable();
+        }
+        function _addDependentHeadList() {
+            //update dependent dropdown
+            var dependList = [];
+            for (var v = 0; v < $scope.payGridOptions.data.length; v++) {
+                var shead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, $scope.payGridOptions.data[v].PBRSHId, 'value')
+                if (shead != null) {
+                    dependList.push(shead);
+                }
+            }
+
+            $scope.payGridOptions.columnDefs[2].editDropdownOptionsArray = dependList;
         }
         //adding new row to rule grid
         function _addNewRule(row) {
@@ -214,17 +264,36 @@
                 _addRuleGridRow(0, false, 0, 0, 0, '', '', '', '', 0);
             }
         }
-
+        function _changeSlab(row) {
+            console.log(row)
+            //isExpanded
+        }
         function _changeFormula(row) {
+            console.log(row)
             row.entity.PBRIsFormula = !row.entity.PBRIsFormula;
 
             if (row.entity.PBRIsFormula) {
                 _getSubGridOptions(row.entity, row.entity.PBRIsFormula)
                 if (row.entity.PBRCalcOnSHId.length > 0) {
-                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
-                }
+                    if (row.entity.PBRCalcOnSHId.length == 1) {
+                        $scope.showMsg('warning', 'Select atleat two heads in calculation part.')
+                        row.entity.PBRIsFormula = false;
+                    }
+                    else {
+                        row.entity.PBRPercantage = '';
+                        if (!row.isExpanded)
+                            $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                    }
+                }//
                 else {
+                    row.entity.subGridOptions = { data: [], columnDefs: [] };
                     row.entity.PBRIsFormula = false;
+                }
+            }
+            else {
+                if (row.isExpanded) {
+                    row.entity.subGridOptions = { data: [], columnDefs: [] };
+                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
                 }
             }
         }
@@ -233,25 +302,63 @@
             $scope.payGridOptions.data.splice(index, 1);
         }
 
+        $scope.$watch(function () {
+            return $scope.entity.PBBasicPerctange;
+        }, function (newVal, oldValue) {
+            _calculateBasicOnGross();
+        })
+        $scope.$watch(function () {
+            return $scope.entity.PBGrossSalary;
+        }, function (newVal, oldValue) {
+            _calculateBasicOnGross();
+        })
+
         //calculating basic on gross percentage
         function _calculateBasicOnGross() {
+            console.log($scope.entity.PBGrossSalary, $scope.entity.PBBasicPerctange)
             if ($scope.entity.PBBasicPerctange && $scope.entity.PBGrossSalary) {
                 if ($scope.entity.PBBasicPerctange == '' && $scope.entity.PBGrossSalary == '') {
+                    $scope.payGridOptions.data = [];
+                    _getNetPayable();
                     return;
                 }
             }
             else {
+                $scope.payGridOptions.data = [];
+                _getNetPayable();
                 return;
             }
-            var basicPerct = parseFloat($scope.entity.PBBasicPerctange);
-            var PBGrossSalary = parseFloat($scope.entity.PBGrossSalary);
-            if (!isNaN(PBGrossSalary) && !isNaN(PBGrossSalary)) {
+            var basicPerct = Math.abs(parseFloat($scope.entity.PBBasicPerctange));
+            var PBGrossSalary = Math.abs(parseFloat($scope.entity.PBGrossSalary))
+
+            //removing rows from grid if invalid values found
+            if (basicPerct <= 0 || PBGrossSalary <= 0) {
+                $scope.payGridOptions.data = [];
+                _getNetPayable();
+                return;
+            }
+            //removing rows from grid if invalid values found
+            if (isNaN(PBGrossSalary) || isNaN(basicPerct)) {
+                $scope.payGridOptions.data = [];
+                _getNetPayable();
+                return;
+            }
+            //removing rows from grid if invalid values found
+            if (basicPerct > 100) {
+                $scope.showMsg('Basic % can not more than 100%')
+                $scope.payGridOptions.data = [];
+                _getNetPayable();
+                return;
+            }
+            if (!isNaN(PBGrossSalary) && !isNaN(basicPerct)) {
                 //finding basic head in dropdown list
                 var shBasic = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsBasic')
                 var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsGross')
 
                 var basicSalary = (basicPerct / 100) * PBGrossSalary
-
+                if (isNaN(basicSalary)) {
+                    basicSalary = 0;
+                }
                 if ($scope.payGridOptions.data.length > 0) {
 
 
@@ -334,6 +441,7 @@
                     $scope.payGridOptions.data.splice(1, 1, basicHead)
                 }
             }
+            _getNetPayable();
         }
 
         function _loadController() {
@@ -476,8 +584,12 @@
         }
         function _addRuleGridColumns() {
             var cellTemplateCheck = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
-            cellTemplateCheck += "<a href ng-click=\"grid.appScope.changeFormula(row)\" ng-show=\"row.entity.PBRCalcOnSHId.length>0\"> <i class=\"fa fa-check-square-o  fa-lg font-green\" aria-hidden=\"true\" ng-show=\"row.entity.PBRIsFormula\" ></i> <i ng-hide=\"row.entity.PBRIsFormula\" class=\"fa fa-square-o fa-lg\" aria-hidden=\"true\"></i></a>";
+            cellTemplateCheck += "<a href ng-click=\"grid.appScope.changeFormula(row)\" ng-show=\"row.entity.PBRCalcOnSHId.length>0 && !row.entity.PBRIsSlab\"> <i class=\"fa fa-check-square-o  fa-lg font-green\" aria-hidden=\"true\" ng-show=\"row.entity.PBRIsFormula\" ></i> <i ng-hide=\"row.entity.PBRIsFormula\" class=\"fa fa-square-o fa-lg\" aria-hidden=\"true\"></i></a>";
             cellTemplateCheck += "</div>"
+
+            var cellTemplateSlab = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
+            cellTemplateSlab += "<a href ng-click=\"grid.appScope.changeSlab(row)\" ng-show=\"row.entity.PBRCalcOnSHId.length>0 && !row.entity.PBRIsFormula\"> <i class=\"fa fa-check-square-o  fa-lg font-green\" aria-hidden=\"true\" ng-show=\"row.entity.PBRIsSlab\" ></i> <i ng-hide=\"row.entity.PBRIsSlab\" class=\"fa fa-square-o fa-lg\" aria-hidden=\"true\"></i></a>";
+            cellTemplateSlab += "</div>"
 
             var cellTemplateOptions = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
             cellTemplateOptions += " <a href ng-hide=\"row.entity.PBRIsFormula || row.entity.PBRCalcOnSHId.length==0\" ng-click=grid.appScope.addRuleSlab(row) title=\"Open Slab\"><i class=\"fa fa-level-down\" aria-hidden=\"true\"></i></a>";
@@ -486,7 +598,6 @@
             var cellTemplateRemove = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
             cellTemplateRemove += " <a href ng-click=grid.appScope.removeRuleSlab(row) title=\"Remove Rule\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a>";
             cellTemplateRemove += "</div>"
-
 
             $scope.payGridOptions.columnDefs.push({
                 name: $scope.rulePage.pageinfo.fields.PBRSHId.name,
@@ -517,12 +628,15 @@
                 editableCellTemplate: 'uiSelectMulti',
                 // editDropdownIdLabel: 'value',
                 // editDropdownValueLabel: 'name',
-                editDropdownOptionsArray: $scope.rulePage.pageinfo.fields.PBRCalcOnSHId.options,
+                editDropdownOptionsArray: $scope.payGridOptions.data,
                 cellFilter: "mapMultiDropdown:grid.appScope.rulePage.pageinfo.fields.PBRCalcOnSHId.options:'value':'name'",
                 cellClass: _cellClass,
                 cellEditableCondition: _cellEditableCondition,
                 colIndex: 2
             })
+
+            // editDropdownOptionsArray: $scope.rulePage.pageinfo.fields.PBRCalcOnSHId.options,
+            // cellFilter: "mapMultiDropdown:grid.appScope.rulePage.pageinfo.fields.PBRCalcOnSHId.options:'value':'name'",
 
             $scope.payGridOptions.columnDefs.push(
                 {
@@ -558,7 +672,7 @@
                 {
                     cellTemplate: cellTemplateCheck,
                     name: 'PBRIsFormula',
-                    displayName: '-',
+                    displayName: 'For mula',
                     type: 'boolean',
                     width: 50, visible: true, cellFilter: '',
                     cellClass: _cellClass,
@@ -568,9 +682,9 @@
 
             $scope.payGridOptions.columnDefs.push(
                 {
-                    cellTemplate: cellTemplateOptions,
-                    name: 'ruleOptions',
-                    displayName: '-',
+                    cellTemplate: cellTemplateSlab,
+                    name: 'PBRIsSlab',
+                    displayName: 'Sl ab',
                     width: 30, visible: true,
                     cellClass: _cellClass,
                     cellEditableCondition: false,
@@ -589,6 +703,17 @@
                 })
         }
         function _addFormulaGridColumns(row) {
+
+            row.subGridOptions.columnDefs.push(
+                {
+                    name: 'leftpin',
+                    displayName: '.',
+                    width: 50, visible: true, cellFilter: '',
+                    cellEditableCondition: false,
+                    cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                        return 'status-bg YELLOW-300'
+                    }
+                })
 
             row.subGridOptions.columnDefs.push(
                 {
@@ -664,9 +789,28 @@
             return '';
         }
 
+
         function _cellEditableCondition(scope) {
             console.log(scope)
-            if (scope.row.entity.PBRSHId) {
+            if (scope.col.name == "PBRSHId") {
+                return true;
+            }
+            else if (scope.col.name == "PBRPercantage") {
+                if (scope.row.entity.PBRCalcOnSHId) {
+                    if (scope.row.entity.PBRCalcOnSHId.length > 0) {
+                        if (!scope.row.entity.PBRIsFormula)
+                            return true;
+                    }
+                }
+                return false;
+            }
+            // else if (scope.col.name == "PBRCalcOnSHId") {
+            //     if ($scope.payGridOptions.data.length > 0) {
+
+            //     }
+            //     return false;
+            // }
+            else if (scope.row.entity.PBRSHId) {
                 var shBasic = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsBasic')
                 var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsGross')
                 if (shBasic !== null && shGross != null) {
@@ -680,6 +824,9 @@
                     }
                 }
             }
+            else {
+                return false;
+            }
             return true;
         }
 
@@ -691,28 +838,37 @@
             };
             if (PBRIsFormula) {
                 _addFormulaGridColumns(row)
-                var dataList = [];
+                row.subGridOptions.data = [];
                 if (row.PBRCalcOnSHId.length > 0) {
                     for (var i = 0; i < row.PBRCalcOnSHId.length; i++) {
                         var headAmt = _getHeadAmount(row.PBRCalcOnSHId[i].value)
 
+                        row.subGridOptions.data.push({
+                            PFDId: 0,
+                            PFDPBRId: 0,
+                            PFDCalcHeadId: [row.PBRCalcOnSHId[i]],
+                            PFDPercentage: 100,
+                            PFDOperator: '',
+                            PFDAmount: headAmt
+                        })
 
 
-                        var data = {
-                            SHId: row.PBRCalcOnSHId[i].value,
-                            SHName: row.PBRCalcOnSHId[i].name,
-                            percentage: 100,
-                            amount: headAmt
-                        }
-                        dataList.push(data)
                     }
                 }
-                row.subGridOptions.data = dataList;
-                console.log(row)
             }
             else {
                 if ($scope.slabPage.pageinfo) {
 
+                    row.subGridOptions.columnDefs.push(
+                        {
+                            name: 'leftpin',
+                            displayName: '.',
+                            width: 50, visible: true, cellFilter: '',
+                            cellEditableCondition: false,
+                            cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                                return 'status-bg YELLOW-300'
+                            }
+                        })
                     row.subGridOptions.columnDefs.push(
                         {
                             name: $scope.slabPage.pageinfo.fields.PBSPercentage.name,
@@ -772,6 +928,24 @@
             subGridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 console.log('sub grid api', colDef)
                 if (subGridApi.grid.parentRow.entity.PBRIsFormula) {
+                    if (colDef.name == "PFDPercentage") {
+                        //checking valid input %
+                        var pfdPercentage = parseFloat(rowEntity.PFDPercentage);
+                        if (isNaN(pfdPercentage)) {
+                            rowEntity.PFDPercentage = 0;
+                        }
+                        else {
+                            rowEntity.PFDPercentage = pfdPercentage.toFixed(2);
+                        }
+                    }
+                    else if (colDef.name == "PFDOperator") {
+                        //checking valid input operators
+
+                    }
+                    else if (colDef.name == "PFDOperator") {
+                        //checking valid input operators
+
+                    }
                     //calculating amount as per forumula
                     var lastTotal = 0;
                     for (var i = 0; i < subGridApi.grid.rows.length; i++) {
@@ -798,16 +972,16 @@
 
                     if (colDef.name == "PBSMinCalcOnAmount") {
 
-                        var minPercentage = Math.round((calcPercentage / 100) * rowEntity.PBSMinCalcOnAmount);
+                        var calcMinAmt = Math.round((calcPercentage / 100) * rowEntity.PBSMinCalcOnAmount);
                         if (minPercentage > 0) {
-                            rowEntity.PBSMinAmount = minPercentage;
+                            rowEntity.PBSMinAmount = calcMinAmt.toFixed(2);
                         }
                     }
                     else if (colDef.name == "PBSMaxCalcOnAmount") {
 
-                        var maxPercentage = Math.round((calcPercentage / 100) * rowEntity.PBSMaxCalcOnAmount);
+                        var calcMaxAmt = Math.round((calcPercentage / 100) * rowEntity.PBSMaxCalcOnAmount);
                         if (maxPercentage > 0) {
-                            rowEntity.PBSMasAmount = maxPercentage;
+                            rowEntity.PBSMasAmount = calcMaxAmt.toFixed(2);
                         }
                     }
 
@@ -867,11 +1041,11 @@
                             calculatedAmt = maxAmt;
                         }
 
-                        rowEntity.CalculatedAmount = Math.round(parseFloat(calculatedAmt), 0)
+                        rowEntity.CalculatedAmount = Math.round(parseFloat(calculatedAmt), 0).toFixed(2)
 
                         //setting amount to parent row
                         if (subGridApi.grid.rows.length == 1)
-                            subGridApi.grid.parentRow.entity.PBRAmount = Math.round(parseFloat(calculatedAmt));
+                            subGridApi.grid.parentRow.entity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
                         else
                             subGridApi.grid.parentRow.entity.PBRAmount = 0;
 
@@ -889,7 +1063,19 @@
             $scope.rulePage.gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
                 if (row.isExpanded) {
                     if (row.entity.PBRCalcOnSHId.length == 0) {
+                        //stop expanding if no dependent head found.
                         $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                    }
+                    else {
+                        //increasing dynamic subgrid height
+                        console.log(row.expandedRowHeight)
+                        row.expandedRowHeight = 70;
+
+                        $timeout(function () {
+                            if (row.entity.subGridOptions.data)
+                                row.expandedRowHeight = row.entity.subGridOptions.data.length * row.entity.subGridOptions.rowHeight + 39;
+                            console.log(row.expandedRowHeight)
+                        }, 150);
                     }
                 }
             });
@@ -934,25 +1120,46 @@
 
                 var dependTotalAmt = 0
                 for (var i = 0; i < rowEntity.PBRCalcOnSHId.length; i++) {
-                    var amt = _getHeadAmount(rowEntity.PBRCalcOnSHId[i].value)
-                    dependTotalAmt += parseFloat(amt)
+                    if (rowEntity.PBRCalcOnSHId[i].value == rowEntity.PBRSHId) {
+                        rowEntity.PBRCalcOnSHId = [];
+                        $scope.showMsg('warning', 'Head can not depend on to itself')
+                        return;
+                    }
+                    else {
+                        var amt = _getHeadAmount(rowEntity.PBRCalcOnSHId[i].value)
+                        dependTotalAmt += parseFloat(amt)
+                    }
                 }
 
                 if (colDef.colIndex == 0) {
-                    var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, rowEntity.PBRSHId, 'value')
-                    if (foundPB != null) {
-                        if (foundPB.SHIsForEmployer) {
-                            rowEntity.SHeadType = 'Employer';
+                    //find existing in list
+                    rowEntity.PBRSHId = oldValue;
+                    var existingHead = $filter('findObj')($scope.payGridOptions.data, newValue, 'PBRSHId')
+                    if (existingHead != null) {
+                        $scope.showMsg('warning', 'Heads can not be duplicate.')
+                        rowEntity.PBRSHId = 0;
+                    }
+                    else {
+                        rowEntity.PBRSHId = newValue;
+                        var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, rowEntity.PBRSHId, 'value')
+                        if (foundPB != null) {
+                            if (foundPB.SHIsForEmployer) {
+                                rowEntity.SHeadType = 'Employer';
+                            }
+                            else if (foundPB.SHIsDeduction == "False") {
+                                rowEntity.SHeadType = 'Earning';
+                            }
+                            else {
+                                rowEntity.SHeadType = 'Deduction';
+                            }
                         }
-                        else if (foundPB.SHIsDeduction == "False") {
-                            rowEntity.SHeadType = 'Earning';
-                        }
-                        else {
-                            rowEntity.SHeadType = 'Deduction';
-                        }
+
+                        _addDependentHeadList();
                     }
                 }
                 else if (colDef.colIndex == 2 || colDef.colIndex == 3) {
+
+
                     //calculate amount and Percentage on depend col and percentage
 
                     //updating amount field as per percentage
@@ -968,7 +1175,7 @@
                     //find gorss % for calculated %
                     //setting gross %
                     if (grossAmt > 0) {
-                        rowEntity.GrossPercentage = Math.round((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt).toFixed(2)
+                        rowEntity.GrossPercentage = Math.round((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt, 2).toFixed(2)
                     }
                 }
                 else if (colDef.colIndex == 4) {
@@ -978,19 +1185,35 @@
                             $scope.showMsg('error', 'Netpayble can not more than Gross')
                             rowEntity.PBRAmount = remainingAmount.toFixed(2)
                         }
-                        else{
+                        else {
                             rowEntity.PBRAmount = parseFloat(newValue).toFixed(2);
                         }
+                        //avoiding 
+                        var expectedPer = Math.round(parseFloat((rowEntity.PBRAmount * 100)) / grossAmt, 2)
+                        var expected1 = Math.round((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt, 2)
+                        var expected2 = (parseFloat(rowEntity.PBRAmount) * 100) / grossAmt
+                        var expected3 = expected2.toPrecision(2)
+                        var expected2 = ((rowEntity.PBRAmount * 100) / grossAmt).toPrecision(2);
 
-                        var expectedPer = Math.round((rowEntity.PBRAmount * 100) / grossAmt, 2)
-                        //updating % field as per amount
-                        if (rowEntity.PBRPercantage) {
-                            if (rowEntity.PBRPercantage > 0) {
-                                rowEntity.PBRPercantage = expectedPer;
+                        if (dependTotalAmt > 0) {
+                            expectedPer = Math.round((rowEntity.PBRAmount * 100) / dependTotalAmt, 2)
+                            if (expectedPer > 100) {
+                                rowEntity.PBRPercantage = 100.00;
+                                rowEntity.PBRAmount = Math.round(dependTotalAmt).toFixed(2);
+                            }
+                            else {
+                                rowEntity.PBRPercantage = Math.round(expectedPer, 2).toFixed(2);
                             }
                         }
+                        else
+                            //updating % field as per amount
+                            if (rowEntity.PBRPercantage) {
+                                if (rowEntity.PBRPercantage > 0) {
+                                    rowEntity.PBRPercantage = expectedPer;
+                                }
+                            }
 
-                        rowEntity.GrossPercentage = Math.round((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt).toFixed(2)
+                        rowEntity.GrossPercentage = Math.round((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt, 2).toFixed(2)
                     }
                 }
 
