@@ -20,7 +20,7 @@
       mastersMenu.push({ name: 'shiftdetail', text: 'Shift detail ', id: 128 })
       mastersMenu.push({ name: 'holidaymaster', text: 'holiday master ', id: 291 })
       mastersMenu.push({ name: 'holidaylocationmap', text: 'holiday by Location ', id: 292 })
-      mastersMenu.push({ name: 'weekoff', text: 'Shift Weekly OFF ', id: 455 })
+      mastersMenu.push({ name: 'weekoff', text: 'Shift Weekly OFF ', id: 290 })
       mastersMenu.push({ name: 'ShiftGroupconfigure', text: 'Shift Group configure ', id: 293 })
 
       return mastersMenu;

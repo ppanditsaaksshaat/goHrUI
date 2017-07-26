@@ -24,8 +24,6 @@
     $scope.saveForm = _saveForm;
     $scope.getTotalTenure = _getTotalTenure;
     $scope.selectGroup = _selectGroup;
-    $scope.daysDiff = _daysDiff;
-    $scope.groupOnChange = _groupOnChange;
 
 
     $scope.page = $scope.createPage();
@@ -64,44 +62,7 @@
     //   text: 'Approve', click: _rowApprove, type: 'a', pin: true, name: 'approve', width: 80
     // });
 
-    function _groupOnChange(Value, isSelected) {
-      console.log(Value)
-      if (Value == 0) {
-        if (isSelected) {
-          angular.forEach($scope.groupList, function (data) {
-            data.isSelected = true;
-          })
 
-
-        }
-        else {
-          angular.forEach($scope.groupList, function (data) {
-            data.isSelected = false;
-          })
-
-        }
-
-      }
-
-    }
-
-    function _daysDiff() {
-      $scope.entity.LRCWEFDate;
-      $scope.entity.LRCToDate;
-      // console.log($scope.entity.LRCWEFDate)
-      // console.log($scope.entity.LRCToDate)
-      if ($scope.entity.LRCWEFDate != undefined && $scope.entity.LRCToDate != undefined) {
-        var wefDate = moment($scope.entity.LRCWEFDate);
-        var toDate = moment($scope.entity.LRCToDate);
-        var diff = toDate.diff(wefDate, "days") + 1
-        $scope.entity.calculateDays = diff;
-        
-
-        console.log(diff)
-      }
-
-
-    }
     function _loadController() {
       var data = {
         searchList: [],
@@ -111,8 +72,6 @@
     }
     function getCustomQuerySuccessResult(result) {
       $scope.groupList = result;
-      $scope.groupList.splice(0, 0, { 'GMCId': 0, 'GMCName': 'All' })
-
     }
     function getCustomQueryErrorResult(eerr) {
 
@@ -175,9 +134,6 @@
     function _addRecord() {
       $scope.entity = {};
       $scope.showEditForm = true;
-        angular.forEach($scope.groupList, function (group) {
-          group.isSelected = false;
-        })
     }
     function _editRecord(row) {
       $scope.showEditForm = true;
@@ -334,7 +290,7 @@
     function _selectGroup(groupId) {
       groupIds.push(groupId);
 
-
+      alert(groupIds)
     }
 
     function _getTotalTenure() {
@@ -343,12 +299,12 @@
 
         var value = $scope.entity.LRCNoOfDaysInCycle / $scope.entity.LRCCycleIntervalDays;
         if (!isNaN($scope.entity.LRCCRDaysInInterval))
-          $scope.entity.totalTenure = parseInt(value) * $scope.entity.LRCCRDaysInInterval;
+          $scope.totalTenure = parseInt(value) * $scope.entity.LRCCRDaysInInterval;
         else
           $scope.showMsg("error", "Please enter numeric value in Number Of Leave Field");
       }
-      else if ($scope.entity.totalTenure != undefined) {
-        $scope.entity.totalTenure = "";
+      else if ($scope.totalTenure != undefined) {
+        $scope.totalTenure = "";
       }
     }
 

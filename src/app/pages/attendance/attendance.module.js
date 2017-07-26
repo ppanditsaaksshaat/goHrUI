@@ -9,8 +9,7 @@
     'BlurAdmin.pages.attendance.masters',
     'BlurAdmin.pages.attendance.transaction',
     'BlurAdmin.pages.attendance.reports',
-    'BlurAdmin.pages.attendance.synctable',
-    'BlurAdmin.pages.attendance.shiftmaster'
+    'BlurAdmin.pages.attendance.synctable'
   ])
   
     .config(routeConfig);

@@ -44,7 +44,7 @@
       showAdd: true,
       showRowMenu: true,
       showCustomView: true,
-      showUpload: true,
+      showUpload: false,
       showDialog: false,
       enableRefreshAfterUpdate: true,
       gridHeight: 450,
@@ -55,11 +55,7 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      showDataOnLoad: false,
-      uploadRecord: _uploadRecord
-    }
-    function _uploadRecord() {
-      $state.go("leave.transaction.upload");
+      showDataOnLoad: false
     }
 
     function _addRecord() {
