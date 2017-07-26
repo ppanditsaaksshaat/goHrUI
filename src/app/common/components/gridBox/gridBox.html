@@ -1,5 +1,4 @@
 <div>
-<div ng-hide="isErrorOccured">
     <div class="row">
         <div class="col-md-3" ng-show="page.showFilter" style="padding-right:0px; margin-right:0px;">
             <filter-box page="page"></filter-box>
@@ -126,21 +125,4 @@
 
         </div>
     </div>
-</div>
-<div ng-show="isErrorOccured">
-    <div 
-         ba-panel
-         ba-panel-title="Basic"
-         ba-panel-class="with-scroll">
-      <div >
-        
-        <div class="alert bg-danger">
-          <strong>Oh snap!</strong> Something went worng. Please reload the page or contact to Administrator.
-          <br/>
-          {{errorText}}
-        </div>
-      </div>
-    </div>
-
-</div>
 </div>
