@@ -12,9 +12,12 @@
     function paybandController($scope, $state, $stateParams,
         pageService, DJWebStore, dialogModal, editFormService, $timeout, $filter, $http) {
 
+
+        var headRemainingPerList = [];//used for handling remaining % of dependent heads
+
         $scope.salary = { grossAmt: 0, earningAmt: 0, deductionAmt: 0, netPayableAmt: 0, employerAmt: 0, ctcAmt: 0 }
         $scope.payGridOptions = {
-            expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" ui-grid-edit class="djSubGrid" ></div>',
+            expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" ui-grid-edit ui-grid-cellNav class="djSubGrid" ></div>',
             expandableRowHeight: 150,
             enableExpandableRowHeader: false,
             //subGridVariable will be available in subGrid scope
@@ -81,6 +84,7 @@
         $scope.changeFormula = _changeFormula;
         $scope.changeSlab = _changeSlab;
         $scope.addTotal = _addTotal;
+        $scope.toggleRowExpand = _toggleRowExpand;
 
         $scope.getNetPayable = _getNetPayable;
         $scope.getgross = _getGross;
@@ -204,6 +208,8 @@
                         PBRRuleName: $scope.selectedOtherHead.name,
                         PBRCalcOnSHId: [{ value: grossId, name: 'Gross' }],
                         PBRIsFormula: true,
+                        PBRIsSlab: false,
+                        PBRPercantage: '',
                         PBRAmount: diffAmt.toFixed(2),
                         GrossPercentage: grossPer
                     })
@@ -232,6 +238,8 @@
                         PFDOperator: '-',
                         PFDAmount: totAmt
                     })
+
+                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(lastRow)
 
                 }
             }
@@ -264,14 +272,32 @@
                 _addRuleGridRow(0, false, 0, 0, 0, '', '', '', '', 0);
             }
         }
+        function _toggleRowExpand(row) {
+            $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+        }
         function _changeSlab(row) {
             console.log(row)
             //isExpanded
+            row.entity.PBRIsSlab = !row.entity.PBRIsSlab;
+            row.entity.PBRAmount = '';
+            if (row.entity.PBRIsSlab) {
+                _getSubGridOptions(row.entity, row.entity.PBRIsFormula)
+                if (!row.isExpanded) {//expand row 
+                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                }
+            }
+            else {
+                row.entity.subGridOptions = { data: [], columnDefs: [] }
+                if (row.isExpanded) {//collapse row
+                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                }
+            }
+
         }
         function _changeFormula(row) {
-            console.log(row)
-            row.entity.PBRIsFormula = !row.entity.PBRIsFormula;
 
+            row.entity.PBRIsFormula = !row.entity.PBRIsFormula;
+            row.entity.PBRAmount = '';
             if (row.entity.PBRIsFormula) {
                 _getSubGridOptions(row.entity, row.entity.PBRIsFormula)
                 if (row.entity.PBRCalcOnSHId.length > 0) {
@@ -300,6 +326,7 @@
         function _removeRuleSlab(row) {
             var index = $scope.payGridOptions.data.indexOf(row.entity);
             $scope.payGridOptions.data.splice(index, 1);
+            _getNetPayable();
         }
 
         $scope.$watch(function () {
@@ -584,16 +611,16 @@
         }
         function _addRuleGridColumns() {
             var cellTemplateCheck = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
-            cellTemplateCheck += "<a href ng-click=\"grid.appScope.changeFormula(row)\" ng-show=\"row.entity.PBRCalcOnSHId.length>0 && !row.entity.PBRIsSlab\"> <i class=\"fa fa-check-square-o  fa-lg font-green\" aria-hidden=\"true\" ng-show=\"row.entity.PBRIsFormula\" ></i> <i ng-hide=\"row.entity.PBRIsFormula\" class=\"fa fa-square-o fa-lg\" aria-hidden=\"true\"></i></a>";
+            cellTemplateCheck += "<a href ng-click=\"grid.appScope.changeFormula(row)\" ng-show=\"row.entity.PBRCalcOnSHId.length>0 && !row.entity.PBRIsSlab && (row.entity.PBRPercantage<=0)\"> <i class=\"fa font-green\" ng-class=\"{'fa-check-square-o': row.entity.PBRIsFormula, 'fa-square-o': !row.entity.PBRIsFormula }\" aria-hidden=\"true\" ></i></a>";
             cellTemplateCheck += "</div>"
 
             var cellTemplateSlab = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
-            cellTemplateSlab += "<a href ng-click=\"grid.appScope.changeSlab(row)\" ng-show=\"row.entity.PBRCalcOnSHId.length>0 && !row.entity.PBRIsFormula\"> <i class=\"fa fa-check-square-o  fa-lg font-green\" aria-hidden=\"true\" ng-show=\"row.entity.PBRIsSlab\" ></i> <i ng-hide=\"row.entity.PBRIsSlab\" class=\"fa fa-square-o fa-lg\" aria-hidden=\"true\"></i></a>";
+            cellTemplateSlab += "<a href ng-click=\"grid.appScope.changeSlab(row)\" ng-show=\"row.entity.PBRCalcOnSHId.length>0 && !row.entity.PBRIsFormula && (row.entity.PBRPercantage<=0)\"> <i class=\"fa  font-green\"  ng-class=\"{'fa-check-square-o': row.entity.PBRIsSlab, 'fa-square-o': !row.entity.PBRIsSlab }\"  aria-hidden=\"true\"></i></a>";
             cellTemplateSlab += "</div>"
 
-            var cellTemplateOptions = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
-            cellTemplateOptions += " <a href ng-hide=\"row.entity.PBRIsFormula || row.entity.PBRCalcOnSHId.length==0\" ng-click=grid.appScope.addRuleSlab(row) title=\"Open Slab\"><i class=\"fa fa-level-down\" aria-hidden=\"true\"></i></a>";
-            cellTemplateOptions += "</div>"
+            var cellTemplateRowExpand = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
+            cellTemplateRowExpand += '<a href ng-click=\"grid.appScope.toggleRowExpand(row)\" ng-show=\"row.entity.PBRCalcOnSHId.length>0 && (row.entity.PBRIsFormula || row.entity.PBRIsSlab) && (row.entity.PBRPercantage<=0)\"  title="Expand/ Collapse Row" ><i class="fa " ng-class=\"{\'fa-plus\':!row.isExpanded, \'fa-minus\':row.isExpanded}\" aria-hidden="true"></i></a>'
+            cellTemplateRowExpand += "</div>"
 
             var cellTemplateRemove = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
             cellTemplateRemove += " <a href ng-click=grid.appScope.removeRuleSlab(row) title=\"Remove Rule\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a>";
@@ -701,6 +728,17 @@
                     cellEditableCondition: false,
                     colIndex: 7
                 })
+
+            $scope.payGridOptions.columnDefs.push(
+                {
+                    cellTemplate: cellTemplateRowExpand,
+                    name: 'rowExpand',
+                    displayName: '-',
+                    width: 30, visible: true,
+                    cellClass: _cellClass,
+                    cellEditableCondition: false,
+                    colIndex: 8
+                })
         }
         function _addFormulaGridColumns(row) {
 
@@ -798,7 +836,7 @@
             else if (scope.col.name == "PBRPercantage") {
                 if (scope.row.entity.PBRCalcOnSHId) {
                     if (scope.row.entity.PBRCalcOnSHId.length > 0) {
-                        if (!scope.row.entity.PBRIsFormula)
+                        if (!scope.row.entity.PBRIsFormula && !scope.row.entity.PBRIsSlab)
                             return true;
                     }
                 }
@@ -816,7 +854,10 @@
                 if (shBasic !== null && shGross != null) {
                     if (scope.row.entity.PBRSHId == shBasic.value || scope.row.entity.PBRSHId == shGross.value) {
                         if (scope.col.name == "PBRAmount") {
-                            if (scope.row.entity.PBRSHId == shBasic.value) {
+                            if (scope.row.entity.PBRIsFormula || scope.row.entity.PBRIsSlab) {
+                                return false;
+                            }
+                            else if (scope.row.entity.PBRSHId == shBasic.value) {
                                 return true;
                             }
                         }
@@ -968,34 +1009,170 @@
                 }
                 else {
 
+                    //finding dependent heads total
+                    var headRows = subGridApi.grid.parentRow.entity.PBRCalcOnSHId;
+                    var headAmtTot = 0
+                    for (var i = 0; i < headRows.length; i++) {
+                        var headAmt = _getHeadAmount(headRows[i].value)
+                        headAmtTot += parseFloat(headAmt);
+                    }
+
                     var calcPercentage = parseFloat(rowEntity.PBSPercentage);
-
-                    if (colDef.name == "PBSMinCalcOnAmount") {
-
-                        var calcMinAmt = Math.round((calcPercentage / 100) * rowEntity.PBSMinCalcOnAmount);
-                        if (minPercentage > 0) {
-                            rowEntity.PBSMinAmount = calcMinAmt.toFixed(2);
+                    if (colDef.name == "PBSPercentage") {
+                        if (isNaN(calcPercentage)) {
+                            rowEntity.PBSPercentage = '';
+                        }
+                        else {
+                            if (calcPercentage > 0 && calcPercentage <= 100) {
+                                rowEntity.PBSPercentage = calcPercentage.toFixed(2);
+                            }
+                            else {
+                                rowEntity.PBSPercentage = '';
+                            }
+                        }
+                    }
+                    else if (colDef.name == "PBSMinCalcOnAmount") {
+                        var inputMaxAmt = parseFloat(rowEntity.PBSMaxCalcOnAmount);
+                        var inputMinAmt = parseFloat(rowEntity.PBSMinCalcOnAmount);
+                        if (isNaN(inputMinAmt)) {
+                            rowEntity.PBSMinCalcOnAmount = 0;
+                        }
+                        else {
+                            //checking whether min amount is more than dependent head total amount or not
+                            if (headAmtTot < inputMinAmt) {
+                                $scope.showMsg('warning', 'Min Amount can not more than dependent head amount')
+                                rowEntity.PBSMinCalcOnAmount = headAmtTot.toFixed(2);
+                                return;
+                            }
+                            //checking whether max amount is less than min amount or not
+                            if (!isNaN(inputMaxAmt)) {
+                                if (inputMaxAmt > 0) {
+                                    if (inputMaxAmt < inputMinAmt) {
+                                        $scope.showMsg('warning', 'Min amount can not more than max amount')
+                                        rowEntity.PBSMinCalcOnAmount = 0;
+                                        return;
+                                    }
+                                }
+                            }
+                            rowEntity.PBSMinCalcOnAmount = inputMinAmt.toFixed(2);
+                            var calcMinAmt = Math.round((calcPercentage / 100) * inputMinAmt);
+                            if (calcPercentage > 0) {
+                                rowEntity.PBSMinAmount = calcMinAmt.toFixed(2);
+                            }
                         }
                     }
                     else if (colDef.name == "PBSMaxCalcOnAmount") {
+                        var inputMaxAmt = parseFloat(rowEntity.PBSMaxCalcOnAmount);
+                        var inputMinAmt = parseFloat(rowEntity.PBSMinCalcOnAmount);
+                        if (isNaN(inputMaxAmt)) {
+                            rowEntity.PBSMaxCalcOnAmount = 0;
+                        }
+                        else {
+                            //checking whether min amount is more than dependent head total amount or not
+                            if (headAmtTot < inputMaxAmt) {
+                                $scope.showMsg('warning', 'Min amount can not more than dependent head amount')
+                                rowEntity.PBSMaxCalcOnAmount = headAmtTot.toFixed(2);
+                                return;
+                            }
+                            //checking whether max amount is less than min amount or not
+                            if (!isNaN(inputMinAmt)) {
+                                if (inputMinAmt > 0) {
+                                    if (inputMaxAmt < inputMinAmt) {
+                                        $scope.showMsg('warning', 'Max amount can not less than min amount')
+                                        rowEntity.PBSMaxCalcOnAmount = 0;
+                                        return;
+                                    }
+                                }
+                            }
+                            //calculating max amount as per percentage input
+                            rowEntity.PBSMaxCalcOnAmount = inputMaxAmt.toFixed(2);
+                            var calcMaxAmt = Math.round((calcPercentage / 100) * inputMaxAmt);
+                            if (calcPercentage > 0) {
+                                rowEntity.PBSMasAmount = calcMaxAmt.toFixed(2);
+                            }
+                        }
+                    }
+                    else if (colDef.name == "PBSMinAmount") {
+                        var inputValue = parseFloat(rowEntity.PBSMinAmount);
+                        var inputMinAmt = parseFloat(rowEntity.PBSMinCalcOnAmount);
+                        if (isNaN(inputValue)) {
+                            rowEntity.PBSMinAmount = 0;
+                        }
+                        else {
 
-                        var calcMaxAmt = Math.round((calcPercentage / 100) * rowEntity.PBSMaxCalcOnAmount);
-                        if (maxPercentage > 0) {
-                            rowEntity.PBSMasAmount = calcMaxAmt.toFixed(2);
+                            if (isNaN(inputMinAmt)) {
+                                rowEntity.PBSMinCalcOnAmount = 0;
+                            }
+                            else {
+                                var calcMinAmt = Math.round((calcPercentage / 100) * inputMinAmt);
+                                if (inputValue < calcMinAmt) {
+                                    rowEntity.PBSMinAmount = calcMinAmt.toFixed(2);
+                                    $scope.showMsg('warning', 'Min calculated amount can not less than ' + calcPercentage.toFixed(2) + '% of defined min salary amount.')
+                                }
+                                else {
+                                    rowEntity.PBSMinAmount = inputValue.toFixed(2);
+                                }
+                            }
+                        }
+
+                    }
+                    else if (colDef.name == "PBSMasAmount") {
+                        var inputValue = parseFloat(rowEntity.PBSMasAmount);
+                        var inputMaxAmt = parseFloat(rowEntity.PBSMaxCalcOnAmount);
+
+                        if (isNaN(inputValue)) {
+                            rowEntity.PBSMasAmount = 0;
+                        }
+                        else {
+                            if (isNaN(inputMaxAmt)) {
+                                rowEntity.PBSMaxCalcOnAmount = 0;
+                            }
+                            else {
+                                var calcMaxAmt = Math.round((calcPercentage / 100) * inputMaxAmt);
+                                if (inputValue > calcMaxAmt) {
+                                    $scope.showMsg('warning', 'Max calculated amount can not more than ' + calcPercentage.toFixed(2) + '% of defined max salary amount.')
+                                    rowEntity.PBSMasAmount = calcMaxAmt.toFixed(2);
+                                }
+                                else {
+                                    rowEntity.PBSMasAmount = inputValue.toFixed(2);
+                                }
+                            }
                         }
                     }
 
 
                     //calculating amount as per slab
                     if (subGridApi.grid.parentRow.entity.PBRCalcOnSHId.length > 0) {
-                        //finding dependent heads total
-                        var headRows = subGridApi.grid.parentRow.entity.PBRCalcOnSHId;
-                        var headAmtTot = 0
-                        for (var i = 0; i < headRows.length; i++) {
-                            var headAmt = _getHeadAmount(headRows[i].value)
-                            headAmtTot += parseFloat(headAmt);
+
+
+
+                        var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsGross')
+                        var grossId = 0;
+                        if (shGross != null) {
+                            grossId = shGross.value;
                         }
 
+                        var totalAmount = 0;
+                        var deductionTotal = 0;
+                        var employerTotal = 0;
+                        var grossAmt = 0;
+                        for (var c = 0; c < $scope.payGridOptions.data.length; c++) {
+                            var row = $scope.payGridOptions.data[c];
+
+                            if (grossId != row.PBRSHId && row.SHeadType == 'Earning') {
+                                totalAmount += Math.round(row.PBRAmount);
+                            }
+                            else if (grossId != row.PBRSHId && row.SHeadType == 'Deduction') {
+                                deductionTotal += Math.round(row.PBRAmount);
+                            }
+                            else if (grossId != row.PBRSHId && row.SHeadType == 'Employer') {
+                                employerTotal += Math.round(row.PBRAmount);
+                            }
+                            else {
+                                grossAmt += Math.round(row.PBRAmount);
+                            }
+
+                        }
 
 
                         var calcOnAmt = headAmtTot;
@@ -1044,12 +1221,12 @@
                         rowEntity.CalculatedAmount = Math.round(parseFloat(calculatedAmt), 0).toFixed(2)
 
                         //setting amount to parent row
-                        if (subGridApi.grid.rows.length == 1)
+                        if (subGridApi.grid.rows.length == 1) {
                             subGridApi.grid.parentRow.entity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
+                            subGridApi.grid.parentRow.entity.GrossPercentage = ((calculatedAmt * 100) / grossAmt).toFixed(2)
+                        }
                         else
                             subGridApi.grid.parentRow.entity.PBRAmount = 0;
-
-
                     }
 
                 }
@@ -1116,9 +1293,56 @@
                     }
                 }
 
+                // //calculating remaining percentage of each dependent heads for each earning and deduction input
+                // for (var l = 0; l < $scope.payGridOptions.data.length; l++) {
+                //     var ro = $scope.payGridOptions.data[l];
+                //     if (ro) {
+                //         if (ro.PBRCalcOnSHId) {
+                //             if (ro.PBRCalcOnSHId.length > 0) {
+                //                 //checking current dependent head also occured in other row
+                //                 for (var z = 0; z < ro.PBRCalcOnSHId.length; z++) {
+                //                     //find current depend head in headRemainingList for each Earning and Deduction
+                //                     var isFoundInList = false;
+                //                     var dependHeadPercentage = parseFloat(ro.PBRPercantage);
+                //                     //check whether current rule row have any percentage value or not
+
+                //                     //if depend head found in other row store in 
+                //                     if (ro.PBRCalcOnSHId[z].value == rowEntity.PBRCalcOnSHId[i].value) {
+
+                //                         if (isNaN(dependHeadPercentage)) {
+
+                //                         }
+                //                         else {
+                //                             for (var h = 0; h < headRemainingPerList.length; h++) {
+                //                                 if (headRemainingPerList[h].headId == rowEntity.PBRCalcOnSHId[i].value) {
+                //                                     headRemainingPerList[h].usedPercentage += dependHeadPercentage;
+                //                                     isFoundInList = true;
+                //                                     break;
+                //                                 }
+                //                             }
+                //                             if (!isFoundInList) {
+                //                                 var existHead = {
+                //                                     headId: rowEntity.PBRCalcOnSHId[i].value,
+                //                                     usedPercentage: dependHeadPercentage
+                //                                 }
+                //                                 headRemainingPerList.push(existHead);
+                //                             }
+                //                         }
+
+                //                     }
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
+                // console.log(headRemainingPerList)
+
+
                 var remainingAmount = grossAmt - totalAmount;
+                var deductionRemainingAmount = grossAmt - deductionTotal;
 
                 var dependTotalAmt = 0
+
                 for (var i = 0; i < rowEntity.PBRCalcOnSHId.length; i++) {
                     if (rowEntity.PBRCalcOnSHId[i].value == rowEntity.PBRSHId) {
                         rowEntity.PBRCalcOnSHId = [];
@@ -1128,6 +1352,9 @@
                     else {
                         var amt = _getHeadAmount(rowEntity.PBRCalcOnSHId[i].value)
                         dependTotalAmt += parseFloat(amt)
+                        //finding dependent head used ppercentage on entire data
+
+
                     }
                 }
 
@@ -1140,6 +1367,7 @@
                         rowEntity.PBRSHId = 0;
                     }
                     else {
+
                         rowEntity.PBRSHId = newValue;
                         var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, rowEntity.PBRSHId, 'value')
                         if (foundPB != null) {
@@ -1147,7 +1375,17 @@
                                 rowEntity.SHeadType = 'Employer';
                             }
                             else if (foundPB.SHIsDeduction == "False") {
-                                rowEntity.SHeadType = 'Earning';
+
+
+                                if (remainingAmount > 0) {
+
+                                    rowEntity.SHeadType = 'Earning';
+                                }
+                                else {
+                                    rowEntity.PBRSHId = 0;
+                                    $scope.showMsg('warning', 'Earnings already match with Gross amount')
+                                }
+
                             }
                             else {
                                 rowEntity.SHeadType = 'Deduction';
@@ -1155,9 +1393,21 @@
                         }
 
                         _addDependentHeadList();
+
                     }
                 }
                 else if (colDef.colIndex == 2 || colDef.colIndex == 3) {
+
+                    var inputPer = parseFloat(rowEntity.PBRPercantage);
+                    if (isNaN(inputPer)) {
+                        rowEntity.PBRPercantage = '';
+                        return
+                    }
+                    else if (inputPer > 100) {
+                        rowEntity.PBRPercantage = '';
+                        return
+                    }
+                    //find dependent head remaining percentage
 
 
                     //calculate amount and Percentage on depend col and percentage
@@ -1167,72 +1417,97 @@
                     if (isNaN(rowEntity.PBRAmount)) {
                         rowEntity.PBRAmount = 0;
                     }
-                    if (remainingAmount < rowEntity.PBRAmount) {
-                        $scope.showMsg('error', 'Can not more than 100%')
-                        rowEntity.PBRAmount = remainingAmount;
-                        rowEntity.PBRPercantage = Math.round(((rowEntity.PBRAmount * 100) / dependTotalAmt)).toFixed(2)
+                    if (remainingAmount <= 0 && rowEntity.SHeadType == 'Earning') {
+                        rowEntity.PBRAmount = 0;
+                        rowEntity.PBRPercantage = 0;
+                        rowEntity.GrossPercentage = 0;
+                        $scope.showMsg('warning', 'Earnings already match with Gross amount')
                     }
-                    //find gorss % for calculated %
-                    //setting gross %
-                    if (grossAmt > 0) {
-                        rowEntity.GrossPercentage = Math.round((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt, 2).toFixed(2)
+                    else if (deductionRemainingAmount <= 0 && rowEntity.SHeadType == 'Deduction') {
+                        rowEntity.PBRAmount = 0;
+                        rowEntity.PBRPercantage = 0;
+                        rowEntity.GrossPercentage = 0;
+                        $scope.showMsg('warning', 'Deductions can not more than earnings')
+                    }
+                    else {
+                        if (remainingAmount < rowEntity.PBRAmount && rowEntity.SHeadType == 'Earning') {
+                            rowEntity.PBRAmount = remainingAmount;
+                            rowEntity.PBRPercantage = ((rowEntity.PBRAmount * 100) / dependTotalAmt).toFixed(2)
+                        }
+                        else if (rowEntity.SHeadType == 'Deduction') {
+                            if ((deductionTotal + parseFloat(rowEntity.PBRAmount)) > earningAmt) {
+                                rowEntity.PBRAmount = 0;
+                                rowEntity.PBRPercantage = 0;
+                                rowEntity.GrossPercentage = 0;
+                                $scope.showMsg('warning', 'Deductions can not more than earnings')
+                            }
+                        }
+                        //find gorss % for calculated %
+                        //setting gross %
+                        if (grossAmt > 0) {
+                            rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt).toFixed(2)
+                        }
                     }
                 }
                 else if (colDef.colIndex == 4) {
                     if (grossAmt > 0) {
                         //if salary configured based on Gross than remaining must be checked
-                        if (newValue > remainingAmount) {
+                        if (newValue > remainingAmount && rowEntity.SHeadType == 'Earning') {
                             $scope.showMsg('error', 'Netpayble can not more than Gross')
                             rowEntity.PBRAmount = remainingAmount.toFixed(2)
+                        }
+                        else if (newValue > deductionRemainingAmount && rowEntity.SHeadType == 'Deduction') {
+                            $scope.showMsg('error', 'Deductions can not more than Earnings')
+                            rowEntity.PBRAmount = deductionRemainingAmount.toFixed(2)
                         }
                         else {
                             rowEntity.PBRAmount = parseFloat(newValue).toFixed(2);
                         }
                         //avoiding 
-                        var expectedPer = Math.round(parseFloat((rowEntity.PBRAmount * 100)) / grossAmt, 2)
-                        var expected1 = Math.round((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt, 2)
-                        var expected2 = (parseFloat(rowEntity.PBRAmount) * 100) / grossAmt
-                        var expected3 = expected2.toPrecision(2)
-                        var expected2 = ((rowEntity.PBRAmount * 100) / grossAmt).toPrecision(2);
+                        if (rowEntity.PBRIsSlab || rowEntity.PBRIsFormula) {
 
-                        if (dependTotalAmt > 0) {
-                            expectedPer = Math.round((rowEntity.PBRAmount * 100) / dependTotalAmt, 2)
-                            if (expectedPer > 100) {
-                                rowEntity.PBRPercantage = 100.00;
-                                rowEntity.PBRAmount = Math.round(dependTotalAmt).toFixed(2);
-                            }
-                            else {
-                                rowEntity.PBRPercantage = Math.round(expectedPer, 2).toFixed(2);
-                            }
                         }
-                        else
-                            //updating % field as per amount
-                            if (rowEntity.PBRPercantage) {
-                                if (rowEntity.PBRPercantage > 0) {
-                                    rowEntity.PBRPercantage = expectedPer;
+                        else {
+                            var expectedPer = Math.round(parseFloat((rowEntity.PBRAmount * 100)) / grossAmt, 2)
+
+                            if (dependTotalAmt > 0) {
+                                expectedPer = (rowEntity.PBRAmount * 100) / dependTotalAmt;
+                                if (expectedPer > 100) {
+                                    rowEntity.PBRPercantage = 100.00;
+                                    rowEntity.PBRAmount = Math.round(dependTotalAmt).toFixed(2);
+                                }
+                                else {
+                                    rowEntity.PBRPercantage = expectedPer.toFixed(2);
                                 }
                             }
-
-                        rowEntity.GrossPercentage = Math.round((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt, 2).toFixed(2)
+                            else
+                                //updating % field as per amount
+                                if (rowEntity.PBRPercantage) {
+                                    if (rowEntity.PBRPercantage > 0) {
+                                        rowEntity.PBRPercantage = expectedPer.toFixed(2);
+                                    }
+                                }
+                        }
+                        rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt).toFixed(2)
                     }
                 }
 
 
 
                 //SHeadType
-                if (colDef.name = 'PBRIsFormula') {
-                    _getSubGridOptions(rowEntity, rowEntity.PBRIsFormula)
-                }
-                else if (colDef.name = 'PBRCalcOnSHId') {
+                // if (colDef.name = 'PBRIsFormula') {
+                //     _getSubGridOptions(rowEntity, rowEntity.PBRIsFormula)
+                // }
+                // else if (colDef.name = 'PBRCalcOnSHId') {
 
-                    //_getSubGridOptions(rowEntity, rowEntity.PBRIsFormula)
-                }
-                else if (colDef.name = 'PBRPercantage') {
-                    //removing unwanted percentage value if no dependences attached
+                //     //_getSubGridOptions(rowEntity, rowEntity.PBRIsFormula)
+                // }
+                // else if (colDef.name = 'PBRPercantage') {
+                //     //removing unwanted percentage value if no dependences attached
 
 
-                    //_getSubGridOptions(rowEntity, rowEntity.PBRIsFormula)
-                }
+                //     //_getSubGridOptions(rowEntity, rowEntity.PBRIsFormula)
+                // }
 
                 $scope.netPayableAmount = _getNetPayable();
             });
