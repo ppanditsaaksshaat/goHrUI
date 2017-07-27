@@ -256,10 +256,10 @@
                  * Clear All Fiters Values
                  */
                 function _clearFilter() {
-                    
+
                     $scope.page.searchList = {};
                     $scope.filterData = undefined;
-                    angular.forEach($scope.page.pageinfo.filters, function (filter) {                     
+                    angular.forEach($scope.page.pageinfo.filters, function (filter) {
                         if (filter.required) {
                             filter.showFilter = true;
                             filter.value = undefined;
@@ -380,6 +380,32 @@
                                 }
 
                             })
+                            if ($scope.page.pageinfo.statuslist != null) {
+                                if ($scope.page.pageinfo.statuslist.length > 0) {
+                                    $scope.page.pageinfo.statuslist.push({
+                                        isApproved: false,
+                                        isCancelApprove: false,
+                                        isCancelOnHold: false,
+                                        isCancelRejected: false,
+                                        isCancelRequest: false,
+                                        isCancelled: false,
+                                        isOnHold: false,
+                                        isPending: true,
+                                        isRejected: false,
+                                        name: "Pending",
+                                        perc: "0",
+                                        rank: "0",
+                                        value: 0
+                                    })
+                                    $scope.page.pageinfo.filters.push({
+                                        name: 'StatusId',
+                                        controlType: 'select',
+                                        displayName: 'Status',
+                                        operator: '=',
+                                        titleMap: $scope.page.pageinfo.statuslist
+                                    })
+                                }
+                            }
                             pageInfoListner();
                         }
                     }

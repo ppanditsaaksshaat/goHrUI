@@ -19,6 +19,7 @@
     // this.uploadRecord = _uploadRecord;
     $scope.entity = {}
     $scope.page = $scope.createPage();
+    $scope.closeForm = _closeForm;
 
 
     console.log($scope.page)
@@ -40,7 +41,7 @@
       gridHeight: 450,
       getPageData: null,
       refreshData: null,
-      addRecord: _addRecord,
+      addRecord: null,
       editRecord: null,
       updateRecord: null,
       viewRecord: null,
@@ -51,6 +52,9 @@
       $scope.showEditForm = true;
       $scope.entity = {};
       $scope.newEntity = {};
+    }
+    function _closeForm(editForm) {
+      $scope.showEditForm = false;
     }
 
 

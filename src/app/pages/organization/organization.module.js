@@ -11,7 +11,7 @@
     // 'BlurAdmin.pages.organization.employee',
     // 'BlurAdmin.pages.organization.empupload',
     // 'BlurAdmin.pages.organization.masters',
-    'BlurAdmin.pages.organization.company',
+    'BlurAdmin.pages.organization.general',
     'BlurAdmin.pages.organization.employees.reports'
     
     
