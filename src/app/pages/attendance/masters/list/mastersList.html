@@ -2,6 +2,7 @@
 <div ng-hide="showWeeklyOffList">
     <grid-box ng-model="page">
     </grid-box>
+    
 </div>
 
 <div ng-show="showWeeklyOffList">
@@ -34,17 +35,19 @@
                         </div>
                     </div>
 
-                </div>
-
-                <div class="row">
-                    <div ui-grid="weekGridOptions" ui-grid-expandable ui-grid-selection ui-grid-edit></div>
-                </div>
-                <div class="row">
-                    <div class="form-group text-center">
-                        <button type="submit" class="btn btn-info btn-lg">Save</button>
-                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeWeekOffAdd()">Close</button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div ui-grid="weekGridOptions" ui-grid-expandable ui-grid-selection ui-grid-edit></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-info btn-lg">Save</button>
+                            <button type="button" class="btn btn-danger btn-lg" ng-click="closeWeekOffAdd()">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+</div>
