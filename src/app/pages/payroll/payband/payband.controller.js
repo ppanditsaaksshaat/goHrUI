@@ -40,7 +40,7 @@
             onRegisterApi: _onRegisterApi,
             showGridFooter: true,
             showColumnFooter: false,
-            gridFooterTemplate: '<div class="row"> <div class="col-md-8"> <div class="pull-left">  Diffrences of earning to be added in <select ng-model="grid.appScope.selectedOtherHead" ng-options="opt.name for opt in grid.appScope.rulePage.pageinfo.fields.PBRSHId.options"></select></div><div class="pull-right"><button ng-click="grid.appScope.addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button></div></div><div class="col-md-4"><div class="pull-right"><button ng-click="grid.appScope.addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div></div>'
+            gridFooterTemplate: '<div class="row"> <div class="col-md-8"> <div class="pull-left" ng-show="grid.appScope.isShowCalculatediff">  Diffrences of earning to be added in <select ng-model="grid.appScope.selectedOtherHead" ng-options="opt.name for opt in grid.appScope.rulePage.pageinfo.fields.PBRSHId.options"></select></div><div class="pull-right" ng-show="grid.appScope.isShowCalculatediff"><button ng-click="grid.appScope.addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button></div></div><div class="col-md-4"><div class="pull-right"><button ng-click="grid.appScope.addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div></div>'
             // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
         }
 
@@ -85,7 +85,7 @@
         $scope.changeSlab = _changeSlab;
         $scope.addTotal = _addTotal;
         $scope.toggleRowExpand = _toggleRowExpand;
-
+        $scope.changeAvoidExcessCalc = _changeAvoidExcessCalc;
         $scope.getNetPayable = _getNetPayable;
         $scope.getgross = _getGross;
         $scope.getCTC = _getCTC;
@@ -164,6 +164,12 @@
 
         }
         function _addTotal() {
+            if ($scope.salary) {
+                if ($scope.salary.grossAmt < $scope.salary.earningAmt) {
+                    $scope.showMsg('warning', 'Earning already matched with Gross Amount')
+                    return;
+                }
+            }
             //adding current state total row at last
             if ($scope.selectedOtherHead) {
                 if ($scope.payGridOptions.data.length) {
@@ -328,6 +334,21 @@
             $scope.payGridOptions.data.splice(index, 1);
             _getNetPayable();
         }
+        function _changeAvoidExcessCalc(row) {
+            console.log(row)
+            var headRows = row.grid.parentRow.entity.PBRCalcOnSHId;
+            var headAmtTot = 0
+            for (var i = 0; i < headRows.length; i++) {
+                var headAmt = _getHeadAmount(headRows[i].value)
+                headAmtTot += parseFloat(headAmt);
+            }
+
+            if (row.entity.PBSMaxCalcOnAmount) {
+                if (parseFloat(row.entity.PBSMaxCalcOnAmount) > headAmt) {
+                    row.grid.parentRow.entity.PBRAmount = ''
+                }
+            }
+        }
 
         $scope.$watch(function () {
             return $scope.entity.PBBasicPerctange;
@@ -342,7 +363,8 @@
 
         //calculating basic on gross percentage
         function _calculateBasicOnGross() {
-            console.log($scope.entity.PBGrossSalary, $scope.entity.PBBasicPerctange)
+            $scope.isShowCalculatediff = false;
+
             if ($scope.entity.PBBasicPerctange && $scope.entity.PBGrossSalary) {
                 if ($scope.entity.PBBasicPerctange == '' && $scope.entity.PBGrossSalary == '') {
                     $scope.payGridOptions.data = [];
@@ -372,9 +394,9 @@
             }
             //removing rows from grid if invalid values found
             if (basicPerct > 100) {
-                $scope.showMsg('Basic % can not more than 100%')
                 $scope.payGridOptions.data = [];
                 _getNetPayable();
+                $scope.showMsg('Basic % can not more than 100%')
                 return;
             }
             if (!isNaN(PBGrossSalary) && !isNaN(basicPerct)) {
@@ -382,7 +404,7 @@
                 var shBasic = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsBasic')
                 var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsGross')
 
-                var basicSalary = (basicPerct / 100) * PBGrossSalary
+                var basicSalary = Math.round((basicPerct / 100) * PBGrossSalary);
                 if (isNaN(basicSalary)) {
                     basicSalary = 0;
                 }
@@ -467,6 +489,8 @@
                     }
                     $scope.payGridOptions.data.splice(1, 1, basicHead)
                 }
+
+                $scope.isShowCalculatediff = true;
             }
             _getNetPayable();
         }
@@ -882,7 +906,7 @@
                 row.subGridOptions.data = [];
                 if (row.PBRCalcOnSHId.length > 0) {
                     for (var i = 0; i < row.PBRCalcOnSHId.length; i++) {
-                        var headAmt = _getHeadAmount(row.PBRCalcOnSHId[i].value)
+                        var headAmt = parseFloat(_getHeadAmount(row.PBRCalcOnSHId[i].value))
 
                         row.subGridOptions.data.push({
                             PFDId: 0,
@@ -890,7 +914,7 @@
                             PFDCalcHeadId: [row.PBRCalcOnSHId[i]],
                             PFDPercentage: 100,
                             PFDOperator: '',
-                            PFDAmount: headAmt
+                            PFDAmount: headAmt.toFixed(2)
                         })
 
 
@@ -899,6 +923,11 @@
             }
             else {
                 if ($scope.slabPage.pageinfo) {
+
+                    var cellTemplateAvoid = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
+                    cellTemplateAvoid += "<a href ng-click=\"grid.appScope.changeAvoidExcessCalc(row)\"> <i class=\"fa font-green\" ng-class=\"{'fa-check-square-o': row.entity.PBSAvoidExcessCalc, 'fa-square-o': !row.entity.PBSAvoidExcessCalc }\" aria-hidden=\"true\" ></i></a>";
+                    cellTemplateAvoid += "</div>"
+
 
                     row.subGridOptions.columnDefs.push(
                         {
@@ -921,7 +950,7 @@
                         {
                             name: $scope.slabPage.pageinfo.fields.PBSMinCalcOnAmount.name,
                             displayName: $scope.slabPage.pageinfo.fields.PBSMinCalcOnAmount.text,
-                            width: 150, visible: true, cellFilter: '', type: 'decimal'
+                            width: 140, visible: true, cellFilter: '', type: 'decimal'
                         })
                     row.subGridOptions.columnDefs.push(
                         {
@@ -935,20 +964,29 @@
                         {
                             name: $scope.slabPage.pageinfo.fields.PBSMinAmount.name,
                             displayName: $scope.slabPage.pageinfo.fields.PBSMinAmount.text,
-                            width: 150, visible: true, cellFilter: '', type: 'decimal'
+                            width: 130, visible: true, cellFilter: '', type: 'decimal'
                         })
 
                     row.subGridOptions.columnDefs.push(
                         {
                             name: $scope.slabPage.pageinfo.fields.PBSMasAmount.name,
                             displayName: $scope.slabPage.pageinfo.fields.PBSMasAmount.text,
-                            width: 150, visible: true, cellFilter: '', type: 'decimal'
+                            width: 130, visible: true, cellFilter: '', type: 'decimal'
                         })
                     row.subGridOptions.columnDefs.push(
                         {
                             name: 'CalculatedAmount',
                             displayName: 'Amount',
-                            width: 100, visible: true, cellFilter: '', cellEditableCondition: false
+                            width: 90, visible: true, cellFilter: '', cellEditableCondition: false
+                        })
+                    row.subGridOptions.columnDefs.push(
+                        {
+                            name: 'PBSAvoidExcessCalc',
+                            displayName: 'Avoid',
+                            type: 'boolean',
+                            cellTemplate: cellTemplateAvoid,
+                            // editableCellTemplate: cellTemplateAvoid,
+                            width: 50, visible: true, cellFilter: '', cellEditableCondition: true
                         })
 
                     if (row.PBRCalcOnSHId.length > 0) {
@@ -997,15 +1035,15 @@
                             var shAmt = parseFloat(subGridApi.grid.rows[i].entity.PFDAmount);
                             var shPer = parseFloat(subGridApi.grid.rows[i].entity.PFDPercentage)
                             var calcAmt = (shPer / 100) * shAmt;
-                            if (subGridApi.grid.rows[i].entity.operator == '+') {
+                            if (subGridApi.grid.rows[i].entity.PFDOperator == '+') {
                                 lastTotal = lastTotal + calcAmt
                             }
-                            else if (subGridApi.grid.rows[i].entity.operator == '-') {
+                            else if (subGridApi.grid.rows[i].entity.PFDOperator == '-') {
                                 lastTotal = lastTotal - calcAmt
                             }
                         }
                     }
-                    subGridApi.grid.parentRow.entity.PBRAmount = lastTotal;
+                    subGridApi.grid.parentRow.entity.PBRAmount = lastTotal.toFixed(2);
                 }
                 else {
 
@@ -1139,6 +1177,9 @@
                             }
                         }
                     }
+                    else if (colDef.name == "PBSAvoidExcessCalc") {
+
+                    }
 
 
                     //calculating amount as per slab
@@ -1223,10 +1264,23 @@
                         //setting amount to parent row
                         if (subGridApi.grid.rows.length == 1) {
                             subGridApi.grid.parentRow.entity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
-                            subGridApi.grid.parentRow.entity.GrossPercentage = ((calculatedAmt * 100) / grossAmt).toFixed(2)
+                            if (grossAmt > 0)
+                                subGridApi.grid.parentRow.entity.GrossPercentage = ((calculatedAmt * 100) / grossAmt).toFixed(2)
+                            else
+                                subGridApi.grid.parentRow.entity.GrossPercentage = '-';
                         }
                         else
                             subGridApi.grid.parentRow.entity.PBRAmount = 0;
+
+
+                        if (rowEntity.PBSAvoidExcessCalc) {
+                            if (rowEntity.PBSMaxCalcOnAmount) {
+                                if (parseFloat(rowEntity.PBSMaxCalcOnAmount) < headAmt) {
+                                    subGridApi.grid.parentRow.entity.PBRAmount = ''
+                                    subGridApi.grid.parentRow.entity.GrossPercentage = ''
+                                }
+                            }
+                        }
                     }
 
                 }
@@ -1377,7 +1431,7 @@
                             else if (foundPB.SHIsDeduction == "False") {
 
 
-                                if (remainingAmount > 0) {
+                                if ((grossAmt > 0 && remainingAmount > 0) || (grossAmt <= 0)) {
 
                                     rowEntity.SHeadType = 'Earning';
                                 }
@@ -1417,7 +1471,7 @@
                     if (isNaN(rowEntity.PBRAmount)) {
                         rowEntity.PBRAmount = 0;
                     }
-                    if (remainingAmount <= 0 && rowEntity.SHeadType == 'Earning') {
+                    if (grossAmt > 0 && remainingAmount <= 0 && rowEntity.SHeadType == 'Earning') {
                         rowEntity.PBRAmount = 0;
                         rowEntity.PBRPercantage = 0;
                         rowEntity.GrossPercentage = 0;
@@ -1430,12 +1484,12 @@
                         $scope.showMsg('warning', 'Deductions can not more than earnings')
                     }
                     else {
-                        if (remainingAmount < rowEntity.PBRAmount && rowEntity.SHeadType == 'Earning') {
+                        if (grossAmt > 0 && remainingAmount < rowEntity.PBRAmount && rowEntity.SHeadType == 'Earning') {
                             rowEntity.PBRAmount = remainingAmount;
                             rowEntity.PBRPercantage = ((rowEntity.PBRAmount * 100) / dependTotalAmt).toFixed(2)
                         }
                         else if (rowEntity.SHeadType == 'Deduction') {
-                            if ((deductionTotal + parseFloat(rowEntity.PBRAmount)) > earningAmt) {
+                            if ((deductionTotal + parseFloat(rowEntity.PBRAmount)) > totalAmount) {
                                 rowEntity.PBRAmount = 0;
                                 rowEntity.PBRPercantage = 0;
                                 rowEntity.GrossPercentage = 0;
@@ -1450,46 +1504,49 @@
                     }
                 }
                 else if (colDef.colIndex == 4) {
-                    if (grossAmt > 0) {
-                        //if salary configured based on Gross than remaining must be checked
-                        if (newValue > remainingAmount && rowEntity.SHeadType == 'Earning') {
-                            $scope.showMsg('error', 'Netpayble can not more than Gross')
-                            rowEntity.PBRAmount = remainingAmount.toFixed(2)
-                        }
-                        else if (newValue > deductionRemainingAmount && rowEntity.SHeadType == 'Deduction') {
-                            $scope.showMsg('error', 'Deductions can not more than Earnings')
-                            rowEntity.PBRAmount = deductionRemainingAmount.toFixed(2)
-                        }
-                        else {
-                            rowEntity.PBRAmount = parseFloat(newValue).toFixed(2);
-                        }
-                        //avoiding 
-                        if (rowEntity.PBRIsSlab || rowEntity.PBRIsFormula) {
 
-                        }
-                        else {
-                            var expectedPer = Math.round(parseFloat((rowEntity.PBRAmount * 100)) / grossAmt, 2)
+                    //if salary configured based on Gross than remaining must be checked
+                    if ((grossAmt > 0) && newValue > remainingAmount && rowEntity.SHeadType == 'Earning') {
+                        $scope.showMsg('error', 'Netpayble can not more than Gross')
+                        rowEntity.PBRAmount = remainingAmount.toFixed(2)
+                    }
+                    else if ((grossAmt > 0) && newValue > deductionRemainingAmount && rowEntity.SHeadType == 'Deduction') {
+                        $scope.showMsg('error', 'Deductions can not more than Earnings')
+                        rowEntity.PBRAmount = deductionRemainingAmount.toFixed(2)
+                    }
+                    else {
+                        rowEntity.PBRAmount = parseFloat(newValue).toFixed(2);
+                    }
+                    //avoiding 
+                    if (rowEntity.PBRIsSlab || rowEntity.PBRIsFormula) {
 
-                            if (dependTotalAmt > 0) {
-                                expectedPer = (rowEntity.PBRAmount * 100) / dependTotalAmt;
-                                if (expectedPer > 100) {
-                                    rowEntity.PBRPercantage = 100.00;
-                                    rowEntity.PBRAmount = Math.round(dependTotalAmt).toFixed(2);
-                                }
-                                else {
+                    }
+                    else {
+                        var expectedPer = Math.round(parseFloat((rowEntity.PBRAmount * 100)) / grossAmt, 2)
+
+                        if (dependTotalAmt > 0) {
+                            expectedPer = (rowEntity.PBRAmount * 100) / dependTotalAmt;
+                            if (expectedPer > 100) {
+                                rowEntity.PBRPercantage = 100.00;
+                                rowEntity.PBRAmount = Math.round(dependTotalAmt).toFixed(2);
+                            }
+                            else {
+                                rowEntity.PBRPercantage = expectedPer.toFixed(2);
+                                rowEntity.PBRAmount = Math.round(newValue).toFixed(2);
+                            }
+                        }
+                        else
+                            //updating % field as per amount
+                            if (rowEntity.PBRPercantage) {
+                                if (rowEntity.PBRPercantage > 0) {
                                     rowEntity.PBRPercantage = expectedPer.toFixed(2);
                                 }
                             }
-                            else
-                                //updating % field as per amount
-                                if (rowEntity.PBRPercantage) {
-                                    if (rowEntity.PBRPercantage > 0) {
-                                        rowEntity.PBRPercantage = expectedPer.toFixed(2);
-                                    }
-                                }
-                        }
-                        rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt).toFixed(2)
                     }
+                    if (grossAmt > 0)
+                        rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt).toFixed(2)
+                    else
+                        rowEntity.GrossPercentage = '-';
                 }
 
 
@@ -1562,25 +1619,31 @@
                     }
                     else if (grossId != $scope.payGridOptions.data[i].PBRSHId && $scope.payGridOptions.data[i].PBRSHId > 0) {
                         if ($scope.payGridOptions.data[i].SHeadType == 'Earning') {
-                            $scope.salary.earningAmt += parseFloat($scope.payGridOptions.data[i].PBRAmount);
-                            totAmt += parseFloat($scope.payGridOptions.data[i].PBRAmount)
+                            $scope.salary.earningAmt += Math.round(parseFloat($scope.payGridOptions.data[i].PBRAmount));
+                            totAmt += Math.round(parseFloat($scope.payGridOptions.data[i].PBRAmount));
                         }
                         else if ($scope.payGridOptions.data[i].SHeadType == 'Deduction') {
-                            $scope.salary.deductionAmt += parseFloat($scope.payGridOptions.data[i].PBRAmount);
-                            totAmt -= parseFloat($scope.payGridOptions.data[i].PBRAmount)
+                            $scope.salary.deductionAmt += Math.round(parseFloat($scope.payGridOptions.data[i].PBRAmount));
+                            totAmt -= Math.round(parseFloat($scope.payGridOptions.data[i].PBRAmount))
                         }
                         else {
-                            $scope.salary.employerAmt += parseFloat($scope.payGridOptions.data[i].PBRAmount);
+                            $scope.salary.employerAmt += Math.round(parseFloat($scope.payGridOptions.data[i].PBRAmount));
                         }
                     }
                 }
             }
 
             if ($scope.salary.grossAmt == 0) {
-                $scope.salary.grossAmt = $scope.salary.earningAmt;
+                $scope.salary.grossAmt = Math.round(parseFloat($scope.salary.earningAmt)).toFixed(2);
             }
-            $scope.salary.netPayableAmt = $scope.salary.earningAmt - $scope.salary.deductionAmt;
-            $scope.salary.ctcAmt = $scope.salary.earningAmt + $scope.salary.employerAmt;
+            $scope.salary.netPayableAmt = Math.round(parseFloat($scope.salary.earningAmt - $scope.salary.deductionAmt)).toFixed(2);
+            $scope.salary.ctcAmt = Math.round(parseFloat($scope.salary.earningAmt + $scope.salary.employerAmt)).toFixed(2);
+
+            if ($scope.salary) {
+                if ($scope.salary.grossAmt < $scope.salary.earningAmt) {
+                    $scope.isShowCalculatediff = false;
+                }
+            }
         }
         function _getGross() {
             return 0;
@@ -1699,6 +1762,7 @@
                                         slabEntity.PBSMasAmount = ent.PBSMasAmount;
                                         slabEntity.PBSPercentage = ent.PBSPercentage;
                                         slabEntity.PBRRuleName = ent.PBRRuleName;
+                                        slabEntity.PBSAvoidExcessCalc = ent.PBSAvoidExcessCalc;
 
                                         slabChild.rows.push(slabEntity);
                                     }
