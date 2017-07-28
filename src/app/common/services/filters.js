@@ -96,4 +96,12 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
             }
             return val.toFixed(2);
         };
+    }).filter('avoidNan', function () {
+        return function (value) {
+            var val = parseFloat(value)
+            if (isNaN(val)) {
+                return '0.00'
+            }
+            return val.toFixed(2);
+        };
     });
