@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
-<grid-box ng-model="page" ng-hide="page.showEditForm" ></grid-box>
+<grid-box ng-model="page" ng-hide="page.showEditForm"></grid-box>
 <form name="editForm" ng-submit="saveForm(editForm)" novalidate>
     <div id="editForm" class="panel panel-default bootstrap-panel xmedium-panel" ng-show="page.showEditForm">
         <edit-panel-head page="page" page-title="page.pageinfo.tagline" show-save="editForm.untouch" reset-form="resetForm(editForm)"
@@ -71,35 +71,34 @@
                             </div>
 
 
-                            <div id="djGridPay" ui-grid="payGridOptions" 
-                            ui-grid-expandable ui-grid-auto-resize ui-grid-pagination ui-grid-selection
+                            <div id="djGridPay" ui-grid="payGridOptions" ui-grid-expandable ui-grid-auto-resize ui-grid-pagination ui-grid-selection
                                 ui-grid-pinning ui-grid-edit class="paybandgrid"></div>
                         </div>
                         <div class="col-md-2">
                             <table class="table table-condensed table-striped">
                                 <tr>
                                     <td class="font-bold text-left">Gross</td>
-                                    <td class="text-right">{{salary.grossAmt}}</td>
+                                    <td class="text-right" ng-bind="salary.grossAmt | avoidNan"></td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold text-left">Earnings</td>
-                                    <td class="text-right">{{salary.earningAmt}}</td>
+                                    <td class="text-right" ng-bind="salary.earningAmt | avoidNan"></td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold text-left">Deductions</td>
-                                    <td class="text-right">{{salary.deductionAmt}}</td>
+                                    <td class="text-right" ng-bind="salary.deductionAmt | avoidNan"></td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold text-left">Net Pay</td>
-                                    <td class="text-right">{{salary.netPayableAmt}}</td>
+                                    <td class="text-right" ng-bind="salary.netPayableAmt | avoidNan"></td>
                                 </tr>
                                 <tr>
-                                    <td class="font-bold">Employer</td>
-                                    <td class="text-right">{{salary.employerAmt}}</td>
+                                    <td class="font-bold">Employer Pay</td>
+                                    <td class="text-right"  ng-bind="salary.employerAmt | avoidNan"></td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold">CTC</td>
-                                    <td class="text-right">{{salary.ctcAmt}}</td>
+                                    <td class="text-right" ng-bind="salary.ctcAmt | avoidNan"></td>
                                 </tr>
                             </table>
                         </div>
