@@ -253,7 +253,7 @@
 
     function _validateWeekOff(entity) {
 
-      if (entity.WOSName == undefined) {
+      if (entity.WOSName == undefined || entity.WOSName == "") {
         $scope.showMsg("error", "Please enter Set Name");
         return false;
       }
