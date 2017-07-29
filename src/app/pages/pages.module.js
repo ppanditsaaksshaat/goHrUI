@@ -7,6 +7,7 @@
 
   angular.module('BlurAdmin.pages', [
     'ui.router',
+    'BlurAdmin.pages.getstarted',
     'BlurAdmin.pages.dashboard',
     // 'BlurAdmin.pages.ui',
     // 'BlurAdmin.pages.components',
@@ -22,10 +23,11 @@
     'BlurAdmin.pages.payroll',
     'BlurAdmin.pages.loan',
     'BlurAdmin.pages.advance',
-    'BlurAdmin.pages.mis'
-    
+    'BlurAdmin.pages.mis',
+    'BlurAdmin.pages.configuration'
+
   ])
-      .config(routeConfig);
+    .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
