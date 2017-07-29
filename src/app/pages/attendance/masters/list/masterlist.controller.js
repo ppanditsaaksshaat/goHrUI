@@ -71,9 +71,17 @@
     }
 
     function _addRecord() {
-      _loadController();
+      console.log($scope.weekGridOptions.data)
       $scope.entity = [];
-
+      angular.forEach($scope.weekGridOptions.data, function (data) {
+        data.SGWDFirst = -1;
+        data.SGWDSecond = -1;
+        data.SGWDThird = -1;
+        data.SGWDFourth = -1;
+        data.SGWDFifth = -1;
+      })
+      // $scope.weekGridOptions.data = [];
+      // _loadController();
       $scope.showWeeklyOffList = true;
     }
     function _editRecord(row) {
@@ -269,14 +277,18 @@
 
       if (_validateWeekOff(entity)) {
         var groupIds = "";
+        var groupNames = "";
         angular.forEach($scope.entity.WOSGroupId, function (group) {
           groupIds += group.GMCId + ",";
+          groupNames += group.GMCName + ",";
         })
         groupIds = groupIds.substring(0, groupIds.length - 1);
+        groupNames = groupNames.substring(0, groupNames.length - 1);
         var weekOffSet = {
           WOSId: $scope.entity.WOSId == undefined ? undefined : $scope.entity.WOSId,
           WOSName: $scope.entity.WOSName,
-          WOSGroupId: groupIds
+          WOSGroupId: groupIds,
+          WOSGroupName: groupNames
         }
         $scope.multiEntity = {};
         $scope.multiEntity.parent = {
