@@ -27,12 +27,13 @@
     $scope.verifyCancelRequestForm = true;
     $scope.verifySanctionForm = true;
     $scope.closeSanction = _closeSanction;
+
     var cancelRequestPageId = 456;
     var cancelRequestTableId = 436;
-
     var sanctionLoanPageId = 144;
     var loanTableId = 109;
     var sanctinLoanTableId = 150;
+    var sanctionLonPageId = 285;
 
     $scope.saveForm = _saveForm;
     $scope.approvedLoan = _approvedLoan;
@@ -42,11 +43,11 @@
     $scope.onChangeLoanEmployee = _onChangeLoanEmployee;
     $scope.onChangeInstallmentDate = _onChangeInstallmentDate;
     $scope.onControlClick = _onControlClick;
-    $scope.leaveSanction = _leaveSanction;
+    $scope.loanSanction = _loanSanction;
     $scope.closeViewSanctionForm = _closeViewSanctionForm
     $scope.closeVerifyCancelRequestForm = _closeVerifyCancelRequestForm;
     $scope.cancelLeave = _cancelLeave;
-    var sanctionLonPageId = 285;
+
     $scope.cancelRequestEntity = {};
     $scope.sanctionEntity = {};
     $scope.replyOnCancelLoan = _replyOnCancelLoan;
@@ -164,6 +165,7 @@
           // $scope.cancelRequestEntity.EmpName = row.entity.EmpName;
           console.log(row.entity)
           $scope.entity = angular.copy(row.entity);
+          console.log($scope.entity)
           $scope.cancelRequestEntity = angular.copy(row.entity);
           console.log($scope.entity)
           var searchList = [];
@@ -178,7 +180,7 @@
         }
       }
       else {
-        $scope.showMsg("error", "You can view this leave only")
+        $scope.showMsg("error", "You can view this loan only")
       }
 
     }
@@ -230,6 +232,7 @@
       console.log(result)
       if (result.LADId != undefined) {
         $scope.sanctionEntity.LADId = result.LADId;
+        $scope.sanctionEntity.LADRemark = result.LADRemark;
       }
       else {
         $scope.sanctionEntity.LADId = undefined;
@@ -264,7 +267,7 @@
       return false;
     }
 
-    function _leaveSanction() {
+    function _loanSanction() {
 
       if (!_validateSanctionForm()) {
         var santionLeave = {
@@ -277,7 +280,8 @@
           LADApprovalLoanClDate: $scope.entity.LADate,
           LADApprovedOn: moment(),
           LADApprovedInstallmentAmount: $scope.entity.LAInstallment,
-          StatusId: $scope.sanctionEntity.StatusId
+          StatusId: $scope.sanctionEntity.StatusId,
+          LADRemark: $scope.sanctionEntity.LADRemark
         }
       }
 
@@ -604,8 +608,17 @@
       // }
       // else {
       if (_validateForm(editForm)) {
-        editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLoanApp, _errorLoanApp);
-        editForm.$setPristine();
+        if ($scope.entity.LAId == undefined) {
+          editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, 'create', $scope.page.pageinfo.tagline).then(_successLoanApp, _errorLoanApp);
+          editForm.$setPristine();
+          // _formSave(cancelRequest, cancelRequestPageId, 'create', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, true, 'Cancel Request');
+        }
+        else {
+          // _formSave(cancelRequest, cancelRequestPageId, 'edit', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, false, 'Cancel Request');
+          editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, 'edit', $scope.page.pageinfo.tagline).then(_successLoanApp, _errorLoanApp);
+          editForm.$setPristine();
+        }
+
         // }
       }
 
@@ -798,6 +811,7 @@
           searchList.push(searchFields)
           _commonFindEntity(cancelRequestTableId, searchList, row.entity);
           $scope.entity = angular.copy(row.entity);
+          console.log($scope.entity)
           console.log(row.entity)
           $scope.showEditForm = true;
           $scope.showEditLv = true;
@@ -840,7 +854,7 @@
         }
       }
       else {
-        $scope.showMsg("error", "Please comment before leave cancel");
+        $scope.showMsg("error", "Please comment before loan cancel");
       }
     }
 
@@ -853,7 +867,8 @@
           LCDLAId: $scope.entity.LAId,
           LCDLAAmount: $scope.cancelRequestEntity.LAAmount,
           LCDEmpId: $scope.cancelRequestEntity.LAEmpId,
-          LCDRemark: $scope.cancelRequestEntity.LCDRemark
+          LCDRemark: $scope.cancelRequestEntity.LCDRemark,
+          StatusId: $scope.cancelRequestEntity.StatusId
 
         }
         console.log(cancelRequest)

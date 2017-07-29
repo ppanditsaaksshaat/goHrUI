@@ -75,25 +75,6 @@
                 </div>
             </div>
 
-
-            <div class="row" ng-show="isLeaveApprovedDet ">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <label for="inputPassword3">Status</label>
-                            <select class="form-control" ng-options="status.value as status.name for status in page.pageinfo.statuslist" ng-model="entity.StatusId"
-                                name="editForm"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <button type="button" ng-click="approvedLoan() " class=" btn btn-sm btn-primary ">Update</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
 
@@ -104,7 +85,7 @@
 <div ng-hide="showSanctionForm">
     <div class="row">
         <div ba-panel ba-panel-class="x-medium" ba-panel-title="Sanction Loan Application">
-            <form ng-submit="leaveSanction()" name="editForm">
+            <form ng-submit="loanSanction()" name="editForm">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -409,7 +390,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Admin Comment</label>
-                                <span class="form-control" ng-bind="entity.LEADAdminComment"></span>
+                                <span class="form-control" ng-bind="sanctionEntity.LADRemark"></span>
                             </div>
                         </div>
 
@@ -431,7 +412,7 @@
 
 
                     <div class="text-center">
-                        <button ng-if="!status.isRejected" type="submit" class="btn btn-info btn-lg">Cancel Leave</button>
+                        <button ng-if="!status.isRejected" type="submit" class="btn btn-info btn-lg">Cancel Loan</button>
                         <button type="button" class="btn btn-danger btn-lg" ng-click="closeViewSanctionForm()">Close</button>
                     </div>
                 </div>
