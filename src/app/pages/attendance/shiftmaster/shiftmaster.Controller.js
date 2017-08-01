@@ -13,11 +13,11 @@
   function shiftMasterController($scope, $state, $stateParams,
     pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService) {
 
-      
+
     var vm = this;
     // var pageId = $stateParams.pageId;
     var pageId = 128;
-    
+
     var tempName = $stateParams.name;
     var currentState = $state.current;
     vm.queryId = 528;
@@ -318,12 +318,91 @@
       $scope.lunchDurations = hours + ' hour and ' + minutes + ' minutes';
     }
 
-    function _saveForm(editForm, entity) {
+    // function _saveForm(editForm, entity) {
 
-      var splitValMinimumHourForHalfDay = entity.SMMinimumHourForHalfDay.split(' ');
+    //   if (!_validateShiftForm()) {
+    //     var splitValMinimumHourForHalfDay = entity.SMMinimumHourForHalfDay.split(' ');
+    //     var spMinHour = splitValMinimumHourForHalfDay[0];
+
+    //     var splitValMinimumHourForFullDay = entity.SMMinimumHourForFullDay.split(' ');
+    //     var spMaxHour = splitValMinimumHourForFullDay[0];
+
+    //     console.log(spMinHour, spMaxHour)
+    //     var SMMinimumHourForHalfDays = moment.duration(spMinHour).asMinutes();
+    //     var SMMinimumHourForFullDays = moment.duration(spMaxHour).asMinutes();
+    //     console.log(SMMinimumHourForHalfDays, SMMinimumHourForFullDays)
+
+    //     entity.SMMinimumHourForHalfDay = SMMinimumHourForHalfDays;
+    //     entity.SMMinimumHourForFullDay = SMMinimumHourForFullDays;
+    //     console.log(entity.SMMinimumHourForHalfDay, entity.SMMinimumHourForFullDay)
+
+
+
+    //     console.log($scope.groupList)
+    //     var selectedGroups = '';
+    //     angular.forEach($scope.groupList, function (group) {
+    //       if (group.isSelected) {
+    //         selectedGroups += group.GMCId + ',';
+    //         console.log(selectedGroups)
+    //       }
+    //     })
+
+    //     if (selectedGroups.length > 0) {
+    //       selectedGroups = selectedGroups.substring(0, selectedGroups.length - 1);
+    //       entity.SHGroupId = selectedGroups;
+    //     }
+    //     (entity.SHGroupId, selectedGroups)
+    //     var pkId = 0;
+    //     var searchLists = [];
+    //     var queryId = 553;
+    //     searchLists.push({ field: 'SMId', operand: '!=', value: pkId })
+    //     searchLists.push({ field: 'SHGroupId', operand: 'IN', value: entity.SHGroupId })
+    //     var data = {
+    //       searchList: searchLists,
+    //       orderByList: []
+    //     }
+    //     console.log(searchLists)
+    //     var groupName = "";
+    //     var isNotDuplicateGroupId = true;
+    //     pageService.getCustomQuery(data, queryId).then(function (result) {
+    //       if ($scope.page.action != 'edit') {
+    //         angular.forEach($scope.groupList, function (group) {
+    //           angular.forEach(result, function (groupId) {
+    //             if (groupId.SHGroupId == group.GMCId) {
+    //               groupName += group.GMCName + ',';
+    //               isNotDuplicateGroupId = false;
+    //             }
+    //             console.log($scope.groupList)
+    //           })
+    //           console.log('duplicate record exist' + groupName)
+    //         })
+    //       }
+    //       if (isNotDuplicateGroupId == false) {
+    //         $scope.showMsg("warning", "duplicate record  " + groupName);
+    //       }
+    //       if (isNotDuplicateGroupId) {
+    //         console.log(entity)
+    //         editFormService.saveForm(pageId, entity, vm.oldEntity,
+    //           entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
+    //           .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+    //       }
+    //     })
+
+    //     //   console.log(entity)
+    //     //   editFormService.saveForm(pageId, entity, vm.oldEntity,
+    //     //     entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
+    //     //     .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+    //   }
+    // }
+
+    function _saveForm() {
+      var newEntity = {};
+
+
+      var splitValMinimumHourForHalfDay = $scope.entity.SMMinimumHourForHalfDay.split(' ');
       var spMinHour = splitValMinimumHourForHalfDay[0];
 
-      var splitValMinimumHourForFullDay = entity.SMMinimumHourForFullDay.split(' ');
+      var splitValMinimumHourForFullDay = $scope.entity.SMMinimumHourForFullDay.split(' ');
       var spMaxHour = splitValMinimumHourForFullDay[0];
 
       console.log(spMinHour, spMaxHour)
@@ -331,10 +410,13 @@
       var SMMinimumHourForFullDays = moment.duration(spMaxHour).asMinutes();
       console.log(SMMinimumHourForHalfDays, SMMinimumHourForFullDays)
 
-      entity.SMMinimumHourForHalfDay = SMMinimumHourForHalfDays;
-      entity.SMMinimumHourForFullDay = SMMinimumHourForFullDays;
+      $scope.entity.SMMinimumHourForHalfDay = SMMinimumHourForHalfDays;
+      $scope.entity.SMMinimumHourForFullDay = SMMinimumHourForFullDays;
+      console.log($scope.entity.SMMinimumHourForHalfDay, $scope.entity.SMMinimumHourForFullDay)
 
-      console.log(entity)
+
+
+      console.log($scope.groupList)
       var selectedGroups = '';
       angular.forEach($scope.groupList, function (group) {
         if (group.isSelected) {
@@ -342,16 +424,150 @@
           console.log(selectedGroups)
         }
       })
+
       if (selectedGroups.length > 0) {
         selectedGroups = selectedGroups.substring(0, selectedGroups.length - 1);
-        entity.SHGroupId = selectedGroups;
+        $scope.entity.SHGroupId = selectedGroups;
       }
-      editFormService.saveForm(pageId, entity, vm.oldEntity,
-        entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
-        .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+      ($scope.entity.SHGroupId, selectedGroups)
+      var pkId = 0;
+      var searchLists = [];
+      var queryId = 553;
+      searchLists.push({ field: 'SMId', operand: '!=', value: pkId })
+      searchLists.push({ field: 'SHGroupId', operand: 'IN', value: $scope.entity.SHGroupId })
+      var data = {
+        searchList: searchLists,
+        orderByList: []
+      }
+      console.log(searchLists)
+      var groupName = "";
+      var isNotDuplicateGroupId = true;
+      newEntity = angular.copy($scope.entity);
+      if ($scope.page.action != 'edit') {
+        pageService.getCustomQuery(data, queryId).then(function (result) {
+          console.log(result)
+
+          if (result != 'NoDataFound') {
+            angular.forEach($scope.groupList, function (group) {
+              angular.forEach(result, function (groupId) {
+                if (groupId.SHGroupId == group.GMCId) {
+                  groupName += group.GMCName + ',';
+                  isNotDuplicateGroupId = false;
+                }
+                console.log($scope.groupList)
+              })
+              console.log('duplicate record exist' + groupName)
+            })
+          }
+          else {
+            console.log($scope.entity)
+            editFormService.saveForm(pageId, newEntity, vm.oldEntity,
+              $scope.entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+              .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+          }
+          if (isNotDuplicateGroupId == false) {
+            $scope.showMsg("warning", "duplicate record  " + groupName);
+          }
+          if (isNotDuplicateGroupId) {
+          }
+        })
+      }
+      else {
+        editFormService.saveForm(pageId, $scope.entity, vm.oldEntity,
+          $scope.entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+          .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+      }
+    }
+
+
+
+    // function _successDuplicateGroup(result, editForm, entity) {
+    //   if (!_validateShiftForm()) {
+    //     var splitValMinimumHourForHalfDay = entity.SMMinimumHourForHalfDay.split(' ');
+    //     var spMinHour = splitValMinimumHourForHalfDay[0];
+
+    //     var splitValMinimumHourForFullDay = entity.SMMinimumHourForFullDay.split(' ');
+    //     var spMaxHour = splitValMinimumHourForFullDay[0];
+
+    //     console.log(spMinHour, spMaxHour)
+    //     var SMMinimumHourForHalfDays = moment.duration(spMinHour).asMinutes();
+    //     var SMMinimumHourForFullDays = moment.duration(spMaxHour).asMinutes();
+    //     console.log(SMMinimumHourForHalfDays, SMMinimumHourForFullDays)
+
+    //     entity.SMMinimumHourForHalfDay = SMMinimumHourForHalfDays;
+    //     entity.SMMinimumHourForFullDay = SMMinimumHourForFullDays;
+    //     console.log(entity.SMMinimumHourForHalfDay, entity.SMMinimumHourForFullDay)
+
+
+
+    //     console.log($scope.groupList)
+    //     var selectedGroups = '';
+    //     angular.forEach($scope.groupList, function (group) {
+    //       if (group.isSelected) {
+    //         selectedGroups += group.GMCId + ',';
+    //         console.log(selectedGroups)
+    //       }
+    //     })
+
+    //     if (selectedGroups.length > 0) {
+    //       selectedGroups = selectedGroups.substring(0, selectedGroups.length - 1);
+    //       entity.SHGroupId = selectedGroups;
+    //     }
+    //     (entity.SHGroupId, selectedGroups)
+    //     var pkId = 0;
+    //     var searchLists = [];
+    //     var queryId = 553;
+    //     searchLists.push({ field: 'SMId', operand: '!=', value: pkId })
+    //     searchLists.push({ field: 'SHGroupId', operand: 'IN', value: entity.SHGroupId })
+    //     var data = {
+    //       searchList: searchLists,
+    //       orderByList: []
+    //     }
+    //     console.log(searchLists)
+    //     var groupName = "";
+    //     var isNotDuplicateGroupId = true;
+    //     if ($scope.page.action != 'edit') {
+    //       angular.forEach($scope.groupList, function (group) {
+    //         angular.forEach(result, function (groupId) {
+    //           if (groupId.SHGroupId == group.GMCId) {
+    //             groupName += group.GMCName + ',';
+    //             isNotDuplicateGroupId = false;
+    //           }
+    //           console.log($scope.groupList)
+    //         })
+    //         console.log('duplicate record exist' + groupName)
+    //       })
+    //     }
+    //     if (isNotDuplicateGroupId == false) {
+    //       $scope.showMsg("warning", "duplicate record  " + groupName);
+    //     }
+    //     if (isNotDuplicateGroupId) {
+    //       console.log(entity)
+    //       editFormService.saveForm(pageId, entity, vm.oldEntity,
+    //         entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
+    //         .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+    //     }
+    //   }
+    // }
+
+    // function _errorDuplicateGroup(result) {
+
+    // }
+
+    function _validateShiftForm() {
+      // if ($scope.entity.SMMinimumHourForHalfDay == undefined || $scope.entity.SMMinimumHourForHalfDay == null || $scope.entity.SMMinimumHourForHalfDay == '') {
+      //   $scope.showMsg("error", "Please Enter Minimum Hour For Half Day");
+      //   return true;
+      // }
+      // if ($scope.entity.SMMinimumHourForFullDay == undefined || $scope.entity.SMMinimumHourForFullDay == null || $scope.entity.SMMinimumHourForFullDay == '') {
+      //   $scope.showMsg("error", "Please Enter Maximum Hour For Half Day");
+      //   return true;
+      // }
+      // return false;
     }
 
     function _saveWizardFormSuccessResult(result) {
+      console.log(result)
       $scope.page.refreshData();
       $scope.showEditForm = false;
       $scope.showMsg("success", "Record Saved Successfully");

@@ -1,6 +1,6 @@
 <grid-box ng-model="page" ng-hide="showEditForm">
 </grid-box>
-<form name="editForm " novalidate ng-submit="saveForm(editForm,entity) " ng-show="showEditForm ">
+<form name="editForm " novalidate ng-submit="saveForm() " ng-show="showEditForm ">
     <div class="panel panel-default xmedium-panel ">
         <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
             close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            
+
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMFromTime.text}}</label>
@@ -315,9 +315,9 @@
                         <li>
                             <div class="checkbox">
                                 <label class="custom-checkbox"> 
- <input type="checkbox" ng-model="value.isSelected"> 
- <span ng-bind="value.GMCName"></span>
- </label>
+                                <input type="checkbox" ng-model="value.isSelected" required="true"> 
+                                <span ng-bind="value.GMCName"></span>
+                                </label>
                             </div>
                         </li>
                     </ul>
@@ -333,4 +333,3 @@
 
 
 </form>
-
