@@ -264,8 +264,18 @@
 
       // duration time for minimum hour for full day
       $scope.durationTime = moment(hours + ':' + minutes, 'HH:mm:ss a');
+      console.log($scope.durationTime)
       console.log($scope.durationTime.format("HH:mm"))
       $scope.entity.SMMinimumHourForFullDay = $scope.durationTime.format("HH:mm");
+
+      //duration time for minimum hour for half day
+      var halfHour = hours / 2;
+      var halfMinute = minutes / 2;
+      $scope.halfDurationTime = moment(halfHour + ':' + halfMinute, 'HH:mm:ss a');
+      $scope.entity.SMMinimumHourForHalfDay = $scope.halfDurationTime.format("HH:mm");
+      console.log(halfHour, halfMinute)
+      console.log($scope.halfDurationTime, $scope.entity.SMMinimumHourForHalfDay)
+
 
 
 
@@ -467,6 +477,8 @@
           }
           if (isNotDuplicateGroupId == false) {
             $scope.showMsg("warning", "duplicate record  " + groupName);
+            $scope.entity.SMMinimumHourForHalfDay = $scope.halfDurationTime.format("HH:mm");
+            $scope.entity.SMMinimumHourForFullDay = $scope.durationTime.format("HH:mm");
           }
           if (isNotDuplicateGroupId) {
           }
@@ -571,6 +583,8 @@
       $scope.page.refreshData();
       $scope.showEditForm = false;
       $scope.showMsg("success", "Record Saved Successfully");
+      $scope.shiftDurations = '00:00:00';
+      $scope.lunchDurations = '00:00:00';
     }
     function _saveWizardFormErrorResult(err) {
 
@@ -578,7 +592,7 @@
 
     function _loadController() {
       $scope.shiftDurations = '00:00:00';
-      $scope.lunchDurations = '00:00:00'
+      $scope.lunchDurations = '00:00:00';
 
 
       var data = {
