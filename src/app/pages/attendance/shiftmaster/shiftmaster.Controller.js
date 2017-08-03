@@ -406,91 +406,92 @@
     // }
 
     function _saveForm() {
-      var newEntity = {};
+      if (!_validateShiftForm()) {
+        var newEntity = {};
 
 
-      var splitValMinimumHourForHalfDay = $scope.entity.SMMinimumHourForHalfDay.split(' ');
-      var spMinHour = splitValMinimumHourForHalfDay[0];
+        var splitValMinimumHourForHalfDay = $scope.entity.SMMinimumHourForHalfDay.split(' ');
+        var spMinHour = splitValMinimumHourForHalfDay[0];
 
-      var splitValMinimumHourForFullDay = $scope.entity.SMMinimumHourForFullDay.split(' ');
-      var spMaxHour = splitValMinimumHourForFullDay[0];
+        var splitValMinimumHourForFullDay = $scope.entity.SMMinimumHourForFullDay.split(' ');
+        var spMaxHour = splitValMinimumHourForFullDay[0];
 
-      console.log(spMinHour, spMaxHour)
-      var SMMinimumHourForHalfDays = moment.duration(spMinHour).asMinutes();
-      var SMMinimumHourForFullDays = moment.duration(spMaxHour).asMinutes();
-      console.log(SMMinimumHourForHalfDays, SMMinimumHourForFullDays)
+        console.log(spMinHour, spMaxHour)
+        var SMMinimumHourForHalfDays = moment.duration(spMinHour).asMinutes();
+        var SMMinimumHourForFullDays = moment.duration(spMaxHour).asMinutes();
+        console.log(SMMinimumHourForHalfDays, SMMinimumHourForFullDays)
 
-      $scope.entity.SMMinimumHourForHalfDay = SMMinimumHourForHalfDays;
-      $scope.entity.SMMinimumHourForFullDay = SMMinimumHourForFullDays;
-      console.log($scope.entity.SMMinimumHourForHalfDay, $scope.entity.SMMinimumHourForFullDay)
+        $scope.entity.SMMinimumHourForHalfDay = SMMinimumHourForHalfDays;
+        $scope.entity.SMMinimumHourForFullDay = SMMinimumHourForFullDays;
+        console.log($scope.entity.SMMinimumHourForHalfDay, $scope.entity.SMMinimumHourForFullDay)
 
 
 
-      console.log($scope.groupList)
-      var selectedGroups = '';
-      angular.forEach($scope.groupList, function (group) {
-        if (group.isSelected) {
-          selectedGroups += group.GMCId + ',';
-          console.log(selectedGroups)
-        }
-      })
-
-      if (selectedGroups.length > 0) {
-        selectedGroups = selectedGroups.substring(0, selectedGroups.length - 1);
-        $scope.entity.SHGroupId = selectedGroups;
-      }
-      ($scope.entity.SHGroupId, selectedGroups)
-      var pkId = 0;
-      var searchLists = [];
-      var queryId = 553;
-      searchLists.push({ field: 'SMId', operand: '!=', value: pkId })
-      searchLists.push({ field: 'SHGroupId', operand: 'IN', value: $scope.entity.SHGroupId })
-      var data = {
-        searchList: searchLists,
-        orderByList: []
-      }
-      console.log(searchLists)
-      var groupName = "";
-      var isNotDuplicateGroupId = true;
-      newEntity = angular.copy($scope.entity);
-      if ($scope.page.action != 'edit') {
-        pageService.getCustomQuery(data, queryId).then(function (result) {
-          console.log(result)
-
-          if (result != 'NoDataFound') {
-            angular.forEach($scope.groupList, function (group) {
-              angular.forEach(result, function (groupId) {
-                if (groupId.SHGroupId == group.GMCId) {
-                  groupName += group.GMCName + ',';
-                  isNotDuplicateGroupId = false;
-                }
-                console.log($scope.groupList)
-              })
-              console.log('duplicate record exist' + groupName)
-            })
-          }
-          else {
-            console.log($scope.entity)
-            editFormService.saveForm(pageId, newEntity, vm.oldEntity,
-              $scope.entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
-              .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
-          }
-          if (isNotDuplicateGroupId == false) {
-            $scope.showMsg("warning", "duplicate record  " + groupName);
-            $scope.entity.SMMinimumHourForHalfDay = $scope.halfDurationTime.format("HH:mm");
-            $scope.entity.SMMinimumHourForFullDay = $scope.durationTime.format("HH:mm");
-          }
-          if (isNotDuplicateGroupId) {
+        console.log($scope.groupList)
+        var selectedGroups = '';
+        angular.forEach($scope.groupList, function (group) {
+          if (group.isSelected) {
+            selectedGroups += group.GMCId + ',';
+            console.log(selectedGroups)
           }
         })
-      }
-      else {
-        editFormService.saveForm(pageId, $scope.entity, vm.oldEntity,
-          $scope.entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
-          .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+
+        if (selectedGroups.length > 0) {
+          selectedGroups = selectedGroups.substring(0, selectedGroups.length - 1);
+          $scope.entity.SHGroupId = selectedGroups;
+        }
+        ($scope.entity.SHGroupId, selectedGroups)
+        var pkId = 0;
+        var searchLists = [];
+        var queryId = 553;
+        searchLists.push({ field: 'SMId', operand: '!=', value: pkId })
+        searchLists.push({ field: 'SHGroupId', operand: 'IN', value: $scope.entity.SHGroupId })
+        var data = {
+          searchList: searchLists,
+          orderByList: []
+        }
+        console.log(searchLists)
+        var groupName = "";
+        var isNotDuplicateGroupId = true;
+        newEntity = angular.copy($scope.entity);
+        if ($scope.page.action != 'edit') {
+          pageService.getCustomQuery(data, queryId).then(function (result) {
+            console.log(result)
+
+            if (result != 'NoDataFound') {
+              angular.forEach($scope.groupList, function (group) {
+                angular.forEach(result, function (groupId) {
+                  if (groupId.SHGroupId == group.GMCId) {
+                    groupName += group.GMCName + ',';
+                    isNotDuplicateGroupId = false;
+                  }
+                  console.log($scope.groupList)
+                })
+                console.log('duplicate record exist' + groupName)
+              })
+            }
+            else {
+              console.log($scope.entity)
+              editFormService.saveForm(pageId, newEntity, vm.oldEntity,
+                $scope.entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+                .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+            }
+            if (isNotDuplicateGroupId == false) {
+              $scope.showMsg("warning", "duplicate record  " + groupName);
+              $scope.entity.SMMinimumHourForHalfDay = $scope.halfDurationTime.format("HH:mm");
+              $scope.entity.SMMinimumHourForFullDay = $scope.durationTime.format("HH:mm");
+            }
+            if (isNotDuplicateGroupId) {
+            }
+          })
+        }
+        else {
+          editFormService.saveForm(pageId, $scope.entity, vm.oldEntity,
+            $scope.entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+            .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+        }
       }
     }
-
 
 
     // function _successDuplicateGroup(result, editForm, entity) {
@@ -567,15 +568,15 @@
     // }
 
     function _validateShiftForm() {
-      // if ($scope.entity.SMMinimumHourForHalfDay == undefined || $scope.entity.SMMinimumHourForHalfDay == null || $scope.entity.SMMinimumHourForHalfDay == '') {
-      //   $scope.showMsg("error", "Please Enter Minimum Hour For Half Day");
-      //   return true;
-      // }
-      // if ($scope.entity.SMMinimumHourForFullDay == undefined || $scope.entity.SMMinimumHourForFullDay == null || $scope.entity.SMMinimumHourForFullDay == '') {
-      //   $scope.showMsg("error", "Please Enter Maximum Hour For Half Day");
-      //   return true;
-      // }
-      // return false;
+      if ($scope.entity.SMMinimumHourForHalfDay == undefined || $scope.entity.SMMinimumHourForHalfDay == null || $scope.entity.SMMinimumHourForHalfDay == '') {
+        $scope.showMsg("error", "Please Enter Minimum Hour For Half Day");
+        return true;
+      }
+      if ($scope.entity.SMMinimumHourForFullDay == undefined || $scope.entity.SMMinimumHourForFullDay == null || $scope.entity.SMMinimumHourForFullDay == '') {
+        $scope.showMsg("error", "Please Enter Maximum Hour For Half Day");
+        return true;
+      }
+      return false;
     }
 
     function _saveWizardFormSuccessResult(result) {

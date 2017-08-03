@@ -97,15 +97,15 @@
 
                         <div class="form-group col-md-6">
                             <label class="radio-inline custom-radio nowrap font-bold">
-                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalDayInCycle" value="true">
+                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false;entity.LSCFixedDays=0" ng-model="entity.LSCTotalDayInCycle" value="true">
                             <span>{{page.pageinfo.fields.LSCTotalDayInCycle.text}}</span>
                         </label>
                             <label class="radio-inline custom-radio nowrap font-bold">
-                            <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalWorkingDay" value=" true ">
+                            <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false;entity.LSCFixedDays=0" ng-model="entity.LSCTotalWorkingDay" value=" true ">
                             <span>{{page.pageinfo.fields.LSCTotalWorkingDay.text}}</span>
                         </label>
                             <label class="radio-inline custom-radio nowrap font-bold">
-                            <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=true" ng-model="entity.LSCFixDay" value="true">
+                            <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=true;entity.LSCFixedDays=0" ng-model="entity.LSCFixDay" value="true">
                             <span>{{page.pageinfo.fields.LSCFixDay.text}}</span>
                         </label>
                         </div>
