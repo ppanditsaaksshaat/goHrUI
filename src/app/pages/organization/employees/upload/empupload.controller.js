@@ -115,7 +115,7 @@
             // var resultDataList = [];
             var data = {
                 searchList: [],
-                orderByList: orderBy
+                orderByList: orderBy 
             }
 
             pageService.getTableData(uploadHistoryTableId, uploadHistoryPageId, '', '', false, data).then(function (result) {
