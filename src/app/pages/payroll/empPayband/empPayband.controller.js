@@ -51,7 +51,7 @@
             // gridFooterTemplate: '<div class="row"> <div class="col-md-8"> <div class="pull-left">  Diffrences of earning to be added in <select ng-model="grid.appScope.selectedOtherHead" ng-options="opt.name for opt in grid.appScope.rulePage.pageinfo.fields.PBRSHId.options"></select></div><div class="pull-right"><button ng-click="grid.appScope.addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button></div></div><div class="col-md-4"><div class="pull-right"><button ng-click="grid.appScope.addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div></div>'
             // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
         }
-
+        $scope.entity = {};
         $scope.rulePage = {}
         $scope.rulePage.pageId = pageIds.rulePage.pageId;
         $scope.slabPage = {}
@@ -59,12 +59,25 @@
         $scope.formulaPage = {}
         $scope.formulaPage.pageId = pageIds.formulaPage.pageId;
 
+        $scope.serachEmpPayBand = _serachEmpPayBand;
         $scope.removeRuleSlab = _removeRuleSlab;
         $scope.changeFormula = _changeFormula;
         $scope.changeSlab = _changeSlab;
         $scope.toggleRowExpand = _toggleRowExpand;
 
+
+
+
+
         var grossHead = {};
+
+
+
+        //serach employee payband according to grade and level
+        function _serachEmpPayBand() {
+
+            _getGradeLevelEmployeeDetail($scope.entity.PBEmpGradeId, $scope.entity.PBEmpLevelId);
+        }
 
         $scope.getThirdGridHeight = function (options) {
             console.log(options)
@@ -107,6 +120,12 @@
 
             //loading pages
             $timeout(function () {
+
+                pageService.getPagData(pageIds.payband.pageId).then(function (result) {
+                    console.log(result)
+                    $scope.paybandPage = result;
+                })
+
                 pageService.getPagData($scope.rulePage.pageId).then(
                     function (result) {
                         console.log(result)
@@ -123,7 +142,7 @@
                                 //once slabpage success call employee detail
 
                                 //getting employee list
-                                _getGradeLevelEmployeeDetail(1, 7);
+                                // _getGradeLevelEmployeeDetail(1, 7);
 
                             }, function (err) {
 
@@ -164,7 +183,9 @@
                 //promt no payband found for selected grades
             }
             else {
+
                 if (result.length > 0) {
+                 
                     selectedPaybandMaster = result[0];
                     //feteching payband rule detail with multi calling facility
                     _fetchPaybandRuleDetail(selectedPaybandMaster.PBId)
@@ -205,7 +226,7 @@
             else {
 
                 $scope.employeeList = result;
-                _getGradeLevelPaybandDetail(1, 7)
+                _getGradeLevelPaybandDetail($scope.entity.PBEmpGradeId, $scope.entity.PBEmpLevelId)
 
             }
         }
