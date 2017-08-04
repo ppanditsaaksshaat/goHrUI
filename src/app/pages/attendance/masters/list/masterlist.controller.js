@@ -71,6 +71,17 @@
     }
 
     function _addRecord() {
+      console.log($scope.weekGridOptions.data)
+      $scope.entity = [];
+      angular.forEach($scope.weekGridOptions.data, function (data) {
+        data.SGWDFirst = -1;
+        data.SGWDSecond = -1;
+        data.SGWDThird = -1;
+        data.SGWDFourth = -1;
+        data.SGWDFifth = -1;
+      })
+      // $scope.weekGridOptions.data = [];
+      // _loadController();
       $scope.showWeeklyOffList = true;
     }
     function _editRecord(row) {
@@ -90,9 +101,10 @@
     }
 
     function _getMultiEntitySuccessResult(result) {
-      console.log(result)
+
 
       var _groupIds = result.WOSGroupId;
+
       var groupIds = _groupIds.split(',');
       result.WOSGroupId = [];
       for (var c = 0; c < groupIds.length; c++) {
@@ -102,6 +114,7 @@
         }
       }
       $scope.entity = result;
+      console.log(result)
       angular.forEach(result.child, function (child) {
         $scope.weekGridOptions.data = child.rows;
       })
@@ -183,7 +196,9 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
         }
       ];
+
       $scope.weekGridOptions.data = result.pageinfo.selects.SGWDWeekDayId;
+      console.log($scope.weekGridOptions.data)
 
       // $scope.weekDays = result.pageinfo.selects.SGWDWeekDayId;
       // angular.forEach($scope.weekDays, function (data) {
@@ -244,56 +259,80 @@
 
     }
 
-    function _weekOffSave(editForm, entity) {
-      console.log($scope.weekGridOptions)
-      console.log($scope.weekGridOptions.data)
-      var groupIds = "";
-      angular.forEach($scope.entity.WOSGroupId, function (group) {
-        groupIds += group.GMCId + ",";
-      })
-      groupIds = groupIds.substring(0, groupIds.length - 1);
-      var weekOffSet = {
-        WOSName: $scope.entity.WOSName,
-        WOSGroupId: groupIds
-      }
-      $scope.multiEntity = {};
-      $scope.multiEntity.parent = {
-        newEntity: weekOffSet,
-        oldEntity: {},
-        action: 'create',
-        tableid: $scope.weekOffSetPage.pageinfo.tableid,
-        pageid: $scope.weekOffSetPage.pageinfo.pageid
-      }
-      $scope.multiEntity.child = [];
-      var child = {
-        tableid: $scope.weekOffPage.pageinfo.tableid,
-        pageid: $scope.weekOffPage.pageinfo.pageid,
-        parentColumn: $scope.weekOffSetPage.pageinfo.idencolname,
-        linkColumn: 'SGWDWeekOffSetId',
-        idenColName: $scope.weekOffPage.pageinfo.idencolname,
-        rows: []
-      }
-      for (var i = 0; i < $scope.weekGridOptions.data.length; i++) {
-        var col = {
-          SGWDId: 0,
-          SGWDWeekDayId: $scope.weekGridOptions.data[i].value == undefined ? -1 : $scope.weekGridOptions.data[i].value,
-          SGWDFirst: $scope.weekGridOptions.data[i].SGWDFirst == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFirst,
-          SGWDSecond: $scope.weekGridOptions.data[i].SGWDSecond == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDSecond,
-          SGWDThird: $scope.weekGridOptions.data[i].SGWDThird == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDThird,
-          SGWDFourth: $scope.weekGridOptions.data[i].SGWDFourth == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFourth,
-          SGWDFifth: $scope.weekGridOptions.data[i].SGWDFifth == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFifth,
-        }
-        child.rows.push(col);
-      }
-      console.log($scope.multiEntity)
-      $scope.multiEntity.child.push(child);
-      $scope.multiEntity.lz = false;
-      pageService.multiSave($scope.multiEntity).then(function (result) {
-        console.log(result)
-      }, function (err) {
-        console.log(err)
-      })
+    function _validateWeekOff(entity) {
 
+      if (entity.WOSName == undefined || entity.WOSName == "") {
+        $scope.showMsg("error", "Please enter Set Name");
+        return false;
+      }
+      if (entity.WOSGroupId == "") {
+        $scope.showMsg("error", "Please select atleast one group");
+        return false;
+      }
+      return true;
+
+    }
+
+    function _weekOffSave(editForm, entity) {
+
+      if (_validateWeekOff(entity)) {
+        var groupIds = "";
+        var groupNames = "";
+        angular.forEach($scope.entity.WOSGroupId, function (group) {
+          groupIds += group.GMCId + ",";
+          groupNames += group.GMCName + ",";
+        })
+        groupIds = groupIds.substring(0, groupIds.length - 1);
+        groupNames = groupNames.substring(0, groupNames.length - 1);
+        var weekOffSet = {
+          WOSId: $scope.entity.WOSId == undefined ? undefined : $scope.entity.WOSId,
+          WOSName: $scope.entity.WOSName,
+          WOSGroupId: groupIds,
+          WOSGroupName: groupNames
+        }
+        $scope.multiEntity = {};
+        $scope.multiEntity.parent = {
+          newEntity: weekOffSet,
+          oldEntity: {},
+          action: $scope.entity.WOSId == undefined ? 'create' : 'edit',
+          tableid: $scope.weekOffSetPage.pageinfo.tableid,
+          pageid: $scope.weekOffSetPage.pageinfo.pageid
+        }
+        $scope.multiEntity.child = [];
+        var child = {
+          tableid: $scope.weekOffPage.pageinfo.tableid,
+          pageid: $scope.weekOffPage.pageinfo.pageid,
+          parentColumn: $scope.weekOffSetPage.pageinfo.idencolname,
+          linkColumn: 'SGWDWeekOffSetId',
+          idenColName: $scope.weekOffPage.pageinfo.idencolname,
+          rows: []
+        }
+        for (var i = 0; i < $scope.weekGridOptions.data.length; i++) {
+          var col = {
+            SGWDId: $scope.weekGridOptions.data[i].SGWDId == undefined ? 0 : $scope.weekGridOptions.data[i].SGWDId,
+            SGWDWeekDayId: $scope.weekGridOptions.data[i].value == undefined ? $scope.weekGridOptions.data[i].SGWDWeekDayId : $scope.weekGridOptions.data[i].value,
+            SGWDFirst: $scope.weekGridOptions.data[i].SGWDFirst == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFirst,
+            SGWDSecond: $scope.weekGridOptions.data[i].SGWDSecond == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDSecond,
+            SGWDThird: $scope.weekGridOptions.data[i].SGWDThird == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDThird,
+            SGWDFourth: $scope.weekGridOptions.data[i].SGWDFourth == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFourth,
+            SGWDFifth: $scope.weekGridOptions.data[i].SGWDFifth == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFifth,
+          }
+          child.rows.push(col);
+        }
+        console.log($scope.multiEntity)
+        $scope.multiEntity.child.push(child);
+        $scope.multiEntity.lz = false;
+        pageService.multiSave($scope.multiEntity).then(function (result) {
+          console.log(result)
+          if (result == "done") {
+            $scope.showMsg("success", "Record Saved Successfully");
+            $scope.showWeeklyOffList = false;
+            $scope.page.refreshData();
+          }
+        }, function (err) {
+          console.log(err)
+        })
+      }
     }
 
     function _closeWeekOffAdd() {

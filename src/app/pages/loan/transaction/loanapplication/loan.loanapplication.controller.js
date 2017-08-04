@@ -23,9 +23,17 @@
     $scope.showEditLv = false;
     $scope.showEditGrid = true;
     $scope.showEditForm = true;
+    $scope.showSanctionForm = true;
+    $scope.verifyCancelRequestForm = true;
+    $scope.verifySanctionForm = true;
+    $scope.closeSanction = _closeSanction;
 
+    var cancelRequestPageId = 456;
+    var cancelRequestTableId = 436;
     var sanctionLoanPageId = 144;
     var loanTableId = 109;
+    var sanctinLoanTableId = 150;
+    var sanctionLonPageId = 285;
 
     $scope.saveForm = _saveForm;
     $scope.approvedLoan = _approvedLoan;
@@ -35,6 +43,15 @@
     $scope.onChangeLoanEmployee = _onChangeLoanEmployee;
     $scope.onChangeInstallmentDate = _onChangeInstallmentDate;
     $scope.onControlClick = _onControlClick;
+    $scope.loanSanction = _loanSanction;
+    $scope.closeViewSanctionForm = _closeViewSanctionForm
+    $scope.closeVerifyCancelRequestForm = _closeVerifyCancelRequestForm;
+    $scope.cancelLeave = _cancelLeave;
+
+    $scope.cancelRequestEntity = {};
+    $scope.sanctionEntity = {};
+    $scope.replyOnCancelLoan = _replyOnCancelLoan;
+
 
     $scope.oldEntity = {};
     $scope.page.boxOptions = {
@@ -54,11 +71,12 @@
       editRecord: _editRecord,
       updateRecord: null,
       viewRecord: _viewRecord,
-      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _leaveVerify, pin: true }],
+      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _loanVerify, pin: true }],
       deleteRecord: null,
     }
 
-    function _leaveVerify(row) {
+    //loan verify detail
+    function _loanVerify(row) {
       console.log(row)
       var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
       console.log(status)
@@ -67,8 +85,243 @@
         status.isRejected = false;
         status.isCancelRequest = false;
       }
+      if (!status.isRejected) {
+        if (!status.isCancelRequest && !status.isCancelApproved && !status.isCancelRejected && !status.isCancelOnHold) {
+          $scope.leaveDetails = [];
+          $scope.entity = [];
+          $scope.showEditLv = true;
+          $scope.showEditGrid = true;
+          $scope.showEditForm = true;
+          $scope.showSanctionForm = false;
+          $scope.verifyCancelRequestForm = true;
+          $scope.verifySanctionForm = true;
+
+          //Get page of SanctionLeave 
+          pageService.getPagData(sanctionLoanPageId).then(_getPageDataSuccessResult, _getPageDataErrorResult)
+          var transaction = row.entity.LEADTransation;
+          if (transaction != null && transaction != undefined && transaction != '') {
+            var rows = transaction.split(',');
+
+            angular.forEach(rows, function (row) {
+
+              var data = row.split('|');
+              if (parseInt(data[0]) != 0) {
+                var leaveType = $filter('findObj')($scope.page.pageinfo.selects.LEADLTId, parseInt(data[0]), 'value').name;
+                var leaveDetail = {
+                  type: leaveType == null ? "" : leaveType,
+                  balance: data[1]
+                }
+              }
+              else {
+                var leaveDetail = {
+                  type: "LWP",
+                  balance: data[1]
+                }
+              }
+              $scope.leaveDetails.push(leaveDetail)
+            })
+          }
+          else {
+            $scope.leaveDetails = undefined;
+          }
+          if (row.entity.LEADDateFrom != undefined)
+            row.entity.LEADDateFrom = moment(row.entity.LEADDateFrom).format("DD/MMMM/YYYY");
+          if (row.entity.LEADDateTo != undefined)
+            row.entity.LEADDateTo = moment(row.entity.LEADDateTo).format("DD/MMMM/YYYY");
+          if (row.entity.LEADFromHalfDayId != null && row.entity.LEADFromHalfDayId != undefined) {
+            if (row.entity.LEADFromHalfDayId == 0) {
+              row.entity.fromHalf = 'First Half';
+            }
+            else if (row.entity.LEADFromHalfDayId == 1) {
+              row.entity.fromHalf = 'Second Half';
+            }
+            else {
+              row.entity.fromHalf = '';
+            }
+          }
+          if (row.entity.LEADToHalfDayId != null && row.entity.LEADToHalfDayId != undefined) {
+            if (row.entity.LEADToHalfDayId == 0) {
+              row.entity.toHalf = 'First Half'
+            }
+            else if (row.entity.LEADFromHalfDayId == 1) {
+              row.entity.toHalf = 'Second Half';
+            }
+            else {
+              row.entity.toHalf = '';
+            }
+          }
+          $scope.entity = row.entity;
+        }
+        else {
+          $scope.showEditLv = true;
+          $scope.showEditGrid = true;
+          $scope.showEditForm = true;
+          $scope.showSanctionForm = true;
+          $scope.verifyCancelRequestForm = false;
+          $scope.verifySanctionForm = true;
+
+
+          pageService.getPagData(cancelRequestPageId).then(_getPageDataSuccessResult, _getPageDataErrorResult)
+          // $scope.cancelRequestEntity.EmpName = row.entity.EmpName;
+          console.log(row.entity)
+          $scope.entity = angular.copy(row.entity);
+          console.log($scope.entity)
+          $scope.cancelRequestEntity = angular.copy(row.entity);
+          console.log($scope.entity)
+          var searchList = [];
+          var searchFields = {
+            field: 'LCDLAId',
+            operand: '=',
+            value: row.entity.LAId
+          }
+          searchList.push(searchFields)
+
+          _commonFindEntity(cancelRequestTableId, searchList)
+        }
+      }
+      else {
+        $scope.showMsg("error", "You can view this loan only")
+      }
 
     }
+
+    function _commonFindEntity(tableId, searchList) {
+
+      pageService.findEntity(tableId, undefined, searchList).then(_cancelRequestSuccessResult, _cancelRequestErrorResult)
+    }
+    function _cancelRequestSuccessResult(result) {
+
+
+      $scope.cancelRequestOldEntity = angular.copy(result);
+      // $scope.entity = angular.copy(result);
+
+      console.log($scope.entity)
+
+      if (result.LCDId != undefined) {
+        $scope.cancelRequestEntity.LCDId = result.LCDId;
+        $scope.cancelRequestEntity.LCDRemark = result.LCDRemark;
+      }
+      else {
+        // $scope.cancelRequestEntity.CRComment = '';
+      }
+    }
+    function _cancelRequestErrorResult(err) {
+
+    }
+
+    function _getPageDataSuccessResult(result) {
+      if (parseInt(result.pageinfo.pageid) == parseInt(cancelRequestPageId)) {
+        $scope.cancelRequestPage = result;
+      }
+      if (parseInt(result.pageinfo.pageid) == parseInt(sanctionLoanPageId)) {
+        $scope.sanctionPage = result;
+        //Get entity of sanctionleave  
+        var searchList = [];
+        var searchFields = {
+          field: 'LADLAId',
+          operand: '=',
+          value: $scope.entity.LAId
+        }
+        searchList.push(searchFields);
+        pageService.findEntity(sanctinLoanTableId, undefined, searchList).then(_findEntitySuccessResult, _findEntityErrorResult)
+      }
+    }
+
+    function _findEntitySuccessResult(result) {
+      $scope.sectionOldEntity = angular.copy(result);
+      console.log(result)
+      if (result.LADId != undefined) {
+        $scope.sanctionEntity.LADId = result.LADId;
+        $scope.sanctionEntity.LADRemark = result.LADRemark;
+      }
+      else {
+        $scope.sanctionEntity.LADId = undefined;
+      }
+    }
+    function _findEntityErrorResult(err) {
+
+    }
+    function _getPageDataErrorResult(err) {
+
+    }
+
+    //close loan verify
+    function _closeSanction() {
+      $scope.showEditLv = false;
+      $scope.showEditGrid = true;
+      $scope.showEditForm = true;
+      $scope.showSanctionForm = true;
+      $scope.verifyCancelRequestForm = true;
+      $scope.verifySanctionForm = true;
+    }
+
+    function _validateSanctionForm() {
+      if ($scope.sanctionEntity.StatusId == "0") {
+        $scope.showMsg("error", "Please Select Status");
+        return true;
+      }
+      if ($scope.sanctionEntity.LADRemark == undefined || $scope.sanctionEntity.LADRemark == null || $scope.sanctionEntity.LADRemark == '') {
+        $scope.showMsg("error", "Please Enter Comment");
+        return true;
+      }
+      return false;
+    }
+
+    function _loanSanction() {
+
+      if (!_validateSanctionForm()) {
+        var santionLeave = {
+          LADId: $scope.sanctionEntity.LADId == undefined ? undefined : $scope.sanctionEntity.LADId,
+          LADLAId: $scope.entity.LAId,
+          LADApprovedAmount: $scope.entity.LAApplyAmount,
+          LADApprovedAmountWithPercentage: $scope.entity.LAAmount,
+          LADInstalmentAmount: $scope.entity.LAInstallment,
+          LADAprvdNoOfInstamt: $scope.entity.LANoOfInstallment,
+          LADApprovalLoanClDate: $scope.entity.LADate,
+          LADApprovedOn: moment(),
+          LADApprovedInstallmentAmount: $scope.entity.LAInstallment,
+          StatusId: $scope.sanctionEntity.StatusId,
+          LADRemark: $scope.sanctionEntity.LADRemark
+        }
+      }
+
+      if ($scope.sanctionEntity.LADId == undefined) {
+        _formSave(santionLeave, sanctionLoanPageId, 'create', $scope.sectionOldEntity == undefined ? {} : $scope.sectionOldEntity, editForm, false, $scope.sanctionPage.title);
+      }
+      else {
+        _formSave(santionLeave, sanctionLoanPageId, 'edit', $scope.sectionOldEntity == undefined ? {} : $scope.sectionOldEntity, editForm, false, $scope.sanctionPage.title);
+      }
+    }
+
+
+    function _formSave(entity, pageId, action, oldEntity, editForm, showConfirmation, title) {
+
+      editFormService.saveForm(pageId, entity, oldEntity,
+        action, title, editForm, showConfirmation)
+        .then(_saveSuccessResult, _saveErrorResult)
+    }
+
+    function _saveSuccessResult(result) {
+
+      if (result.success_message == 'Added New Record.') {
+        $scope.showMsg("success", "Record Saved Successfully")
+      }
+      else {
+        $scope.showMsg("success", "Record Saved Successfully")
+      }
+      $scope.showEditLv = false;
+      $scope.showEditGrid = true;
+      $scope.showEditForm = true;
+      $scope.showSanctionForm = true;
+      $scope.verifyCancelRequestForm = true;
+      $scope.verifySanctionForm = true;
+      $scope.page.refreshData();
+    }
+    function _saveErrorResult(err) {
+      $scope.showMsg("error", err)
+    }
+
+
 
     $scope.editPage = $scope.createPage();
     $scope.editPage.pageId = 145;
@@ -107,6 +360,9 @@
       $scope.showEditForm = true;
       $scope.showEditLv = false;
       $scope.showEditGrid = true;
+      $scope.showSanctionForm = true;
+      $scope.verifyCancelRequestForm = true;
+      $scope.verifySanctionForm = true;
     }
 
     function _onChangeLoanEmployee(e, elm, ctrl, col) {
@@ -131,6 +387,7 @@
       var queryId = 523;
       pageService.getCustomQuery(data, queryId).then(function (result) {
         console.log(result)
+
         if (result[0].JDEmpGradeId != null && result[0].JDEmpLevelId != null && result[0].JDSubUnitID != null) {
           $scope.jobEmpGradeId = result[0].JDEmpGradeId;
           $scope.jobEmpLeaveId = result[0].JDEmpLevelId;
@@ -307,23 +564,27 @@
     }
 
 
-    function _viewRecord(row) {
-      console.log(row)
-      $scope.showEditForm = true;
-      $scope.showEditLv = true;
-      $scope.showEditGrid = false;
+    // function _viewRecord(row) {
+    //   console.log(row)
+    //   $scope.showEditForm = true;
+    //   $scope.showEditLv = true;
+    //   $scope.showEditGrid = false;
+    //   $scope.showSanctionForm = true;
+    //   $scope.verifyCancelRequestForm = true;
 
-      $scope.editPage.searchList = [{ field: "LILoanId", operand: "=", value: row.entity.LAId }];
-      console.log($scope.editPage.searchList)
-      $scope.editPage.orderByList = [{ column: 'LIInstallmentDate', isDesc: true }]
-      $scope.editPage.refreshData();
-    }
+    //   $scope.editPage.searchList = [{ field: "LILoanId", operand: "=", value: row.entity.LAId }];
+    //   console.log($scope.editPage.searchList)
+    //   $scope.editPage.orderByList = [{ column: 'LIInstallmentDate', isDesc: true }]
+    //   $scope.editPage.refreshData();
+    // }
 
     function _addRecord() {
       $scope.showEditForm = false;
       $scope.showEditLv = true;
       $scope.showEditGrid = true;
       $scope.isLeaveApprovedDet = false;
+      $scope.verifyCancelRequestForm = true;
+      $scope.verifySanctionForm = true;
       $scope.entity = {};
     }
 
@@ -336,6 +597,8 @@
       $scope.showEditLv = true;
       $scope.showEditGrid = true;
       $scope.isLeaveApprovedDet = true;
+      $scope.verifyCancelRequestForm = true;
+      $scope.verifySanctionForm = true;
 
     }
 
@@ -345,8 +608,17 @@
       // }
       // else {
       if (_validateForm(editForm)) {
-        editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successLoanApp, _errorLoanApp);
-        editForm.$setPristine();
+        if ($scope.entity.LAId == undefined) {
+          editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, 'create', $scope.page.pageinfo.tagline).then(_successLoanApp, _errorLoanApp);
+          editForm.$setPristine();
+          // _formSave(cancelRequest, cancelRequestPageId, 'create', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, true, 'Cancel Request');
+        }
+        else {
+          // _formSave(cancelRequest, cancelRequestPageId, 'edit', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, false, 'Cancel Request');
+          editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, 'edit', $scope.page.pageinfo.tagline).then(_successLoanApp, _errorLoanApp);
+          editForm.$setPristine();
+        }
+
         // }
       }
 
@@ -359,6 +631,9 @@
         $scope.showEditForm = true;
         $scope.showEditLv = false;
         $scope.showEditGrid = true;
+        $scope.verifyCancelRequestForm = true;
+        $scope.verifySanctionForm = true;
+        $scope.showSanctionForm = true;
         $scope.page.refreshData()
         // editForm.$setPristine();
       }
@@ -366,12 +641,18 @@
         $scope.showEditForm = true;
         $scope.showEditLv = false;
         $scope.showEditGrid = true;
+
+        $scope.verifyCancelRequestForm = true;
+        $scope.verifySanctionForm = true;
         $scope.page.refreshData()
       }
       else {
         $scope.showEditForm = false;
         $scope.showEditLv = true;
         $scope.showEditGrid = true;
+        $scope.showSanctionForm = true;
+        $scope.verifyCancelRequestForm = true;
+        $scope.verifySanctionForm = true;
       }
 
     }
@@ -391,6 +672,9 @@
       $scope.showEditForm = true;
       $scope.showEditLv = false;
       $scope.showEditGrid = true;
+      $scope.showSanctionForm = true;
+      $scope.verifyCancelRequestForm = true;
+      $scope.verifySanctionForm = true;
     }
 
     function _approvedLoan() {
@@ -479,6 +763,9 @@
         $scope.showEditForm = true;
         $scope.showEditLv = false;
         $scope.showEditGrid = true;
+        $scope.showSanctionForm = true;
+        $scope.verifyCancelRequestForm = true;
+        $scope.verifySanctionForm = true;
         $scope.page.refreshData()
         // editForm.$setPristine();
       }
@@ -486,18 +773,136 @@
         $scope.showEditForm = true;
         $scope.showEditLv = false;
         $scope.showEditGrid = true;
+        $scope.showSanctionForm = true;
+        $scope.verifyCancelRequestForm = true;
+        $scope.verifySanctionForm = true;
         $scope.page.refreshData()
       }
       else {
         $scope.showEditForm = false;
         $scope.showEditLv = true;
         $scope.showEditGrid = true;
+        $scope.showSanctionForm = true;
+        $scope.verifyCancelRequestForm = true;
+        $scope.verifySanctionForm = true;
       }
 
     }
 
     function _errorLoanApproved() {
 
+    }
+
+    function _viewRecord(row) {
+      console.log(row)
+
+      if (row.entity.StatusId == 0) {
+        _editRecord(row);
+      }
+      else {
+        $scope.status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
+        if (!$scope.status.isCancelRequest && !$scope.status.isCancelApproved && !$scope.status.isCancelRejected && !$scope.status.isCancelOnHold) {
+          var searchList = [];
+          var searchFields = {
+            field: 'LCDLAId',
+            operand: '=',
+            value: row.entity.LAId
+          }
+          searchList.push(searchFields)
+          _commonFindEntity(cancelRequestTableId, searchList, row.entity);
+          $scope.entity = angular.copy(row.entity);
+          console.log($scope.entity)
+          console.log(row.entity)
+          $scope.showEditForm = true;
+          $scope.showEditLv = true;
+          $scope.showEditGrid = true;
+          $scope.showSanctionForm = true;
+          $scope.verifyCancelRequestForm = true;
+          $scope.verifySanctionForm = false;
+          $scope.cancelRequestEntity.LCDLAId = row.entity.LAId;
+          $scope.cancelRequestEntity.LCDId = row.entity.LCDId;
+          $scope.cancelRequestEntity.StatusId = row.entity.StatusId;
+
+        }
+        else {
+          if ($scope.isCancelRequest) {
+            $scope.showMsg("error", "You are not allowed to view this leave application beacause this leave application is already in processing for approval")
+          }
+          else {
+            $scope.showMsg("error", "Your application already sanctioned/rejected/onhold")
+          }
+        }
+      }
+
+    }
+
+    function _cancelLeave() {
+
+      if ($scope.cancelRequestEntity.LCDRemark != undefined && $scope.cancelRequestEntity.LCDRemark != '') {
+        var cancelRequest = {
+          LCDLAId: $scope.entity.LAId,
+          LCDLAAmount: $scope.entity.LAAmount,
+          LCDEmpId: $scope.entity.LAEmpId,
+          LCDRemark: $scope.cancelRequestEntity.LCDRemark
+          //  LCDId       LCDLAId     LCDLAAmount           LCDEmpId    LCDRemark  
+        }
+        if ($scope.entity.LCDId == undefined) {
+          _formSave(cancelRequest, cancelRequestPageId, 'create', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, true, 'Cancel Request');
+        }
+        else {
+          _formSave(cancelRequest, cancelRequestPageId, 'edit', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, false, 'Cancel Request');
+        }
+      }
+      else {
+        $scope.showMsg("error", "Please comment before loan cancel");
+      }
+    }
+
+    function _replyOnCancelLoan(cancelRequestEntity) {
+
+      if (cancelRequestEntity.StatusId != undefined && cancelRequestEntity.LCDRemark != undefined) {
+        var cancelRequest = {
+          // CREmpId: cancelRequestEntity.CREmpId,
+          LCDId: $scope.cancelRequestEntity.LCDId,
+          LCDLAId: $scope.entity.LAId,
+          LCDLAAmount: $scope.cancelRequestEntity.LAAmount,
+          LCDEmpId: $scope.cancelRequestEntity.LAEmpId,
+          LCDRemark: $scope.cancelRequestEntity.LCDRemark,
+          StatusId: $scope.cancelRequestEntity.StatusId
+
+        }
+        console.log(cancelRequest)
+        _formSave(cancelRequest, cancelRequestPageId, 'edit', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, false, 'Cancel Request');
+      }
+      else {
+        if (cancelRequestEntity.StatusId == undefined) {
+          $scope.showMsg("error", "Please select status");
+        } else if (cancelRequestEntity.CRCommentAfterCanReq == undefined) {
+          $scope.showMsg("error", "Please enter comment");
+        }
+      }
+
+    }
+
+    function _closeViewSanctionForm() {
+      $scope.showEditForm = true;
+      $scope.showEditLv = false;
+      $scope.showEditGrid = true;
+      $scope.showSanctionForm = true;
+      $scope.verifyCancelRequestForm = true;
+      $scope.verifySanctionForm = true;
+      $scope.page.refreshData();
+    }
+
+
+    function _closeVerifyCancelRequestForm() {
+      $scope.showEditForm = true;
+      $scope.showEditLv = false;
+      $scope.showEditGrid = true;
+      $scope.showSanctionForm = true;
+      $scope.verifyCancelRequestForm = true;
+      $scope.verifySanctionForm = true;
+      $scope.page.refreshData();
     }
 
 

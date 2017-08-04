@@ -75,28 +75,348 @@
                 </div>
             </div>
 
-
-            <div class="row" ng-show="isLeaveApprovedDet ">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <label for="inputPassword3">Status</label>
-                            <select class="form-control" ng-options="status.value as status.name for status in page.pageinfo.statuslist" ng-model="entity.StatusId"
-                                name="editForm"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <button type="button" ng-click="approvedLoan() " class=" btn btn-sm btn-primary ">Update</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
 
     </div>
     </div>
 </form>
+
+<div ng-hide="showSanctionForm">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Sanction Loan Application">
+            <form ng-submit="loanSanction()" name="editForm">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LAEmpId.text"></label>
+                                                <span class="form-control" ng-bind="entity.EmpName"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LAAmount.text"></label>
+                                                <span class="form-control" ng-bind="entity.LAAmount"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LADate.text"></label>
+                                                <span class="form-control" ng-bind="entity.LADate"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LALTId.text"></label>
+                                                <span class="form-control" ng-bind="entity.LALTId"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LAMaxLimit.text"></label>
+                                                <span class="form-control" ng-bind="entity.LAMaxLimit"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LAInterest.text"></label>
+                                                <span class="form-control" ng-bind="entity.LAInterest"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LAInstallment.text"></label>
+                                                <span class="form-control" ng-bind="entity.LAInstallment"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LARemark.text"></label>
+                                                <span class="form-control" ng-bind="entity.LARemark"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LAApplyAmount.text"></label>
+                                                <span class="form-control" ng-bind="entity.LAApplyAmount"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LANoOfInstallment.text"></label>
+                                                <span class="form-control" ng-bind="entity.LANoOfInstallment"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="row" ng-if="leaveDetails!=undefined">
+                                        <div class "col-md-6">
+                                            <div class="form-group">
+                                                <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Type</th>
+                                                            <th class="col-md-1">Balance</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="leaveDetail in leaveDetails">
+                                                            <td ng-bind="leaveDetail.type"></td>
+                                                            <td ng-bind="leaveDetail.balance"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Status<span style="color:red">*</span></label>
+                                                <!--<select class="form-control" ng-model="entity.StatusId" ng-options="status.value as status.name for status in sanctionPage.pageinfo.statuslist"></select>-->
+                                                <select class="form-control" ng-model="sanctionEntity.StatusId" ng-options="status.value as status.name for status in sanctionPage.pageinfo.statuslist"></select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Comment<span style="color:red">* </label>
+                                                <textarea class="form-control" ng-model="sanctionEntity.LADRemark"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info btn-lg">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeSanction()">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div ng-hide="verifyCancelRequestForm">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Cancel Request Approval Application">
+            <form ng-submit="replyOnCancelLoan(cancelRequestEntity)" name="editForm">
+                <div class="panel-body">
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LAEmpId.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.EmpName"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LAAmount.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.LAAmount"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LADate.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.LADate"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LALTId.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.LTName"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LAMaxLimit.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.LAMaxLimit"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LAInterest.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.LAInterest"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employee Comment</label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.CRComment"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status<span style="color:red">*</label>
+                                <select class="form-control" ng-model="cancelRequestEntity.StatusId" ng-options="status.value as status.name for status in cancelRequestPage.pageinfo.statuslist"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Comment <span style="color:red">* </label>
+                                <textarea class="form-control" ng-model="cancelRequestEntity.LCDRemark"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info btn-lg">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeVerifyCancelRequestForm()">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div ng-hide="verifySanctionForm">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Cancel Loan Application">
+            <form ng-submit="cancelLeave()" name="editForm">
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LAEmpId.text"></label>
+                                <span class="form-control" ng-bind="entity.EmpName"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LAAmount.text"></label>
+                                <span class="form-control" ng-bind="entity.LAAmount"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LADate.text"></label>
+                                <span class="form-control" ng-bind="entity.LADate"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LALTId.text"></label>
+                                <span class="form-control" ng-bind="entity.LTName"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LAMaxLimit.text"></label>
+                                <span class="form-control" ng-bind="entity.LAMaxLimit"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LAInterest.text"></label>
+                                <span class="form-control" ng-bind="entity.LAInterest"></span>
+                            </div>
+                        </div>
+                    </div>
+                    {{entity.LAMaxLimit}}
+
+
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Created By</label>
+                                <span class="form-control" ng-bind="entity.CreatedBy"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Created On</label>
+                                <span class="form-control" ng-bind="entity.CreatedOn"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employee Comment</label>
+                                <span class="form-control" ng-bind="entity.LeadComment"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Admin Comment</label>
+                                <span class="form-control" ng-bind="sanctionEntity.LADRemark"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div ng-if="!status.isRejected" class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select ng-disabled="true" class="form-control" ng-model="cancelRequestEntity.StatusId" ng-options="status.value as status.name for status in page.pageinfo.statuslist"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Comment<span style="color:red">* </label>
+                                <textarea class="form-control" ng-model="cancelRequestEntity.LCDRemark"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="text-center">
+                        <button ng-if="!status.isRejected" type="submit" class="btn btn-info btn-lg">Cancel Loan</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeViewSanctionForm()">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
