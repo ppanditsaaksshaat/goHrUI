@@ -1,10 +1,53 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 <div class="panel panel-default bootstrap-panel xmedium-panel">
 
     <div class="panel-heading">
         Employees Payband Entitilement
     </div>
     <div class="panel-body">
-        <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning ui-grid-edit
+        <div class="row">
+            <div class="col-md-12">
+                Grade:<select></select>
+                Level:<select></select>
+            </div>
+        </div>
+        <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-cellNav ui-grid-edit ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-expandable
             class="djGrid"></div>
     </div>
 </div>
+<script type="text/ng-template" id="uiSelectMulti">
+    <ui-select-wrap>
+        <ui-select multiple ng-model="MODEL_COL_FIELD" theme="select2" ng-disabled="disabled" search-enabled="true" append-to-body="true">
+            <ui-select-match placeholder="Choose..">
+                {{$item.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="item in col.colDef.editDropdownOptionsArray | filter: $select.search">
+                <span>{{ item.name }}</span>
+            </ui-select-choices>
+        </ui-select>
+    </ui-select-wrap>
+
+
+</script>
+
+<style>
+    .ui-grid-cell {
+        overflow: visible;
+        z-index: 99999;
+    }
+
+    .ui-grid-cell,
+    ui-select-wrap {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    /* Make sure the container doesn't shrink too small */
+
+    .ui-select-container {
+        min-width: 100px;
+    }
+</style>
