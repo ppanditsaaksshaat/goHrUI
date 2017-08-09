@@ -40,6 +40,9 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
     return function (input, map, idField, valueField) {
         if (map) {
             for (var i = 0; i < map.length; i++) {
+                if (input == -2) {
+                    return "";
+                }
                 if (map[i][idField] == input) {
                     return map[i][valueField];
                 }
@@ -104,4 +107,13 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
             }
             return val.toFixed(2);
         };
+    }).filter('avoidNone', function () {
+        return function () {
+            return function (value) {
+                if (value == -2) {
+                    return ''
+                }
+                return value;
+            };
+        }
     });
