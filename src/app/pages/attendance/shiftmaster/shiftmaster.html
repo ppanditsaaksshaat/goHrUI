@@ -1,6 +1,6 @@
 <grid-box ng-model="page" ng-hide="showEditForm">
 </grid-box>
-<form name="editForm " novalidate ng-submit="saveForm(editForm,entity) " ng-show="showEditForm ">
+<form name="editForm " novalidate ng-submit="saveForm() " ng-show="showEditForm ">
     <div class="panel panel-default xmedium-panel ">
         <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
             close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            
+
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMFromTime.text}}</label>
@@ -148,7 +148,7 @@
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinimumHourForHalfDay.text}}</label>
                     <!--<input class="form-control" type="text" ng-model="entity.SMMinimumHourForHalfDay">-->
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <field-box page="page" ng-column="page.pageinfo.fields.SMMinimumHourForHalfDay " ng-entity="entity " form="editForm "></field-box>
                 </div>
             </div>
@@ -156,7 +156,7 @@
             <div class="row" ng-if="entity.SMMinimumDurationForHalfOrFullDay">
                 <div class="form-group col-md-5 col-md-offset-1">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinimumHourForFullDay.text}}</label> </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <field-box page="page" ng-column="page.pageinfo.fields.SMMinimumHourForFullDay " ng-entity="entity " form="editForm "></field-box>
                 </div>
             </div>
@@ -169,6 +169,23 @@
                          <span style="font:bold">{{page.pageinfo.fields.SMShiftFlexibility.place}}</span>
                      </label>
             </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinWorkCrtFWeekOffCr.text}}</label> </div>
+                <div class="form-group col-md-3">
+                    <field-box page="page" ng-column="page.pageinfo.fields.SMMinWorkCrtFWeekOffCr " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
+
+            <!--<div class="text">
+                <div class="custom-input-primary">
+                    <span style="font:bold"></span>
+                    <label for="inputPassword3 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.SMMinWorkCrtFWeekOffCr " ng-entity="entity " form="editForm "></field-box>
+                    </label>
+                </div>
+            </div>-->
 
 
 
@@ -315,9 +332,9 @@
                         <li>
                             <div class="checkbox">
                                 <label class="custom-checkbox"> 
- <input type="checkbox" ng-model="value.isSelected"> 
- <span ng-bind="value.GMCName"></span>
- </label>
+                                <input type="checkbox" ng-model="value.isSelected" required="true"> 
+                                <span ng-bind="value.GMCName"></span>
+                                </label>
                             </div>
                         </li>
                     </ul>
@@ -333,4 +350,3 @@
 
 
 </form>
-

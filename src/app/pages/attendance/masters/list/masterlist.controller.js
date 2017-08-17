@@ -152,11 +152,20 @@
       console.log(result)
       $scope.weekOffPage = result;
       result.pageinfo.selects.SGWDWeekDayId.splice(0, 1);
-      // result.pageinfo.selects.SGWDFirst.splice(0, 0, { id: -1, name: "--Select--" });
+      result.pageinfo.selects.SGWDFirst.splice(0, 0, { value: -2, name: "None" });
       $scope.weekGridOptions.columnDefs = [
-        { name: 'name', displayName: 'Day', width: 150 },
+        { name: 'name', displayName: 'Day', width: 140, enableCellEdit: false },
         {
-          name: result.pageinfo.fields.SGWDFirst.name, displayName: result.pageinfo.fields.SGWDFirst.text, width: 150,
+          name: result.pageinfo.fields.SGWDFirst.name, displayName: result.pageinfo.fields.SGWDFirst.text, width: 140,
+          editableCellTemplate: 'ui-grid/dropdownEditor',
+          editDropdownIdLabel: 'value',
+          editDropdownValueLabel: 'name',
+          editDropdownOptionsArray: result.pageinfo.selects.SGWDFirst,
+          cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'"
+
+        },
+        {
+          name: result.pageinfo.fields.SGWDSecond.name, displayName: result.pageinfo.fields.SGWDSecond.text, width: 140,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -164,15 +173,7 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'"
         },
         {
-          name: result.pageinfo.fields.SGWDSecond.name, displayName: result.pageinfo.fields.SGWDSecond.text, width: 150,
-          editableCellTemplate: 'ui-grid/dropdownEditor',
-          editDropdownIdLabel: 'value',
-          editDropdownValueLabel: 'name',
-          editDropdownOptionsArray: result.pageinfo.selects.SGWDFirst,
-          cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'"
-        },
-        {
-          name: result.pageinfo.fields.SGWDThird.name, displayName: result.pageinfo.fields.SGWDThird.text, width: 150,
+          name: result.pageinfo.fields.SGWDThird.name, displayName: result.pageinfo.fields.SGWDThird.text, width: 140,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -180,7 +181,7 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
         },
         {
-          name: result.pageinfo.fields.SGWDFourth.name, displayName: result.pageinfo.fields.SGWDFourth.text, width: 150,
+          name: result.pageinfo.fields.SGWDFourth.name, displayName: result.pageinfo.fields.SGWDFourth.text, width: 140,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -188,7 +189,7 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
         },
         {
-          name: result.pageinfo.fields.SGWDFifth.name, displayName: result.pageinfo.fields.SGWDFifth.text, width: 150,
+          name: result.pageinfo.fields.SGWDFifth.name, displayName: result.pageinfo.fields.SGWDFifth.text, width: 140,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -311,12 +312,13 @@
           var col = {
             SGWDId: $scope.weekGridOptions.data[i].SGWDId == undefined ? 0 : $scope.weekGridOptions.data[i].SGWDId,
             SGWDWeekDayId: $scope.weekGridOptions.data[i].value == undefined ? $scope.weekGridOptions.data[i].SGWDWeekDayId : $scope.weekGridOptions.data[i].value,
-            SGWDFirst: $scope.weekGridOptions.data[i].SGWDFirst == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFirst,
-            SGWDSecond: $scope.weekGridOptions.data[i].SGWDSecond == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDSecond,
-            SGWDThird: $scope.weekGridOptions.data[i].SGWDThird == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDThird,
-            SGWDFourth: $scope.weekGridOptions.data[i].SGWDFourth == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFourth,
-            SGWDFifth: $scope.weekGridOptions.data[i].SGWDFifth == undefined ? -1 : $scope.weekGridOptions.data[i].SGWDFifth,
+            SGWDFirst: $scope.weekGridOptions.data[i].SGWDFirst == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDFirst,
+            SGWDSecond: $scope.weekGridOptions.data[i].SGWDSecond == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDSecond,
+            SGWDThird: $scope.weekGridOptions.data[i].SGWDThird == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDThird,
+            SGWDFourth: $scope.weekGridOptions.data[i].SGWDFourth == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDFourth,
+            SGWDFifth: $scope.weekGridOptions.data[i].SGWDFifth == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDFifth,
           }
+          console.log($scope.weekGridOptions.data[i].SGWDFirst)
           child.rows.push(col);
         }
         console.log($scope.multiEntity)
