@@ -58,7 +58,12 @@
 
 
     $scope.page = $scope.createPage();
+    console.log($scope.page)
     $scope.page.pageId = pageId;
+    console.log($scope.page.pageinfo)
+    console.log($scope.page)
+
+
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -78,8 +83,14 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      uploadRecord: null
+      uploadRecord: null,
+      pageResult: _pageResult
     }
+
+    function _pageResult(result) {
+      console.log(result)
+    }
+
 
     $scope.$watch('entity.SMFromTime', function (newVal, oldVal) {
       // debugger;
