@@ -44,6 +44,7 @@
         $scope.contactPage = { isAllowEdit: false };
         $scope.emgContactPage = { isAllowEdit: false };
         $scope.showResignation = true;
+        vm.entity = {};
 
 
         vm.empContactDetail = {};
@@ -79,6 +80,10 @@
             openedToasts.push(toastr[toastOption.type](msg, title));
         }
         function _loadController() {
+            $scope.gridOptions = $scope.getGridSetting();
+            // $scope.gridOptions.onRegisterApi = _onRegisterApi;
+            $scope.gridOptions.columnDefs = [];
+            $scope.gridOptions.data = [];
             var rndValu = Math.round((Math.random() * 10) * 10);
             var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
             vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
@@ -101,6 +106,19 @@
                             _getPageDataSuccessResult, _getPageDataErrorResult);
                     })
                 }
+                if (vm.pageId == 125) {
+                    var isBenifitSalaryHeadQueryId = 559;
+                    var searchLists = [];
+                    // var searchListData = { field: 'EmpId', operand: '=',value: vm.empPKId}
+                    searchLists.push({ field: 'EmpId', operand: '=', value: vm.empPKId })
+                    searchLists.push({ field: 'SHIsBenefit', operand: '=', value: 1 })
+                    console.log(searchLists)
+                    var data = {
+                        searchList: searchLists,
+                        orderByList: []
+                    }
+                    pageService.getCustomQuery(data, isBenifitSalaryHeadQueryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+                }
             }
             else {
                 // vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
@@ -118,6 +136,23 @@
                     console.log($scope.page)
                 }
             }
+        }
+
+        function _getCustomQuerySuccessResult(result) {
+            console.log(result)
+            if (result !== "NoDataFound") {
+                var colSalaryHead = { name: 'SHName', field: 'SHName', displayName: 'Salary Head', width: 100, visible: true };
+                var colSalaryAmount = { name: 'SalAmount', field: 'SalAmount', displayName: 'Account Number', width: 100, visible: true };
+                $scope.gridOptions.columnDefs.push(colSalaryHead);
+                $scope.gridOptions.columnDefs.push(colSalaryAmount);
+
+                $scope.gridOptions.data = result;
+                console.log($scope.gridOptions.data)
+            }
+        }
+
+        function _getCustomQueryErrorResult(result) {
+            console.log(result);
         }
 
 
@@ -153,6 +188,17 @@
             $scope.page.pageIsLoading = false;
             var linkFieldName;
             if (result.pageinfo.pageid == 114) {
+                console.log(result.pageinfo.selects)
+                console.log(result.pageinfo.selects.BRId)
+                if (result.pageinfo.selects.LocationId.length == 1) {
+                    $scope.entity.LocationId = result.pageinfo.selects.LocationId[1].value;
+                }
+                if (result.pageinfo.selects.BRId.length == 1) {
+                    $scope.entity.BRId = result.pageinfo.selects.BRId[1].value;
+                }
+                if (result.pageinfo.selects.JDSubUnitID.length == 1) {
+                    $scope.entity.JDSubUnitID = result.pageinfo.selects.JDSubUnitID[1].value;
+                }
                 linkFieldName = 'JDEmpId';
             } else if (result.pageinfo.pageid == 35) {
                 linkFieldName = 'PdEmpId';
@@ -383,17 +429,17 @@
 
             if ($scope.page.gridOptions.data.length > 0) {
                 angular.forEach($scope.page.gridOptions.data, function (row) {
-                    //                    console.log(row)
+                               console.log(row)
 
                     var data = {
                         EBDId: row.EBDId == null ? undefined : row.EBDId,
                         EBDAccountNumber: row.EBDAccountNumber,
                         EBDBenefitId: row.EBDBenefitId,
                         EBDEmpId: row.EBDEmpId,
-                        EBDIsOnPercentage: row.EBDIsOnPercentage,
-                        EBDFiexedAmount: row.EBDFiexedAmount,
-                        EBDPercentage: row.EBDPercentage,
-                        EBDIsCalOnBasic: row.EBDIsCalOnBasic
+                        // EBDIsOnPercentage: row.EBDIsOnPercentage,
+                        // EBDFiexedAmount: row.EBDFiexedAmount,
+                        // EBDPercentage: row.EBDPercentage,
+                        // EBDIsCalOnBasic: row.EBDIsCalOnBasic
                     }
                     var form = {}
                     if (data.EBDId == undefined) {
@@ -557,12 +603,12 @@
                     console.log(vm.entity)
                     if (vm.entity.JDId === undefined) {
                         vm.entity.JDEmpId = vm.empPKId;
-                        vm.entity.JDSubUnitID = 2;
+                        // vm.entity.JDSubUnitID = 2;
                         _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
                     }
                     else {
                         console.log(vm.entity);
-                        vm.entity.JDSubUnitID = 2;
+                        //vm.entity.JDSubUnitID = 2;
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
                 }

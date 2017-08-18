@@ -98,6 +98,27 @@
             </div>
           </div>
         </div>
+
+          <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label ng-bind="page.pageinfo.fields.LocationId.text"></label>
+              <field-box page="page" ng-column ="page.pageinfo.fields.LocationId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label ng-bind="page.pageinfo.fields.BRId.text"></label>
+              <field-box page="page" ng-column ="page.pageinfo.fields.BRId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label ng-bind="page.pageinfo.fields.JDSubUnitID.text"></label>
+              <field-box page="page" ng-column ="page.pageinfo.fields.JDSubUnitID" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+            </div>
+          </div>
+        </div>
         <!--this to be uncommented after adding columns in JobDescription:DJ-->
         <!--<div class="row">
           <div class="col-sm-4">

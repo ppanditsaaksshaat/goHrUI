@@ -159,6 +159,7 @@
     $scope.page.boxOptions.customButtons.push({ text: 'ReGenerate', icon: 'ion-refresh', onClick: _reGenerateClick, type: 'btn-danger' })
     $scope.page.boxOptions.customButtons.push({ text: 'Save & Generate Salary', icon: 'btn-primary', onClick: _saveAndGenerateSalaryClick, type: 'btn-warning' })
 
+
     function _pendingClick() {
       $scope.page.searchList = [];
 
@@ -176,6 +177,7 @@
           field: col.name,
           operand: '=',
           value: col.value,
+          displayName: col.displayName,
         }
         $scope.page.searchList.push(colList)
       })
@@ -196,38 +198,49 @@
         value: $scope.acToDate
       })
 
-      
-      // angular.forEach($scope.page.searchList, function (col, cdx) {
-      //   if (col.field == "SubUnitId") {
-      //     if (col.value === undefined) {
-      //       alert('select subunit')
-
-      //     }
-      //   }
-      //   else if (col.field == "SalMonth") {
-      //     if (col.value === undefined) {
-      //       alert('select month')
-
-      //     }
-      //   }
-      //   else if (col.field == "SalYear") {
-      //     if (col.value === undefined) {
-      //       alert('select year')
-
-      //     }
-      //   }
-      // })
-
-      console.log($scope.page.searchList);
-      $scope.page.refreshData()
-      console.log($scope.page)
-      console.log($scope.page.searchList)
-      // }
-      // else
-      //   $scope.showMsg('error', 'Month.');
-      // }
-      // else
-      //   $scope.showMsg('error', 'Year.');
+      var undefinedData = [];
+      var isValidateData = false;
+      angular.forEach($scope.page.searchList, function (col, cdx) {
+        if (col.field == "SubUnitId") {
+          if (col.value === undefined) {
+            undefinedData.push(col.displayName)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "SalMonth") {
+          if (col.value === undefined) {
+            undefinedData.push(col.displayName)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "SalYear") {
+          if (col.value === undefined) {
+            undefinedData.push(col.displayName)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "fromdate") {
+          if (col.value === undefined) {
+            undefinedData.push(col.field)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "todate") {
+          if (col.value === undefined) {
+            undefinedData.push(col.field)
+            isValidateData = true;
+          }
+        }
+      })
+      if (isValidateData) {
+        $scope.showMsg('warning', 'Please choose option from ' + undefinedData);
+      }
+      else {
+        console.log($scope.page.searchList);
+        $scope.page.refreshData()
+        console.log($scope.page)
+        console.log($scope.page.searchList)
+      }
     }
 
     function _filterChange(filter) {
@@ -511,16 +524,18 @@
     }
 
     function _readyClick() {
-      var colList = [];
       $scope.page.searchList = [];
+      var colList = [];
       angular.forEach($scope.page.pageinfo.filters, function (col, cdx) {
         colList = {
           field: col.name,
           operand: '=',
           value: col.value,
+          displayName: col.displayName,
         }
         $scope.page.searchList.push(colList)
       })
+
       $scope.page.searchList.push({
         field: 'SalaryStatus',
         operand: '=',
@@ -536,10 +551,52 @@
         operand: '=',
         value: $scope.acToDate
       })
-      console.log($scope.page.searchList)
-      $scope.page.refreshData()
-      console.log($scope.page)
+
+      var undefinedData = [];
+      var isValidateData = false;
+      angular.forEach($scope.page.searchList, function (col, cdx) {
+        if (col.field == "SubUnitId") {
+          if (col.value === undefined) {
+            undefinedData.push(col.displayName)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "SalMonth") {
+          if (col.value === undefined) {
+            undefinedData.push(col.displayName)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "SalYear") {
+          if (col.value === undefined) {
+            undefinedData.push(col.displayName)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "fromdate") {
+          if (col.value === undefined) {
+            undefinedData.push(col.field)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "todate") {
+          if (col.value === undefined) {
+            undefinedData.push(col.field)
+            isValidateData = true;
+          }
+        }
+      })
+      if (isValidateData) {
+        $scope.showMsg('warning', 'Please choose option from ' + undefinedData);
+      }
+      else {
+        console.log($scope.page.searchList);
+        $scope.page.refreshData()
+        console.log($scope.page)
+        console.log($scope.page.searchList)
+      }
     }
+
     function _reGenerateClick() {
       $scope.page.searchList = [];
       var colList = [];
@@ -548,10 +605,11 @@
           field: col.name,
           operand: '=',
           value: col.value,
+          displayName: col.displayName,
         }
         $scope.page.searchList.push(colList)
       })
-      console.log($scope.page.searchList);
+
       $scope.page.searchList.push({
         field: 'SalaryStatus',
         operand: '=',
@@ -567,19 +625,87 @@
         operand: '=',
         value: $scope.acToDate
       })
-      console.log($scope.page.searchList)
-      $scope.page.refreshData()
-      console.log($scope.page)
+
+      var undefinedData = [];
+      var isValidateData = false;
+      angular.forEach($scope.page.searchList, function (col, cdx) {
+        if (col.field == "SubUnitId") {
+          if (col.value === undefined) {
+            undefinedData.push(col.displayName)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "SalMonth") {
+          if (col.value === undefined) {
+            undefinedData.push(col.displayName)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "SalYear") {
+          if (col.value === undefined) {
+            undefinedData.push(col.displayName)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "fromdate") {
+          if (col.value === undefined) {
+            undefinedData.push(col.field)
+            isValidateData = true;
+          }
+        }
+        else if (col.field == "todate") {
+          if (col.value === undefined) {
+            undefinedData.push(col.field)
+            isValidateData = true;
+          }
+        }
+      })
+      if (isValidateData) {
+        $scope.showMsg('warning', 'Please choose option from ' + undefinedData);
+      }
+      else {
+        console.log($scope.page.searchList);
+        $scope.page.refreshData()
+        console.log($scope.page)
+        console.log($scope.page.searchList)
+      }
     }
+
+  
     function _saveAndGenerateSalaryClick() {
       var colList = [];
-      // var filterData = [];
-      // console.log($scope.page.searchList);
-      // angular.forEach($scope.page.pageinfo.filters, function (col, cdx) {
-      //   colList = {
-      //     value: col.value,
+      var filterData = {};
+      var undefinedData = [];
+      var isValidateData = false;
+      console.log($scope.page.searchList)
+      // angular.forEach($scope.page.searchList, function (col, cdx) {
+      //   if (col.field == "SubUnitId") {
+      //     if (col.value != undefined) {
+      //       filterData.subUnitId.push(col.value)
+      //     }
+      //     else {
+      //       undefinedData.push(col.displayName)
+      //       isValidateData = true;
+      //     }
       //   }
-      //   filterData.push(colList)
+      //   else if (col.field == "SalMonth") {
+      //     if (col.value != undefined) {
+      //       filterData.salMonth.push(col.value)
+      //     }
+      //     else {
+      //       undefinedData.push(col.displayName)
+      //       isValidateData = true;
+      //     }
+      //   }
+      //   else if (col.field == "SalYear") {
+      //     if (col.value != undefined) {
+      //       filterData.salYear.push(col.value)
+      //     }
+      //     else {
+      //       undefinedData.push(col.displayName)
+      //       isValidateData = true;
+      //     }
+      //   }
       // })
 
       var filterData = {
@@ -588,17 +714,23 @@
         salYear: $scope.page.searchList[2].value
       }
       console.log(filterData)
-      pageService.generateSalary(filterData).then(function (result) {
-        if (result.success_message == 'Salary Generate And Save') {
-          // alert(result.success_message)
-          $scope.showMsg('success', 'Salary generate and save.', '');
-        }
-        else {
-          var empData = result;
-          alert(result)
-          console.log(empData)
-        }
-      });
+      if (isValidateData) {
+        $scope.showMsg('warning', 'Please choose option from ' + undefinedData);
+      }
+      else {
+        pageService.generateSalary(filterData).then(function (result) {
+          console.log(result)
+          if (result.success_message == 'Salary Generate And Save') {
+            $scope.showMsg('success', 'Salary generate and save.', '');
+          }
+          else {
+            var empData = result.error_message;
+            $scope.showMsg('error', empData, '');
+            console.log(empData)
+          }
+        });
+      }
+
     }
 
     function _addRecord() {
