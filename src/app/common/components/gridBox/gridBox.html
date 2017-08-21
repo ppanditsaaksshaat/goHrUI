@@ -1,89 +1,97 @@
 <div>
-<div ng-hide="isErrorOccured">
-    <div class="row">
-        <div class="col-md-3" ng-show="page.showFilter" style="padding-right:0px; margin-right:0px;">
-            <filter-box page="page"></filter-box>
-        </div>
-        <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
+    <div ng-hide="isErrorOccured">
+        <div class="row">
+            <div class="col-md-3" ng-show="page.showFilter" style="padding-right:0px; margin-right:0px;">
+                <filter-box page="page"></filter-box>
+            </div>
+            <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
 
-            <div class="panel panel-default bootstrap-panel xmedium-panel" ng-hide="page.showViewRecord || page.showAddRecord">
-                <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
-                    <div class="row">
-                        <div class="col-md-3">
-                            {{page.pageinfo.title}}
-                            <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
-                                <button ng-show="page.boxOptions.showBack" type="button" class="btn btn-xs btn-default" ng-click="page.goBack()"><i class="ion-backspace"></i>Back</button>
-                                <button ng-show="page.boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="page.refreshData()"><i 
-                                class="ion-refresh"></i>Refresh</button>                                &nbsp;
-                                <button ng-show="page.boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="page.addRecord(editForm)">
-                                 <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>                                &nbsp;
-                                <button ng-show="page.boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="page.uploadRecord()">
-                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>                                &nbsp;
+                <div class="panel panel-default bootstrap-panel xmedium-panel" ng-hide="page.showViewRecord || page.showAddRecord">
+                    <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
+                        <div class="row">
+                            <div class="col-md-3">
+                                {{page.pageinfo.title}}
+                                <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
+                                    <button ng-show="page.boxOptions.showBack" type="button" class="btn btn-xs btn-default" ng-click="page.goBack()"><i class="ion-backspace"></i>Back</button>
+                                    <button ng-show="page.boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="page.refreshData()"><i 
+                                class="ion-refresh"></i>Refresh</button> &nbsp;
+                                    <button ng-show="page.boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="page.addRecord(editForm)">
+                                 <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>                                    &nbsp;
+                                    <button ng-show="page.boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="page.uploadRecord()">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>                                    &nbsp;
 
-                                <select ng-show="page.boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
-                                    ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
+                                    <select ng-show="page.boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
+                                        ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
                                 </select>
-                            </div>
-                            <div class="pull-right" ng-show="page.boxOptions.customButtons.length>0">
-                                <button ng-repeat="button in page.boxOptions.customButtons" type="button" class="btn btn-xs" ng-class="button.type" ng-click="button.onClick()"><i ng-class="button.icon"></i>{{button.text}}</button>
+                                </div>
+                                <div class="pull-right" ng-show="page.boxOptions.customButtons.length>0">
+                                    <button ng-repeat="button in page.boxOptions.customButtons" type="button" class="btn btn-xs" ng-class="button.type" ng-click="button.onClick()"><i ng-class="button.icon"></i>{{button.text}}</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-                <div class="panel-heading" ng-show="(page.selectedRows.length>0)">
-                    <div class="row">
-                        <div class="col-md-3">{{page.selectedRows.length}} Rows Selected [<a href ng-click="page.clearSelected()">Clear</a>]</div>
-                        <div class="col-md-9">
-                            <div class="pull-right" ng-show="page.boxOptions.selectedRowButtons.length>0">
-                                <button type="button" ng-show="page.selectedRows.length==1 && page.pageinfo.buttons.edit.isvisible" class="btn btn-xs btn-primary" ng-click="page.editRecord(page.selectedRows[0])"><i ng-class="button.icon"></i>Edit</button>
-                                <button type="button" ng-show="page.pageinfo.buttons.view.isvisible" class="btn btn-xs" ng-click="page.viewRecord(page.selectedRows[0])"><i ng-class="button.icon"></i>View</button>
-                                <button type="button" ng-show="page.pageinfo.buttons.update.isvisible" class="btn btn-xs" ng-click="page.updateRecord(page.selectedRows)"><i ng-class="button.icon"></i>Update</button>
-                                <button type="button" ng-show="page.pageinfo.buttons.delete.isvisible" class="btn btn-xs btn-danger" ng-click="page.deleteRecord(page.selectedRows)"><i ng-class="button.icon"></i>Delete</button>
-                                <button ng-repeat="button in page.boxOptions.selectedRowButtons" type="button" class="btn btn-xs" ng-class="button.type" ng-click="button.onClick()"><i ng-class="button.icon"></i>{{button.text}}</button>
+                    </div>
+                    <div class="panel-heading" ng-show="(page.selectedRows.length>0)">
+                        <div class="row">
+                            <div class="col-md-3">{{page.selectedRows.length}} Rows Selected [<a href ng-click="page.clearSelected()">Clear</a>]</div>
+                            <div class="col-md-9">
+                                <div class="pull-right" ng-show="page.boxOptions.selectedRowButtons.length>0">
+                                    <button type="button" ng-show="page.selectedRows.length==1 && page.pageinfo.buttons.edit.isvisible" class="btn btn-xs btn-primary"
+                                        ng-click="page.editRecord(page.selectedRows[0])"><i ng-class="button.icon"></i>Edit</button>
+                                    <button type="button" ng-show="page.pageinfo.buttons.view.isvisible" class="btn btn-xs" ng-click="page.viewRecord(page.selectedRows[0])"><i ng-class="button.icon"></i>View</button>
+                                    <button type="button" ng-show="page.pageinfo.buttons.update.isvisible" class="btn btn-xs" ng-click="page.updateRecord(page.selectedRows)"><i ng-class="button.icon"></i>Update</button>
+                                    <button type="button" ng-show="page.pageinfo.buttons.delete.isvisible" class="btn btn-xs btn-danger" ng-click="page.deleteRecord(page.selectedRows)"><i ng-class="button.icon"></i>Delete</button>
+                                    <button ng-repeat="button in page.boxOptions.selectedRowButtons" type="button" class="btn btn-xs" ng-class="button.type"
+                                        ng-click="button.onClick()"><i ng-class="button.icon"></i>{{button.text}}</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel-body">
-                    <button ng-show="page.boxOptions.showFilter" id="image" style="width:3px;
+                    <div class="panel-body">
+                        <button ng-show="page.boxOptions.showFilter" id="image" style="width:3px;
                 height:30px;
                 position:absolute;
                 top:200px;
                 left:0px;" ng-click="page.showFilter=!page.showFilter">
                     <i ng-class="{'ion-arrow-right-b':!page.showFilter, 'ion-arrow-left-b':page.showFilter}"></i>
                 </button>
-                    <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning ui-grid-edit class="djGrid"></div>
-                </div>
-            </div>
-            <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll" ng-show="page.showViewRecord">
-                <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <button type="button" class="btn btn-xs btn-default" ng-click="page.closeViewRecord()"><i class="ion-back"></i>Back</button>                            {{page.pageinfo.tagline}}
-                        </div>
-                        <div class="col-md-6">
-                            <div class="pull-right">
-
-
+                        <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning ui-grid-edit
+                            class="djGrid">
+                            <div class="no-data" ng-if="page.gridOptions.data.length==0 && !page.dataIsLoading">{{page.boxOptions.noResultMessageText}}</div>
+                            <div class="no-data font-black" ng-if="page.dataIsLoading">
+                                    <i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i> Please wait data is loading....
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
-                    <div class="row">
-                        <div ng-class="{'col-md-7':page.isVerticalView,'col-md-12':!page.isVerticalView}">
-                            <ng-include src="page.viewFormUrl" onload="editFormLoaded=true"></ng-include>
+                <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll" ng-show="page.showViewRecord">
+                    <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-xs btn-default" ng-click="page.closeViewRecord()"><i class="ion-back"></i>Back</button>                                {{page.pageinfo.tagline}}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="pull-right">
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
+                        <div class="row">
+                            <div ng-class="{'col-md-7':page.isVerticalView,'col-md-12':!page.isVerticalView}">
+                                <ng-include src="page.viewFormUrl" onload="editFormLoaded=true"></ng-include>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <form ng-show="page.showAddRecord" ng-submit="saveForm(editForm)" name="editForm" novalidate>
-                <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
-                    <!--<div class="panel-heading clearfix" style="padding-top:0px;">
+                <form ng-show="page.showAddRecord" ng-submit="saveForm(editForm)" name="editForm" novalidate>
+                    <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
+                        <!--<div class="panel-heading clearfix" style="padding-top:0px;">
                         <div class="row">
                             <div class="col-md-5" style="padding-top:15px">
                                 <button type="button" class="btn btn-xs btn-default" ng-click="closeForm()"><i class="ion-back"></i>Back</button>                                {{page.pageinfo.tagline}}
@@ -97,50 +105,37 @@
                             </div>
                         </div>
                     </div>-->
-                    <edit-panel-head 
-                        page="page"
-                        page-title="page.pageinfo.tagline" 
-                        show-save="editForm.untouch"
-                        reset-form="resetForm(editForm)" 
-                        clear-form="clearForm(editForm)" 
-                        condition="true" 
-                        show-list="false"
-                        show-close="true"
-                        close-form="closeForm(editForm)"
-                        ></edit-panel-head>
+                        <edit-panel-head page="page" page-title="page.pageinfo.tagline" show-save="editForm.untouch" reset-form="resetForm(editForm)"
+                            clear-form="clearForm(editForm)" condition="true" show-list="false" show-close="true" close-form="closeForm(editForm)"></edit-panel-head>
 
-                    <div class="panel-body">
-                        <div class="row">
-                            <div ng-class="{'col-md-7':page.isVerticalForm,'col-md-12':!page.isVerticalForm}">
-                                <div class="form-group" ng-repeat="col in page.formrows">
-                                    <label for="inputPassword3" class="col-sm-5 control-label">{{col.text}}</label>
-                                    <div class="col-md-7" ng-switch="col.type">
-                                        <field-box page="page" ng-column="col" ng-entity="entity" form="editForm"></field-box>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div ng-class="{'col-md-7':page.isVerticalForm,'col-md-12':!page.isVerticalForm}">
+                                    <div class="form-group" ng-repeat="col in page.formrows">
+                                        <label for="inputPassword3" class="col-sm-5 control-label">{{col.text}}</label>
+                                        <div class="col-md-7" ng-switch="col.type">
+                                            <field-box page="page" ng-column="col" ng-entity="entity" form="editForm"></field-box>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div ng-show="isErrorOccured">
+        <div ba-panel ba-panel-title="Basic" ba-panel-class="with-scroll">
+            <div>
+
+                <div class="alert bg-danger">
+                    <strong>Oh snap!</strong> Something went worng. Please reload the page or contact to Administrator.
+                    <br/> {{errorText}}
                 </div>
-            </form>
-
+            </div>
         </div>
-    </div>
-</div>
-<div ng-show="isErrorOccured">
-    <div 
-         ba-panel
-         ba-panel-title="Basic"
-         ba-panel-class="with-scroll">
-      <div >
-        
-        <div class="alert bg-danger">
-          <strong>Oh snap!</strong> Something went worng. Please reload the page or contact to Administrator.
-          <br/>
-          {{errorText}}
-        </div>
-      </div>
-    </div>
 
-</div>
+    </div>
 </div>
