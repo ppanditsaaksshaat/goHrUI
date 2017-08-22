@@ -180,6 +180,10 @@ input:focus, select:foucs {
 {
   color:green;
 }
+.font-black
+{
+  color:black;
+}
 .padT8
 {
   padding-top:8px;
@@ -1297,4 +1301,9 @@ abbr[title] {
   font-weight: bold;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 14px;
+}
+
+.no-data{
+  position: absolute; top : 80px;opacity: 0.25; font-size: 1.5em;width: 100%; text-align: center;
+  z-index: 1000;
 }
