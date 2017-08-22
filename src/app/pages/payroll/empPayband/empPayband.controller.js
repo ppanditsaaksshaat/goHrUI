@@ -581,7 +581,7 @@
             });
 
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                debugger
+
                 if (grossHead) {
                     if (colDef.name == 'SH_' + grossHead.value) {
                         //updating subgrid gross amount
@@ -812,6 +812,7 @@
         }
 
         function _updateFirstGridFromSecondGrid(entity) {
+            debugger
             if (entity) {
                 if (entity.subGridOptions) {
                     if (entity.subGridOptions.data.length > 0) {
@@ -1539,7 +1540,7 @@
                         console.log(result)
                         if (result == "done") {
                             $scope.showMsg("success", "Record Saved Successfully");
-                          //  _recalculatingSecondGrid($scope.page.gridOptions)
+                            //  _recalculatingSecondGrid($scope.page.gridOptions)
                         }
                     }, function (err) {
                         console.log(err)

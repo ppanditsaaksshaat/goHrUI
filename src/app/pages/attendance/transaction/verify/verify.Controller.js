@@ -32,14 +32,15 @@
     $scope.entity = {}
     $scope.page = $scope.createPage();
     $scope.page.pageId = vm.pageId;
-    $scope.page.searchList = [];
-    $scope.page.searchList.push({ field: 'VAMonth', operand: '=', value: moment().format('MM') })
-    $scope.page.searchList.push({ field: 'VAYear', operand: '=', value: moment().format('YYYY') })
-    $scope.page.searchList.push({ field: 'VADepartmentId', operand: '=', value: -1 })
+    // $scope.page.searchList = [];
+    // $scope.page.searchList.push({ field: 'Month', operand: '=', value: moment().format('MM') })
+    // $scope.page.searchList.push({ field: 'VAYear', operand: '=', value: moment().format('YYYY') })
+    // $scope.page.searchList.push({ field: 'VADepartmentId', operand: '=', value: -1 })
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
       showFilter: true,
+      showDataOnLoad: false,
       filterOpened: true,
       requiredFilter: false,
       showAdd: false,
@@ -48,9 +49,9 @@
       showUpload: false,
       showDialog: false,
       enableRefreshAfterUpdate: true,
+      noResultMessageText: 'Please use filter to show data.',
       enableAutoRefresh: true,
-      showDataOnLoad: true,
-      selectedRowButtons: [{ text: "Verify", icon: '', onClick: _verifyAttendance, type: "btn-default" }],
+      selectedRowButtons: [{ text: "Verify", icon: '', onClick: _verifyAttendance, type: "btn-default", defaultButton: false }],
       linkColumns: null,
       gridHeight: 450,
       getPageData: null,
@@ -60,7 +61,9 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      pageResult: _pageResult
+      pageResult: _pageResult,
+
+
       // readonlyColumns: ['col1', 'col2']
     }
     /**End of For all list of verify attendance grid setting */
@@ -107,26 +110,25 @@
     $scope.saveForm = _saveForm;
 
     function _pageResult(result) {
-      console.log(result)
-
       angular.forEach(result.pageinfo.filters, function (filter) {
-        if (filter.name == 'VAMonth') {
+        if (filter.name == 'Month') {
           filter.value = parseInt(moment().format('MM'));
-          console.log(moment().format('MM'))
+
         }
-        if (filter.name == 'VAYear') {
+        if (filter.name == 'Year') {
           filter.value = parseInt(moment().format('YYYY'));
-          console.log(moment().format('YYYY'))
+
         }
         if (filter.name == 'VADepartmentId') {
           filter.value = -1;
           filter.disabled = true;
         }
-        console.log(result)
+
       })
 
 
     }
+
 
     /**Close edit list */
     function _close() {
@@ -146,7 +148,7 @@
      */
     function _saveForm(editForm) {
       if (_validateForm(editForm)) {
-        console.log($scope.entity)
+
       }
     }
     /**
@@ -168,6 +170,8 @@
       $scope.showEditForm = true;
     }
     function _editRecord(row) {
+
+      console.log(row)
       /**For list of edit verify attendance grid setting */
       vm.showVerifyAttendance = false
       var startDate = "", endDate = "";
@@ -177,8 +181,8 @@
 
       }
       else {
-        console.log($scope.page.filterData);
-        var sDate = $scope.page.filterData.VAMonth.value + "-" + 1 + "-" + $scope.page.filterData.VAYear.value;
+
+        var sDate = $scope.page.filterData.Month.value + "-" + 1 + "-" + $scope.page.filterData.Year.value;
         startDate = moment(sDate).startOf('month').format('YYYY-MM-DD');
         endDate = moment(sDate).endOf('month').format('YYYY-MM-DD');
       }
@@ -206,7 +210,7 @@
     //   $state.go('organization.employees.upload')
     // }
     function _applyFilter() {
-      console.log($scope.page.pageinfo.filters);
+
       $scope.page.searchList = [];
       angular.forEach($scope.page.pageinfo.filters, function (filter) {
 
@@ -228,11 +232,11 @@
     }
 
     function _verifyRow(row) {
-      console.log(row)
+
     }
     /**Verify attendance according to row selection */
     function _verifyAttendance() {
-      console.log($scope.page.selectedRows)
+
       var searchLists = [];
       var empIds = "";
       var startDate = "";
@@ -248,8 +252,8 @@
         endDate = moment().endOf('month').format('YYYY-MM-DD');
       }
       else {
-        console.log($scope.page.filterData);
-        var sDate = $scope.page.filterData.VAMonth.value + "-" + 1 + "-" + $scope.page.filterData.VAYear.value;
+
+        var sDate = $scope.page.filterData.Month.value + "-" + 1 + "-" + $scope.page.filterData.Year.value;
         startDate = moment(sDate).startOf('month').format('YYYY-MM-DD');
         endDate = moment(sDate).endOf('month').format('YYYY-MM-DD');
       }
@@ -276,12 +280,12 @@
         searchList: searchLists,
         orderByList: []
       }
-      console.log(data);
+
 
       pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
     }
     function _getCustomQuerySuccessResult(result) {
-      console.log(result)
+
       if (result[0].emp == 1 && result[0].sum == 1) {
         $scope.showMsg("success", "Verify Successfully")
         $scope.page.refreshData();
