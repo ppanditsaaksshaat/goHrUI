@@ -589,16 +589,16 @@
                     if (vm.entity.JDIsOT == false) {
                         vm.entity.SingleOT = false;
                         vm.entity.JDDoubleOT = false;
-                        vm.entity.JDSingleOTRate = '';
-                        vm.entity.DoubleOTRate = '';
+                        vm.entity.JDSingleOTRate = 0;
+                        vm.entity.DoubleOTRate = 0;
 
 
                     }
                     else if (vm.entity.SingleOT == false) {
-                        vm.entity.JDSingleOTRate = '';
+                        vm.entity.JDSingleOTRate = 0;
                     }
                     else if (vm.entity.JDDoubleOT == false) {
-                        vm.entity.DoubleOTRate = '';
+                        vm.entity.DoubleOTRate = 0;
                     }
                     console.log(vm.entity)
                     if (vm.entity.JDId === undefined) {
