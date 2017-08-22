@@ -41,7 +41,7 @@
     // $scope.weekClick = _weekClick;
     $scope.closeWeekOffAdd = _closeWeekOffAdd;
 
-    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false }
+    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false }
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.page.boxOptions = {
@@ -154,9 +154,9 @@
       result.pageinfo.selects.SGWDWeekDayId.splice(0, 1);
       result.pageinfo.selects.SGWDFirst.splice(0, 0, { value: -2, name: "None" });
       $scope.weekGridOptions.columnDefs = [
-        { name: 'name', displayName: 'Day', width: 140, enableCellEdit: false },
+        { name: 'name', displayName: 'Day', width: 120, enableCellEdit: false },
         {
-          name: result.pageinfo.fields.SGWDFirst.name, displayName: result.pageinfo.fields.SGWDFirst.text, width: 140,
+          name: result.pageinfo.fields.SGWDFirst.name, displayName: result.pageinfo.fields.SGWDFirst.text, width: 120,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -165,7 +165,7 @@
 
         },
         {
-          name: result.pageinfo.fields.SGWDSecond.name, displayName: result.pageinfo.fields.SGWDSecond.text, width: 140,
+          name: result.pageinfo.fields.SGWDSecond.name, displayName: result.pageinfo.fields.SGWDSecond.text, width: 120,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -173,7 +173,7 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'"
         },
         {
-          name: result.pageinfo.fields.SGWDThird.name, displayName: result.pageinfo.fields.SGWDThird.text, width: 140,
+          name: result.pageinfo.fields.SGWDThird.name, displayName: result.pageinfo.fields.SGWDThird.text, width: 120,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -181,7 +181,7 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
         },
         {
-          name: result.pageinfo.fields.SGWDFourth.name, displayName: result.pageinfo.fields.SGWDFourth.text, width: 140,
+          name: result.pageinfo.fields.SGWDFourth.name, displayName: result.pageinfo.fields.SGWDFourth.text, width: 120,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -189,7 +189,7 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
         },
         {
-          name: result.pageinfo.fields.SGWDFifth.name, displayName: result.pageinfo.fields.SGWDFifth.text, width: 140,
+          name: result.pageinfo.fields.SGWDFifth.name, displayName: result.pageinfo.fields.SGWDFifth.text, width: 120,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',

@@ -9,18 +9,18 @@
     <div class="row">
         <form ng-submit="weekOffSave(editForm,entity)">
             <div ba-panel ba-panel-class="x-medium" ba-panel-title="weekOff">
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Name*</label>
                             <input type="textbox" class="form-control" ng-model="entity.WOSName">
                         </div>
                     </div>
-
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label style="margin-left:15px;">Groups</label>
-                             <ui-select-wrap>
+                            <label style="margin-left:15px;">Groups*</label>
+                            <ui-select-wrap>
                                 <ui-select multiple class="col-md-12" ng-model="entity.WOSGroupId" theme="select2" ng-disabled="disabled" search-enabled="true"
                                     append-to-body="true">
                                     <ui-select-match placeholder="Choose..">
@@ -34,19 +34,38 @@
 
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div ui-grid="weekGridOptions"ui-grid-edit ui-grid-expandable ui-grid-auto-resize ui-grid-selection class="grid" ></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>From*</label>
+                            <div class="input-group" moment-picker="entity.from" format="DD-MMM-YYYY" start-view="month">
+                                <span class="input-group-addon">
+                                         <i class="fa fa-calendar"></i>
+                                     </span>
+                                <input ng-readonly="true" class="form-control" placeholder="Select a date" ng-model="entity.from" ng-model-options="{ updateOn: 'blur' }">
+                                <span class="input-group-btn">
+                                         <button class="btn btn-secondary" ng-click="entity.from=''" type="button"><i class="fa fa-close"></i></button>
+                                     </span>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-info btn-lg">Save</button>
-                            <button type="button" class="btn btn-danger btn-lg" ng-click="closeWeekOffAdd()">Close</button>
-                        </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ui-grid="weekGridOptions" ui-grid-edit ui-grid-expandable ui-grid-auto-resize ui-grid-selection class="grid" style="height:270px;"></div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-info btn-lg">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeWeekOffAdd()">Close</button>
+                    </div>
+                </div>
+
             </div>
         </form>
     </div>

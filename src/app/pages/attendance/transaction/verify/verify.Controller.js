@@ -51,7 +51,7 @@
       enableRefreshAfterUpdate: true,
       noResultMessageText: 'Please use filter to show data.',
       enableAutoRefresh: true,
-      selectedRowButtons: [{ text: "Verify", icon: '', onClick: _verifyAttendance, type: "btn-default" }],
+      selectedRowButtons: [{ text: "Verify", icon: '', onClick: _verifyAttendance, type: "btn-default", defaultButton: false }],
       linkColumns: null,
       gridHeight: 450,
       getPageData: null,
