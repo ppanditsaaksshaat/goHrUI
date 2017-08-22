@@ -1,3 +1,15 @@
+#loading-bar .bar {
+background: red;
+height: 4px;
+}
+#loading-bar-spinner .spinner-icon {
+width: 20px;
+height: 20px;
+border: solid 4px transparent;
+border-top-color: red;
+border-left-color: red;
+border-radius: 10px;
+}
 // .input-help {
 //   display: none;
 //   position:absolute;

@@ -32,6 +32,8 @@ angular.module('BlurAdmin', [
   'ngScrollbars',
   'jQueryScrollbar',
   'rzModule',
+  // 'angular-loading-bar',
+  'cfp.loadingBar',
   'BlurAdmin.theme',
   'BlurAdmin.pages',
   'BlurAdmin.common'

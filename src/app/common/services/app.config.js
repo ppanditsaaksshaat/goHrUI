@@ -18,12 +18,12 @@ angular.module('BlurAdmin.common').config(function (ScrollBarsProvider) {
 });
 
 
-angular.module('BlurAdmin.common').config(function(IdleProvider, KeepaliveProvider) {
-	// configure Idle settings
-	IdleProvider.idle(10*60); // in seconds
-	IdleProvider.timeout(60); // in seconds
-	KeepaliveProvider.interval(2); // in seconds
-}) 
+angular.module('BlurAdmin.common').config(function (IdleProvider, KeepaliveProvider) {
+  // configure Idle settings
+  IdleProvider.idle(10 * 60); // in seconds
+  IdleProvider.timeout(60); // in seconds
+  KeepaliveProvider.interval(2); // in seconds
+})
 
 
 angular.module('BlurAdmin.common').config(['$provide', function ($provide) {
@@ -66,14 +66,21 @@ angular.module('BlurAdmin.common').config(['$provide', function ($provide) {
     }
   }
 }]).directive('iframeOnload', [function () {
-    return {
-        scope: {
-            callBack: '&iframeOnload'
-        },
-        link: function (scope, element, attrs) {
-            element.on('load', function () {
-                return scope.callBack();
-            })
-        }
+  return {
+    scope: {
+      callBack: '&iframeOnload'
+    },
+    link: function (scope, element, attrs) {
+      element.on('load', function () {
+        return scope.callBack();
+      })
     }
+  }
+}])
+
+
+angular.module('BlurAdmin.common').config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
+  cfpLoadingBarProvider.includeSpinner = true;
+  // cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner">Loading...</div>';
+  cfpLoadingBarProvider.includeBar = true;
 }])
