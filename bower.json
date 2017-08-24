@@ -75,7 +75,8 @@
     "angular-moment-picker": "moment-picker#^0.10.1",
     "angular-input-masks": "^2.6.0",
     "angularjs-slider": "^6.2.2",
-    "ng-idle": "^1.3.2"
+    "ng-idle": "^1.3.2",
+    "angular-loading-bar": "^0.9.0"
   },
   "resolutions": {
     "angular": "~1.5.9",

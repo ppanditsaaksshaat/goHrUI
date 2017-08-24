@@ -22,6 +22,27 @@
     $scope.saveForm = _saveForm;
     $scope.clearAllEntity = true;
 
+    
+    $scope.salaryCalculatedOn = _salaryCalculatedOn;
+
+
+    function _salaryCalculatedOn(value) {
+      if (value == 1) {
+        $scope.entity.LSCFixDay = 0
+        $scope.entity.LSCTotalDayInCycle = 1
+        $scope.entity.LSCTotalWorkingDay = 0
+      }
+      else if (value == 2) {
+        $scope.entity.LSCFixDay = 0
+        $scope.entity.LSCTotalDayInCycle = 0
+        $scope.entity.LSCTotalWorkingDay = 1
+      }
+      else {
+        $scope.entity.LSCFixDay = 1
+        $scope.entity.LSCTotalDayInCycle = 0
+        $scope.entity.LSCTotalWorkingDay = 0
+      }
+    }
 
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
@@ -88,6 +109,7 @@
 
         editFormService.saveForm(pageId, $scope.entity,
           $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline).then(_successSalarySetting, _errorSalarySetting);
+        $scope.page.refreshData();
         console.log(pageId + 'pageid')
         console.log($scope.entity)
         console.log($scope.oldEntity)
@@ -104,10 +126,12 @@
       console.log(result)
       if (result.success_message == 'Added New Record.') {
         $scope.showEditForm = false;
+        $scope.page.refreshData();
         // editForm.$setPristine();
       }
       else if (result.success_message == 'Record Updated.') {
         $scope.showEditForm = false;
+        $scope.page.refreshData();
       }
       else
         $scope.showEditForm = true;
@@ -122,5 +146,9 @@
       return valid;
 
     }
+
+
+
+
   }
 })();

@@ -225,6 +225,8 @@
         case 15:
           $scope.entity.SHIsSingleOT = true;
           break;
+        case 100:
+          break;
       }
     }
   }

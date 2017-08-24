@@ -409,7 +409,9 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         $rootScope.started = true;
     }
 
-
+    $rootScope.openProgress = function () {
+        return dialogModal.openProgress();
+    }
     function closeModals() {
         if ($rootScope.warning) {
             $rootScope.warning.close();
@@ -478,5 +480,11 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     $rootScope.openUserProfile = function () {
         dialogModal.openUserProfile();
     }
+
+    // $rootScope.$on('cfpLoadingBar:completed', function (evt) {
+    //     console.log(evt, 'fpLoadingBar:completed')
+    //     // dialogModal.openProgress();
+    // });
+
 
 });
