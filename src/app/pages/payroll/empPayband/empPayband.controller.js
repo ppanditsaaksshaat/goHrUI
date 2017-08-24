@@ -121,11 +121,41 @@
 
         function _loadController() {
 
-
+            // $timeout(function () {
+            //     var multiData = {
+            //         lz: false,
+            //         parent: {
+            //             tableid: pageIds.empRulePage.tableId,
+            //             pkValue: paybandId
+            //         }, child: [
+            //             {
+            //                 tableid: pageIds.rulePage.tableId,
+            //                 linkColumn: 'PBRPBId',
+            //                 orderByList: [
+            //                     { column: 'PBRId', isDesc: false }
+            //                 ],
+            //                 child: [
+            //                     {
+            //                         tableid: pageIds.formulaPage.tableId,//formula table
+            //                         linkColumn: 'PFDPBRId',
+            //                         orderByList: []
+            //                     },
+            //                     {
+            //                         tableid: pageIds.slabPage.tableId,
+            //                         linkColumn: 'PBSPBRId',
+            //                         orderByList: []
+            //                     }]
+            //             }
+            //         ]
+            //     };
+            //     var tableData = pageService.getMultiEntity(multiData);
+            //     tableData.then(_fetchPaybandRuleDetailSuccess, _fetchPaybandRuleDetailError)
+            // });
 
 
             //loading pages
             $timeout(function () {
+
 
                 pageService.getPagData(pageIds.payband.pageId).then(function (result) {
                     console.log(result)
