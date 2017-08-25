@@ -21,7 +21,7 @@
         title: 'reports',
         sidebarMeta: {
           icon: 'ion-gear-a',
-          order: 2,
+          order: 4,
         },
       })
   }

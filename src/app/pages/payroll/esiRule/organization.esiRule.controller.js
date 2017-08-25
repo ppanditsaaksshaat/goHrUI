@@ -5,15 +5,15 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.payRoll.paybandHeadDetail')
-    .controller('paybandHeadController', paybandHeadController);
+  angular.module('BlurAdmin.pages.payroll.esiRule')
+    .controller('esiRuleController', esiRuleController);
 
   /** @ngInject */
-  function paybandHeadController($scope, $state, $stateParams,
+  function esiRuleController($scope, $state, $stateParams,
     pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr) {
 
     var vm = this;
-    var pageId = 137;
+    var pageId = 345;
     var currentState = $state.current;
     
     $scope.entity = {}
@@ -21,7 +21,7 @@
     console.log($scope.page)
     // $scope.selectEmployeeData = $scope.page.pageinfo.selects.LEADEmpId;
     // console.log($scope.selectEmployeeData)
-    $scope.page.pageId = 137;
+    $scope.page.pageId = 345;
 
    
     $scope.page.boxOptions = {

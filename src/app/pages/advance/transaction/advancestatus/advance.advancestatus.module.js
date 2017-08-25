@@ -16,7 +16,7 @@
       .state('advance.transaction.advancestatus', {
         url: '/advancestatus',
       //  abstract: true,
-        templateUrl: 'app/pages/advance/transaction/advancestatus/advance.advancestatus.html?v=1',
+        templateUrl: 'app/pages/advance/transaction/advancestatus/advance.advancestatus.html',
         controller: "AdvanceStatusController",
         controllerAs: "attCtrl",
         title: 'Advance Status',

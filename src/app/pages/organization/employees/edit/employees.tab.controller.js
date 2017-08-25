@@ -86,7 +86,7 @@
             $scope.gridOptions.data = [];
             var rndValu = Math.round((Math.random() * 10) * 10);
             var rndValu2 = Math.round((Math.random() * rndValu) * rndValu);
-            vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html?" + rndValu2 + "=" + rndValu;
+            vm.templateUrlPath = "app/pages/organization/employees/templates/" + vm.tempName + "/" + vm.tempName + "-view.html";
 
             $scope.page.pageIsLoaded = false;
             $scope.page.pageIsLoading = true;
@@ -126,7 +126,7 @@
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.guempPKId)
 
                 if (vm.pageId != 360 && vm.pageId != 'entitlement') {
-                    vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
+                    vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html";
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page);
                 }

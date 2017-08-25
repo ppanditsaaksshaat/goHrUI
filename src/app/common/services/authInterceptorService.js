@@ -79,9 +79,12 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
                 result = result_data;
 
                 if (result_data.lz !== undefined) {
+                    console.log('converting request')
                     if (result_data.lz) {
                         var paramData = LZString.decompressFromEncodedURIComponent(result_data.data);
                         result = angular.fromJson(paramData);
+                        console.log('request converted')
+                        console.log(result)
                     }
                 }
             }
@@ -101,6 +104,7 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
 
         //    }
         // }
+        
         return response;
     }
 

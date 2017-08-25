@@ -15,7 +15,7 @@
     $stateProvider
         .state('attendance.synctable', {
           url: '/synctable',        
-          templateUrl: 'app/pages/attendance/synctable/synctable.html?v=1',
+          templateUrl: 'app/pages/attendance/synctable/synctable.html',
           controller: "syncTableController",
           controllerAs: "syncCtrl",
           title: 'SyncTable',

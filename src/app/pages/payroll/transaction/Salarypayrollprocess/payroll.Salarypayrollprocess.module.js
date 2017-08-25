@@ -16,7 +16,7 @@
       .state('attendance.transaction.Salarypayrollprocess', {
         url: '/Salarypayrollprocess',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/transaction/Salarypayrollprocess/payroll.Salarypayrollprocess.html?v=1',
+        templateUrl: 'app/pages/payroll/transaction/Salarypayrollprocess/payroll.Salarypayrollprocess.html',
         controller: "paySalarypayrollprocessController",
         controllerAs: "payCtrl",
         title: 'SalaryPayProcess',

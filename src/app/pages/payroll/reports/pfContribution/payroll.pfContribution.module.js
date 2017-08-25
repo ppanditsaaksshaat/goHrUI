@@ -16,7 +16,7 @@
       .state('payroll.reports.pfContribution', {
         url: '/pfContribution',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/pfContribution/payroll.pfContribution.html?v=1',
+        templateUrl: 'app/pages/payroll/reports/pfContribution/payroll.pfContribution.html',
         controller: "pfContributionController",
         controllerAs: "payCtrl",
         title: 'PF Contribution',

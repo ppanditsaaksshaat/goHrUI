@@ -16,7 +16,7 @@
       .state('payroll.reports.combinedChallan', {
         url: '/combinedChallan',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/combinedChallan/payroll.combinedChallan.html?v=1',
+        templateUrl: 'app/pages/payroll/reports/combinedChallan/payroll.combinedChallan.html',
         controller: "combinedChallanController",
         controllerAs: "payCtrl",
         title: 'Combined Challan',

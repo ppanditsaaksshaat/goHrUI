@@ -16,7 +16,7 @@
       .state('payroll.reports.eSIChallanForm', {
         url: '/eSIChallanForm',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/eSIChallanForm/payroll.eSIChallanForm.html?v=1',
+        templateUrl: 'app/pages/payroll/reports/eSIChallanForm/payroll.eSIChallanForm.html',
         controller: "eSIChallanFormController",
         controllerAs: "payCtrl",
         title: 'ESI ChallanForm',

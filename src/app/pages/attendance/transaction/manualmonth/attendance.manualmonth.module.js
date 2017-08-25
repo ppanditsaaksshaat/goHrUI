@@ -16,7 +16,7 @@
       .state('attendance.transaction.manualmonth', {
         url: '/manualmonth',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/transaction/manualmonth/attendance.manualmonth.html?v=1',
+        templateUrl: 'app/pages/attendance/transaction/manualmonth/attendance.manualmonth.html',
         controller: "attTransmanualmonthController",
         controllerAs: "attCtrl",
         title: 'Month By Attendance ',

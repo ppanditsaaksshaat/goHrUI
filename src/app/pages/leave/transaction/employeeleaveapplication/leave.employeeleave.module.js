@@ -16,7 +16,7 @@
       .state('leave.transaction.employeeleaveapplication', {
         url: '/leaveapplication',
       //  abstract: true,
-        templateUrl: 'app/pages/leave/transaction/employeeleaveapplication/leave.employeeleave.html?v=1',
+        templateUrl: 'app/pages/leave/transaction/employeeleaveapplication/leave.employeeleave.html',
         controller: "EmpLeaveAppController",
         controllerAs: "leaveCtrl",
         title: 'Leave Application',

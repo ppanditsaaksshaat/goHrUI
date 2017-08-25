@@ -16,7 +16,7 @@
       .state('attendance.transaction.verified', {
         url: '/verified',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/transaction/verified/verified.attendance.html?v=1',
+        templateUrl: 'app/pages/attendance/transaction/verified/verified.attendance.html',
         controller: "attTransVerifiedController",
         controllerAs: "attVerifiedCtrl",
         title: 'Verified Attendance',

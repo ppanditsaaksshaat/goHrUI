@@ -5,15 +5,15 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.payRoll.epfRule')
-    .controller('epfRuleController', epfRuleController);
+  angular.module('BlurAdmin.pages.payroll.otRule')
+    .controller('otRuleController', otRuleController);
 
   /** @ngInject */
-  function epfRuleController($scope, $state, $stateParams,
+  function otRuleController($scope, $state, $stateParams,
     pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr) {
 
     var vm = this;
-    var pageId = 344;
+    var pageId = 346;
     var currentState = $state.current;
     
     $scope.entity = {}
@@ -21,7 +21,7 @@
     console.log($scope.page)
     // $scope.selectEmployeeData = $scope.page.pageinfo.selects.LEADEmpId;
     // console.log($scope.selectEmployeeData)
-    $scope.page.pageId = 344;
+    $scope.page.pageId = 346;
 
    
     $scope.page.boxOptions = {

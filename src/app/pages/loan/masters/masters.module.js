@@ -16,7 +16,7 @@
         .state('loan.masters', {
           url: '/masters',
           abstract: true,
-          templateUrl: 'app/pages/loan/masters/masters.html?v=1',
+          templateUrl: 'app/pages/loan/masters/masters.html',
           controller: "LoanMastersController1",
           controllerAs: "tabCtrl",
           title: 'Master',

@@ -16,7 +16,7 @@
       .state('attendance.transaction.compoffApply', {
         url: '/compoffApply',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/transaction/compoffApply/attendance.compoffApply.html?v=1',
+        templateUrl: 'app/pages/attendance/transaction/compoffApply/attendance.compoffApply.html',
         controller: "attTranscompoffApplyController",
         controllerAs: "attCtrl",
         title: 'Comp Off Apply',

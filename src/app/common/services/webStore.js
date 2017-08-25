@@ -87,20 +87,24 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         //serviceBase = 'http://rudraitsl.com/api/';// _getValue('serviceBase');
         //serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
         //serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
-        serviceBase = 'http://web400.hrms/api/';
+        // serviceBase = 'http://web400.hrms/api/';
         // serviceBase = 'http://localhost/api/';
-        //serviceBase = 'http://seacliff.com/api/';
-
-
-
+        // serviceBase = 'http://ultralive.rudra.hrm/api/';
+        // serviceBase = '/api/'
+        serviceBase = null;
+        console.log($location)
         if (serviceBase == null) {
             var host = $location.host();
-            var absUrl = $location.absUrl().replace('#/', '');
-            var lastIdx = absUrl.lastIndexOf('/');
-            var firstIdx = absUrl.indexOf('/');
-            var hostIdx = absUrl.indexOf(host);
-            serviceBase = absUrl.substring(hostIdx + host.length, lastIdx) + '/api/';
+            serviceBase = 'http://' + host + '/api/'
+            console.log(serviceBase)
+            // console.log($location)
+            // var absUrl = $location.absUrl().replace('#/', '');
+            // var lastIdx = absUrl.lastIndexOf('/');
+            // var firstIdx = absUrl.indexOf('/');
+            // var hostIdx = absUrl.indexOf(host);
+            // serviceBase = absUrl.substring(hostIdx + host.length, lastIdx) + '/api/';
             _setValue('serviceBase', serviceBase);
+
         }
         return serviceBase;
     }

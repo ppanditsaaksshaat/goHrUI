@@ -31,10 +31,10 @@
         url: '/reports',
         template: '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
         abstract: true,
-        title: 'reports',
+        title: 'Reports',
         sidebarMeta: {
           icon: 'ion-gear-a',
-          order: 2,
+          order: 50,
         },
       })
   }

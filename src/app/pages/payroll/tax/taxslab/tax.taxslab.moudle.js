@@ -16,7 +16,7 @@
       .state('payroll.tax.taxslab', {
         url: '/taxslab',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/tax/taxslab/tax.taxslab.html?v=1',
+        templateUrl: 'app/pages/payroll/tax/taxslab/tax.taxslab.html',
         controller: "taxSlabController",
         controllerAs: "",
         title: 'Tax Slab',

@@ -16,7 +16,7 @@
       .state('organization.company.list', {
         url: '/list',
         // abstract: true,
-        templateUrl: 'app/pages/organization/company/list/company.list.html?v=1',
+        templateUrl: 'app/pages/organization/company/list/company.list.html',
         controller: "companyListController",
         controllerAs: "comCtrl",
         title: 'List',
