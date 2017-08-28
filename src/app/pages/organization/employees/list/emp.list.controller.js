@@ -25,6 +25,10 @@
 
     $scope.page = $scope.createPage();
     $scope.page.pageId = 25;
+    $scope.page.searchList = [];
+    $scope.page.searchList.push({ field: 'JDIsHasLeft', operand: '=', value: 0 })
+    // $scope.page.searchList.push({ field: 'VAYear', operand: '=', value: moment().format('YYYY') })
+    // $scope.page.searchList.push({ field: 'VADepartmentId', operand: '=', value: -1 })
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -44,9 +48,20 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      uploadRecord: _uploadRecord
+      uploadRecord: _uploadRecord,
+      pageResult: _pageResult
     }
 
+
+    function _pageResult(row) {
+      console.log(row);
+      angular.forEach(row.pageinfo.filters, function (filter) {
+        if (filter.name == 'JDIsHasLeft') {
+            filter.value = 0
+        }
+      })
+
+    }
     function _addRecord() {
       $state.go("organization.employees.add", "{action:'create'}");
     }

@@ -103,7 +103,9 @@
       $scope.showWeeklyOffList = true;
       var multiSelect = {
         lz: false,
-        parent: { tableid: $scope.weekOffSetPage.pageinfo.tableid, pkValue: row.entity.WOSId },
+        parent: { 
+          tableid: $scope.weekOffSetPage.pageinfo.tableid, 
+          pkValue: row.entity.WOSId },
         child: [{
           tableid: $scope.weekOffPage.pageinfo.tableid,
           linkColumn: 'SGWDWeekOffSetId',

@@ -48,7 +48,19 @@
     }
 
     function _pageResult(result) {
-      console.log(result)
+      angular.forEach(result.pageinfo.filters, function (filter) {
+        if (filter.name == 'SubUnitId') {
+          filter.value = -1;
+        
+        }
+        if (filter.name == 'SalMonth') {
+          filter.value = parseInt(moment().format('MM'));
+        }
+        if (filter.name == 'SalYear') {
+          filter.value = parseInt(moment().format('YYYY'));
+        }
+      
+      })
     }
 
     function _afterCellEdit(rowEntity, colDef, newValue, oldValue) {

@@ -429,7 +429,7 @@
 
             if ($scope.page.gridOptions.data.length > 0) {
                 angular.forEach($scope.page.gridOptions.data, function (row) {
-                               console.log(row)
+                    console.log(row)
 
                     var data = {
                         EBDId: row.EBDId == null ? undefined : row.EBDId,
@@ -585,7 +585,9 @@
                     }
                 }
                 else if (vm.pageId == 114) {
-
+                    if (vm.entity.JDIsHasLeft) {
+                        vm.entity.JDHasLeftDate = moment();
+                    }
                     if (vm.entity.JDIsOT == false) {
                         vm.entity.SingleOT = false;
                         vm.entity.JDDoubleOT = false;
