@@ -7,6 +7,7 @@
 
   angular.module('BlurAdmin.pages.loan.reports', [
     'BlurAdmin.pages.loan.reports.empLoanApplication',
+    'BlurAdmin.pages.loan.reports.loanOutStanding',
   ])
     .config(routeConfig);
 
