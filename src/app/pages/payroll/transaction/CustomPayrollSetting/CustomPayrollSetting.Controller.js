@@ -44,24 +44,24 @@
       showApplyFilter: false,
       filterOnChange: _filterChange,
       afterCellEdit: _afterCellEdit,
-      pageResult: _pageResult
+      //pageResult: _pageResult
     }
 
-    function _pageResult(result) {
-      angular.forEach(result.pageinfo.filters, function (filter) {
-        if (filter.name == 'SubUnitId') {
-          filter.value = -1;
+    // function _pageResult(result) {
+    //   angular.forEach(result.pageinfo.filters, function (filter) {
+    //     if (filter.name == 'SubUnitId') {
+    //       filter.value = -1;
         
-        }
-        if (filter.name == 'SalMonth') {
-          filter.value = parseInt(moment().format('MM'));
-        }
-        if (filter.name == 'SalYear') {
-          filter.value = parseInt(moment().format('YYYY'));
-        }
+    //     }
+    //     if (filter.name == 'SalMonth') {
+    //       filter.value = parseInt(moment().format('MM'));
+    //     }
+    //     if (filter.name == 'SalYear') {
+    //       filter.value = parseInt(moment().format('YYYY'));
+    //     }
       
-      })
-    }
+    //   })
+    // }
 
     function _afterCellEdit(rowEntity, colDef, newValue, oldValue) {
       console.log(rowEntity, colDef, newValue, oldValue)
