@@ -1590,7 +1590,6 @@
                         EPBRIsSlab: data.PBRIsSlab,
                         EPBREmpId: data.EmpId,
                         EPBRPBRId: data.PBRId,
-                        PBRId: data.PBRId,
                         EPBRIgnoreRule: false,
                         EPBRPercantage: data.PBRPercantage,
                         EPBRSHId: data.PBRSHId,
