@@ -1564,8 +1564,6 @@
 
             if (newRuleList != null && newRuleList != undefined) {
                 console.log(newRuleList)
-
-
                 angular.forEach(newRuleList, function (data) {
                     var calOnShId = "";
                     var calOnHeadId = "";
@@ -1574,13 +1572,25 @@
                             calOnShId += cal.value + ",";
                         })
                     }
+
+                    var empPBRId = 0;
+                    if ($scope.empRuleWithSlabAndFormulaDetail != undefined) {
+                        var allEmpRule = $filter('findAll')($scope.empRuleWithSlabAndFormulaDetail[0], data.EmpId, 'EPBREmpId');
+                        if (allEmpRule != null) {
+                            var empRule = $filter('findObj')(allEmpRule, data.PBRId, 'EPBRPBRId');
+                            if (empRule != null) {
+                                empPBRId = empRule.EPBRId;
+                            }
+                        }
+                    }
                     var empRule = {
-                        EPBRId: undefined,
+                        EPBRId: empPBRId == 0 ? undefined : empPBRId,
                         EPBRCalcOnSHId: "[" + calOnShId.substring(0, calOnShId.length - 1) + "]",
                         EPBRIsFormula: data.PBRIsFormula,
                         EPBRIsSlab: data.PBRIsSlab,
                         EPBREmpId: data.EmpId,
                         EPBRPBRId: data.PBRId,
+                        PBRId: data.PBRId,
                         EPBRIgnoreRule: false,
                         EPBRPercantage: data.PBRPercantage,
                         EPBRSHId: data.PBRSHId,
@@ -1613,7 +1623,7 @@
                                         calOnHeadId = formulaCal.value + ",";
                                     })
                                 }
-
+                               
                                 var empFormula = {
                                     EPFDId: 0,
                                     EPFDPBRId: data.child[0].rows[formula].PFDPBRId,
