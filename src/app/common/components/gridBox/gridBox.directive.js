@@ -49,6 +49,7 @@
                     gridStyle: { height: '450px' },
                     noResultMessageText: undefined,
                     customButtons: [],
+                    customButtonsWithDefault:[],
                     selectedRowButtons: [],
                     customColumns: [],
                     pageResult: null,
