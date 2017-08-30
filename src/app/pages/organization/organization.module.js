@@ -12,7 +12,8 @@
     // 'BlurAdmin.pages.organization.empupload',
     // 'BlurAdmin.pages.organization.masters',
     'BlurAdmin.pages.organization.general',
-    'BlurAdmin.pages.organization.employees.reports'
+    // 'BlurAdmin.pages.organization.employees.report'
+    'BlurAdmin.pages.organization.reports',
     
     
     // 'BlurAdmin.pages.organization.empadd',

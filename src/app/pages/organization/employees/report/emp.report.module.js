@@ -6,17 +6,17 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.employees.reports', [])
+  angular.module('BlurAdmin.pages.organization.employees.report', [])
     .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($stateProvider, $urlRouterProvider) {
 
     $stateProvider
-      .state('organization.employees.reports', {
+      .state('organization.employees.report', {
         url: '/reports',
         // abstract: true,
-        templateUrl: 'app/pages/organization/employees/reports/emp.reports.html?v=1',
+        templateUrl: 'app/pages/organization/employees/report/emp.report.html?v=1',
         controller: "empReportsController",
         controllerAs: "tabCtrl",
         title: 'Reports',
