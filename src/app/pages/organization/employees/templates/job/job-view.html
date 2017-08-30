@@ -1,14 +1,7 @@
 <form ng-submit="empTabCtrl.saveFormCommon(editForm)" name="editForm" novalidate>
   <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
-    <edit-panel-head 
-      page="page"
-      page-title="page.pageinfo.title" 
-      reset-form="empTabCtrl.resetFormCommon(editForm)"
-      clear-form="empTabCtrl.clearFormCommon()"
-      open-List="empTabCtrl.goToEmployeeList()" 
-      condition="(true)"
-      show-close="true"
-      ></edit-panel-head>
+    <edit-panel-head page="page" page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon(editForm)" clear-form="empTabCtrl.clearFormCommon()"
+      open-List="empTabCtrl.goToEmployeeList()" condition="(true)" show-close="true"></edit-panel-head>
     <div class="panel-body" style="padding:5px;" ng-scrollbars ng-scrollbars-config="config">
       <div style="min-height: 450px;" ng-show="page.pageIsLoaded">
         <div class="row">
@@ -16,20 +9,20 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="inputDepartment" ng-bind="page.pageinfo.fields.JDDeptId.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDDeptId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDDeptId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDDesgId.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDDesgId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDDesgId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDEmploymentId.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDEmploymentId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDEmploymentId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
             </div>
           </div>
@@ -38,21 +31,21 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDDate.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDDate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDEmpGradeId.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDEmpGradeId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDEmpGradeId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDEmpLevelId.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDEmpLevelId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDEmpLevelId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
           </div>
         </div>
@@ -61,19 +54,19 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDCategory.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDCategory" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDCategory" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDOfficeEmail.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDOfficeEmail" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDOfficeEmail" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDOfficeMobile.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDOfficeMobile" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDOfficeMobile" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
           </div>
 
@@ -82,19 +75,40 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDOfficePhone.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDOfficePhone" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDOfficePhone" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDOfficeExtention.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDOfficeExtention" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDOfficeExtention" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDGroupId.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDGroupId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDGroupId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label ng-bind="page.pageinfo.fields.LocationId.text"></label>
+              <field-box page="page" ng-column="page.pageinfo.fields.LocationId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label ng-bind="page.pageinfo.fields.BRId.text"></label>
+              <field-box page="page" ng-column="page.pageinfo.fields.BRId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label ng-bind="page.pageinfo.fields.JDSubUnitID.text"></label>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDSubUnitID" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
           </div>
         </div>
@@ -132,42 +146,43 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDIsOT.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDIsOT" ng-entity="empTabCtrl.entity" form="editForm" fb-change="onOTChange()"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDIsOT" ng-entity="empTabCtrl.entity" form="editForm" fb-change="onOTChange()"></field-box>
             </div>
-            <!--<div class="checkbox">
-              <label class="custom-checkbox">      
-            <input type="checkbox" ng-model="empTabCtrl.entity.JDIsOT" >   
-            <span>OT</span>
-          </label>
-            </div>-->
           </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label ng-bind="page.pageinfo.fields.JDIsHasLeft.text"></label>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDIsHasLeft" ng-entity="empTabCtrl.entity" form="editForm" fb-change="onOTChange()"></field-box>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
           <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.SingleOT.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.SingleOT" ng-entity="empTabCtrl.entity" form="editForm"  fb-change="onSingleOTChange()"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.SingleOT" ng-entity="empTabCtrl.entity" form="editForm" fb-change="onSingleOTChange()"></field-box>
             </div>
-
           </div>
 
           <div ng-if="empTabCtrl.entity.JDIsOT" class="col-sm-4">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDDoubleOT.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDDoubleOT" ng-entity="empTabCtrl.entity" form="editForm"   fb-change="onDoubleOTChange()"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDDoubleOT" ng-entity="empTabCtrl.entity" form="editForm" fb-change="onDoubleOTChange()"></field-box>
             </div>
-
           </div>
         </div>
         <div class="row" ng-if="empTabCtrl.entity.JDIsOT">
           <div class="col-sm-4" ng-if="empTabCtrl.entity.SingleOT">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDSingleOTRate.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.JDSingleOTRate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDSingleOTRate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
           </div>
           <div class="col-sm-4" ng-if="empTabCtrl.entity.JDDoubleOT">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.DoubleOTRate.text"></label>
-              <field-box page="page" ng-column ="page.pageinfo.fields.DoubleOTRate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <field-box page="page" ng-column="page.pageinfo.fields.DoubleOTRate" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
 
             </div>
           </div>

@@ -16,7 +16,7 @@
       .state('attendance.reports.musterMonthWise', {
         url: '/musterMonthWise',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/reports/musterMonthWise/attendance.musterMonthWise.html?v=1',
+        templateUrl: 'app/pages/attendance/reports/musterMonthWise/attendance.musterMonthWise.html',
         controller: "musterMonthWiseController",
         controllerAs: "payCtrl",
         title: 'Muster MonthWise',

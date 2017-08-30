@@ -10,7 +10,18 @@
     function authController($scope, pageService, DJWebStore, authService) {
 
         var vm = this;
-        console.log('authController')
+
+        $scope.languageList = [];
+
+        $scope.languageList.push({
+            label: 'English', value: 'en'
+        })
+
+        $scope.languageList.push({
+            label: 'Hindi', value: 'hi'
+        })
+
+        $scope.selectedLanguage = $scope.languageList[0];
 
         $scope.doLogin = _doLogin;
 
@@ -63,6 +74,7 @@
             $("#userName").prop("disabled", true);
             $("#userPassword").prop("disabled", true);
             $("#btnlogin").prop("disabled", true);
+            $("#userLanguage").prop("disabled", true); 
             $("#btnlogin").text("Please Wait..");
 
             var loginData = {
@@ -79,7 +91,7 @@
                 }, function (err) {
                     console.log(err);
                 });
-                },
+            },
                 function (err) {
                     console.log(err);
                     if (err.error_description !== undefined) {
@@ -91,6 +103,7 @@
                     }
                     $("#userName").prop("disabled", false);
                     $("#userPassword").prop("disabled", false);
+                    $("#userLanguage").prop("disabled", false); 
                     $("#btnlogin").prop("disabled", false);
                     $("#btnlogin").text("Sign in");
                 });

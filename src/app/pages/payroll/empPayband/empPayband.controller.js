@@ -17,8 +17,12 @@
             rulePage: { tableId: 140, pageId: 134 },
             slabPage: { tableId: 141, pageId: 135 },
             formulaPage: { tableId: 434, pageId: 135 },
-            employeePage: { tableId: 30, pageId: 25 }
+            employeePage: { tableId: 30, pageId: 25 },
+            empRulePage: { tableId: 437, pageId: 459 },
+            empSlabPage: { tableId: 438, pageId: 460 },
+            empFormulaPage: { tableId: 439, pageId: 458 }
         }
+        var queryId = 560;
         var selectedPaybandMaster = {};
 
         //
@@ -51,7 +55,7 @@
             // gridFooterTemplate: '<div class="row"> <div class="col-md-8"> <div class="pull-left">  Diffrences of earning to be added in <select ng-model="grid.appScope.selectedOtherHead" ng-options="opt.name for opt in grid.appScope.rulePage.pageinfo.fields.PBRSHId.options"></select></div><div class="pull-right"><button ng-click="grid.appScope.addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button></div></div><div class="col-md-4"><div class="pull-right"><button ng-click="grid.appScope.addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div></div>'
             // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
         }
-
+        $scope.entity = {};
         $scope.rulePage = {}
         $scope.rulePage.pageId = pageIds.rulePage.pageId;
         $scope.slabPage = {}
@@ -59,12 +63,28 @@
         $scope.formulaPage = {}
         $scope.formulaPage.pageId = pageIds.formulaPage.pageId;
 
+        $scope.serachEmpPayBand = _serachEmpPayBand;
         $scope.removeRuleSlab = _removeRuleSlab;
         $scope.changeFormula = _changeFormula;
         $scope.changeSlab = _changeSlab;
         $scope.toggleRowExpand = _toggleRowExpand;
+        $scope.saveEmpPayband = _saveEmpPayband;
+
+
+
+
 
         var grossHead = {};
+
+
+
+        //serach employee payband according to grade and level
+        function _serachEmpPayBand() {
+
+            _getGradeLevelEmployeeDetail($scope.entity.PBEmpGradeId, $scope.entity.PBEmpLevelId);
+        }
+
+        //END :  serach employee payband according to grade and level
 
         $scope.getThirdGridHeight = function (options) {
             console.log(options)
@@ -104,9 +124,24 @@
 
 
 
-
             //loading pages
             $timeout(function () {
+
+
+                var data = {
+                    searchList: [{
+                        field: 'PBId',
+                        operand: '=',
+                        value: 1
+                    }],
+                    orderByList: []
+                }
+                pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccess, _getCustomQueryError)
+                pageService.getPagData(pageIds.payband.pageId).then(function (result) {
+                    console.log(result)
+                    $scope.paybandPage = result;
+                })
+
                 pageService.getPagData($scope.rulePage.pageId).then(
                     function (result) {
                         console.log(result)
@@ -123,7 +158,7 @@
                                 //once slabpage success call employee detail
 
                                 //getting employee list
-                                _getGradeLevelEmployeeDetail(1, 7);
+                                // _getGradeLevelEmployeeDetail(1, 7);
 
                             }, function (err) {
 
@@ -158,13 +193,26 @@
             pageService.getTableData(pageIds.payband.tableId, pageIds.payband.pageId, '', '', false, data).then(_getGradeLevelPaybandDetailSuccess, _getGradeLevelPaybandDetailError);
 
         }
+
+        function _getCustomQuerySuccess(result) {
+            if (result != "NoDataFound") {
+                console.log(result)
+                $scope.empRuleWithSlabAndFormulaDetail = result;
+            }
+        }
+        function _getCustomQueryError(err) {
+
+        }
         function _getGradeLevelPaybandDetailSuccess(result) {
 
             if (result == 'NoDataFound') {
                 //promt no payband found for selected grades
             }
             else {
+
                 if (result.length > 0) {
+                    //grid show 
+                    $scope.gridShow = true;
                     selectedPaybandMaster = result[0];
                     //feteching payband rule detail with multi calling facility
                     _fetchPaybandRuleDetail(selectedPaybandMaster.PBId)
@@ -205,7 +253,7 @@
             else {
 
                 $scope.employeeList = result;
-                _getGradeLevelPaybandDetail(1, 7)
+                _getGradeLevelPaybandDetail($scope.entity.PBEmpGradeId, $scope.entity.PBEmpLevelId)
 
             }
         }
@@ -261,9 +309,8 @@
 
         //setting up first level grid columns as per data loaded for selected payband detail
         function _setEntitlementColumns(result) {
-
+            console.log(result)
             var defaultData = {};
-
             if (result) {
                 if (result.child) {
                     if (result.child[0].rows) {
@@ -352,10 +399,6 @@
                                 }
                             }
                             //END: manuplating data
-
-
-
-
                             var column = {
                                 field: 'SH_' + row.PBRSHId,
                                 name: 'SH_' + row.PBRSHId,
@@ -367,8 +410,6 @@
                                 cellEditableCondition: _firstGridCellEditableCondition
                             }
                             //
-
-
                             defaultData['SH_' + row.PBRSHId] = parseFloat(row.PBRAmount)
 
                             if (row.SHIsDeduction) {
@@ -481,18 +522,122 @@
                         _setupSecondGrid(empData);
 
                         if (empData.subGridOptions) {
+
+                            var empRuleList = null;
+                            console.log($scope.empRuleWithSlabAndFormulaDetail)
+                            if ($scope.empRuleWithSlabAndFormulaDetail != undefined) {
+                                var empRuleList = $filter('findAll')($scope.empRuleWithSlabAndFormulaDetail[0], empData.EmpId, 'EPBREmpId')
+                                //var empSlabList = $filter('findAll')($scope.empRuleWithSlabAndFormulaDetail[2], empData.EmpId, 'EPBREmpId')
+
+                            }
                             if (result.child)
                                 if (result.child.length > 0) {
                                     var childRows = angular.copy(result.child[0].rows);
 
                                     for (var rowIndex = 0; rowIndex < childRows.length; rowIndex++) {
                                         var childRow = childRows[rowIndex];
+                                        var epbrId = 0;
+                                        if (empRuleList != null) {
+                                            var empRule = $filter('findObj')(empRuleList, childRow.PBRId, 'EPBRPBRId')
+                                            if (empRule != null) {
+
+                                                childRow.PBRId = empRule.EPBRPBRId;
+                                                if (empRule.EPBRCalcOnSHId != '[]') {
+                                                    //convert
+                                                    empRule.EPBRCalcOnSHId = empRule.EPBRCalcOnSHId.replace('[', '').replace(']', '')
+                                                    if (empRule.EPBRCalcOnSHId != '') {
+                                                        var dependHeadList = empRule.EPBRCalcOnSHId.split(',');
+                                                        var selectedHeadList = [];
+                                                        for (var h = 0; h < dependHeadList.length; h++) {
+                                                            var shead = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, dependHeadList[h], 'value')
+                                                            if (shead != null) {
+                                                                selectedHeadList.push(shead)
+                                                            }
+                                                        }
+                                                        empRule.EPBRCalcOnSHId = selectedHeadList;
+                                                    }
+                                                    childRow.PBRCalcOnSHId = empRule.EPBRCalcOnSHId;
+                                                }
+                                                childRow.PBRIsFormula = empRule.EPBRIsFormula;
+                                                childRow.PBRIsSlab = empRule.EPBRIsSlab;
+                                                if (empRule.EPBRPercantage != '0')
+                                                    childRow.PBRPercantage = empRule.EPBRPercantage;
+                                                childRow.PBRSHId = empRule.EPBRSHId;
+                                                childRow.PBRPBId = empRule.EPBRPBId;
+                                                childRow.PBRRuleName = empRule.EPBRRuleName;
+                                                childRow.PBRAmount = empRule.EPBRAmount;
+                                                childRow.PBRIgnoreRule = empRule.EPBRIgnoreRule;
+                                                childRow.PBREmpId = empRule.EPBREmpId;
+                                                epbrId = empRule.EPBRId;
+
+                                            }
+                                        }
+
                                         if (childRow.PBRIsFormula) {
+                                            if (epbrId != 0) {
+                                                var empFormulaList = $filter('findAll')($scope.empRuleWithSlabAndFormulaDetail[2], epbrId, 'EPFDPBRId');
+                                                if (empFormulaList != null) {
+                                                    for (var f = 0; f < childRow.child[0].rows.length; f++) {
+                                                        var formula = childRow.child[0].rows[f];
+                                                        for (var ef = 0; ef < empFormulaList.length; ef++) {
+                                                            var empFormula = empFormulaList[ef];
+                                                            if (f == ef) {
+                                                                formula.PFDPBRId = empFormula.EPFDPBRId
+                                                                formula.PFDPercentage = empFormula.EPFDPercentage;
+                                                                formula.PFDOperator = empFormula.EPFDOperator;
+                                                                formula.PFDAmount = empFormula.EPFDAmount;
+                                                                formula.PFDCalcHeadId = empFormula.EPFDCalcHeadId;
+                                                                if (formula.PFDCalcHeadId != '[]') {
+                                                                    //convert
+                                                                    formula.PFDCalcHeadId = formula.PFDCalcHeadId.replace('[', '').replace(']', '')
+                                                                    if (empRule.EPBRCalcOnSHId != '') {
+                                                                        var dependHeadList = formula.PFDCalcHeadId.split(',');
+                                                                        var selectedHeadList = [];
+                                                                        for (var h = 0; h < dependHeadList.length; h++) {
+                                                                            var shead = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, dependHeadList[h], 'value')
+                                                                            if (shead != null) {
+                                                                                selectedHeadList.push(shead)
+                                                                            }
+                                                                        }
+                                                                        formula.PFDCalcHeadId = selectedHeadList;
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                             //creating third level grid for formula
                                             childRows[rowIndex].subGridOptions = _setupThirdGridOptions();
                                             _addThirdGridFormulaColumns(childRows[rowIndex])
                                         }
                                         else if (childRow.PBRIsSlab) {
+
+                                            if (epbrId != 0) {
+                                                var empSlabList = $filter('findAll')($scope.empRuleWithSlabAndFormulaDetail[1], epbrId, 'EPBSEPBRId');
+                                                if (empSlabList != null) {
+
+                                                    for (var s = 0; s < childRow.child[1].rows.length; s++) {
+                                                        var slab = childRow.child[1].rows[s];
+                                                        for (var es = 0; es < empSlabList.length; es++) {
+                                                            var empSlab = empSlabList[es];
+                                                            if (s == es) {
+                                                                slab.PBSEPBRId = empSlab.EPBSEPBRId
+                                                                slab.PBSIsCalcOnPercentage = empSlab.EPBSIsCalcOnPercentage
+                                                                slab.PBSPercentage = empSlab.EPBSPercentage
+                                                                slab.PBSMinCalcOnAmount = empSlab.EPBSMinCalcOnAmount
+                                                                slab.PBSMaxCalcOnAmount = empSlab.EPBSMaxCalcOnAmount
+                                                                slab.PBSMinAmount = empSlab.EPBSMinAmount
+                                                                slab.PBSMasAmount = empSlab.EPBSMasAmount
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+
+
                                             //creating third level grid for slab
                                             childRows[rowIndex].subGridOptions = _setupThirdGridOptions();
                                             _addThirdGridSlabColumns(childRows[rowIndex])
@@ -503,6 +648,7 @@
                                             if (childRow.child.length > 0)
                                                 if (childRow.child[0].rows.length > 0) {
                                                     if (childRows[rowIndex].subGridOptions) {
+
                                                         childRows[rowIndex].subGridOptions.data = childRows[rowIndex].child[0].rows;
                                                     }
                                                 }
@@ -515,8 +661,7 @@
                                                 }
                                         }
                                     }
-
-
+                                    empData.oldEntity = angular.copy(childRows)
                                     empData.subGridOptions.data = childRows
 
                                 }
@@ -553,6 +698,7 @@
             });
 
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+
                 if (grossHead) {
                     if (colDef.name == 'SH_' + grossHead.value) {
                         //updating subgrid gross amount
@@ -783,6 +929,7 @@
         }
 
         function _updateFirstGridFromSecondGrid(entity) {
+
             if (entity) {
                 if (entity.subGridOptions) {
                     if (entity.subGridOptions.data.length > 0) {
@@ -852,11 +999,11 @@
             return totalAmt;
         }
         function _toggleRowExpand(row) {
-            console.log($scope.secondGridApi, row)
+
             $scope.secondGridApi.expandable.toggleRowExpansion(row.entity);
         }
         function _changeSlab(row) {
-            console.log(row)
+
             //isExpanded
             row.entity.PBRIsSlab = !row.entity.PBRIsSlab;
             row.entity.PBRAmount = '';
@@ -936,7 +1083,7 @@
         function _secondGridOptions() {
 
             var subGridOptions = {
-                expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" ui-grid-edit ng-style=\"getSubgridHeight(row.entity.subGridOptions)\"></div>',
+                expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" ui-grid-edit ng-style=\"getSubgridHeight(row.entity.subGridOptions)\" class=\"djGrid\"></div>',
                 expandableRowHeight: 150,
                 enableExpandableRowHeader: false,
                 // subGridVariable will be available in subGrid scope
@@ -960,7 +1107,7 @@
                 onRegisterApi: _onSecondGridRegisterApi,
                 showGridFooter: false,
                 showColumnFooter: false,
-                externalScope: $scope
+
                 // gridFooterTemplate: '<div class="row"> <div class="col-md-8"> <div class="pull-left">  Diffrences of earning to be added in <select ng-model="grid.appScope.selectedOtherHead" ng-options="opt.name for opt in grid.appScope.rulePage.pageinfo.fields.PBRSHId.options"></select></div><div class="pull-right"><button ng-click="grid.appScope.addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button></div></div><div class="col-md-4"><div class="pull-right"><button ng-click="grid.appScope.addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div></div>'
                 // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
             };
@@ -969,7 +1116,7 @@
         }
         function _addSecondGridColumns(entity) {
             var cellTemplateCheck = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
-            cellTemplateCheck += "<a href ng-click=\"grid.appScope.externalScope.changeFormula(row)\" ng-show=\"row.entity.PBRCalcOnSHId.length>1 && !row.entity.PBRIsSlab && (row.entity.PBRPercantage<=0)\"> <i class=\"fa font-green\" ng-class=\"{'fa-check-square-o': row.entity.PBRIsFormula, 'fa-square-o': !row.entity.PBRIsFormula }\" aria-hidden=\"true\" ></i></a>";
+            cellTemplateCheck += "<a href ng-click=\"grid.appScope.externalScope.changeFormula(row)\" ng-show=\"row.entity.PBRCalcOnSHId.length>0 && !row.entity.PBRIsSlab && (row.entity.PBRPercantage<=0)\"> <i class=\"fa font-green\" ng-class=\"{'fa-check-square-o': row.entity.PBRIsFormula, 'fa-square-o': !row.entity.PBRIsFormula }\" aria-hidden=\"true\" ></i></a>";
             cellTemplateCheck += "</div>"
 
             var cellTemplateSlab = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
@@ -1174,6 +1321,7 @@
                 if (row.isExpanded) {
                     row.expandedRowHeight = 70;
                     $timeout(function () {
+
                         if (row.entity.subGridOptions.data)
                             row.expandedRowHeight = row.entity.subGridOptions.data.length * row.entity.subGridOptions.rowHeight + 39;
 
@@ -1222,7 +1370,8 @@
                 columnDefs: [],
                 onRegisterApi: _onThirdGridRegisterApi,
                 showGridFooter: false,
-                showColumnFooter: false
+                showColumnFooter: false,
+
                 // gridFooterTemplate: '<div class="row"> <div class="col-md-8"> <div class="pull-left">  Diffrences of earning to be added in <select ng-model="grid.appScope.selectedOtherHead" ng-options="opt.name for opt in grid.appScope.rulePage.pageinfo.fields.PBRSHId.options"></select></div><div class="pull-right"><button ng-click="grid.appScope.addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button></div></div><div class="col-md-4"><div class="pull-right"><button ng-click="grid.appScope.addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div></div>'
                 // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
             };
@@ -1365,16 +1514,20 @@
                     width: 50, visible: true, cellFilter: '', cellEditableCondition: true
                 })
 
-            if (row.PBRCalcOnSHId.length > 0) {
-                row.subGridOptions.data = [];
-                row.subGridOptions.data.push({
-                    PBRRuleName: '',
-                    PBSId: 0,
-                    PBSIsCalcOnPercentage: true,
-                    PBSPBRId: 0
-                })
+
+            if (row.PBRCalcOnSHId != undefined) {
+                if (row.PBRCalcOnSHId.length > 0) {
+                    row.subGridOptions.data = [];
+                    row.subGridOptions.data.push({
+                        PBRRuleName: '',
+                        PBSId: 0,
+                        PBSIsCalcOnPercentage: true,
+                        PBSPBRId: 0
+                    })
+                }
             }
         }
+
         function _onThirdGridRegisterApi(thirdGridApi) {
             $scope.thirdGridApi = thirdGridApi;
             console.log($scope.thirdGridApi)
@@ -1383,6 +1536,151 @@
 
 
         //END: third level grid functions
+
+
+        // save employee payband detail
+        function _saveEmpPayband() {
+            var newRuleList = [];
+            for (var firstRowIndex = 0; firstRowIndex < $scope.page.gridOptions.data.length; firstRowIndex++) {
+                var firstRow = $scope.page.gridOptions.data[firstRowIndex];
+                var oldEntity = firstRow.oldEntity;
+                if (firstRow.subGridOptions) {
+
+                    if (firstRow.subGridOptions.data.length > 0) {
+                        for (var secondRowIndex = 0; secondRowIndex < firstRow.subGridOptions.data.length; secondRowIndex++) {
+                            var newRule = firstRow.subGridOptions.data[secondRowIndex];
+                            var isFoundChanges = false;
+                            var oldRule = $filter('findObj')(oldEntity, newRule.PBRSHId, 'PBRSHId');
+                            if (oldRule != null) {
+                                if (!angular.equals(oldRule, newRule)) {
+                                    newRule.EmpId = firstRow.EmpId;
+                                    newRuleList.push(newRule)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (newRuleList != null && newRuleList != undefined) {
+                console.log(newRuleList)
+                angular.forEach(newRuleList, function (data) {
+                    var calOnShId = "";
+                    var calOnHeadId = "";
+                    if (data.PBRCalcOnSHId != undefined) {
+                        angular.forEach(data.PBRCalcOnSHId, function (cal) {
+                            calOnShId += cal.value + ",";
+                        })
+                    }
+
+                    var empPBRId = 0;
+                    if ($scope.empRuleWithSlabAndFormulaDetail != undefined) {
+                        var allEmpRule = $filter('findAll')($scope.empRuleWithSlabAndFormulaDetail[0], data.EmpId, 'EPBREmpId');
+                        if (allEmpRule != null) {
+                            var empRule = $filter('findObj')(allEmpRule, data.PBRId, 'EPBRPBRId');
+                            if (empRule != null) {
+                                empPBRId = empRule.EPBRId;
+                            }
+                        }
+                    }
+                    var empRule = {
+                        EPBRId: empPBRId == 0 ? undefined : empPBRId,
+                        EPBRCalcOnSHId: "[" + calOnShId.substring(0, calOnShId.length - 1) + "]",
+                        EPBRIsFormula: data.PBRIsFormula,
+                        EPBRIsSlab: data.PBRIsSlab,
+                        EPBREmpId: data.EmpId,
+                        EPBRPBRId: data.PBRId,
+                        PBRId: data.PBRId,
+                        EPBRIgnoreRule: false,
+                        EPBRPercantage: data.PBRPercantage,
+                        EPBRSHId: data.PBRSHId,
+                        EPBRPBId: data.PBRPBId,
+                        EPBRRuleName: data.PBRRuleName,
+                        EPBRAmount: data.PBRAmount
+                    }
+                    $scope.multiEntity = {};
+                    $scope.multiEntity.parent = {
+                        newEntity: empRule,
+                        oldEntity: {},
+                        action: empRule.EPBRId == undefined ? 'create' : 'edit',
+                        tableid: pageIds.empRulePage.tableId,
+                        pageid: pageIds.empRulePage.pageId
+                    }
+                    $scope.multiEntity.child = [];
+                    if (data.PBRIsFormula) {
+                        if (data.child[0].rows.length > 0) {
+                            var child = {
+                                tableid: pageIds.empFormulaPage.tableId,
+                                pageid: pageIds.empFormulaPage.pageId,
+                                parentColumn: 'EPBRId',
+                                linkColumn: 'EPFDPBRId',
+                                idenColName: 'EPFDId',
+                                rows: []
+                            }
+                            for (var formula = 0; formula < data.child[0].rows.length; formula++) {
+                                if (data.child[0].rows[formula].PFDCalcHeadId != undefined && data.child[0].rows[formula].PFDCalcHeadId != null) {
+                                    angular.forEach(data.child[0].rows[formula].PFDCalcHeadId, function (formulaCal) {
+                                        calOnHeadId = formulaCal.value + ",";
+                                    })
+                                }
+                               
+                                var empFormula = {
+                                    EPFDId: 0,
+                                    EPFDPBRId: data.child[0].rows[formula].PFDPBRId,
+                                    EPFDCalcHeadId: "[" + calOnHeadId.substring(0, calOnHeadId.length - 1) + "]",
+                                    EPFDPercentage: data.child[0].rows[formula].PFDPercentage,
+                                    EPFDOperator: data.child[0].rows[formula].PFDOperator,
+                                    EPFDAmount: data.child[0].rows[formula].PFDAmount,
+                                }
+                                child.rows.push(empFormula);
+                            }
+                        }
+                        $scope.multiEntity.child.push(child);
+                    }
+
+                    if (data.PBRIsSlab) {
+                        if (data.child[1].rows.length > 0) {
+                            var child = {
+                                tableid: pageIds.empSlabPage.tableId,
+                                pageid: pageIds.empSlabPage.pageId,
+                                parentColumn: 'EPBRId',
+                                linkColumn: 'EPBSEPBRId',
+                                idenColName: 'EPBSId',
+                                rows: []
+                            }
+                            for (var slab = 0; slab < data.child[1].rows.length; slab++) {
+                                var empSlab = {
+                                    EPBSId: 0,
+                                    EPBSEPBRId: data.child[1].rows[slab].PBSPBRId,
+                                    EPBSIsCalcOnPercentage: data.child[1].rows[slab].PBSIsCalcOnPercentage,
+                                    EPBSPercentage: data.child[1].rows[slab].PBSPercentage,
+                                    EPBSMinCalcOnAmount: data.child[1].rows[slab].PBSMinCalcOnAmount,
+                                    EPBSMaxCalcOnAmount: data.child[1].rows[slab].PBSMaxCalcOnAmount,
+                                    EPBSMinAmount: data.child[1].rows[slab].PBSMinAmount,
+                                    EPBSAvoidExcessCalc: data.child[1].rows[slab].PBSAvoidExcessCalc,
+                                    EPBSMasAmount: data.child[1].rows[slab].PBSMasAmount
+                                }
+                                child.rows.push(empSlab);
+                            }
+                        }
+                        $scope.multiEntity.child.push(child);
+                    }
+                    console.log($scope.multiEntity)
+                    $scope.multiEntity.lz = false;
+                    pageService.multiSave($scope.multiEntity).then(function (result) {
+                        console.log(result)
+                        if (result == "done") {
+                            $scope.showMsg("success", "Record Saved Successfully");
+                            //  _recalculatingSecondGrid($scope.page.gridOptions)
+                        }
+                    }, function (err) {
+                        console.log(err)
+                    })
+                })
+            }
+        }
+
+        // END: save employee payband detail
 
         _loadController();
     }

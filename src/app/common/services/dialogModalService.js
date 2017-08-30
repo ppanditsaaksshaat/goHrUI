@@ -116,6 +116,17 @@
       return $rootScope.modalInstance;
     }
 
+
+    this.openProgress = function () {
+      var modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: 'app/common/components/showProgress.html',
+        size: 'top-center-500',
+        backdrop: 'static',
+        keyboard: false,
+      });
+      return modalInstance;
+    }
   }
 
 })();

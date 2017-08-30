@@ -16,7 +16,7 @@
       .state('organization.payRoll.salaryHead', {
         url: '/salaryHead',
       //  abstract: true,
-        templateUrl: 'app/pages/organization/payRoll/salaryHead/organization.salaryHead.html?v=1',
+        templateUrl: 'app/pages/organization/payRoll/salaryHead/organization.salaryHead.html',
         controller: "salaryHeadController",
         controllerAs: "attCtrl",
         title: 'Salary Head',

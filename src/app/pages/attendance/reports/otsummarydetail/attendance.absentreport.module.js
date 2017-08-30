@@ -16,7 +16,7 @@
       .state('attendance.reports.otsummarydetail', {
         url: '/otsummarydetail',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/reports/otsummarydetail/attendance.otsummarydetail.html?v=1',
+        templateUrl: 'app/pages/attendance/reports/otsummarydetail/attendance.otsummarydetail.html',
         controller: "attreportotsummarydetailtController",
         controllerAs: "attCtrl",
         title: 'ot summary detail',

@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.payRoll.otRule', [])
+  angular.module('BlurAdmin.pages.payroll.otRule', [])
     .config(routeConfig);
 
   /** @ngInject */
@@ -16,7 +16,7 @@
       .state('organization.payRoll.otRule', {
         url: '/otRule',
       //  abstract: true,
-        templateUrl: 'app/pages/organization/payRoll/otRule/organization.otRule.html?v=1',
+        templateUrl: 'app/pages/organization/payRoll/otRule/organization.otRule.html',
         controller: "otRuleController",
         controllerAs: "attCtrl",
         title: 'OT Rule',

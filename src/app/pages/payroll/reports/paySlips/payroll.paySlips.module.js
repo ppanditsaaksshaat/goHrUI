@@ -16,7 +16,7 @@
       .state('payroll.reports.paySlips', {
         url: '/paySlips',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/paySlips/payroll.paySlips.html?v=1',
+        templateUrl: 'app/pages/payroll/reports/paySlips/payroll.paySlips.html',
         controller: "paySlipchallanController",
         controllerAs: "payCtrl",
         title: 'PaySlip',

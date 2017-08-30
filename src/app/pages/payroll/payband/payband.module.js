@@ -15,7 +15,7 @@
         $stateProvider
             .state('payroll.payband', {
                 url: '/payband',
-                templateUrl: 'app/pages/payroll/payband/payband.html?v=1',
+                templateUrl: 'app/pages/payroll/payband/payband.html',
                 controller: 'paybandController',
                 title: 'Payband',
                 sidebarMeta: {

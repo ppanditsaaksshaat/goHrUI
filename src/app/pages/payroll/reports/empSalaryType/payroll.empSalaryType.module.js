@@ -16,7 +16,7 @@
       .state('payroll.reports.empSalaryType', {
         url: '/empSalaryType',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/empSalaryType/payroll.empSalaryType.html?v=1',
+        templateUrl: 'app/pages/payroll/reports/empSalaryType/payroll.empSalaryType.html',
         controller: "empSalaryTypeController",
         controllerAs: "payCtrl",
         title: 'Employee Salary Type',

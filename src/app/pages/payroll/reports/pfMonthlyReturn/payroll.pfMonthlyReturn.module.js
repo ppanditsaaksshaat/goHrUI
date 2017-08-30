@@ -16,7 +16,7 @@
       .state('payroll.reports.pfMonthlyReturn', {
         url: '/pfMonthlyReturn',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/pfMonthlyReturn/payroll.pfMonthlyReturn.html?v=1',
+        templateUrl: 'app/pages/payroll/reports/pfMonthlyReturn/payroll.pfMonthlyReturn.html',
         controller: "pfMonthlyReturnController",
         controllerAs: "payCtrl",
         title: 'PF Monthly Return',

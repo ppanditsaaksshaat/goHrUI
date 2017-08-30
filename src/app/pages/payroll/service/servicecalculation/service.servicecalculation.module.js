@@ -16,7 +16,7 @@
       .state('payroll.service.servicecalculation', {
         url: '/servicecalculation',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/service/servicecalculation/service.servicecalculation.html?v=1',
+        templateUrl: 'app/pages/payroll/service/servicecalculation/service.servicecalculation.html',
         controller: "serviceCalculationController",
         controllerAs: "",
         title: 'Service Calculation',

@@ -17,7 +17,7 @@
       .state('attendance.transaction.upload', {
         url: '/upload',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/transaction/upload/attendance.upload.html?v=1',
+        templateUrl: 'app/pages/attendance/transaction/upload/attendance.upload.html',
         controller: "attTransuploadController",
         controllerAs: "attCtrl",
         sidebarMeta: {

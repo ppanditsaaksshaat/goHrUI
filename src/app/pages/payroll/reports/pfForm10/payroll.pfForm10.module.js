@@ -16,7 +16,7 @@
       .state('payroll.reports.pfForm10', {
         url: '/pfForm10',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/pfForm10/payroll.pfForm10.html?v=1',
+        templateUrl: 'app/pages/payroll/reports/pfForm10/payroll.pfForm10.html',
         controller: "pfForm10Controller",
         controllerAs: "payCtrl",
         title: 'PF Form 10',

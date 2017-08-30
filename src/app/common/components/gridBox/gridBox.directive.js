@@ -47,6 +47,7 @@
                     filterOnChange: null,//an event for filter box
                     defaultEntity: {},//providing default values to add form
                     gridStyle: { height: '450px' },
+                    noResultMessageText: undefined,
                     customButtons: [],
                     customButtonsWithDefault:[],
                     selectedRowButtons: [],
@@ -298,7 +299,18 @@
                         $scope.page.boxOptions.onRegisterApi(gridApi)
                     }
 
+                    //for all select event
+                    gridApi.selection.on.rowSelectionChangedBatch($scope, function (row) {
+
+                        $scope.page.selectedRows = gridApi.selection.getSelectedRows();
+                        // $scope.grid1Api.selection.getSelectedRows().forEach(function (row) {
+                        //     //Do something
+                        // });
+                    });
+                    // for individual select event
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+
+
                         $scope.page.selectedRows = gridApi.selection.getSelectedRows();
                         // if (row.isSelected) {
                         //     //enable edit button
@@ -533,6 +545,7 @@
                     $scope.page.dataIsLoading = false;
 
                     if (result == 'NoDataFound') {
+                        $scope.page.boxOptions.noResultMessageText = 'No data found.'
                         // uivm.showMsg('warning', 'No Record Found.');
                     } else if (result.Errors !== undefined) {
                         // uivm.showMsg('error', result.Message);

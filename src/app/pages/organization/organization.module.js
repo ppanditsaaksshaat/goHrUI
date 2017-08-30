@@ -6,6 +6,7 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.organization', [
+    'BlurAdmin.pages.organization.employees.masters',
     'BlurAdmin.pages.organization.employees',
     'BlurAdmin.pages.organization.payRoll',
     'BlurAdmin.pages.organization.company',
@@ -13,11 +14,9 @@
     // 'BlurAdmin.pages.organization.empupload',
     // 'BlurAdmin.pages.organization.masters',
     'BlurAdmin.pages.organization.general',
+    // 'BlurAdmin.pages.organization.employees.report'
+    'BlurAdmin.pages.organization.reports',
     'BlurAdmin.pages.organization.employees.reports'
-
-
-    // 'BlurAdmin.pages.organization.empadd',
-    // 'BlurAdmin.pages.organization.empedit',
 
   ])
     .config(routeConfig);

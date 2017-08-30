@@ -2,11 +2,25 @@
 //This is a Interceptor for our all WebApi call, it will add authorization header in our all request
 
 'use strict';
-angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$location', 'DJWebStore', function ($q, $location, DJWebStore) {
+angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$location', 'DJWebStore', '$rootScope', 'cfpLoadingBar', function ($q, $location, DJWebStore, $rootScope, cfpLoadingBar) {
 
     var authInterceptorServiceFactory = {};
-
+    authInterceptorServiceFactory.progressModalInstance = undefined;
+    authInterceptorServiceFactory.isProgressIsOpened = false;
     var _request = function (config) {
+
+
+        if (config.url.indexOf('/api/') > 0) {
+            console.log(config.url)
+            cfpLoadingBar.start();
+            // if (!authInterceptorServiceFactory.isProgressIsOpened) {
+            //     authInterceptorServiceFactory.progressModalInstance = $rootScope.openProgress();
+            //     if (authInterceptorServiceFactory.progressModalInstance) {
+            //         authInterceptorServiceFactory.isProgressIsOpened = true;
+            //     }
+            // }
+        }
+
 
         config.headers = config.headers || {};
 
@@ -24,6 +38,13 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
     }
 
     var _responseError = function (rejection) {
+        // if (authInterceptorServiceFactory.progressModalInstance) {
+        //     authInterceptorServiceFactory.progressModalInstance.close(undefined);
+        //     authInterceptorServiceFactory.isProgressIsOpened = false;
+        // }
+
+        cfpLoadingBar.complete();
+
         if (rejection.status === 401) {
             $location.path('/login');
         }
@@ -37,6 +58,13 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
     }
 
     var _response = function (response) {
+        // if (authInterceptorServiceFactory.progressModalInstance) {
+        //     authInterceptorServiceFactory.progressModalInstance.close(undefined);
+        //     authInterceptorServiceFactory.isProgressIsOpened = false;
+        // }
+
+        cfpLoadingBar.complete();
+
         if (response.statusText != 'OK') {
             console.log(response)
         }
@@ -44,16 +72,20 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
             || response.config.url.endsWith('GetFile')
             || response.config.url.endsWith('GetAttach')) {
         }
-        else if (response.config.url.indexOf('/api/') > 0) {
+        else if (response.config.url.indexOf('/api/') > -1) {
             var result = {};
             if (response.data !== undefined) {
                 var result_data = angular.fromJson(response.data);
                 result = result_data;
-
+                console.log(result_data.lz,'lz')
+                console.log(result_data,'result_data')
                 if (result_data.lz !== undefined) {
+                    console.log('converting request')
                     if (result_data.lz) {
                         var paramData = LZString.decompressFromEncodedURIComponent(result_data.data);
                         result = angular.fromJson(paramData);
+                        console.log('request converted')
+                        console.log(result)
                     }
                 }
             }
@@ -73,8 +105,11 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
 
         //    }
         // }
+        
         return response;
     }
+
+
 
     authInterceptorServiceFactory.request = _request;
     authInterceptorServiceFactory.responseError = _responseError;

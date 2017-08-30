@@ -16,7 +16,7 @@
       .state('payroll.reports.coveringLetter', {
         url: '/coveringLetter',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/coveringLetter/payroll.coveringLetter.html?v=1',
+        templateUrl: 'app/pages/payroll/reports/coveringLetter/payroll.coveringLetter.html',
         controller: "coveringLetterController",
         controllerAs: "payCtrl",
         title: 'Covering Letter',

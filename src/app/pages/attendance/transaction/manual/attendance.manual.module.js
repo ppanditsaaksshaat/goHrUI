@@ -16,7 +16,7 @@
       .state('attendance.transaction.manual', {
         url: '/manual',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/transaction/manual/attendance.manual.html?v=1',
+        templateUrl: 'app/pages/attendance/transaction/manual/attendance.manual.html',
         controller: "attTransManualController",
         controllerAs: "attCtrl",
         title: 'Day By Attendance',

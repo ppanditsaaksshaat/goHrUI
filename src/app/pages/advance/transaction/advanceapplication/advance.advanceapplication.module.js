@@ -16,7 +16,7 @@
       .state('advance.transaction.advanceapplication', {
         url: '/advanceapplication',
       //  abstract: true,
-        templateUrl: 'app/pages/advance/transaction/advanceapplication/advance.advanceapplication.html?v=1',
+        templateUrl: 'app/pages/advance/transaction/advanceapplication/advance.advanceapplication.html',
         controller: "AdvanceAppController",
         controllerAs: "attCtrl",
         title: 'Advance App',

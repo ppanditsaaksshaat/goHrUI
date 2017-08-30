@@ -9,6 +9,23 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
         }
         return null;
     }
+}).filter('findAll', function () {
+    return function (list, value, propName) {
+        var result = []
+        var i = 0, len = list.length;
+        for (; i < len; i++) {
+            if (list[i][propName] == value) {
+                result.push(list[i]);
+            }
+        }
+        if (result.length > 0) {
+            return result;
+        }
+        else {
+            return null;
+        }
+
+    }
 }).filter('mapGender', function () {
     var genderHash = {
         1: 'male',

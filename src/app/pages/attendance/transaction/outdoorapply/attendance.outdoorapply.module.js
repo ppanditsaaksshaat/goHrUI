@@ -16,7 +16,7 @@
       .state('attendance.transaction.outdoorapply', {
         url: '/outdoorapply',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/transaction/outdoorapply/attendance.outdoorapply.html?v=1',
+        templateUrl: 'app/pages/attendance/transaction/outdoorapply/attendance.outdoorapply.html',
         controller: "attTransoutdoorapplyController",
         controllerAs: "attCtrl",
         title: 'OutDoor Application',

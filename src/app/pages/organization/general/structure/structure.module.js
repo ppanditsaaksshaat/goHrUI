@@ -15,7 +15,7 @@
     $stateProvider
       .state('organization.general.structure', {
         url: '/structure',
-        templateUrl: 'app/pages/organization/general/structure/structure.html?v=1',
+        templateUrl: 'app/pages/organization/general/structure/structure.html',
         controller: "structureController",
         controllerAs: "tabCtrl",
         title: 'Location Structure',
@@ -25,7 +25,7 @@
         },
       }).state('organization.general.structure.list', {
         url: '/:name/:pageId',
-        templateUrl: 'app/pages/organization/general/structure/structure.list.html?v=1',
+        templateUrl: 'app/pages/organization/general/structure/structure.list.html',
         controller: "structureListController",
         controllerAs: "tabCtrl",
         title: 'Location Structure/ Masters',

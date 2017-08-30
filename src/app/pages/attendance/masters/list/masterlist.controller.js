@@ -40,6 +40,7 @@
     $scope.showWeeklyOffList = false;
     // $scope.weekClick = _weekClick;
     $scope.closeWeekOffAdd = _closeWeekOffAdd;
+    $scope.WEFChange = _WEFChange;
 
     $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false }
     $scope.page = $scope.createPage();
@@ -63,11 +64,17 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      uploadRecord: null
+      uploadRecord: null,
+      dataResult: _dataResult
     }
     if (pageId == 455) {
       $scope.page.boxOptions.addRecord = _addRecord;
       $scope.page.boxOptions.editRecord = _editRecord;
+    }
+
+    function _dataResult(row) {
+      $scope.oldData = angular.copy(row);
+      console.log($scope.oldData);
     }
 
     function _addRecord() {
@@ -89,7 +96,9 @@
       $scope.showWeeklyOffList = true;
       var multiSelect = {
         lz: false,
-        parent: { tableid: $scope.weekOffSetPage.pageinfo.tableid, pkValue: row.entity.WOSId },
+        parent: { 
+          tableid: $scope.weekOffSetPage.pageinfo.tableid, 
+          pkValue: row.entity.WOSId },
         child: [{
           tableid: $scope.weekOffPage.pageinfo.tableid,
           linkColumn: 'SGWDWeekOffSetId',
@@ -114,7 +123,6 @@
         }
       }
       $scope.entity = result;
-      console.log(result)
       angular.forEach(result.child, function (child) {
         $scope.weekGridOptions.data = child.rows;
       })
@@ -154,9 +162,9 @@
       result.pageinfo.selects.SGWDWeekDayId.splice(0, 1);
       result.pageinfo.selects.SGWDFirst.splice(0, 0, { value: -2, name: "None" });
       $scope.weekGridOptions.columnDefs = [
-        { name: 'name', displayName: 'Day', width: 140, enableCellEdit: false },
+        { name: 'name', displayName: 'Day', width: 130, enableCellEdit: false },
         {
-          name: result.pageinfo.fields.SGWDFirst.name, displayName: result.pageinfo.fields.SGWDFirst.text, width: 140,
+          name: result.pageinfo.fields.SGWDFirst.name, displayName: result.pageinfo.fields.SGWDFirst.text, width: 130,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -165,7 +173,7 @@
 
         },
         {
-          name: result.pageinfo.fields.SGWDSecond.name, displayName: result.pageinfo.fields.SGWDSecond.text, width: 140,
+          name: result.pageinfo.fields.SGWDSecond.name, displayName: result.pageinfo.fields.SGWDSecond.text, width: 130,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -173,7 +181,7 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'"
         },
         {
-          name: result.pageinfo.fields.SGWDThird.name, displayName: result.pageinfo.fields.SGWDThird.text, width: 140,
+          name: result.pageinfo.fields.SGWDThird.name, displayName: result.pageinfo.fields.SGWDThird.text, width: 130,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -181,7 +189,7 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
         },
         {
-          name: result.pageinfo.fields.SGWDFourth.name, displayName: result.pageinfo.fields.SGWDFourth.text, width: 140,
+          name: result.pageinfo.fields.SGWDFourth.name, displayName: result.pageinfo.fields.SGWDFourth.text, width: 130,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -189,7 +197,7 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
         },
         {
-          name: result.pageinfo.fields.SGWDFifth.name, displayName: result.pageinfo.fields.SGWDFifth.text, width: 140,
+          name: result.pageinfo.fields.SGWDFifth.name, displayName: result.pageinfo.fields.SGWDFifth.text, width: 130,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -213,6 +221,8 @@
     function _successWeekOffSetCustomQuery(result) {
       console.log(result)
       $scope.weekOffSetPage = result;
+      $scope.weekOffSetPage.isAllowEdit = true;
+
     }
     function _errorweekOffSetCustomQuery(err) {
 
@@ -261,13 +271,62 @@
     }
 
     function _validateWeekOff(entity) {
-
+      var errorMsg = "";
+      var gridErrorMsg = "";
+      var newWEF = moment(entity.WOSWEF);
+      var newWET = moment(entity.WOSWET);
       if (entity.WOSName == undefined || entity.WOSName == "") {
         $scope.showMsg("error", "Please enter Set Name");
         return false;
       }
-      if (entity.WOSGroupId == "") {
+      if (entity.WOSGroupId.length == 0) {
         $scope.showMsg("error", "Please select atleast one group");
+        return false;
+      }
+      if (entity.WOSWEF == undefined || entity.WOSWEF == "") {
+        $scope.showMsg("error", "Please select With Effect From");
+        return false;
+      }
+      if (entity.WOSWET == undefined || entity.WOSWET == "") {
+        $scope.showMsg("error", "Please select With Effect To");
+        return false;
+      }
+      if ($scope.weekGridOptions.data.length > 0) {
+        for (var i = 0; i < $scope.weekGridOptions.data.length; i++) {
+          var row = $scope.weekGridOptions.data[i];
+          if ((row.SGWDFirst != -1 && row.SGWDFirst != -2) || (row.SGWDSecond != -1 && row.SGWDSecond != -2) || (row.SGWDThird != -1 && row.SGWDThird != -2) || (row.SGWDFourth != -1 && row.SGWDFourth != -2) || (row.SGWDFifth != -1 && row.SGWDFifth != -2)) {
+            gridErrorMsg = "";
+            break;
+          }
+          else {
+            gridErrorMsg = "Please select atleast one weekoff from grid";
+          }
+        }
+      }
+      if (gridErrorMsg != "") {
+        $scope.showMsg("error", gridErrorMsg);
+        return false;
+      }
+      if ($scope.oldData != null && $scope.oldData != undefined) {
+        angular.forEach($scope.oldData, function (data) {
+          var oldWEF = moment(data.WOSWEF);
+          var oldWET = moment(data.WOSWET);
+          newWEF.isBetween(oldWEF, oldWET);
+          newWET.isBetween(oldWEF, oldWET);
+          if (newWEF.isBetween(oldWEF, oldWET) || moment(data.WOSWEF).format('DD/MMMM/YYYY') == moment(entity.WOSWEF).format('DD/MMMM/YYYY') || moment(data.WOSWET).format('DD/MMMM/YYYY') == moment(entity.WOSWEF).format('DD/MMMM/YYYY')) {
+            errorMsg += moment(data.WOSWEF).format('DD/MMMM/YYYY') + " " + "to " + moment(data.WOSWET).format('DD/MMMM/YYYY');
+          }
+        });
+
+      }
+
+      if (errorMsg != "") {
+        $scope.showMsg("error", "WeekOff already present from " + errorMsg);
+        return false;
+      }
+
+      if (parseInt(newWET.diff(newWEF, 'days')) < 30) {
+        $scope.showMsg("error", "Atleast 1 month difference between with effect from and with effect to");
         return false;
       }
       return true;
@@ -289,7 +348,9 @@
           WOSId: $scope.entity.WOSId == undefined ? undefined : $scope.entity.WOSId,
           WOSName: $scope.entity.WOSName,
           WOSGroupId: groupIds,
-          WOSGroupName: groupNames
+          WOSGroupName: groupNames,
+          WOSWEF: $scope.entity.WOSWEF,
+          WOSWET: $scope.entity.WOSWET
         }
         $scope.multiEntity = {};
         $scope.multiEntity.parent = {

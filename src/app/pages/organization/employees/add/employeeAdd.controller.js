@@ -85,7 +85,11 @@
                 JDEmploymentId: vm.empAdd.JDEmploymentId,
                 JDEmpGradeId: vm.empAdd.JDEmpGradeId,
                 JDEmpLevelId: vm.empAdd.JDEmpLevelId,
-                JDGroupId: vm.empAdd.JDGroupId
+                JDGroupId: vm.empAdd.JDGroupId,
+                DoubleOTRate: 0,
+                JDSingleOTRate: 0,
+                SingleOT: 0,
+                JDDoubleOT: 0
             }
             var personal = {
                 PdGenderId: vm.empAdd.PdGenderId,

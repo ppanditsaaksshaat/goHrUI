@@ -16,7 +16,7 @@
         .state('leave.masters', {
           url: '/masters',
           abstract: true,
-          templateUrl: 'app/pages/leave/masters/masters.html?v=1',
+          templateUrl: 'app/pages/leave/masters/masters.html',
           controller: "LeaveMastersController1",
           controllerAs: "tabCtrl",
           title: 'Master',

@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.employees.reports')
+  angular.module('BlurAdmin.pages.organization.employees.report')
     .controller('empReportsController', empReportsController);
 
   /** @ngInject */
@@ -13,6 +13,7 @@
    console.log('empReportsController controller')
     var vm = this;
     
+    $scope.page = { reportId: 10 }
 
   }
 

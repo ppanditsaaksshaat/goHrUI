@@ -16,7 +16,7 @@
 //       .state('organization.general.companies', {
 //         url: '/companies',
 //         // abstract: true,
-//         templateUrl: 'app/pages/organization/general/companies/companies.html?v=1',
+//         templateUrl: 'app/pages/organization/general/companies/companies.html',
 //         controller: "companiesController",
 //         controllerAs: "tabCtrl",
 //         title: 'Companies',
