@@ -16,8 +16,11 @@
     'BlurAdmin.pages.organization.general',
     // 'BlurAdmin.pages.organization.employees.report'
     'BlurAdmin.pages.organization.reports',
-    // 'BlurAdmin.pages.organization.employees.reports'
-
+    
+    
+    // 'BlurAdmin.pages.organization.empadd',
+    // 'BlurAdmin.pages.organization.empedit',
+    
   ])
     .config(routeConfig);
 

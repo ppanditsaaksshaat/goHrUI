@@ -22,7 +22,7 @@
         title: 'General Info',
         sidebarMeta: {
           icon: 'ion-gear-a',
-          order: 100,
+          order: 1,
         },
       });
   }
