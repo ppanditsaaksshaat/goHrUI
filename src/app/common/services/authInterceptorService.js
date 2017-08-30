@@ -72,12 +72,13 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
             || response.config.url.endsWith('GetFile')
             || response.config.url.endsWith('GetAttach')) {
         }
-        else if (response.config.url.indexOf('/api/') > 0) {
+        else if (response.config.url.indexOf('/api/') > -1) {
             var result = {};
             if (response.data !== undefined) {
                 var result_data = angular.fromJson(response.data);
                 result = result_data;
-
+                console.log(result_data.lz,'lz')
+                console.log(result_data,'result_data')
                 if (result_data.lz !== undefined) {
                     console.log('converting request')
                     if (result_data.lz) {

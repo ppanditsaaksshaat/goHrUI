@@ -86,7 +86,7 @@
                 function _showResult() {
                     $("#progress-bar").show();
                     $("#print-button").hide();
-                    $scope.reportUrl = 'app/common/components/reportViewer/blank.html?rnd=1'
+                    $scope.reportUrl = 'app/common/components/reportViewer/blank.html'
                     console.log($scope.page.searchList)
                     if ($scope.page.pageinfo.filters.length > 0) {
                         if ($scope.page.searchList.length <= 0) {
