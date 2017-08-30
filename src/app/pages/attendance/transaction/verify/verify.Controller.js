@@ -288,11 +288,11 @@
       pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
     }
     function _getCustomQuerySuccessResult(result) {
-
-      if (result[0].emp == 1 && result[0].sum == 1) {
-        $scope.showMsg("success", "Verify Successfully")
-        $scope.page.refreshData();
-      }
+      $scope.showMsg("success", "Verify Successfully")
+      // if (result. == { emp = 1, sum = 1 }) {
+      //  
+      //   $scope.page.refreshData();
+      // }
     }
     function _getCustomQueryErrorResult(err) {
 

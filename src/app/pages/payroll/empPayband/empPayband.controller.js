@@ -69,6 +69,7 @@
         $scope.changeSlab = _changeSlab;
         $scope.toggleRowExpand = _toggleRowExpand;
         $scope.saveEmpPayband = _saveEmpPayband;
+        $scope.refreshEmpPayband = _refreshEmpPayband;
 
 
 
@@ -209,7 +210,7 @@
                 //promt no payband found for selected grades
             }
             else {
-
+                console.log(result)
                 if (result.length > 0) {
                     //grid show 
                     $scope.gridShow = true;
@@ -299,7 +300,6 @@
         }
         function _fetchPaybandRuleDetailSuccess(result) {
             console.log(result)
-
             _setEntitlementColumns(result)
         }
         function _fetchPaybandRuleDetailError(err) {
@@ -667,6 +667,10 @@
                                 }
 
                         }
+
+                        empData.GrossPercentage = empData.PBRPercantage;
+                        _updateFirstGridFromSecondGrid(empData)
+
                         dataList.push(empData)
                     }
 
@@ -912,14 +916,17 @@
                     //check whether rule is depend on percentage
                     if (rowEntity.PBRPercantage) {
                         if (rowEntity.PBRPercantage > 0) {
-                            rowEntity.PBRAmount = Math.round((parseFloat(rowEntity.PBRPercantage) / 100) * dependTotalAmt).toFixed(2);
-                            if (isNaN(rowEntity.PBRAmount)) {
-                                rowEntity.PBRAmount = 0;
-                            }
-                            //find gorss % for calculated %
-                            //setting gross %
-                            if (grossAmt > 0) {
-                                rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt).toFixed(2)
+                            if (dependTotalAmt > 0) {
+
+                                rowEntity.PBRAmount = Math.round((parseFloat(rowEntity.PBRPercantage) / 100) * dependTotalAmt).toFixed(2);
+                                if (isNaN(rowEntity.PBRAmount)) {
+                                    rowEntity.PBRAmount = 0;
+                                }
+                                //find gorss % for calculated %
+                                //setting gross %
+                                if (grossAmt > 0) {
+                                    rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBRAmount) * 100) / grossAmt).toFixed(2)
+                                }
                             }
                         }
                     }
@@ -936,7 +943,11 @@
                         for (var rowIndex = 0; rowIndex < entity.subGridOptions.data.length; rowIndex++) {
                             var rowEntity = entity.subGridOptions.data[rowIndex];
                             //updating parent row cell value
+
                             entity['SH_' + rowEntity.PBRSHId] = parseFloat(rowEntity.PBRAmount);
+                            rowEntity.GrossPercentage = parseFloat(rowEntity.PBRPercantage);
+
+
                         }
                         //fetching and calculating totals from subgrid
                         var grossId = parseInt(grossHead.value);
@@ -971,6 +982,7 @@
                         entity['employer'] = employerTotal.toFixed(2)
                         entity['netPayable'] = netPayable.toFixed(2)
                         entity['totalCtc'] = ctcTotal.toFixed(2)
+
                     }
                 }
             }
@@ -1063,7 +1075,8 @@
         }
         function _removeRuleSlab(row) {
             row.entity.PBRIsRemove = !row.entity.PBRIsRemove;
-            row.entity.PBRAmount = 0.00;
+            gridApi.core.refresh()
+            //  row.entity.PBRAmount = 0.00;
             // var index = $scope.payGridOptions.data.indexOf(row.entity);
             // $scope.payGridOptions.data.splice(index, 1);
             _getNetPayable();
@@ -1274,6 +1287,7 @@
             return '';
         }
         function _secondGridCellEditableCondition(scope) {
+
             if (scope.col.name == "PBRSHId") {
                 return true;
             }
@@ -1285,6 +1299,14 @@
                     }
                 }
                 return false;
+
+            }
+            else if (scope.col.name == "PBRAmount") {
+                
+                if (scope.row.entity.PBRIsFormula || scope.row.entity.PBRIsSlab) {
+                    return false
+                }
+
             }
             // else if (scope.col.name == "PBRCalcOnSHId") {
             //     if (entity.subGridOptions.data.length > 0) {
@@ -1339,6 +1361,28 @@
             });
 
             secondGridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+
+                if (newValue != "") {
+                    if (colDef.name == "PBRPercantage") {
+                        console.log(rowEntity.PBRPercantage)
+                        if (rowEntity.PBRPercantage > 100) {
+                            rowEntity.PBRPercantage = oldValue;
+                            $scope.showMsg("warning", "percentage not more than 100")
+                        }
+                    }
+                    if (colDef.name == "PBRAmount") {
+                        rowEntity.PBRPercantage = ((parseFloat(rowEntity.PBRAmount) * 100) / secondGridApi.grid.parentRow.entity.subGridOptions.data[0].PBRAmount).toFixed(2)
+                        rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBRAmount) * 100) / secondGridApi.grid.parentRow.entity.subGridOptions.data[0].PBRAmount).toFixed(2)
+                    }
+
+                    _recalculatingSecondGrid(secondGridApi.grid.parentRow.entity);
+
+                    //update first grid values after changes
+                    _updateFirstGridFromSecondGrid(secondGridApi.grid.parentRow.entity)
+                }
+                console.log(secondGridApi.grid.parentRow.entity.subGridOptions.data);
+                console.log(secondGridApi.grid.parentRow.entity)
+
                 console.log('sub grid api', colDef, rowEntity, newValue, oldValue)
             });
         }
@@ -1562,7 +1606,7 @@
                 }
             }
 
-            if (newRuleList != null && newRuleList != undefined) {
+            if (newRuleList.length > 0) {
                 console.log(newRuleList)
                 angular.forEach(newRuleList, function (data) {
                     var calOnShId = "";
@@ -1616,15 +1660,27 @@
                                 idenColName: 'EPFDId',
                                 rows: []
                             }
+
                             for (var formula = 0; formula < data.child[0].rows.length; formula++) {
                                 if (data.child[0].rows[formula].PFDCalcHeadId != undefined && data.child[0].rows[formula].PFDCalcHeadId != null) {
                                     angular.forEach(data.child[0].rows[formula].PFDCalcHeadId, function (formulaCal) {
                                         calOnHeadId = formulaCal.value + ",";
                                     })
                                 }
-                               
+
+                                var empPFDId = 0;
+                                if ($scope.empRuleWithSlabAndFormulaDetail != undefined) {
+                                    var allEmpFormula = $filter('findAll')($scope.empRuleWithSlabAndFormulaDetail[2], empPBRId, 'EPFDPBRId');
+                                    if (allEmpFormula != null) {
+                                        var empFormula = $filter('findObj')(allEmpFormula, data.child[0].rows[formula].PFDId, 'EPFDPFDId');
+                                        if (empFormula != null) {
+                                            empPFDId = empFormula.EPFDId;
+                                        }
+                                    }
+                                }
                                 var empFormula = {
-                                    EPFDId: 0,
+                                    EPFDId: empPFDId == 0 ? 0 : empPFDId,
+                                    EPFDPFDId: data.child[0].rows[formula].PFDId,
                                     EPFDPBRId: data.child[0].rows[formula].PFDPBRId,
                                     EPFDCalcHeadId: "[" + calOnHeadId.substring(0, calOnHeadId.length - 1) + "]",
                                     EPFDPercentage: data.child[0].rows[formula].PFDPercentage,
@@ -1648,8 +1704,23 @@
                                 rows: []
                             }
                             for (var slab = 0; slab < data.child[1].rows.length; slab++) {
+
+
+                                var empPBSId = 0;
+                                if ($scope.empRuleWithSlabAndFormulaDetail != undefined) {
+                                    var allEmpSlab = $filter('findAll')($scope.empRuleWithSlabAndFormulaDetail[1], empPBRId, 'EPBSEPBRId');
+                                    if (allEmpSlab != null) {
+                                        var empSlab = $filter('findObj')(allEmpSlab, data.child[1].rows[slab].PBSId, 'EPBSPBSId');
+                                        if (empSlab != null) {
+                                            empPBSId = empSlab.EPBSId;
+                                        }
+                                    }
+                                }
+
+
                                 var empSlab = {
-                                    EPBSId: 0,
+                                    EPBSId: empPBSId == 0 ? 0 : empPBSId,
+                                    EPBSPBSId: data.child[1].rows[slab].PBSId,
                                     EPBSEPBRId: data.child[1].rows[slab].PBSPBRId,
                                     EPBSIsCalcOnPercentage: data.child[1].rows[slab].PBSIsCalcOnPercentage,
                                     EPBSPercentage: data.child[1].rows[slab].PBSPercentage,
@@ -1670,6 +1741,8 @@
                         console.log(result)
                         if (result == "done") {
                             $scope.showMsg("success", "Record Saved Successfully");
+                            // $scope.page.refreshData();
+
                             //  _recalculatingSecondGrid($scope.page.gridOptions)
                         }
                     }, function (err) {
@@ -1677,8 +1750,14 @@
                     })
                 })
             }
+            else {
+                $scope.showMsg("warning", "Please any change in grid before save")
+            }
         }
 
+        function _refreshEmpPayband() {
+            _getGradeLevelEmployeeDetail($scope.entity.PBEmpGradeId, $scope.entity.PBEmpLevelId);
+        }
         // END: save employee payband detail
 
         _loadController();

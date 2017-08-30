@@ -21,6 +21,9 @@
     var weekOffSetDetailPageId = 455;
     var weekOffSetDetailTableId = 435;
 
+
+    var isWeekOffEdit = false;
+
     // if ($scope.isResetShifAndLunch) {
     //   $scope.resetLunchDuration = _resetLunchDuration;
     // }
@@ -85,7 +88,7 @@
     }
 
     function _addRecord() {
-      console.log($scope.weekGridOptions.data)
+      isWeekOffEdit = false;
       $scope.entity = [];
       angular.forEach($scope.weekGridOptions.data, function (data) {
         data.SGWDFirst = -1;
@@ -99,13 +102,14 @@
       $scope.showWeeklyOffList = true;
     }
     function _editRecord(row) {
-
+      isWeekOffEdit = true;
       $scope.showWeeklyOffList = true;
       var multiSelect = {
         lz: false,
-        parent: { 
-          tableid: $scope.weekOffSetPage.pageinfo.tableid, 
-          pkValue: row.entity.WOSId },
+        parent: {
+          tableid: $scope.weekOffSetPage.pageinfo.tableid,
+          pkValue: row.entity.WOSId
+        },
         child: [{
           tableid: $scope.weekOffPage.pageinfo.tableid,
           linkColumn: 'SGWDWeekOffSetId',
@@ -286,7 +290,13 @@
         $scope.showMsg("error", "Please enter Set Name");
         return false;
       }
-      if (entity.WOSGroupId.length == 0) {
+      // alert(entity.WOSGroupId)
+      if (entity.WOSGroupId != undefined) {
+        if (entity.WOSGroupId.length == 0) {
+          $scope.showMsg("error", "Please select atleast one group");
+          return false;
+        }
+      } else {
         $scope.showMsg("error", "Please select atleast one group");
         return false;
       }
@@ -327,7 +337,7 @@
 
       }
 
-      if (errorMsg != "") {
+      if (errorMsg != "" && !isWeekOffEdit) {
         $scope.showMsg("error", "WeekOff already present from " + errorMsg);
         return false;
       }
