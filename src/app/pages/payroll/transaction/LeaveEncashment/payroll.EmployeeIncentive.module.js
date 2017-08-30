@@ -16,7 +16,7 @@
       .state('payroll.transaction.LeaveEncashment', {
         url: '/LeaveEncashment',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/transaction/LeaveEncashment/payroll.LeaveEncashment.html?v=1',
+        templateUrl: 'app/pages/payroll/transaction/LeaveEncashment/payroll.LeaveEncashment.html',
         controller: "payLeaveEncashmentController",
         controllerAs: "payCtrl",
         title: 'Encashment Apply',

@@ -16,7 +16,7 @@
         .state('organization.masters', {
           url: '/masters',
           abstract: true,
-          templateUrl: 'app/pages/organization/masters/masters.html?v=1',
+          templateUrl: 'app/pages/organization/masters/masters.html',
           controller: "OrgMastersController1",
           controllerAs: "tabCtrl",
           title: 'Master',

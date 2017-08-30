@@ -16,7 +16,7 @@
       .state('payroll.reports.payregister', {
         url: '/payregister',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/payregister/payroll.payregister.html?v=1',
+        templateUrl: 'app/pages/payroll/reports/payregister/payroll.payregister.html',
         controller: "payPayregisterController",
         controllerAs: "payCtrl",
         title: 'Pay Register',

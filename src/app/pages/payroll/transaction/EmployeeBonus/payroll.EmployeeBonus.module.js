@@ -16,7 +16,7 @@
       .state('payroll.transaction.EmployeeBonus', {
         url: '/EmployeeBonus',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/transaction/EmployeeBonus/payroll.EmployeeBonus.html?v=1',
+        templateUrl: 'app/pages/payroll/transaction/EmployeeBonus/payroll.EmployeeBonus.html',
         controller: "payEmployeeBonusController",
         controllerAs: "payCtrl",
         title: 'EmployeeBonus',

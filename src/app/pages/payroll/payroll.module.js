@@ -12,7 +12,10 @@
     'BlurAdmin.pages.payroll.transaction',
      'BlurAdmin.pages.payroll.reports',
      'BlurAdmin.pages.payroll.tax',
-     'BlurAdmin.pages.payroll.service'
+     'BlurAdmin.pages.payroll.service',
+     'BlurAdmin.pages.payroll.otRule',
+     'BlurAdmin.pages.payroll.esiRule',
+     'BlurAdmin.pages.payroll.epfRule'
   ])
       .config(routeConfig);
       
@@ -26,7 +29,7 @@
           title: 'Payroll',
           sidebarMeta: {
             icon: 'ion-pound',
-            order: 1,
+            order: 6,
           },
         });
   }

@@ -16,7 +16,7 @@
       .state('payroll.transaction.FullAndFinalSettlement', {
         url: '/FullAndFinalSettlement',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/transaction/FullAndFinalSettlement/payroll.FullAndFinalSettlement.html?v=1',
+        templateUrl: 'app/pages/payroll/transaction/FullAndFinalSettlement/payroll.FullAndFinalSettlement.html',
         controller: "payFullAndFinalSettlementController",
         controllerAs: "payCtrl",
         title: 'FullAndFinalSettlement',

@@ -16,7 +16,7 @@
       .state('loan.transaction.loaninstallment', {
         url: '/loaninstallment',
       //  abstract: true,
-        templateUrl: 'app/pages/loan/transaction/loaninstallment/loan.loaninstallment.html?v=1',
+        templateUrl: 'app/pages/loan/transaction/loaninstallment/loan.loaninstallment.html',
         controller: "LoanInstallmentController",
         controllerAs: "attCtrl",
         title: 'Loan Installment',

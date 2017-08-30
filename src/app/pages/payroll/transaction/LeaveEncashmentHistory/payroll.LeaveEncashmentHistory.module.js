@@ -16,7 +16,7 @@
       .state('payroll.transaction.LeaveEncashmentHistory', {
         url: '/LeaveEncashmentHistory',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/transaction/LeaveEncashmentHistory/payroll.LeaveEncashmentHistory.html?v=1',
+        templateUrl: 'app/pages/payroll/transaction/LeaveEncashmentHistory/payroll.LeaveEncashmentHistory.html',
         controller: "payLeaveEncashmentHistoryController",
         controllerAs: "payCtrl",
         title: 'Encash History',

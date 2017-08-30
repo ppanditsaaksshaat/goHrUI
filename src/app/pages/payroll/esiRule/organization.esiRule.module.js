@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.payRoll.esiRule', [])
+  angular.module('BlurAdmin.pages.payroll.esiRule', [])
     .config(routeConfig);
 
   /** @ngInject */
@@ -16,7 +16,7 @@
       .state('organization.payRoll.esiRule', {
         url: '/esiRule',
       //  abstract: true,
-        templateUrl: 'app/pages/organization/payRoll/esiRule/organization.esiRule.html?v=1',
+        templateUrl: 'app/pages/organization/payRoll/esiRule/organization.esiRule.html',
         controller: "esiRuleController",
         controllerAs: "attCtrl",
         title: 'ESI Rule',

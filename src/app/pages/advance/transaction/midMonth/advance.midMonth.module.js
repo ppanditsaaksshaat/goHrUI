@@ -16,7 +16,7 @@
       .state('advance.transaction.midMonth', {
         url: '/midMonth',
       //  abstract: true,
-        templateUrl: 'app/pages/advance/transaction/midMonth/advance.midMonth.html?v=1',
+        templateUrl: 'app/pages/advance/transaction/midMonth/advance.midMonth.html',
         controller: "midMonthController",
         controllerAs: "attCtrl",
         title: 'Mid Month',

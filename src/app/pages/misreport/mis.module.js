@@ -19,7 +19,7 @@
           title: 'MIS Report',
           sidebarMeta: {
             icon: 'ion-ios-list-outline',
-            order: 6,
+            order: 7,
           },
         });
   }

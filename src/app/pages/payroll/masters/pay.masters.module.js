@@ -16,7 +16,7 @@
         .state('payroll.masters', {
           url: '/masters',
           abstract: true,
-          templateUrl: 'app/pages/payroll/masters/pay.master.html?v=1',
+          templateUrl: 'app/pages/payroll/masters/pay.master.html',
           controller: "PayMastersController",
           controllerAs: "tabCtrl",
           title: 'Master',

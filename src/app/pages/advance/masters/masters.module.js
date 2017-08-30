@@ -16,7 +16,7 @@
         .state('advance.masters', {
           url: '/masters',
           abstract: true,
-          templateUrl: 'app/pages/advance/masters/masters.html?v=1',
+          templateUrl: 'app/pages/advance/masters/masters.html',
           controller: "advMastersController1",
           controllerAs: "tabCtrl",
           title: 'Master',

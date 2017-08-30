@@ -16,7 +16,7 @@
       .state('payroll.reports.test', {
         url: '/test',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/reports/test/payroll.test.html?v=1',
+        templateUrl: 'app/pages/payroll/reports/test/payroll.test.html',
         controller: "testController",
         controllerAs: "payCtrl",
         title: 'test',

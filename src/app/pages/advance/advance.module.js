@@ -23,10 +23,10 @@
           url: '/advance',
           template : '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
           abstract: true,
-          title: 'advance',
+          title: 'Advance',
           sidebarMeta: {
             icon: 'ion-pound',
-            order: 1,
+            order: 3,
           },
         });
   }

@@ -17,7 +17,7 @@
           title: 'Dashboard',
           sidebarMeta: {
             icon: 'ion-android-home',
-            order: 1,
+            order: 0,
           },
         });
   }
