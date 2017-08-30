@@ -7,11 +7,7 @@
 
   angular.module('BlurAdmin.pages.loan.reports', [
     'BlurAdmin.pages.loan.reports.empLoanApplication',
-<<<<<<< HEAD
-    'BlurAdmin.pages.loan.reports.empLoanDetail',
-=======
     'BlurAdmin.pages.loan.reports.loanOutStanding',
->>>>>>> 5b3872c6450793570fdc5c6f6651118a99638cd5
   ])
     .config(routeConfig);
 
