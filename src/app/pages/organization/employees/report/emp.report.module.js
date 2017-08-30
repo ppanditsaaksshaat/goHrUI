@@ -16,7 +16,7 @@
       .state('organization.employees.reports', {
         url: '/reports',
         // abstract: true,
-        templateUrl: 'app/pages/organization/employees/reports/emp.reports.html',
+        templateUrl: 'app/pages/organization/employees/report/emp.reports.html',
         controller: "empReportsController",
         controllerAs: "tabCtrl",
         title: 'Reports',

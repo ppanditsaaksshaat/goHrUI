@@ -7,6 +7,7 @@
 
   angular.module('BlurAdmin.pages.loan.reports', [
     'BlurAdmin.pages.loan.reports.empLoanApplication',
+    'BlurAdmin.pages.loan.reports.empLoanDetail',
   ])
     .config(routeConfig);
 
@@ -18,7 +19,7 @@
         url: '/reports',
         template: '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
         abstract: true,
-        title: 'reports',
+        title: 'Reports',
         sidebarMeta: {
           icon: 'ion-gear-a',
           order: 4,
