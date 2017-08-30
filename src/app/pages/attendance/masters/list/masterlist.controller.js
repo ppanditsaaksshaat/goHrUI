@@ -46,8 +46,13 @@
     $scope.WEFChange = _WEFChange;
 
 
+    //change WET date on change of WEF
+    function _WEFChange(WEFDate) {
+      var date = new Date(WEFDate)
+      $scope.entity.WOSWET = "31-Dec-" + date.getFullYear();
+    }
 
-    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false }
+    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false }
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.page.boxOptions = {
@@ -76,12 +81,7 @@
       $scope.page.boxOptions.addRecord = _addRecord;
       $scope.page.boxOptions.editRecord = _editRecord;
     }
-    
-      //change WET date on change of WEF
-      function _WEFChange(WEFDate) {
-        var date = new Date(WEFDate)
-        $scope.entity.WOSWET = "31-Dec-" + date.getFullYear();
-      }
+
     function _dataResult(row) {
       $scope.oldData = angular.copy(row);
       console.log($scope.oldData);
