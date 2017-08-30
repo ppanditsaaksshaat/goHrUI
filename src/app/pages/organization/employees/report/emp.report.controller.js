@@ -13,6 +13,7 @@
    console.log('empReportsController controller')
     var vm = this;
     
+    $scope.page = { reportId: 10 }
 
   }
 

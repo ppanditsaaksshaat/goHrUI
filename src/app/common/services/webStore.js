@@ -89,18 +89,26 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         //serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
         serviceBase = 'http://web400.hrms/api/';
         // serviceBase = 'http://localhost/api/';
-        //serviceBase = 'http://seacliff.com/api/';
-
-
-
+        // serviceBase = 'http://ultralive.rudra.hrm/api/';
+        // serviceBase = '/api/'
+        // serviceBase = null;
+        // console.log($location)
         if (serviceBase == null) {
             var host = $location.host();
-            var absUrl = $location.absUrl().replace('#/', '');
+            // serviceBase = 'http://' + host + '/api/'
+            
+            // console.log($location)
+            var absUrl = $location.absUrl();
+            if (absUrl.indexOf('.html') > 0) {
+                absUrl = absUrl.substring(0, absUrl.indexOf('.html'))
+            }
+            console.log(absUrl);
             var lastIdx = absUrl.lastIndexOf('/');
             var firstIdx = absUrl.indexOf('/');
             var hostIdx = absUrl.indexOf(host);
             serviceBase = absUrl.substring(hostIdx + host.length, lastIdx) + '/api/';
             _setValue('serviceBase', serviceBase);
+            console.log(serviceBase)
         }
         return serviceBase;
     }

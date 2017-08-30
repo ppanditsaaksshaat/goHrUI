@@ -16,7 +16,7 @@
         .state('attendance.masters', {
           url: '/masters',
           abstract: true,
-          templateUrl: 'app/pages/attendance/masters/masters.html?v=1',
+          templateUrl: 'app/pages/attendance/masters/masters.html',
           controller: "attMastersController1",
           controllerAs: "tabCtrl",
           title: 'Master',

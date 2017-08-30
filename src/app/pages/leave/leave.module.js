@@ -22,7 +22,7 @@
         title: 'Leave',
         sidebarMeta: {
           icon: 'ion-android-calendar',
-          order: 3,
+          order: 5,
         },
       });
   }

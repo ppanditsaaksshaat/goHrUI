@@ -16,7 +16,7 @@
       .state('attendance.reports.absentreport', {
         url: '/absentreport',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/reports/absentreport/attendance.absentreport.html?v=1',
+        templateUrl: 'app/pages/attendance/reports/absentreport/attendance.absentreport.html',
         controller: "attreportabsentreportController",
         controllerAs: "attCtrl",
         title: 'absent report',

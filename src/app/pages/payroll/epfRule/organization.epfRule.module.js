@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.payRoll.epfRule', [])
+  angular.module('BlurAdmin.pages.payroll.epfRule', [])
     .config(routeConfig);
 
   /** @ngInject */
@@ -16,7 +16,7 @@
       .state('organization.payRoll.epfRule', {
         url: '/epfRule',
       //  abstract: true,
-        templateUrl: 'app/pages/organization/payRoll/epfRule/organization.epfRule.html?v=1',
+        templateUrl: 'app/pages/organization/payRoll/epfRule/organization.epfRule.html',
         controller: "epfRuleController",
         controllerAs: "attCtrl",
         title: 'EPF Rule',

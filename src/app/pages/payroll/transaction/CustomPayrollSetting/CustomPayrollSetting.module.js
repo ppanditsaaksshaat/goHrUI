@@ -16,7 +16,7 @@
       .state('payroll.transaction.CustomPayrollSetting', {
         url: '/CustomPayrollSetting',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/transaction/CustomPayrollSetting/CustomPayrollSetting.html?v=1',
+        templateUrl: 'app/pages/payroll/transaction/CustomPayrollSetting/CustomPayrollSetting.html',
         controller: "CustomPayrollSettingController",
         controllerAs: "payCtrl",
         title: 'Payroll Process',

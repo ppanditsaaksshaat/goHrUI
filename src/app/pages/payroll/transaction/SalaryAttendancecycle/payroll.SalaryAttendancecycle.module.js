@@ -16,7 +16,7 @@
       .state('payroll.transaction.SalaryAttendancecycle', {
         url: '/SalaryAttendancecycle',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/transaction/SalaryAttendancecycle/payroll.SalaryAttendancecycle.html?v=1',
+        templateUrl: 'app/pages/payroll/transaction/SalaryAttendancecycle/payroll.SalaryAttendancecycle.html',
         controller: "paySalaryAttendancecycleController",
         controllerAs: "payCtrl",
         title: 'SalaryAttcycle',

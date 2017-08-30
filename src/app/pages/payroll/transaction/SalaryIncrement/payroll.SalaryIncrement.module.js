@@ -16,7 +16,7 @@
       .state('payroll.transaction.SalaryIncrement', {
         url: '/SalaryIncrement',
         // abstract: true,
-        templateUrl: 'app/pages/payroll/transaction/SalaryIncrement/payroll.SalaryIncrement.html?v=1',
+        templateUrl: 'app/pages/payroll/transaction/SalaryIncrement/payroll.SalaryIncrement.html',
         controller: "paySalaryIncrementController",
         controllerAs: "payCtrl",
         title: 'SalaryIncrement',

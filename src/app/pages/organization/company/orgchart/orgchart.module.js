@@ -16,7 +16,7 @@
       .state('organization.general.orgchart', {
         url: '/orgchart',
         // abstract: true,
-        templateUrl: 'app/pages/organization/general/orgchart/orgchart.html?v=1',
+        templateUrl: 'app/pages/organization/general/orgchart/orgchart.html',
         controller: "orgchartController",
         controllerAs: "tabCtrl",
         title: 'Organization Chart',

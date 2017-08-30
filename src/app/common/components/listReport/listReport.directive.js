@@ -2,13 +2,13 @@
     'use strict';
 
     angular.module('BlurAdmin.common.components')
-        .directive('reportViewer', reportViewer);
+        .directive('listReport', listReport);
     /** @ngInject */
-    function reportViewer($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
+    function listReport($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
         editFormService, focus, $sce) {
         return {
             restrict: 'E',
-            templateUrl: 'app/common/components/reportViewer/reportViewer.html',
+            templateUrl: 'app/common/components/listReport/listReport.html',
             require: ['^ngController', 'ngModel'],
             replace: true,
             scope: {
@@ -86,7 +86,7 @@
                 function _showResult() {
                     $("#progress-bar").show();
                     $("#print-button").hide();
-                    $scope.reportUrl = 'app/common/components/reportViewer/blank.html'
+                    $scope.reportUrl = 'app/common/components/listReport/blank.html?rnd=1'
                     console.log($scope.page.searchList)
                     if ($scope.page.pageinfo.filters.length > 0) {
                         if ($scope.page.searchList.length <= 0) {

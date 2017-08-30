@@ -25,7 +25,7 @@
         title: 'Attendance',
         sidebarMeta: {
           icon: 'ion-gear-a',
-          order: 100,
+          order: 2,
         },
       });
   }

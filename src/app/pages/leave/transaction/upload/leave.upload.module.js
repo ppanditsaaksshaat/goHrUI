@@ -17,7 +17,7 @@
       .state('leave.transaction.upload', {
         url: '/upload',
         // abstract: true,
-        templateUrl: 'app/pages/leave/transaction/upload/leave.upload.html?v=1',
+        templateUrl: 'app/pages/leave/transaction/upload/leave.upload.html',
         controller: "leaveUploadController",
         controllerAs: "attCtrl",
         sidebarMeta: {

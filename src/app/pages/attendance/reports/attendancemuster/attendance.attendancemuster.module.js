@@ -16,7 +16,7 @@
       .state('attendance.reports.attendancemuster', {
         url: '/attendancemuster',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/reports/attendancemuster/attendance.attendancemuster.html?v=1',
+        templateUrl: 'app/pages/attendance/reports/attendancemuster/attendance.attendancemuster.html',
         controller: "attreportattendancemusterController",
         controllerAs: "attCtrl",
         title: 'attendance muster',
