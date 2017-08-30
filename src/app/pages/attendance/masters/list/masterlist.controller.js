@@ -45,6 +45,8 @@
     $scope.closeWeekOffAdd = _closeWeekOffAdd;
     $scope.WEFChange = _WEFChange;
 
+
+
     $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false }
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
@@ -74,7 +76,12 @@
       $scope.page.boxOptions.addRecord = _addRecord;
       $scope.page.boxOptions.editRecord = _editRecord;
     }
-
+    
+      //change WET date on change of WEF
+      function _WEFChange(WEFDate) {
+        var date = new Date(WEFDate)
+        $scope.entity.WOSWET = "31-Dec-" + date.getFullYear();
+      }
     function _dataResult(row) {
       $scope.oldData = angular.copy(row);
       console.log($scope.oldData);
