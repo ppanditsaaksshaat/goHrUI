@@ -22,7 +22,7 @@
         title: 'Employee',
         sidebarMeta: {
           icon: 'ion-gear-a',
-          order: 100,
+          order: 2,
         },
       }).state('organization.employees.add', {
         url: '/:action',
