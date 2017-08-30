@@ -62,6 +62,7 @@
       viewRecord: null,
       deleteRecord: null,
       pageResult: _pageResult,
+      dataResult: _dataResult
 
 
       // readonlyColumns: ['col1', 'col2']
@@ -113,20 +114,22 @@
       angular.forEach(result.pageinfo.filters, function (filter) {
         if (filter.name == 'Month') {
           filter.value = parseInt(moment().format('MM'));
-
         }
         if (filter.name == 'Year') {
           filter.value = parseInt(moment().format('YYYY'));
-
         }
         if (filter.name == 'VADepartmentId') {
           filter.value = -1;
           filter.disabled = true;
         }
-
       })
+    }
 
-
+    function _dataResult(result) {
+      if (result[0].Error == "Salary Cycle not found") {
+        $scope.page.gridOptions.data = [];
+        $scope.page.boxOptions.noResultMessageText = result[0].Error;
+      }
     }
 
 

@@ -135,6 +135,8 @@
                     if ($scope.page.pageinfo.filters) {
                         var isRequiredFailed = false;
                         angular.forEach($scope.page.pageinfo.filters, function (filter) {
+
+                            
                             if (!isRequiredFailed) {
 
                                 if (filter.required) {
@@ -238,6 +240,7 @@
                                         }
                                     }
                                     else {
+
                                         $scope.page.searchList.push(search)
                                     }
                                 }
@@ -363,7 +366,7 @@
                              * assigning dateOption to filters
                              */
                             angular.forEach($scope.page.pageinfo.filters, function (filter, indx) {
-
+                               
                                 if (filter.type == 'datetime') {
                                     filter.datePicker = { option1: {}, option2: {}, format: '' }
 
