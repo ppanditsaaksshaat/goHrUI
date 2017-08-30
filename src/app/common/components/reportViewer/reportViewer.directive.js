@@ -25,6 +25,19 @@
             },
             link: function ($scope, elm, attrs, ctrl) {
                 var reportBaseURL = 'reports/';
+
+                var host = $location.host();
+                var absUrl = $location.absUrl();
+                if (absUrl.indexOf('.html') > 0) {
+                    absUrl = absUrl.substring(0, absUrl.indexOf('.html'))
+                }
+                console.log(absUrl);
+                var lastIdx = absUrl.lastIndexOf('/');
+                var firstIdx = absUrl.indexOf('/');
+                var hostIdx = absUrl.indexOf(host);
+                reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx) + '/reports/';
+
+
                 var boxSetting = {
                     selfLoading: true,//gridBox will fetch data from api on its own
                     showRefresh: true,//show refresh button
@@ -86,7 +99,7 @@
                 function _showResult() {
                     $("#progress-bar").show();
                     $("#print-button").hide();
-                    $scope.reportUrl = 'app/common/components/reportViewer/blank.html'
+                    //$scope.reportUrl = 'app/common/components/reportViewer/blank.html'
                     console.log($scope.page.searchList)
                     if ($scope.page.pageinfo.filters.length > 0) {
                         if ($scope.page.searchList.length <= 0) {
@@ -123,7 +136,7 @@
                         //   var result = angular.fromJson(response.data);
                         console.log(result)
                         var rptUrl = reportBaseURL + result.URL + '/' + result.Key + '/' + result.OAuth;
-
+                        console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 
 
@@ -136,8 +149,7 @@
                 }
 
                 function _loadReport() {
-                    $("#progress-bar").hide();
-                    $("#print-button").hide();
+                   
                     pageService.getListReport($scope.reportId).then(function (result) {
 
                         $scope.page.pageinfo = result;

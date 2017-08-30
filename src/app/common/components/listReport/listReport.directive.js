@@ -65,7 +65,6 @@
                 }
 
                 $scope.reportId = $scope.page.reportId;
-                $scope.iframeLoadedCallBack = _iframeLoadedCallBack;
                 $scope.reset = _reset;
                 $scope.callReportPrint = _callReportPrint;
                 $scope.showResult = _showResult;
@@ -77,61 +76,10 @@
                 function _reset() {
 
                 }
-                function _iframeLoadedCallBack() {
-                    $scope.iFrameIsLoading = false;
-                    $("#progress-bar").hide();
-                    $("#print-button").show();
-
-                }
+               
                 function _showResult() {
-                    $("#progress-bar").show();
-                    $("#print-button").hide();
-                    $scope.reportUrl = 'app/common/components/listReport/blank.html?rnd=1'
-                    console.log($scope.page.searchList)
-                    if ($scope.page.pageinfo.filters.length > 0) {
-                        if ($scope.page.searchList.length <= 0) {
-                            $rootScope.showMsg('warning', 'Please select any one filter', '');
-                            $("#progress-bar").hide();
-                            return;
-                        }
-                    }
-
-                    var filterCopy = angular.copy($scope.page.pageinfo.filters)
-                    console.log(filterCopy)
-                    var userFilterData = [];
-                    angular.forEach(filterCopy, function (row, idx) {
-                        var userFilter = {};
-                        userFilter.name = row.name
-                        userFilter.nosp = (row.spfield == '')
-                        if (row.value !== undefined) {
-                            userFilter.selectedValue = row.value;
-                        }
-                        else {
-                            userFilter.selectedValue = '';
-                        }
-                        userFilterData.push(userFilter);
-                    })
-                    console.log(userFilterData);
-                    var data = { reportId: $scope.page.reportId, filterData: userFilterData }
-                    var uncData = JSON.stringify(data);
-                    var compressed = LZString.compressToEncodedURIComponent(uncData);
-                    compressed = compressed.toString().replace('+', '!')
-                    $scope.iFrameIsLoading = true;
-
-                    var encData = { auth: compressed }
-                    pageService.rptHandshake($scope.page.reportId, JSON.stringify(encData)).then(function (result) {
-                        //   var result = angular.fromJson(response.data);
-                        console.log(result)
-                        var rptUrl = reportBaseURL + result.URL + '/' + result.Key + '/' + result.OAuth;
-
-                        $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
-
-
-                    }, function (err) {
-                        console.log(err)
-                    })
-
-                    console.log(compressed)
+                   
+                  
 
                 }
 
