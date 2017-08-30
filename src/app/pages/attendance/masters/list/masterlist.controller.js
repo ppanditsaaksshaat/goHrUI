@@ -45,14 +45,7 @@
     $scope.closeWeekOffAdd = _closeWeekOffAdd;
     $scope.WEFChange = _WEFChange;
 
-
-    //change WET date on change of WEF
-    function _WEFChange(WEFDate) {
-      var date = new Date(WEFDate)
-      $scope.entity.WOSWET = "31-Dec-" + date.getFullYear();
-    }
-
-    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false }
+    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false }
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.page.boxOptions = {

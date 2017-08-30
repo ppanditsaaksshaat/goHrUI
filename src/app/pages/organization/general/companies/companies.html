@@ -1,1 +1,125 @@
-<list-top></list-top>
+ <div class="row">
+    <div class="col-md-12">
+        <div ba-panel ba-panel-title="Organization Configuration" ba-panel-class="with-scroll">
+            <ba-wizard ba-save-wizard="saveWizardForm(entity,editForm)">
+                <ba-wizard-step title="Company" form="formLeaveType">
+                    <form name="formLeaveType" novalidate>
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="companyPage.pageinfo.fields.CCOName.text"></label>
+                                    <field-box page="companyPage" ng-column="companyPage.pageinfo.fields.CCOName" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="companyPage.pageinfo.fields.CCOCompanyPFAccount.text"></label>
+                                    <field-box page="companyPage" ng-column="companyPage.pageinfo.fields.CCOCompanyPFAccount" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="companyPage.pageinfo.fields.CCOCompanyESIAccount.text"></label>
+                                    <field-box page="companyPage" ng-column="companyPage.pageinfo.fields.CCOCompanyESIAccount" ng-entity="entity" form="editForm"></field-box>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind=companyPage.pageinfo.fields.CCOAddress.text ""></label>
+                                    <field-box page="companyPage" ng-column="companyPage.pageinfo.fields.CCOAddress" ng-entity="entity" form="editForm"></field-box>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </ba-wizard-step>
+                <ba-wizard-step title="Location" form="formLeaveCycle">
+                    <form name="formLeaveCycle" novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="locationPage.pageinfo.fields.LocationName.text"></label>
+                                    <field-box page="locationPage" ng-column="locationPage.pageinfo.fields.LocationName" ng-entity="entity" form+ "editForm"></field-box>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="locationPage.pageinfo.fields.CountryId.text"></label>
+                                    <field-box page="locationPage" ng-column="locationPage.pageinfo.fields.CountryId" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="locationPage.pageinfo.fields.StateId.text"></label>
+                                    <field-box page="locationPage" ng-column="locationPage.pageinfo.fields.StateId" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="locationPage.pageinfo.fields.LocationCityId.text"></label>
+                                    <field-box page="locationPage" ng-column="locationPage.pageinfo.fields.LocationCityId" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </ba-wizard-step>
+
+                <ba-wizard-step title="Branch" form="BranchName">
+                    <form name="BranchName" novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="branchPage.pageinfo.fields.BRLocationId.text"></label>
+                                    <field-box page="branchPage" ng-column="branchPage.pageinfo.fields.BRLocationId" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="branchPage.pageinfo.fields.BRName.text"></label>
+                                    <field-box page="branchPage" ng-column="branchPage.pageinfo.fields.BRName" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </ba-wizard-step>
+                <ba-wizard-step title="SubUnit" form="SubUnitName">
+                    <form name="SubUnitName" novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="subUnitPage.pageinfo.fields.LocationId.text"></label>
+                                    <field-box page="subUnitPage" ng-column="subUnitPage.pageinfo.fields.LocationId" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="subUnitPage.pageinfo.fields.SUBranchId.text"></label>
+                                    <field-box page="subUnitPage" ng-column="subUnitPage.pageinfo.fields.SUBranchId" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="subUnitPage.pageinfo.fields.SUName.text"></label>
+                                    <field-box page="subUnitPage" ng-column="subUnitPage.pageinfo.fields.SUName" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </ba-wizard-step>
+            </ba-wizard>
+        </div>
+    </div>
+</div> 
