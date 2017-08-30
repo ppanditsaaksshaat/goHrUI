@@ -48,6 +48,7 @@
                     defaultEntity: {},//providing default values to add form
                     gridStyle: { height: '450px' },
                     customButtons: [],
+                    customButtonsWithDefault:[],
                     selectedRowButtons: [],
                     customColumns: [],
                     pageResult: null,

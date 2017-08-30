@@ -41,7 +41,7 @@
     // $scope.weekClick = _weekClick;
     $scope.closeWeekOffAdd = _closeWeekOffAdd;
 
-    $scope.weekGridOptions = { enableCellEditOnFocus: true }
+    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false }
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.page.boxOptions = {
