@@ -21,6 +21,9 @@
     var weekOffSetDetailPageId = 455;
     var weekOffSetDetailTableId = 435;
 
+
+    var isWeekOffEdit = false;
+
     // if ($scope.isResetShifAndLunch) {
     //   $scope.resetLunchDuration = _resetLunchDuration;
     // }
@@ -42,14 +45,7 @@
     $scope.closeWeekOffAdd = _closeWeekOffAdd;
     $scope.WEFChange = _WEFChange;
 
-
-    //change WET date on change of WEF
-    function _WEFChange(WEFDate) {
-      var date = new Date(WEFDate)
-      $scope.entity.WOSWET = "31-Dec-" + date.getFullYear();
-    }
-
-    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false }
+    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false }
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.page.boxOptions = {
@@ -85,7 +81,7 @@
     }
 
     function _addRecord() {
-      console.log($scope.weekGridOptions.data)
+      isWeekOffEdit = false;
       $scope.entity = [];
       angular.forEach($scope.weekGridOptions.data, function (data) {
         data.SGWDFirst = -1;
@@ -99,13 +95,14 @@
       $scope.showWeeklyOffList = true;
     }
     function _editRecord(row) {
-
+      isWeekOffEdit = true;
       $scope.showWeeklyOffList = true;
       var multiSelect = {
         lz: false,
-        parent: { 
-          tableid: $scope.weekOffSetPage.pageinfo.tableid, 
-          pkValue: row.entity.WOSId },
+        parent: {
+          tableid: $scope.weekOffSetPage.pageinfo.tableid,
+          pkValue: row.entity.WOSId
+        },
         child: [{
           tableid: $scope.weekOffPage.pageinfo.tableid,
           linkColumn: 'SGWDWeekOffSetId',
@@ -286,7 +283,13 @@
         $scope.showMsg("error", "Please enter Set Name");
         return false;
       }
-      if (entity.WOSGroupId.length == 0) {
+      // alert(entity.WOSGroupId)
+      if (entity.WOSGroupId != undefined) {
+        if (entity.WOSGroupId.length == 0) {
+          $scope.showMsg("error", "Please select atleast one group");
+          return false;
+        }
+      } else {
         $scope.showMsg("error", "Please select atleast one group");
         return false;
       }
@@ -327,7 +330,7 @@
 
       }
 
-      if (errorMsg != "") {
+      if (errorMsg != "" && !isWeekOffEdit) {
         $scope.showMsg("error", "WeekOff already present from " + errorMsg);
         return false;
       }

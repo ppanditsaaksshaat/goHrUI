@@ -5,9 +5,10 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.loan.reports', [
-    'BlurAdmin.pages.loan.reports.empLoanApplication',
-    'BlurAdmin.pages.loan.reports.loanOutStanding',
+  angular.module('BlurAdmin.pages.organization.reports', [
+    
+    'BlurAdmin.pages.organization.reports.paySlips',
+    
   ])
     .config(routeConfig);
 
@@ -15,11 +16,11 @@
   /** @ngInject */
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('loan.reports', {
+      .state('organization.reports', {
         url: '/reports',
         template: '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
         abstract: true,
-        title: 'Reports',
+        title: 'Report',
         sidebarMeta: {
           icon: 'ion-gear-a',
           order: 4,
