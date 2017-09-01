@@ -70,8 +70,12 @@
         $scope.toggleRowExpand = _toggleRowExpand;
         $scope.saveEmpPayband = _saveEmpPayband;
         $scope.refreshEmpPayband = _refreshEmpPayband;
+        $scope.uploadRecord = _uploadRecord;
 
 
+        function _uploadRecord() {
+            $state.go("payroll.upload");
+        }
 
 
 
@@ -81,7 +85,7 @@
 
         //serach employee payband according to grade and level
         function _serachEmpPayBand() {
-
+          
             _getGradeLevelEmployeeDetail($scope.entity.PBEmpGradeId, $scope.entity.PBEmpLevelId);
         }
 
@@ -517,6 +521,7 @@
                 if ($scope.employeeList.length > 0) {
                     var dataList = [];
                     for (var empIndex = 0; empIndex < $scope.employeeList.length; empIndex++) {
+                        var empPaybandExist = false
                         var empData = angular.extend({}, $scope.employeeList[empIndex], defaultData);
                         //setup payband rule grid
                         _setupSecondGrid(empData);
@@ -536,6 +541,7 @@
 
                                     for (var rowIndex = 0; rowIndex < childRows.length; rowIndex++) {
                                         var childRow = childRows[rowIndex];
+                                        childRow.GrossPercentage = childRow.PBRPercantage;
                                         var epbrId = 0;
                                         if (empRuleList != null) {
                                             var empRule = $filter('findObj')(empRuleList, childRow.PBRId, 'EPBRPBRId')
@@ -558,10 +564,12 @@
                                                     }
                                                     childRow.PBRCalcOnSHId = empRule.EPBRCalcOnSHId;
                                                 }
+
                                                 childRow.PBRIsFormula = empRule.EPBRIsFormula;
                                                 childRow.PBRIsSlab = empRule.EPBRIsSlab;
                                                 if (empRule.EPBRPercantage != '0')
                                                     childRow.PBRPercantage = empRule.EPBRPercantage;
+                                                childRow.GrossPercentage = empRule.EPBRPercantage;
                                                 childRow.PBRSHId = empRule.EPBRSHId;
                                                 childRow.PBRPBId = empRule.EPBRPBId;
                                                 childRow.PBRRuleName = empRule.EPBRRuleName;
@@ -577,6 +585,7 @@
                                             if (epbrId != 0) {
                                                 var empFormulaList = $filter('findAll')($scope.empRuleWithSlabAndFormulaDetail[2], epbrId, 'EPFDPBRId');
                                                 if (empFormulaList != null) {
+                                                    empPaybandExist = true
                                                     for (var f = 0; f < childRow.child[0].rows.length; f++) {
                                                         var formula = childRow.child[0].rows[f];
                                                         for (var ef = 0; ef < empFormulaList.length; ef++) {
@@ -668,8 +677,10 @@
 
                         }
 
-                        empData.GrossPercentage = empData.PBRPercantage;
-                        _updateFirstGridFromSecondGrid(empData)
+
+                        if (empPaybandExist) {
+                            _updateFirstGridFromSecondGrid(empData)
+                        }
 
                         dataList.push(empData)
                     }
@@ -1302,7 +1313,7 @@
 
             }
             else if (scope.col.name == "PBRAmount") {
-                
+
                 if (scope.row.entity.PBRIsFormula || scope.row.entity.PBRIsSlab) {
                     return false
                 }
@@ -1589,11 +1600,14 @@
                 var firstRow = $scope.page.gridOptions.data[firstRowIndex];
                 var oldEntity = firstRow.oldEntity;
                 if (firstRow.subGridOptions) {
-
+                    debugger
                     if (firstRow.subGridOptions.data.length > 0) {
                         for (var secondRowIndex = 0; secondRowIndex < firstRow.subGridOptions.data.length; secondRowIndex++) {
                             var newRule = firstRow.subGridOptions.data[secondRowIndex];
                             var isFoundChanges = false;
+                            if (isNaN(newRule.GrossPercentage)) {
+                                newRule.GrossPercentage = 0;
+                            }
                             var oldRule = $filter('findObj')(oldEntity, newRule.PBRSHId, 'PBRSHId');
                             if (oldRule != null) {
                                 if (!angular.equals(oldRule, newRule)) {
@@ -1662,9 +1676,10 @@
                             }
 
                             for (var formula = 0; formula < data.child[0].rows.length; formula++) {
+                                var calFormulaOnHeadId = "";
                                 if (data.child[0].rows[formula].PFDCalcHeadId != undefined && data.child[0].rows[formula].PFDCalcHeadId != null) {
-                                    angular.forEach(data.child[0].rows[formula].PFDCalcHeadId, function (formulaCal) {
-                                        calOnHeadId = formulaCal.value + ",";
+                                    angular.forEach(data.child[0].rows[formula].PFDCalcHeadId, function (formulaCal, index) {
+                                        calFormulaOnHeadId += formulaCal.value + ",";
                                     })
                                 }
 
@@ -1682,7 +1697,7 @@
                                     EPFDId: empPFDId == 0 ? 0 : empPFDId,
                                     EPFDPFDId: data.child[0].rows[formula].PFDId,
                                     EPFDPBRId: data.child[0].rows[formula].PFDPBRId,
-                                    EPFDCalcHeadId: "[" + calOnHeadId.substring(0, calOnHeadId.length - 1) + "]",
+                                    EPFDCalcHeadId: "[" + calFormulaOnHeadId.substring(0, calFormulaOnHeadId.length - 1) + "]",
                                     EPFDPercentage: data.child[0].rows[formula].PFDPercentage,
                                     EPFDOperator: data.child[0].rows[formula].PFDOperator,
                                     EPFDAmount: data.child[0].rows[formula].PFDAmount,
