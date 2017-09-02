@@ -10,8 +10,8 @@
 
   /** @ngInject */
   function loanOutStandingController($scope) {
-    // $scope.page = { reportId: 49 }
-    $scope.page = { reportId: 50 }
+    $scope.page = { reportId: 49 }
+    // $scope.page = { reportId: 50 }
   }
 
 })();
