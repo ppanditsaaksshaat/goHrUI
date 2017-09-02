@@ -10,7 +10,7 @@
 
     /** @ngInject */
     function empPaybandController($scope, $state, $stateParams,
-        pageService, DJWebStore, dialogModal, editFormService, $timeout, $filter, $http) {
+        pageService, DJWebStore, dialogModal, editFormService, $timeout, $filter, $http, DJWebStoreGlobal) {
 
         var pageIds = {
             payband: { tableId: 139, pageId: 133 },
@@ -25,7 +25,9 @@
         var queryId = 560;
         var selectedPaybandMaster = {};
 
-        //
+        $scope.uplodGridOptions = $scope.getGridSetting();
+        $scope.uploaders = [];
+        $scope.fileResult = undefined;
         $scope.page = {};
         $scope.page.gridOptions = {
             expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" ui-grid-edit ui-grid-expandable ng-style=\"getSecondGridHeight(row.entity.subGridOptions)\" class=\"djGrid\"></div>',
@@ -70,14 +72,68 @@
         $scope.toggleRowExpand = _toggleRowExpand;
         $scope.saveEmpPayband = _saveEmpPayband;
         $scope.refreshEmpPayband = _refreshEmpPayband;
-        $scope.uploadRecord = _uploadRecord;
+        $scope.upload = _upload;
+        $scope.downLoadTemplate = _downLoadTemplate;
+        $scope.cancelUploader = _cancelUploader;
 
-
-        function _uploadRecord() {
-            $state.go("payroll.upload");
+        function _cancelUploader() {
+            $scope.uploader = false;
         }
 
+        function _downLoadTemplate() {
+            console.log($scope.page.gridOptions.columnDefs)
 
+            var tempColumns = {};
+            angular.forEach($scope.page.gridOptions.columnDefs, function (col) {
+                if (col.displayName != "Earnings" && col.displayName != "Deductions" && col.displayName != "Net Salary" && col.displayName != "Employer" && col.displayName != "CTC") {
+                    if (col.displayName == "Employee") {
+                        col.displayName = "EmpCode";
+                    }
+                    tempColumns[col.displayName] = '';
+                }
+            });
+            var rows = [];
+            rows.push(tempColumns)
+
+            DJWebStoreGlobal.JSONToCSVConvertor(rows, 'Payband', false, true, true);
+        }
+
+        function _upload() {
+            // alert("cabc")\
+            if ($scope.uplodGridOptions.data != undefined) {
+                if ($scope.page.gridOptions.data != undefined) {
+                    angular.forEach($scope.uplodGridOptions.data, function (newHead) {
+
+                        var empEntitlement = $filter("findObj")($scope.page.gridOptions.data, newHead.EmpCode, "EmpCode")
+                        if (empEntitlement != null) {
+
+                            angular.forEach(empEntitlement.subGridOptions.data, function (head) {
+                                angular.forEach($scope.uplodGridOptions.columnDefs, function (col) {
+
+                                    if (head.SHName == col.field) {
+                                        head.PBRAmount = newHead[col.field];
+                                        head.GrossPercentage = "";
+                                        head.PBRPercantage = "";
+                                        head.PBRIsFormula = false;
+                                        head.PBRIsSlab = false;
+                                    }
+                                });
+                                _recalculatingSecondGrid(empEntitlement)
+                                _updateFirstGridFromSecondGrid(empEntitlement);
+                            })
+
+
+                        }
+                        else {
+
+                        }
+                    })
+
+                }
+            }
+            console.log($scope.uplodGridOptions.data)
+            console.log($scope.page.gridOptions.data)
+        }
 
         var grossHead = {};
 
@@ -85,7 +141,6 @@
 
         //serach employee payband according to grade and level
         function _serachEmpPayBand() {
-          
             _getGradeLevelEmployeeDetail($scope.entity.PBEmpGradeId, $scope.entity.PBEmpLevelId);
         }
 
@@ -314,6 +369,7 @@
         //setting up first level grid columns as per data loaded for selected payband detail
         function _setEntitlementColumns(result) {
             console.log(result)
+
             var defaultData = {};
             if (result) {
                 if (result.child) {
@@ -341,7 +397,7 @@
                             //find head type
                             var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, row.PBRSHId, 'value')
                             if (foundPB != null) {
-                                if (foundPB.SHIsForEmployer) {
+                                if (foundPB.SHIsForEmployer == "True") {
                                     row.SHeadType = 'Employer';
                                 }
                                 else if (foundPB.SHIsDeduction == "False") {
@@ -1600,7 +1656,7 @@
                 var firstRow = $scope.page.gridOptions.data[firstRowIndex];
                 var oldEntity = firstRow.oldEntity;
                 if (firstRow.subGridOptions) {
-                    debugger
+
                     if (firstRow.subGridOptions.data.length > 0) {
                         for (var secondRowIndex = 0; secondRowIndex < firstRow.subGridOptions.data.length; secondRowIndex++) {
                             var newRule = firstRow.subGridOptions.data[secondRowIndex];
