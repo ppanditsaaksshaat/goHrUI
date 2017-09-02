@@ -16,7 +16,6 @@
      'BlurAdmin.pages.payroll.otRule',
      'BlurAdmin.pages.payroll.esiRule',
      'BlurAdmin.pages.payroll.epfRule',
-     'BlurAdmin.pages.payroll.upload',
   ])
       .config(routeConfig);
       

@@ -4,13 +4,14 @@
     <div class="panel-heading">
         Employees Payband Entitilement
 
-        <button ng-show="gridShow" ng-click="saveEmpPayband()" class="btn btn-xs btn-default pull-right">save</button>
-        <!-- <button ng-show="gridShow" ng-click="uploadRecord()" class="btn btn-xs btn-default pull-right">Uploder</button> -->
+        <button ng-show="gridShow" ng-click="saveEmpPayband()" class="btn btn-xs btn-default pull-right">Save</button>
+        <button ng-show="gridShow" ng-click="uploader=true" class="btn btn-xs btn-default pull-right">Upload</button>
+        <button ng-show="gridShow" ng-click="downLoadTemplate()" class="btn btn-xs btn-default pull-right">Download Template</button>
         <button ng-show="gridShow" ng-click="refreshEmpPayband()" class="btn btn-xs btn-default pull-right">Refresh</button>
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" ng-if="!uploader">
                 <div class="row">
                     <div class="col-md-4">
                         <label ng-bind="paybandPage.pageinfo.fields.PBEmpGradeId.text"></label>
@@ -34,6 +35,37 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-12" ng-if="uploader">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div>
+                            <label class="control-label ">
+                                        Select a file to upload: 
+                                  </label>
+                            <label class="btn btn-success btn-file">
+                                             Browse
+                                             <input type="file" 
+                                             accept=".xls,.xlsx,.ods"  
+                                             readfiledata
+                                             opts="uplodGridOptions" 
+                                             uploader="uploaders"
+                                             multiple="false" 
+                                             result="fileResult"
+                                             style="display: none;">
+                                 </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div>
+                            <button class="btn btn-primary" ng-click="upload()">Upload</button>
+                            <button class="btn btn-primary" ng-click="cancelUploader()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            </br>
+
             <div class="col-md-12" ng-show="gridShow">
                 <div class="row">
                     <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-cellNav ui-grid-edit ui-grid-auto-resize ui-grid-pagination ui-grid-selection
@@ -41,6 +73,7 @@
                     </div>
                 </div>
             </div>
+
 
         </div>
     </div>

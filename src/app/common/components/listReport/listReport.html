@@ -34,7 +34,60 @@
 
 
                     <i id="progress-bar" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
-                    grid come here
+
+
+                    <table ng-show="page.reportData.tables.length<=0"class="table table-striped table-bordered table-hover table-sm table-responsive pad0A">
+                        <caption>
+                            <h3 >No Data Found</h3>
+                        </caption>
+        
+                    </table>
+        
+                   
+        
+                    <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A"
+                           cellspacing="0" width="100%">
+                        <tbody ng-repeat="table in page.reportData.tables" style="border:solid 1px black !important">
+                            <tr>
+                                <td class="font-bold font-size-14"  colspan="{{page.reportData.header.length}}">{{table.header}}</td>
+                            </tr>
+                            <tr>
+                                <th ng-repeat="head in page.reportData.header" class="font-bold">
+                                    {{head.text}}
+                                </th>
+                            </tr>
+                            <tr ng-hide="table.rows.length>0">
+                                <td colspan="{{page.reportData.header.length}}" align="center">
+                                    <b class="font-size-16"> No Data Found.</b>
+                                </td>
+                            </tr>
+                            <tr scope="row" ng-repeat="row in table.rows">
+                                <td ng-repeat="head in page.reportData.header">
+                                    <span ng-repeat="col in row">
+                                        <span ng-if="head.name == col.name && head.type == 'currency'" class="FloatRight">
+                                            {{col.value | currency:""}}
+                                        </span>
+                                        <span ng-if="head.name == col.name && head.type != 'currency'">
+                                            {{col.value}}
+                                        </span>
+                                    </span> 
+                                </td>
+                            </tr>
+                            <tr scope="row" ng-if="table.total.length>0 && table.rows.length>1">
+                                <td ng-repeat="head in  page.reportData.header" class="font-bold">
+                                    <span ng-repeat="tot in table.total">
+                                        <span ng-if="head.name == tot.name && head.type == 'currency'" class="FloatRight">
+                                            {{tot.value| currency:""}}
+                                        </span>
+                                        <span ng-if="head.name == tot.name && head.type != 'currency'">
+                                            {{tot.value}}
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </div>
