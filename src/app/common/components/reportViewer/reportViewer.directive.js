@@ -24,7 +24,7 @@
 
             },
             link: function ($scope, elm, attrs, ctrl) {
-                var reportBaseURL = 'reports/';
+                var reportBaseURL = 'report/';
 
                 var host = $location.host();
                 var absUrl = $location.absUrl();
@@ -35,7 +35,7 @@
                 var lastIdx = absUrl.lastIndexOf('/');
                 var firstIdx = absUrl.indexOf('/');
                 var hostIdx = absUrl.indexOf(host);
-                reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx) + '/reports/';
+                reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx) + '/report/';
 
 
                 var boxSetting = {
