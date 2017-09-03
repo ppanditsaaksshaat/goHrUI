@@ -610,7 +610,7 @@
                         //find head type
                         var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, row.PBRSHId, 'value')
                         if (foundPB != null) {
-                            if (foundPB.SHIsForEmployer) {
+                            if (foundPB.SHIsForEmployer == "True") {
                                 row.SHeadType = 'Employer';
                             }
                             else if (foundPB.SHIsDeduction == "False") {
@@ -1422,7 +1422,7 @@
                         rowEntity.PBRSHId = newValue;
                         var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, rowEntity.PBRSHId, 'value')
                         if (foundPB != null) {
-                            if (foundPB.SHIsForEmployer) {
+                            if (foundPB.SHIsForEmployer == "True") {
                                 rowEntity.SHeadType = 'Employer';
                             }
                             else if (foundPB.SHIsDeduction == "False") {
