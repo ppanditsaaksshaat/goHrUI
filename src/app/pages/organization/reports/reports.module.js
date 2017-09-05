@@ -7,7 +7,8 @@
 
   angular.module('BlurAdmin.pages.organization.reports', [
     
-    'BlurAdmin.pages.organization.reports.paySlips',
+    'BlurAdmin.pages.organization.reports.empDetail',
+    'BlurAdmin.pages.organization.reports.empJoiningDt',
     
   ])
     .config(routeConfig);

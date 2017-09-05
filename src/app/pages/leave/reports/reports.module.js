@@ -7,7 +7,8 @@
 
   angular.module('BlurAdmin.pages.leave.reports', [
      'BlurAdmin.pages.leave.reports.monthlyLeaveDetail' ,
-     'BlurAdmin.pages.leave.reports.leaveDetail' 
+     'BlurAdmin.pages.leave.reports.leaveDetail' ,
+     'BlurAdmin.pages.leave.reports.leaveOutStanding' 
          
        ])
     .config(routeConfig);

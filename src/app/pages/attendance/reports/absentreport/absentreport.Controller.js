@@ -9,8 +9,9 @@
     .controller('attreportabsentreportController', attreportabsentreportController);
 
   /** @ngInject */
-  function attreportabsentreportController() {
-   console.log('attreportabsentreportController')
+  function attreportabsentreportController($scope) {
+    $scope.page = { reportId: 17 }
+    console.log('attreportabsentreportController')
   }
 
 })();
