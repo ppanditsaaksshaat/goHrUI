@@ -19,11 +19,11 @@
         templateUrl: 'app/pages/attendance/reports/attendancedetail/attendance.attendancedetail.html',
         controller: "attreportattendancedetailController",
         controllerAs: "attCtrl",
-        title: 'attendance detail',
+        title: 'Attendance Detail',
         sidebarMeta: {
           order: 5,
           parent: 'attendance.reports',
-          pageTitle: 'attendance detail'
+          pageTitle: 'Attendance Detail'
         },
       })
   }

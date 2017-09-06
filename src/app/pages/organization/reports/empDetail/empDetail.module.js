@@ -6,24 +6,24 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.organization.reports.paySlips', [])
+  angular.module('BlurAdmin.pages.organization.reports.empDetail', [])
     .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($stateProvider, $urlRouterProvider) {
 
     $stateProvider
-      .state('organization.reports.paySlips', {
-        url: '/paySlips',
+      .state('organization.reports.empDetail', {
+        url: '/empDetail',
         // abstract: true,
-        templateUrl: 'app/pages/organization/reports/paySlips/payroll.paySlips.html?v=1',
-        controller: "paysSlipchallanController",
+        templateUrl: 'app/pages/organization/reports/empDetail/empDetail.html?v=1',
+        controller: "empDetailReportController",
         controllerAs: "payCtrl",
-        title: 'PaySlip',
+        title: 'Employee Detail',
         sidebarMeta: {
           order:0,
           parent: 'organization.reports',
-          pageTitle: 'PaySlip'
+          pageTitle: 'Employee Detail'
         },
       })
   }

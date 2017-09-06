@@ -16,14 +16,14 @@
       .state('attendance.reports.absentreport', {
         url: '/absentreport',
         // abstract: true,
-        templateUrl: 'app/pages/attendance/reports/absentreport/attendance.absentreport.html',
+        templateUrl: 'app/pages/attendance/reports/absentreport/attendance.absentreport.html?v=1',
         controller: "attreportabsentreportController",
         controllerAs: "attCtrl",
-        title: 'absent report',
+        title: 'Absent Detail',
         sidebarMeta: {
           order: 5,
           parent: 'attendance.reports',
-          pageTitle: 'absent report'
+          pageTitle: 'Absent Detail'
         },
       })
   }

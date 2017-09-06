@@ -76,10 +76,10 @@
                 function _reset() {
 
                 }
-               
+
                 function _showResult() {
-                   
-                  
+
+                    refreshReport();
 
                 }
 
@@ -89,11 +89,35 @@
                     pageService.getListReport($scope.reportId).then(function (result) {
 
                         $scope.page.pageinfo = result;
-                        //setPageTitle();
+                        //setPageTitle(); 
                         console.log($scope.page)
                     }, function (err) {
                         //console.log(err);
                     });
+                }
+                function refreshReport() {
+
+                    var filterCopy = angular.copy($scope.page.pageinfo.filters)
+                    var filterData = {};
+                    angular.forEach(filterCopy, function (row, idx) {
+                        filterData[row.name] = row.value;
+                    })
+
+
+                    if (filterData === undefined) {
+                        alert('Please select any one filter');
+                        return;
+                    }
+                    pageService.getReport($scope.reportId, JSON.stringify(filterData)).then(function (result) {
+                        //var result = angular.fromJson(response.data);
+                        console.log(result);
+                        $scope.page.reportData = result;
+
+                    }, function (err) {
+                        console.log(err);
+                    });
+
+
                 }
                 $scope.$on('apply-filter', function (successEvent, searchList) {
 

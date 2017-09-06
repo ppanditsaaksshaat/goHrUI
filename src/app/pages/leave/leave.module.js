@@ -8,7 +8,8 @@
     // 'BlurAdmin.pages.leave.applications',
     'BlurAdmin.pages.leave.appadd',
     'BlurAdmin.pages.leave.masters',
-    'BlurAdmin.pages.leave.transaction'
+    'BlurAdmin.pages.leave.transaction',
+    'BlurAdmin.pages.leave.reports'
   ])
     .config(routeConfig);
 

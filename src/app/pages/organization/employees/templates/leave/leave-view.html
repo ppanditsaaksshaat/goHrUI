@@ -50,8 +50,11 @@
                 <tr ng-show="leaveBalance.length">
                     <td>Total</td>
                     <td class="text-center">{{getTotal('ELTLeaveCr')}}</td>
-                    <td class="text-center">{{getDrTotal('ELTLeaveDr')}}</td>
-                    <td class="text-center">{{getBalTotal('LeaveBalance')}}</td>
+                    <!--<td class="text-center">{{getDrTotal('ELTLeaveDr')}}</td>
+                    <td class="text-center">{{getBalTotal('LeaveBalance')}}</td>-->
+
+                    <td class="text-center">{{getTotal('ELTLeaveDr')}}</td>
+                    <td class="text-center">{{getTotal('LeaveBalance')}}</td>
                     <td colspan="3"></td>
                 </tr>
             </tfoot>

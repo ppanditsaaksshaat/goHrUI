@@ -26,6 +26,7 @@
         function _querySuccessResult(result) {
             console.log(result);
             $scope.leaveBalance = result;
+            console.log(result)
         }
         function _queryErrorResult(result) {
 
