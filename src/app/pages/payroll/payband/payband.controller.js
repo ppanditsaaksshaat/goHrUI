@@ -390,6 +390,7 @@
 
         //calculating basic on gross percentage
         function _calculateBasicOnGross() {
+
             $scope.isShowCalculatediff = false;
 
             if ($scope.entity.PBBasicPerctange && $scope.entity.PBGrossSalary) {
@@ -557,6 +558,7 @@
             $scope.action = 'create';
         }
         function _editRecord(row) {
+          
             $scope.page.showEditForm = true;
             $scope.entity = angular.copy(row.entity);
             $scope.page.isAllowEdit = true;
@@ -1329,7 +1331,7 @@
         }
 
         function _onRegisterApi(gridApi) {
-          
+
             $scope.rulePage.gridApi = gridApi;
 
             $scope.rulePage.gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
@@ -1355,7 +1357,7 @@
 
             $scope.rulePage.gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 // console.log(colD ef)
-             
+
                 if (rowEntity.PBRCalcOnSHId.length <= 0) {
                     rowEntity.PBRPercantage = '';
                 }
@@ -1913,7 +1915,7 @@
             pageService.multiSave($scope.multiEntity).then(function (result) {
                 if (result == "done") {
                     $scope.showMsg("success", "Record Saved Successfully");
-                   //  _recalculatingSecondGrid($scope.page.gridOptions)
+                    //  _recalculatingSecondGrid($scope.page.gridOptions)
                 }
             }, function (err) {
                 console.log(err)

@@ -72,7 +72,7 @@
         $scope.toggleRowExpand = _toggleRowExpand;
         $scope.saveEmpPayband = _saveEmpPayband;
         $scope.refreshEmpPayband = _refreshEmpPayband;
-        $scope.upload = _upload;
+        $scope.uploadRecord = _uploadRecord;
         $scope.downLoadTemplate = _downLoadTemplate;
         $scope.cancelUploader = _cancelUploader;
 
@@ -98,41 +98,53 @@
             DJWebStoreGlobal.JSONToCSVConvertor(rows, 'Payband', false, true, true);
         }
 
-        function _upload() {
-            // alert("cabc")\
-            if ($scope.uplodGridOptions.data != undefined) {
-                if ($scope.page.gridOptions.data != undefined) {
-                    angular.forEach($scope.uplodGridOptions.data, function (newHead) {
-
-                        var empEntitlement = $filter("findObj")($scope.page.gridOptions.data, newHead.EmpCode, "EmpCode")
-                        if (empEntitlement != null) {
-
-                            angular.forEach(empEntitlement.subGridOptions.data, function (head) {
-                                angular.forEach($scope.uplodGridOptions.columnDefs, function (col) {
-
-                                    if (head.SHName == col.field) {
-                                        head.PBRAmount = newHead[col.field];
-                                        head.GrossPercentage = "";
-                                        head.PBRPercantage = "";
-                                        head.PBRIsFormula = false;
-                                        head.PBRIsSlab = false;
-                                    }
-                                });
-                                _recalculatingSecondGrid(empEntitlement)
-                                _updateFirstGridFromSecondGrid(empEntitlement);
-                            })
-
-
-                        }
-                        else {
-
-                        }
-                    })
-
-                }
+        function _uploadRecord() {
+            var options = {
+                url: "app/common/forms/browseModal/browseModal.html",
+                controller: "",
+                controllerAs: ""
             }
-            console.log($scope.uplodGridOptions.data)
-            console.log($scope.page.gridOptions.data)
+            dialogModal.open(options)
+
+        }
+        $scope.$on('uploadGridData', _upload)
+        function _upload(evt, uploadGridData) {
+            // alert("cabc")\
+            var flag = false;
+
+            if ($scope.page.gridOptions.data.length > 0) {
+                angular.forEach(uploadGridData.data, function (newHead) {
+
+                    var empEntitlement = $filter("findObj")($scope.page.gridOptions.data, newHead.EmpCode, "EmpCode")
+                    if (empEntitlement != null) {
+
+                        angular.forEach(empEntitlement.subGridOptions.data, function (head) {
+                            angular.forEach(uploadGridData.columnDefs, function (col) {
+
+                                if (head.SHName == col.field) {
+                                    head.PBRAmount = newHead[col.field];
+                                    head.GrossPercentage = "";
+                                    head.PBRPercantage = "";
+                                    head.PBRIsFormula = false;
+                                    head.PBRIsSlab = false;
+                                    flag = true;
+                                }
+                            });
+                            _recalculatingSecondGrid(empEntitlement)
+                            _updateFirstGridFromSecondGrid(empEntitlement);
+                        })
+
+
+                    }
+                    else {
+
+                    }
+                })
+                if (flag) {
+                    $scope.showMsg("success", "Your file uploaded successfully")
+                }
+
+            }
         }
 
         var grossHead = {};
@@ -141,6 +153,7 @@
 
         //serach employee payband according to grade and level
         function _serachEmpPayBand() {
+
             _getGradeLevelEmployeeDetail($scope.entity.PBEmpGradeId, $scope.entity.PBEmpLevelId);
         }
 
@@ -196,6 +209,7 @@
                     }],
                     orderByList: []
                 }
+
                 pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccess, _getCustomQueryError)
                 pageService.getPagData(pageIds.payband.pageId).then(function (result) {
                     console.log(result)
@@ -255,6 +269,7 @@
         }
 
         function _getCustomQuerySuccess(result) {
+            console.log(result)
             if (result != "NoDataFound") {
                 console.log(result)
                 $scope.empRuleWithSlabAndFormulaDetail = result;
@@ -309,6 +324,8 @@
             console.log(result)
             if (result == 'NoDataFound') {
                 //promt no payband found for selected grades
+                $scope.showMsg("error", "No Data Found");
+                $scope.page.gridOptions.data = [];
             }
             else {
 
@@ -369,6 +386,7 @@
         //setting up first level grid columns as per data loaded for selected payband detail
         function _setEntitlementColumns(result) {
             console.log(result)
+
 
             var defaultData = {};
             if (result) {

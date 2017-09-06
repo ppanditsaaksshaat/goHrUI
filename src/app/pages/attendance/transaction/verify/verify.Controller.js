@@ -9,7 +9,7 @@
     .controller('attTransverifyController', attTransverifyController);
 
   /** @ngInject */
-  function attTransverifyController($scope, $state, $timeout, pageService, dialogModal, toastr, toastrConfig) {
+  function attTransverifyController($scope, $state, $timeout, pageService, dialogModal, toastr, toastrConfig, $filter, DJWebStoreGlobal) {
 
     var vm = this;
     var currentState = $state.current;
@@ -21,11 +21,11 @@
     vm.queryId = 520;
     vm.showVerifyAttendance = true;
 
+
     this.applyFilter = _applyFilter;
 
 
-    // this.uploadRecord = _uploadRecord;
-
+    // this.uploadRecord = _uploadRecord
 
 
     /**For all list of verify attendance grid setting */
@@ -46,12 +46,13 @@
       showAdd: false,
       showRowMenu: true,
       showCustomView: true,
-      showUpload: false,
+      showUpload: true,
       showDialog: false,
       enableRefreshAfterUpdate: true,
       noResultMessageText: 'Please use filter to show data.',
       enableAutoRefresh: true,
       selectedRowButtons: [{ text: "Verify", icon: '', onClick: _verifyAttendance, type: "btn-default", defaultButton: false }],
+      customButtonsWithDefault: [{ text: "Download Template", icon: 'ion-archive', onClick: _downloadTemplate, type: "btn-default", defaultButton: false }],
       linkColumns: null,
       gridHeight: 450,
       getPageData: null,
@@ -62,7 +63,8 @@
       viewRecord: null,
       deleteRecord: null,
       pageResult: _pageResult,
-      dataResult: _dataResult
+      dataResult: _dataResult,
+      uploadRecord: _uploadRecord
 
 
       // readonlyColumns: ['col1', 'col2']
@@ -110,6 +112,9 @@
     $scope.closeForm = _closeForm;
     $scope.saveForm = _saveForm;
 
+
+
+
     function _pageResult(result) {
       angular.forEach(result.pageinfo.filters, function (filter) {
         if (filter.name == 'Month') {
@@ -129,6 +134,82 @@
       if (result[0].Error == "Salary Cycle not found") {
         $scope.page.gridOptions.data = [];
         $scope.page.boxOptions.noResultMessageText = result[0].Error;
+      }
+    }
+    function _downloadTemplate() {
+
+      var tempColumns = [];
+      var row = {
+        'EmployeeCode': '',
+        'TotalWeekOff': '',
+        'WeekOffPresent': '',
+        'TotalDays': '',
+        'TotalPresentDays': '',
+        'TotalHolidays': '',
+        'HolidayPresent': '',
+        'TotalLeaves': '',
+        'TotalLWP': '',
+        'TotalSalaryDays': '',
+        'LateCount': '',
+        'LateDays': '',
+        'AbsentDays': '',
+        'IncentiveDays': '',
+        'SingleOTMinute': '',
+        'SingleOTHours': '',
+        'DoubleOTMinute': '',
+        'DoubleOTHours': '',
+
+      }
+      tempColumns.push(row)
+      DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'Verify', false, true, true);
+    }
+    function _uploadRecord() {
+      $scope.deepak = 'is my name';
+      var options = {
+        url: "app/common/forms/browseModal/browseModal.html",
+        controller: "",
+        controllerAs: "",
+      }
+      dialogModal.open(options)
+
+    }
+
+    $scope.$on('uploadGridData', _upload)
+    function _upload(evt, uploadGridData) {
+
+      var flag = false;
+
+      if ($scope.page.gridOptions.data.length > 0) {
+        angular.forEach(uploadGridData.data, function (newEmpDetail) {
+          var oldEmpDetail = $filter("findObj")($scope.page.gridOptions.data, newEmpDetail.EmployeeCode, "EmpCode")
+          if (oldEmpDetail != null) {
+
+            oldEmpDetail.TotalWeekoff = parseInt(newEmpDetail.TotalWeekOff);
+            oldEmpDetail.TotalDays = newEmpDetail.TotalDays;
+            oldEmpDetail.TotalPresentDays = newEmpDetail.TotalPresentDays;
+            oldEmpDetail.TotalHolidays = newEmpDetail.TotalHolidays;
+            oldEmpDetail.HolidayPresent = newEmpDetail.HolidayPresent;
+            oldEmpDetail.TotalLeaves = newEmpDetail.TotalLeaves;
+            oldEmpDetail.TotalLWP = newEmpDetail.TotalLWP;
+            oldEmpDetail.TotalSalaryDays = newEmpDetail.TotalSalaryDays;
+            oldEmpDetail.DeductableLateCount = newEmpDetail.LateCount;
+            oldEmpDetail.DeductableLateDays = newEmpDetail.LateDays;
+            oldEmpDetail.AbsentDays = parseInt(newEmpDetail.AbsentDays);
+            oldEmpDetail.IncentiveDays = parseInt(newEmpDetail.IncentiveDays);
+            oldEmpDetail.SingleOvertimeMin = parseFloat(newEmpDetail.SingleOTMinute);
+            oldEmpDetail.SingleOvertimeHours = parseFloat(newEmpDetail.SingleOTHours);
+            oldEmpDetail.DoubleOvertimeMin = parseFloat(newEmpDetail.DoubleOTMinute);
+            oldEmpDetail.DoubleOvertimeHours = parseFloat(newEmpDetail.DoubleOTHours);
+            flag = true;
+
+          }
+          else {
+
+          }
+        })
+        if (flag) {
+          $scope.showMsg("success", "Your file uploaded successfully")
+        }
       }
     }
 
@@ -209,9 +290,7 @@
     function _openView() {
       alert('view opened')
     }
-    // function _uploadRecord() {
-    //   $state.go('organization.employees.upload')
-    // }
+
     function _applyFilter() {
 
       $scope.page.searchList = [];
@@ -241,15 +320,14 @@
     function _verifyAttendance() {
 
       var searchLists = [];
-      var empIds = "";
       var startDate = "";
       var endDate = "";
 
-      angular.forEach($scope.page.selectedRows, function (data) {
-        empIds += data.EmpId + ",";
-      });
+      // angular.forEach($scope.page.selectedRows, function (data) {
+      //   empIds += data.EmpId + ",";
+      // });
 
-      var empId = empIds.substring(0, empIds.length - 1)
+      // var empId = empIds.substring(0, empIds.length - 1)
       if ($scope.page.filterData === undefined) {
         startDate = moment().startOf('month').format('YYYY-MM-DD');
         endDate = moment().endOf('month').format('YYYY-MM-DD');
@@ -260,10 +338,11 @@
         startDate = moment(sDate).startOf('month').format('YYYY-MM-DD');
         endDate = moment(sDate).endOf('month').format('YYYY-MM-DD');
       }
+
       var searchListData = {
-        field: 'EmpIds',
-        operand: '=',
-        value: empId
+        field: 'VerifyAttendance',
+        operand: "table",
+        value: LZString.compressToEncodedURIComponent(JSON.stringify($scope.page.selectedRows))
       }
       searchLists.push(searchListData)
       searchListData = {
@@ -279,6 +358,7 @@
         value: endDate
       }
       searchLists.push(searchListData)
+
       var data = {
         searchList: searchLists,
         orderByList: []
@@ -288,7 +368,13 @@
       pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
     }
     function _getCustomQuerySuccessResult(result) {
-      $scope.showMsg("success", "Verify Successfully")
+      console.log(result);
+
+      $scope.showMsg("success", "Verify Successfully");
+      $scope.page.refreshData();
+
+
+
       // if (result. == { emp = 1, sum = 1 }) {
       //  
       //   $scope.page.refreshData();

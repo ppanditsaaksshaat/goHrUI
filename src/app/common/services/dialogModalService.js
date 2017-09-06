@@ -17,6 +17,7 @@
         size = options.size;
       }
       $rootScope.modalInstance = $uibModal.open({
+
         animation: false,
         templateUrl: options.url,
         controller: options.controller,
@@ -127,6 +128,7 @@
       });
       return modalInstance;
     }
+    
   }
 
 })();
