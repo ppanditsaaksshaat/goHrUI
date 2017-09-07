@@ -601,7 +601,7 @@
                         _setupSecondGrid(empData);
 
                         if (empData.subGridOptions) {
-
+                            empPaybandExist = true;
                             var empRuleList = null;
                             console.log($scope.empRuleWithSlabAndFormulaDetail)
                             if ($scope.empRuleWithSlabAndFormulaDetail != undefined) {

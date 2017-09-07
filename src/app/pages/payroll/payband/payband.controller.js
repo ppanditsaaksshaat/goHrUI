@@ -558,7 +558,7 @@
             $scope.action = 'create';
         }
         function _editRecord(row) {
-          
+
             $scope.page.showEditForm = true;
             $scope.entity = angular.copy(row.entity);
             $scope.page.isAllowEdit = true;
@@ -1823,6 +1823,7 @@
                 ruleEntity.PBRCalcOnSHId = '[' + calcHeads + ']'
 
                 ruleEntity.PBRIsFormula = row.PBRIsFormula;
+                ruleEntity.IsDeleted = true;
 
                 if (row.subGridOptions) {
                     if (row.subGridOptions.data) {
