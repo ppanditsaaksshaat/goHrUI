@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function pfForm5Controller($scope) {
-    $scope.page = { reportId: 25 }
+    $scope.page = { reportId: 22 }
   }
 
 })();
