@@ -68,7 +68,42 @@
         $scope.saveResignation = _saveResignation;
         $scope.resignList = _resignList;
         $scope.payByEmpOnChange = _payByEmpOnChange;
+        $scope.setProbetionDate = _setProbetionDate;
+        $scope.setProbetionDateOnJoininDate = _setProbetionDateOnJoininDate;
 
+        function _setProbetionDateOnJoininDate() {
+            if ($scope.empTabCtrl.entity.JDProbationValidity !== undefined) {
+                if ($scope.empTabCtrl.entity.JDProbationValidity != null) {
+                    if ($scope.empTabCtrl.entity.JDNumberOfProbationInDays !== undefined) {
+                        if ($scope.empTabCtrl.entity.JDNumberOfProbationInDays != null) {
+                            var installmentDate = moment($scope.empTabCtrl.entity.JDDate)
+                            $scope.empTabCtrl.entity.JDProbationValidity = installmentDate.add($scope.empTabCtrl.entity.JDNumberOfProbationInDays, 'd')
+
+                        }
+                    }
+                }
+            }
+        }
+
+
+        function _setProbetionDate() {
+            if ($scope.empTabCtrl.entity.JDDate !== undefined) {
+                if ($scope.empTabCtrl.entity.JDDate != null) {
+
+                    var installmentDate = moment($scope.empTabCtrl.entity.JDDate)
+                    $scope.empTabCtrl.entity.JDProbationValidity = installmentDate.add($scope.empTabCtrl.entity.JDNumberOfProbationInDays, 'd')
+
+                }
+                else {
+                    $scope.showMsg("error", "please provide employee joining date.")
+                    // alert('please provide employee joining date.')
+                }
+            }
+            else {
+                $scope.showMsg("error", "please provide employee joining date.")
+            }
+
+        }
 
 
         function _goToEmployeeList() {
