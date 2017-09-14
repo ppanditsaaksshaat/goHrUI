@@ -785,7 +785,7 @@
                     cellEditableCondition: false,
                     colIndex: 7
                 })
-
+_
             $scope.payGridOptions.columnDefs.push(
                 {
                     cellTemplate: cellTemplateRowExpand,
