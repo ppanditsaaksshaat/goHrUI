@@ -191,8 +191,15 @@
 
     function _fetchLeaveDetail() {
 
+      var searchLists = [];
       $scope.entity.LEADEmpId = $scope.entity.selectedEmp.value;
       $scope.employeeJoiningDate = $scope.entity.selectedEmp.JDDate;
+      $scope.jobIsProbation = $scope.entity.selectedEmp.JDIsProbation;
+      $scope.jobProbationDate = $scope.entity.selectedEmp.JDProbationValidity;
+
+
+
+
       if ($scope.entity.selectedEmp.JDDate != null && $scope.entity.selectedEmp.JDDate != undefined && $scope.entity.selectedEmp.JDDate != '') {
         $timeout(function () {
           $scope.$broadcast('rzSliderForceRender');
@@ -201,18 +208,38 @@
         $scope.showSlider = true;
         queryId = 530;
         vm.validateLeave = true;
-        var searchLists = [];
-        var searchListData = {
-          field: 'ELTEmpId',
-          operand: '=',
-          value: $scope.entity.selectedEmp.value
-        }
-        searchLists.push(searchListData)
-        var data = {
-          searchList: searchLists,
-          orderByList: []
-        }
-        pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+        // // var searchLists = [];
+        // var searchListData = {
+        //   field: 'ELTEmpId',
+        //   operand: '=',
+        //   value: $scope.entity.selectedEmp.value
+        // }
+
+        // // var searchListData = {
+        // //   field: 'JDEmpId',
+        // //   operand: '=',
+        // //   value: $scope.entity.selectedEmp.value
+        // // }
+        // searchLists.push(searchListData)
+        // var data = {
+        //   searchList: searchLists,
+        //   orderByList: []
+        // }
+
+        // //Probation Leave Detail
+        // // var probationLeaveQueryId = 565;
+
+        // // var data = {
+        // //   searchList: [],
+        // //   orderByList: []
+        // // }
+
+        // // pageService.getCustomQuery(data, probationLeaveQueryId).then(_getProbationCustomQuerySuccessResult, _getProbationCustomQueryErrorResult)
+
+        // //
+
+
+        // pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
         _fetchPendingLeave();
       }
       else {
@@ -224,7 +251,10 @@
 
     function _getCustomQuerySuccessResult(result) {
       queryId = 534;
+
       $scope.showLeave = result;
+      console.log(result);
+      // alert(result);
 
 
       if (result != "NoDataFound") {
@@ -243,6 +273,7 @@
       }
       else {
         vm.validateEmployee = false;
+        _calculateDays();
       }
     }
     function _getCustomQueryErrorResult(err) {
@@ -517,7 +548,63 @@
       var joiningDate = moment($scope.employeeJoiningDate);
       var fromDate = moment($scope.entity.LEADDateFrom);
       var diff = fromDate.diff(joiningDate, 'days')
+      var queryId = 530;
       if (diff > 0) {
+        // debugger;
+        if ($scope.entity.selectedEmp.JDIsProbation != null && $scope.entity.selectedEmp.JDIsProbation != undefined && $scope.entity.selectedEmp.JDIsProbation != '') {
+          if ($scope.entity.selectedEmp.JDProbationValidity != null && $scope.entity.selectedEmp.JDProbationValidity != undefined && $scope.entity.selectedEmp.JDProbationValidity != '') {
+            if (moment($scope.entity.selectedEmp.JDProbationValidity) >= moment($scope.entity.LEADDateFrom)) {
+
+              var searchLists = [];
+              var searchListDatas = {
+                field: 'ELTEmpId',
+                operand: '=',
+                value: $scope.entity.selectedEmp.value
+              }
+              searchLists.push(searchListDatas)
+              var searchListDatas = {
+                field: 'LRCIsDRInProbation',
+                operand: '=',
+                value: $scope.entity.selectedEmp.JDIsProbation
+              }
+              searchLists.push(searchListDatas)
+              var data = {
+                searchList: searchLists,
+                orderByList: []
+              }
+            }
+            else {
+              var searchLists = [];
+              var searchListData = {
+                field: 'ELTEmpId',
+                operand: '=',
+                value: $scope.entity.selectedEmp.value
+              }
+              searchLists.push(searchListData)
+              var data = {
+                searchList: searchLists,
+                orderByList: []
+              }
+            }
+            pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+
+          }
+        }
+        else {
+          var searchLists = [];
+          var searchListData = {
+            field: 'ELTEmpId',
+            operand: '=',
+            value: $scope.entity.selectedEmp.value
+          }
+          searchLists.push(searchListData)
+          var data = {
+            searchList: searchLists,
+            orderByList: []
+          }
+          pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+        }
+
         vm.validateLeave = true;
         $scope.isgreaterJoinDate = false;
         var appliedDays = 0;
@@ -924,6 +1011,8 @@
       $scope.entity.LEADFromHalfDayId = 2;
       $scope.entity.LEADToHalfDayId = 2;
     }
+
+
 
     function _addRecord() {
 
