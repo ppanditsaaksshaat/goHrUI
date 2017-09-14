@@ -91,7 +91,8 @@
                 icon: meta.icon,
                 stateRef: s.name,
                 parent: meta.parent,
-                pageTitle: meta.pageTitle
+                pageTitle: meta.pageTitle,
+                headerCode: s.headerCode
               };
             })
             .sort(function (a, b) {

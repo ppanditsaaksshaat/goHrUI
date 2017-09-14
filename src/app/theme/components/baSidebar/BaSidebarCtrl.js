@@ -9,14 +9,16 @@
     .controller('BaSidebarCtrl', BaSidebarCtrl);
 
   /** @ngInject */
-  function BaSidebarCtrl($scope, baSidebarService) {
+  function BaSidebarCtrl($scope, baSidebarService, $rootScope) {
 
-    $scope.menuItems = baSidebarService.getMenuItems();
+    var localMenuItems = baSidebarService.getMenuItems();
+    $scope.menuItems = $rootScope.sideMenu;
+    console.log(localMenuItems)
     $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
 
     $scope.hoverItem = function ($event) {
       $scope.showHoverElem = true;
-      $scope.hoverElemHeight =  $event.currentTarget.clientHeight;
+      $scope.hoverElemHeight = $event.currentTarget.clientHeight;
       var menuTopValue = 66;
       $scope.hoverElemTop = $event.currentTarget.getBoundingClientRect().top - menuTopValue;
     };

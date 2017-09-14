@@ -17,6 +17,8 @@
      'BlurAdmin.pages.payroll.esiRule',
      'BlurAdmin.pages.payroll.epfRule',
      'BlurAdmin.pages.payroll.paybandtemplate',
+     'BlurAdmin.pages.payroll.salaryHead',
+    //  'BlurAdmin.pages.payroll.Challan',
   ])
       .config(routeConfig);
       
@@ -28,6 +30,7 @@
           template : '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
           abstract: true,
           title: 'Payroll',
+          headerCode: 'payroll',
           sidebarMeta: {
             icon: 'ion-pound',
             order: 6,

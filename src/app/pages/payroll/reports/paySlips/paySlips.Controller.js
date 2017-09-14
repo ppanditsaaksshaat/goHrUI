@@ -11,6 +11,7 @@
   /** @ngInject */
   function paySlipchallanController($scope) {
     $scope.page = { reportId: 19 }
+    
 
   }
 

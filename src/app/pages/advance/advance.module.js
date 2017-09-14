@@ -24,6 +24,7 @@
           template : '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
           abstract: true,
           title: 'Advance',
+          headerCode: 'payroll',
           sidebarMeta: {
             icon: 'ion-pound',
             order: 3,
