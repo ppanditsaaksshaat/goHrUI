@@ -120,7 +120,7 @@
 
                         angular.forEach(empEntitlement.subGridOptions.data, function (head) {
                             angular.forEach(uploadGridData.columnDefs, function (col) {
-
+                              
                                 if (head.SHName == col.field) {
                                     head.PBRAmount = newHead[col.field];
                                     head.GrossPercentage = "";
@@ -201,16 +201,7 @@
             $timeout(function () {
 
 
-                var data = {
-                    searchList: [{
-                        field: 'PBId',
-                        operand: '=',
-                        value: 1
-                    }],
-                    orderByList: []
-                }
-
-                pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccess, _getCustomQueryError)
+               
                 pageService.getPagData(pageIds.payband.pageId).then(function (result) {
                     console.log(result)
                     $scope.paybandPage = result;
@@ -218,6 +209,7 @@
 
                 pageService.getPagData($scope.rulePage.pageId).then(
                     function (result) {
+
                         console.log(result)
                         $scope.rulePage = angular.extend({}, $scope.rulePage, result);
 
@@ -286,9 +278,20 @@
             else {
                 console.log(result)
                 if (result.length > 0) {
+
                     //grid show 
                     $scope.gridShow = true;
                     selectedPaybandMaster = result[0];
+                    var data = {
+                        searchList: [{
+                            field: 'PBId',
+                            operand: '=',
+                            value: selectedPaybandMaster.PBId
+                        }],
+                        orderByList: []
+                    }
+    
+                    pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccess, _getCustomQueryError)
                     //feteching payband rule detail with multi calling facility
                     _fetchPaybandRuleDetail(selectedPaybandMaster.PBId)
                 }
@@ -329,7 +332,7 @@
             }
             else {
 
-                $scope.employeeList = result;
+                $scope.employeeList = result;              
                 _getGradeLevelPaybandDetail($scope.entity.PBEmpGradeId, $scope.entity.PBEmpLevelId)
 
             }
@@ -590,7 +593,6 @@
             }
 
 
-
             if ($scope.employeeList) {
                 if ($scope.employeeList.length > 0) {
                     var dataList = [];
@@ -761,7 +763,11 @@
 
                     console.log(dataList)
                 }
+                else {
+                    $scope.showMsg("error", "No employee found please contact admin or add employee")
+                }
             }
+
             $scope.page.gridOptions.data = dataList;
         }
 

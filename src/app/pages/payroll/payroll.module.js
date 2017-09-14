@@ -16,6 +16,7 @@
      'BlurAdmin.pages.payroll.otRule',
      'BlurAdmin.pages.payroll.esiRule',
      'BlurAdmin.pages.payroll.epfRule',
+     'BlurAdmin.pages.payroll.paybandtemplate',
      'BlurAdmin.pages.payroll.salaryHead',
      'BlurAdmin.pages.payroll.Challan',
   ])
