@@ -142,7 +142,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
 
         var _getNavigation = function () {
             var rndVal = Math.round((Math.random() * 10) * 10);
-            var url = serviceBase + 'api/Menu/Side/?' + rndVal;
+            var url = serviceBase + 'api/Menu/State/?' + rndVal;
             return $http.get(url).then(function (results) {
                 return results;
             });

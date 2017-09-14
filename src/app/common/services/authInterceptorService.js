@@ -11,7 +11,7 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
 
 
         if (config.url.indexOf('/api/') > 0) {
-            console.log(config.url)
+            //console.log(config.url)
             cfpLoadingBar.start();
             // if (!authInterceptorServiceFactory.isProgressIsOpened) {
             //     authInterceptorServiceFactory.progressModalInstance = $rootScope.openProgress();
@@ -27,7 +27,7 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
         var authData = DJWebStore.GetAuthorization();
         if (authData) {
             config.headers.Authorization = 'Bearer ' + authData.token;
-            //console.log(authData.token)
+            ////console.log(authData.token)
         }
         // console.log (config)
         // config.defaults.useXDomain = true;
@@ -66,7 +66,7 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
         cfpLoadingBar.complete();
 
         if (response.statusText != 'OK') {
-            console.log(response)
+            //console.log(response)
         }
         if (response.config.url.endsWith('token')
             || response.config.url.endsWith('GetFile')
@@ -77,15 +77,15 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
             if (response.data !== undefined) {
                 var result_data = angular.fromJson(response.data);
                 result = result_data;
-                console.log(result_data.lz,'lz')
-                console.log(result_data,'result_data')
+                //console.log(result_data.lz,'lz')
+                //console.log(result_data,'result_data')
                 if (result_data.lz !== undefined) {
-                    console.log('converting request')
+                    //console.log('converting request')
                     if (result_data.lz) {
                         var paramData = LZString.decompressFromEncodedURIComponent(result_data.data);
                         result = angular.fromJson(paramData);
-                        console.log('request converted')
-                        console.log(result)
+                        //console.log('request converted')
+                        //console.log(result)
                     }
                 }
             }

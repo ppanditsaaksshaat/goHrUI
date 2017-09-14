@@ -23,6 +23,7 @@
         template: '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
         abstract: true,
         title: 'Attendance',
+        headerCode: 'payroll',
         sidebarMeta: {
           icon: 'ion-gear-a',
           order: 2,

@@ -16,11 +16,11 @@
     'BlurAdmin.pages.organization.general',
     // 'BlurAdmin.pages.organization.employees.report'
     'BlurAdmin.pages.organization.reports',
-    
-    
+
+
     // 'BlurAdmin.pages.organization.empadd',
     // 'BlurAdmin.pages.organization.empedit',
-    
+
   ])
     .config(routeConfig);
 
@@ -32,6 +32,7 @@
         template: '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
         abstract: true,
         title: 'Organization',
+        headerCode: 'emp',
         sidebarMeta: {
           icon: 'ion-ios-people',
           order: 1,
