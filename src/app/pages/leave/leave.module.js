@@ -21,6 +21,7 @@
         template: '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
         abstract: true,
         title: 'Leave',
+        headerCode: 'payroll',
         sidebarMeta: {
           icon: 'ion-android-calendar',
           order: 5,

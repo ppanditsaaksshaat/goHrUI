@@ -18,6 +18,7 @@
           template : '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
           abstract: true,
           title: 'Time',
+          headerCode: 'time',
           sidebarMeta: {
             icon: 'ion-clock',
             order: 2,

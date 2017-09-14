@@ -90,7 +90,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         serviceBase = 'http://web400.hrms/api/';
         // serviceBase = 'http://localhost/api/';
         // serviceBase = 'http://ultralive.rudra.hrm/api/';
-        // serviceBase = '/api/'
+        // serviceBase = 'http://seacliffnew.rudra.hrm/api/'
         // serviceBase = null;
         // console.log($location)
         if (serviceBase == null) {

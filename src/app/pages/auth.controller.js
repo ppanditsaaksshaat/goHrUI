@@ -74,7 +74,7 @@
             $("#userName").prop("disabled", true);
             $("#userPassword").prop("disabled", true);
             $("#btnlogin").prop("disabled", true);
-            $("#userLanguage").prop("disabled", true); 
+            $("#userLanguage").prop("disabled", true);
             $("#btnlogin").text("Please Wait..");
 
             var loginData = {
@@ -87,7 +87,8 @@
                 pageService.getAppUserData().then(function (result) {
                     var profileData = result;//angular.fromJson(response.data);
                     DJWebStore.SetUserProfile(profileData.user);
-                    window.location.href = 'index.html'
+                    _loadSideMenu();
+                    // window.location.href = 'index.html'
                 }, function (err) {
                     console.log(err);
                 });
@@ -103,10 +104,33 @@
                     }
                     $("#userName").prop("disabled", false);
                     $("#userPassword").prop("disabled", false);
-                    $("#userLanguage").prop("disabled", false); 
+                    $("#userLanguage").prop("disabled", false);
                     $("#btnlogin").prop("disabled", false);
                     $("#btnlogin").text("Sign in");
                 });
+        }
+
+        function _loadSideMenu() {
+
+            $scope.sideMenu = DJWebStore.GetValue('sidemenu');
+            if ($scope.sideMenu == null) {
+                pageService.getNavigation().then(_sideMenuSuccessResult, _sideMenuErrorResult);
+            }
+            else {
+                //_setupMenu();
+            }
+
+        }
+        function _sideMenuSuccessResult(result) {
+            console.log(result)
+            $scope.sideMenu = result;
+            DJWebStore.SetValue('sidemenu', $scope.sideMenu);
+            //_setupMenu();
+
+            window.location.href = 'index.html'
+        }
+        function _sideMenuErrorResult(err) {
+
         }
 
         _loadController();

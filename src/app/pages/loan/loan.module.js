@@ -22,6 +22,7 @@
           template : '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
           abstract: true,
           title: 'Loan',
+          headerCode: 'payroll',
           sidebarMeta: {
             icon: 'ion-briefcase',
             order: 4,

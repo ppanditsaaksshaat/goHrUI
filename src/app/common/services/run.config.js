@@ -4,7 +4,10 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
 
 
     $rootScope.user = DJWebStore.ValidateUser();
-    console.log($rootScope.user)
+
+    $rootScope.sideMenu = DJWebStore.GetValue('sidemenu');
+
+    console.log($rootScope.sideMenu)
 
     var toastOption = {};
     var defaultConfig = angular.copy(toastrConfig);
