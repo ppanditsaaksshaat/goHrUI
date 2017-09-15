@@ -15,15 +15,14 @@
     $stateProvider
       .state('payroll.salaryHead', {
         url: '/salaryhead',
-      //  abstract: true,
+        //  abstract: true,
         templateUrl: 'app/pages/payroll/salaryHead/organization.salaryHead.html',
         controller: "salaryHeadController",
         controllerAs: "attCtrl",
         title: 'Salary Head',
         sidebarMeta: {
-          order: 3          
+          order: 3
         },
       })
   }
-
 })();

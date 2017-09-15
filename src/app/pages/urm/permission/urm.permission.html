@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-3" style="padding-right:0px; margin-right:0px;  ">
+        <div class="panel panel-default bootstrap-panel xmedium-panel">
+            <div class="panel-heading panHead" style="vertical-align: super">
+                User Roles
+            </div>
+
+            <div class="panel-body" style="overflow: scroll">
+                <ul class="list-unstyled side-menu maxHeight450">
+                    <li ng-repeat="t in roleList" ng-click="callMenu(t.RoleId)">
+                        <a href>{{t.RoleName}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9" style="padding-left:0px; margin-left:0px;">
+        <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
+            <div class="panel-heading clearfix">
+                Menu Permission for {{selectedRoleName}} <i ng-show="isLoadingPermission" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+            </div>
+            <div class="panel-body" style="padding:5px" >
+
+                <div ng-scrollbars ng-scrollbars-config="config" style="max-height: 430px">
+                        <tree-view checkbox click="myClick(node)" model="nodes" ng-show="isPermissionLoaded"></tree-view>
+                </div>
+                
+                <button ng-click="savePermission()" class="btn btn-info btn-lg" ng-disabled="isApplyingChanges">
+                        <i ng-show="isApplyingChanges" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                        <span ng-hide="isApplyingChanges">Apply Changes</span>
+                        <span ng-show="isApplyingChanges">Applying..</span>
+                </button>
+
+                <button type="button" class="btn btn-danger btn-lg" ng-click="reset()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
