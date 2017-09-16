@@ -13,9 +13,9 @@
     $stateProvider
       .state('dashboard', {
         url: '/dashboard',
-        templateUrl: 'app/pages/dashboard/configure.html',
-        controller: 'configureController',
-        title: 'configure',
+        templateUrl: 'app/pages/dashboard/dashboard.html',
+        //controller: 'configureController',
+        title: 'Dashboard',
         sidebarMeta: {
           icon: 'ion-android-home',
           order: 1,
