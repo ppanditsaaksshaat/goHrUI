@@ -1,0 +1,27 @@
+<form ng-submit="empTabCtrl.saveFormCommon(editForm)" name="editForm" novalidate>
+    <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
+        <edit-panel-head page="page" page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon(editForm)" clear-form="empTabCtrl.clearFormCommon()"
+            open-List="empTabCtrl.goToEmployeeList()" condition="(true)" show-close="true"></edit-panel-head>
+        <div class="panel-body" style="padding:5px;" ng-scrollbars ng-scrollbars-config="config">
+            <div style="min-height: 450px;" ng-show="page.pageIsLoaded">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="inputDepartment" ng-bind="page.pageinfo.fields.UserId.text"></label>
+                            <field-box page="page" ng-column="page.pageinfo.fields.UserId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label ng-bind="page.pageinfo.fields.RoleId.text"></label>
+                            <field-box page="page" ng-column="page.pageinfo.fields.RoleId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form>

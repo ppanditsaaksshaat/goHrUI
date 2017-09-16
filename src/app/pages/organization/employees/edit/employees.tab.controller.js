@@ -126,8 +126,8 @@
             $scope.page.pageIsLoaded = false;
             $scope.page.pageIsLoading = true;
 
-            if (vm.pageId == 114 || vm.pageId == 35 || vm.pageId == 125 || vm.pageId == 36) {
-                if (vm.pageId == 114 || vm.pageId == 36 || vm.pageId == 125) {
+            if (vm.pageId == 114 || vm.pageId == 35 || vm.pageId == 125 || vm.pageId == 36 || vm.pageId == 21) {
+                if (vm.pageId == 114 || vm.pageId == 36 || vm.pageId == 125 || vm.pageId == 21) {
                     $timeout(function () {
                         pageService.getPagData(vm.pageId).then(
                             _getPageDataSuccessResult, _getPageDataErrorResult);
@@ -165,6 +165,7 @@
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page);
                 }
+
                 else {
 
                     $scope.page = _getLocalPageObject(vm.pageId)
@@ -239,13 +240,15 @@
                 linkFieldName = 'PdEmpId';
             } else if (result.pageinfo.pageid == 125) {
                 linkFieldName = 'ADEmpId';
+            } else if (result.pageinfo.pageid == 21) {
+                linkFieldName = 'EmpId';
             }
 
 
 
 
             $timeout(function () {
-                if (result.pageinfo.pageid == 114 || result.pageinfo.pageid == 125) {
+                if (result.pageinfo.pageid == 114 || result.pageinfo.pageid == 125 || result.pageinfo.pageid == 21) {
                     var searchList = [];
                     var searchFields = {
                         field: linkFieldName,
@@ -670,6 +673,19 @@
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
                 }
+
+                else if (vm.pageId == 21) {
+
+                    if (vm.entity.LinkRoleUserId === undefined) {
+                        vm.entity.EmpId = vm.empPKId;
+                        _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
+                    }
+                    else {
+                        console.log(vm.entity);
+                        _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
+                    }
+                }
+
                 if (vm.pageId == 36) {
 
                     if (vm.empContactDetail.CDId === undefined) {
