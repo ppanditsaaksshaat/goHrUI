@@ -112,13 +112,15 @@
 
         function _loadSideMenu() {
 
-            $scope.sideMenu = DJWebStore.GetValue('sidemenu');
-            if ($scope.sideMenu == null) {
-                pageService.getNavigation().then(_sideMenuSuccessResult, _sideMenuErrorResult);
-            }
-            else {
-                //_setupMenu();
-            }
+            // $scope.sideMenu = DJWebStore.GetValue('sidemenu');
+            // if ($scope.sideMenu == null) {
+               
+            // }
+            // else {
+            //     //_setupMenu();
+            // }
+
+            pageService.getNavigation().then(_sideMenuSuccessResult, _sideMenuErrorResult);
 
         }
         function _sideMenuSuccessResult(result) {
