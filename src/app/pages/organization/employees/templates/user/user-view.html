@@ -6,10 +6,7 @@
             <div style="min-height: 450px;" ng-show="page.pageIsLoaded">
                 <div class="row">
                     <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="inputDepartment" ng-bind="page.pageinfo.fields.UserId.text"></label>
-                            <field-box page="page" ng-column="page.pageinfo.fields.UserId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                        </div>
+                        <span class="form-control" ng-bind="empTabCtrl.entity.EmpName"></span>
                     </div>
                 </div>
 
