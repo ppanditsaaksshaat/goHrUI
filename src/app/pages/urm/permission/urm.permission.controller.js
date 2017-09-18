@@ -15,6 +15,8 @@
 
 
     $scope.savePermission = _savePermission;
+    $scope.saveActivity = _saveActivity;
+
     $scope.reset = _reset;
     $scope.selectedRoleId = 0;
     var vm = this;
@@ -216,12 +218,8 @@
     function _getApplyChangesSuccess(result) {
       $scope.isApplyingChanges = false;
       console.log(result)
-      if (result.length > 0) {
-        if (result[0].result) {
-          if (result[0].result == 'sucess') {
-            $scope.showMsg('success', 'Saved Successfully.')
-          }
-        }
+      if (result[0][0].result == 'success') {
+        $scope.showMsg('success', 'Saved Successfully.')
       }
     }
     function _getApplyChangesError(err) {
@@ -248,28 +246,142 @@
     _loadController();
 
 
+    //activity
+    function _getRoleMenuActivity(menuId, roleId) {
+      var data = {
+        searchList: [
+          {
+            field: 'UIMenuId',
+            operand: '=',
+            value: menuId
+          },
+          {
+            field: 'RoleId',
+            operand: '=',
+            value: roleId
+          }
+        ],
+        orderByList: []
+      }
+      pageService.getCustomQuery(data, 570).then(_getRoleMenuActivitySuccess, _getRoleMenuActivityError)
+
+    }
+
+    function _getRoleMenuActivitySuccess(result) {
+      console.log(result[0])
+      $scope.activityList = result[0];
+      $scope.isShowActivity = true;
+    }
+    function _getRoleMenuActivityError(err) {
+      console.log(err)
+    }
+
+    function _saveActivity() {
+      $scope.isSavingActivity = true;
+      $scope.isActivitySaved = false;
+      $scope.isApplyingChanges = true;
+
+      console.log($scope.activityList)
+      var selectedActivity = '';
+      for (var i = 0; i < $scope.activityList.length; i++) {
+        if ($scope.activityList[i].IsAllowed) {
+          selectedActivity += $scope.activityList[i].MenuActivityId + ',';
+        }
+      }
+      if (selectedActivity != '')
+        selectedActivity = selectedActivity.substr(0, selectedActivity.length - 1);
+
+      var data = {
+        searchList: [],
+        orderByList: []
+      }
+      data.searchList.push({ field: 'roleId', operand: '=', value: $scope.selectedRoleId });
+      data.searchList.push({ field: 'menuId', operand: '=', value: $scope.selectedMenuId });
+      data.searchList.push({ field: 'actId', operand: '=', value: selectedActivity });
+      data.searchList.push({ field: 'createdBy', operand: '=', value: 'itel_admin' });
+
+
+      pageService.getCustomQuery(data, 571).then(_saveActivitySuccess, _saveActivityError)
+
+    }
+    function _saveActivitySuccess(result) {
+      $scope.isSavingActivity = false;
+      $scope.isActivitySaved = true;
+      $scope.isApplyingChanges = false;
+
+      // console.log(result)
+      // console.log(result[0])
+      // console.log(result[0][0])
+      console.log(result[0][0].result)
+      if (result[0][0].result == 'success') {
+        $scope.showMsg('success', 'Saved Successfully.')
+      }
+      // if (result.length > 0) {
+      //   if (result[0][0].result) {
+      //     if (result[0][0].result == 'success') {
+      //       $scope.showMsg('success', 'Saved Successfully.')
+      //     }
+      //   }
+      // }
+    }
+    function _saveActivityError(err) {
+      console.log(err)
+      $scope.isApplyingChanges = false;
+      $scope.isSavingActivity = false;
+      $scope.isActivitySaved = false;
+    }
 
     $scope.myClick = function (node) {
-      //alert('Clicked [' + node.name + '] state is [' + node.checked + ']');
+      // //alert('Clicked [' + node.name + '] state is [' + node.checked + ']');
+      // var param = { node: node, roleId: $scope.selectedRoleId }
+      // var confirm = dialog.confirm(param);
+      // confirm.result.then(function (btn) {
 
-      var confirm = dialog.confirm('Editar', node);
-      confirm.result.then(function (btn) {
-
-      });
+      // });
+      $scope.selectedMenuName = node.name;
+      $scope.selectedMenuId = node.id;
+      _getRoleMenuActivity(node.id, $scope.selectedRoleId)
     };
 
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////
   /// DIALOG  ////////////////////////////////////////////////////////////////////////////////
-  angular.module('BlurAdmin.pages.urm.permission').controller('dialogConfirmCtrl', ['$scope', '$uibModalInstance', 'header', 'msg',
-    function ($scope, $uibModalInstance, header, msg) {
+  angular.module('BlurAdmin.pages.urm.permission').controller('dialogConfirmCtrl', ['$scope', '$uibModalInstance', 'pageService', 'param',
+    function ($scope, $uibModalInstance, pageService, param) {
       //-- Variables -----//
-
-      $scope.header = (angular.isDefined(header)) ? header : 'Confirmation';
-      //$scope.msg = (angular.isDefined(msg)) ? msg : 'Confirmation required.';
-      $scope.node = msg;
+      console.log(param)
       //-- Methods -----//
+
+      function _getRoleMenuActivity() {
+        var data = {
+          searchList: [
+            {
+              field: 'UIMenuId',
+              operand: '=',
+              value: param.node.id
+            },
+            {
+              field: 'RoleId',
+              operand: '=',
+              value: param.roleId
+            }
+          ],
+          orderByList: []
+        }
+        pageService.getCustomQuery(data, 570).then(_getRoleMenuActivitySuccess, _getRoleMenuActivityError)
+
+      }
+
+      function _getRoleMenuActivitySuccess(result) {
+        console.log(result)
+        $scope.activityList = result;
+      }
+      function _getRoleMenuActivityError(err) {
+        console.log(err)
+      }
+
+      _getRoleMenuActivity();
 
       $scope.no = function () {
         $uibModalInstance.dismiss('no');
@@ -280,18 +392,15 @@
       }; // end yes
     }
   ]).service('dialog', ["$uibModal", function ($uibModal) {
-    var _confirm = function (header, msg, stat) {
+    var _confirm = function (param, stat) {
       return $uibModal.open({
         templateUrl: 'app/pages/urm/permission/confirm.html',
         controller: 'dialogConfirmCtrl',
         backdrop: (stat ? 'static' : true),
         keyboard: (stat ? false : true),
         resolve: {
-          header: function () {
-            return angular.copy(header);
-          },
-          msg: function () {
-            return angular.copy(msg);
+          param: function () {
+            return angular.copy(param);
           }
         }
       }); // end modal.open
