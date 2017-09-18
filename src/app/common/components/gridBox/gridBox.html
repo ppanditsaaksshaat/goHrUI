@@ -15,7 +15,7 @@
                             </div>
                             <div class="col-md-9">
                                 <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
-                                    <button ng-show="page.boxOptions.showBack" type="button" class="btn btn-xs btn-default" ng-click="page.goBack()"><i class="ion-backspace"></i>Back</button>
+                                    <button ng-show="page.boxOptions.showBack" type="button" class="btn btn-xs btn-default" ng-click="page.goBack()"><i class="ion-backspace"></i>List</button>
                                     <button ng-show="page.boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="page.uploadRecord()">
                                             <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>
                                     <button ng-show="page.boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="page.refreshData()"><i 
@@ -119,7 +119,7 @@
                                     <div class="form-group" ng-repeat="col in page.formrows">
                                         <label for="inputPassword3" class="col-sm-5 control-label">{{col.text}}</label>
                                         <div class="col-md-7" ng-switch="col.type">
-                                            <field-box page="page" ng-column="col" ng-entity="entity" form="editForm"></field-box>
+                                            <field-box page="page" ng-column="col" ng-entity="entity" form="editForm" fb-change="col.onChangeEvent()" ></field-box>
                                         </div>
                                     </div>
                                 </div>

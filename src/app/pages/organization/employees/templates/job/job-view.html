@@ -208,7 +208,8 @@
           <div class="col-sm-4" ng-if="empTabCtrl.entity.JDNumberOfProbationInDays && empTabCtrl.entity.JDIsProbation">
             <div class="form-group">
               <label ng-bind="page.pageinfo.fields.JDProbationValidity.text"></label>
-              <field-box page="page" ng-column="page.pageinfo.fields.JDProbationValidity" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              <!--<field-box page="page" ng-column="page.pageinfo.fields.JDProbationValidity" ng-entity="empTabCtrl.entity" form="editForm"></field-box>-->
+              <span class="form-control" ng-bind="empTabCtrl.entity.JDProbationValidity"></span>
             </div>
           </div>
         </div>
