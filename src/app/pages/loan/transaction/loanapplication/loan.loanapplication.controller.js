@@ -277,8 +277,8 @@
           LADApprovedAmountWithPercentage: $scope.entity.LAAmount,
           LADInstalmentAmount: $scope.entity.LAInstallment,
           LADAprvdNoOfInstamt: $scope.entity.LANoOfInstallment,
-          LADApprovalLoanClDate: $scope.entity.LADate,
-          LADApprovedOn: moment(),
+          LADApprovedOn: $scope.entity.LADate,
+          LADApprovalLoanClDate:  $scope.entity.LALastLoanCheckDate,
           LADApprovedInstallmentAmount: $scope.entity.LAInstallment,
           StatusId: $scope.sanctionEntity.StatusId,
           LADRemark: $scope.sanctionEntity.LADRemark
