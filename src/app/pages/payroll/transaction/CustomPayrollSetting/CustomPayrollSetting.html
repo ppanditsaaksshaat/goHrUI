@@ -1,4 +1,3 @@
-
 <div class="row animated" ng-hide="isDate">
     <div class="col-md-12">
         <div class="row">
@@ -8,7 +7,8 @@
                         From Date
                     </div>
                     <div class="col-md-9">
-                        <input ng-model="acFromDate" type="text" class="form-control disabled">
+                        <!--<input ng-model="acFromDate" type="text" class="form-control disabled">-->
+                        <span class="form-control" ng-bind="acFromDate"></span>
                     </div>
                 </div>
             </div>
@@ -18,7 +18,8 @@
                         To Date
                     </div>
                     <div class="col-md-9">
-                        <input ng-model="acToDate" type="text" class="form-control disabled">
+                        <!--<input ng-model="acToDate" type="text" class="form-control disabled">-->
+                        <span class="form-control" ng-bind="acToDate"></span>
                     </div>
                 </div>
             </div>
@@ -29,52 +30,3 @@
 </div>
 <grid-box ng-model="page">
 </grid-box>
-<!--
-<form name="editForm " novalidate ng-submit="saveForm(editForm) " ng-show="showEditForm ">
-    <div class="panel panel-default xmedium-panel ">
-        <div class="panel-heading" style="padding-top:0px; background-color:#e3e8ef;">
-            <div class="row">
-                <div class="col-md-5" style="padding-top:15px">
-                    Generate Salary Process
-                    <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
-                </div>
-
-                <div class="col-md-7" style="padding-top:5px">
-                    <div class="pull-right">
-                        <button type="submit" class="btn btn-sm btn-primary">Pending</button>
-                        <button type="button" class="btn btn-sm btn-warning" ng-click="resetForm()">Ready</button>
-                        <button type="button" class="btn btn-sm btn-danger" ng-click="closeForm()">ReGenerate</button>
-                        <button type="button" class="btn btn-sm btn-primary" ng-hide="isGenerateSalary" ng-click="openList()">Save & GenerateSalary</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
-            <!--<div class="row animated">
-                <div class="col-md-5">
-                    <button type="submit" class="btn btn-success" ng-click="pending()">
-                    Pending
-                </button>
-                    <button type="submit" class="btn btn-success" ng-click="ready()">
-                    Ready
-                </button>
-
-                    <button type="submit" class="btn btn-success" ng-click="reGenerate()">
-                    ReGenerate
-                </button>
-
-                </div>
-                <div class="col-md-5">
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" ng-hide="isGenerateSalary" class="btn bg-blue" ng-click="saveGenerateSalary()">
-                    Save & GenerateSalary
-                </button>
-                </div>
-
-            </div>-->
-
-</div>
-</div>
-</form>-->
