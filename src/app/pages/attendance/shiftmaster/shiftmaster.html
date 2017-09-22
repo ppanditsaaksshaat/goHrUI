@@ -173,10 +173,25 @@
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinWorkCrtFWeekOffCr.text}}</label> </div>
-                <div class="form-group col-md-3">
-                    <field-box page="page" ng-column="page.pageinfo.fields.SMMinWorkCrtFWeekOffCr " ng-entity="entity " form="editForm "></field-box>
+                <div class="form-group col-md-1">
+                    <select class="form-control" ng-model="entity.SMMinWorkCrtFWeekOffCr" ng-options="y for (x, y) in minWorkForWeekOff"></select>
+                    <!--<select class="form-control" ng-model="entity.SMMinWorkCrtFWeekOffCr" ng-options="y for (x, y) in [1,2,3,4]"></select>-->
+                    <!--<field-box page="page" ng-column="page.pageinfo.fields.SMMinWorkCrtFWeekOffCr " ng-entity="entity " form="editForm "></field-box>-->
                 </div>
             </div>
+
+            <div class="checkbox">
+                <label class="custom-checkbox"> 
+                        <input type="checkbox" ng-model="entity.SMIsAllowWOfBefAtten"> 
+                         <span style="font:bold">{{page.pageinfo.fields.SMIsAllowWOfBefAtten.place}}</span>
+                     </label>
+            </div>
+
+
+
+
+
+
 
             <!--<div class="text">
                 <div class="custom-input-primary">
