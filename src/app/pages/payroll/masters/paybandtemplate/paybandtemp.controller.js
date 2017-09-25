@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.payroll.paybandtemplate')
+    angular.module('BlurAdmin.pages.payroll.masters.paybandtemplate')
         .controller('paybandTempController', paybandTempController);
 
     /** @ngInject */

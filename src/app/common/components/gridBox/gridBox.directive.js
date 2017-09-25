@@ -492,7 +492,6 @@
                                 $scope.page.boxOptions.pageResult(result);
                             }
                         }
-                        debugger;
                         angular.forEach($scope.page.pageinfo.fields, function (field) {
                             var customField = $filter('findObj')($scope.page.boxOptions.fieldEvents, field.name, 'name')
                             console.log(customField)

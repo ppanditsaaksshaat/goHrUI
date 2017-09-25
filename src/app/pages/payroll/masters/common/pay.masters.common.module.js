@@ -15,7 +15,7 @@
       $stateProvider
           .state('payroll.masters.common', {
             url: '/common',
-            abstract: true,
+            //abstract: true,
             templateUrl: 'app/pages/payroll/masters/common/pay.master.html',
             controller: "PayMastersController",
             controllerAs: "tabCtrl",

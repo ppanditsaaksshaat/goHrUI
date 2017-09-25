@@ -7,7 +7,11 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.payroll.masters', [
-    'BlurAdmin.pages.payroll.masters.common'
+    'BlurAdmin.pages.payroll.masters.common',
+    'BlurAdmin.pages.payroll.masters.salaryHead',
+    'BlurAdmin.pages.payroll.masters.paybandtemplate',
+    'BlurAdmin.pages.payroll.masters.payband',
+    'BlurAdmin.pages.payroll.masters.empPayband',
   ])
     .config(routeConfig);
 

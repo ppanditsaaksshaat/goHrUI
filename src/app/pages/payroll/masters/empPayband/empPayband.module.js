@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.payroll.empPayband', [
+    angular.module('BlurAdmin.pages.payroll.masters.empPayband', [
 
     ])
         .config(routeConfig);
@@ -13,9 +13,9 @@
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('payroll.empPayband', {
+            .state('payroll.masters.empPayband', {
                 url: '/empPayband',
-                templateUrl: 'app/pages/payroll/empPayband/empPayband.html',
+                templateUrl: 'app/pages/payroll/masters/empPayband/empPayband.html',
                 controller: 'empPaybandController',
                 title: 'Employee Band',
                 sidebarMeta: {
