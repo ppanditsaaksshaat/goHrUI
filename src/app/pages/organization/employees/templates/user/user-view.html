@@ -4,15 +4,22 @@
             open-List="empTabCtrl.goToEmployeeList()" condition="(true)" show-close="true"></edit-panel-head>
         <div class="panel-body" style="padding:5px;" ng-scrollbars ng-scrollbars-config="config">
             <div style="min-height: 450px;" ng-show="page.pageIsLoaded">
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label ng-bind="page.pageinfo.fields.EmpName.text"></label>
                             <span class="form-control" ng-bind="empTabCtrl.entity.EmpName"></span>
                         </div>
                     </div>
-                </div>
-
+                </div>-->
+                <!--<div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label ng-bind="page.pageinfo.fields.RoleId.text"></label>
+                            <field-box page="page" ng-column="page.pageinfo.fields.RoleId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>-->
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
@@ -21,6 +28,8 @@
                         </div>
                     </div>
                 </div>
+                
+
             </div>
         </div>
     </div>

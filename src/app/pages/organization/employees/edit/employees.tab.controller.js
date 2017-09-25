@@ -675,10 +675,25 @@
                 }
 
                 else if (vm.pageId == 21) {
-
+                    var userQueryId = 579;
                     if (vm.entity.LinkRoleUserId === undefined) {
-                        vm.entity.EmpId = vm.empPKId;
-                        _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
+                        // vm.entity.EmpId = vm.empPKId;
+                        var searchLists = [];
+                        var searchListData = {
+                            field: 'EmpId',
+                            operand: '=',
+                            value: vm.empPKId
+                        }
+                        searchLists.push(searchListData)
+                        var data = {
+                            searchList: searchLists,
+                            orderByList: []
+                        }
+                        // vm.entity.UserId = 662;
+                        // console.log(vm.entity)
+                        // _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
+
+                        pageService.getCustomQuery(data, userQueryId).then(_saveUserSuccessResult, _saveUserErrorResult)
                     }
                     else {
                         console.log(vm.entity);
@@ -703,6 +718,18 @@
             editFormService.saveForm(pageId, entity, (oldEntity === undefined) ? vm.oldEntity : oldEntity,
                 action, ($scope.page.pageinfo.title === undefined) ? 'Resination' : $scope.page.pageinfo.title, editForm, showConfirmation)
                 .then(_updateSuccessResult, _updateErrorResult)
+        }
+
+        function _saveUserSuccessResult(result) {
+            console.log(result);
+            console.log(result[0].UserId);
+            vm.entity.UserId = result[0].UserId;
+            console.log(vm.entity);
+            _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
+        }
+
+        function _saveUserErrorResult(error) {
+
         }
 
         function _updateSuccessResult(result) {

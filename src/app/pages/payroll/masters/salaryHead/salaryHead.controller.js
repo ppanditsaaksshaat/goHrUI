@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.payroll.salaryHead')
+  angular.module('BlurAdmin.pages.payroll.masters.salaryHead')
     .controller('salaryHeadController', salaryHeadController);
 
   /** @ngInject */
