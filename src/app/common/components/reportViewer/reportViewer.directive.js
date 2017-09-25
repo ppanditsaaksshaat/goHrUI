@@ -35,9 +35,9 @@
                 var lastIdx = absUrl.lastIndexOf('/');
                 var firstIdx = absUrl.indexOf('/');
                 var hostIdx = absUrl.indexOf(host);
-                reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx) + '/report/';
+                reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx);
 
-                reportBaseURL = 'http://rudraitsllive.com';
+               //reportBaseURL = 'http://rudraitsllive.com';
 
 
                 var boxSetting = {
