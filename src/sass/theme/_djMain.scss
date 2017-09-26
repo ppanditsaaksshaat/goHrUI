@@ -10,6 +10,15 @@ border-top-color: red;
 border-left-color: red;
 border-radius: 10px;
 }
+
+.tree-view-wrapper, .tree-view-wrapper ul { list-style:none;}
+.show-hide, .edit{cursor:pointer;}
+.tree-checkbox{margin: 6px !important;}
+.edit{margin-right: 6px !important;}
+.edit i {color: #D77105;}
+.hide{display:none;}
+.show{display:block;}
+
 // .input-help {
 //   display: none;
 //   position:absolute;

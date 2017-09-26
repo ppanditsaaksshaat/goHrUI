@@ -6,24 +6,23 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.payroll.salaryHead', [])
+  angular.module('BlurAdmin.pages.payroll.masters.salaryHead', [])
     .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($stateProvider, $urlRouterProvider) {
 
     $stateProvider
-      .state('payroll.salaryHead', {
+      .state('payroll.masters.salaryHead', {
         url: '/salaryhead',
-      //  abstract: true,
-        templateUrl: 'app/pages/payroll/salaryHead/organization.salaryHead.html',
+        //  abstract: true,
+        templateUrl: 'app/pages/payroll/masters/salaryHead/salaryHead.html',
         controller: "salaryHeadController",
         controllerAs: "attCtrl",
         title: 'Salary Head',
         sidebarMeta: {
-          order: 3          
+          order: 3
         },
       })
   }
-
 })();

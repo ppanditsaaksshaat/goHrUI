@@ -49,14 +49,15 @@
                     gridStyle: { height: '450px' },
                     noResultMessageText: undefined,
                     customButtons: [],
-                    customButtonsWithDefault:[],
+                    customButtonsWithDefault: [],
                     selectedRowButtons: [],
                     customColumns: [],
                     pageResult: null,
                     dataResult: null,
                     saveResult: null,
                     afterCellEdit: null,//external cell edit event
-                    onRegisterApi: null
+                    onRegisterApi: null,
+                    fieldEvents: []
                 }
 
                 //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
@@ -140,6 +141,7 @@
                 $scope.resetForm = _resetForm;
                 $scope.closeForm = _closeForm;
                 $scope.clearForm = _clearForm;
+
 
                 function _loadDirective() {
                     if ($scope.page.boxOptions.selfLoading) {
@@ -481,6 +483,8 @@
                     }
                     else {
                         $scope.page = angular.extend({}, $scope.page, result);
+                        console.log(result)
+                        console.log($scope.page)
                         $scope.page.pageIsLoaded = true;
                         $scope.page.pageIsLoading = false;
                         if ($scope.page.boxOptions.pageResult) {
@@ -488,6 +492,17 @@
                                 $scope.page.boxOptions.pageResult(result);
                             }
                         }
+                        angular.forEach($scope.page.pageinfo.fields, function (field) {
+                            var customField = $filter('findObj')($scope.page.boxOptions.fieldEvents, field.name, 'name')
+                            console.log(customField)
+                            if (customField) {
+                                if (customField.changeEvent) {
+                                    field.onChangeEvent = customField.changeEvent;
+                                    console.log(field.onChangeEvent)
+                                }
+                            }
+                        });
+
                         if ($scope.page.boxOptions.showDataOnLoad)
                             _refreshData();
                     }

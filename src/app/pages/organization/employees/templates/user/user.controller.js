@@ -6,11 +6,11 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.organization.employees')
-        .controller('employeeEntitlementDetail', employeeEntitlementDetail);
+        .controller('userDetail', userDetail);
 
     /** @ngInject */
     /** @ngInject */
-    function employeeEntitlementDetail($scope, $stateParams,
+    function userDetail($scope, $stateParams,
         pageService, $timeout, $filter) {     
         var vm = this;
         vm.empPKId = $stateParams.empId;
@@ -43,7 +43,7 @@
             console.log(result)
             if (result !== "NoDataFoundemp") {
                 var colCreatedOn = { name: 'SHName', field: 'SHName', displayName: 'SHName', width: 100, visible: true };
-                var colCreatedBy = { name: 'PBName', field: 'PBName', displayName: 'Payband Name', width: 100, visible: true };
+                var colCreatedBy = { name: 'PaybandRule', field: 'PaybandRule', displayName: 'Payband Rule', width: 100, visible: true };
                 var colAssignedUser = { name: 'SalAmount', field: 'SalAmount', displayName: 'Salary Amount', width: 100, visible: true };
                 $scope.gridOptions.columnDefs.push(colCreatedOn);
                 $scope.gridOptions.columnDefs.push(colCreatedBy);

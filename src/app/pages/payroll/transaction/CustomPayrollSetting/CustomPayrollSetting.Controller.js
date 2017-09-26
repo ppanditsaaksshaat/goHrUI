@@ -51,7 +51,7 @@
     //   angular.forEach(result.pageinfo.filters, function (filter) {
     //     if (filter.name == 'SubUnitId') {
     //       filter.value = -1;
-        
+
     //     }
     //     if (filter.name == 'SalMonth') {
     //       filter.value = parseInt(moment().format('MM'));
@@ -59,7 +59,7 @@
     //     if (filter.name == 'SalYear') {
     //       filter.value = parseInt(moment().format('YYYY'));
     //     }
-      
+
     //   })
     // }
 
@@ -502,8 +502,11 @@
           var getFromDate = (fromDate.getMonth()) + 1 + "-" + fromDate.getDate() + "-" + fromDate.getFullYear();
           var getToDate = (toDate.getMonth()) + 1 + "-" + toDate.getDate() + "-" + toDate.getFullYear();
           console.log(getFromDate)
-          $scope.acFromDate = getFromDate;
-          $scope.acToDate = getToDate;
+          // $scope.acFromDate = getFromDate;
+          // $scope.acToDate = getToDate;
+          $scope.showAcFromDate = moment(getFromDate).format("DD-MMM-YYYY");
+          $scope.showAcToDate = moment(getToDate).format("DD-MMM-YYYY");;
+
           console.log($scope.acFromDate, $scope.acToDate);
           if (($scope.page.filterData.SubUnitId.value !== undefined && $scope.page.filterData.SalMonth.value != null && $scope.page.filterData.SalYear.value != null) || ($scope.page.filterData.SalMonth.value != null && $scope.page.filterData.SalYear.value != null && $scope.page.filterData.SubUnitId.value !== undefined)) {
             // console.log($scope.filterData.SubUnitId.value, $scope.filterData.SalMonth.value, $scope.filterData.SalYear.value)
@@ -517,8 +520,8 @@
           var toDate = new Date(fromDate.getFullYear(), fromDate.getMonth() + 1, 0);
           var getFromDate = (fromDate.getMonth()) + 1 + "-" + fromDate.getDate() + "-" + fromDate.getFullYear();
           var getToDate = (toDate.getMonth()) + 1 + "-" + toDate.getDate() + "-" + toDate.getFullYear();
-          $scope.acFromDate = getFromDate;
-          $scope.acToDate = getToDate;
+          $scope.acFromDate = moment(getFromDate).format("DD-MMM-YYYY");
+          $scope.acToDate = moment(getToDate).format("DD-MMM-YYYY");;
           console.log(getFromDate)
           // $scope.acFromDate = fromDate.getDay() + '-' + fromDate.getMonth() + '-' + fromDate.getFullYear();
           // $scope.acToDate = toDate.getDay() + '-' + toDate.getMonth() + '-' + toDate.getFullYear();
@@ -683,7 +686,7 @@
       }
     }
 
-  
+
     function _saveAndGenerateSalaryClick() {
       var colList = [];
       var filterData = {};

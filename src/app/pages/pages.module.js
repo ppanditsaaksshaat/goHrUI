@@ -7,7 +7,6 @@
 
   angular.module('BlurAdmin.pages', [
     'ui.router',
-    'BlurAdmin.pages.getstarted',
     'BlurAdmin.pages.dashboard',
     // 'BlurAdmin.pages.ui',
     // 'BlurAdmin.pages.components',
@@ -15,7 +14,7 @@
     // 'BlurAdmin.pages.tables',
     // 'BlurAdmin.pages.charts',
     // 'BlurAdmin.pages.maps',
-    // 'BlurAdmin.pages.profile',
+    'BlurAdmin.pages.urm',
     'BlurAdmin.pages.organization',
     'BlurAdmin.pages.time',
     'BlurAdmin.pages.leave',

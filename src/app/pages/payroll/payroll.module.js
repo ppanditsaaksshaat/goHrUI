@@ -6,8 +6,7 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.payroll', [
-    'BlurAdmin.pages.payroll.empPayband',
-    'BlurAdmin.pages.payroll.payband',
+    
     'BlurAdmin.pages.payroll.masters',
     'BlurAdmin.pages.payroll.transaction',
      'BlurAdmin.pages.payroll.reports',
@@ -16,9 +15,7 @@
      'BlurAdmin.pages.payroll.otRule',
      'BlurAdmin.pages.payroll.esiRule',
      'BlurAdmin.pages.payroll.epfRule',
-     'BlurAdmin.pages.payroll.paybandtemplate',
-     'BlurAdmin.pages.payroll.salaryHead',
-    //  'BlurAdmin.pages.payroll.Challan',
+     'BlurAdmin.pages.payroll.Challan',
   ])
       .config(routeConfig);
       

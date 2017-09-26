@@ -79,7 +79,7 @@
                     return $scope.showClear && $scope.page.isAllowEdit;
                 }
                 function _isShowClose() {
-                    return $scope.showClose;
+                    return $scope.showClose && $scope.page.isAllowEdit;
                 }
                 function _isShowList() {
                     return $scope.showList;

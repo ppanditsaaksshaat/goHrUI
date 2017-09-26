@@ -45,6 +45,7 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
+      fieldEvents: [{ name: 'AttDate', onChangeEvent: _funcDateChange }],
       uploadRecord: _uploadRecord
       // readonlyColumns: ['col1', 'col2']
     }
@@ -52,6 +53,13 @@
     $scope.clearFormCommon = _clearFormCommon;
     $scope.closeForm = _closeForm;
     $scope.saveForm = _saveForm;
+
+    // var fieldEvents = [];
+    // fieFldEvents.push({ name: 'AttDate', onChangeEvent: _funcDateChange })
+    function _funcDateChange(obj) {
+      console.log(obj + 'call')
+    }
+
 
 
 

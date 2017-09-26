@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-md-3" style="padding-right:0px; margin-right:0px;  ">
+        <div class="panel panel-default bootstrap-panel xmedium-panel">
+            <div class="panel-heading panHead" style="vertical-align: super">
+                User Roles
+            </div>
+
+            <div class="panel-body" style="overflow: scroll">
+                <ul class="list-unstyled side-menu maxHeight450">
+                    <li ng-repeat="t in roleList" ng-click="callMenu(t.RoleId)">
+                        <a href>{{t.RoleName}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9" style="padding-left:0px; margin-left:0px;">
+        <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
+            <div class="panel-heading clearfix">
+                Menu Permission for {{selectedRoleName}} <i ng-show="isLoadingPermission" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+            </div>
+            <div class="panel-body" style="padding:5px">
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div ng-scrollbars ng-scrollbars-config="config" style="max-height: 430px">
+                            <tree-view checkbox click="myClick(node)" model="nodes" ng-show="isPermissionLoaded"></tree-view>
+                        </div>
+
+                        <button ng-click="savePermission()" class="btn btn-info btn-lg" ng-disabled="isApplyingChanges">
+                                        <i ng-show="isApplyingChanges" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                                        <span ng-hide="isApplyingChanges">Apply Changes</span>
+                                        <span ng-show="isApplyingChanges">Applying..</span>
+                        </button>
+
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="reset()">Reset</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div ng-show="isShowActivity">
+                            <div class="modal-header dialog-header-confirm">
+                                
+                                <div class="modal-title">
+                                    <span class="glyphicon glyphicon-check"></span>Page Activity of {{selectedMenuName}} Menu for {{selectedRoleName}}  
+                                </div>
+                            </div>
+                            <div class="modal-body row" ng-scrollbars ng-scrollbars-config="config" style="max-height: 330px">
+                            <ul style="list-style:none;">
+                                <li ng-repeat="opt in activityList">
+                                    <div class="checkbox">
+                                        <label class="custom-checkbox">      
+                                            <input  type="checkbox"  ng-model="opt.IsAllowed"> 
+                                            <span>{{opt.ActText}}</span>
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                            </div>
+                            <div class="modal-footer">
+                            <button ng-click="saveActivity()" class="btn btn-info btn-lg" ng-disabled="isSavingActivity">
+                                    <i ng-show="isSavingActivity" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                                    <span ng-hide="isSavingActivity">Save</span>
+                                    <span ng-show="isSavingActivity">Saving..</span>
+                            </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="isShowActivity=false">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

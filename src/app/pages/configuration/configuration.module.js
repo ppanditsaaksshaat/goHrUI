@@ -11,16 +11,16 @@
   /** @ngInject */
   function routeConfig($stateProvider) {
     $stateProvider
-        .state('configuration', {
-          url: '/configuration',
-          template : '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
-          abstract: true,
-          title: 'Configuration',
-          sidebarMeta: {
-            icon: 'ion-ios-people',
-            order: 10,
-          },
-        });
+    .state('configuration', {
+      url: '/configuration',
+      templateUrl: 'app/pages/configuration/configure.html',
+      controller: 'configureController',
+      title: 'Configuration',
+      sidebarMeta: {
+        icon: 'ion-android-home',
+        order: 1,
+      },
+    });
   }
 
 })();

@@ -126,8 +126,8 @@
             $scope.page.pageIsLoaded = false;
             $scope.page.pageIsLoading = true;
 
-            if (vm.pageId == 114 || vm.pageId == 35 || vm.pageId == 125 || vm.pageId == 36) {
-                if (vm.pageId == 114 || vm.pageId == 36 || vm.pageId == 125) {
+            if (vm.pageId == 114 || vm.pageId == 35 || vm.pageId == 125 || vm.pageId == 36 || vm.pageId == 21) {
+                if (vm.pageId == 114 || vm.pageId == 36 || vm.pageId == 125 || vm.pageId == 21) {
                     $timeout(function () {
                         pageService.getPagData(vm.pageId).then(
                             _getPageDataSuccessResult, _getPageDataErrorResult);
@@ -165,6 +165,7 @@
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page);
                 }
+
                 else {
 
                     $scope.page = _getLocalPageObject(vm.pageId)
@@ -239,13 +240,15 @@
                 linkFieldName = 'PdEmpId';
             } else if (result.pageinfo.pageid == 125) {
                 linkFieldName = 'ADEmpId';
+            } else if (result.pageinfo.pageid == 21) {
+                linkFieldName = 'EmpId';
             }
 
 
 
 
             $timeout(function () {
-                if (result.pageinfo.pageid == 114 || result.pageinfo.pageid == 125) {
+                if (result.pageinfo.pageid == 114 || result.pageinfo.pageid == 125 || result.pageinfo.pageid == 21) {
                     var searchList = [];
                     var searchFields = {
                         field: linkFieldName,
@@ -349,11 +352,11 @@
                 showBack: true,
                 selfLoading: true,
                 showRefresh: true,
-                showFilter: true,
+                showFilter: false,
                 showAdd: true,
                 showRowMenu: true,
                 showCustomView: true,
-                showUpload: true,
+                showUpload: false,
                 showDialog: false,
                 enableRefreshAfterUpdate: true,
                 enableAutoRefresh: true,
@@ -620,6 +623,8 @@
                     }
                 }
                 else if (vm.pageId == 114) {
+                    // vm.entity.JDDesgId = 10;
+                    vm.entity.JDSUId = vm.entity.JDSubUnitID;
                     if (vm.entity.JDIsHasLeft) {
                         vm.entity.JDHasLeftDate = moment();
                     }
@@ -637,15 +642,23 @@
                     else if (vm.entity.JDDoubleOT == false) {
                         vm.entity.DoubleOTRate = 0;
                     }
+
+
+
                     console.log(vm.entity)
+
+
                     if (vm.entity.JDId === undefined) {
                         vm.entity.JDEmpId = vm.empPKId;
                         // vm.entity.JDSubUnitID = 2;
+
+
                         _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
                     }
                     else {
                         console.log(vm.entity);
                         //vm.entity.JDSubUnitID = 2;
+
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
                 }
@@ -660,6 +673,34 @@
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
                 }
+
+                else if (vm.pageId == 21) {
+                    var userQueryId = 579;
+                    if (vm.entity.LinkRoleUserId === undefined) {
+                        // vm.entity.EmpId = vm.empPKId;
+                        var searchLists = [];
+                        var searchListData = {
+                            field: 'EmpId',
+                            operand: '=',
+                            value: vm.empPKId
+                        }
+                        searchLists.push(searchListData)
+                        var data = {
+                            searchList: searchLists,
+                            orderByList: []
+                        }
+                        // vm.entity.UserId = 662;
+                        // console.log(vm.entity)
+                        // _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
+
+                        pageService.getCustomQuery(data, userQueryId).then(_saveUserSuccessResult, _saveUserErrorResult)
+                    }
+                    else {
+                        console.log(vm.entity);
+                        _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
+                    }
+                }
+
                 if (vm.pageId == 36) {
 
                     if (vm.empContactDetail.CDId === undefined) {
@@ -677,6 +718,18 @@
             editFormService.saveForm(pageId, entity, (oldEntity === undefined) ? vm.oldEntity : oldEntity,
                 action, ($scope.page.pageinfo.title === undefined) ? 'Resination' : $scope.page.pageinfo.title, editForm, showConfirmation)
                 .then(_updateSuccessResult, _updateErrorResult)
+        }
+
+        function _saveUserSuccessResult(result) {
+            console.log(result);
+            console.log(result[0].UserId);
+            vm.entity.UserId = result[0].UserId;
+            console.log(vm.entity);
+            _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
+        }
+
+        function _saveUserErrorResult(error) {
+
         }
 
         function _updateSuccessResult(result) {
