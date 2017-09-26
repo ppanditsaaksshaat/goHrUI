@@ -36,5 +36,8 @@ angular.module('BlurAdmin', [
   'cfp.loadingBar',
   'BlurAdmin.theme',
   'BlurAdmin.pages',
-  'BlurAdmin.common'
+  'BlurAdmin.common',
+  'ui.knob'
+  // ,
+  // 'angularUtils.directives.dirPagination'
 ]);

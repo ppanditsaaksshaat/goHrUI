@@ -240,7 +240,7 @@
 
 
         // pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
-        _fetchPendingLeave();
+
       }
       else {
 
@@ -448,25 +448,25 @@
         operand: '=',
         value: $scope.entity.LEADEmpId
       })
-
-      // searchList.push({
-      //   field: 'CreatedOn',
-      //   operand: '>=',
-      //   value: moment().add(-1, 'year').format('YYYY-MM-DD')
-      // })
-
-      // searchList.push({
-      //   field: 'CreatedOn',
-      //   operand: '<=',
-      //   value: moment().format('YYYY-MM-DD')
-      // })
-
+      console.log(moment().add(-1, 'year').format('YYYY-MM-DD'))
+      searchList.push({
+        field: 'CreatedOn',
+        operand: '>=',
+        value: moment().add(-1, 'year').format('YYYY-MM-DD')
+      })
 
       searchList.push({
-        field: 'IsRejected',
-        operand: '<>',
-        value: 1
+        field: 'CreatedOn',
+        operand: '<=',
+        value: moment().format('YYYY-MM-DD') + ' 23:59:59'
       })
+
+
+      // searchList.push({
+      //   field: 'IsRejected',
+      //   operand: '<>',
+      //   value: 1
+      // })
       // searchList.push({
       //   field: 'IsOnHold',
       //   operand: '=',
@@ -490,9 +490,7 @@
       tableData.then(_fetchPendingLeaveSuccess, _fetchPendingLeaveError)
     }
     function _fetchPendingLeaveSuccess(result) {
-      console.log(result)
-      console.log($scope.showLeave)
-
+    
       //ADD CONDITION FOR NODATAFOUND
       if (result != "NoDataFound") {
 
@@ -510,7 +508,7 @@
           }
           $scope.prevLeaveList.push(prev);
           var transaction = leave.LEADTransation.split(',')
-
+          
           angular.forEach(transaction, function (applyLeave) {
             var leaveType = applyLeave.split("|");
             angular.forEach($scope.showLeave, function (crLeave) {
@@ -648,7 +646,7 @@
         $scope.showMsg("error", "From date is greater than to Joining Date");
       }
 
-
+      _fetchPendingLeave();
     }
     /**End of how many leave apply */
 
