@@ -37,8 +37,8 @@
                 var hostIdx = absUrl.indexOf(host);
                 reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx) + '/report/';
 
-                reportBaseURL = 'http://rudraitsllive.com';
-
+                //reportBaseURL = 'http://rudraitsllive.com';
+                reportBaseURL= 'http://seacliffnew.rudra.hrm';
 
                 var boxSetting = {
                     selfLoading: true,//gridBox will fetch data from api on its own

@@ -4,6 +4,7 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
         var i = 0, len = list.length;
         for (; i < len; i++) {
             if (list[i][propName] == value) {
+                list[i].index = i;
                 return list[i];
             }
         }
@@ -70,7 +71,7 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
 }).filter('mapMultiDropdown', function () {
 
     return function (input, map, idField, valueField) {
-      
+
         if (input.length) {
             var valueReturn = '';
             for (var i = 0; i < input.length; i++) {
@@ -79,7 +80,8 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
             if (valueReturn.length > 2) {
                 valueReturn = valueReturn.substr(0, valueReturn.length - 1)
             }
-           
+
+
             return valueReturn;
         }
         // if (map) {
