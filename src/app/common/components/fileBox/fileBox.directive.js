@@ -7,7 +7,7 @@
 
 //     angular.module('BlurAdmin.common.components')
 //     .directive('fileBox', fileBox);
-//     function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
+//     function fileBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
 //         editFormService, focus, $filter) {
 
 //             return {

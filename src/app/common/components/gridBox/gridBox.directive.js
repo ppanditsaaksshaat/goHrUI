@@ -20,9 +20,9 @@
             },
             controller: function ($scope, $timeout) {
                 // $scope.$watch("page.pageinfo", function (newValue, OldValue, scope) {
-                //     ////console.log('ctrl', newValue, OldValue, scope)
-                //     ////console.log(scope.page.boxOptions)
-                //     ////console.log(scope.page.isLoaded)
+                //     //////console.log('ctrl', newValue, OldValue, scope)
+                //     //////console.log(scope.page.boxOptions)
+                //     //////console.log(scope.page.isLoaded)
                 // });
 
             },
@@ -75,7 +75,7 @@
                 else if ($scope.page.boxOptions.filterOpened) {
                     $scope.page.showFilter = true;
                 }
-                console.log($scope.page)
+                //console.log($scope.page)
                 if ($scope.page.gridOptions === undefined) {
                     $scope.page.gridOptions = angular.copy(gridOptions);
                 }
@@ -89,7 +89,7 @@
 
                 $scope.oldEntity = {};
                 var pageInfoWach = $scope.$watch('page.pageinfo', function () {
-                    console.log($scope.page.pageinfo)
+                    //console.log($scope.page.pageinfo)
                     _setGridColumns();
                     _setupVerticalForm();
 
@@ -295,7 +295,7 @@
                     $scope.page.boxOptions.uploadRecord();
                 }
                 function _onRegisterApi(gridApi) {
-                    ////console.log('register grid api')
+                    //////console.log('register grid api')
                     $scope.page.gridApi = gridApi;
                     if ($scope.page.boxOptions.onRegisterApi) {
                         $scope.page.boxOptions.onRegisterApi(gridApi)
@@ -318,7 +318,7 @@
                         //     //enable edit button
 
                         //     uivm.currentSelection = uivm.gridApi.selection.getSelectedRows();
-                        //     //////console.log(uivm.currentSelection)
+                        //     ////////console.log(uivm.currentSelection)
                         //     if (uivm.currentSelection.length > 0) {
                         //         uivm.selectedRow = row;
                         //     }
@@ -390,7 +390,7 @@
                             $scope.page.gridOptions = $rootScope.gridSetupColumns($scope.page.gridOptions,
                                 $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit,
                                 $scope.page.boxOptions.showRowMenu);
-                            console.log($scope.page)
+                            //console.log($scope.page)
                             if ($scope.page.boxOptions.customColumns) {
                                 if ($scope.page.boxOptions.customColumns != null) {
                                     angular.forEach($scope.page.boxOptions.customColumns, function (col) {
@@ -416,7 +416,7 @@
                                         else
                                             custColumn.width = 100;
 
-                                        console.log($scope.page.gridOptions.columnDefs);
+                                        //console.log($scope.page.gridOptions.columnDefs);
                                         $scope.page.gridOptions.columnDefs.push(custColumn);
 
                                     })
@@ -468,12 +468,12 @@
                     $scope.page.pageIsLoaded = false;
                     $scope.page.pageIsLoading = true;
                     $timeout(function () {
-                        ////console.log($scope.page);
+                        //////console.log($scope.page);
                         pageService.getPagData($scope.page.pageId).then(_getPageSuccessResult, _getPageErrorResult)
                     });
                 }
                 function _getPageSuccessResult(result) {
-                    console.log(result)
+                    //console.log(result)
                     var isErrored = false;
                     if (result.error_message) {
                         $scope.isErrorOccured = true;
@@ -483,8 +483,8 @@
                     }
                     else {
                         $scope.page = angular.extend({}, $scope.page, result);
-                        console.log(result)
-                        console.log($scope.page)
+                        //console.log(result)
+                        //console.log($scope.page)
                         $scope.page.pageIsLoaded = true;
                         $scope.page.pageIsLoading = false;
                         if ($scope.page.boxOptions.pageResult) {
@@ -494,11 +494,11 @@
                         }
                         angular.forEach($scope.page.pageinfo.fields, function (field) {
                             var customField = $filter('findObj')($scope.page.boxOptions.fieldEvents, field.name, 'name')
-                            console.log(customField)
+                            //console.log(customField)
                             if (customField) {
                                 if (customField.changeEvent) {
                                     field.onChangeEvent = customField.changeEvent;
-                                    console.log(field.onChangeEvent)
+                                    //console.log(field.onChangeEvent)
                                 }
                             }
                         });
@@ -550,12 +550,12 @@
                     tableData.then(_getTableSuccessResult, _getTableErrorResult)
                 }
                 function _getTableErrorResult(err) {
-                    console.log(err)
+                    //console.log(err)
                     $scope.page.dataIsLoaded = true;
                     $scope.page.dataIsLoading = false;
                 }
                 function _getTableSuccessResult(result) {
-                    console.log(result)
+                    //console.log(result)
                     $scope.page.dataIsLoaded = true;
                     $scope.page.dataIsLoading = false;
 
@@ -580,7 +580,7 @@
 
                 function _validateForm(form) {
                     var valid = true;
-                    ////console.log(form)
+                    //////console.log(form)
                     if (!form['$valid']) {
                         if (form['$error'] !== undefined) {
                             var err = form['$error'];
@@ -589,13 +589,13 @@
                                     var fieldName = err.required[0].$name;
                                     err.required[0].$setTouched();
                                     err.required[0].$setDirty();
-                                    ////console.log(err)
+                                    //////console.log(err)
                                     focus(fieldName);
                                     valid = false;
                                 }
                             }
 
-                            ////console.log(err)
+                            //////console.log(err)
                             if (err['emailError']) {
                                 alert('email failed');
                                 valid = false;
@@ -609,7 +609,7 @@
                                 valid = false
                             }
                             if (err['pattern'] !== undefined) {
-                                ////console.log(err['pattern'])
+                                //////console.log(err['pattern'])
                                 alert('invalid pattern')
                                 valid = false
                             }
@@ -640,7 +640,7 @@
                     }
                 }
                 function _saveFormError(err) {
-                    console.log(err)
+                    //console.log(err)
                 }
                 function _resetForm(editForm) {
                     if (editForm) {
@@ -662,7 +662,7 @@
                     $scope.form.isLoaded = true;
                     $scope.form.isLoading = false;
                     $scope.entity = result;
-                    ////console.log($scope.entity)
+                    //////console.log($scope.entity)
                     $scope.oldEntity = angular.copy(result)
                 }
                 function _findEntityErrorResult(err) {
@@ -674,11 +674,11 @@
                 })
                 $scope.$on('apply-filter', function (successEvent, searchList) {
 
-                    // console.log(searchList)
-                    // console.log('from gridbox', $scope.page)
+                    // //console.log(searchList)
+                    // //console.log('from gridbox', $scope.page)
                     if (searchList) {
                         $scope.page.searchList = searchList;
-                        // console.log(searchList)
+                        // //console.log(searchList)
                         _refreshData();
                     }
                 })
