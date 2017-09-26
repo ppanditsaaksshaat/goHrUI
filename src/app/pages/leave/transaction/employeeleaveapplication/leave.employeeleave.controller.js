@@ -253,7 +253,7 @@
       queryId = 534;
 
       $scope.showLeave = result;
-      console.log(result);
+      //console.log(result);
       // alert(result);
 
 
@@ -411,7 +411,7 @@
       $scope.showLeave = angular.copy(leaveBalList);
 
       if ($scope.transation != undefined) {
-        console.log($scope.showLeave)
+        //console.log($scope.showLeave)
         angular.forEach($scope.transation, function (leaveApply) {
           angular.forEach($scope.showLeave, function (leave) {
             var lp = leaveApply.split("|")
@@ -448,7 +448,7 @@
         operand: '=',
         value: $scope.entity.LEADEmpId
       })
-      console.log(moment().add(-1, 'year').format('YYYY-MM-DD'))
+      //console.log(moment().add(-1, 'year').format('YYYY-MM-DD'))
       searchList.push({
         field: 'CreatedOn',
         operand: '>=',
@@ -490,12 +490,18 @@
       tableData.then(_fetchPendingLeaveSuccess, _fetchPendingLeaveError)
     }
     function _fetchPendingLeaveSuccess(result) {
-    
+
       //ADD CONDITION FOR NODATAFOUND
       if (result != "NoDataFound") {
 
         $scope.pendingLeave = false;
         $scope.prevLeaveList = [];
+
+        for (var i = 0; i < $scope.showLeave.length; i++) {
+          $scope.showLeave[i].LeaveBalance = $scope.showLeave[i].ActualBalance;
+          $scope.showLeave[i].unClearBal = 0;
+        }
+
         angular.forEach(result, function (leave) {
           var applyLeave = 0;
           var prev = {
@@ -508,7 +514,7 @@
           }
           $scope.prevLeaveList.push(prev);
           var transaction = leave.LEADTransation.split(',')
-          
+
           angular.forEach(transaction, function (applyLeave) {
             var leaveType = applyLeave.split("|");
             angular.forEach($scope.showLeave, function (crLeave) {
@@ -524,9 +530,9 @@
             })
           })
 
-          if (leave.IsPending) {
-            var leaveDest = leave.transation.splice(',')
-          }
+          // if (leave.IsPending) {
+          //   var leaveDest = leave.transation.splice(',')
+          // }
 
         })
 
@@ -747,7 +753,7 @@
       }
     }
     function _getLeaveCountError(err) {
-      console.log(err)
+      //console.log(err)
     }
 
     /**End of Save Leave */
@@ -756,7 +762,7 @@
 
     function _leaveVerify(row) {
 
-      console.log(row)
+      //console.log(row)
       var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
       if (status == null) {
         status = {};
@@ -1051,7 +1057,7 @@
       $scope.page.refreshData();
     }
     function _viewRecord(row) {
-      console.log(row)
+      //console.log(row)
 
       if (row.entity.StatusId == 0) {
         _editRecord(row);
