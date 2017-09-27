@@ -525,217 +525,253 @@
             });
             $scope.rulePage.gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 // console.log(colD ef)
-
+                // debugger
                 if (rowEntity.PBTRCalcOnSHId.length <= 0) {
                     rowEntity.PBTRPercentage = '';
                 }
 
                 var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsGross')
+                var shBasic = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsBasic')
+
+
                 var grossId = 0;
                 if (shGross != null) {
                     grossId = shGross.value;
                 }
-
-
-                var totalAmount = 0;
-                var deductionTotal = 0;
-                var employerTotal = 0;
-                var grossAmt = 0;
-                for (var c = 0; c < $scope.payTempGridOptions.data.length; c++) {
-                    var row = $scope.payTempGridOptions.data[c];
-                    if (rowEntity.PBTRSHId != row.PBTRSHId) {
-                        if (grossId != row.PBTRSHId && row.SHeadType == 'Earning') {
-                            totalAmount += Math.round(row.PBTRAmount);
+                var isBasicOrGrossOnRightRow = false;
+                if (shBasic != null || shGross != null) {
+                    if (shBasic.value == newValue || shGross.value == newValue) {
+                        isBasicOrGrossOnRightRow = true;
+                    }
+                    else {
+                        if ($scope.payTempGridOptions.data.length == 2) {
+                            if (($scope.payTempGridOptions.data[0].PBTRSHId == shBasic.value || $scope.payTempGridOptions.data[1].PBTRSHId == shBasic.value) && ($scope.payTempGridOptions.data[0].PBTRSHId == shGross.value || $scope.payTempGridOptions.data[1].PBTRSHId == shGross.value)) {
+                                isBasicOrGrossOnRightRow = true;
+                            }
+                            else {
+                                isBasicOrGrossOnRightRow = false;
+                                rowEntity.PBTRSHId = '';
+                                rowEntity.SHeadType = '';
+                                $scope.showMsg("warning", "you can place gross or basic head in first or second row")
+                            }
                         }
-                        else if (grossId != row.PBTRSHId && row.SHeadType == 'Deduction') {
-                            deductionTotal += Math.round(row.PBTRAmount);
-                        }
-                        else if (grossId != row.PBTRSHId && row.SHeadType == 'Employer') {
-                            employerTotal += Math.round(row.PBTRAmount);
+                        else if ($scope.payTempGridOptions.data[0].PBTRSHId == shBasic.value || $scope.payTempGridOptions.data[0].PBTRSHId == shGross.value) {
+                            isBasicOrGrossOnRightRow = true;
                         }
                         else {
-                            grossAmt += Math.round(row.PBTRAmount);
+                            isBasicOrGrossOnRightRow = false;
+                            rowEntity.PBTRSHId = '';
+                            rowEntity.SHeadType = '';
+                            $scope.showMsg("warning", "you can place gross or basic head in first or second row")
                         }
                     }
                 }
+                if (isBasicOrGrossOnRightRow) {
 
-                var remainingAmount = grossAmt - totalAmount;
-                var deductionRemainingAmount = grossAmt - deductionTotal;
-
-                var dependTotalAmt = 0
-
-                for (var i = 0; i < rowEntity.PBTRCalcOnSHId.length; i++) {
-                    if (rowEntity.PBTRCalcOnSHId[i].value == rowEntity.PBTRSHId) {
-                        rowEntity.PBTRCalcOnSHId = [];
-                        $scope.showMsg('warning', 'Head can not depend on to itself')
-                        return;
-                    }
-                    else {
-                        var amt = _getHeadAmount(rowEntity.PBTRCalcOnSHId[i].value)
-                        dependTotalAmt += parseFloat(amt)
-                        //finding dependent head used ppercentage on entire data
-
-
-                    }
-                }
-
-                if (colDef.colIndex == 0) {
-                    //find existing in list
-                    rowEntity.PBTRSHId = oldValue;
-                    var existingHead = $filter('findObj')($scope.payTempGridOptions.data, newValue, 'PBTRSHId')
-                    if (existingHead != null) {
-                        $scope.showMsg('warning', 'Heads can not be duplicate.')
-                        rowEntity.PBTRSHId = 0;
-                    }
-                    else {
-
-
-                        rowEntity.PBTRSHId = newValue;
-                        var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRSHId.options, rowEntity.PBTRSHId, 'value')
-                        if (foundPB != null) {
-                            if (foundPB.SHIsForEmployer == "True") {
-                                rowEntity.SHeadType = 'Employer';
+                    var totalAmount = 0;
+                    var deductionTotal = 0;
+                    var employerTotal = 0;
+                    var grossAmt = 0;
+                    for (var c = 0; c < $scope.payTempGridOptions.data.length; c++) {
+                        var row = $scope.payTempGridOptions.data[c];
+                        if (rowEntity.PBTRSHId != row.PBTRSHId) {
+                            if (grossId != row.PBTRSHId && row.SHeadType == 'Earning') {
+                                totalAmount += Math.round(row.PBTRAmount);
                             }
-                            else if (foundPB.SHIsDeduction == "False") {
-
-
-                                // if ((grossAmt > 0 && remainingAmount > 0) || (grossAmt <= 0)) {
-
-                                rowEntity.SHeadType = 'Earning';
-                                // }
-                                // else {
-                                //     rowEntity.PBTRSHId = 0;
-                                //     $scope.showMsg('warning', 'Earnings already match with Gross amount')
-                                // }
-
+                            else if (grossId != row.PBTRSHId && row.SHeadType == 'Deduction') {
+                                deductionTotal += Math.round(row.PBTRAmount);
+                            }
+                            else if (grossId != row.PBTRSHId && row.SHeadType == 'Employer') {
+                                employerTotal += Math.round(row.PBTRAmount);
                             }
                             else {
-                                rowEntity.SHeadType = 'Deduction';
+                                grossAmt += Math.round(row.PBTRAmount);
                             }
                         }
-                        _getDifferenceHeadList();
-                        _addDependentHeadList();
-                        // _addSalaryHeadList();
                     }
-                }
-                else if (colDef.colIndex == 2 || colDef.colIndex == 3) {
 
-                    var inputPer = parseFloat(rowEntity.PBTRPercentage);
-                    if (isNaN(inputPer)) {
-                        rowEntity.PBTRPercentage = '';
-                        return
-                    }
-                    else if (inputPer > 100) {
-                        rowEntity.PBTRPercentage = '';
-                        return
-                    }
-                    //find dependent head remaining percentage
+                    var remainingAmount = grossAmt - totalAmount;
+                    var deductionRemainingAmount = grossAmt - deductionTotal;
 
+                    var dependTotalAmt = 0
 
-                    //calculate amount and Percentage on depend col and percentage
-
-                    //updating amount field as per percentage
-                    rowEntity.PBTRAmount = Math.round((parseFloat(rowEntity.PBTRPercentage) / 100) * dependTotalAmt).toFixed(2);
-                    if (isNaN(rowEntity.PBTRAmount)) {
-                        rowEntity.PBRAmount = 0;
-                    }
-                    if (grossAmt > 0 && remainingAmount <= 0 && rowEntity.SHeadType == 'Earning') {
-                        rowEntity.PBTRAmount = 0;
-                        rowEntity.PBTRPercentage = 0;
-                        rowEntity.GrossPercentage = 0;
-                        $scope.showMsg('warning', 'Earnings already match with Gross amount')
-                    }
-                    else if (deductionRemainingAmount <= 0 && rowEntity.SHeadType == 'Deduction') {
-                        rowEntity.PBTRAmount = 0;
-                        rowEntity.PBTRPercentage = 0;
-                        rowEntity.GrossPercentage = 0;
-                        $scope.showMsg('warning', 'Deductions can not more than earnings')
-                    }
-                    else {
-                        if (grossAmt > 0 && remainingAmount < rowEntity.PBRAmount && rowEntity.SHeadType == 'Earning') {
-                            rowEntity.PBTRAmount = remainingAmount;
-                            rowEntity.PBTRPercentage = ((rowEntity.PBRAmount * 100) / dependTotalAmt).toFixed(2)
+                    for (var i = 0; i < rowEntity.PBTRCalcOnSHId.length; i++) {
+                        if (rowEntity.PBTRCalcOnSHId[i].value == rowEntity.PBTRSHId) {
+                            rowEntity.PBTRCalcOnSHId = [];
+                            $scope.showMsg('warning', 'Head can not depend on to itself')
+                            return;
                         }
-                        else if (rowEntity.SHeadType == 'Deduction') {
-                            if ((deductionTotal + parseFloat(rowEntity.PBTRAmount)) > totalAmount) {
-                                rowEntity.PBTRAmount = 0;
-                                rowEntity.PBTRPercentage = 0;
-                                rowEntity.GrossPercentage = 0;
-                                $scope.showMsg('warning', 'Deductions can not more than earnings')
-                            }
-                        }
-                        //find gorss % for calculated %
-                        //setting gross %
-                        if (grossAmt > 0) {
-                            rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBTRAmount) * 100) / grossAmt).toFixed(2)
+                        else {
+                            var amt = _getHeadAmount(rowEntity.PBTRCalcOnSHId[i].value)
+                            dependTotalAmt += parseFloat(amt)
+                            //finding dependent head used ppercentage on entire data
+
+
                         }
                     }
-                }
-                else if (colDef.colIndex == 4) {
 
-                    //if salary configured based on Gross than remaining must be checked
-                    if ((grossAmt > 0) && newValue > remainingAmount && rowEntity.SHeadType == 'Earning') {
-                        $scope.showMsg('error', 'Netpayble can not more than Gross')
-                        rowEntity.PBTRAmount = remainingAmount.toFixed(2)
-                    }
-                    else if ((grossAmt > 0) && newValue > deductionRemainingAmount && rowEntity.SHeadType == 'Deduction') {
-                        $scope.showMsg('error', 'Deductions can not more than Earnings')
-                        rowEntity.PBTRAmount = deductionRemainingAmount.toFixed(2)
-                    }
-                    else {
-                        rowEntity.PBTRAmount = parseFloat(newValue).toFixed(2);
-                    }
-                    //avoiding 
-                    if (rowEntity.PBTRIsSlab || rowEntity.PBTRIsFormula) {
-
-                    }
-                    else {
-                        var expectedPer = Math.round(parseFloat((rowEntity.PBTRAmount * 100)) / grossAmt, 2)
-
-                        if (dependTotalAmt > 0) {
-                            expectedPer = (rowEntity.PBTRAmount * 100) / dependTotalAmt;
-                            if (expectedPer > 100) {
-                                rowEntity.PBTRPercentage = 100.00;
-                                rowEntity.PBTRAmount = Math.round(dependTotalAmt).toFixed(2);
-                            }
-                            else {
-                                rowEntity.PBTRPercentage = expectedPer.toFixed(2);
-                                rowEntity.PBTRAmount = Math.round(newValue).toFixed(2);
-                            }
+                    if (colDef.colIndex == 0) {
+                        //find existing in list
+                        rowEntity.PBTRSHId = oldValue;
+                        var existingHead = $filter('findObj')($scope.payTempGridOptions.data, newValue, 'PBTRSHId')
+                        if (existingHead != null) {
+                            $scope.showMsg('warning', 'Heads can not be duplicate.')
+                            rowEntity.PBTRSHId = 0;
+                            rowEntity.SHeadType = '';
+                          
                         }
-                        else
-                            //updating % field as per amount
-                            if (rowEntity.PBTRPercentage) {
-                                if (rowEntity.PBTRPercentage > 0) {
-                                    rowEntity.PBTRPercentage = expectedPer.toFixed(2);
+                        else {
+
+
+                            rowEntity.PBTRSHId = newValue;
+                            var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRSHId.options, rowEntity.PBTRSHId, 'value')
+                            if (foundPB != null) {
+                                if (foundPB.SHIsForEmployer == "True") {
+                                    rowEntity.SHeadType = 'Employer';
+                                }
+                                else if (foundPB.SHIsDeduction == "False") {
+
+
+                                    // if ((grossAmt > 0 && remainingAmount > 0) || (grossAmt <= 0)) {
+
+                                    rowEntity.SHeadType = 'Earning';
+                                    // }
+                                    // else {
+                                    //     rowEntity.PBTRSHId = 0;
+                                    //     $scope.showMsg('warning', 'Earnings already match with Gross amount')
+                                    // }
+
+                                }
+                                else {
+                                    rowEntity.SHeadType = 'Deduction';
                                 }
                             }
+                            _getDifferenceHeadList();
+                            _addDependentHeadList();
+                            // _addSalaryHeadList();
+                        }
                     }
-                    if (grossAmt > 0)
-                        rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBTRAmount) * 100) / grossAmt).toFixed(2)
-                    else
-                        rowEntity.GrossPercentage = '-';
+                    else if (colDef.colIndex == 2 || colDef.colIndex == 3) {
+
+                        var inputPer = parseFloat(rowEntity.PBTRPercentage);
+                        if (isNaN(inputPer)) {
+                            rowEntity.PBTRPercentage = '';
+                            return
+                        }
+                        else if (inputPer > 100) {
+                            rowEntity.PBTRPercentage = '';
+                            return
+                        }
+                        //find dependent head remaining percentage
+
+
+                        //calculate amount and Percentage on depend col and percentage
+
+                        //updating amount field as per percentage
+                        rowEntity.PBTRAmount = Math.round((parseFloat(rowEntity.PBTRPercentage) / 100) * dependTotalAmt).toFixed(2);
+                        if (isNaN(rowEntity.PBTRAmount)) {
+                            rowEntity.PBRAmount = 0;
+                        }
+                        if (grossAmt > 0 && remainingAmount <= 0 && rowEntity.SHeadType == 'Earning') {
+                            rowEntity.PBTRAmount = 0;
+                            rowEntity.PBTRPercentage = 0;
+                            rowEntity.GrossPercentage = 0;
+                            $scope.showMsg('warning', 'Earnings already match with Gross amount')
+                        }
+                        else if (deductionRemainingAmount <= 0 && rowEntity.SHeadType == 'Deduction') {
+                            rowEntity.PBTRAmount = 0;
+                            rowEntity.PBTRPercentage = 0;
+                            rowEntity.GrossPercentage = 0;
+                            $scope.showMsg('warning', 'Deductions can not more than earnings')
+                        }
+                        else {
+                            if (grossAmt > 0 && remainingAmount < rowEntity.PBRAmount && rowEntity.SHeadType == 'Earning') {
+                                rowEntity.PBTRAmount = remainingAmount;
+                                rowEntity.PBTRPercentage = ((rowEntity.PBRAmount * 100) / dependTotalAmt).toFixed(2)
+                            }
+                            else if (rowEntity.SHeadType == 'Deduction') {
+                                if ((deductionTotal + parseFloat(rowEntity.PBTRAmount)) > totalAmount) {
+                                    rowEntity.PBTRAmount = 0;
+                                    rowEntity.PBTRPercentage = 0;
+                                    rowEntity.GrossPercentage = 0;
+                                    $scope.showMsg('warning', 'Deductions can not more than earnings')
+                                }
+                            }
+                            //find gorss % for calculated %
+                            //setting gross %
+                            if (grossAmt > 0) {
+                                rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBTRAmount) * 100) / grossAmt).toFixed(2)
+                            }
+                        }
+                    }
+                    else if (colDef.colIndex == 4) {
+
+                        //if salary configured based on Gross than remaining must be checked
+                        if ((grossAmt > 0) && newValue > remainingAmount && rowEntity.SHeadType == 'Earning') {
+                            $scope.showMsg('error', 'Netpayble can not more than Gross')
+                            rowEntity.PBTRAmount = remainingAmount.toFixed(2)
+                        }
+                        else if ((grossAmt > 0) && newValue > deductionRemainingAmount && rowEntity.SHeadType == 'Deduction') {
+                            $scope.showMsg('error', 'Deductions can not more than Earnings')
+                            rowEntity.PBTRAmount = deductionRemainingAmount.toFixed(2)
+                        }
+                        else {
+                            rowEntity.PBTRAmount = parseFloat(newValue).toFixed(2);
+                        }
+                        //avoiding 
+                        if (rowEntity.PBTRIsSlab || rowEntity.PBTRIsFormula) {
+
+                        }
+                        else {
+                            var expectedPer = Math.round(parseFloat((rowEntity.PBTRAmount * 100)) / grossAmt, 2)
+
+                            if (dependTotalAmt > 0) {
+                                expectedPer = (rowEntity.PBTRAmount * 100) / dependTotalAmt;
+                                if (expectedPer > 100) {
+                                    rowEntity.PBTRPercentage = 100.00;
+                                    rowEntity.PBTRAmount = Math.round(dependTotalAmt).toFixed(2);
+                                }
+                                else {
+                                    rowEntity.PBTRPercentage = expectedPer.toFixed(2);
+                                    rowEntity.PBTRAmount = Math.round(newValue).toFixed(2);
+                                }
+                            }
+                            else
+                                //updating % field as per amount
+                                if (rowEntity.PBTRPercentage) {
+                                    if (rowEntity.PBTRPercentage > 0) {
+                                        rowEntity.PBTRPercentage = expectedPer.toFixed(2);
+                                    }
+                                }
+                        }
+                        if (grossAmt > 0)
+                            rowEntity.GrossPercentage = ((parseFloat(rowEntity.PBTRAmount) * 100) / grossAmt).toFixed(2)
+                        else
+                            rowEntity.GrossPercentage = '-';
+                    }
+
+
+
+                    //SHeadType
+                    // if (colDef.name = 'PBTRIsFormula') {
+                    //     _getSubGridOptions(rowEntity, rowEntity.PBTRIsFormula)
+                    // }
+                    // else if (colDef.name = 'PBTRCalcOnSHId') {
+
+                    //     //_getSubGridOptions(rowEntity, rowEntity.PBTRIsFormula)
+                    // }
+                    // else if (colDef.name = 'PBTRPercentage') {
+                    //     //removing unwanted percentage value if no dependences attached
+
+
+                    //     //_getSubGridOptions(rowEntity, rowEntity.PBTRIsFormula)
+                    // }
+
+                    $scope.netPayableAmount = _getNetPayable();
                 }
-
-
-
-                //SHeadType
-                // if (colDef.name = 'PBTRIsFormula') {
-                //     _getSubGridOptions(rowEntity, rowEntity.PBTRIsFormula)
-                // }
-                // else if (colDef.name = 'PBTRCalcOnSHId') {
-
-                //     //_getSubGridOptions(rowEntity, rowEntity.PBTRIsFormula)
-                // }
-                // else if (colDef.name = 'PBTRPercentage') {
-                //     //removing unwanted percentage value if no dependences attached
-
-
-                //     //_getSubGridOptions(rowEntity, rowEntity.PBTRIsFormula)
-                // }
-
-                $scope.netPayableAmount = _getNetPayable();
             });
+
+
         }
 
         function _getDifferenceHeadList() {
