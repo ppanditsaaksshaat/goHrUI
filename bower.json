@@ -76,7 +76,8 @@
     "angular-input-masks": "^2.6.0",
     "angularjs-slider": "^6.2.2",
     "ng-idle": "^1.3.2",
-    "angular-loading-bar": "^0.9.0"
+    "angular-loading-bar": "^0.9.0",
+    "ng-knob": "^0.1.3"
   },
   "resolutions": {
     "angular": "~1.5.9",

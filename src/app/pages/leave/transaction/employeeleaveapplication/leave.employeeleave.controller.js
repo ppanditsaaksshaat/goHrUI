@@ -240,7 +240,7 @@
 
 
         // pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
-        _fetchPendingLeave();
+
       }
       else {
 
@@ -253,7 +253,7 @@
       queryId = 534;
 
       $scope.showLeave = result;
-      console.log(result);
+      //console.log(result);
       // alert(result);
 
 
@@ -411,7 +411,7 @@
       $scope.showLeave = angular.copy(leaveBalList);
 
       if ($scope.transation != undefined) {
-        console.log($scope.showLeave)
+        //console.log($scope.showLeave)
         angular.forEach($scope.transation, function (leaveApply) {
           angular.forEach($scope.showLeave, function (leave) {
             var lp = leaveApply.split("|")
@@ -448,25 +448,25 @@
         operand: '=',
         value: $scope.entity.LEADEmpId
       })
-
-      // searchList.push({
-      //   field: 'CreatedOn',
-      //   operand: '>=',
-      //   value: moment().add(-1, 'year').format('YYYY-MM-DD')
-      // })
-
-      // searchList.push({
-      //   field: 'CreatedOn',
-      //   operand: '<=',
-      //   value: moment().format('YYYY-MM-DD')
-      // })
-
+      //console.log(moment().add(-1, 'year').format('YYYY-MM-DD'))
+      searchList.push({
+        field: 'CreatedOn',
+        operand: '>=',
+        value: moment().add(-1, 'year').format('YYYY-MM-DD')
+      })
 
       searchList.push({
-        field: 'IsRejected',
-        operand: '<>',
-        value: 1
+        field: 'CreatedOn',
+        operand: '<=',
+        value: moment().format('YYYY-MM-DD') + ' 23:59:59'
       })
+
+
+      // searchList.push({
+      //   field: 'IsRejected',
+      //   operand: '<>',
+      //   value: 1
+      // })
       // searchList.push({
       //   field: 'IsOnHold',
       //   operand: '=',
@@ -490,14 +490,18 @@
       tableData.then(_fetchPendingLeaveSuccess, _fetchPendingLeaveError)
     }
     function _fetchPendingLeaveSuccess(result) {
-      console.log(result)
-      console.log($scope.showLeave)
 
       //ADD CONDITION FOR NODATAFOUND
       if (result != "NoDataFound") {
 
         $scope.pendingLeave = false;
         $scope.prevLeaveList = [];
+
+        for (var i = 0; i < $scope.showLeave.length; i++) {
+          $scope.showLeave[i].LeaveBalance = $scope.showLeave[i].ActualBalance;
+          $scope.showLeave[i].unClearBal = 0;
+        }
+
         angular.forEach(result, function (leave) {
           var applyLeave = 0;
           var prev = {
@@ -526,9 +530,9 @@
             })
           })
 
-          if (leave.IsPending) {
-            var leaveDest = leave.transation.splice(',')
-          }
+          // if (leave.IsPending) {
+          //   var leaveDest = leave.transation.splice(',')
+          // }
 
         })
 
@@ -648,7 +652,7 @@
         $scope.showMsg("error", "From date is greater than to Joining Date");
       }
 
-
+      _fetchPendingLeave();
     }
     /**End of how many leave apply */
 
@@ -749,7 +753,7 @@
       }
     }
     function _getLeaveCountError(err) {
-      console.log(err)
+      //console.log(err)
     }
 
     /**End of Save Leave */
@@ -758,7 +762,7 @@
 
     function _leaveVerify(row) {
 
-      console.log(row)
+      //console.log(row)
       var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
       if (status == null) {
         status = {};
@@ -1053,7 +1057,7 @@
       $scope.page.refreshData();
     }
     function _viewRecord(row) {
-      console.log(row)
+      //console.log(row)
 
       if (row.entity.StatusId == 0) {
         _editRecord(row);
@@ -1298,10 +1302,12 @@
       }
     }
     function _onConditionalLeaveTypeChange() {
+      console.log($scope.leaveRuleList)
+      console.log($scope.entity.conditinalLeaveTypeId)
       var leaveRule = $filter('findObj')($scope.leaveRuleList, $scope.entity.conditinalLeaveTypeId, 'LRCLeaveTypeId')
 
       if (leaveRule == null) {
-        $scope.showMsg('err', 'No leave rule defined.')
+        $scope.showMsg('error', 'No leave rule defined.')
       }
       else {
 
@@ -1388,6 +1394,12 @@
     function _saveFormError(err) {
 
       $scope.isSavingLeave = false;
+    }
+
+    $scope.filter = function (value, index, array) {
+
+      return value.Conditional === 'True' && parseInt(value.GenderId) === parseInt($scope.entity.selectedEmp.PdGenderId);
+
     }
 
     _loadController();

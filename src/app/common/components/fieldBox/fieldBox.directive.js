@@ -168,20 +168,20 @@
                     A watch for form submit, if anything required which 
                     will act after form sumbit will be work here
                 ==================================================*/
-                $scope.$watch(function () {
-                    return $ctrl[0].$submitted;
-                }, function (newVal, oldVal) {
-                    if ($ctrl[0].$submitted) {
-                        /*==================================================
-                            anything which will work after form submit only
-                        ==================================================*/
+                // $scope.$watch(function () {
+                //     return $ctrl[0].$submitted;
+                // }, function (newVal, oldVal) {
+                //     if ($ctrl[0].$submitted) {
+                //         /*==================================================
+                //             anything which will work after form submit only
+                //         ==================================================*/
 
-                        // $scope.col.errorText = warningIcon +
-                        //     $scope.col.text + ' is required.'
-                        // $scope.col.showError = true;
+                //         // $scope.col.errorText = warningIcon +
+                //         //     $scope.col.text + ' is required.'
+                //         // $scope.col.showError = true;
 
-                    }
-                })
+                //     }
+                // })
                 // if (!$scope.entity)
                 //     return;
                 // //console.log($scope.entity)

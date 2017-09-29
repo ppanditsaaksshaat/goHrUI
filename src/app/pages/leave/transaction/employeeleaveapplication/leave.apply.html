@@ -69,11 +69,11 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div ng-if="leaveCtrl.isConditiaonal" class="col-md-6">
+                                <!-- <div ng-if="leaveCtrl.isConditiaonal" class="col-md-6">
                                     <label>Conditional Leave Type</label>
-                                    <select class="form-control" ng-model="entity" ng-options="leaveType.value as leaveType.name for leaveType in page.pageinfo.selects.LEADLTId  | filter:leaveType.Conditional==True">
+                                    <select class="form-control" ng-model="entity" ng-options="leaveType.value as leaveType.name for leaveType in page.pageinfo.selects.LEADLTId  | filter:leaveType.Conditional==True | filter1:leaveType.GenderId==1">
                                 </select>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-md-6">

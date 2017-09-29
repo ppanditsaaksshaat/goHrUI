@@ -106,33 +106,38 @@
      * ROLE LIST
      */
     function _getRoleList() {
-      var rolePageId = 20;
-      var roleTableId = 25;
+      // var rolePageId = 20;
+      // var roleTableId = 25;
+      // var data = {
+      //   searchList: [],
+      //   orderByList: []
+      // }
+      // var tableData = pageService.getTableData(
+      //   roleTableId,
+      //   rolePageId,
+      //   '', '',
+      //   false, data);
+
+      // tableData.then(_getTableSuccessResult, _getTableErrorResult)
+
       var data = {
         searchList: [],
         orderByList: []
       }
-      var tableData = pageService.getTableData(
-        roleTableId,
-        rolePageId,
-        '', '',
-        false, data);
-
-      tableData.then(_getTableSuccessResult, _getTableErrorResult)
-
-      var data = {
-        searchList: [],
-        orderByList: []
-      }
+      pageService.getCustomQuery(data, 581).then(_getRoleWithLocationSuccess, _getRoleWithLocationError)
+     
     }
-    function _getTableSuccessResult(result) {
+    function _getRoleWithLocationSuccess(result) {
       console.log(result)
       _getMenuList();
-      $scope.roleList = result;
+      $scope.roleList = result[0];
+      $scope.locationList = result[1];
+      $scope.branchList = result[2];
+      $scope.subUnitList = result[3];
 
     }
 
-    function _getTableErrorResult(err) {
+    function _getRoleWithLocationError(err) {
 
     }
 

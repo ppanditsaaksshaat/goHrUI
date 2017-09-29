@@ -28,6 +28,13 @@ angular.module('BlurAdmin.common').directive('treeView', function ($compile) {
                 if (!angular.isUndefined(node.children)) return true;
             }
 
+            scope.showCheckbox = function (node) {
+                if(angular.isUndefined(node.showCheckbox))
+                    return true;
+                else 
+                    return node.showCheckbox;
+            }
+
             /////////////////////////////////////////////////
             /// SELECT ALL CHILDRENS
             // as seen at: http://jsfiddle.net/incutonez/D8vhb/5/
@@ -54,11 +61,12 @@ angular.module('BlurAdmin.common').directive('treeView', function ($compile) {
                 text += '<span ng-show=!showIcon(n) style="padding-right: 13px"></span>';
 
                 if (hasCheckBox) {
-                    text += '<input class="tree-checkbox" type=checkbox ng-model=n.checked ng-change=checkChange(n)>';
+                    text += '<input ng-show=showCheckbox(n) class="tree-checkbox" type=checkbox ng-model=n.checked ng-change=checkChange(n)>';
                 }
 
 
-                text += '<span class="edit" ng-click=localClick({node:n})><i class="fa fa-pencil"></i></span>'
+                text += '<span ng-show=showCheckbox(n) class="edit" ng-click=localClick({node:n})><i class="fa fa-pencil"></i></span>'
+                text += '<span ng-show=!showCheckbox(n)>  </span>'
 
 
                 text += '<label>{{n.name}}</label>';
