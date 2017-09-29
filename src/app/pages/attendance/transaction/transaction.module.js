@@ -13,6 +13,7 @@
     'BlurAdmin.pages.attendance.transaction.compoffApply',
     'BlurAdmin.pages.attendance.transaction.outdoorapply',
     'BlurAdmin.pages.attendance.transaction.manualmonth',
+    'BlurAdmin.pages.attendance.transaction.manualmonthlyatt',
   ])
     .config(routeConfig);
 

@@ -1,0 +1,82 @@
+<div class="panel panel-default bootstrap-panel xmedium-panel">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label ng-bind="manualAttendance.pageinfo.fields.SubUnit.text"></label>
+                        <div>
+                            <select class="form-control" ng-model="entity.SubUnit" ng-options="subUnit.value as subUnit.name for subUnit in manualAttendance.pageinfo.selects.SubUnit"></select>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label ng-bind="manualAttendance.pageinfo.fields.Month.text"></label>
+                        <div>
+                            <select class="form-control" ng-model="entity.Month" ng-options="month.value as month.name for month in manualAttendance.pageinfo.selects.Month"></select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-2">
+                        <label ng-bind="manualAttendance.pageinfo.fields.Year.text"></label>
+                        <div>
+                            <select class="form-control" ng-model="entity.Year" ng-options="year.value as year.name for year in manualAttendance.pageinfo.selects.Year"></select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-1">
+                        <label></label>
+                        <div>
+                            <button class="btn btn-primary" ng-click="getEmployeeAttendance();">Search</button>
+                        </div>
+                    </div>
+                    <div class="col-md-1" ng-show="showCurrentMonth">
+                        <label></label>
+                        <div>
+                            <label class="checkbox-inline custom-checkbox nowrap">
+                                    <input type="checkbox" ng-click="getEmployeeAttendance()" id="inlineCheckbox02"ng-model="callCurrentMonth"  >
+                                    <span>Current</span>
+                                </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1" ng-show="showAllButton">
+                        <label></label>
+                        <div>
+                            <button class="btn btn-primary" ng-click=downloadAttendanceDataList()>DownLoad</button>
+                        </div>
+                    </div>
+                    <div class="col-md-1" ng-show="showAllButton">
+                        <label></label>
+                        <div>
+                            <button class="btn btn-primary" ng-click=uploadRecord()>Upload</button>
+                        </div>
+                    </div>
+                    <div class="col-md-1" ng-show="showAllButton">
+                        <label></label>
+                        <div>
+                            <button class="btn btn-primary" ng-click=markAllPresent()>AllPresent</button>
+                        </div>
+                    </div>
+                    <div class="col-md-1" ng-show="showAllButton">
+                        <label></label>
+                        <div>
+                            <button class="btn btn-primary" ng-click=uploadBulkAttendance()>Save</button>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="with-line " ng-show="gridLine"></h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ui-grid="weekGridOptions" ui-grid-cellNav ui-grid-edit ui-grid-expandable ui-grid-auto-resize ui-grid-selection class="grid"></div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+    </div>
