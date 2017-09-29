@@ -16,7 +16,6 @@
 
         $scope.paybandTemp = {
             TableId: 441,
-            TableId: 441,
             PageId: 461,
             RuleTableId: 442,
             RulePageId: 462,

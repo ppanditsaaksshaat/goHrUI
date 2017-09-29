@@ -1261,7 +1261,7 @@
                         {
                             name: 'CalculatedAmount',
                             displayName: 'Amount',
-                            width: 90, visible: true, cellFilter: 'avoidNan', cellEditableCondition: false,
+                            width: 90, visible: true, cellFilter: 'avoidNan',
                             cellEditableCondition: false,
                         })
                     row.subGridOptions.columnDefs.push(
@@ -1280,7 +1280,6 @@
                         row.subGridOptions.data.push({
                             PBRRuleName: '',
                             PBSId: 0,
-                            PBSIsCalcOnPercentage: true,
                             PBSPBRId: 0,
                             PBSMaxCalcOnAmount: row.child[1].rows.PBSMaxCalcOnAmount,
                             PBSIsCalcOnPercentage: row.child[1].rows.PBSIsCalcOnPercentage,
