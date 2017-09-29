@@ -1145,6 +1145,18 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 });
         }
 
+        var _uploadManualAttendance = function (data) {
+            var url = serviceBase + 'api/Upload/UploadManualAttendance';
+            return $http.post(url, JSON.stringify(JSON.stringify(data)),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
+        }
+
 
         pageServiceFactory.serviceBase = serviceBase;
         pageServiceFactory.getPagData = _getPagData;
@@ -1262,6 +1274,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.leaveTypeUpload = _leaveTypeUpload;
         pageServiceFactory.multiSave = _multiSave;
         pageServiceFactory.getMultiEntity = _getMultiEntity;
+        pageServiceFactory.uploadManualAttendance = _uploadManualAttendance;
+
+
 
         return pageServiceFactory;
 
