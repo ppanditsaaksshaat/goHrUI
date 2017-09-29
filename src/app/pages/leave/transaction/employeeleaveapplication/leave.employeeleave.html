@@ -106,7 +106,7 @@
                                                     </div>
                                                 </div>
                                                 <div ng-if="entity.isConditiaonal" class="col-md-2">
-                                                    <select class="form-control" ng-model="entity.conditinalLeaveTypeId" ng-options="leaveType.value as leaveType.name for leaveType in page.pageinfo.selects.LEADLTId  | filter:leaveType.Conditional==True"
+                                                    <select class="form-control" ng-model="entity.conditinalLeaveTypeId" ng-options="leaveType.value as leaveType.name for leaveType in page.pageinfo.selects.LEADLTId  | filter: filter"
                                                         ng-change="onConditionalLeaveTypeChange()">
                                             </select>
                                                 </div>

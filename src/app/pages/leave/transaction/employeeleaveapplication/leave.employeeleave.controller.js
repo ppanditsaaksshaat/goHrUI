@@ -1302,10 +1302,12 @@
       }
     }
     function _onConditionalLeaveTypeChange() {
+      console.log($scope.leaveRuleList)
+      console.log($scope.entity.conditinalLeaveTypeId)
       var leaveRule = $filter('findObj')($scope.leaveRuleList, $scope.entity.conditinalLeaveTypeId, 'LRCLeaveTypeId')
 
       if (leaveRule == null) {
-        $scope.showMsg('err', 'No leave rule defined.')
+        $scope.showMsg('error', 'No leave rule defined.')
       }
       else {
 
@@ -1392,6 +1394,12 @@
     function _saveFormError(err) {
 
       $scope.isSavingLeave = false;
+    }
+
+    $scope.filter = function (value, index, array) {
+
+      return value.Conditional === 'True' && parseInt(value.GenderId) === parseInt($scope.entity.selectedEmp.PdGenderId);
+
     }
 
     _loadController();
