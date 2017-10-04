@@ -19,7 +19,7 @@
     $scope.getEmployeeAttendance = _getEmployeeAttendance;
     $scope.downloadAttendanceDataList = _downloadAttendanceDataList;
     var downloadAtt = false;
-    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false }
+    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false, paginationPageSize: 10 }
     vm.uploader = [];
     vm.fileResult = undefined;
     $scope.weekGridOptions.columnDefs = [];
@@ -29,6 +29,7 @@
     $scope.markAllPresent = _markAllPresent;
     $scope.showCurrentMonth = false;
     $scope.callCurrentMonth = false;
+    $scope.gridLine = false;
 
 
     console.log($scope.page)
@@ -52,6 +53,7 @@
     $scope.dropDownForDayStatus.push({ value: 'P/H', name: 'P/H' });
     $scope.dropDownForDayStatus.push({ value: 'N/A', name: 'N/A' });
     $scope.dropDownForDayStatus.push({ value: 'P/W', name: 'P/W' });
+    $scope.dropDownForDayStatus.push({ value: 'L', name: 'L' });
     $scope.dropDownForDayStatus.push({ value: '-', name: '-' });
 
 
@@ -61,7 +63,7 @@
         if ($scope.entity.Month !== undefined && $scope.entity.Month != '') {
           if ($scope.entity.Year !== undefined && $scope.entity.Year != '') {
             $scope.showAllButton = true
-            $scope.gridLine = true;
+            
             downloadAtt = true;
             var searchLists = [];
             var searchListData = { field: 'SubUnit', operand: '=', value: $scope.entity.SubUnit }
@@ -93,6 +95,7 @@
       console.log(result[0]);
       $scope.resultData = result[0];
       $scope.attendanceDataList = [];
+      $scope.gridLine = true;
 
       $scope.attendanceDataList = result[0];
       // $scope.weekOffPage = result;
