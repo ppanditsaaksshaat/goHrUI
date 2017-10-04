@@ -131,6 +131,9 @@
     }
 
     function _dataResult(result) {
+      if (result.length > 0) {
+        $scope.gridDataCount = result.length;
+      }
       if (result[0].Error == "Salary Cycle not found") {
         $scope.page.gridOptions.data = [];
         $scope.page.boxOptions.noResultMessageText = result[0].Error;
@@ -164,7 +167,7 @@
       DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'Verify', false, true, true);
     }
     function _uploadRecord() {
-      $scope.deepak = 'is my name';
+
       var options = {
         url: "app/common/forms/browseModal/browseModal.html",
         controller: "",
@@ -318,54 +321,90 @@
     }
     /**Verify attendance according to row selection */
     function _verifyAttendance() {
+      console.log($scope.page.selectedRows);
+      var finalVerifyData = [];
+      if ($scope.page.selectedRows != undefined && $scope.page.selectedRows.length > 0) {
+        if ($scope.page.selectedRows.length == 1 && $scope.page.selectedRows[0].StatusBGClass != "") {
+          finalVerifyData = angular.copy($scope.page.selectedRows)
+          $scope.showMsg("error", "you are not allowed to verify this attendance");
+          return;
+        }
+        else {
+          if ($scope.gridDataCount == $scope.page.selectedRows.length) {
+            if ($scope.page.selectedRows[0].SMAllowedNegitiveVerify) {
+              finalVerifyData = angular.copy($scope.page.selectedRows)
+            }
+            else {
+              angular.forEach($scope.page.selectedRows, function (data, index) {
+                if (data.StatusBGClass == "") {
+                  finalVerifyData.push(data);
+                  //  delete $scope.page.selectedRows[index];
+                }
+              })
+            }
+          }
+          else {
+            var negitiveCount = 0;
+            angular.forEach($scope.page.selectedRows, function (data, index) {
+              if (data.StatusBGClass == "") {
+                finalVerifyData.push(data);
+              }
+              else {
+                negitiveCount++;
+              }
 
-      var searchLists = [];
-      var startDate = "";
-      var endDate = "";
+            })
+            if ($scope.page.selectedRows.length == negitiveCount) {
+              $scope.showMsg("error", "you are not allowed to verify this attendance");
+              finalVerifyData = [];
+              return
+            }
+          }
+        }
 
-      // angular.forEach($scope.page.selectedRows, function (data) {
-      //   empIds += data.EmpId + ",";
-      // });
 
-      // var empId = empIds.substring(0, empIds.length - 1)
-      if ($scope.page.filterData === undefined) {
-        startDate = moment().startOf('month').format('YYYY-MM-DD');
-        endDate = moment().endOf('month').format('YYYY-MM-DD');
+        var searchLists = [];
+        var startDate = "";
+        var endDate = "";
+
+        if ($scope.page.filterData === undefined) {
+          startDate = moment().startOf('month').format('YYYY-MM-DD');
+          endDate = moment().endOf('month').format('YYYY-MM-DD');
+        }
+        else {
+
+          var sDate = $scope.page.filterData.Month.value + "-" + 1 + "-" + $scope.page.filterData.Year.value;
+          startDate = moment(sDate).startOf('month').format('YYYY-MM-DD');
+          endDate = moment(sDate).endOf('month').format('YYYY-MM-DD');
+        }
+
+        var searchListData = {
+          field: 'VerifyAttendance',
+          operand: "table",
+          value: LZString.compressToEncodedURIComponent(JSON.stringify(finalVerifyData))
+        }
+        searchLists.push(searchListData)
+        searchListData = {
+          field: 'FromDate',
+          operand: '=',
+          value: startDate
+
+        }
+        searchLists.push(searchListData)
+        searchListData = {
+          field: 'EndDate',
+          operand: '=',
+          value: endDate
+        }
+        searchLists.push(searchListData)
+
+        var data = {
+          searchList: searchLists,
+          orderByList: []
+        }
+        pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
       }
-      else {
 
-        var sDate = $scope.page.filterData.Month.value + "-" + 1 + "-" + $scope.page.filterData.Year.value;
-        startDate = moment(sDate).startOf('month').format('YYYY-MM-DD');
-        endDate = moment(sDate).endOf('month').format('YYYY-MM-DD');
-      }
-
-      var searchListData = {
-        field: 'VerifyAttendance',
-        operand: "table",
-        value: LZString.compressToEncodedURIComponent(JSON.stringify($scope.page.selectedRows))
-      }
-      searchLists.push(searchListData)
-      searchListData = {
-        field: 'FromDate',
-        operand: '=',
-        value: startDate
-
-      }
-      searchLists.push(searchListData)
-      searchListData = {
-        field: 'EndDate',
-        operand: '=',
-        value: endDate
-      }
-      searchLists.push(searchListData)
-
-      var data = {
-        searchList: searchLists,
-        orderByList: []
-      }
-
-
-      pageService.getCustomQuery(data, vm.queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
     }
     function _getCustomQuerySuccessResult(result) {
       console.log(result);
