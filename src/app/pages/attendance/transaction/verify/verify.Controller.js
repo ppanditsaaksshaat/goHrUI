@@ -323,10 +323,11 @@
     function _verifyAttendance() {
       console.log($scope.page.selectedRows);
       var finalVerifyData = [];
+      var negitiveCount = 0;
       if ($scope.page.selectedRows != undefined && $scope.page.selectedRows.length > 0) {
         if ($scope.page.selectedRows.length == 1 && $scope.page.selectedRows[0].StatusBGClass != "") {
           finalVerifyData = angular.copy($scope.page.selectedRows)
-          $scope.showMsg("error", "you are not allowed to verify this attendance");
+          alert("you are not allowed to verify this attendance");
           return;
         }
         else {
@@ -340,11 +341,19 @@
                   finalVerifyData.push(data);
                   //  delete $scope.page.selectedRows[index];
                 }
+                else {
+                  negitiveCount++;
+                }
+
               })
+              if ($scope.page.selectedRows.length == negitiveCount) {
+                alert("you are not allowed to verify this attendance");
+                finalVerifyData = [];
+                return
+              }
             }
           }
           else {
-            var negitiveCount = 0;
             angular.forEach($scope.page.selectedRows, function (data, index) {
               if (data.StatusBGClass == "") {
                 finalVerifyData.push(data);
@@ -355,7 +364,7 @@
 
             })
             if ($scope.page.selectedRows.length == negitiveCount) {
-              $scope.showMsg("error", "you are not allowed to verify this attendance");
+              alert("you are not allowed to verify this attendance");
               finalVerifyData = [];
               return
             }
