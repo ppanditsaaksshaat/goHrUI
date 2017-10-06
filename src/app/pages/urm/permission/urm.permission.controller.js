@@ -125,7 +125,7 @@
         orderByList: []
       }
       pageService.getCustomQuery(data, 581).then(_getRoleWithLocationSuccess, _getRoleWithLocationError)
-     
+
     }
     function _getRoleWithLocationSuccess(result) {
       console.log(result)
@@ -134,7 +134,7 @@
       $scope.locationList = result[1];
       $scope.branchList = result[2];
       $scope.subUnitList = result[3];
-
+      $scope.empList = result[4];
     }
 
     function _getRoleWithLocationError(err) {
