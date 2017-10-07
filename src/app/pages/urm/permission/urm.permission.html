@@ -60,19 +60,38 @@
 
             </uib-tab>
             <uib-tab heading="Users">
-                <div class="row">
+                <div class="row" ng-hide="true">
                     <div class="col-md-2">
-                            <select name="location" id="location" ng-model="selectedLocationId" class="form-control" ng-options="opt.LocationId as opt.LocationName for opt in locationList"
+                        <lable>Location</lable>
+                        <select name="location" id="location" ng-model="selectedLocationId" class="form-control" ng-options="opt.LocationId as opt.LocationName for opt in locationList"
                             ng-change="changeLocation(selectedLocationId)"></select>
                     </div>
                     <div class="col-md-2">
-                            <select name="branch" id="branch" ng-model="selectedBranchId" class="form-control" ng-options="opt.BRId as opt.BRName for opt in branchList"
+                        <lable>Branch</lable>
+                        <select name="branch" id="branch" ng-model="selectedBranchId" class="form-control" ng-options="opt.BRId as opt.BRName for opt in branchList"
                             ng-change="changeBranch(selectedBranchId)"></select>
                     </div>
                     <div class="col-md-2">
-                            <select name="sunit" id="sunit" ng-model="selectedSUnitId" class="form-control" ng-options="opt.SUId as opt.SUName for opt in subUnitList"
+                        <lable>Sub Unit</lable>
+                        <select name="sunit" id="sunit" ng-model="selectedSUnitId" class="form-control" ng-options="opt.SUId as opt.SUName for opt in subUnitList"
                             ng-change="changeSUnit(selectedSUnitId)"></select>
                     </div>
+                    <div class="col-md-2">
+                        <lable>Employee</lable>
+                        <select name="emp" id="emp" ng-model="selectedEmpId" class="form-control" ng-options="opt.EmpId as opt.EmpName for opt in empList"
+                            ng-change="changeEmp(selectedSUnitId)"></select>
+                    </div>
+                </div>
+                <div>
+                    <ui-select ng-model="selectedEmp" class="btn-group bootstrap-select form-control" ng-disabled="false"
+                        append-to-body="true" search-enabled="true">
+                        <ui-select-match placeholder="Select Employee">
+                            {{$select.selected.EmpName}} ( {{$select.selected.EmpCode}}  )
+                        </ui-select-match>
+                        <ui-select-choices repeat="withSearchItem in empList | filter: $select.search">
+                            <span>{{withSearchItem.EmpName}} ( {{withSearchItem.EmpCode}}  )</span>
+                        </ui-select-choices>
+                    </ui-select>
                 </div>
             </uib-tab>
         </uib-tabset>
