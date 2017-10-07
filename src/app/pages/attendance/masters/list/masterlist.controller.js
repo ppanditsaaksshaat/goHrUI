@@ -282,6 +282,7 @@
     }
 
     function _validateWeekOff(entity) {
+      console.log(entity)
       var errorMsg = "";
       var gridErrorMsg = "";
       var newWEF = moment(entity.WOSWEF);
@@ -324,14 +325,26 @@
         $scope.showMsg("error", gridErrorMsg);
         return false;
       }
-      if ($scope.oldData != null && $scope.oldData != undefined) {
+      if ($scope.oldData!="NoDataFound") {
+        var groupExist = false;
         angular.forEach($scope.oldData, function (data) {
-          var oldWEF = moment(data.WOSWEF);
-          var oldWET = moment(data.WOSWET);
-          newWEF.isBetween(oldWEF, oldWET);
-          newWET.isBetween(oldWEF, oldWET);
-          if (newWEF.isBetween(oldWEF, oldWET) || moment(data.WOSWEF).format('DD/MMMM/YYYY') == moment(entity.WOSWEF).format('DD/MMMM/YYYY') || moment(data.WOSWET).format('DD/MMMM/YYYY') == moment(entity.WOSWEF).format('DD/MMMM/YYYY')) {
-            errorMsg += moment(data.WOSWEF).format('DD/MMMM/YYYY') + " " + "to " + moment(data.WOSWET).format('DD/MMMM/YYYY');
+          var groupIds = data.WOSGroupId.split(',');
+          angular.forEach(entity.WOSGroupId, function (newGroupId) {
+            angular.forEach(groupIds, function (oldGroupId) {
+              if (newGroupId.GMCId == oldGroupId) {
+                groupExist = true;
+              }
+            })
+          })
+          if (groupExist) {
+            //  var selectedGroupId = entity.WOSGroupId.GMCId;
+            var oldWEF = moment(data.WOSWEF);
+            var oldWET = moment(data.WOSWET);
+            newWEF.isBetween(oldWEF, oldWET);
+            newWET.isBetween(oldWEF, oldWET);
+            if (newWEF.isBetween(oldWEF, oldWET) || moment(data.WOSWEF).format('DD/MMMM/YYYY') == moment(entity.WOSWEF).format('DD/MMMM/YYYY') || moment(data.WOSWET).format('DD/MMMM/YYYY') == moment(entity.WOSWEF).format('DD/MMMM/YYYY')) {
+              errorMsg += moment(data.WOSWEF).format('DD/MMMM/YYYY') + " " + "to " + moment(data.WOSWET).format('DD/MMMM/YYYY');
+            }
           }
         });
 

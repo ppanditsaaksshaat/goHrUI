@@ -567,6 +567,7 @@
                         // _startMsgTimer();
                     }
                     else {
+                        
                         $scope.page.gridOptions.data = result;
                     }
 

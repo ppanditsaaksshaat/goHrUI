@@ -678,8 +678,19 @@
 
     /**Save Leave */
     function _saveLeaveForm(form) {
-
-      if (_validateForm(form)) {
+      var leaveFromDate = moment($scope.entity.LEADDateFrom);
+      var month = leaveFromDate.format('M');
+      var year = leaveFromDate.format('YYYY');
+      if (!$scope.entity.selectedEmp.AMSTIsVarified) {
+        if (_validateForm(form)) {
+        }
+      }
+      else if ($scope.entity.selectedEmp.AMSMonth == parseInt(month) && $scope.entity.selectedEmp.AMSYear == parseInt(year)) {
+        $scope.showMsg("error", "You are not allowed to apply leave because this month attendance verified");
+      }
+      else {
+        if (_validateForm(form)) {
+        }
       }
     }
     function _validateForm(form) {
