@@ -1,11 +1,14 @@
 <grid-box ng-model="page" ng-hide="showEditForm">
 </grid-box>
-<form  name="editForm" novalidate ng-submit="updateForm(entity)" ng-show="showEditForm">
-    <div class="panel panel-default xmedium-panel">
-        <edit-panel-head  page="page" page-title="page.pageinfo.title" close-form=" closeForm(editForm)" show-close="true"></edit-panel-head>
 
-        <div class="panel-body text-centre" style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
 
+<form name="editForm " novalidate ng-submit="saveForm() " ng-hide="showForm ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
+ " show-reset="true " condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
             <div class="row ">
                 <div class="form-group col-md-8 ">
                     <label class="col-md-2">{{page.pageinfo.fields.FADEmpId.text}}</label>
@@ -52,6 +55,14 @@
                 </div>
             </div>
             <div class="row ">
+                <div class="form-group col-md-8 ">
+                    <label class="col-md-2">{{page.pageinfo.fields.FDARemark.text}}</label>
+                    <div class="col-md-6">
+                        <field-box page="page" ng-column="page.pageinfo.fields.FDARemark " ng-entity="entity " form="editForm "></field-box>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row ">
                 <div class="form-group col-md-8">
                     <label class="col-md-2">{{page.pageinfo.fields.FDARemark.text}}</label>
                     <div class="col-md-6">
@@ -60,10 +71,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-8">                 
+                <div class="form-group col-md-8">
                     <label class="col-md-2">Status</label>
-                    <div class="col-md-2" >
-                       <select class="form-control" ng-options="status.value as status.name for status in page.pageinfo.statuslist" ng-model="entity.StatusId" name="editForm"></select>
+                    <div class="col-md-2">
+                        <select class="form-control" ng-options="status.value as status.name for status in page.pageinfo.statuslist" ng-model="entity.StatusId"
+                            name="editForm"></select>
                     </div>
                 </div>
             </div>
@@ -71,13 +83,171 @@
             <div class="form-group col-md-8">
                 <div class="col-md-2"></div>
                 <div class="">
-                    <button type="submit" class="btn btn-primary">Update</button>               
+                    <button type="submit" class="btn btn-primary">Update</button>
                     <button type="button" class="btn btn-danger" ng-click="close()">Close</button>
                 </div>
-            </div>
+            </div>-->
+
+
+
         </div>
     </div>
-
-
-
 </form>
+
+
+<div ng-hide="showSanctionForm">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Sanction Out Door Application">
+            <form ng-submit="cOffSanction()" name="editForm">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.FADEmpId.text"></label>
+                                                <span class="form-control" ng-bind="entity.EmpName"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.FDARemark.text"></label>
+                                                <span class="form-control" ng-bind="entity.FDARemark"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.FDAFromDate.text"></label>
+                                                <span class="form-control" ng-bind="entity.FDAFromDate"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.FDAToDate.text"></label>
+                                                <span class="form-control" ng-bind="entity.FDAToDate"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.FADInTime.text"></label>
+                                                <span class="form-control" ng-bind="entity.FADInTime"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.FDAOutTime.text"></label>
+                                                <span class="form-control" ng-bind="entity.FDAOutTime"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+
+
+                                    </div>
+                                    
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="row" ng-if="leaveDetails!=undefined">
+                                        <div class "col-md-6">
+                                            <div class="form-group">
+                                                <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Type</th>
+                                                            <th class="col-md-1">Balance</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="leaveDetail in leaveDetails">
+                                                            <td ng-bind="leaveDetail.type"></td>
+                                                            <td ng-bind="leaveDetail.balance"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="sanctionPage.pageinfo.fields.AFDADFDAFromDate.text"></label>
+                                                <div class="input-group" moment-picker="sanctionEntity.AFDADFDAFromDate" 
+                                                format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                                    min-date="col.minDate">
+                                                    <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                </span>
+                                                    <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                                        ng-model="sanctionEntity.AFDADFDAFromDate" ng-model-options="{ updateOn: 'blur' }">
+                                                    <span class="input-group-btn">
+                                                <button class="btn btn-secondary" ng-click="sanctionEntity.AFDADFDAFromDate=''" type="button"><i class="fa fa-close"></i></button>
+                                                 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="sanctionPage.pageinfo.fields.AFDADFDAToDate.text"></label>
+                                                <div class="input-group" moment-picker="sanctionEntity.AFDADFDAToDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                                    min-date="col.minDate">
+                                                    <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                </span>
+                                                    <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                                        ng-model="sanctionEntity.AFDADFDAToDate" ng-model-options="{ updateOn: 'blur' }">
+                                                    <span class="input-group-btn">
+                                                <button class="btn btn-secondary" ng-click="sanctionEntity.AFDADFDAToDate=''" type="button"><i class="fa fa-close"></i></button>
+                                                 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Status<span style="color:red">*</span></label>
+                                                <!--<select class="form-control" ng-model="entity.StatusId" ng-options="status.value as status.name for status in sanctionPage.pageinfo.statuslist"></select>-->
+                                                <select class="form-control" ng-model="sanctionEntity.StatusId" ng-options="status.value as status.name for status in sanctionPage.pageinfo.statuslist"></select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Comment<span style="color:red">* </label>
+                                                <textarea class="form-control" ng-model="sanctionEntity.AFDADRemark"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info btn-lg">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeSanction()">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

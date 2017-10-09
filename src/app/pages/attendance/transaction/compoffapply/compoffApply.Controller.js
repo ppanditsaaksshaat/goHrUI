@@ -63,7 +63,7 @@
       getPageData: null,
       refreshData: null,
       addRecord: _addRecord,
-      editRecord: null,
+      editRecord: _editRecord,
       updateRecord: null,
       viewRecord: _viewRecord,
       customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _cOffVerify, pin: true }],
