@@ -9,59 +9,72 @@
  " show-reset="true " condition="true "></edit-panel-head>
 
         <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
-            <div class="row ">
-                <div class="form-group col-md-8 ">
-                    <label class="col-md-2">{{page.pageinfo.fields.FADEmpId.text}}</label>
-                    <div class="col-md-6">
-                        <field-box page="page" ng-column="page.pageinfo.fields.FADEmpId " ng-entity="entity " form="editForm "></field-box>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FADEmpId.text}}</label>
+                        <select class="form-control" ng-model="entity.FADEmpId" ng-change="shiftInOutTime()" ng-options="employee.value as employee.name  for employee in page.pageinfo.selects.FADEmpId">
+                            </select>
                     </div>
                 </div>
 
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FADAppDate.text}}</label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.FADAppDate " ng-entity="entity " form="editForm "></field-box>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-md-8 ">
-                    <label class="col-md-2">{{page.pageinfo.fields.FDAFromDate.text}}</label>
-                    <div class="col-md-6">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FDAFromDate.text}}</label>
                         <field-box page="page" ng-column="page.pageinfo.fields.FDAFromDate " ng-entity="entity " form="editForm "></field-box>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-8 ">
-                    <label class="col-md-2">{{page.pageinfo.fields.FDAToDate.text}}</label>
-                    <div class="col-md-6">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FDAToDate.text}}</label>
                         <field-box page="page" ng-column="page.pageinfo.fields.FDAToDate " ng-entity="entity " form="editForm "></field-box>
                     </div>
                 </div>
+
             </div>
 
-
-            <div class="row ">
-                <div class="form-group col-md-8 ">
-                    <label class=" col-md-2">{{page.pageinfo.fields.FADInTime.text}}</label>
-                    <div class=" col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FADInTime.text}}</label>
                         <field-box page="page" ng-column="page.pageinfo.fields.FADInTime " ng-entity="entity " form="editForm "></field-box>
                     </div>
                 </div>
-            </div>
-
-            <div class="row ">
-                <div class="form-group col-md-8 ">
-                    <label class="col-md-2">{{page.pageinfo.fields.FDAOutTime.text}}</label>
-                    <div class="col-md-6">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FDAOutTime.text}}</label>
                         <field-box page="page" ng-column="page.pageinfo.fields.FDAOutTime " ng-entity="entity " form="editForm "></field-box>
                     </div>
                 </div>
+                <!--<div class="col-md-4">
+                    <div class="form-group">
+                        <label >{{page.pageinfo.fields.FADAppDate.text}}</label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.FDAFromDate " ng-entity="entity " form="editForm "></field-box>
+                    </div>
+                </div>-->
             </div>
-            <div class="row ">
-                <div class="form-group col-md-8 ">
-                    <label class="col-md-2">{{page.pageinfo.fields.FDARemark.text}}</label>
-                    <div class="col-md-6">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FDARemark.text}}</label>
                         <field-box page="page" ng-column="page.pageinfo.fields.FDARemark " ng-entity="entity " form="editForm "></field-box>
                     </div>
                 </div>
+
             </div>
+
+
             <!--<div class="row ">
                 <div class="form-group col-md-8">
                     <label class="col-md-2">{{page.pageinfo.fields.FDARemark.text}}</label>
@@ -153,7 +166,7 @@
 
 
                                     </div>
-                                    
+
 
                                 </div>
                                 <div class="col-md-6">
@@ -188,8 +201,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label ng-bind="sanctionPage.pageinfo.fields.AFDADFDAFromDate.text"></label>
-                                                <div class="input-group" moment-picker="sanctionEntity.AFDADFDAFromDate" 
-                                                format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                                <div class="input-group" moment-picker="sanctionEntity.AFDADFDAFromDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
                                                     min-date="col.minDate">
                                                     <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>

@@ -11,7 +11,7 @@
   /** @ngInject */
   function attTransoutdoorapplyController($scope, $state, $timeout, pageService, $filter, editFormService) {
     var vm = this;
-    var pageId = 294;
+    // var pageId = 294;
     vm.tableId = 305;
     vm.pageId = 294;
     var currentState = $state.current;
@@ -26,7 +26,7 @@
     $scope.saveForm = _saveForm;
     $scope.entity = {}
     $scope.page = $scope.createPage();
-    $scope.page.pageId = 294;
+    $scope.page.pageId = vm.pageId;
     var sanctionLoanPageId = 468;
     var cancelRequestPageId = 0;
     var cancelRequestTableId = 0;
@@ -34,6 +34,7 @@
     $scope.cOffSanction = _cOffSanction;
     $scope.close = _close;
     $scope.closeForm = _closeForm;
+    $scope.shiftInOutTime = _shiftInOutTime;
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -54,8 +55,18 @@
       editRecord: _editRecord,
       updateRecord: null,
       viewRecord: _viewRecord,
-      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _cOffVerify, pin: true }],
+      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _oDVerify, pin: true }],
       deleteRecord: null,
+      pageResult: _pageResult,
+      dataResult: _dataResult
+    }
+
+    function _dataResult(result) {
+      console.log(result)
+    }
+
+    function _pageResult(result) {
+      console.log(result);
     }
 
     function _addRecord() {
@@ -66,8 +77,30 @@
 
     }
 
+    function _shiftInOutTime() {
+      // $scope.employeeJoiningDate = $scope.entity.selectedEmp.JDDate;
+      $scope.FADInTimes = $scope.entity.FADEmpId.SMFromTime;
+      $scope.FDAOutTimes = $scope.entity.FADEmpId.SMToTime;
 
-    function _cOffVerify(row) {
+      if ($scope.FADInTimes != undefined && $scope.FADInTimes != '') {
+        if ($scope.FDAOutTimes != undefined && $scope.FDAOutTimes != '') {
+          $scope.entity.FADInTime = $scope.FADInTimes;
+          $scope.entity.FDAOutTime = $scope.FDAOutTimes;
+        }
+        else {
+          $scope.showMsg("error", "This employee not exist in shift")
+        }
+      }
+      else {
+        $scope.showMsg("error", "This employee not exist in shift")
+      }
+
+      console.log($scope.entity.FADInTime)
+
+    }
+
+
+    function _oDVerify(row) {
       console.log(row)
       var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
       console.log(status)
@@ -197,48 +230,43 @@
       }
       else {
         $scope.status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
-        if (!$scope.status.isApproved && !$scope.status.isRejected && !$scope.status.isOnHold) {
-          // var searchList = [];
-          // var searchFields = {
-          //   field: 'COCDCOId',
-          //   operand: '=',
-          //   value: row.entity.COId
-          // }
-          // searchList.push(searchFields)
-          // _commonFindEntity(cancelRequestTableId, searchList, row.entity);
-          $scope.entity = angular.copy(row.entity);
-          // console.log($scope.entity)
-          // console.log(row.entity)
-          $scope.showEditForm = true;
-          $scope.showSanctionForm = true;
-          $scope.showForm = false;
-          $scope.entity = row.entity
-          // $scope.cancelRequestEntity.COCDCOId = row.entity.COId;
-          // $scope.cancelRequestEntity.COCDId = row.entity.COCDId;
-          // $scope.cancelRequestEntity.StatusId = row.entity.StatusId;
 
-        }
-        else {
-          if ($scope.isCancelRequest) {
-            $scope.showMsg("error", "You are not allowed to view this Out Door application beacause this Out Doo application is already in processing for approval")
+
+
+        if (!$scope.status.isApproved) {
+          if (!$scope.status.isRejected) {
+            if (!$scope.status.isOnHold) {
+              $scope.entity = angular.copy(row.entity);
+              $scope.showEditForm = true;
+              $scope.showSanctionForm = true;
+              $scope.showForm = false;
+              $scope.entity = row.entity
+
+            }
+            else {
+              $scope.showMsg("error", "Your application has been onhold")
+            }
           }
           else {
-            $scope.showMsg("error", "Your application already sanctioned/rejected/onhold")
+            $scope.showMsg("error", "Your application has been rejected")
           }
         }
+        else {
+          $scope.showMsg("error", "Your application has been sanctioned")
+        }
       }
-
-
     }
 
 
 
-
     function _saveForm() {
-      console.log($scope.entity)
+
+
       editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
-        $scope.entity.COId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+        $scope.entity.FDAId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
         .then(_saveFormSuccessResult, _saveFormErrorResult)
+      console.log($scope.entity)
+      console.log(vm.oldEntity)
     }
 
     function _saveFormSuccessResult(result) {
@@ -300,8 +328,21 @@
 
     }
 
+    // function _validateForm() {
+    //   if ($scope.entity.FADEmpId == undefined || $scope.entity.FADEmpId == null || $scope.entity.FADEmpId == '') {
+    //     $scope.showMsg("error", "Please Enter Minimum Hour For Half Day");
+    //     return true;
+    //   }
+    //   if ($scope.entity.FADAppDate == undefined || $scope.entity.FADAppDate == null || $scope.entity.FADAppDate == '') {
+    //     $scope.showMsg("error", "Please Enter Maximum Hour For Half Day");
+    //     return true;
+    //   }
+
+    //   return false;
+    // }
+
     function _validateSanctionForm() {
-      if ($scope.sanctionEntity.StatusId == "0") {
+      if ($scope.sanctionEntity.StatusId == "0" || $scope.sanctionEntity.StatusId == undefined) {
         $scope.showMsg("error", "Please Select Status");
         return true;
       }
@@ -340,12 +381,15 @@
     }
 
     function _editRecord(row) {
-      console.log(row)
-      $scope.entity = row.entity;
-      $scope.showEditForm = true;
-      $scope.showSanctionForm = true;
-      $scope.showForm = false;
-
+      if (row.entity.StatusId == 0) {
+        console.log(row)
+        $scope.entity = row.entity;
+        $scope.entity.FADEmpId = row.entity.FADEmpId
+        console.log($scope.entity.FADEmpId)
+        $scope.showEditForm = true;
+        $scope.showSanctionForm = true;
+        $scope.showForm = false;
+      }
     }
 
 
