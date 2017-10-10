@@ -167,9 +167,10 @@
                 }
 
                 else {
-
-                    $scope.page = _getLocalPageObject(vm.pageId)
-                    console.log($scope.page)
+                    if (vm.pageId != 360) {
+                        $scope.page = _getLocalPageObject(vm.pageId)
+                        //console.log($scope.page)
+                    }
                 }
             }
         }
