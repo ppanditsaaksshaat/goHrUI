@@ -64,11 +64,39 @@
       deleteRecord: null,
       pageResult: _pageResult,
       dataResult: _dataResult,
-      uploadRecord: _uploadRecord
-
-
+      uploadRecord: _uploadRecord,
+      columnDesign: []
       // readonlyColumns: ['col1', 'col2']
     }
+
+    $scope.page.boxOptions.columnDesign.push({ name: 'EmpName', visible: true, pinnedLeft: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalDays', visible: true, cellClass: 'YELLOW-100' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalPresentDays', visible: true, cellEditableCondition: true, cellClass: 'YELLOW-100' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalWeekoff', visible: true, cellEditableCondition: true, width: 80, cellClass: 'YELLOW-100' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalHolidays', visible: true, cellEditableCondition: true, cellClass: 'YELLOW-100' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'AbsentDays', visible: true, cellEditableCondition: true, cellClass: 'PINK-50' })
+
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalLeaves', visible: true, cellEditableCondition: true, cellClass: 'PURPLE-50' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalLWP', visible: true, cellEditableCondition: true, cellClass: 'PURPLE-50' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'DeductableLateCount', visible: true, cellEditableCondition: true, cellClass: 'RED-100' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'DeductableLateDays', visible: true, cellEditableCondition: true, cellClass: 'RED-100' })
+
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalDeductableDays', visible: true, cellClass: 'RED-500' })
+
+    $scope.page.boxOptions.columnDesign.push({ name: 'WeekOffPresent', visible: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'HolidayPresent', visible: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalWeekOffComp', visible: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalHolidayComp', visible: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'IncentiveDays', visible: true })
+
+    $scope.page.boxOptions.columnDesign.push({ name: 'DoubleOvertimeMin', visible: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'SingleOvertimeMin', visible: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'DoubleOvertimeHours', visible: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'SingleOvertimeHours', visible: true })
+
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalLateCount', visible: true })
+
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalSalaryDays', visible: true, pinnedRight: true, cellClass: 'GREEN-300' })
     /**End of For all list of verify attendance grid setting */
 
     // $scope.page.boxOptions.customColumns = [];
