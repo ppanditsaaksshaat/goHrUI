@@ -11,7 +11,7 @@
   /** @ngInject */
   function attTransuploadController($scope, $sce, $filter, $http, uiGridConstants, $interval, $timeout,
     $uibModal, pageService, $q, DJWebStore, $window, DJWebStoreGlobal, toastr, toastrConfig) {
-    console.log('attTransuploadController')
+
 
     /**Local Variable */
     var vm = this;
@@ -22,6 +22,9 @@
     var insertedGridData = [], updatedGridData = [], failedGridData = [];
     vm.showUploderResult = true;
     vm.btnResetBrowse = true;
+    var monthlySummaryQueryId = 582;
+    var varifiedAttendance = [];
+    var finalaAttendanceList = [];
 
 
 
@@ -118,14 +121,45 @@
     /**
      * Upload Attendance List from Excel
      */
+
     function _uploadAttendance() {
-      angular.forEach(vm.gridOptions.data, function (data, index) {
-        data.AttDataBaseType = 5;
-      })
+      finalaAttendanceList = [];
+      varifiedAttendance = [];
+      var isSameMonth = false;
+      if ($scope.verifiedAttendance != undefined && $scope.verifiedAttendance != null) {
+
+        var att = $filter("findObj")($scope.verifiedAttendance, "AMTEmpCode")
+        // angular.forEach($scope.verifiedAttendance, function (verifiedAtt) {
+        angular.forEach(vm.gridOptions.data, function (newAtt) {
+          var attFromDate = moment(newAtt.AttendanceDate);
+          var month = attFromDate.format('M');
+          var year = attFromDate.format('YYYY');
+          var empVerifedatt = $filter("findObj")($scope.verifiedAttendance, newAtt.EmployeeCode, "AMSEmpCode")
+          if (empVerifedatt != null) {
+            if (empVerifedatt.AMSTIsVarified && empVerifedatt.AMSMonth == parseInt(month) && empVerifedatt.AMSYear == parseInt(year)) {
+              if (empVerifedatt.AMSMonth == parseInt(month) && empVerifedatt.AMSYear == parseInt(year)) {
+                varifiedAttendance.push({ "RESULT": "#verification", "IsInserted": false, "IsUpdated": false, "IsFailed": true, "HashKey": "HashKey", "UniqueFields": "#Verified" })
+              }
+            }
+            else {
+              newAtt.AttDataBaseType = 5;
+              newAtt.StatusId=0;
+              newAtt.IsDeleted=0;
+              finalaAttendanceList.push(newAtt);
+            }
+          }
+
+        })
+        // })
+      }
+      // return
+      // // angular.forEach(vm.gridOptions.data, function (data, index) {
+      // //   data.AttDataBaseType = 5;
+      // // })
       console.log(vm.gridOptions.data)
 
       var upload = {
-        fieldRow: vm.gridOptions.data,
+        fieldRow: finalaAttendanceList,
         groupName: 'Attendance'
       }
       var postData = JSON.stringify(upload);
@@ -137,35 +171,63 @@
           vm.showUploderResult = false;
           angular.forEach(result.Table1, function (data) {
             if (data.IsInserted) {
+              vm.updatedRow = result.Table2[0].Updated;;
+              vm.failedRow = result.Table2[0].Failed;;
+              vm.insertedRow = result.Table2[0].Inserted;
               insertedGridData.push(data)
             }
             else if (data.IsUpdated) {
+              vm.insertedRow = result.Table2[0].Inserted;;
+              vm.failedRow = result.Table2[0].Failed;;
+              vm.updatedRow = result.Table2[0].Updated;
               updatedGridData.push(data)
             }
             else {
+              vm.insertedRow = result.Table2[0].Inserted;
+              vm.updatedRow = result.Table2[0].Updated;
+              vm.failedRow = result.Table2[0].Failed;
               failedGridData.push(data)
             }
           });
 
-          vm.insertedRow = result.Table2[0].Inserted;
-          vm.updatedRow = result.Table2[0].Updated;
-          vm.failedRow = result.Table2[0].Failed;
+          if (varifiedAttendance.length > 0) {
+            vm.failedRow = varifiedAttendance.length;
+            failedGridData = varifiedAttendance;
+            vm.gridUpHeading = "Failed Preview Data"
+            vm.commonGridOptions.data = failedGridData;
+            // _showToast("error", "your provided attendance is already verified", "")
+          }
+
+
           if (vm.failedRow != 0) {
             vm.gridUpHeading = "Failed Preview Data"
             vm.commonGridOptions.data = failedGridData;
           }
-          else {
-            if (vm.insertedRow != 0) {
-              vm.gridUpHeading = "Inserted Preview Data"
-              vm.commonGridOptions.data = insertedGridData;
-            }
-            else {
-              vm.gridUpHeading = "Updated Preview Data"
-              vm.commonGridOptions.data = updatedGridData;
-            }
+          if (vm.updatedRow != 0) {
+            vm.gridUpHeading = "Updated Preview Data"
+            vm.commonGridOptions.data = updatedGridData;
+          }
+
+          if (vm.insertedRow != 0) {
+            vm.gridUpHeading = "Inserted Preview Data"
+            vm.commonGridOptions.data = insertedGridData;
           }
         }
-        _showToast("success", "Data Uploaded Successfully", "")
+
+        if (finalaAttendanceList.length > 0) {
+          _showToast("success", "Data Uploaded Successfully", "")
+        }
+        else {
+          if (varifiedAttendance.length > 0) {
+            vm.insertedRow = 0;
+            vm.updatedRow = 0;
+            vm.failedRow = varifiedAttendance.length;
+            failedGridData = varifiedAttendance;
+            vm.gridUpHeading = "Failed Preview Data"
+            vm.commonGridOptions.data = failedGridData;
+            _showToast("error", "your provided attendance is already verified", "")
+          }
+        }
 
         console.log(result)
       })
@@ -206,18 +268,36 @@
         }
 
       })
+      $timeout(function () {
+
+        var data = {
+          searchList: [],
+          orderByList: []
+        }
+        var tableData = pageService.getCustomQuery(data, monthlySummaryQueryId);
+        tableData.then(_getMonthlySummarySuccess, _getMonthlySummaryError)
+      })
+    }
+
+    function _getMonthlySummarySuccess(result) {
+      if (result != "NoDataFound") {
+        $scope.verifiedAttendance = result;
+      }
+    }
+    function _getMonthlySummaryError(err) {
+
     }
     function _close() {
       vm.showPreview = false;
       _loadController();
     }
 
-    function _showPreviewClick(){
-      angular.forEach(vm.gridOptions.data,function(data){
-           data.AttendanceDate= moment(data.AttendanceDate).format("DD/MMM/YYYY");
-           console.log(data.AttendanceDate)
+    function _showPreviewClick() {
+      angular.forEach(vm.gridOptions.data, function (data) {
+        data.AttendanceDate = moment(data.AttendanceDate).format("DD/MMM/YYYY");
+        console.log(data.AttendanceDate)
       })
-       console.log(vm.gridOptions.data)
+      console.log(vm.gridOptions.data)
     }
     _loadController();
   }

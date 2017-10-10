@@ -1,0 +1,17 @@
+<div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll" ng-controller="employeeDocumentDetail">
+
+    <div  class="panel-heading clearfix">
+        Document List
+        <button ng-click="list()" class="btn btn-xs btn-default pull-right" style="margin-left:10px">List</button>
+        <button ng-click="upload()" class="btn btn-xs btn-default pull-right" style="margin-left:10px"><i class="fa fa-plus-circle"  aria-hidden="true"></i>Upload</button>        &nbsp; &nbsp;&nbsp; &nbsp;
+        <button ng-click="refresh()" class="btn btn-xs btn-default pull-right"><i class="ion-refresh" aria-hidden="true"></i>Refresh</button>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div ui-grid="weekGridOptions" ui-grid-edit ui-grid-expandable ui-grid-auto-resize ui-grid-selection class="grid" style="height:270px"></div>
+            </div>
+        </div>
+    </div>   
+
+</div>
