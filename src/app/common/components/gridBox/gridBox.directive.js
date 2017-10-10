@@ -51,7 +51,8 @@
                     customButtons: [],
                     customButtonsWithDefault: [],
                     selectedRowButtons: [],
-                    customColumns: [],
+                    customColumns: [],//for adding additional columns
+                    columnDesign: [],//for reordering columns
                     pageResult: null,
                     dataResult: null,
                     saveResult: null,
@@ -390,6 +391,64 @@
                             $scope.page.gridOptions = $rootScope.gridSetupColumns($scope.page.gridOptions,
                                 $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit,
                                 $scope.page.boxOptions.showRowMenu);
+
+
+                            //re-desiging column as per custom requirements
+                            if ($scope.page.boxOptions.columnDesign) {
+                                $scope.page.cssClasses = [];
+                                var newColumnDefs = [];
+                                for (var c = 0; c < $scope.page.boxOptions.columnDesign.length; c++) {
+                                    var colDesg = $scope.page.boxOptions.columnDesign[c];
+                                    var findCol = $filter('findObj')($scope.page.pageinfo.columns, colDesg.name, 'name')
+                                    if (findCol != null) {
+                                        var newCol = angular.copy(findCol);
+                                        if (colDesg.pinnedRight)
+                                            newCol.pinnedRight = true;
+                                        if (colDesg.pinnedLeft)
+                                            newCol.pinnedLeft = true;
+                                        if (colDesg.cellClass) {
+                                            var cssCl = {};
+                                            cssCl.key = colDesg.name
+                                            cssCl.cellClass = colDesg.cellClass;
+
+                                            $scope.page.cssClasses.push(cssCl)
+                                            newCol["cellClass"] = function (grid, row, col, rowRenderIndex, colRenderIndex) {
+
+                                                var findCss = $filter('findObj')($scope.page.cssClasses, col.name, 'key')
+                                                if (findCss != null) {
+                                                    return findCss.cellClass;
+                                                }
+                                                return '';
+                                            }
+                                        }
+
+                                        if (colDesg.visible !== undefined)
+                                            newCol['visible'] = colDesg.visible;
+
+                                        if (colDesg.width !== undefined)
+                                            newCol['width'] = colDesg.width;
+
+                                        if (colDesg.cellTemplate !== undefined)
+                                            newCol['cellTemplate'] = colDesg.cellTemplate;
+
+                                        if (colDesg.cellTemplate !== undefined)
+                                            newCol['cellTemplate'] = colDesg.cellTemplate;
+
+                                        if (colDesg.cellEditableCondition !== undefined){
+                                            newCol['cellEditableCondition'] = colDesg.cellEditableCondition;
+                                            // newCol['enableCellEdit'] = true;
+                                        }
+
+                                        
+                                        newColumnDefs.push(newCol)
+                                    }
+                                }
+
+                                if (newColumnDefs.length > 0) {
+                                    $scope.page.gridOptions.columnDefs = [];
+                                    $scope.page.gridOptions.columnDefs = newColumnDefs;
+                                }
+                            }
                             //console.log($scope.page)
                             if ($scope.page.boxOptions.customColumns) {
                                 if ($scope.page.boxOptions.customColumns != null) {
@@ -567,7 +626,7 @@
                         // _startMsgTimer();
                     }
                     else {
-                        
+
                         $scope.page.gridOptions.data = result;
                     }
 
