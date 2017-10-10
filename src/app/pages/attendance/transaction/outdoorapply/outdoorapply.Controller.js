@@ -373,6 +373,7 @@
       $scope.showSanctionForm = true;
       $scope.showForm = true;
       $scope.page.refreshData();
+      $scope.sanctionEntity = {};
 
 
     }
