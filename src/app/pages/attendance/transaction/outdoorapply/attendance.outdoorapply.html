@@ -2,7 +2,7 @@
 </grid-box>
 
 
-<form name="editForm " novalidate ng-submit="saveForm() " ng-hide="showForm ">
+<form name="editForm " novalidate ng-submit="saveForm(entity) " ng-hide="showForm ">
     <div class="panel panel-default xmedium-panel ">
         <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
             close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
@@ -14,7 +14,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>{{page.pageinfo.fields.FADEmpId.text}}</label>
-                        <select class="form-control" ng-model="entity.FADEmpId" ng-change="shiftInOutTime()" ng-options="employee.value as employee.name  for employee in page.pageinfo.selects.FADEmpId">
+                        <select class="form-control" ng-model="entity.selectedEmp" ng-change="shiftInOutTime()" ng-options="employee.name  for employee in page.pageinfo.selects.FADEmpId">
                             </select>
                     </div>
                 </div>

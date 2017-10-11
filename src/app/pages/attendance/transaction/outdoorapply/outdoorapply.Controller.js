@@ -79,8 +79,10 @@
 
     function _shiftInOutTime() {
       // $scope.employeeJoiningDate = $scope.entity.selectedEmp.JDDate;
-      $scope.FADInTimes = $scope.entity.FADEmpId.SMFromTime;
-      $scope.FDAOutTimes = $scope.entity.FADEmpId.SMToTime;
+      $scope.FADInTimes = $scope.entity.selectedEmp.SMFromTime;
+      $scope.FDAOutTimes = $scope.entity.selectedEmp.SMToTime;
+
+      console.log($scope.entity);
 
       if ($scope.FADInTimes != undefined && $scope.FADInTimes != '') {
         if ($scope.FDAOutTimes != undefined && $scope.FDAOutTimes != '') {
@@ -88,7 +90,7 @@
           $scope.entity.FDAOutTime = $scope.FDAOutTimes;
         }
         else {
-          $scope.showMsg("error", "This employee not exist in shift")
+          $scope.showMsg("error", "Shift is not assigned to selected Employee")
         }
       }
       else {
@@ -259,8 +261,11 @@
 
 
 
-    function _saveForm() {
+    function _saveForm(entity) {
+      console.log(entity)
 
+      entity.FADEmpId = entity.selectedEmp.value;
+      console.log(entity)
 
       editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
         $scope.entity.FDAId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
@@ -385,13 +390,81 @@
       if (row.entity.StatusId == 0) {
         console.log(row)
         $scope.entity = row.entity;
-        $scope.entity.FADEmpId = row.entity.FADEmpId
-        console.log($scope.entity.FADEmpId)
+        $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.FADEmpId, row.entity.FADEmpId, 'value')
+        // console.log($scope.entity.FADEmpId)
         $scope.showEditForm = true;
         $scope.showSanctionForm = true;
         $scope.showForm = false;
       }
     }
+
+    $scope.$watch('entity.FDAFromDate', function (newVal, oldVal) {
+      if (newVal) {
+        if (!$scope.entity.FDAToDate) {
+          $scope.entity.FDAToDate = $scope.entity.FDAFromDate
+        }
+        else {
+          var shiftFrom = moment($scope.entity.FDAFromDate)
+          var shiftTo = moment($scope.entity.FDAToDate)
+          var daysDiff = shiftTo.diff(shiftFrom, 'days');
+          if (daysDiff < 0) {
+            $scope.entity.FDAToDate = $scope.entity.FDAFromDate
+          }
+        }
+      }
+    })
+
+    $scope.$watch('entity.FDAToDate', function (newVal, oldVal) {
+      if (newVal) {
+        if ($scope.entity.FDAFromDate) {
+          var shiftFrom = moment($scope.entity.FDAFromDate)
+          var shiftTo = moment($scope.entity.FDAToDate)
+
+          var daysDiff = shiftTo.diff(shiftFrom, 'days');
+          if (daysDiff < 0) {
+            $scope.showMsg('warning', 'To date can not be less than from date.')
+            $scope.entity.FDAToDate = oldVal;
+          }
+        }
+      }
+    })
+
+
+
+    $scope.$watch('entity. FADInTime', function (newVal, oldVal) {
+      // debugger;
+      if (newVal) {
+        if (!$scope.entity.FDAOutTime) {
+          $scope.entity.FDAOutTime = $scope.entity.FADInTime
+        }
+        else {
+          var shiftFrom = moment($scope.entity.FADInTime, "HH:mm:ss a")
+          var shiftTo = moment($scope.entity.FDAOutTime, "HH:mm:ss a")
+          var timeDiff = shiftTo.diff(shiftFrom);
+          if (timeDiff < 0) {
+            $scope.entity.FDAOutTime = $scope.entity.FADInTime
+          }
+        }
+      }
+    })
+
+    $scope.$watch('entity. FDAOutTime', function (newVal, oldVal) {
+      // debugger;
+      if (newVal) {
+
+        if ($scope.entity.FADInTime) {
+          var shiftFrom = moment($scope.entity.FADInTime, "HH:mm:ss a")
+          var shiftTo = moment($scope.entity.FDAOutTime, "HH:mm:ss a")
+
+          var timeDiff = shiftTo.diff(shiftFrom);
+          if (timeDiff < 0) {
+            $scope.showMsg('warning', 'To time can not be less than from time.')
+            $scope.entity.FDAOutTime = oldVal;
+          }
+        }
+      }
+    })
+
 
 
   }
