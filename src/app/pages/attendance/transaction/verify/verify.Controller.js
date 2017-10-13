@@ -70,33 +70,50 @@
     }
 
     $scope.page.boxOptions.columnDesign.push({ name: 'EmpName', visible: true, pinnedLeft: true })
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalDays', visible: true, cellClass: 'YELLOW-100' })
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalPresentDays', visible: true, cellEditableCondition: true, cellClass: 'YELLOW-100' })
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalWeekoff', visible: true, cellEditableCondition: true, width: 80, cellClass: 'YELLOW-100' })
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalHolidays', visible: true, cellEditableCondition: true, cellClass: 'YELLOW-100' })
-    $scope.page.boxOptions.columnDesign.push({ name: 'AbsentDays', visible: true, cellEditableCondition: true, cellClass: 'PINK-50' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalDays', visible: true, cellClass: 'YELLOW-100 GRID-CELL-TEXT-RIGHT', width: 80 })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalPresentDays', visible: true, cellEditableCondition: true, cellClass: 'YELLOW-100 GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalWeekoff', visible: true, cellEditableCondition: true, width: 80, cellClass: 'YELLOW-100 GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalHolidays', visible: true, cellEditableCondition: true, cellClass: 'YELLOW-100 GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'AbsentDays', visible: true, cellEditableCondition: true, cellClass: 'PINK-50 GRID-CELL-TEXT-RIGHT' })
 
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalLeaves', visible: true, cellEditableCondition: true, cellClass: 'PURPLE-50' })
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalLWP', visible: true, cellEditableCondition: true, cellClass: 'PURPLE-50' })
-    $scope.page.boxOptions.columnDesign.push({ name: 'DeductableLateCount', visible: true, cellEditableCondition: true, cellClass: 'RED-100' })
-    $scope.page.boxOptions.columnDesign.push({ name: 'DeductableLateDays', visible: true, cellEditableCondition: true, cellClass: 'RED-100' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalLeaves', visible: true, cellEditableCondition: true, cellClass: 'PURPLE-50 GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalLWP', visible: true, cellEditableCondition: true, cellClass: 'PURPLE-50 GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'DeductableLateCount', visible: true, cellEditableCondition: true, cellClass: 'RED-100 GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'DeductableLateDays', visible: true, cellEditableCondition: true, cellClass: 'RED-100 GRID-CELL-TEXT-RIGHT' })
 
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalDeductableDays', visible: true, cellClass: 'RED-500' })
+    $scope.page.boxOptions.columnDesign.push({
+      name: 'TotalDeductableDays', visible: true, cellClass:
+      function (grid, row, col, rowRenderIndex, colRenderIndex) {
+        console.log(grid, row, col, rowRenderIndex, colRenderIndex)
+        var totDays = parseFloat(row.entity.TotalDeductableDays);
+        console.log(totDays)
+        if (totDays > 0) {
+          return 'RED-500 GRID-CELL-TEXT-RIGHT';
+        }
+        else {
+          return 'GREEN-300 GRID-CELL-TEXT-RIGHT'
+        }
+      }
+    })
 
-    $scope.page.boxOptions.columnDesign.push({ name: 'WeekOffPresent', visible: true })
-    $scope.page.boxOptions.columnDesign.push({ name: 'HolidayPresent', visible: true })
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalWeekOffComp', visible: true })
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalHolidayComp', visible: true })
-    $scope.page.boxOptions.columnDesign.push({ name: 'IncentiveDays', visible: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'WeekOffPresent', visible: true, cellClass: 'GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'HolidayPresent', visible: true, cellClass: 'GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalWeekOffComp', visible: true, cellClass: 'GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalHolidayComp', visible: true, cellClass: 'GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'IncentiveDays', visible: true, cellClass: 'GRID-CELL-TEXT-RIGHT' })
 
-    $scope.page.boxOptions.columnDesign.push({ name: 'DoubleOvertimeMin', visible: true })
-    $scope.page.boxOptions.columnDesign.push({ name: 'SingleOvertimeMin', visible: true })
-    $scope.page.boxOptions.columnDesign.push({ name: 'DoubleOvertimeHours', visible: true })
-    $scope.page.boxOptions.columnDesign.push({ name: 'SingleOvertimeHours', visible: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'DoubleOvertimeMin', visible: true, cellClass: 'GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'SingleOvertimeMin', visible: true, cellClass: 'GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'DoubleOvertimeHours', visible: true, cellClass: 'GRID-CELL-TEXT-RIGHT' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'SingleOvertimeHours', visible: true, cellClass: 'GRID-CELL-TEXT-RIGHT' })
 
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalLateCount', visible: true })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalLateCount', visible: true, cellClass: 'GRID-CELL-TEXT-RIGHT' })
 
-    $scope.page.boxOptions.columnDesign.push({ name: 'TotalSalaryDays', visible: true, pinnedRight: true, cellClass: 'GREEN-300' })
+    $scope.page.boxOptions.columnDesign.push({ name: 'TotalSalaryDays', visible: true, pinnedRight: true, cellClass: 'GRID-CELL-BIG-FONT GRID-CELL-FONT-WHITE GRID-CELL-TEXT-RIGHT GREEN-300' })
+
+
+
+
     /**End of For all list of verify attendance grid setting */
 
     // $scope.page.boxOptions.customColumns = [];
