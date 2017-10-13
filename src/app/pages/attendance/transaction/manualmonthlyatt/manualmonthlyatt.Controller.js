@@ -9,7 +9,7 @@
     .controller('manualmonthlyattController', manualmonthlyattController);
 
   /** @ngInject */
-  function manualmonthlyattController($scope, $state, $timeout, pageService, DJWebStoreGlobal, dialogModal, $filter) {
+  function manualmonthlyattController($scope, $state, $uibModal, $timeout, pageService, DJWebStoreGlobal, dialogModal, $filter, $q) {
 
     var vm = this;
     vm.pageId = 465;
@@ -19,7 +19,8 @@
     $scope.getEmployeeAttendance = _getEmployeeAttendance;
     $scope.downloadAttendanceDataList = _downloadAttendanceDataList;
     var downloadAtt = false;
-    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false, paginationPageSize: 10 }
+    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false, paginationPageSize: 10, onRegisterApi: _onRegisterApi }
+    // $scope.weekGridOptions.onRegisterApi = _onRegisterApi;
     vm.uploader = [];
     vm.fileResult = undefined;
     $scope.weekGridOptions.columnDefs = [];
@@ -30,6 +31,12 @@
     $scope.showCurrentMonth = false;
     $scope.callCurrentMonth = false;
     $scope.gridLine = false;
+    var defer = $q.defer()
+    var pageForm = {};
+    pageForm.defer = $q.defer();
+    defer = $q.defer();
+
+    var selectedRowData = [];
 
 
     console.log($scope.page)
@@ -63,7 +70,7 @@
         if ($scope.entity.Month !== undefined && $scope.entity.Month != '') {
           if ($scope.entity.Year !== undefined && $scope.entity.Year != '') {
             $scope.showAllButton = true
-            
+
             downloadAtt = true;
             var searchLists = [];
             var searchListData = { field: 'SubUnit', operand: '=', value: $scope.entity.SubUnit }
@@ -284,21 +291,63 @@
       console.log(postData)
       var compressed = LZString.compressToEncodedURIComponent(postData);
       var data = { lz: true, data: compressed }
+
+      _showConfirm('Do you want to upload ' + '?', _confirmClick, _rejectClick, undefined, data)
+      // return pageForm.defer.promise
+
+      // pageService.uploadManualAttendance(data).then(function (result) {
+      //   console.log(result)
+      //   if (result.successRecord == 'Record Save')
+      //     $scope.showMsg("success", "Data Uploaded Successfully")
+      //   console.log(result)
+      // })
+    }
+
+    function _confirmClick(pageId, data, title) {
       pageService.uploadManualAttendance(data).then(function (result) {
         console.log(result)
         if (result.successRecord == 'Record Save')
-          $scope.showMsg("success", "Data Uploaded Successfully")
+          $scope.showMsg("success", "Data Save Successfully")
         console.log(result)
       })
+    }
+
+    function _rejectClick(pageId, data, title) {
+      // pageForm.defer.reject({ data: data, msg: 'Cancelled' })
+    }
+
+    function _showConfirm(msg, funcConfirm, funcReject, pageId, data, title) {
+
+      console.log(data)
+      var para = {
+        pageId: pageId,
+        data: data,
+        title: title,
+        confirmClick: funcConfirm,
+        rejectClick: funcReject,
+        confirmMessge: msg
+      }
+      var modalInstance = $uibModal.open({
+        template: '<div class="modal-header"><h3 class="modal-title">{{confirmMessage}}</h3></div><div class="modal-footer"><button class="btn btn-primary" type="button" ng-click="ok()">Yes</button><button class="btn btn-warning" type="button" ng-click="cancel()">No</button></div>',
+        controller: 'ModalConfirmCtrl',
+        size: 'sm',
+        windowClass: 'confirm-window',
+        resolve: {
+          param: function () {
+            return para;
+          }
+        }
+      });
     }
 
     /**
      * Mark All Present 
      */
     function _markAllPresent() {
-      for (var row = 0; row < $scope.weekGridOptions.data.length; row++) {
-        var rowData = $scope.weekGridOptions.data[row];
-        console.log(rowData)
+
+      for (var row = 0; row < selectedRowData.length; row++) {
+        var rowData = selectedRowData[row];
+        // console.log(rowData)
         for (var col = 0; col < $scope.weekGridOptions.columnDefs.length; col++) {
           var colData = $scope.weekGridOptions.columnDefs[col];
           if (colData.name != 'EmpId' && colData.name != 'EmpName' && colData.name != 'Sno' && colData.name != 'ShifOutTime' && colData.name != 'ShiftInTime') {
@@ -308,6 +357,7 @@
           }
         }
       }
+      // selectedRowData = [];
     }
 
     function _cellEditableCondition(scope) {
@@ -341,6 +391,66 @@
           return [dropdownForSts, dropdownStatus];
         }, 100);
       }
+    }
+
+    function _onRegisterApi(gridApi) {
+
+      //for all select event
+
+      gridApi.selection.on.rowSelectionChangedBatch($scope, function (row) {
+        selectedRowData = [];
+        for (var rows = 0; rows < row.length; rows++) {
+          var r = row[rows];
+          selectedRowData.push(r.entity);
+        }
+
+
+        // console.log(row)
+        // selectedRowData = [];
+        // selectedRowData = row.entity;
+
+        $scope.page.selectedRows = gridApi.selection.getSelectedRows();
+
+        // $scope.grid1Api.selection.getSelectedRows().forEach(function (row) {
+        //     //Do something
+        // });
+      });
+
+      // for individual select event
+      gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+        // debugger;
+        console.log(row)
+
+        if (row.isSelected) {
+          selectedRowData.push(row.entity);
+        }
+        else {
+          selectedRowData.splice(row, 1);
+        }
+
+
+        console.log(selectedRowData)
+        $scope.page.selectedRows = gridApi.selection.getSelectedRows();
+
+        // if (row.isSelected) {
+        //     //enable edit button
+
+        //     uivm.currentSelection = uivm.gridApi.selection.getSelectedRows();
+        //     ////////console.log(uivm.currentSelection)
+        //     if (uivm.currentSelection.length > 0) {
+        //         uivm.selectedRow = row;
+        //     }
+        // }
+
+        if ($scope.page.selectedRows.length > 0) {
+
+        }
+        else {
+          //DJWebStoreGlobal.ClearPageMenu();
+        }
+      });
+
+
     }
 
     _loadController();
