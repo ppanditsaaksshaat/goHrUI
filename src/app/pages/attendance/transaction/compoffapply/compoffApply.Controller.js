@@ -68,8 +68,17 @@
       viewRecord: _viewRecord,
       customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _cOffVerify, pin: true }],
       deleteRecord: null,
+      pageResult: _pageResult,
+      dataResult: _dataResult
     }
 
+    function _dataResult(result) {
+      console.log(result)
+    }
+
+    function _pageResult(result) {
+      console.log(result);
+    }
     function _closeSanction() {
       $scope.showEditForm = true;
       $scope.showGridData = false;
