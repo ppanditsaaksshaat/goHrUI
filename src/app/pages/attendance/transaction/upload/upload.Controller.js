@@ -128,7 +128,7 @@
       var isSameMonth = false;
       if ($scope.verifiedAttendance != undefined && $scope.verifiedAttendance != null) {
 
-        var att = $filter("findObj")($scope.verifiedAttendance, "AMTEmpCode")
+        var att = $filter("findObj")($scope.verifiedAttendance, "AMSEmpCode")
         // angular.forEach($scope.verifiedAttendance, function (verifiedAtt) {
         angular.forEach(vm.gridOptions.data, function (newAtt) {
           var attFromDate = moment(newAtt.AttendanceDate);
@@ -143,10 +143,16 @@
             }
             else {
               newAtt.AttDataBaseType = 5;
-              newAtt.StatusId=0;
-              newAtt.IsDeleted=0;
+              newAtt.StatusId = 0;
+              newAtt.IsDeleted = 0;
               finalaAttendanceList.push(newAtt);
             }
+          }
+          else {
+            newAtt.AttDataBaseType = 5;
+            newAtt.StatusId = 0;
+            newAtt.IsDeleted = 0;
+            finalaAttendanceList.push(newAtt);
           }
 
         })
