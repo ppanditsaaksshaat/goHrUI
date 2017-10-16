@@ -115,19 +115,23 @@
         $scope.showMsg("error", "Please Enter Comment");
         return true;
       }
+      // if ($scope.sanctionEntity.ACODIsApplyHalfDay == undefined || $scope.sanctionEntity.ACODIsApplyHalfDay == null || $scope.sanctionEntity.ACODIsApplyHalfDay == '' || $scope.sanctionEntity.ACODIsApplyFullDay == undefined || $scope.sanctionEntity.ACODIsApplyFullDay == null || $scope.sanctionEntity.ACODIsApplyFullDay == '') {
+      //   $scope.showMsg("error", "Please select full day Or half day");
+      //   return true;
+      // }
       return false;
     }
 
 
     function _cOffSanction() {
-
+      debugger;
       if (!_validateSanctionForm()) {
         var santionLeave = {
           ACODId: $scope.sanctionEntity.ACODId == undefined ? undefined : $scope.sanctionEntity.ACODId,
           ACODCOId: $scope.entity.COId,
           ACODIsApplyHalfDay: $scope.entity.COIsApplyHalfDay,
           ACODIsApplyFullDay: $scope.entity.COIsApplyFullDay,
-          ACODReson: $scope.entity.COReson,
+          ACODReson: $scope.sanctionEntity.ACODReson,
           StatusId: $scope.sanctionEntity.StatusId,
         }
       }
@@ -193,6 +197,8 @@
           //Get page of SanctionLeave 
           pageService.getPagData(sanctionLoanPageId).then(_getPageDataSuccessResult, _getPageDataErrorResult)
           $scope.entity = row.entity;
+          $scope.sanctionEntity.ACODIsApplyHalfDay = row.entity.COIsApplyHalfDay;
+          $scope.sanctionEntity.ACODIsApplyFullDay = row.entity.COIsApplyFullDay;
         }
         else {
 
@@ -223,7 +229,9 @@
         }
       }
       else {
+
         $scope.showMsg("error", "You can view this App only")
+
       }
 
     }
@@ -346,6 +354,14 @@
         console.log(result[0][0].ERROR)
         if (result[0][0].ERROR == 'You can not apply C-Off') {
           $scope.showMsg("warning", result[0][0].ERROR)
+          $scope.showInOutTime = false;
+          $scope.entity = {};
+          $scope.entity.COAttnDate = moment();
+          $scope.entity.COAppDate = moment();
+          // $scope.entity.COTimeIn = {};
+          // $scope.entity.COTimeOut = {};
+          // $scope.entity.COTotalWrTmInHour = {};
+          // $scope.entity.COReson = {};
         }
         else {
           $scope.entity.COTimeIn = result[0][0].Intime;
@@ -362,6 +378,7 @@
     var cancelRequestTableId = 449;
     /** View Compensentory Record */
     function _viewRecord(row) {
+      debugger
       console.log(row)
 
       if (row.entity.StatusId == 0) {
@@ -471,6 +488,7 @@
 
     function _saveFormErrorResult(error) {
       console.log(error);
+
     }
 
 

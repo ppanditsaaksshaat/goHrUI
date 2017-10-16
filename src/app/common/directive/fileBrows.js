@@ -8,7 +8,7 @@ angular.module('BlurAdmin.common').directive("readfiledata", function ($filter, 
         link: function ($scope, $elm, $attrs) {
          
             $elm.on('change', function (changeEvent) {
-                debugger;
+                
                 var files = changeEvent.target.files;
                 // if (files.length <= 0) {
                 //     $scope.showMsg('error', 'Your template file is null.');

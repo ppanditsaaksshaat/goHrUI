@@ -1,4 +1,4 @@
-<div class="modal-content">
+<div class="modal-content" ng-controller="documentUploadController">
     <div class="modal-header">
 
         <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
@@ -9,7 +9,7 @@
     <div class="modal-body">
         <label class="control-label ">Select a file to upload:</label>
         <label class="btn btn-success btn-file"> Browse
-             <input type="file" 
+             <input type="file" file-Model="file"
                       accept=".xls,.xlsx,.ods"  
                       readfiledata                   
                       style="display: none;">

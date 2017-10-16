@@ -161,16 +161,18 @@
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.guempPKId)
 
                 if (vm.pageId != 360 && vm.pageId != 'entitlement') {
-                    vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html";
-                    $scope.page = _getLocalPageObject(vm.pageId)
-                    console.log($scope.page);
+                    if (vm.pageId != 188) {
+                        vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html";
+                        $scope.page = _getLocalPageObject(vm.pageId)
+                        console.log($scope.page);
+                    }
                 }
 
                 else {
-                    if (vm.pageId != 360) {
-                        $scope.page = _getLocalPageObject(vm.pageId)
-                        //console.log($scope.page)
-                    }
+
+                    $scope.page = _getLocalPageObject(vm.pageId)
+                    //console.log($scope.page)
+
                 }
             }
         }
