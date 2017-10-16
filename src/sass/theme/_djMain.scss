@@ -1,3 +1,14 @@
+.GRID-CELL-BIG-FONT 
+{
+  font-size:20px;
+}
+.GRID-CELL-TEXT-RIGHT{
+  text-align: right;
+}
+.GRID-CELL-FONT-WHITE,.GRID-CELL-FONT-WHITE .ui-grid-cell-contents{
+  color: white;
+}
+
 #loading-bar .bar {
 background: red;
 height: 4px;

@@ -397,6 +397,7 @@
                             if ($scope.page.boxOptions.columnDesign) {
                                 $scope.page.cssClasses = [];
                                 var newColumnDefs = [];
+                                newColumnDefs.push($scope.page.gridOptions.columnDefs[0]);
                                 for (var c = 0; c < $scope.page.boxOptions.columnDesign.length; c++) {
                                     var colDesg = $scope.page.boxOptions.columnDesign[c];
                                     var findCol = $filter('findObj')($scope.page.pageinfo.columns, colDesg.name, 'name')
@@ -411,14 +412,27 @@
                                             cssCl.key = colDesg.name
                                             cssCl.cellClass = colDesg.cellClass;
 
-                                            $scope.page.cssClasses.push(cssCl)
-                                            newCol["cellClass"] = function (grid, row, col, rowRenderIndex, colRenderIndex) {
-
-                                                var findCss = $filter('findObj')($scope.page.cssClasses, col.name, 'key')
-                                                if (findCss != null) {
-                                                    return findCss.cellClass;
+                                            if (typeof colDesg['cellClass'] == 'function') {
+                                                newCol["cellClass"] = colDesg.cellClass;
+                                            }
+                                            else {
+                                                $scope.page.cssClasses.push(cssCl)
+                                                newCol["cellClass"] = function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                                                    var findCss = $filter('findObj')($scope.page.cssClasses, col.name, 'key')
+                                                    if (row.entity.StatusBGClass !== undefined) {
+                                                        if (row.entity.StatusBGClass != '')
+                                                            return 'status-bg ' + row.entity.StatusBGClass;
+                                                        else
+                                                            if (findCss != null) {
+                                                                return findCss.cellClass;
+                                                            }
+                                                    }
+                                                    
+                                                    if (findCss != null) {
+                                                        return findCss.cellClass;
+                                                    }
+                                                    return '';
                                                 }
-                                                return '';
                                             }
                                         }
 
@@ -434,12 +448,12 @@
                                         if (colDesg.cellTemplate !== undefined)
                                             newCol['cellTemplate'] = colDesg.cellTemplate;
 
-                                        if (colDesg.cellEditableCondition !== undefined){
+                                        if (colDesg.cellEditableCondition !== undefined) {
                                             newCol['cellEditableCondition'] = colDesg.cellEditableCondition;
                                             // newCol['enableCellEdit'] = true;
                                         }
 
-                                        
+
                                         newColumnDefs.push(newCol)
                                     }
                                 }
