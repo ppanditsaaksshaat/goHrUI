@@ -1,12 +1,145 @@
-FULL FINAL INDIA
+<grid-box ng-model="page" ng-show="showEditForm">
+</grid-box>
 
-<div class="row">
-    <div class="col-md-3" ng-show="page.showFilter" style="padding-right:0px; margin-right:0px;  ">
-        <filter-box page="page"></filter-box>
-    </div>
-    <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
-        <grid-box page="page" box-options="boxSetting">
-        </grid-box>
-    </div>
-</div>
 
+<form name="editForm " novalidate ng-submit="saveForm(entity) " ng-hide="showEditForm ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
+ " show-reset="true " condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                        <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                        <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                        <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                        <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div style="height: 400px;" ui-grid="weekGridOptions" ui-grid-cellNav ui-grid-pagination ui-grid-edit ui-grid-expandable
+                                ui-grid-auto-resize ui-grid-selection class="grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</form>
