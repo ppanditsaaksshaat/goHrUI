@@ -6,9 +6,9 @@ angular.module('BlurAdmin.common').directive("readfiledata", function ($filter, 
             result: '='
         },
         link: function ($scope, $elm, $attrs) {
-
+         
             $elm.on('change', function (changeEvent) {
-              
+                debugger;
                 var files = changeEvent.target.files;
                 // if (files.length <= 0) {
                 //     $scope.showMsg('error', 'Your template file is null.');
@@ -139,10 +139,26 @@ angular.module('BlurAdmin.common').directive("readfiledata", function ($filter, 
 
                 }
                 else {
-                    $rootScope.showMsg('error','Only .xls, .xlsx are supported')
+                    $rootScope.showMsg('error', 'Only .xls, .xlsx are supported')
                 }
 
             });
         }
     }
 });
+
+angular.module('BlurAdmin.common').directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function () {
+                scope.$apply(function () {
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}])
