@@ -427,7 +427,7 @@
                                                                 return findCss.cellClass;
                                                             }
                                                     }
-                                                    
+
                                                     if (findCss != null) {
                                                         return findCss.cellClass;
                                                     }
@@ -457,10 +457,11 @@
                                         newColumnDefs.push(newCol)
                                     }
                                 }
-
-                                if (newColumnDefs.length > 0) {
-                                    $scope.page.gridOptions.columnDefs = [];
-                                    $scope.page.gridOptions.columnDefs = newColumnDefs;
+                                if ($scope.page.boxOptions.columnDesign.length > 0) {
+                                    if (newColumnDefs.length > 0) {
+                                        $scope.page.gridOptions.columnDefs = [];
+                                        $scope.page.gridOptions.columnDefs = newColumnDefs;
+                                    }
                                 }
                             }
                             //console.log($scope.page)

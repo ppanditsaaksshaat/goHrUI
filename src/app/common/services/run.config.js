@@ -7,7 +7,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
 
     $rootScope.sideMenu = DJWebStore.GetValue('sidemenu');
 
-    console.log($rootScope.sideMenu)
+    console.log($rootScope.user)
 
     var toastOption = {};
     var defaultConfig = angular.copy(toastrConfig);
@@ -149,9 +149,9 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         };
 
         var gridObject = angular.extend(defaults, options);
-        console.log(gridObject)
+        //console.log(gridObject)
         var userColumns = gridObject.columns;
-        console.log(userColumns);
+        //console.log(userColumns);
         var pageId = $stateParams.pageId;;
         if (gridObject.pageId !== undefined) {
             if (gridObject.pageId > 0) {
@@ -174,7 +174,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                 }
             }
         })
-        console.log(page.pageinfo.columns);
+        //console.log(page.pageinfo.columns);
         if (page.pageinfo.titlecolname != '')
             gridObject.titleField = page.pageinfo.titlecolname
         gridObject.columns = colList;;
@@ -182,7 +182,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         gridObject.page = page;
         gridObject.pageId = pageId;
         $rootScope.gridObject = gridObject;
-        console.log(new Date(), gridObject)
+        //console.log(new Date(), gridObject)
     }
 
     $rootScope.showMsg = function (type, msg, title) {
@@ -220,7 +220,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         }
         page.columnDefs = [];
         gridOptions.columnDefs = [];
-        console.log(columns)
+        // console.log(columns)
         // var colRowHeader = {
         //     name: 'RowHeader', field: 'RowHeader',
         //     displayName: '', width: 30, visible: true,
@@ -301,7 +301,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                         cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'dd-MMM-yyyy hh:mm'}}</div>"
                     }
                     else if (column.editable.controltype == 'timepicker') {
-                        console.log(column)
+                        //console.log(column)
                         cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'hh:mm a'}}</div>"
                     }
                     // if(column.controltype)
