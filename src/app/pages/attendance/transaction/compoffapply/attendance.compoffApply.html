@@ -105,7 +105,6 @@
                                                 <span class="form-control" ng-bind="entity.COAppDate"></span>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -179,6 +178,42 @@
 
 
                                     </div>
+                                    <!--<div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="compoffconversion" value="true"  ng-model="entity.ACODIsApplyHalfDay">
+                        <span>{{page.pageinfo.fields.COIsApplyHalfDay.place}}</span>
+                    </label>
+                                                <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="compoffconversion" value="true"  ng-model="entity.ACODIsApplyFullDay">
+                        <span>{{page.pageinfo.fields.COIsApplyFullDay.place}}</span>
+                    </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                            </div>
+                                        </div>
+                                    </div>-->
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="radio-inline custom-radio nowrap font-bold">
+                                                     <input type="radio" name="compoffconversion" value="true"  ng-model="entity.ACODIsApplyHalfDay">
+                                                     <span>{{page.pageinfo.fields.COIsApplyHalfDay.place}}</span>
+                                                </label>
+                                                <label class="radio-inline custom-radio nowrap font-bold">
+                                                       <input type="radio" name="compoffconversion" value="true"  ng-model="entity.ACODIsApplyFullDay">
+                                                       <span>{{page.pageinfo.fields.COIsApplyFullDay.place}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -410,7 +445,7 @@
 
 
                     <div class="text-center">
-                        <button ng-if="!status.isRejected" type="submit" class="btn btn-info btn-lg">Save C-Off</button>
+                        <button ng-if="!status.isRejected" type="submit" class="btn btn-info btn-lg">Save</button>
                         <button type="button" class="btn btn-danger btn-lg" ng-click="closeViewSanctionForm()">Close</button>
                     </div>
                 </div>

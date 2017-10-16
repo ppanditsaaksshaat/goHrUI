@@ -19,11 +19,11 @@
         templateUrl: 'app/pages/payroll/transaction/FullAndFinalDetail/payroll.FullAndFinalDetail.html',
         controller: "payFullAndFinalDetailController",
         controllerAs: "payCtrl",
-        title: 'FullAndFinalDetail',
+        title: 'FullAndFinalDetail Apply',
         sidebarMeta: {
-          order: 2,
+          order: 4,
           parent: 'payroll.transaction',
-          pageTitle: 'FullAndFinalDetail'
+          pageTitle: 'Leave Full And FinalDetail'
         },
       })
   }
