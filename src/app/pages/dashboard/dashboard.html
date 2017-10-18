@@ -11,58 +11,59 @@
 </style>
 
 <div ng-controller="knobCtrl">
-    <div class="row">
-        <div class="col-md-2 ">
-            <input class="form-control" type="button" class="form-control" value="Show Percentage" ng-click="ShowHide()" />
+    <div ng-show="adminDashboard">
+        <div class="row">
+            <div class="col-md-2 ">
+                <input class="form-control" type="button" class="form-control" value="Show Percentage" ng-click="ShowHide()" />
+            </div>
         </div>
-    </div>
-    <div class="row" id="Rowpersentage" ng-show="IsVisible">
-        <div class="col-lg-3 ">
-            <ui-knob value="totalActiveEmpValue" options="totalActiveEmp" title="Hello"></ui-knob>
-        </div>
-        <div class="col-lg-3 ">
-            <ui-knob value="totalPresentValuePercentage" options="totalPresent"></ui-knob>
-        </div>
-       
-        <div class="col-lg-3 ">
-            <ui-knob value="totalLeaveTodayValuePercentage" options="totalLeaveToday"></ui-knob>
-        </div>
-        <div class="col-lg-3 ">
+        <div class="row" id="Rowpersentage" ng-show="IsVisible">
+            <div class="col-lg-3 ">
+                <ui-knob value="totalActiveEmpValue" options="totalActiveEmp" title="Hello"></ui-knob>
+            </div>
+            <div class="col-lg-3 ">
+                <ui-knob value="totalPresentValuePercentage" options="totalPresent"></ui-knob>
+            </div>
+
+            <div class="col-lg-3 ">
+                <ui-knob value="totalLeaveTodayValuePercentage" options="totalLeaveToday"></ui-knob>
+            </div>
+            <div class="col-lg-3 ">
                 <ui-knob value="totalAbsentValuePercentage" options="totalAbsent"></ui-knob>
             </div>
-    
 
-    </div>
 
-    <div class="row" id="RowCount" ng-hide="IsVisible">
-        <div class="col-lg-3 ">
-            <ui-knob value="totalActiveEmpValue" options="totalActiveEmp" title="Hello"></ui-knob>
-        </div>
-        <div class="col-lg-3 ">
-            <ui-knob value="totalPresentValueCount" options="totalPresentCount"></ui-knob>
         </div>
 
-     
+        <div class="row" id="RowCount" ng-hide="IsVisible">
+            <div class="col-lg-3 ">
+                <ui-knob value="totalActiveEmpValue" options="totalActiveEmp" title="Hello"></ui-knob>
+            </div>
+            <div class="col-lg-3 ">
+                <ui-knob value="totalPresentValueCount" options="totalPresentCount"></ui-knob>
+            </div>
 
-        <div class="col-lg-3 ">
-            <ui-knob value="totalLeaveTodayValuePercentageCount" options="totalLeaveTodayCount"></ui-knob>
-        </div>
 
-        <div class="col-lg-3 ">
+
+            <div class="col-lg-3 ">
+                <ui-knob value="totalLeaveTodayValuePercentageCount" options="totalLeaveTodayCount"></ui-knob>
+            </div>
+
+            <div class="col-lg-3 ">
                 <ui-knob value="totalAbsentValuePercentageCount" options="totalAbsentCount"></ui-knob>
             </div>
-    </div>
+        </div>
 
 
 
 
-    <div class="row">
-        <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Last Six Month employee join " ba-panel-class="medium-panel traffic-panel">
-            Total Join Employee - {{TotalNewJoin}}
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Last Six Month employee join " ba-panel-class="medium-panel traffic-panel">
+                Total Join Employee - {{TotalNewJoin}}
 
-            <div ui-grid="joinGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-            </div>
-            <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
+                <div ui-grid="joinGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
+                </div>
+                <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
                 width="100%">
                 <thead>
                     <tr class="sortable">
@@ -89,13 +90,13 @@
                 </tbody>
             </table> -->
 
-        </div>
-        <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Last Six Month employee Left" ba-panel-class="medium-panel">
-            Total Left Employee - {{TotalLeftlastsixmonth}}
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Last Six Month employee Left" ba-panel-class="medium-panel">
+                Total Left Employee - {{TotalLeftlastsixmonth}}
 
-            <div ui-grid="LeftGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
+                <div ui-grid="LeftGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
                 </div>
-            <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
+                <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
                 width="100%">
                 <thead>
                     <tr class="sortable">
@@ -119,16 +120,16 @@
                     </tr>
                 </tbody>
             </table> -->
+            </div>
         </div>
-    </div>
 
 
-    <div class="row">
-        <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Today On  Leave employee List" ba-panel-class="medium-panel traffic-panel">
-                
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Today On  Leave employee List" ba-panel-class="medium-panel traffic-panel">
+
                 <div ui-grid="LeaveTodayGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-                    </div>
-            <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
+                </div>
+                <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
                 width="100%">
                 <thead>
                     <tr class="sortable">
@@ -151,12 +152,12 @@
                 </tbody>
             </table> -->
 
-        </div>
-        <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Next Week On Leave employees List" ba-panel-class="medium-panel">
-           
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Next Week On Leave employees List" ba-panel-class="medium-panel">
+
                 <div ui-grid="LeaveNextWeekGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-                    </div>
-            <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
+                </div>
+                <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
                 width="100%">
                 <thead>
                     <tr class="sortable">
@@ -182,15 +183,15 @@
             </table> -->
 
 
+            </div>
         </div>
-    </div>
 
 
-    <div class="row">
-        <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Today Employee Birthday List" ba-panel-class="medium-panel traffic-panel">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Today Employee Birthday List" ba-panel-class="medium-panel traffic-panel">
                 <div ui-grid="BirthdayTodayGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-                    </div>
-            <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
+                </div>
+                <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
                 width="100%">
                 <thead>
                     <tr class="sortable">
@@ -215,12 +216,12 @@
                 </tbody>
             </table> -->
 
-        </div>
-        <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Next Week Employee Birthday List" ba-panel-class="medium-panel">
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Next Week Employee Birthday List" ba-panel-class="medium-panel">
                 <div ui-grid="BirthdayNextWeekGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-                    </div>
-          
-            <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
+                </div>
+
+                <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
                 width="100%">
                 <thead>
                     <tr class="sortable">
@@ -245,13 +246,13 @@
             </table> -->
 
 
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Next Week Holiday List" ba-panel-class="medium-panel traffic-panel">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Next Week Holiday List" ba-panel-class="medium-panel traffic-panel">
                 <div ui-grid="HolidayNextWeekGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-                    </div>
-            <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
+                </div>
+                <!-- <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A" cellspacing="0"
                 width="100%">
                 <thead>
                     <tr class="sortable">
@@ -276,15 +277,49 @@
                 </tbody>
             </table> -->
 
-        </div>
+            </div>
 
-        <div class="col-lg-6 col-md-12 col-sm-12" ba-panel-class="medium-panel">
+            <div class="col-lg-6 col-md-12 col-sm-12" ba-panel-class="medium-panel">
 
 
 
+            </div>
         </div>
     </div>
+    <div ng-hide="adminDahboard">
 
+        <div class="row">
+            <div class="col-md-6" ba-panel ba-panel-title="Leave List" ba-panel-class="feed-comply-panel with-scroll todo-panel">
+                <div class="pull-right">
+                    <select class="form-control" ng-model="filterId" ng-change="onChange(filterId)" ng-options="list.id as list.name for list in filterBy"></select>
+                </div>
+                <br><br><br>
+                <div ui-grid="leaveOption" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
+                </div>
+            </div>
+            <!-- <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Leave List" ba-panel-class="medium-panel traffic-panel">
+                <div class="pull-right">
+                    <select class="form-control" ng-model="filterId" ng-change="onChange(filterId)" ng-options="list.id as list.name for list in filterBy"></select>
+                </div>
+                <br><br><br>
+                <div ui-grid="leaveOption" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
+                </div>
+
+            </div> -->
+            <div class="col-lg-6" ba-panel ba-panel-title="Holiday List" ba-panel-class="medium-panel">
+                <div ui-grid="holidayOption" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6" ba-panel ba-panel-title="UpComing Birthday" ba-panel-class="medium-panel">
+                <div ui-grid="birthdayOption" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
 </div>

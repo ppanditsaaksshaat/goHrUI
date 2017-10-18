@@ -112,6 +112,26 @@
             </div>
           </div>
         </div>
+        <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.JDReporting1.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.JDReporting1" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.JDReporting2.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.JDReporting2" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label ng-bind="page.pageinfo.fields.JDReportingHR.text"></label>
+                <field-box page="page" ng-column="page.pageinfo.fields.JDReportingHR" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+              </div>
+            </div>
+          </div>
         <!--this to be uncommented after adding columns in JobDescription:DJ-->
         <!--<div class="row">
           <div class="col-sm-4">
