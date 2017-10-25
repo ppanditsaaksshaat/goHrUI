@@ -11,7 +11,7 @@
     /** @ngInject */
     /** @ngInject */
     function employeeDocumentDetail($scope, $stateParams,
-        pageService, $timeout, $filter, editFormService, $state, dialogModal, uiGridConstants) {
+        pageService, $timeout, $filter, editFormService, $state, dialogModal, uiGridConstants, $rootScope) {
 
         /**
          * local variable declaration
@@ -22,7 +22,7 @@
         $scope.actionOption = true;
         var empDocumentTableId = 199;
         var empDocumentPageId = 188;
-      
+
 
         $scope.documentOptions = {
             enableRowSelection: true,
@@ -42,6 +42,7 @@
         $scope.list = _list;
         $scope.close = _close;
         $scope.save = _save;
+        $scope.downloadFile = _downloadFile;
 
         function _loadController() {
 
@@ -59,9 +60,28 @@
                         var column = { name: col.name, displayName: col.displayName, width: 130, enableCellEdit: false }
                         $scope.documentOptions.columnDefs.push(column)
                     }
-                });
 
-                pageService.getTableData(empDocumentTableId, empDocumentPageId, undefined, undefined, undefined, undefined).then(tableDataSuccessResult, tableDataErrorResult)
+                });
+                $scope.documentOptions.columnDefs.push({
+                    name: '-',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+                    cellTemplate: "<div class='ui-grid-cell-contents dupl' title='Download Attached File' ><a ng-click='grid.appScope.downloadFile(row.entity.CDFileId)'>Download File</a></div>"
+                })
+                var searchLists = [];
+                var searchListData = {
+                    field: 'EDocDEmpId',
+                    operand: '=',
+                    value: empPKId
+                }
+                searchLists.push(searchListData)
+
+                var data = {
+                    searchList: searchLists,
+                    orderByList: []
+                }
+
+                pageService.getTableData(empDocumentTableId, empDocumentPageId, '', '', false, data).then(tableDataSuccessResult, tableDataErrorResult)
 
             }
         }
@@ -80,7 +100,7 @@
             console.log(err);
         }
         function _addRecord() {
-            $scope.entity ={};
+            $scope.entity = {};
             $scope.page.isAllowEdit = true;
             $scope.documentList = false;
         }
@@ -203,6 +223,20 @@
                 }
 
             })
+        }
+
+        function _downloadFile(id) {
+
+            var file = {
+                id: id
+            }
+            console.log(file)
+            var options = {
+                url: "app/pages/organization/employees/templates/document/browseModal.html",
+                controller: "documentUploadController",
+                param:file
+            }
+            dialogModal.open(options)
         }
         _loadController();
 
