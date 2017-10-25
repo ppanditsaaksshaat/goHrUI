@@ -122,7 +122,7 @@
         }
         function _save(entity, editForm) {
             console.log(entity)
-            if (_validateForm(entity)) {
+            if (_validateForm(entity, $scope.documentOptions.data)) {
                 var action = "";
                 if (entity.EDocDId == undefined) {
                     action = 'create';
@@ -160,7 +160,8 @@
         function _saveErrorResult(err) {
             console.log(err);
         }
-        function _validateForm(entity) {
+        function _validateForm(entity, oldData) {
+
 
             if (entity.EDocDDTId == undefined) {
                 $scope.showMsg("error", "Please Select Document Type")
@@ -186,7 +187,14 @@
                 $scope.showMsg("error", "Please Enter Description")
                 return false;
             }
+
+            var exist = $filter('findObj')(oldData, entity.EDocDDTId, 'EDocDDTId');
+            if (exist != null) {
+                $scope.showMsg("error", "This docoument type already exist ")
+                return false;
+            }
             return true;
+
         }
         function _onRegisterApi(gridApi) {
             //////console.log('register grid api')
@@ -234,7 +242,7 @@
             var options = {
                 url: "app/pages/organization/employees/templates/document/browseModal.html",
                 controller: "documentUploadController",
-                param:file
+                param: file
             }
             dialogModal.open(options)
         }
