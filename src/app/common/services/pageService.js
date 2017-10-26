@@ -1157,6 +1157,20 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 });
         }
 
+        var _generateFullAndFinalSalary = function (filterData) {
+            var url = serviceBase + 'api/Payroll/GenerateFullAndFinalSalary/';
+            console.log(url)
+            return $http.post(url, JSON.stringify(JSON.stringify(filterData)),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+
+                });
+        }
+
 
         pageServiceFactory.serviceBase = serviceBase;
         pageServiceFactory.getPagData = _getPagData;
@@ -1275,6 +1289,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.multiSave = _multiSave;
         pageServiceFactory.getMultiEntity = _getMultiEntity;
         pageServiceFactory.uploadManualAttendance = _uploadManualAttendance;
+        pageServiceFactory.generateFullAndFinalSalary = _generateFullAndFinalSalary;
 
 
 
