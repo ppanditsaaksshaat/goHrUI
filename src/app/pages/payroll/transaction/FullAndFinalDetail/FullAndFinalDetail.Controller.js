@@ -67,7 +67,6 @@
     }
 
     function _addRecord() {
-      debugger;
       $scope.entity = {};
       $scope.showEditForm = false;
       $scope.showOnClick = false;
