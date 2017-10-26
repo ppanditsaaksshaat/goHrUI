@@ -10,12 +10,13 @@
 
     /** @ngInject */
     /** @ngInject */
-    function documentUploadController($scope, $stateParams,
-        pageService, $timeout, $filter, editFormService, $state, dialogModal,pageService) {
-
+    function documentUploadController($scope, pageService, param) {
+        //alert(param)
         /**
          * local variable declaration
          */
+        console.log(param)
+
         var documentTypePageId = 415;
         var documentTypeTableId = 386;
 
@@ -24,11 +25,12 @@
          * private funtion
          */
 
-        $scope.upload = _upload;
+        $scope.downloadFile = _downloadFile;
 
-        function _upload() {
-            console.log($scope.file)
-            pageService.saveFileAttach($scope.file,documentTypePageId,documentTypeTableId)
+
+        function _downloadFile() {
+            console.log(param)
+            pageService.getFile(param.id, 'attach');
 
         }
 

@@ -160,7 +160,7 @@
       updateRecord: null,
       viewRecord: _viewRecord,
       deleteRecord: _deleteForm,
-      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _leaveVerify, pin: true }],
+      customColumns: ((!$scope.user.profile.isAdmin && !$scope.user.profile.isManager) ? null : [{ text: 'Verify', type: 'a', name: 'Option', click: _leaveVerify, pin: true }]),
       pageResult: _pageResult
     }
     /** End Of Grid Intialization */

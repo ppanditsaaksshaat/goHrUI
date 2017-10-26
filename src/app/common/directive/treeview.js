@@ -64,9 +64,10 @@ angular.module('BlurAdmin.common').directive('treeView', function ($compile) {
                     text += '<input ng-show=showCheckbox(n) class="tree-checkbox" type=checkbox ng-model=n.checked ng-change=checkChange(n)>';
                 }
 
-
-                text += '<span ng-show=showCheckbox(n) class="edit" ng-click=localClick({node:n})><i class="fa fa-pencil"></i></span>'
-                text += '<span ng-show=!showCheckbox(n)>  </span>'
+//fa fa-window-minimize
+                text += '<span ng-if=!checkIfChildren(n) class="edit" ng-click=localClick({node:n})><i class="fa fa-pencil"></i></span>'
+                text += '<span ng-if=checkIfChildren(n) class="edit" ng-click=localClick({node:n})><i class="fa fa-window-minimize"></i></span>'
+                // text += '<span ng-if=checkIfChildren(n)>    </span>' 
 
 
                 text += '<label>{{n.name}}</label>';
