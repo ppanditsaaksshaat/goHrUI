@@ -380,6 +380,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
             if (source == 'attach') {
                 fileUrl = serviceBase + "api/Upload/GetAttach";
             }
+
             $http({
                 method: 'GET',
                 cache: false,
@@ -389,8 +390,14 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     'Content-Type': 'application/json; charset=utf-8',
                     'fileID': fileId
                 }
-            }).success(function (data, status, headers) {
-                console.log(headers)
+            }).then(function (response) {
+                
+                console.log(response)
+
+                var data = response.data;
+                var status = response.status;
+                var headers = response.headers;
+                
                 var octetStreamMime = 'application/octet-stream';
                 var success = false;
 
