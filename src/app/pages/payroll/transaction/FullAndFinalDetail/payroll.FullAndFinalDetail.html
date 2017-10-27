@@ -2,7 +2,7 @@
 </grid-box>
 
 
-<form name="editForm " novalidate ng-submit="saveForm(entity) " ng-hide="showEditForm ">
+<form name="editForm " novalidate ng-submit="saveForm() " ng-hide="showEditForm ">
     <div class="panel panel-default xmedium-panel ">
         <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
             close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
@@ -14,15 +14,26 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                        <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                        <select class="form-control" ng-model="entity.selectedEmp" ng-change="selectedDesignDept()" ng-options="employee.name  for employee in page.pageinfo.selects.FAFEmpId">
+                            </select>
 
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                        <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                        <label>{{page.pageinfo.fields.FAFDDate.text}}</label>
+                        <span class="form-control" ng-bind="entity.FAFDDate"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <!--<label>{{page.pageinfo.fields.FAFEmpId.text}}</label>-->
+                        <label>Sub Unit</label>
+                        <span class="form-control" ng-bind="entity.SUName"></span>
+                        <!--<input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">-->
+
                     </div>
                 </div>
             </div>
@@ -30,101 +41,118 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                        <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                        <!--<label>{{page.pageinfo.fields.FAFEmpId.text}}</label>-->
+                        <label>Designation Name</label>
+                        <span class="form-control" ng-bind="entity.designName"></span>
+                        <!--<input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">-->
 
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                        <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                        <!--<label>{{page.pageinfo.fields.FAFEmpId.text}}</label>-->
+                        <label>Department Name</label>
+                        <span class="form-control" ng-bind="entity.deptName"></span>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label></label>
+                    <div>
+                        <button class="btn btn-primary" type="button" ng-click="getEmpFullAndFinal();">Show</button>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" ng-show="showOnClick">
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                                <label>{{page.pageinfo.fields.FAFDELOpeninig.text}}</label>
+                                <!--<input class="form-control" type="text" ng-model="entity.FAFDELOpeninig">-->
+                                <span class="form-control" ng-bind="entity.FAFDELOpeninig"></span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                                <label>{{page.pageinfo.fields.FAFDPresentDays.text}}</label>
+                                <!--<input class="form-control" type="text" ng-model="entity.FAFDPresentDays">-->
+                                <span class="form-control" ng-bind="entity.FAFDPresentDays"></span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                                <label>{{page.pageinfo.fields.FAFDCurrentYearEL.text}}</label>
+                                <!--<input class="form-control" type="text" ng-model="entity.FAFDCurrentYearEL">-->
+                                <span class="form-control" ng-bind="entity.FAFDCurrentYearEL"></span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                                <label>{{page.pageinfo.fields.FAFDELTaken.text}}</label>
+                                <!--<input class="form-control" type="text" ng-model="entity.FAFDELTaken">-->
+                                <span class="form-control" ng-bind="entity.FAFDELTaken"></span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                                <label>{{page.pageinfo.fields.FAFDELBalance.text}}</label>
+                                <span class="form-control" ng-bind="entity.FAFDELBalance"></span>
+                                <!--<input class="form-control" type="text" ng-model="entity.FAFDELBalance">-->
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                                <label>{{page.pageinfo.fields.FAFDELEncashable.text}}</label>
+                                <!--<input class="form-control" type="text" ng-model="entity.FAFDELEncashable">-->
+                                <span class="form-control" ng-bind="entity.FAFDELEncashable"></span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                                <label>{{page.pageinfo.fields.FAFDJoinYear.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.FAFDJoinYear">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{page.pageinfo.fields.FAFDGratuity.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.FAFDGratuity">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                                <label>{{page.pageinfo.fields.LoanOutStandingAmount.text}}</label>
+                                <input class="form-control" type="text" ng-model="entity.LoanOutstanding">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
+                                <label>{{page.pageinfo.fields.FAFDPayDays.text}}</label>
+                                <input class="form-control" type="text" ng-change="totalPayDays()" ng-model="entity.payDays">
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                                <input class="form-control" type="text" ng-model="entity.ACODIsApplyFullDay">
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="col-md-8">
                     <div class="row">
@@ -136,9 +164,43 @@
                 </div>
             </div>
 
+            <div class="row" ng-show="showOnClick">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Pay Day + Encashment EL</label>
+                        <!--<input class="form-control" type="text" ng-model="entity.totalPayDays">-->
+                        <span class="form-control" ng-bind="entity.totalPayDays"></span>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label></label>
+                    <div>
+                        <button class="btn btn-primary" type="button" ng-click="calculatedEmpSalary();">Calculate</button>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Total Earning</label>
+                        <!--<input class="form-control" type="text" ng-model="entity.totalPayDays">-->
+                        <span class="form-control" ng-bind="entity.totalEarning"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Total Deduction</label>
+                        <!--<input class="form-control" type="text" ng-model="entity.totalPayDays">-->
+                        <span class="form-control" ng-bind="entity.totalDeduction"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Net Pay</label>
+                        <!--<input class="form-control" type="text" ng-model="entity.totalPayDays">-->
+                        <span class="form-control" ng-bind="entity.netPayment"></span>
+                    </div>
+                </div>
 
-
-
+            </div>
 
         </div>
     </div>
