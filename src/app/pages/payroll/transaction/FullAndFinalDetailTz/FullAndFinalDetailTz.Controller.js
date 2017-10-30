@@ -9,7 +9,7 @@
     .controller('payFullAndFinalDetailTzController', payFullAndFinalDetailTzController);
 
   /** @ngInject */
-  function payFullAndFinalDetailTzController($scope, $state, pageService, editFormService,$filter) {
+  function payFullAndFinalDetailTzController($scope, $state, pageService, editFormService, $filter) {
     console.log('payFullAndFinalDetailTzController')
 
     var vm = this;
@@ -124,7 +124,10 @@
           $scope.entity.FFDTZGross = value.SalAmount;
         }
         else if (value.SHIsESIC == 1 || value.SHIsEPF == 1) {
-          $scope.entity.FFDTZNSSF = value.SalAmount;
+          if ($scope.entity.ifPPFORNSSF == 1) {
+            $scope.entity.FFDTZNSSF = value.SalAmount;
+          }
+
         }
 
         totalHeadAmountRate += parseFloat(value.SalAmount);
@@ -285,13 +288,36 @@
 
         $scope.entity.FFDTZTotalDeductions = nFFDTZNSSF + pFFDTZPayeeCalc + pAFFDTZPAYE + sAFFDTZSalaryAdvance + lFFDTZLoan + sHFFDTZSalaryHold + oDFFDTZOthersDeduction;
         $scope.entity.FFDTZNetAmount = $scope.entity.FFDTZTotalAmount - $scope.entity.FFDTZTotalDeductions;
-
-
+        if ($scope.entity.FFDTZPayeeCalc !== undefined && $scope.entity.FFDTZPayeeCalc != '' && $scope.entity.FFDTZPayeeCalc != null) {
+          _payeTaxDeduction();
+        }
       }
       else {
         $scope.showMsg("warning", "Gross salary does not exist");
       }
     }
+
+    function _payeTaxDeduction() {
+      var searchLists = [];
+      var searchListData = { field: 'TotalIncome', operand: '=', value: $scope.entity.FFDTZPayeeCalc }
+      searchLists.push(searchListData)
+      var data = {
+        searchList: searchLists,
+        orderByList: []
+      }
+      pageService.getCustomQuery(data, payeTaxDeductionQueryId).then(_payeTaxDeductionResult, _payeTaxDeductionErrorResult)
+    }
+
+    function _payeTaxDeductionResult(result) {
+      console.log(result)
+      console.log(result[0][0].TaxAmount)
+      $scope.entity.FFDTZPAYE = result[0][0].TaxAmount;
+    }
+
+    function _payeTaxDeductionErrorResult() {
+
+    }
+
 
     function _saveForm() {
       if ($scope.entity.FFDTZNetAmount !== undefined && $scope.entity.FFDTZNetAmount != '' && $scope.entity.FFDTZNetAmount != null) {
