@@ -17,7 +17,7 @@
 
         //local variable
         var vm = this;
-        var columnIds = ['132', '667', '674', '192', '668', '743', '744'];
+        var columnIds = ['132', '667', '3841', '192', '668', '743', '744'];
         vm.pageId = 25;
         vm.empAdd = {};
         var queryId = 528;
@@ -51,6 +51,7 @@
 
         }
         function _getAllSelectSuccessResult(result) {
+            console.log(result)
             vm.dropDownList = result;
         }
         function _getAllSelectErrorResult(err) {
