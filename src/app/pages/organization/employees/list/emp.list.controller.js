@@ -49,15 +49,18 @@
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: _uploadRecord,
-      pageResult: _pageResult
+      pageResult: _pageResult,
+      dataResult: _dataResult
     }
-
+    function _dataResult(result) {
+      console.log(result);
+    }
 
     function _pageResult(row) {
       console.log(row);
       angular.forEach(row.pageinfo.filters, function (filter) {
         if (filter.name == 'JDIsHasLeft') {
-            filter.value = 0
+          filter.value = 0
         }
       })
 

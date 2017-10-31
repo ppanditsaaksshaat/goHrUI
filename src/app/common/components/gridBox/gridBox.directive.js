@@ -457,6 +457,7 @@
                                         newColumnDefs.push(newCol)
                                     }
                                 }
+                                
                                 if ($scope.page.boxOptions.columnDesign.length > 0) {
                                     if (newColumnDefs.length > 0) {
                                         $scope.page.gridOptions.columnDefs = [];
@@ -547,7 +548,7 @@
                     });
                 }
                 function _getPageSuccessResult(result) {
-                    //console.log(result)
+                    console.log(result)
                     var isErrored = false;
                     if (result.error_message) {
                         $scope.isErrorOccured = true;
