@@ -1,4 +1,4 @@
-<grid-box ng-model="page" ng-show="showEditForm">
+<grid-box ng-model="page" ng-hide="showGrid">
 </grid-box>
 
 
@@ -182,21 +182,21 @@
                     <div class="form-group">
                         <label>Total Earning</label>
                         <!--<input class="form-control" type="text" ng-model="entity.totalPayDays">-->
-                        <span class="form-control" ng-bind="entity.totalEarning"></span>
+                        <span class="form-control" ng-bind="entity.FAFDTotalEarning"></span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Total Deduction</label>
                         <!--<input class="form-control" type="text" ng-model="entity.totalPayDays">-->
-                        <span class="form-control" ng-bind="entity.totalDeduction"></span>
+                        <span class="form-control" ng-bind="entity.FAFDTotalDeduction"></span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Net Pay</label>
                         <!--<input class="form-control" type="text" ng-model="entity.totalPayDays">-->
-                        <span class="form-control" ng-bind="entity.netPayment"></span>
+                        <span class="form-control" ng-bind="entity.FAFDNetPayment"></span>
                     </div>
                 </div>
 
@@ -205,3 +205,11 @@
         </div>
     </div>
 </form>
+
+<div ng-hide="showReport">
+    <label></label>
+    <div>
+        <button class="btn btn-primary" type="button" ng-click="closeReport();">Close</button>
+    </div>
+    <report-viewer ng-model="pageReport"></report-viewer>
+</div>

@@ -17,6 +17,8 @@
     var currentState = $state.current;
     $scope.page = $scope.createPage();
     $scope.page.pageId = vm.pageId;
+    $scope.showGrid = false;
+    $scope.showReport = true;
     $scope.showEditForm = true;
     $scope.selectedDesignDept = _selectedDesignDept;
     $scope.getEmpGrossAmount = _getEmpGrossAmount;
@@ -27,6 +29,10 @@
     $scope.entity = {};
     vm.queryId = 588;
     var payeTaxDeductionQueryId = 590;
+
+    $scope.closeReport = _closeReport;
+
+    $scope.pageReport = { reportId: 61 }
 
     $scope.page.boxOptions = {
       selfLoading: true,
@@ -46,6 +52,7 @@
       refreshData: null,
       addRecord: _addRecord,
       editRecord: _editRecord,
+      customColumns: [{ text: 'Report', type: 'a', name: 'Option', click: _fReport, pin: true }],
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
@@ -60,13 +67,37 @@
       console.log(result);
     }
 
+    function _closeReport() {
+      $scope.showGrid = false;
+      $scope.showReport = true;
+      $scope.showEditForm = true;
+    }
+
+    function _fReport(row) {
+      console.log(row.entity.FFDTZEmpId)
+
+      // $scope.pageReport = { reportId: 19 }
+      // $state.go(row.entity.FFDTZEmpId);
+      // $scope.page = { reportId: 61 }
+      $scope.showGrid = true;
+      $scope.showReport = false;
+      $scope.showEditForm = true;
+
+    }
+
     function _addRecord() {
       $scope.entity = {};
+      $scope.showGrid = true;
+      $scope.showReport = true;
       $scope.showEditForm = false;
+
       $scope.page.refreshData();
     }
     function _closeForm() {
       $scope.entity = {};
+      // $scope.showEditForm = true;
+      $scope.showGrid = false;
+      $scope.showReport = true;
       $scope.showEditForm = true;
       $scope.page.refreshData();
     }
@@ -74,6 +105,8 @@
       console.log(row)
       $scope.entity = row.entity;
       $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.FFDTZEmpId, row.entity.FFDTZEmpId, 'value')
+      $scope.showGrid = true;
+      $scope.showReport = true;
       $scope.showEditForm = false;
     }
 
@@ -146,6 +179,9 @@
       $scope.entity.FFDTZSeveranceDays = result[0][0].YearJoin
       $scope.entity.FFDTZUnpaidLeaveDays = result[0][0].ENcashmentEL
       $scope.entity.FFDTZLoan = result[0][0].LoanOutstanding
+
+
+      console.log($scope.entity.FFDTZPWorkingDay)
 
       // $scope.entity.FAFDCurrentYearEL = result[0][0].ELCurrent
       // $scope.entity.FAFDELOpeninig = result[0][0].ELOpen
@@ -337,6 +373,9 @@
       // console.log(result);
       // console.log(result.entity.FAFDId)
       // fullNFinalId = result.entity.FAFDId;
+      // $scope.showEditForm = true;
+      $scope.showGrid = false;
+      $scope.showReport = true;
       $scope.showEditForm = true;
       $scope.page.refreshData();
     }
