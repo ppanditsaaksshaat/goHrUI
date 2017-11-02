@@ -196,8 +196,15 @@
 
 
       if (ELEDTotalEncashableLeave <= encashLeaveMaxAllow) {
-        $scope.entity.LEDTotalEncashableLeave = ELEDTotalEncashableLeave;
-        $scope.entity.LEDEncashAmount = ((grossSalary * ELEDTotalEncashableLeave) / monthDays).toFixed(2);;
+        if ($scope.entity.LEDELEncashable >= ELEDTotalEncashableLeave) {
+          $scope.entity.LEDTotalEncashableLeave = ELEDTotalEncashableLeave;
+          $scope.entity.LEDEncashAmount = ((grossSalary * ELEDTotalEncashableLeave) / monthDays).toFixed(2);;
+        }
+        else {
+          $scope.entity.LEDTotalEncashableLeave = 0;
+          $scope.entity.LEDEncashAmount = 0;
+          $scope.showMsg("warning", "total EL balace is " + $scope.entity.LEDELEncashable);
+        }
       }
       else {
         $scope.entity.LEDTotalEncashableLeave = 0;

@@ -63,25 +63,14 @@
                 <div class="col-xs-4">
                     <span class="form-control" ng-bind="entity.LEDELTaken"></span>
                 </div>
-                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.LEDELBalance.text}}</label>
-                <div class="col-xs-4">
-                    <span class="form-control" ng-bind="entity.LEDELBalance"></span>
-                </div>
-            </div>
-
-            <div class="form-group" ng-show="showOnClick">
                 <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.LEDELEncashable.text}}</label>
                 <div class="col-xs-4">
                     <span class="form-control" ng-bind="entity.LEDELEncashable"></span>
                 </div>
-                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.LEDPayDays.text}}</label>
-                <div class="col-xs-4">
-                    <span class="form-control" ng-bind="entity.LEDPayDays"></span>
-                </div>
             </div>
 
             <div class="form-group" ng-show="showOnClick">
-                <label for="inputPassword" class="control-label col-xs-2">Total Encash EL</label>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.LEDTotalEncashableLeave.text}}</label>
                 <div class="col-xs-4">
                     <input class="form-control" type="text" ng-model="entity.LEDTotalEncashableLeave" ng-change="maxApplyEl()">
                 </div>
@@ -91,7 +80,7 @@
                 </div>
             </div>
 
-            
+
 
 
 
