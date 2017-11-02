@@ -17,7 +17,7 @@
 
         //local variable
         var vm = this;
-        var columnIds = ['132', '667', '674', '192', '668', '743', '744'];
+        var columnIds = ['132', '667', '3841', '192', '668', '743', '744', '665'];
         vm.pageId = 25;
         vm.empAdd = {};
         var queryId = 528;
@@ -42,6 +42,7 @@
             });
         }
         function _getCustomQuerySuccessResult(result) {
+            console.log(result)
             if (result != "NoDataFound") {
                 vm.groupList = result;
                 vm.empAdd.JDGroupId = result[0].GMCId;
@@ -51,6 +52,7 @@
 
         }
         function _getAllSelectSuccessResult(result) {
+            console.log(result)
             vm.dropDownList = result;
         }
         function _getAllSelectErrorResult(err) {
@@ -86,6 +88,9 @@
                 JDEmpGradeId: vm.empAdd.JDEmpGradeId,
                 JDEmpLevelId: vm.empAdd.JDEmpLevelId,
                 JDGroupId: vm.empAdd.JDGroupId,
+                JDReporting1: vm.empAdd.JDReporting1,
+                JDReporting2: vm.empAdd.JDReporting2,
+                JDReportingHR: vm.empAdd.JDReportingHR,
                 DoubleOTRate: 0,
                 JDSingleOTRate: 0,
                 SingleOT: 0,
