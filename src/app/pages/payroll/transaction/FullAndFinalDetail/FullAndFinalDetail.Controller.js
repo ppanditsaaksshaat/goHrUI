@@ -257,7 +257,12 @@
     }
 
     function _totalPayDays() {
-      $scope.entity.totalPayDays = parseInt($scope.entity.payDays) + parseInt($scope.entity.FAFDELEncashable);
+      var PpayDays = parseFloat($scope.entity.payDays);
+      if (isNaN(PpayDays))
+        PpayDays = 0;
+      $scope.entity.payDays = PpayDays;
+
+      $scope.entity.totalPayDays = (parseFloat($scope.entity.payDays) + parseFloat($scope.entity.FAFDELEncashable)).toFixed(2);
     }
 
     function _saveForm() {
