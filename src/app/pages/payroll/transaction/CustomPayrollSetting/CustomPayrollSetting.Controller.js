@@ -24,10 +24,10 @@
 
     $scope.page.boxOptions = {
       selfLoading: true,
-      showRefresh: true,
+      showRefresh: false,
       showFilter: true,
       filterOpened: true,
-      showAdd: true,
+      showAdd: false,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
@@ -44,24 +44,20 @@
       showApplyFilter: false,
       filterOnChange: _filterChange,
       afterCellEdit: _afterCellEdit,
-      //pageResult: _pageResult
+      pageResult: _pageResult
     }
 
-    // function _pageResult(result) {
-    //   angular.forEach(result.pageinfo.filters, function (filter) {
-    //     if (filter.name == 'SubUnitId') {
-    //       filter.value = -1;
-
-    //     }
-    //     if (filter.name == 'SalMonth') {
-    //       filter.value = parseInt(moment().format('MM'));
-    //     }
-    //     if (filter.name == 'SalYear') {
-    //       filter.value = parseInt(moment().format('YYYY'));
-    //     }
-
-    //   })
-    // }
+    function _pageResult(result) {
+      console.log(result)
+      if (result.pageinfo.uibuttons.pending.IsAllowed == "True" || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
+        $scope.page.boxOptions.customButtons.push({ text: 'Pending', icon: 'ion-refresh', onClick: _pendingClick, type: 'btn-danger' })
+      if (result.pageinfo.uibuttons.ready.IsAllowed == "True" || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
+        $scope.page.boxOptions.customButtons.push({ text: 'Ready', icon: 'fa fa-plus-circle', onClick: _readyClick, type: 'btn-warning' })
+      if (result.pageinfo.uibuttons.regenerate.IsAllowed == "True" || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
+        $scope.page.boxOptions.customButtons.push({ text: 'ReGenerate', icon: 'ion-refresh', onClick: _reGenerateClick, type: 'btn-danger' })
+      if (result.pageinfo.uibuttons.saveandregenrate.IsAllowed == "True" || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
+        $scope.page.boxOptions.customButtons.push({ text: 'Save & Generate Salary', icon: 'btn-primary', onClick: _saveAndGenerateSalaryClick, type: 'btn-warning' })
+    }
 
     function _afterCellEdit(rowEntity, colDef, newValue, oldValue) {
       console.log(rowEntity, colDef, newValue, oldValue)
@@ -164,13 +160,8 @@
 
       }
     }
-
-    $scope.page.boxOptions.customButtons = [];
-    $scope.page.boxOptions.customButtons.push({ text: 'Pending', icon: 'ion-refresh', onClick: _pendingClick, type: 'btn-danger' })
-    $scope.page.boxOptions.customButtons.push({ text: 'Ready', icon: 'fa fa-plus-circle', onClick: _readyClick, type: 'btn-warning' })
-    $scope.page.boxOptions.customButtons.push({ text: 'ReGenerate', icon: 'ion-refresh', onClick: _reGenerateClick, type: 'btn-danger' })
-    $scope.page.boxOptions.customButtons.push({ text: 'Save & Generate Salary', icon: 'btn-primary', onClick: _saveAndGenerateSalaryClick, type: 'btn-warning' })
-
+    //  console.log($scope.page)
+    console.log($scope.pending)
 
     function _pendingClick() {
       $scope.page.searchList = [];

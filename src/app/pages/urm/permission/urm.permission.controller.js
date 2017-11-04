@@ -16,6 +16,7 @@
 
     $scope.savePermission = _savePermission;
     $scope.saveActivity = _saveActivity;
+    $scope.activityOnChange = _activityOnChange;
 
     $scope.reset = _reset;
     $scope.selectedRoleId = 0;
@@ -67,8 +68,10 @@
     }
 
     function _generateNodes() {
+      
       $scope.nodes = [];
       var parentMenu = $filter('findAll')($scope.menuList, 0, 'UIMenuParentMenuId')
+    
       for (var p = 0; p < parentMenu.length; p++) {
         var node = { id: parentMenu[p].UIMenuId, name: parentMenu[p].ResourceText, checked: parentMenu[p].checked }
         var childList = _getChild(parentMenu[p].UIMenuId)
@@ -275,13 +278,35 @@
     function _getRoleMenuActivitySuccess(result) {
       console.log(result[0])
       $scope.activityList = result[0];
+      $scope.activityList.splice(0, 0, { 'MenuActivityId': 0, 'MenuActivityName': 'all', 'ActText': 'All' })
       $scope.isShowActivity = true;
+    }
+    function _activityOnChange(value, isSelected) {
+      console.log(value)
+      if (value == 0) {
+        if (isSelected) {
+          angular.forEach($scope.activityList, function (data) {
+            data.IsAllowed = true;
+          })
+
+
+        }
+        else {
+          angular.forEach($scope.activityList, function (data) {
+            data.IsAllowed = false;
+          })
+
+        }
+
+      }
+
     }
     function _getRoleMenuActivityError(err) {
       console.log(err)
     }
 
     function _saveActivity() {
+      
       $scope.isSavingActivity = true;
       $scope.isActivitySaved = false;
       $scope.isApplyingChanges = true;
@@ -303,7 +328,7 @@
       data.searchList.push({ field: 'roleId', operand: '=', value: $scope.selectedRoleId });
       data.searchList.push({ field: 'menuId', operand: '=', value: $scope.selectedMenuId });
       data.searchList.push({ field: 'actId', operand: '=', value: selectedActivity });
-      data.searchList.push({ field: 'createdBy', operand: '=', value: 'itel_admin' });
+      data.searchList.push({ field: 'createdBy', operand: '=', value: 'itsl_admin' });
 
 
       pageService.getCustomQuery(data, 571).then(_saveActivitySuccess, _saveActivityError)

@@ -29,9 +29,9 @@ angular.module('BlurAdmin.common').directive('treeView', function ($compile) {
             }
 
             scope.showCheckbox = function (node) {
-                if(angular.isUndefined(node.showCheckbox))
+                if (angular.isUndefined(node.showCheckbox))
                     return true;
-                else 
+                else
                     return node.showCheckbox;
             }
 
@@ -48,23 +48,62 @@ angular.module('BlurAdmin.common').directive('treeView', function ($compile) {
             }
 
             scope.checkChange = function (node) {
+
                 if (node.children) {
                     parentCheckChange(node);
+                }
+            }
+            scope.checkAllChange = function (node, isChecked) {
+
+                if (isChecked) {
+                    angular.forEach(node, function (parent) {
+                        parent.checked = true;
+                        if (parent.children != undefined) {
+                            angular.forEach(parent.children, function (child) {
+                                child.checked = true
+                                if (child.children != undefined) {
+                                    angular.forEach(child.children, function (c) {
+                                        c.checked = true
+                                    })
+                                }
+                            })
+
+                        }
+                    })
+                }
+                else {
+                    angular.forEach(node, function (parent) {
+                        parent.checked = false;
+                        if (parent.children != undefined) {
+                            angular.forEach(parent.children, function (child) {
+                                child.checked = false
+                                if (child.children != undefined) {
+                                    angular.forEach(child.children, function (c) {
+                                        c.checked = false
+                                    })
+                                }
+                            })
+
+                        }
+                    })
                 }
             }
             /////////////////////////////////////////////////
 
             function renderTreeView(collection, level, max) {
+
                 var text = '';
+
                 text += '<li ng-repeat="n in ' + collection + '" >';
                 text += '<span ng-show=showIcon(n) class="show-hide" ng-click="showHide(n.id, n)"><i ng-show="!n.expanded" class="fa fa-plus-square"></i><i ng-show="n.expanded" class="fa fa-minus-square"></i></span>';
                 text += '<span ng-show=!showIcon(n) style="padding-right: 13px"></span>';
 
                 if (hasCheckBox) {
+
                     text += '<input ng-show=showCheckbox(n) class="tree-checkbox" type=checkbox ng-model=n.checked ng-change=checkChange(n)>';
                 }
 
-//fa fa-window-minimize
+                //fa fa-window-minimize
                 text += '<span ng-if=!checkIfChildren(n) class="edit" ng-click=localClick({node:n})><i class="fa fa-pencil"></i></span>'
                 text += '<span ng-if=checkIfChildren(n) class="edit" ng-click=localClick({node:n})><i class="fa fa-window-minimize"></i></span>'
                 // text += '<span ng-if=checkIfChildren(n)>    </span>' 
@@ -83,6 +122,7 @@ angular.module('BlurAdmin.common').directive('treeView', function ($compile) {
 
             try {
                 var text = '<ul class="tree-view-wrapper">';
+                text += '<input class="tree-checkbox" style="margin-left: 18px !important;" type=checkbox ng-model=checked ng-change=checkAllChange(localNodes,checked)> <label style="margin-left: 3px;">All</label>';
                 text += renderTreeView('localNodes', 1, maxLevels);
                 text += '</ul>';
                 tElement.html(text);
