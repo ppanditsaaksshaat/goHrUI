@@ -69,10 +69,11 @@
                 else {
                     $scope.page.boxOptions = angular.extend({}, boxSetting, $scope.page.boxOptions);
                 }
+
                 if (!$scope.page.boxOptions.showFilter) {
+
                     $scope.page.showFilter = false;
                 }
-
                 else if ($scope.page.boxOptions.filterOpened) {
                     $scope.page.showFilter = true;
                 }
@@ -367,6 +368,7 @@
                 //====================================================================
                 //setup grid columns from pageinfo
                 function _setGridColumns() {
+
                     if ($scope.page.pageinfo !== undefined) {
                         if ($scope.page.pageinfo != null) {
                             var isCreate = false, isEdit = false, isDelete = false, isUpdate = false,
@@ -377,8 +379,9 @@
                                     isCreate = buttons.create.isvisible;
                                 if (buttons.delete !== undefined)
                                     isDelete = buttons.delete.isvisible;
-                                if (buttons.edit !== undefined)
+                                if (buttons.edit !== undefined) {
                                     isEdit = buttons.edit.isvisible;
+                                }
                                 if (buttons.export !== undefined)
                                     isExport = buttons.export.isvisible;
                                 if (buttons.refresh !== undefined)
@@ -388,6 +391,38 @@
                                 if (buttons.colsetting !== undefined)
                                     isColSetting = buttons.colsetting.isvisible;
                             }
+                            $scope.isAdmin = $rootScope.user.profile.isAdmin;
+                            $scope.isManager = $rootScope.user.profile.isManager;
+
+                            if ($scope.page.pageinfo.uibuttons.edit.IsAllowed == 'True' || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
+                                isEdit = true;
+                            else
+                                isEdit = false;
+                            if ($scope.page.pageinfo.uibuttons.view.IsAllowed == 'True' || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
+                                isHelp = true;
+                            else
+                                isHelp = false;
+                            if ($scope.page.pageinfo.uibuttons.delete.IsAllowed == 'True' || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
+                                isDelete = true;
+                            else
+                                isDelete = false;
+                            if ($scope.page.showFilter) {
+                                if ($scope.page.pageinfo.uibuttons.filter.IsAllowed == "True") {
+                                  //  $scope.page.showFilter = true;
+                                    if ($scope.page.pageinfo.uibuttons.filter_toggle.IsAllowed == "True") {
+                                        $scope.page.boxOptions.showFilter = true;
+                                    }
+                                    else {
+                                        $scope.page.boxOptions.showFilter = false;
+                                    }
+                                }
+                                else{
+                                    $scope.page.boxOptions.showFilter = false;
+                                    $scope.page.showFilter = false;
+                                }
+                            }
+
+
                             $scope.page.gridOptions = $rootScope.gridSetupColumns($scope.page.gridOptions,
                                 $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit,
                                 $scope.page.boxOptions.showRowMenu);
@@ -457,7 +492,7 @@
                                         newColumnDefs.push(newCol)
                                     }
                                 }
-                                
+
                                 if ($scope.page.boxOptions.columnDesign.length > 0) {
                                     if (newColumnDefs.length > 0) {
                                         $scope.page.gridOptions.columnDefs = [];
