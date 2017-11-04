@@ -24,8 +24,8 @@
 
             },
             link: function ($scope, elm, attrs, ctrl) {
-                var reportBaseURL = 'http://itsllive.rudra.hrm/';
-
+                // var reportBaseURL = 'http://itsllive.rudra.hrm/';
+                var reportBaseURL = 'http://web400.hrms/';
                 var host = $location.host();
                 var absUrl = $location.absUrl();
                 if (absUrl.indexOf('.html') > 0) {
@@ -38,6 +38,7 @@
                 reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx);
 
                 // reportBaseURL = 'http://itsllive.rudra.hrm/';
+                reportBaseURL = 'http://web400.hrms/';
                 console.log(reportBaseURL)
 
                 var boxSetting = {
@@ -145,7 +146,7 @@
                     pageService.rptHandshake($scope.page.reportId, JSON.stringify(encData)).then(function (result) {
                         //   var result = angular.fromJson(response.data);
                         console.log(result)
-                        var rptUrl = reportBaseURL + 'Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth;
+                        var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth;
                         console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 
