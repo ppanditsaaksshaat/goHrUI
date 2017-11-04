@@ -29,6 +29,11 @@
     $scope.entity = {};
     vm.queryId = 588;
     var payeTaxDeductionQueryId = 590;
+    $scope.pWorkigDay = _pWorkigDay;
+    $scope.severanceDays = _severanceDays;
+    $scope.unpaidLeaveDays = _unpaidLeaveDays;
+    $scope.normalOTHours = _normalOTHours;
+    $scope.holidayOTHours = _holidayOTHours;
 
     $scope.closeReport = _closeReport;
 
@@ -382,6 +387,46 @@
 
     function _saveFormErrorResult(error) {
       console.log(error);
+    }
+
+    function _pWorkigDay() {
+      var pFDTZPWorkingDay = parseFloat($scope.entity.FFDTZPWorkingDay);
+      // _isNumberKey(pFDTZPWorkingDay);
+    }
+
+
+
+    function _unpaidLeaveDays() {
+      var pFDTZPWorkingDay = parseFloat($scope.entity.FFDTZPWorkingDay);
+      _isNumberKey(pFDTZPWorkingDay);
+    }
+
+    function _severanceDays() {
+      var sFFDTZSeveranceDays = parseFloat($scope.entity.FFDTZSeveranceDays);
+      _isNumberKey(sFFDTZSeveranceDays);
+    }
+
+    function _normalOTHours() {
+      var nFFDTZNOTHours = parseFloat($scope.entity.FFDTZNOTHours);
+      _isNumberKey(nFFDTZNOTHours);
+    }
+
+
+    function _holidayOTHours() {
+      var hFFDTZHOTHours = parseFloat($scope.entity.FFDTZHOTHours);
+      _isNumberKey(hFFDTZHOTHours);
+    }
+
+    function _isNumberKey(key) {
+      //getting key code of pressed key
+      var keycode = (key.which) ? key.which : key.keyCode;
+      //comparing pressed keycodes
+
+      if (keycode > 31 && (keycode < 48 || keycode > 57) && keycode != 47) {
+        alert(" You can enter only characters 0 to 9 ");
+        return false;
+      }
+      else return true;
     }
   }
 
