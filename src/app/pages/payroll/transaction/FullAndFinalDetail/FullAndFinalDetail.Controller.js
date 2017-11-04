@@ -18,10 +18,12 @@
     $scope.close = _close;
     vm.queryId = 586;
     $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false, paginationPageSize: 10 }
+    $scope.pageReport = { reportId: 62 }
 
-
-
+    $scope.showGrid = false;
+    $scope.showReport = true;
     $scope.showEditForm = true;
+
     $scope.showOnClick = false;
     $scope.selectedDesignDept = _selectedDesignDept;
     $scope.getEmpFullAndFinal = _getEmpFullAndFinal;
@@ -31,8 +33,11 @@
     $scope.closeForm = _closeForm;
     vm.oldEntity = {};
     var fullNFinalId = 0;
+    $scope.closeReport = _closeReport;
 
     var fullAndFinalSalaryPageId = 473;
+
+
 
     $scope.page.boxOptions = {
       selfLoading: true,
@@ -55,6 +60,7 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
+      customColumns: [{ text: 'Report', type: 'a', name: 'Option', click: _fReport, pin: true }],
       pageResult: _pageResult,
       dataResult: _dataResult
     }
@@ -65,15 +71,42 @@
     function _pageResult(result) {
       console.log(result);
     }
+    function _fReport(row) {
+      console.log(row.entity.FFDTZEmpId)
+
+      // $scope.pageReport = { reportId: 19 }
+      // $state.go(row.entity.FFDTZEmpId);
+      // $scope.page = { reportId: 61 }
+      $scope.showGrid = true;
+      $scope.showReport = false;
+      $scope.showEditForm = true;
+
+    }
+
+    function _closeReport() {
+      $scope.showGrid = false;
+      $scope.showReport = true;
+      $scope.showEditForm = true;
+    }
+
 
     function _addRecord() {
       $scope.entity = {};
+      // $scope.showEditForm = false;
+      $scope.showGrid = true;
+      $scope.showReport = true;
       $scope.showEditForm = false;
+
       $scope.showOnClick = false;
       $scope.page.refreshData();
     }
     function _closeForm() {
+      // $scope.showEditForm = true;
+
+      $scope.showGrid = false;
+      $scope.showReport = true;
       $scope.showEditForm = true;
+
       $scope.showOnClick = false;
       $scope.page.refreshData();
     }
@@ -208,9 +241,9 @@
 
           console.log(totalEarning);
 
-          $scope.entity.totalEarning = parseFloat(totalEarning) + parseFloat($scope.entity.FAFDGratuity);
-          $scope.entity.totalDeduction = parseFloat(totalDeduction) + parseFloat($scope.entity.LoanOutstanding);
-          $scope.entity.netPayment = parseFloat($scope.entity.totalEarning) - parseFloat($scope.entity.totalDeduction);
+          $scope.entity.FAFDTotalEarning = parseFloat(totalEarning) + parseFloat($scope.entity.FAFDGratuity);
+          $scope.entity.FAFDTotalDeduction = parseFloat(totalDeduction) + parseFloat($scope.entity.LoanOutstanding);
+          $scope.entity.FAFDNetPayment = parseFloat($scope.entity.FAFDTotalEarning) - parseFloat($scope.entity.FAFDTotalDeduction);
 
         })
       }
@@ -224,11 +257,16 @@
     }
 
     function _totalPayDays() {
-      $scope.entity.totalPayDays = parseInt($scope.entity.payDays) + parseInt($scope.entity.FAFDELEncashable);
+      var PpayDays = parseFloat($scope.entity.payDays);
+      if (isNaN(PpayDays))
+        PpayDays = 0;
+      $scope.entity.payDays = PpayDays;
+
+      $scope.entity.totalPayDays = (parseFloat($scope.entity.payDays) + parseFloat($scope.entity.FAFDELEncashable)).toFixed(2);
     }
 
     function _saveForm() {
-      if ($scope.entity.totalEarning !== undefined && $scope.entity.totalEarning != '' && $scope.entity.totalEarning != null) {
+      if ($scope.entity.FAFDTotalEarning !== undefined && $scope.entity.FAFDTotalEarning != '' && $scope.entity.FAFDTotalEarning != null) {
         $scope.entity.FAFEmpId = $scope.entity.selectedEmp.value;
         editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
           $scope.entity.FAFDId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
@@ -245,7 +283,12 @@
       console.log(result);
       console.log(result.entity.FAFDId)
       fullNFinalId = result.entity.FAFDId;
+      // $scope.showEditForm = true;
+
+      $scope.showGrid = false;
+      $scope.showReport = true;
       $scope.showEditForm = true;
+
       $scope.showOnClick = false;
       $scope.page.refreshData();
       _saveFullNFinalClick();

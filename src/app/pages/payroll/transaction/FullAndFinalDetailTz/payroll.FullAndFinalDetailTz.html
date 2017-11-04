@@ -1,4 +1,4 @@
-<grid-box ng-model="page" ng-show="showEditForm">
+<grid-box ng-model="page" ng-hide="showGrid">
 </grid-box>
 
 
@@ -64,7 +64,7 @@
             <div class="form-group">
                 <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZPWorkingDay.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="text" ng-model="entity.FFDTZPWorkingDay">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZPWorkingDay">
                     <!--<field-box page="page" ng-column="page.pageinfo.fields.FADAppDate " ng-entity="entity " form="editForm "></field-box>-->
                 </div>
                 <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZPWorkingDayAmount.text}}</label>
@@ -89,7 +89,7 @@
             <div class="form-group">
                 <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZSeveranceDays.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="text" ng-model="entity.FFDTZSeveranceDays ">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZSeveranceDays ">
                 </div>
                 <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZSeveranceAllowance.text}}</label>
                 <div class="col-xs-4">
@@ -100,7 +100,7 @@
             <div class="form-group">
                 <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZUnpaidLeaveDays.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="text" ng-model="entity.FFDTZUnpaidLeaveDays">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZUnpaidLeaveDays">
                 </div>
                 <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZLeaveEncashment.text}}</label>
                 <div class="col-xs-4">
@@ -111,7 +111,7 @@
             <div class="form-group">
                 <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZNOTHours.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="text" ng-model="entity.FFDTZNOTHours">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZNOTHours">
                 </div>
                 <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTNormalOT.text}}</label>
                 <div class="col-xs-4">
@@ -122,7 +122,7 @@
             <div class="form-group">
                 <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZHOTHours.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="text" ng-model="entity.FFDTZHOTHours ">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZHOTHours ">
                 </div>
                 <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZHolidayOT.text}}</label>
                 <div class="col-xs-4">
@@ -133,21 +133,21 @@
             <div class="form-group">
                 <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZLeavePassege.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="text" ng-model="entity.FFDTZLeavePassege ">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZLeavePassege ">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZBonus.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="text" ng-model="entity.FFDTZBonus ">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZBonus ">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZOthersEarn.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="text" ng-model="entity.FFDTZOthersEarn ">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZOthersEarn ">
                 </div>
             </div>
 
@@ -210,7 +210,7 @@
             <div class="form-group">
                 <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZOthersDeduction.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="text" ng-model="entity.FFDTZOthersDeduction ">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZOthersDeduction ">
                 </div>
             </div>
 
@@ -233,3 +233,11 @@
         </div>
     </div>
 </form>
+
+<div ng-hide="showReport">
+    <label></label>
+    <div>
+        <button class="btn btn-primary" type="button" ng-click="closeReport();">Close</button>
+    </div>
+    <report-viewer ng-model="pageReport"></report-viewer>
+</div>

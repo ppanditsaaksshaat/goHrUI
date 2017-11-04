@@ -1,16 +1,89 @@
+<grid-box ng-model="page" ng-show="showEditForm">
+</grid-box>
 
- <script>
-    alert ('Tz')
-    </script>
 
-<div class="row">
-    <div class="col-md-3" ng-show="page.showFilter" style="padding-right:0px; margin-right:0px;  ">
-        <filter-box page="page"></filter-box>
+<form name="editForm " class="form-horizontal" novalidate ng-submit="saveForm() " ng-hide="showEditForm ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
+ " show-reset="true " condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.LEDEmpId.text}}</label>
+                <div class="col-xs-4">
+                    <select class="form-control" ng-model="entity.selectedEmp" ng-change="selectedDesignDept()" ng-options="employee.name  for employee in page.pageinfo.selects.LEDEmpId">
+                            </select>
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.LEDDate.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.LEDDate"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">Sub Unit</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.SUName"></span>
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">Designation Name</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.designName"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">Department Name</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.deptName"></span>
+                </div>
+                <button class="btn btn-primary" type="button" ng-click="getEmpFullAndFinal();">Show All</button>
+                <label for="inputEmail" class="control-label col-xs-2">Gross</label>
+                <div class="col-xs-3">
+                    <span class="form-control" ng-bind="entity.FFDTZGross"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group" ng-show="showOnClick">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.LEDELOpeninig.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.LEDELOpeninig"></span>
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.LEDCurrentYearEL.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.LEDCurrentYearEL"></span>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="showOnClick">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.LEDELTaken.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.LEDELTaken"></span>
+                </div>
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.LEDELEncashable.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.LEDELEncashable"></span>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="showOnClick">
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.LEDTotalEncashableLeave.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="text" ng-model="entity.LEDTotalEncashableLeave" ng-change="maxApplyEl()">
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.LEDEncashAmount.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="text" ng-model="entity.LEDEncashAmount">
+                </div>
+            </div>
+
+
+
+
+
+        </div>
     </div>
-    HELLO
-    <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
-        <grid-box page="page" box-options="boxSetting">
-        </grid-box>
-    </div>
-</div>
-
+</form>

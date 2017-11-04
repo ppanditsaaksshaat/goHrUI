@@ -17,6 +17,8 @@
     var currentState = $state.current;
     $scope.page = $scope.createPage();
     $scope.page.pageId = vm.pageId;
+    $scope.showGrid = false;
+    $scope.showReport = true;
     $scope.showEditForm = true;
     $scope.selectedDesignDept = _selectedDesignDept;
     $scope.getEmpGrossAmount = _getEmpGrossAmount;
@@ -27,6 +29,15 @@
     $scope.entity = {};
     vm.queryId = 588;
     var payeTaxDeductionQueryId = 590;
+    $scope.pWorkigDay = _pWorkigDay;
+    $scope.severanceDays = _severanceDays;
+    $scope.unpaidLeaveDays = _unpaidLeaveDays;
+    $scope.normalOTHours = _normalOTHours;
+    $scope.holidayOTHours = _holidayOTHours;
+
+    $scope.closeReport = _closeReport;
+
+    $scope.pageReport = { reportId: 61 }
 
     $scope.page.boxOptions = {
       selfLoading: true,
@@ -46,6 +57,7 @@
       refreshData: null,
       addRecord: _addRecord,
       editRecord: _editRecord,
+      customColumns: [{ text: 'Report', type: 'a', name: 'Option', click: _fReport, pin: true }],
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
@@ -60,13 +72,37 @@
       console.log(result);
     }
 
+    function _closeReport() {
+      $scope.showGrid = false;
+      $scope.showReport = true;
+      $scope.showEditForm = true;
+    }
+
+    function _fReport(row) {
+      console.log(row.entity.FFDTZEmpId)
+
+      // $scope.pageReport = { reportId: 19 }
+      // $state.go(row.entity.FFDTZEmpId);
+      // $scope.page = { reportId: 61 }
+      $scope.showGrid = true;
+      $scope.showReport = false;
+      $scope.showEditForm = true;
+
+    }
+
     function _addRecord() {
       $scope.entity = {};
+      $scope.showGrid = true;
+      $scope.showReport = true;
       $scope.showEditForm = false;
+
       $scope.page.refreshData();
     }
     function _closeForm() {
       $scope.entity = {};
+      // $scope.showEditForm = true;
+      $scope.showGrid = false;
+      $scope.showReport = true;
       $scope.showEditForm = true;
       $scope.page.refreshData();
     }
@@ -74,6 +110,8 @@
       console.log(row)
       $scope.entity = row.entity;
       $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.FFDTZEmpId, row.entity.FFDTZEmpId, 'value')
+      $scope.showGrid = true;
+      $scope.showReport = true;
       $scope.showEditForm = false;
     }
 
@@ -146,6 +184,9 @@
       $scope.entity.FFDTZSeveranceDays = result[0][0].YearJoin
       $scope.entity.FFDTZUnpaidLeaveDays = result[0][0].ENcashmentEL
       $scope.entity.FFDTZLoan = result[0][0].LoanOutstanding
+
+
+      console.log($scope.entity.FFDTZPWorkingDay)
 
       // $scope.entity.FAFDCurrentYearEL = result[0][0].ELCurrent
       // $scope.entity.FAFDELOpeninig = result[0][0].ELOpen
@@ -337,12 +378,55 @@
       // console.log(result);
       // console.log(result.entity.FAFDId)
       // fullNFinalId = result.entity.FAFDId;
+      // $scope.showEditForm = true;
+      $scope.showGrid = false;
+      $scope.showReport = true;
       $scope.showEditForm = true;
       $scope.page.refreshData();
     }
 
     function _saveFormErrorResult(error) {
       console.log(error);
+    }
+
+    function _pWorkigDay() {
+      var pFDTZPWorkingDay = parseFloat($scope.entity.FFDTZPWorkingDay);
+      // _isNumberKey(pFDTZPWorkingDay);
+    }
+
+
+
+    function _unpaidLeaveDays() {
+      var pFDTZPWorkingDay = parseFloat($scope.entity.FFDTZPWorkingDay);
+      _isNumberKey(pFDTZPWorkingDay);
+    }
+
+    function _severanceDays() {
+      var sFFDTZSeveranceDays = parseFloat($scope.entity.FFDTZSeveranceDays);
+      _isNumberKey(sFFDTZSeveranceDays);
+    }
+
+    function _normalOTHours() {
+      var nFFDTZNOTHours = parseFloat($scope.entity.FFDTZNOTHours);
+      _isNumberKey(nFFDTZNOTHours);
+    }
+
+
+    function _holidayOTHours() {
+      var hFFDTZHOTHours = parseFloat($scope.entity.FFDTZHOTHours);
+      _isNumberKey(hFFDTZHOTHours);
+    }
+
+    function _isNumberKey(key) {
+      //getting key code of pressed key
+      var keycode = (key.which) ? key.which : key.keyCode;
+      //comparing pressed keycodes
+
+      if (keycode > 31 && (keycode < 48 || keycode > 57) && keycode != 47) {
+        alert(" You can enter only characters 0 to 9 ");
+        return false;
+      }
+      else return true;
     }
   }
 
