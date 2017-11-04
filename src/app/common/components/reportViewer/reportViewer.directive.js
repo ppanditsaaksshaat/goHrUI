@@ -24,7 +24,7 @@
 
             },
             link: function ($scope, elm, attrs, ctrl) {
-                var reportBaseURL = 'report/';
+                var reportBaseURL = 'http://itsllive.rudra.hrm/';
 
                 var host = $location.host();
                 var absUrl = $location.absUrl();
@@ -37,8 +37,8 @@
                 var hostIdx = absUrl.indexOf(host);
                 reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx);
 
-               //reportBaseURL = 'http://rudraitsllive.com';
-
+                // reportBaseURL = 'http://itsllive.rudra.hrm/';
+                console.log(reportBaseURL)
 
                 var boxSetting = {
                     selfLoading: true,//gridBox will fetch data from api on its own
@@ -126,8 +126,16 @@
                         }
                         userFilterData.push(userFilter);
                     })
+
+                    // var userEmpId = $rootScope.user.profile.empId;
+                    // userFilterData.push({
+                    //     name: 'UserEmpId',
+                    //     nosp: 'UserEmpId',
+                    //     selectedValue: userEmpId
+                    // })
+
                     console.log(userFilterData);
-                    var data = { reportId: $scope.page.reportId, filterData: userFilterData }
+                    var data = { reportId: $scope.page.reportId, filterData: userFilterData, userEmpId: $rootScope.user.profile.empId }
                     var uncData = JSON.stringify(data);
                     var compressed = LZString.compressToEncodedURIComponent(uncData);
                     compressed = compressed.toString().replace('+', '!')
@@ -137,7 +145,7 @@
                     pageService.rptHandshake($scope.page.reportId, JSON.stringify(encData)).then(function (result) {
                         //   var result = angular.fromJson(response.data);
                         console.log(result)
-                        var rptUrl = reportBaseURL + result.URL + '/' + result.Key + '/' + result.OAuth;
+                        var rptUrl = reportBaseURL + 'Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth;
                         console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 
@@ -151,7 +159,7 @@
                 }
 
                 function _loadReport() {
-                   
+
                     pageService.getListReport($scope.reportId).then(function (result) {
 
                         $scope.page.pageinfo = result;
