@@ -49,13 +49,13 @@
 
     function _pageResult(result) {
       console.log(result)
-      if (result.pageinfo.uibuttons.pending.IsAllowed == "True" || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
+      if (result.pageinfo.uibuttons.pending.IsAllowed || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
         $scope.page.boxOptions.customButtons.push({ text: 'Pending', icon: 'ion-refresh', onClick: _pendingClick, type: 'btn-danger' })
-      if (result.pageinfo.uibuttons.ready.IsAllowed == "True" || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
+      if (result.pageinfo.uibuttons.ready.IsAllowed || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
         $scope.page.boxOptions.customButtons.push({ text: 'Ready', icon: 'fa fa-plus-circle', onClick: _readyClick, type: 'btn-warning' })
-      if (result.pageinfo.uibuttons.regenerate.IsAllowed == "True" || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
+      if (result.pageinfo.uibuttons.regenerate.IsAllowed || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
         $scope.page.boxOptions.customButtons.push({ text: 'ReGenerate', icon: 'ion-refresh', onClick: _reGenerateClick, type: 'btn-danger' })
-      if (result.pageinfo.uibuttons.saveandregenrate.IsAllowed == "True" || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
+      if (result.pageinfo.uibuttons.saveandregenrate.IsAllowed || ($scope.user.profile.isAdmin && $scope.user.profile.isManager))
         $scope.page.boxOptions.customButtons.push({ text: 'Save & Generate Salary', icon: 'btn-primary', onClick: _saveAndGenerateSalaryClick, type: 'btn-warning' })
     }
 
