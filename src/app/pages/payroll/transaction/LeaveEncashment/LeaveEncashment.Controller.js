@@ -248,7 +248,6 @@
     }
 
     function _viewRecord(row) {
-      debugger;
       if (row.entity.StatusId == 0) {
         _editRecord(row);
       }
