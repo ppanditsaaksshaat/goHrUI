@@ -30,6 +30,9 @@
     $scope.maxApplyEl = _maxApplyEl;
     var grossSalary = 0;
     var monthDays = 0;
+    $scope.enableShowButton = true;
+    $scope.disabledEmp = false;
+    $scope.showStatus = false;
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -49,7 +52,8 @@
       addRecord: _addRecord,
       editRecord: _editRecord,
       updateRecord: null,
-      viewRecord: null,
+      customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _lEVerify, pin: true }],
+      viewRecord: _viewRecord,
       deleteRecord: null,
       pageResult: _pageResult,
       dataResult: _dataResult
@@ -63,7 +67,7 @@
     }
 
     function _selectedDesignDept() {
-      $scope.entity.LEDDate = $scope.entity.selectedEmp.RDRelievingDate;
+      // $scope.entity.LEDDate = $scope.entity.selectedEmp.RDRelievingDate;
       $scope.entity.SUName = $scope.entity.selectedEmp.SUName;
       $scope.entity.designName = $scope.entity.selectedEmp.DesgName;
       $scope.entity.deptName = $scope.entity.selectedEmp.DeptName;
@@ -73,20 +77,37 @@
     }
 
     function _editRecord(row) {
+      $scope.showStatus = false;
+      $scope.disabledEmp = true;
       console.log(row)
+      $scope.enableShowButton = false;
       $scope.entity = row.entity;
+
+
+
       $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.LEDEmpId, row.entity.LEDEmpId, 'value')
+      $scope.entity.SUName = row.entity.selectedEmp.SUName;
+      $scope.entity.designName = row.entity.selectedEmp.DesgName;
+      $scope.entity.deptName = row.entity.selectedEmp.DeptName;
+      console.log($scope.entity.selectedEmp);
       $scope.showEditForm = false;
       $scope.showOnClick = true;
     }
 
     function _addRecord() {
+      console.log(moment());
+      $scope.showStatus = false;
+      $scope.enableShowButton = true;
+      $scope.disabledEmp = false;
       $scope.entity = {};
+      $scope.entity.LEDDate = moment().format("DD/MM/YYYY")
+      console.log(moment(new Date(), "DD/MM"))
       $scope.showEditForm = false;
       $scope.showOnClick = false;
     }
 
     function _closeForm() {
+      $scope.showStatus = false;
       $scope.showEditForm = true;
       $scope.showOnClick = false;
       $scope.page.refreshData();
@@ -97,7 +118,8 @@
       if ($scope.entity.selectedEmp.value !== undefined && $scope.entity.selectedEmp.value != '') {
         if ($scope.entity.LEDDate !== undefined && $scope.entity.LEDDate != '') {
 
-          monthDays = moment($scope.entity.LEDDate).daysInMonth();
+          // monthDays = moment($scope.entity.LEDDate).daysInMonth();
+          monthDays = 30
 
           $scope.showOnClick = true;
           var searchLists = [];
@@ -161,10 +183,21 @@
     function _saveForm() {
       if ($scope.entity.LEDEncashAmount !== undefined && $scope.entity.LEDEncashAmount != '' && $scope.entity.LEDEncashAmount != null) {
         if ($scope.entity.LEDEncashAmount > 0) {
-          $scope.entity.LEDEmpId = $scope.entity.selectedEmp.value;
-          editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
-            $scope.entity.LEDId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
-            .then(_saveFormSuccessResult, _saveFormErrorResult)
+          if ($scope.showStatus) {
+            if (!_validateSanctionForm()) {
+              $scope.entity.LEDEmpId = $scope.entity.selectedEmp.value;
+              editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
+                $scope.entity.LEDId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+                .then(_saveFormSuccessResult, _saveFormErrorResult)
+            }
+          }
+          else {
+            $scope.entity.LEDEmpId = $scope.entity.selectedEmp.value;
+            $scope.entity.StatusId = 0
+            editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
+              $scope.entity.LEDId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+              .then(_saveFormSuccessResult, _saveFormErrorResult)
+          }
         }
         else {
           $scope.showMsg("warning", "total earning amount should be more than 0");
@@ -212,6 +245,94 @@
         $scope.showMsg("warning", "total encashable EL should less than max balance " + encashLeaveMaxAllow);
         // ELEDTotalEncashableLeave = 0;
       }
+    }
+
+    function _viewRecord(row) {
+      debugger;
+      if (row.entity.StatusId == 0) {
+        _editRecord(row);
+      }
+      else {
+        $scope.status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
+
+
+
+        if (!$scope.status.isApproved) {
+          if (!$scope.status.isRejected) {
+            if (!$scope.status.isOnHold) {
+              // $scope.entity = angular.copy(row.entity);
+              // $scope.showEditForm = true;
+              // $scope.showSanctionForm = true;
+              // $scope.showForm = false;
+              // $scope.entity = row.entity
+
+            }
+            else {
+              $scope.showMsg("error", "Your application has been onhold")
+            }
+          }
+          else {
+            $scope.showMsg("error", "Your application has been rejected")
+          }
+        }
+        else {
+          $scope.showMsg("error", "Your application has been sanctioned")
+        }
+      }
+    }
+
+    function _lEVerify(row) {
+      console.log(row)
+      var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
+      console.log(status)
+      if (status == null) {
+        status = {};
+        status.isRejected = false;
+        status.isCancelRequest = false;
+      }
+      if (!status.isRejected) {
+        if (!status.isCancelRequest && !status.isCancelApproved && !status.isCancelRejected && !status.isCancelOnHold) {
+          $scope.showStatus = true;
+          $scope.disabledEmp = true;
+          console.log(row)
+          $scope.enableShowButton = false;
+          $scope.entity = row.entity;
+          $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.LEDEmpId, row.entity.LEDEmpId, 'value')
+          $scope.entity.SUName = row.entity.selectedEmp.SUName;
+          $scope.entity.designName = row.entity.selectedEmp.DesgName;
+          $scope.entity.deptName = row.entity.selectedEmp.DeptName;
+          console.log($scope.entity.selectedEmp);
+          $scope.showEditForm = false;
+          $scope.showOnClick = true;
+        }
+        else {
+
+          // $scope.showStatus = true;
+          // $scope.disabledEmp = true;
+          // console.log(row)
+          // $scope.enableShowButton = false;
+          // $scope.entity = row.entity;
+          // $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.LEDEmpId, row.entity.LEDEmpId, 'value')
+          // $scope.entity.SUName = row.entity.selectedEmp.SUName;
+          // $scope.entity.designName = row.entity.selectedEmp.DesgName;
+          // $scope.entity.deptName = row.entity.selectedEmp.DeptName;
+          // console.log($scope.entity.selectedEmp);
+          // $scope.showEditForm = false;
+          // $scope.showOnClick = true;
+
+        }
+      }
+      else {
+        $scope.showMsg("error", "You can view this App only")
+      }
+    }
+
+    function _validateSanctionForm() {
+      if ($scope.entity.StatusId == "0" || $scope.entity.StatusId == undefined) {
+        $scope.showMsg("error", "Status should be sanctioned/onhold/reject");
+        return true;
+      }
+      return false;
     }
 
   }
