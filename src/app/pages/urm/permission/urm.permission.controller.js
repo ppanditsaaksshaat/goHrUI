@@ -68,10 +68,10 @@
     }
 
     function _generateNodes() {
-      
+
       $scope.nodes = [];
       var parentMenu = $filter('findAll')($scope.menuList, 0, 'UIMenuParentMenuId')
-    
+
       for (var p = 0; p < parentMenu.length; p++) {
         var node = { id: parentMenu[p].UIMenuId, name: parentMenu[p].ResourceText, checked: parentMenu[p].checked }
         var childList = _getChild(parentMenu[p].UIMenuId)
@@ -277,9 +277,14 @@
 
     function _getRoleMenuActivitySuccess(result) {
       console.log(result[0])
-      $scope.activityList = result[0];
-      $scope.activityList.splice(0, 0, { 'MenuActivityId': 0, 'MenuActivityName': 'all', 'ActText': 'All' })
       $scope.isShowActivity = true;
+      $scope.activityList = result[0];
+      if ($scope.activityList.length > 0)
+        $scope.activityList.splice(0, 0, { 'MenuActivityId': 0, 'MenuActivityName': 'all', 'ActText': 'All' })
+      else{
+        $scope.isShowActivity = false;
+      }
+
     }
     function _activityOnChange(value, isSelected) {
       console.log(value)
@@ -306,7 +311,7 @@
     }
 
     function _saveActivity() {
-      
+
       $scope.isSavingActivity = true;
       $scope.isActivitySaved = false;
       $scope.isApplyingChanges = true;
@@ -362,7 +367,7 @@
     }
 
     $scope.myClick = function (node) {
-      // //alert('Clicked [' + node.name + '] state is [' + node.checked + ']');
+      //alert('Clicked [' + node.name + '] state is [' + node.checked + ']');
       // var param = { node: node, roleId: $scope.selectedRoleId }
       // var confirm = dialog.confirm(param);
       // confirm.result.then(function (btn) {

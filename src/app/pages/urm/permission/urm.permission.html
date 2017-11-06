@@ -16,13 +16,13 @@
                             <tree-view checkbox click="myClick(node)" model="nodes" ng-show="isPermissionLoaded"></tree-view>
                         </div>
 
-                        <button ng-click="savePermission()" class="btn btn-info btn-lg" ng-disabled="isApplyingChanges">
-                                                <i ng-show="isApplyingChanges" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
-                                                <span ng-hide="isApplyingChanges">Apply Changes</span>
-                                                <span ng-show="isApplyingChanges">Applying..</span>
-                                </button>
+                        <button ng-hide="isShowActivity" ng-click="savePermission()" class="btn btn-info btn-lg" ng-disabled="isApplyingChanges">
+                            <i ng-show="isApplyingChanges" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                            <span ng-hide="isApplyingChanges">Apply Changes</span>
+                            <span ng-show="isApplyingChanges">Applying..</span>
+                        </button>
 
-                        <button type="button" class="btn btn-danger btn-lg" ng-click="reset()">Reset</button>
+                        <button ng-hide="isShowActivity" type="button" class="btn btn-danger btn-lg" ng-click="reset()">Reset</button>
                     </div>
                     <div class="col-md-6">
                         <div ng-show="isShowActivity">
@@ -50,7 +50,7 @@
                                             <i ng-show="isSavingActivity" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
                                             <span ng-hide="isSavingActivity">Save</span>
                                             <span ng-show="isSavingActivity">Saving..</span>
-                                    </button>
+                                </button>
 
                                 <button type="button" class="btn btn-danger" ng-click="isShowActivity=false">Cancel</button>
                             </div>
