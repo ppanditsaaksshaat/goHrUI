@@ -482,6 +482,10 @@
         $scope.showMsg("error", "Status should be sanctioned/onhold/reject");
         return true;
       }
+      if ($scope.entity.FFDTZComment == undefined || $scope.entity.FFDTZComment == '' || $scope.entity.FFDTZComment == null) {
+        $scope.showMsg("error", "Please Enter Comment");
+        return true;
+      }
       return false;
     }
 
