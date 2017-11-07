@@ -114,32 +114,38 @@
     }
 
     function _getEmpFullAndFinal() {
-      console.log($scope.entity.selectedEmp.value)
-      if ($scope.entity.selectedEmp.value !== undefined && $scope.entity.selectedEmp.value != '') {
-        if ($scope.entity.LEDDate !== undefined && $scope.entity.LEDDate != '') {
+      console.log($scope.entity.selectedEmp)
+      if ($scope.entity.selectedEmp !== undefined && $scope.entity.selectedEmp != '') {
+        if ($scope.entity.selectedEmp.value !== undefined && $scope.entity.selectedEmp.value != '') {
+          if ($scope.entity.LEDDate !== undefined && $scope.entity.LEDDate != '') {
 
-          // monthDays = moment($scope.entity.LEDDate).daysInMonth();
-          monthDays = 30
+            // monthDays = moment($scope.entity.LEDDate).daysInMonth();
+            monthDays = 30
 
-          $scope.showOnClick = true;
-          var searchLists = [];
-          var searchListData = { field: 'EmpId', operand: '=', value: $scope.entity.selectedEmp.value }
-          searchLists.push(searchListData)
-          var searchListData = { field: 'FullandFinalDate', operand: '=', value: $scope.entity.LEDDate }
-          searchLists.push(searchListData)
-          var data = {
-            searchList: searchLists,
-            orderByList: []
+            $scope.showOnClick = true;
+            var searchLists = [];
+            var searchListData = { field: 'EmpId', operand: '=', value: $scope.entity.selectedEmp.value }
+            searchLists.push(searchListData)
+            var searchListData = { field: 'FullandFinalDate', operand: '=', value: $scope.entity.LEDDate }
+            searchLists.push(searchListData)
+            var data = {
+              searchList: searchLists,
+              orderByList: []
+            }
+            pageService.getCustomQuery(data, vm.queryId).then(_getEmployeeFullAndFinalResult, _getEmployeeFullAndFinalErrorResult)
           }
-          pageService.getCustomQuery(data, vm.queryId).then(_getEmployeeFullAndFinalResult, _getEmployeeFullAndFinalErrorResult)
+          else {
+            $scope.showMsg("warning", "Please Select Date")
+          }
         }
         else {
-          $scope.showMsg("warning", "Please Select Date")
+          $scope.showMsg("warning", "Please Select Employee")
         }
       }
       else {
         $scope.showMsg("warning", "Please Select Employee")
       }
+
     }
 
     function _getEmployeeFullAndFinalResult(result) {
@@ -329,6 +335,10 @@
     function _validateSanctionForm() {
       if ($scope.entity.StatusId == "0" || $scope.entity.StatusId == undefined) {
         $scope.showMsg("error", "Status should be sanctioned/onhold/reject");
+        return true;
+      }
+      if ($scope.entity.LEDComment == undefined || $scope.entity.LEDComment == '' || $scope.entity.LEDComment == null) {
+        $scope.showMsg("error", "Please Enter Comment");
         return true;
       }
       return false;

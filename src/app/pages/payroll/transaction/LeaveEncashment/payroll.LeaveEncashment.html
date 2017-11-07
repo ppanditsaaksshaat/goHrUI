@@ -85,6 +85,10 @@
                 <div class="col-xs-4">
                     <select class="form-control" ng-model="entity.StatusId" ng-options="status.value as status.name for status in page.pageinfo.statuslist"></select>
                 </div>
+                <label for="inputPassword" class="control-label col-xs-2">Comment<span style="color:red">* </label>
+                <div class="col-xs-4">
+                    <textarea class="form-control" ng-model="entity.LEDComment"></textarea>
+                </div>
 
             </div>
 

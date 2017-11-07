@@ -34,6 +34,8 @@
     $scope.unpaidLeaveDays = _unpaidLeaveDays;
     $scope.normalOTHours = _normalOTHours;
     $scope.holidayOTHours = _holidayOTHours;
+    $scope.disabledEmp = false;
+    $scope.showStatus = false;
 
     $scope.closeReport = _closeReport;
 
@@ -57,15 +59,48 @@
       refreshData: null,
       addRecord: _addRecord,
       editRecord: _editRecord,
-      customColumns: [{ text: 'Report', type: 'a', name: 'Option', click: _fReport, pin: true }],
+      customColumns: [{ text: 'Report', type: 'a', name: 'Option', click: _fReport, pin: true }, { text: 'Verify', type: 'a', name: 'Verify', click: _FNFTZVerify, pin: true }],
       updateRecord: null,
-      viewRecord: null,
+      viewRecord: _viewRecord,
       deleteRecord: null,
       pageResult: _pageResult,
       dataResult: _dataResult
     }
     function _dataResult(result) {
       console.log(result)
+    }
+
+    function _viewRecord(row) {
+      if (row.entity.StatusId == 0) {
+        _editRecord(row);
+      }
+      else {
+        $scope.status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
+
+
+
+        if (!$scope.status.isApproved) {
+          if (!$scope.status.isRejected) {
+            if (!$scope.status.isOnHold) {
+              // $scope.entity = angular.copy(row.entity);
+              // $scope.showEditForm = true;
+              // $scope.showSanctionForm = true;
+              // $scope.showForm = false;
+              // $scope.entity = row.entity
+
+            }
+            else {
+              $scope.showMsg("error", "Your application has been onhold")
+            }
+          }
+          else {
+            $scope.showMsg("error", "Your application has been rejected")
+          }
+        }
+        else {
+          $scope.showMsg("error", "Your application has been sanctioned")
+        }
+      }
     }
 
     function _pageResult(result) {
@@ -91,6 +126,8 @@
     }
 
     function _addRecord() {
+      $scope.showStatus = false;
+      $scope.disabledEmp = false;
       $scope.entity = {};
       $scope.showGrid = true;
       $scope.showReport = true;
@@ -99,6 +136,7 @@
       $scope.page.refreshData();
     }
     function _closeForm() {
+      $scope.showStatus = false;
       $scope.entity = {};
       // $scope.showEditForm = true;
       $scope.showGrid = false;
@@ -107,9 +145,14 @@
       $scope.page.refreshData();
     }
     function _editRecord(row) {
+      $scope.showStatus = false;
+      $scope.disabledEmp = true;
       console.log(row)
       $scope.entity = row.entity;
       $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.FFDTZEmpId, row.entity.FFDTZEmpId, 'value')
+      $scope.entity.SUName = row.entity.selectedEmp.SUName;
+      $scope.entity.designName = row.entity.selectedEmp.DesgName;
+      $scope.entity.deptName = row.entity.selectedEmp.DeptName;
       $scope.showGrid = true;
       $scope.showReport = true;
       $scope.showEditForm = false;
@@ -362,10 +405,23 @@
 
     function _saveForm() {
       if ($scope.entity.FFDTZNetAmount !== undefined && $scope.entity.FFDTZNetAmount != '' && $scope.entity.FFDTZNetAmount != null) {
-        $scope.entity.FFDTZEmpId = $scope.entity.selectedEmp.value;
-        editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
-          $scope.entity.FFDTZId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
-          .then(_saveFormSuccessResult, _saveFormErrorResult)
+
+
+        if ($scope.showStatus) {
+          if (!_validateSanctionForm()) {
+            $scope.entity.FFDTZEmpId = $scope.entity.selectedEmp.value;
+            editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
+              $scope.entity.FFDTZId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+              .then(_saveFormSuccessResult, _saveFormErrorResult)
+          }
+        }
+        else {
+          $scope.entity.StatusId = 0
+          $scope.entity.FFDTZEmpId = $scope.entity.selectedEmp.value;
+          editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
+            $scope.entity.FFDTZId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+            .then(_saveFormSuccessResult, _saveFormErrorResult)
+        }
       }
       else {
         $scope.showMsg("warning", "total earning amount should be more than 0");
@@ -387,6 +443,46 @@
 
     function _saveFormErrorResult(error) {
       console.log(error);
+    }
+
+
+    function _FNFTZVerify(row) {
+      console.log(row)
+      var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
+      console.log(status)
+      if (status == null) {
+        status = {};
+        status.isRejected = false;
+        status.isCancelRequest = false;
+      }
+      if (!status.isRejected) {
+        if (!status.isCancelRequest && !status.isCancelApproved && !status.isCancelRejected && !status.isCancelOnHold) {
+          $scope.showStatus = true;
+          $scope.disabledEmp = true;
+          console.log(row)
+          $scope.entity = row.entity;
+          $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.FFDTZEmpId, row.entity.FFDTZEmpId, 'value')
+          $scope.entity.SUName = row.entity.selectedEmp.SUName;
+          $scope.entity.designName = row.entity.selectedEmp.DesgName;
+          $scope.entity.deptName = row.entity.selectedEmp.DeptName;
+          $scope.showGrid = true;
+          $scope.showReport = true;
+          $scope.showEditForm = false;
+        }
+        else {
+        }
+      }
+      else {
+        $scope.showMsg("error", "You can view this App only")
+      }
+    }
+
+    function _validateSanctionForm() {
+      if ($scope.entity.StatusId == "0" || $scope.entity.StatusId == undefined) {
+        $scope.showMsg("error", "Status should be sanctioned/onhold/reject");
+        return true;
+      }
+      return false;
     }
 
     function _pWorkigDay() {
