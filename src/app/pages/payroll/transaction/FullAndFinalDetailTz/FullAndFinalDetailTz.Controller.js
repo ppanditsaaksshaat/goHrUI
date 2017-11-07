@@ -455,7 +455,7 @@
         status.isRejected = false;
         status.isCancelRequest = false;
       }
-      if (!status.isRejected) {
+      if (!status.isRejected && !status.isApproved) {
         if (!status.isCancelRequest && !status.isCancelApproved && !status.isCancelRejected && !status.isCancelOnHold) {
           $scope.showStatus = true;
           $scope.disabledEmp = true;
@@ -473,7 +473,7 @@
         }
       }
       else {
-        $scope.showMsg("error", "You can view this App only")
+        $scope.showMsg("error", "You can view this Application only")
       }
     }
 
