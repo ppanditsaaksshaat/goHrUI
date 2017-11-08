@@ -14,7 +14,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>{{page.pageinfo.fields.FAFEmpId.text}}</label>
-                        <select class="form-control" ng-model="entity.selectedEmp" ng-change="selectedDesignDept()" ng-options="employee.name  for employee in page.pageinfo.selects.FAFEmpId">
+                        <select class="form-control" ng-disabled="disabledEmp" ng-model="entity.selectedEmp" ng-change="selectedDesignDept()" ng-options="employee.name  for employee in page.pageinfo.selects.FAFEmpId">
                             </select>
 
                     </div>
@@ -55,7 +55,7 @@
                         <span class="form-control" ng-bind="entity.deptName"></span>
                     </div>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1" ng-show="enableShowButton">
                     <label></label>
                     <div>
                         <button class="btn btn-primary" type="button" ng-click="getEmpFullAndFinal();">Show</button>
