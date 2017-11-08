@@ -1,7 +1,7 @@
 <form ng-submit="empTabCtrl.saveFormCommon(editForm)" name="editForm" novalidate>
   <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
-    <edit-panel-head page="page" page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon(editForm)" clear-form="empTabCtrl.clearFormCommon()"
-      open-List="empTabCtrl.goToEmployeeList()" condition="(true)" show-close="true"></edit-panel-head>
+    <edit-panel-head page="page"  page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon(editForm)"
+      clear-form="empTabCtrl.clearFormCommon()" open-List="empTabCtrl.goToEmployeeList()" condition="user.profile.isAdmin && user.profile.isManager ? true :false" show-close="true"></edit-panel-head>
     <div class="panel-body" style="padding:5px;" ng-scrollbars ng-scrollbars-config="config">
       <div style="min-height: 450px;" ng-show="page.pageIsLoaded">
         <div class="row">
@@ -113,25 +113,25 @@
           </div>
         </div>
         <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label ng-bind="page.pageinfo.fields.JDReporting1.text"></label>
-                <field-box page="page" ng-column="page.pageinfo.fields.JDReporting1" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label ng-bind="page.pageinfo.fields.JDReporting2.text"></label>
-                <field-box page="page" ng-column="page.pageinfo.fields.JDReporting2" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label ng-bind="page.pageinfo.fields.JDReportingHR.text"></label>
-                <field-box page="page" ng-column="page.pageinfo.fields.JDReportingHR" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-              </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label ng-bind="page.pageinfo.fields.JDReporting1.text"></label>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDReporting1" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
             </div>
           </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label ng-bind="page.pageinfo.fields.JDReporting2.text"></label>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDReporting2" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label ng-bind="page.pageinfo.fields.JDReportingHR.text"></label>
+              <field-box page="page" ng-column="page.pageinfo.fields.JDReportingHR" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
+            </div>
+          </div>
+        </div>
         <!--this to be uncommented after adding columns in JobDescription:DJ-->
         <!--<div class="row">
           <div class="col-sm-4">

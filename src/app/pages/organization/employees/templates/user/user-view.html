@@ -1,7 +1,8 @@
 <form ng-submit="empTabCtrl.saveFormCommon(editForm)" name="editForm" novalidate>
     <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
         <edit-panel-head page="page" page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon(editForm)" clear-form="empTabCtrl.clearFormCommon()"
-            open-List="empTabCtrl.goToEmployeeList()" condition="(true)" show-close="true"></edit-panel-head>
+            open-List="empTabCtrl.goToEmployeeList()" condition="user.profile.isAdmin && user.profile.isManager ? true :false"
+            show-close="true"></edit-panel-head>
         <div class="panel-body" style="padding:5px;" ng-scrollbars ng-scrollbars-config="config">
             <div style="min-height: 450px;" ng-show="page.pageIsLoaded">
                 <!--<div class="row">
@@ -20,6 +21,7 @@
                         </div>
                     </div>
                 </div>-->
+
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
@@ -28,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-                
+
 
             </div>
         </div>

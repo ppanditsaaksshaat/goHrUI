@@ -131,6 +131,7 @@
                     $timeout(function () {
                         pageService.getPagData(vm.pageId).then(
                             _getPageDataSuccessResult, _getPageDataErrorResult);
+
                     });
                 }
                 if (vm.pageId == 35) {
@@ -375,6 +376,7 @@
                 deleteRecord: null,
                 uploadRecord: null
             }
+            
             if (pageId == 448) {
                 pageObject.boxOptions.showFilter = false;
                 pageObject.boxOptions.pageResult = _pageResultForBenefit;
