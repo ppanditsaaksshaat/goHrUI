@@ -26,7 +26,7 @@
     vm.queryId = 591;
     $scope.saveForm = _saveForm;
     vm.oldEntity = {};
-    var encashLeaveMaxAllow = 0;
+    $scope.encashLeaveMaxAllow = 0;
     $scope.maxApplyEl = _maxApplyEl;
     var grossSalary = 0;
     var monthDays = 0;
@@ -77,6 +77,7 @@
     }
 
     function _editRecord(row) {
+      $scope.page.isAllowEdit = true;
       $scope.showStatus = false;
       $scope.disabledEmp = true;
       console.log(row)
@@ -90,6 +91,9 @@
       $scope.entity.designName = row.entity.selectedEmp.DesgName;
       $scope.entity.deptName = row.entity.selectedEmp.DeptName;
       console.log($scope.entity.selectedEmp);
+      vm.oldEntity = angular.copy(row.entity);
+
+      // angular.copy(row.entity, vm.oldEntity)
       $scope.showEditForm = false;
       $scope.showOnClick = true;
     }
@@ -175,8 +179,8 @@
         console.log(value)
       });
 
-      encashLeaveMaxAllow = result[2][0].LRCEncashableDaysAllowed;
-      console.log(encashLeaveMaxAllow);
+      $scope.encashLeaveMaxAllow = result[2][0].LRCEncashableDaysAllowed;
+      console.log($scope.encashLeaveMaxAllow);
 
 
 
@@ -186,31 +190,48 @@
       console.log(error);
     }
 
+    function _validateSave() {
+      var trueVal = angular.equals($scope.entity, vm.oldEntity);
+      return trueVal;
+    }
+
     function _saveForm() {
       if ($scope.entity.LEDEncashAmount !== undefined && $scope.entity.LEDEncashAmount != '' && $scope.entity.LEDEncashAmount != null) {
         if ($scope.entity.LEDEncashAmount > 0) {
           if ($scope.showStatus) {
             if (!_validateSanctionForm()) {
+              if (!_validateSave()) {
+                $scope.entity.LEDEmpId = $scope.entity.selectedEmp.value;
+                editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
+                  $scope.entity.LEDId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+                  .then(_saveFormSuccessResult, _saveFormErrorResult)
+
+              }
+              else {
+                $scope.showMsg("info", "Nothing to save.")
+              }
+            }
+          }
+          else {
+            if (!_validateSave()) {
               $scope.entity.LEDEmpId = $scope.entity.selectedEmp.value;
+              $scope.entity.StatusId = 0
               editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
                 $scope.entity.LEDId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
                 .then(_saveFormSuccessResult, _saveFormErrorResult)
             }
-          }
-          else {
-            $scope.entity.LEDEmpId = $scope.entity.selectedEmp.value;
-            $scope.entity.StatusId = 0
-            editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
-              $scope.entity.LEDId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
-              .then(_saveFormSuccessResult, _saveFormErrorResult)
+            else {
+              $scope.showMsg("success", "Nothing to save.")
+            }
+
           }
         }
         else {
-          $scope.showMsg("warning", "total earning amount should be more than 0");
+          $scope.showMsg("warning", "EL encashable should be more than 0");
         }
       }
       else {
-        $scope.showMsg("warning", "total earning amount should be more than 0");
+        $scope.showMsg("warning", "EL encashable should be more than 0");
       }
 
     }
@@ -229,12 +250,13 @@
     }
 
     function _maxApplyEl() {
+      _getEmpFullAndFinal();
       var ELEDTotalEncashableLeave = parseFloat($scope.entity.LEDTotalEncashableLeave);
       if (isNaN(ELEDTotalEncashableLeave))
         ELEDTotalEncashableLeave = 0;
 
 
-      if (ELEDTotalEncashableLeave <= encashLeaveMaxAllow) {
+      if (ELEDTotalEncashableLeave <= $scope.encashLeaveMaxAllow) {
         if ($scope.entity.LEDELEncashable >= ELEDTotalEncashableLeave) {
           $scope.entity.LEDTotalEncashableLeave = ELEDTotalEncashableLeave;
           $scope.entity.LEDEncashAmount = ((grossSalary * ELEDTotalEncashableLeave) / monthDays).toFixed(2);;
@@ -248,7 +270,7 @@
       else {
         $scope.entity.LEDTotalEncashableLeave = 0;
         $scope.entity.LEDEncashAmount = 0;
-        $scope.showMsg("warning", "total encashable EL should less than max balance " + encashLeaveMaxAllow);
+        $scope.showMsg("warning", "total encashable EL should less than max balance " + $scope.encashLeaveMaxAllow);
         // ELEDTotalEncashableLeave = 0;
       }
     }
@@ -287,6 +309,7 @@
     }
 
     function _lEVerify(row) {
+      $scope.page.isAllowEdit = true;
       console.log(row)
       var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
       console.log(status)
