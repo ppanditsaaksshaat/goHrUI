@@ -9,7 +9,7 @@
     .controller('payFullAndFinalDetailController', payFullAndFinalDetailController);
 
   /** @ngInject */
-  function payFullAndFinalDetailController($scope, $state, pageService, editFormService) {
+  function payFullAndFinalDetailController($scope, $state, pageService, editFormService, $filter) {
     var vm = this;
     vm.pageId = 471;
     var currentState = $state.current;
@@ -23,6 +23,7 @@
     $scope.showGrid = false;
     $scope.showReport = true;
     $scope.showEditForm = true;
+    $scope.disabledEmp = false;
 
     $scope.showOnClick = false;
     $scope.selectedDesignDept = _selectedDesignDept;
@@ -34,8 +35,10 @@
     vm.oldEntity = {};
     var fullNFinalId = 0;
     $scope.closeReport = _closeReport;
+    $scope.entity = {};
 
     var fullAndFinalSalaryPageId = 473;
+    var getFullAndFinalQueryId = 594;
 
 
 
@@ -56,9 +59,9 @@
       getPageData: null,
       refreshData: null,
       addRecord: _addRecord,
-      editRecord: null,
+      editRecord: _editRecord,
       updateRecord: null,
-      viewRecord: null,
+      viewRecord: _viewRecord,
       deleteRecord: null,
       customColumns: [{ text: 'Report', type: 'a', name: 'Option', click: _fReport, pin: true }],
       pageResult: _pageResult,
@@ -71,6 +74,63 @@
     function _pageResult(result) {
       console.log(result);
     }
+
+    function _editRecord(row) {
+      $scope.page.isAllowEdit = true;
+      $scope.showStatus = false;
+      $scope.disabledEmp = true;
+      console.log(row)
+      $scope.enableShowButton = false;
+      $scope.entity = row.entity;
+      console.log(row)
+
+
+      $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.FAFEmpId, row.entity.FAFEmpId, 'value')
+      console.log($scope.entity.selectedEmp)
+      $scope.entity.SUName = row.entity.selectedEmp.SUName;
+      $scope.entity.designName = row.entity.selectedEmp.DesgName;
+      $scope.entity.deptName = row.entity.selectedEmp.DeptName;
+      console.log($scope.entity.selectedEmp);
+
+      var searchLists = [];
+      var searchListData = { field: 'FAFDId', operand: '=', value: row.entity.FAFDId }
+      searchLists.push(searchListData)
+      var data = {
+        searchList: searchLists,
+        orderByList: []
+      }
+      pageService.getCustomQuery(data, getFullAndFinalQueryId).then(_getEmployeeFullAndFinalOnEditResult, _getEmployeeFullAndFinalOnEditErrorResult)
+
+
+
+      $scope.showOnClick = true;
+    }
+
+    function _getEmployeeFullAndFinalOnEditResult(result) {
+      console.log(result)
+      // $scope.entity = result[0];
+
+      $scope.entity.FAFDTotalEarning = result[0][0].FAFDTotalEarning
+      $scope.entity.FAFDTotalDeduction = result[0][0].FAFDTotalDeduction
+      $scope.entity.FAFDNetPayment = result[0][0].FAFDNetPayment
+
+      $scope.weekGridOptions.columnDefs = [
+        { name: 'SHName', displayName: 'Salary Head', width: 170, enableCellEdit: false },
+        { name: 'FFSDSHRate', displayName: 'Head Rate', width: 130, enableCellEdit: false },
+        { name: 'FFSDSHAmount', displayName: 'Salary Amount', width: 130, enableCellEdit: false }
+      ]
+      $scope.weekGridOptions.data = result[1];
+
+
+      $scope.showGrid = true;
+      $scope.showReport = true;
+      $scope.showEditForm = false;
+    }
+
+    function _getEmployeeFullAndFinalOnEditErrorResult(error) {
+      console.log(error)
+    }
+
     function _fReport(row) {
       console.log(row.entity.FFDTZEmpId)
 
@@ -96,6 +156,7 @@
       $scope.showGrid = true;
       $scope.showReport = true;
       $scope.showEditForm = false;
+      $scope.disabledEmp = false;
 
       $scope.showOnClick = false;
       $scope.page.refreshData();
@@ -350,6 +411,34 @@
       $scope.showOnClick = false;
       // alert(JSON.stringify(err))
       console.log(err);
+    }
+
+    function _viewRecord(row) {
+      if (row.entity.StatusId == 0) {
+        _editRecord(row);
+      }
+      else {
+        $scope.status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
+
+
+
+        if (!$scope.status.isApproved) {
+          if (!$scope.status.isRejected) {
+            if (!$scope.status.isOnHold) {
+
+            }
+            else {
+              $scope.showMsg("error", "Your application has been onhold")
+            }
+          }
+          else {
+            $scope.showMsg("error", "Your application has been rejected")
+          }
+        }
+        else {
+          $scope.showMsg("error", "Your application has been sanctioned")
+        }
+      }
     }
 
   }

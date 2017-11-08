@@ -221,7 +221,7 @@
                 .then(_saveFormSuccessResult, _saveFormErrorResult)
             }
             else {
-              $scope.showMsg("success", "Nothing to save.")
+              $scope.showMsg("info", "Nothing to save.")
             }
 
           }

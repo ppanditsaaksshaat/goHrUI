@@ -144,7 +144,14 @@
       $scope.showEditForm = true;
       $scope.page.refreshData();
     }
+
+    function _validateSave() {
+      var trueVal = angular.equals($scope.entity, vm.oldEntity);
+      return trueVal;
+    }
+
     function _editRecord(row) {
+      $scope.page.isAllowEdit = true;
       $scope.showStatus = false;
       $scope.disabledEmp = true;
       console.log(row)
@@ -153,6 +160,7 @@
       $scope.entity.SUName = row.entity.selectedEmp.SUName;
       $scope.entity.designName = row.entity.selectedEmp.DesgName;
       $scope.entity.deptName = row.entity.selectedEmp.DeptName;
+      vm.oldEntity = angular.copy(row.entity);
       $scope.showGrid = true;
       $scope.showReport = true;
       $scope.showEditForm = false;
@@ -409,18 +417,29 @@
 
         if ($scope.showStatus) {
           if (!_validateSanctionForm()) {
+            if (!_validateSave()) {
+              $scope.entity.FFDTZEmpId = $scope.entity.selectedEmp.value;
+              editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
+                $scope.entity.FFDTZId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+                .then(_saveFormSuccessResult, _saveFormErrorResult)
+            }
+            else {
+              $scope.showMsg("info", "Nothing to save");
+            }
+
+          }
+        }
+        else {
+          if (!_validateSave()) {
+            $scope.entity.StatusId = 0
             $scope.entity.FFDTZEmpId = $scope.entity.selectedEmp.value;
             editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
               $scope.entity.FFDTZId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
               .then(_saveFormSuccessResult, _saveFormErrorResult)
           }
-        }
-        else {
-          $scope.entity.StatusId = 0
-          $scope.entity.FFDTZEmpId = $scope.entity.selectedEmp.value;
-          editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
-            $scope.entity.FFDTZId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
-            .then(_saveFormSuccessResult, _saveFormErrorResult)
+          else {
+            $scope.showMsg("info", "Nothing to save");
+          }
         }
       }
       else {
@@ -447,6 +466,7 @@
 
 
     function _FNFTZVerify(row) {
+      $scope.page.isAllowEdit = true;
       console.log(row)
       var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
       console.log(status)
