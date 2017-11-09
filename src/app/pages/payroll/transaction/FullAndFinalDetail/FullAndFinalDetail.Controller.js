@@ -17,7 +17,10 @@
     $scope.page.pageId = vm.pageId;
     $scope.close = _close;
     vm.queryId = 586;
-    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false, paginationPageSize: 10 }
+    $scope.weekGridOptions = {
+      enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false, paginationPageSize: 10
+      // , onRegisterApi: function (gridApi) { $scope.gridApi = gridApi }
+    }
     $scope.pageReport = { reportId: 62 }
 
     $scope.showGrid = false;
@@ -36,6 +39,8 @@
     var fullNFinalId = 0;
     $scope.closeReport = _closeReport;
     $scope.entity = {};
+
+    $scope.showStatus = false;
 
     var fullAndFinalSalaryPageId = 473;
     var getFullAndFinalQueryId = 594;
@@ -63,7 +68,7 @@
       updateRecord: null,
       viewRecord: _viewRecord,
       deleteRecord: null,
-      customColumns: [{ text: 'Report', type: 'a', name: 'Option', click: _fReport, pin: true }],
+      customColumns: [{ text: 'Report', type: 'a', name: 'Option', click: _fReport, pin: true }, { text: 'Verify', type: 'a', name: 'Verify', click: _fNFerify, pin: true }],
       pageResult: _pageResult,
       dataResult: _dataResult
     }
@@ -90,7 +95,10 @@
       $scope.entity.SUName = row.entity.selectedEmp.SUName;
       $scope.entity.designName = row.entity.selectedEmp.DesgName;
       $scope.entity.deptName = row.entity.selectedEmp.DeptName;
+      $scope.entity.subUnitId = $scope.entity.selectedEmp.JDSubUnitID;
       console.log($scope.entity.selectedEmp);
+      // vm.oldEntity = angular.copy(row.entity);
+
 
       var searchLists = [];
       var searchListData = { field: 'FAFDId', operand: '=', value: row.entity.FAFDId }
@@ -113,6 +121,9 @@
       $scope.entity.FAFDTotalEarning = result[0][0].FAFDTotalEarning
       $scope.entity.FAFDTotalDeduction = result[0][0].FAFDTotalDeduction
       $scope.entity.FAFDNetPayment = result[0][0].FAFDNetPayment
+      vm.oldEntity = result[0];
+      // $scope.entity.FAFDLoanOutstanding = result[0][0].FAFDLoanOutstanding
+      $scope.entity.totalPayDays = (parseFloat(result[0][0].FAFDPayDays) + parseFloat(result[0][0].FAFDELEncashable)).toFixed(2);
 
       $scope.weekGridOptions.columnDefs = [
         { name: 'SHName', displayName: 'Salary Head', width: 170, enableCellEdit: false },
@@ -151,6 +162,8 @@
 
 
     function _addRecord() {
+      $scope.showStatus = false;
+      $scope.enableShowButton = true;
       $scope.entity = {};
       // $scope.showEditForm = false;
       $scope.showGrid = true;
@@ -163,7 +176,7 @@
     }
     function _closeForm() {
       // $scope.showEditForm = true;
-
+      $scope.showStatus = false;
       $scope.showGrid = false;
       $scope.showReport = true;
       $scope.showEditForm = true;
@@ -231,7 +244,7 @@
       $scope.entity.FAFDELBalance = result[0][0].ELTaken
       // $scope.entity = result[0][0].TotalPresentDaysInYear
       $scope.entity.FAFDJoinYear = result[0][0].YearJoin
-      $scope.entity.LoanOutstanding = result[0][0].LoanOutstanding
+      $scope.entity.FAFDLoanOutstanding = result[0][0].LoanOutstanding
 
       $scope.weekGridOptions.columnDefs = [
         { name: 'SHName', displayName: 'Salary Head', width: 170, enableCellEdit: false },
@@ -276,15 +289,25 @@
               var rowData = $scope.weekGridOptions.data[row];
 
               console.log(rowData);
-              if (rowData.SHId == value.SalaryCode && rowData.SHIsDeduction == 0) {
+
+              if ((rowData.SHId == undefined && rowData.FFSDSHId == value.SalaryCode) || (rowData.FFSDSHId == undefined && rowData.SHId == value.SalaryCode) && (rowData.SHIsDeduction == 0)) {
+                // if ((rowData.SHId == undefined ? rowData.FFSDSHId : rowData.SHId == value.SalaryCode) && rowData.SHIsDeduction == 0) {
+                // $scope.weekGridOptions.data[row].push(value.SalaryHeadAmount)
+
                 rowData.SalaryAmount = value.SalaryHeadAmount;
+                rowData.FFSDSHAmount = value.SalaryHeadAmount;
                 console.log(rowData.SalaryAmount);
+
                 earning = parseFloat(value.SalaryHeadAmount);
                 console.log(earning);
                 totalEarning += earning;
               }
-              else if (rowData.SHId == value.SalaryCode && rowData.SHIsDeduction == 1) {
+              else if ((rowData.SHId == undefined && rowData.FFSDSHId == value.SalaryCode) || (rowData.FFSDSHId == undefined && rowData.SHId == value.SalaryCode) && (rowData.SHIsDeduction == 1)) {
+                // else if (rowData.SHId == value.SalaryCode && rowData.SHIsDeduction == 1) {
+                // $scope.weekGridOptions.data[row].push(value.SalaryHeadAmount)
+
                 rowData.SalaryAmount = value.SalaryHeadAmount;
+                rowData.FFSDSHAmount = value.SalaryHeadAmount;
                 console.log(rowData.SalaryAmount);
                 deduction = parseFloat(value.SalaryHeadAmount);
                 totalDeduction += deduction;
@@ -298,12 +321,13 @@
               // // totalSalAmount += parseFloat(salaryData);
               // // console.log(totalSalAmount);
             }
+            // $scope.gridApi.core.refresh();
           });
 
           console.log(totalEarning);
 
           $scope.entity.FAFDTotalEarning = parseFloat(totalEarning) + parseFloat($scope.entity.FAFDGratuity);
-          $scope.entity.FAFDTotalDeduction = parseFloat(totalDeduction) + parseFloat($scope.entity.LoanOutstanding);
+          $scope.entity.FAFDTotalDeduction = parseFloat(totalDeduction) + parseFloat($scope.entity.FAFDLoanOutstanding);
           $scope.entity.FAFDNetPayment = parseFloat($scope.entity.FAFDTotalEarning) - parseFloat($scope.entity.FAFDTotalDeduction);
 
         })
@@ -318,25 +342,76 @@
     }
 
     function _totalPayDays() {
-      var PpayDays = parseFloat($scope.entity.payDays);
-      if (isNaN(PpayDays))
-        PpayDays = 0;
-      $scope.entity.payDays = PpayDays;
+      var PFAFDPayDays = parseFloat($scope.entity.FAFDPayDays);
+      if (isNaN(PFAFDPayDays))
+        PFAFDPayDays = 0;
+      $scope.entity.FAFDPayDays = PFAFDPayDays;
 
-      $scope.entity.totalPayDays = (parseFloat($scope.entity.payDays) + parseFloat($scope.entity.FAFDELEncashable)).toFixed(2);
+      $scope.entity.totalPayDays = (parseFloat($scope.entity.FAFDPayDays) + parseFloat($scope.entity.FAFDELEncashable)).toFixed(2);
+    }
+
+    function _validateSave() {
+      var trueVal = angular.equals($scope.entity, vm.oldEntity);
+      return trueVal;
     }
 
     function _saveForm() {
+
+
+
+
+
       if ($scope.entity.FAFDTotalEarning !== undefined && $scope.entity.FAFDTotalEarning != '' && $scope.entity.FAFDTotalEarning != null) {
-        $scope.entity.FAFEmpId = $scope.entity.selectedEmp.value;
-        editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
-          $scope.entity.FAFDId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
-          .then(_saveFormSuccessResult, _saveFormErrorResult)
+
+
+        if ($scope.showStatus) {
+          if (!_validateSanctionForm()) {
+            if (!_validateSave()) {
+              $scope.entity.FAFEmpId = $scope.entity.selectedEmp.value;
+              editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
+                $scope.entity.FAFDId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+                .then(_saveFormSuccessResult, _saveFormErrorResult)
+
+            }
+            else {
+              $scope.showMsg("info", "Nothing to save.")
+            }
+          }
+        }
+        else {
+          if (!_validateSave()) {
+            $scope.entity.FAFEmpId = $scope.entity.selectedEmp.value;
+            $scope.entity.StatusId = 0
+            $scope.entity.FAFEmpId = $scope.entity.selectedEmp.value;
+            editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
+              $scope.entity.FAFDId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+              .then(_saveFormSuccessResult, _saveFormErrorResult)
+          }
+          else {
+            $scope.showMsg("info", "Nothing to save.")
+          }
+
+        }
+
+
+
       }
       else {
         $scope.showMsg("warning", "total earning amount should be more than 0");
       }
 
+    }
+
+    function _validateSanctionForm() {
+      if ($scope.entity.StatusId == "0" || $scope.entity.StatusId == undefined) {
+        $scope.showMsg("error", "Status should be sanctioned/onhold/reject");
+        return true;
+      }
+      if ($scope.entity.FAFDComment == undefined || $scope.entity.FAFDComment == '' || $scope.entity.FAFDComment == null) {
+        $scope.showMsg("error", "Please Enter Comment");
+        return true;
+      }
+      return false;
     }
 
     function _saveFormSuccessResult(result) {
@@ -372,9 +447,9 @@
           var data = {
             FFSDId: row.FFSDId == null ? undefined : row.FFSDId,
             FFSDFAFDId: fullNFinalId,
-            FFSDSHId: row.SHId,
-            FFSDSHRate: row.SalAmount,
-            FFSDSHAmount: row.SalaryAmount
+            FFSDSHId: row.SHId == undefined ? row.FFSDSHId : row.SHId,
+            FFSDSHRate: row.SalAmount == undefined ? row.FFSDSHRate : row.SalAmount,
+            FFSDSHAmount: row.SalaryAmount == undefined ? row.FFSDSHAmount : row.SalaryAmount,
 
           }
           console.log(data)
@@ -397,7 +472,7 @@
     function _successFullNFinalResult(result) {
       $scope.showOnClick = false;
       console.log(result)
-      $scope.showMsg("success", "Saved Successfully");
+      $scope.showMsg("success", "Record Saved Successfully");
       $scope.page.refreshData();
       // benefintSavecount++;
       // console.log(benefintSavecount + ' of ' + totalSavingRecord)
@@ -438,6 +513,55 @@
         else {
           $scope.showMsg("error", "Your application has been sanctioned")
         }
+      }
+    }
+
+    function _fNFerify(row) {
+      // $scope.page.isAllowEdit = true;
+      console.log(row)
+      var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
+      console.log(status)
+      if (status == null) {
+        status = {};
+        status.isRejected = false;
+        status.isCancelRequest = false;
+      }
+      if (!status.isRejected && !status.isApproved) {
+        if (!status.isCancelRequest && !status.isCancelApproved && !status.isCancelRejected && !status.isCancelOnHold) {
+          $scope.showStatus = true;
+          $scope.page.isAllowEdit = true;
+          $scope.disabledEmp = true;
+          console.log(row)
+          $scope.enableShowButton = false;
+          $scope.entity = row.entity;
+          console.log(row)
+          $scope.entity.selectedEmp = $filter('findObj')($scope.page.pageinfo.selects.FAFEmpId, row.entity.FAFEmpId, 'value')
+          console.log($scope.entity.selectedEmp)
+          $scope.entity.SUName = row.entity.selectedEmp.SUName;
+          $scope.entity.designName = row.entity.selectedEmp.DesgName;
+          $scope.entity.deptName = row.entity.selectedEmp.DeptName;
+          $scope.entity.subUnitId = $scope.entity.selectedEmp.JDSubUnitID;
+          console.log($scope.entity.selectedEmp);
+
+          var searchLists = [];
+          var searchListData = { field: 'FAFDId', operand: '=', value: row.entity.FAFDId }
+          searchLists.push(searchListData)
+          var data = {
+            searchList: searchLists,
+            orderByList: []
+          }
+          pageService.getCustomQuery(data, getFullAndFinalQueryId).then(_getEmployeeFullAndFinalOnEditResult, _getEmployeeFullAndFinalOnEditErrorResult)
+
+
+
+          $scope.showOnClick = true;
+        }
+        else {
+
+        }
+      }
+      else {
+        $scope.showMsg("error", "You can view this Application only")
       }
     }
 
