@@ -36,6 +36,8 @@
     $scope.holidayOTHours = _holidayOTHours;
     $scope.disabledEmp = false;
     $scope.showStatus = false;
+    $scope.overTimeAllowed = _overTimeAllowed;
+    $scope.holidayOverTimeAllowed = _holidayOverTimeAllowed;
 
     $scope.closeReport = _closeReport;
 
@@ -160,6 +162,7 @@
       $scope.entity.SUName = row.entity.selectedEmp.SUName;
       $scope.entity.designName = row.entity.selectedEmp.DesgName;
       $scope.entity.deptName = row.entity.selectedEmp.DeptName;
+      $scope.entity.SMOverTimeAllowed = row.entity.selectedEmp.SMOverTimeAllowed;
       vm.oldEntity = angular.copy(row.entity);
       $scope.showGrid = true;
       $scope.showReport = true;
@@ -171,6 +174,7 @@
       $scope.entity.SUName = $scope.entity.selectedEmp.SUName;
       $scope.entity.designName = $scope.entity.selectedEmp.DesgName;
       $scope.entity.deptName = $scope.entity.selectedEmp.DeptName;
+      $scope.entity.SMOverTimeAllowed = $scope.entity.selectedEmp.SMOverTimeAllowed;
       // $scope.entity.subUnitId = $scope.entity.selectedEmp.JDSubUnitID;
       _getEmpFullAndFinal();
     }
@@ -213,6 +217,7 @@
           $scope.entity.FFDTZGross = value.SalAmount;
         }
         else if (value.SHIsESIC == 1 || value.SHIsEPF == 1) {
+          $scope.entity.SHIsEPF = value.SHName;
           if ($scope.entity.ifPPFORNSSF == 1) {
             $scope.entity.FFDTZNSSF = value.SalAmount;
           }
@@ -507,6 +512,26 @@
         return true;
       }
       return false;
+    }
+
+    function _overTimeAllowed() {
+      if ($scope.entity.SMOverTimeAllowed) {
+        $scope.entity.FFDTZNOTHours = $scope.entity.FFDTZNOTHours;
+      }
+      else {
+        $scope.entity.FFDTZNOTHours = 0.0;
+        $scope.showMsg("warning", "This employee not applicable for OT");
+      }
+    }
+
+    function _holidayOverTimeAllowed() {
+      if ($scope.entity.SMOverTimeAllowed) {
+        $scope.entity.FFDTZHOTHours = $scope.entity.FFDTZHOTHours;
+      }
+      else {
+        $scope.entity.FFDTZHOTHours = 0.0;
+        $scope.showMsg("warning", "This employee not applicable for Holiday OT");
+      }
     }
 
     function _pWorkigDay() {
