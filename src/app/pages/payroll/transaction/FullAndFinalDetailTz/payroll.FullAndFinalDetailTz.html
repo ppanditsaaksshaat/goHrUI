@@ -46,12 +46,12 @@
             <div class="form-group">
                 <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZNSSF.text}}</label>
                 <div class="col-xs-4">
-                    <span class="form-control" ng-bind="entity.FAFDDate"></span>
+                    <span class="form-control" ng-bind="entity.SHIsEPF"></span>
                 </div>
                 <label for="inputPassword" class="control-label col-xs-2">Calculate NSSF/PPF</label>
                 <div class="col-xs-4">
                     <div class="checkbox">
-                        <label><input type="checkbox"> </label>
+                        <label><input type="checkbox" ng-model="ifPPFORNSSF" value="true"> </label>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@
             <div class="form-group">
                 <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZNOTHours.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="number" ng-model="entity.FFDTZNOTHours">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZNOTHours" ng-change="overTimeAllowed()">
                 </div>
                 <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTNormalOT.text}}</label>
                 <div class="col-xs-4">
@@ -122,7 +122,7 @@
             <div class="form-group">
                 <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZHOTHours.text}}</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="number" ng-model="entity.FFDTZHOTHours ">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZHOTHours " ng-change="holidayOverTimeAllowed()">
                 </div>
                 <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZHolidayOT.text}}</label>
                 <div class="col-xs-4">
