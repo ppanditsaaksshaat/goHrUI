@@ -161,11 +161,14 @@
       viewRecord: _viewRecord,
       deleteRecord: _deleteForm,
       customColumns: ((!$scope.user.profile.isAdmin && !$scope.user.profile.isManager) ? null : [{ text: 'Verify', type: 'a', name: 'Option', click: _leaveVerify, pin: true }]),
-      pageResult: _pageResult
+      pageResult: _pageResult,
+      dataResult: _dataResult,
     }
     /** End Of Grid Intialization */
 
-
+    function _dataResult(result) {
+      console.log(result);
+    }
     function _pageResult(result) {
 
       angular.forEach(result.pageinfo.filters, function (filter) {

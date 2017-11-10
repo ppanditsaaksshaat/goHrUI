@@ -2,7 +2,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     toastr, toastrConfig, pageService, $timeout, $location, Idle, dialogModal) {
 
 
-
+    
     $rootScope.user = DJWebStore.ValidateUser();
 
     $rootScope.sideMenu = DJWebStore.GetValue('sidemenu');

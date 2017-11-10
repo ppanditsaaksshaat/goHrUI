@@ -125,7 +125,7 @@
 
             $scope.page.pageIsLoaded = false;
             $scope.page.pageIsLoading = true;
-
+            console.log($scope.page)
             if (vm.pageId == 114 || vm.pageId == 35 || vm.pageId == 125 || vm.pageId == 36 || vm.pageId == 21) {
                 if (vm.pageId == 114 || vm.pageId == 36 || vm.pageId == 125 || vm.pageId == 21) {
                     $timeout(function () {
@@ -172,7 +172,7 @@
                 else {
 
                     $scope.page = _getLocalPageObject(vm.pageId)
-                    //console.log($scope.page)
+                    console.log($scope.page)
 
                 }
             }
@@ -374,9 +374,10 @@
                 updateRecord: null,
                 viewRecord: null,
                 deleteRecord: null,
-                uploadRecord: null
+                uploadRecord: null,
+                buttonPermission:true
             }
-            
+
             if (pageId == 448) {
                 pageObject.boxOptions.showFilter = false;
                 pageObject.boxOptions.pageResult = _pageResultForBenefit;
@@ -396,6 +397,7 @@
 
             return pageObject;
         }
+       
         //Resignation Edit
         function _editRecord(row) {
             console.log(row.entity)

@@ -85,6 +85,8 @@
             authService.login(loginData).then(function (response) {
                 console.log(response)
                 pageService.getAppUserData().then(function (result) {
+                    
+                    console.log(result)
                     var profileData = result;//angular.fromJson(response.data);
                     DJWebStore.SetUserProfile(profileData.user);
                     _loadSideMenu();
@@ -114,7 +116,7 @@
 
             // $scope.sideMenu = DJWebStore.GetValue('sidemenu');
             // if ($scope.sideMenu == null) {
-               
+
             // }
             // else {
             //     //_setupMenu();

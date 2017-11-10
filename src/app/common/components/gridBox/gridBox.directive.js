@@ -58,7 +58,8 @@
                     saveResult: null,
                     afterCellEdit: null,//external cell edit event
                     onRegisterApi: null,
-                    fieldEvents: []
+                    fieldEvents: [],
+                    buttonPermission: false
                 }
 
                 //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
@@ -393,21 +394,21 @@
                             }
                             $scope.isAdmin = $rootScope.user.profile.isAdmin;
                             $scope.isManager = $rootScope.user.profile.isManager;
-                            
+
                             if ($scope.page.pageinfo.uibuttons.edit.IsAllowed || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
                                 isEdit = true;
                             else
                                 isEdit = false;
-                            if ($scope.page.pageinfo.uibuttons.view.IsAllowed  || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
+                            if ($scope.page.pageinfo.uibuttons.view.IsAllowed || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
                                 isHelp = true;
                             else
                                 isHelp = false;
-                            if ($scope.page.pageinfo.uibuttons.delete.IsAllowed  || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
+                            if ($scope.page.pageinfo.uibuttons.delete.IsAllowed || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
                                 isDelete = true;
                             else
                                 isDelete = false;
                             if ($scope.page.showFilter) {
-                                if ($scope.page.pageinfo.uibuttons.filter.IsAllowed  || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager)) {
+                                if ($scope.page.pageinfo.uibuttons.filter.IsAllowed || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager)) {
                                     //  $scope.page.showFilter = true;
                                     if ($scope.page.pageinfo.uibuttons.filter_toggle.IsAllowed || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager)) {
                                         $scope.page.boxOptions.showFilter = true;
@@ -592,6 +593,11 @@
                         }
                     }
                     else {
+                        
+                        if ($scope.page.boxOptions.buttonPermission) {
+                            result.pageinfo.uibuttons.create.IsAllowed = true;
+                            result.pageinfo.uibuttons.edit.IsAllowed = true;
+                        }
                         $scope.page = angular.extend({}, $scope.page, result);
                         //console.log(result)
                         //console.log($scope.page)
