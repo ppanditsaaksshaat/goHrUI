@@ -17,6 +17,7 @@
     $scope.savePermission = _savePermission;
     $scope.saveActivity = _saveActivity;
     $scope.activityOnChange = _activityOnChange;
+    $scope.cancelActivity = _cancelActivity;
 
     $scope.reset = _reset;
     $scope.selectedRoleId = 0;
@@ -80,7 +81,13 @@
         }
 
         $scope.nodes.push(node);
+
       }
+
+      $scope.oldNodes = angular.copy($scope.nodes);
+    }
+    function _cancelActivity() {
+      $scope.isShowActivity = false;
     }
     function _getChild(UIMenuId) {
       var children = $filter('findAll')($scope.menuList, UIMenuId, 'UIMenuParentMenuId')
@@ -191,43 +198,47 @@
 
 
     function _savePermission() {
-
-      $scope.selectedNodes = [];
-      for (var n = 0; n < $scope.nodes.length; n++) {
-        if ($scope.nodes[n].checked) {
-          $scope.selectedNodes.push($scope.nodes[n].id)
+      if (!_validate($scope.nodes, $scope.oldNodes)) {
+        $scope.selectedNodes = [];
+        for (var n = 0; n < $scope.nodes.length; n++) {
+          if ($scope.nodes[n].checked) {
+            $scope.selectedNodes.push($scope.nodes[n].id)
+          }
+          if ($scope.nodes[n].children) {
+            _getSelectedChild($scope.nodes[n].children)
+          }
         }
 
-        if ($scope.nodes[n].children) {
-          _getSelectedChild($scope.nodes[n].children)
+        var selectedNodeString = '';
+        for (var s = 0; s < $scope.selectedNodes.length; s++) {
+          selectedNodeString += $scope.selectedNodes[s] + ','
         }
+
+        if (selectedNodeString != '')
+          selectedNodeString = selectedNodeString.substr(0, selectedNodeString.length - 1)
+
+        var data = {
+          searchList: [],
+          orderByList: []
+        }
+        data.searchList.push({ field: 'roleId', operand: '=', value: $scope.selectedRoleId });
+        data.searchList.push({ field: 'menuId', operand: '=', value: selectedNodeString });
+        data.searchList.push({ field: 'userId', operand: '=', value: 'itel_admin' });
+
+        $scope.isApplyingChanges = true;
+        pageService.getCustomQuery(data, 569).then(_getApplyChangesSuccess, _getApplyChangesError)
+
       }
-
-      var selectedNodeString = '';
-      for (var s = 0; s < $scope.selectedNodes.length; s++) {
-        selectedNodeString += $scope.selectedNodes[s] + ','
+      else {
+        $scope.showMsg("info", "Nothing to save");
       }
-
-      if (selectedNodeString != '')
-        selectedNodeString = selectedNodeString.substr(0, selectedNodeString.length - 1)
-
-      var data = {
-        searchList: [],
-        orderByList: []
-      }
-      data.searchList.push({ field: 'roleId', operand: '=', value: $scope.selectedRoleId });
-      data.searchList.push({ field: 'menuId', operand: '=', value: selectedNodeString });
-      data.searchList.push({ field: 'userId', operand: '=', value: 'itel_admin' });
-
-      $scope.isApplyingChanges = true;
-      pageService.getCustomQuery(data, 569).then(_getApplyChangesSuccess, _getApplyChangesError)
-
     }
     function _getApplyChangesSuccess(result) {
       $scope.isApplyingChanges = false;
       console.log(result)
       if (result[0][0].result == 'success') {
         $scope.showMsg('success', 'Saved Successfully.')
+        _generateNodes();
       }
     }
     function _getApplyChangesError(err) {
@@ -256,6 +267,8 @@
 
     //activity
     function _getRoleMenuActivity(menuId, roleId) {
+      $scope.menuId = menuId;
+      $scope.roleId = roleId;
       var data = {
         searchList: [
           {
@@ -276,14 +289,15 @@
     }
 
     function _getRoleMenuActivitySuccess(result) {
-      console.log(result[0])
       $scope.isShowActivity = true;
       $scope.activityList = result[0];
-      if ($scope.activityList.length > 0)
+      if ($scope.activityList.length > 0) {
         $scope.activityList.splice(0, 0, { 'MenuActivityId': 0, 'MenuActivityName': 'all', 'ActText': 'All' })
-      else{
+      }
+      else {
         $scope.isShowActivity = false;
       }
+      $scope.oldActivityList = angular.copy($scope.activityList)
 
     }
     function _activityOnChange(value, isSelected) {
@@ -309,35 +323,45 @@
     function _getRoleMenuActivityError(err) {
       console.log(err)
     }
-
+    function _validate(newEntity, oldEntity) {
+      if (angular.equals(newEntity, oldEntity)) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
     function _saveActivity() {
+      if (!_validate($scope.activityList, $scope.oldActivityList)) {
+        $scope.isSavingActivity = true;
+        $scope.isActivitySaved = false;
+        $scope.isApplyingChanges = true;
 
-      $scope.isSavingActivity = true;
-      $scope.isActivitySaved = false;
-      $scope.isApplyingChanges = true;
-
-      console.log($scope.activityList)
-      var selectedActivity = '';
-      for (var i = 0; i < $scope.activityList.length; i++) {
-        if ($scope.activityList[i].IsAllowed) {
-          selectedActivity += $scope.activityList[i].MenuActivityId + ',';
+        console.log($scope.activityList)
+        var selectedActivity = '';
+        for (var i = 0; i < $scope.activityList.length; i++) {
+          if ($scope.activityList[i].IsAllowed) {
+            selectedActivity += $scope.activityList[i].MenuActivityId + ',';
+          }
         }
+        if (selectedActivity != '')
+          selectedActivity = selectedActivity.substr(0, selectedActivity.length - 1);
+
+        var data = {
+          searchList: [],
+          orderByList: []
+        }
+        data.searchList.push({ field: 'roleId', operand: '=', value: $scope.selectedRoleId });
+        data.searchList.push({ field: 'menuId', operand: '=', value: $scope.selectedMenuId });
+        data.searchList.push({ field: 'actId', operand: '=', value: selectedActivity });
+        data.searchList.push({ field: 'createdBy', operand: '=', value: 'itsl_admin' });
+
+
+        pageService.getCustomQuery(data, 571).then(_saveActivitySuccess, _saveActivityError)
       }
-      if (selectedActivity != '')
-        selectedActivity = selectedActivity.substr(0, selectedActivity.length - 1);
-
-      var data = {
-        searchList: [],
-        orderByList: []
+      else {
+        $scope.showMsg("info", "Nothing to save");
       }
-      data.searchList.push({ field: 'roleId', operand: '=', value: $scope.selectedRoleId });
-      data.searchList.push({ field: 'menuId', operand: '=', value: $scope.selectedMenuId });
-      data.searchList.push({ field: 'actId', operand: '=', value: selectedActivity });
-      data.searchList.push({ field: 'createdBy', operand: '=', value: 'itsl_admin' });
-
-
-      pageService.getCustomQuery(data, 571).then(_saveActivitySuccess, _saveActivityError)
-
     }
     function _saveActivitySuccess(result) {
       $scope.isSavingActivity = false;
@@ -349,6 +373,7 @@
       // console.log(result[0][0])
       console.log(result[0][0].result)
       if (result[0][0].result == 'success') {
+        _getRoleMenuActivity($scope.menuId, $scope.roleId)
         $scope.showMsg('success', 'Saved Successfully.')
       }
       // if (result.length > 0) {
@@ -367,6 +392,7 @@
     }
 
     $scope.myClick = function (node) {
+
       //alert('Clicked [' + node.name + '] state is [' + node.checked + ']');
       // var param = { node: node, roleId: $scope.selectedRoleId }
       // var confirm = dialog.confirm(param);
@@ -411,6 +437,7 @@
       function _getRoleMenuActivitySuccess(result) {
         console.log(result)
         $scope.activityList = result;
+        $scope.oldActivityList = angular.copy(result);
       }
       function _getRoleMenuActivityError(err) {
         console.log(err)

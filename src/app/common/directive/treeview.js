@@ -95,7 +95,7 @@ angular.module('BlurAdmin.common').directive('treeView', function ($compile) {
                 var text = '';
 
                 text += '<li ng-repeat="n in ' + collection + '" >';
-                text += '<span ng-show=showIcon(n) class="show-hide" ng-click="showHide(n.id, n)"><i ng-show="!n.expanded" class="fa fa-plus-square"></i><i ng-show="n.expanded" class="fa fa-minus-square"></i></span>';
+                text += '<span ng-show= (n) class="show-hide" ng-click="showHide(n.id, n)"><i ng-show="!n.expanded" class="fa fa-plus-square"></i><i ng-show="n.expanded" class="fa fa-minus-square"></i></span>';
                 text += '<span ng-show=!showIcon(n) style="padding-right: 13px"></span>';
 
                 if (hasCheckBox) {
@@ -104,7 +104,7 @@ angular.module('BlurAdmin.common').directive('treeView', function ($compile) {
                 }
 
                 //fa fa-window-minimize
-                text += '<span ng-if=!checkIfChildren(n) class="edit" ng-click=localClick({node:n})><i class="fa fa-pencil"></i></span>'
+                text += '<span ng-if="!checkIfChildren(n) && n.checked"  class="edit" ng-if="{node:n}" ng-click=localClick({node:n})><i class="fa fa-pencil"></i></span>'
                 text += '<span ng-if=checkIfChildren(n) class="edit" ng-click=localClick({node:n})><i class="fa fa-window-minimize"></i></span>'
                 // text += '<span ng-if=checkIfChildren(n)>    </span>' 
 

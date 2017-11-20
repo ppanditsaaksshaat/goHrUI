@@ -56,12 +56,27 @@
       viewRecord: null,
       deleteRecord: null,
       showDataOnLoad: false,
-      uploadRecord: _uploadRecord
+      uploadRecord: _uploadRecord,
+      pageResult: _pageResult
     }
     function _uploadRecord() {
       $state.go("leave.transaction.upload");
     }
 
+
+
+    function _pageResult(result) {
+      if (!$scope.user.profile.isAdmin && !$scope.user.profile.isManager) {
+        angular.forEach(result.pageinfo.filters, function (filter) {
+          if (filter.name == 'ELTEmpId') {
+            filter.value = $scope.user.profile.userId;
+          }
+        })
+        var searchList = [];
+        searchList.push({ field: 'ELTEmpId', operand: '=', value: $scope.user.profile.userId })
+        $scope.page.refreshData(searchList);
+      }
+    }
     function _addRecord() {
       $scope.showEditForm = true;
       $scope.entity = {};
@@ -223,7 +238,6 @@
     $scope.$watch('page.gridOptions.data', function (data) {
       console.log($scope.page.gridOptions)
     })
-
 
 
   }
