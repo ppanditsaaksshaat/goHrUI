@@ -159,15 +159,21 @@
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-            <label>Reporting HR*</label>
-            <select id="inputLevel" ng-model="addCtrl.empAdd.JDReportingHR" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
-              required>
+          <label>Reporting HR*</label>
+          <select id="inputLevel" ng-model="addCtrl.empAdd.JDReportingHR" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
+            required>
                <option></option>
-              </select>        </div>
+              </select> </div>
       </div>
     </div>
     <div class="row">
 
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" class="form-control" ng-model="addCtrl.empAdd.PdEmail" placeholder="Email">
+        </div>
+      </div>
       <div class="col-sm-4">
         <div class="form-group">
           <label>Other Identity</label>

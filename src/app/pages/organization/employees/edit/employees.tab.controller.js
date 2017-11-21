@@ -375,7 +375,7 @@
                 viewRecord: null,
                 deleteRecord: null,
                 uploadRecord: null,
-                buttonPermission:true
+                buttonPermission: true
             }
 
             if (pageId == 448) {
@@ -397,7 +397,7 @@
 
             return pageObject;
         }
-       
+
         //Resignation Edit
         function _editRecord(row) {
             console.log(row.entity)
@@ -730,9 +730,16 @@
         function _saveUserSuccessResult(result) {
             console.log(result);
             console.log(result[0].UserId);
-            vm.entity.UserId = result[0].UserId;
-            console.log(vm.entity);
-            _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
+
+            if (result != "NoDataFound") {
+                vm.entity.UserId = result[0].UserId;
+                console.log(vm.entity);
+                _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
+            }
+            else {
+                $scope.showMsg('warning', 'Joining date does not exist.');
+            }
+
         }
 
         function _saveUserErrorResult(error) {

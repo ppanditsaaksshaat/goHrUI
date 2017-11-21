@@ -99,7 +99,8 @@
             var personal = {
                 PdGenderId: vm.empAdd.PdGenderId,
                 PdMobileNo: vm.empAdd.PdMobileNo,
-                PDOtherNumber: vm.empAdd.PDOtherNumber
+                PDOtherNumber: vm.empAdd.PDOtherNumber,
+                PdEmail:vm.empAdd.PdEmail
             }
             var employeeData = { basic: basic, job: job, personal: personal };
             pageService.create(JSON.stringify(employeeData)).then(_createSuccessResult, _createErrorResult)

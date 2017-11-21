@@ -14,53 +14,53 @@
     //creating Join Employee  grids
     $scope.joinGridOpt = $scope.getGridSetting();
     $scope.joinGridOpt.columnDefs = []
-    $scope.joinGridOpt.columnDefs.push({ name: 'Sno', displayName: 'Sno', Width: '5x' })
-    $scope.joinGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Code', Width: '5px' })
+    $scope.joinGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+    $scope.joinGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.joinGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
-    $scope.joinGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department Name' })
-    $scope.joinGridOpt.columnDefs.push({ name: 'JDDate', displayName: 'Joining Date' })
+    $scope.joinGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
+    $scope.joinGridOpt.columnDefs.push({ name: 'JDDate', displayName: 'Joining' })
     $scope.joinGridOpt.data = [];
 
 
     //creating Employee Left  grids
     $scope.LeftGridOpt = $scope.getGridSetting();
     $scope.LeftGridOpt.columnDefs = []
-    $scope.LeftGridOpt.columnDefs.push({ name: 'Sno', displayName: 'Sno', Width: '5x' })
-    $scope.LeftGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Code', Width: '5px' })
+    $scope.LeftGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+    $scope.LeftGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.LeftGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
-    $scope.LeftGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department Name' })
-    $scope.LeftGridOpt.columnDefs.push({ name: 'JDHasLeftDate', displayName: 'Left  Date' })
+    $scope.LeftGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
+    $scope.LeftGridOpt.columnDefs.push({ name: 'JDHasLeftDate', displayName: 'Left' })
     $scope.LeftGridOpt.data = [];
 
 
     //creating Employee Leave Today  grids
     $scope.LeaveTodayGridOpt = $scope.getGridSetting();
     $scope.LeaveTodayGridOpt.columnDefs = []
-    $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'Sno', displayName: 'Sno', Width: '5x' })
-    $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Code', Width: '5px' })
+    $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+    $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
-    $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department Name' })
-    $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'ELSDSanctionFromDate', displayName: 'Leave  Date' })
+    $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
+    $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'ELSDSanctionFromDate', displayName: 'Leave' })
     $scope.LeaveTodayGridOpt.data = [];
 
 
     //creating Employee Leave Next 7 days  grids
     $scope.LeaveNextWeekGridOpt = $scope.getGridSetting();
     $scope.LeaveNextWeekGridOpt.columnDefs = []
-    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'Sno', displayName: 'Sno', Width: '5x' })
-    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Code', Width: '5px' })
+    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
-    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department Name' })
-    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'ELSDSanctionFromDate', displayName: 'Leave  Date' })
+    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
+    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'ELSDSanctionFromDate', displayName: 'Leave' })
     $scope.LeaveNextWeekGridOpt.data = [];
 
     //creating Employee  Today Birthday grids
     $scope.BirthdayTodayGridOpt = $scope.getGridSetting();
     $scope.BirthdayTodayGridOpt.columnDefs = []
-    $scope.BirthdayTodayGridOpt.columnDefs.push({ name: 'Sno', displayName: 'Sno', Width: '5x' })
-    $scope.BirthdayTodayGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Code', Width: '5px' })
+    $scope.BirthdayTodayGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+    $scope.BirthdayTodayGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.BirthdayTodayGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
-    $scope.BirthdayTodayGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department Name' })
+    $scope.BirthdayTodayGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
     //  $scope.BirthdayTodayGridOpt.columnDefs.push({  name: 'DateOfBirth', displayName: 'Birthday  Date' })
     $scope.BirthdayTodayGridOpt.data = [];
 
@@ -68,17 +68,17 @@
     //creating Employee Birthday Next 7 days  grids
     $scope.BirthdayNextWeekGridOpt = $scope.getGridSetting();
     $scope.BirthdayNextWeekGridOpt.columnDefs = []
-    $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'Sno', displayName: 'Sno', Width: '5x' })
-    $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Code', Width: '5px' })
+    $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+    $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
-    $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department Name' })
+    $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
     $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'DateOfBirth', displayName: 'Date' })
     $scope.BirthdayNextWeekGridOpt.data = [];
 
     //creating Holiday  Next 7 days  grids
     $scope.HolidayNextWeekGridOpt = $scope.getGridSetting();
     $scope.HolidayNextWeekGridOpt.columnDefs = []
-    $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'Sno', displayName: 'Sno', Width: '5x' })
+    $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDName', displayName: 'Holiday-Name', Width: '5px' })
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDFromDate', displayName: 'From-Day' })
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDToDate', displayName: 'To-Day' })
