@@ -1,0 +1,19 @@
+<div class="panel-heading" style="padding-top:0px; background-color:#e3e8ef;">
+    <div class="row">
+        <div class="col-md-5" style="padding-top:15px">
+            {{pageTitle}}
+            <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+        </div>
+        <div class="col-md-7" style="padding-top:5px">
+            <div class="pull-right" ng-show="ngCondition">
+                <button ng-show="isShowEdit()" type="button" class="btn btn-xs btn-default" ng-click="editForm()">Edit</button>
+                <button ng-show="isShowSave()" type="submit" class="btn btn-xs btn-primary" ng-disabled="editForm.$invalid">Save</button>
+                <button ng-show="isShowReset()" type="button" class="btn btn-xs btn-default" ng-click="resetForm()">Reset</button>
+                <button ng-show="isShowClear()" type="button" class="btn btn-xs btn-default" ng-click="clearForm()">Clear</button>
+                <button ng-show="isShowClose()" type="button" class="btn btn-xs btn-danger" ng-click="closeForm()">Close</button>
+                <button ng-show="isShowList()" type="button" class="btn btn-xs btn-default" ng-click="openList()">List</button>
+
+            </div>
+        </div>
+    </div>
+</div>

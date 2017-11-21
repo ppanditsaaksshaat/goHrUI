@@ -1,0 +1,30 @@
+<div class="panel panel-default bootstrap-panel" 
+ng-class="{pnl100:(addCtrl.page.formrows.length==1), pnl200:(addCtrl.page.formrows.length==2),pnl300:(addCtrl.page.formrows.length==3),pnl400:(addCtrl.page.formrows.length==4),pnl500:(addCtrl.page.formrows.length==5),pnl600:(addCtrl.page.formrows.length==6),pnl800:(addCtrl.page.formrows.length>6)}">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <button ng-click="$close()" type="button" class="btn btn-xs btn-default btn-with-icon"><i
+          class="ion-chevron-left"></i>Back
+      </button>{{addCtrl.page.pageinfo.tagline}}
+                <i ng-show="addCtrl.tempLoaded" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+            </div>
+            <div class="col-md-6">
+                <div class="pull-right">
+                    <button ng-show="boxOptions.showRefresh" type="button" class="btn btn-xs btn-default" ng-click="refreshData()"><i class="ion-refresh"></i>Refresh</button>                    &nbsp;
+                    <button ng-show="boxOptions.showAdd" type="button" class="btn btn-xs btn-default" ng-click="addRecord()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button> &nbsp;
+                    <button ng-show="boxOptions.showUpload" type="button" class="btn btn-xs btn-default" ng-click="uploadRecord()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button> &nbsp;
+                    <select ng-show="boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
+                        ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="panel-body" style="height: 300px;">
+        <form-vertical page="addCtrl.page"></form-vertical>
+    </div>
+</div>

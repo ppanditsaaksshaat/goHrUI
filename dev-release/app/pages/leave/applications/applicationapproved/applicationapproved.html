@@ -1,0 +1,212 @@
+<div class="row">
+  <div class="col-md-6">
+    <form class="form-horizontal" name="editForm" ng-submit="approvedCtrl.saveForm(editForm)">
+      <div ba-panel ba-panel-class="xmedium-panel" ba-panel-title="Employee Leave Application">
+
+        <table class="table table-bordered table-hover table-condensed">
+
+          <!--<thead>
+            <tr>
+
+              <th>Employee Name</th>
+              <th>Leave Type</th>
+              
+
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr>
+
+             
+              <td> {{employeeLeaveAppDetailList.EmpName}} </td>
+              <td>{{employeeLeaveAppDetailList.LTName}}</td>
+
+            </tr>
+
+            </tbody>
+            <thead>
+            <tr>
+
+              <th>Leave For Half Day</th>
+              <th>Apply Date</th>
+              
+
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr>
+
+             
+              <td> {{employeeLeaveAppDetailList.LeadHalfDay}} </td>
+              <td>{{employeeLeaveAppDetailList.LEADDateFrom}}</td>
+
+            </tr>
+
+            </tbody>
+            <thead>
+            <tr>
+
+              <th>From Date</th>
+              <th>To Date</th>
+              
+
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr>
+
+             
+              <td> {{employeeLeaveAppDetailList.LEADDateFrom}} </td>
+              <td>{{employeeLeaveAppDetailList.LEADDateTo}}</td>
+
+            </tr>
+
+            </tbody>
+            <thead>
+            <tr>
+
+              <th>Contact Person</th>
+              <th>Contact Number</th>
+              
+
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr>
+
+             
+              <td> {{employeeLeaveAppDetailList.LEADContactName}} </td>
+              <td>{{employeeLeaveAppDetailList.LEADContactNo}}</td>
+
+            </tr>
+
+            </tbody>-->
+
+
+
+          <tr>
+            <td>
+              <p class="text-left"><strong>Employee Name</strong>
+                <p>
+            </td>
+            <td>{{employeeLeaveAppDetailList.EmpName}}</td>
+          </tr>
+
+          <tr>
+            <td>
+              <p class="text-left"><strong> Leave Type</strong></td>
+            <td>{{employeeLeaveAppDetailList.LTName}}</td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-left"><strong>Leave For Half Day</strong></td>
+            <td>{{employeeLeaveAppDetailList.LeadHalfDay}}</td>
+          </tr>
+
+          <tr>
+            <td>
+              <p class="text-left"><strong>Apply Date</strong></td>
+            <td>{{employeeLeaveAppDetailList.LEADDateFrom}}</td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-left"><strong>From Date</strong></td>
+            <td>{{employeeLeaveAppDetailList.LEADContactName}}</td>
+          </tr>
+
+          <tr>
+            <td>
+              <p class="text-left"><strong> To Date</strong></td>
+            <td>{{employeeLeaveAppDetailList.LEADDateTo}}</td>
+          </tr>
+          <tr>
+            <td>
+              <p class="text-left"><strong>Contact Person</strong></td>
+            <td>{{employeeLeaveAppDetailList.LEADContactName}}</td>
+          </tr>
+
+          <tr>
+            <td>
+              <p class="text-left"><strong> Contact Number</strong></td>
+            <td>{{employeeLeaveAppDetailList.LEADContactNo}}</td>
+          </tr>
+
+        </table>
+
+      </div>
+    </form>
+
+  </div>
+  <div class="col-md-6">
+    <form class="form-horizontal" name="editForm" ng-submit="approvedCtrl.saveForm(editForm)">
+      <div ba-panel ba-panel-class="xmedium-panel" ba-panel-title="Employee Approval Detail">
+
+
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+
+              <label for="inputEmail3">Full Leave</label>
+
+
+
+              <input type="checkbox" id="showLeaveDate" name="showLeaveDate" ng-model="approvedCtrl.entity.showLeaveDate">
+            </div>
+            <!--<select class="form-control" title="Select Employee" ng-model="approvedCtrl.entity.LeaveStatusId"
+            ng-options="opt.value as opt.name for opt in approvedCtrl.selects.ELSDLeaveStatusId"
+             >
+                    </select>-->
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="inputLastName">Comment</label>
+
+              <textarea type="text" class="form-control" placeholder="Enter Comment" ng-model="approvedCtrl.entity.ELSDComment" />
+              <!--ng-model="approvedCtrl.entity.Comment"-->
+            </div>
+          </div>
+        </div>
+        <div class="row" ng-show="approvedCtrl.entity.showLeaveDate">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="inputFirstName">From Date</label>
+              <input type="text" class="form-control" ng-model="approvedCtrl.entity.ELSDSanctionFromDate" placeholder="From Date">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="inputWebsite">To Date</label>
+              <input type="text" class="form-control" ng-model="approvedCtrl.entity.ELSDSanctionToDate" placeholder="To Date">
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-warning">Approved</button>
+            <button type="button" class="btn btn-danger" ng-click="back()">Reject</button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+</div>
+<!--<div ng-hide="addCtrl.isLoading"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>-->

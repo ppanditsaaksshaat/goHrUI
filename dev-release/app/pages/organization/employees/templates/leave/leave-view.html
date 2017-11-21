@@ -1,0 +1,90 @@
+<div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll" ng-controller="empEditLeaveDetail as vm">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div class="col-md-3">
+                Leave Detail
+            </div>
+            <div class="col-md-9">
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="panel-body">
+        <h4>Current Leave Status</h4>
+        <table class="table table-responsive table-bordered table-hover">
+            <thead class="thead-default">
+                <tr>
+                    <th>Leave Type</th>
+                    <th>No of Credit Leave</th>
+                    <th>No of Debit Leave</th>
+                    <th>No of Leave Balance</th>
+                    <th>First Trans Date</th>
+                    <th>Last Trans Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in leaveBalance">
+                    <td>
+                        <a href ng-click="viewStatement(row.LRCLeaveTypeId, 'ALL')">   {{row.LTName}}</a>
+                    </td>
+                    <td class="text-center">
+                        <a href ng-click="viewStatement(row.LRCLeaveTypeId, 'CR')">   {{row.ELTLeaveCr}}</a>
+                    </td>
+                    <td class="text-center">
+                        <a href ng-click="viewStatement(row.LRCLeaveTypeId, 'DR')">   {{row.ELTLeaveDr}}</a>
+                    </td>
+                    <td class="text-center">
+                        {{row.LeaveBalance}}
+                    </td>
+                    <td>
+                        {{row.FromTransDate|date:'dd-MMM-yyyy'}}
+                    </td>
+                    <td>
+                        {{row.ToTransDate|date:'dd-MMM-yyyy'}}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr ng-show="leaveBalance.length">
+                    <td>Total</td>
+                    <td class="text-center">{{getTotal('ELTLeaveCr')}}</td>
+                    <!--<td class="text-center">{{getDrTotal('ELTLeaveDr')}}</td>
+                    <td class="text-center">{{getBalTotal('LeaveBalance')}}</td>-->
+
+                    <td class="text-center">{{getTotal('ELTLeaveDr')}}</td>
+                    <td class="text-center">{{getTotal('LeaveBalance')}}</td>
+                    <td colspan="3"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <hr>
+        <table class="table table-responsive table-bordered table-hover table-striped" ng-show="statementDetail.length>0">
+            <thead class="thead-default">
+                <tr>
+                    <th>Date</th>
+                    <th>Remark</th>
+                    <th>Leave Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in statementDetail">
+                    <td>{{row.CreatedOn| date: 'dd-MMM-yyyy'}}</td>
+                    <td>{{row.ELTRemark}}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<style>
+    [ng\:cloak],
+    [ng-cloak],
+    [data-ng-cloak],
+    [x-ng-cloak],
+    .ng-cloak,
+    .x-ng-cloak {
+        display: none !important;
+    }
+</style>

@@ -1,0 +1,52 @@
+<div>
+    <h3 class="">Signature Detail</h3>
+<hr>
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-sm-3 control-label">SignatureType</label>
+
+          <div class="col-sm-9">
+              <select id="empSignatureType_{{$index}}"
+                      name="empSignatureType_{{$index}}"
+                      ng-model="empTabCtrl.empSignDetail.STName"
+                      class="form-control"
+                      ng-options="signatureType.name as signatureType.name for signatureType in empTabCtrl.signatureType"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+          </div>
+        </div>
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-lg-3 control-label">Name</label>
+
+          <div class="col-lg-9">
+            <input type="text" class="form-control" id="inputFirstName"ng-model="empTabCtrl.empSignDetail.EmpName">
+          </div>
+        </div>
+     </div>
+      <div class="col-md-12">
+        
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputLastName" class="col-sm-3 control-label">Email</label>
+
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputLastName" ng-model="empTabCtrl.empSignDetail.SDEmail">
+          </div>
+        </div>
+        <div class="form-group row clearfix col-md-6">
+          <label for="inputFirstName" class="col-lg-3 control-label">AddSignature</label>
+
+          <div class="col-lg-9">
+            <input type="text" class="form-control" id="inputFirstName" ng-model="empTabCtrl.empSignDetail.RDRelievingDate">
+          </div>
+        </div>
+      </div>
+      
+    <button type="button" class="btn btn-primary btn-with-icon save-profile">
+      <i class="ion-android-checkmark-circle"></i>Update Profile
+    </button>
+
+</div>

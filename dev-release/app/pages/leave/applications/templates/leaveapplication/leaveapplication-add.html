@@ -1,0 +1,232 @@
+<style>
+
+
+
+  .lvl-over {
+    /* applied to a drop target when a draggable object is over it */
+    border: 2px dashed black !important;
+  }
+  
+  .lvl-target {
+    /* applied to all drop targets when a drag operation begins, used to indicate drop targets on a page */
+    background-color: #ddd;
+    opacity: .5;
+  }
+  
+  [draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+    cursor: move;
+    border: 1px solid black;
+  }
+  
+  .peg {
+    text-align: center;
+    font-weight: bold;
+    border: 1px black solid;
+    width: 75px;
+    margin: 10px;
+  }
+  
+  .slot {
+    margin-right: 2px;
+    margin-top: 2px;
+    width: 25;
+    height: 25px;
+    display: inline-block;
+    border: none;
+  }
+  
+  .red {
+    background-color: red;
+  }
+  
+  .blue {
+    background-color: blue;
+  }
+  
+  .green {
+    background-color: green;
+  }
+  
+  .black {
+    background-color: black;
+    color: white;
+  }
+  
+  .grey {
+    background-color: grey;
+  }
+  
+  pre strong {
+    font-size: 12pt;
+  }
+</style>
+<div class="message-container" ng-class="{'expanded': tabCtrl.navigationCollapsed}">
+
+  <form name="editForm" ng-submit="vm.saveEmployeeLeaveApplication(editForm)">
+    <div class="panel bg-white mrg0B">
+      <div class="row animated">
+        <div class="content-box-wrapper">
+          <div class="form-group col-md-12">
+            <h3 class="content-box-header bg-blue-alt">
+              Employee Leave Application
+            </h3>
+          </div>
+        </div>
+        <div class="content-box-wrapper">
+          <div class="form-group col-md-12">
+            <label class="col-md-2">Employee Name</label>
+            <div class="col-md-4">
+              <!--<select id="selUsers" class="form-control" data-placeholder="Select a User" ng-model="vm.assign.user"
+                                    ng-options="opt.value as opt.name for opt vm.selectEmployeeList"></select>-->
+              <!--<select name="repeatSelect" id="repeatSelect" class="form-control">
+                               
+                                <option ng-repeat="option in vm.selectEmployeeList" value="{{option.id}}">{{option.name}}</option>
+                            </select>-->
+
+              <div custom-select="opt.EmpId as opt.EmpFirstName for opt in vm.employeeSelectOptions.data | filter: $searchTerm" custom-select-options="vm.employeeSelectOptions"
+                ng-model="vm.employeeSelectOptions.selectedItem" ng-class="{disabled:vm.companySelectOptions.disable}" required></div>
+
+            </div>
+            <label class="col-md-2">Leave Type</label>
+            <div class="col-md-4">
+              <!--<select id="selLeaveType"
+                                    class="form-control" data-placeholder="Select Leave Type"></select>-->
+              <div custom-select="opt.ELTLCRId as opt.LTName for opt in vm.leaveTypeSelectOptions.data | filter: $searchTerm" custom-select-options="vm.leaveTypeSelectOptions"
+                ng-model="vm.leaveTypeSelectOptions.selectedItem" ng-class="{disabled:vm.openingSelectOptions.disable}" required></div>
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+
+            <label class="col-md-2">Leave For Half Day</label>
+            <div class="col-md-4">
+              <input type="checkbox" ng-model="vm.isLeaveHalfDay">
+            </div>
+            <label class="col-md-2">Comment</label>
+            <div class="col-md-4">
+              <textarea type="text" ng-model="vm.comment" class="form-control" />
+            </div>
+
+          </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-2">Date From</label>
+            <div class="col-md-4">
+              <input type="datetime" datetimepicker class="form-control" placeholder="" ng-model="vm.leaveDateFrom" required/>
+            </div>
+            <label class="col-md-2">Date To</label>
+            <div class="col-md-4">
+              <input type="datetime" datetimepicker date-format="dd-mm-yyyy" class="form-control" ng-model="vm.leaveDateTo" required/>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row animated">
+        <div class="content-box-wrapper">
+          <div class="form-group col-md-12">
+            <h3 class="content-box-header bg-blue-alt">
+              Contact Detail On Leave Period
+            </h3>
+          </div>
+        </div>
+        <div class="content-box-wrapper">
+          <div class="form-group col-md-12">
+            <label class="col-md-2">Contact Name</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" ng-model="vm.contactName" /></div>
+
+
+            <label class="col-md-2">Contact Number</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" ng-model="vm.contactNumber">
+            </div>
+
+          </div>
+          <div class="form-group col-md-12">
+
+            <label class="col-md-2">Address</label>
+            <div class="col-md-4">
+              <textarea type="text" class="form-control" ng-model="vm.address" />
+            </div>
+
+
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="divider"></div>
+      <div class="row animated">
+        <div class="content-box-wrapper">
+          <div class="form-group col-md-12" ng-show="vm.isLeaveTransactionTable">
+            <div class="col-md-12">
+              <table id="mytable" class="table table-striped table-bordered table-hover table-sm table-responsive pad0A">
+                <thead>
+                  <tr>
+
+                    <th>Leave Type</th>
+                    <th>Creadit Leave</th>
+                    <th>Debit Leave</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="transactionList in vm.leaveTypeSelectOptions.data">
+
+                    <td>{{transactionList.LTName}}</td>
+                    <td>{{transactionList.ELTLeaveCr}}</td>
+                    <td>{{transactionList.ELTLeaveDr}}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <div class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="navbar-text pull-left">
+              <div ng-if="vm.response.type=='success'" class="alert alert-success">
+                <i class="glyph-icon icon-check"></i>&nbsp;{{vm.response.text}}
+              </div>
+              <div ng-if="vm.response.type=='info'" class="alert alert-info">
+                <i class="glyph-icon icon-comment"></i>&nbsp;{{vm.response.text}}
+              </div>
+              <div ng-if="vm.response.type=='notice'" class="alert alert-notice">
+                <i class="glyph-icon icon-info"></i>&nbsp;{{vm.response.text}}
+              </div>
+              <div ng-if="vm.response.type=='warning'" class="alert alert-warning">
+                <i class="glyph-icon icon-warning"></i>&nbsp;{{vm.response.text}}
+              </div>
+              <div ng-if="vm.response.type=='error'" class="alert alert-danger">
+                <i class="glyph-icon icon-times"></i>&nbsp;{{vm.response.text}}
+              </div>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <button type="submit" class="navbar-btn btn-success btn pull-right">Save</button>
+            <button type="button" ng-click="vm.GoBack()" class="navbar-btn btn-danger btn pull-right">{{(vm.sendEmail.emailSent)?"Go Back":"Cancel"}}</button>
+            <md-progress-circular ng-show="vm.sendEmail.sendingEmail" class="md-hue-2" md-diameter="30px"></md-progress-circular>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+</div>

@@ -1,0 +1,66 @@
+<grid-box ng-model="page" ng-hide="showEditForm">
+</grid-box>
+<form name="editForm " novalidate ng-submit="saveForm(editForm) " ng-show="showEditForm ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false" show-reset="true "
+            condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+            <div class="row">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.AAEmpId.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.AAEmpId " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.AAAdvanceTypeId.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.AAAdvanceTypeId " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.AADate.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.AADate " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.AAAmount.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.AAAmount " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.ELTPeriodToDate.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.ELTPeriodToDate " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="form-group col-md-2 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.ELTRemark.text}}</label>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <field-box page="page" ng-column="page.pageinfo.fields.ELTRemark " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

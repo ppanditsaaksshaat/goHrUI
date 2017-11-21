@@ -27,12 +27,19 @@ angular.module('BlurAdmin.common').factory('authService', ['$http', '$q', 'DJWeb
 
     };
 
-    var _login = function (loginData) {
+    var _login = function (loginData, corpoId) {
 
+        // var corpoId = DJWebStore.GetValue('CorpoId');
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
 
         var deferred = $q.defer();
-        $http.post(urlLogin, data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+        $http.post(urlLogin, data, {
+            headers:
+                {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'CorpoId': corpoId
+                }
+        })
             .then(function (response) {
                 var result = angular.fromJson(response.data);
                 console.log(result)

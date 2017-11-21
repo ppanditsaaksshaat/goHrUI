@@ -1,0 +1,255 @@
+<grid-box ng-model="page" ng-hide="showGrid">
+</grid-box>
+
+
+<form name="editForm " class="form-horizontal" novalidate ng-submit="saveForm() " ng-hide="showEditForm ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="false " show-list="false
+ " show-reset="false " condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZEmpId.text}}</label>
+                <div class="col-xs-4">
+                    <select class="form-control" ng-model="entity.selectedEmp" ng-disabled="disabledEmp" ng-change="selectedDesignDept()" ng-options="employee.name  for employee in page.pageinfo.selects.FFDTZEmpId">
+                            </select>
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZDate.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZDate"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">Department</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.deptName"></span>
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">Designation</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.designName"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZBasic.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZBasic | number:2"></span>
+                </div>
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZGross.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZGross | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZNSSF.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.SHIsEPF"></span>
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">Calculate NSSF/PPF</label>
+                <div class="col-xs-4">
+                    <div class="checkbox">
+                        <label><input type="checkbox" ng-model="ifPPFORNSSF" value="true"> </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+            </div>
+
+            <h3 class="with-line ">Allowance </h3>
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZPWorkingDay.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZPWorkingDay">
+                    <!--<field-box page="page" ng-column="page.pageinfo.fields.FADAppDate " ng-entity="entity " form="editForm "></field-box>-->
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZPWorkingDayAmount.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZPWorkingDayAmount | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">Notice Days</label>
+                <div class="col-xs-4">
+                    <div class="checkbox">
+                        <label><input type="checkbox" ng-click="getEmpGrossAmount()" value="true" ng-model="entity.isGetGrossSalary">Notice Status </label>
+                    </div>
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZNoticePay.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZNoticePay | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZSeveranceDays.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZSeveranceDays ">
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZSeveranceAllowance.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZSeveranceAllowance | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZUnpaidLeaveDays.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZUnpaidLeaveDays">
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZLeaveEncashment.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZLeaveEncashment"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZNOTHours.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZNOTHours" ng-change="overTimeAllowed()">
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTNormalOT.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTNormalOT | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZHOTHours.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZHOTHours " ng-change="holidayOverTimeAllowed()">
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.FFDTZHolidayOT.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZHolidayOT | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZLeavePassege.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZLeavePassege ">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZBonus.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZBonus ">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZOthersEarn.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZOthersEarn ">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label></label>
+                <div class="col-xs-offset-1 col-xs-1">
+                    <button class="btn btn-primary" type="button" ng-click="calculateAmount();">Calculate</button>
+                </div>
+                <label for="inputPassword" class="col-xs-offset-4  control-label col-xs-2">{{page.pageinfo.fields.FFDTZTotalAmount.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZTotalAmount | number:2"></span>
+                </div>
+            </div>
+
+
+            <h3 class="with-line ">Deduction </h3>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZNSSF.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZNSSF | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZPayeeCalc.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZPayeeCalc | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZPAYE.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZPAYE | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZSalaryAdvance.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZSalaryAdvance | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZLoan.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZLoan | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZSalaryHold.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZSalaryHold | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZOthersDeduction.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="number" ng-model="entity.FFDTZOthersDeduction ">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZTotalDeductions.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZTotalDeductions | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-xs-offset-6 control-label col-xs-2">{{page.pageinfo.fields.FFDTZNetAmount.text}}</label>
+                <div class="col-xs-4">
+                    <span class="form-control" ng-bind="entity.FFDTZNetAmount | number:2"></span>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="showStatus">
+                <label for="inputPassword" class="control-label col-xs-2">Status<span style="color:red">*</span></label>
+                <div class="col-xs-4">
+                    <select class="form-control" ng-model="entity.StatusId" ng-options="status.value as status.name for status in page.pageinfo.statuslist"></select>
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">Comment<span style="color:red">* </label>
+                <div class="col-xs-4">
+                    <textarea class="form-control" ng-model="entity.FFDTZComment"></textarea>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</form>
+
+<div ng-hide="showReport">
+    <label></label>
+    <div>
+        <button class="btn btn-primary" type="button" ng-click="closeReport();">Close</button>
+    </div>
+    <report-viewer ng-model="pageReport"></report-viewer>
+</div>

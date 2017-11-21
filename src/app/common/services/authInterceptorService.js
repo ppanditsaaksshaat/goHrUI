@@ -24,6 +24,13 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
 
         config.headers = config.headers || {};
 
+
+        var corpoId = DJWebStore.GetValue('CorpoId');
+        if (corpoId == null)
+            config.headers.CorpoId = '';
+        else
+            config.headers.CorpoId = corpoId;
+
         var authData = DJWebStore.GetAuthorization();
         if (authData) {
             config.headers.Authorization = 'Bearer ' + authData.token;
@@ -105,7 +112,7 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
 
         //    }
         // }
-        
+
         return response;
     }
 

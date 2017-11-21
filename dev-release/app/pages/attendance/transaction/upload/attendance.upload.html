@@ -1,0 +1,178 @@
+<div ba-panel ba-panel-class="horizontal-tabs tabs-panel">
+    <uib-tabset active="$tabSetStatus.activeTab">
+        <uib-tab heading="Import Wizard">
+            <div ng-show="attCtrl.showUploderResult">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div ng-show="attCtrl.btnResetBrowse">
+                            <label class="control-label ">
+                                   Select a file to upload: 
+                                    </label>
+                            <label class="btn btn-success btn-file">
+                                        Browse
+                                        <input type="file" 
+                                        accept=".xls,.xlsx,.ods"  
+                                        readfiledata
+                                        opts="attCtrl.gridOptions" 
+                                        uploader="attCtrl.uploader"
+                                        multiple="false" 
+                                        result="attCtrl.fileResult"
+                                        style="display: none;">
+                                    </label><br/>
+                            <span class="">(Only .xls, .xlsx are supported)</span><br>
+                            <div class="schema-form-section row" ng-show="attCtrl.gridOptions.data.length > 0">
+                                <div class="schema-form-section col-xs-12">
+                                    <div class="form-group schema-form-text  has-feedback">
+                                        <label class="control-label ">
+                                        You have selected {{attCtrl.gridOptions.data.length}} record file
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-hide="attCtrl.btnResetBrowse">
+                            <button type="button" ng-click="attCtrl.resetBrowse();attCtrl.gridOptions.data=[];" class="btn btn-success btn-file">Reset</button>
+                        </div>
+                        <hr ng-show="attCtrl.gridOptions.data.length > 0" />
+                        <div class="row" ng-show="attCtrl.gridOptions.data.length > 0">
+                            <div class="col-md-12">
+                                <label class="checkbox-inline custom-checkbox nowrap">
+                                    <input type="checkbox" id="inlineCheckbox01" ng-model="attCtrl.showPreview" ng-change="attCtrl.showPreviewClick()">
+                                    <span>Show Preview</span>
+                                </label>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="row" ng-show="attCtrl.gridOptions.data.length > 0">
+                            <div class="col-md-12">
+                                <input type="button" class="btn btn-success btn-file" value="Upload" ng-click="attCtrl.uploadAttendance()">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-9" ng-show="attCtrl.showUploderResult">
+                        <div ng-hide="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">
+                            <h5>Download Template</h5>
+                            <button type="button" class="btn btn-warning" ng-click="attCtrl.downloadTemp()">
+                           Minimum Requirement Template</button>
+                            <h5>Supported Formats</h5>
+                            <p>
+                                You can import up to 1000 records through an .xls, .xlsx file. Please use a .csv file if you're importing more than 1000
+                                records at once.
+                            </p>
+                            <h5>Maximum Limits</h5>
+                            <p>1000 per batch.</p>
+                            <h5>Important Notes</h5>
+
+                            <p>Rudra will map the first row of cells to the corresponding fields. (These values are for reference
+                                and will not be imported.)</p>
+                            <p>File size cannot exceed 5 MB.</p>
+                            <p>All duplicate records will be ignored when importing.</p>
+                            <p>Checkbox value should be 1 or 0.</p>
+                            <p>Date must be in the format DD/MM/YYYY. Records that use other date formats will be ignored.</p>
+                            <p>Date and time values must be in the following format: DD/MM/YYYY hh:mm:ss. Any other format will
+                                be ignored.</p>
+                            <p>By default, the character encoding is UTF-8 (Unicode). Make sure you provide the correct character
+                                encoding if your import file has special characters.</p>
+                            <p>We recommend doing a test import with a sample file before importing your actual data.</p>
+
+                        </div>
+
+                        <span ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">Preview Data</span>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="grid1" style="height:auto" ui-grid="attCtrl.gridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav
+                                    ng-show="attCtrl.gridOptions.data.length > 0 && attCtrl.showPreview">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-9" ng-hide="attCtrl.showUploderResult">
+                <div class="btn-group" role="group">
+                    <a href ng-click="attCtrl.insert()">{{attCtrl.insertedRow}} Inserted</a>
+                    <a href ng-click="attCtrl.update()">{{attCtrl.updatedRow}} Updated</a>
+                    <a href ng-click="attCtrl.fail()">{{attCtrl.failedRow}} Failed</a>
+                </div>
+                <button ng-click="attCtrl.showUploderResult=true;attCtrl.gridOptions.data=[];attCtrl.commonGridOptions.data=[];attCtrl.btnResetBrowse=true;attCtrl.close();" class="pull-right btn btn-danger btn-file">Close</button>
+
+                <div>
+                    <br><br>
+                    <label>{{attCtrl.gridUpHeading}}</label>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="grid1" style="height:auto;" ui-grid="attCtrl.commonGridOptions" class="grid" ui-grid-pagination ui-grid-edit ui-grid-cellnav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <!--<uib-tab heading="Import History">
+            <h3 class="with-line">Import History</h3>
+            <grid-box ng-model="uploadHistory" box-options="boxSetting">
+            </grid-box>
+          
+        </uib-tab>-->
+    </uib-tabset>
+</div>
+
+<style>
+    .djGrid {
+        height: 400px;
+        width: 1100px;
+    }
+</style>
+
+<style>
+    .grid {
+        height: 300px;
+        width: 500px;
+    }
+
+    @media only screen and (min-width: 320px) {
+        .grid {
+            width: 300px;
+        }
+    }
+
+    @media only screen and (min-width: 375px) {
+        .grid {
+            width: 355px;
+        }
+    }
+
+    @media only screen and (min-width: 410px) {
+        .grid {
+            width: 390px;
+        }
+    }
+
+    @media only screen and (min-width: 560px) {
+        .grid {
+            width: 540px;
+        }
+    }
+
+    @media only screen and (min-width: 760px) {
+        .grid {
+            width: 600px;
+        }
+    }
+
+    @media only screen and (min-width: 790px) {
+        .grid {
+            width: 600px;
+        }
+    }
+
+    @media only screen and (min-width: 1300px) {
+        .grid {
+            width: 800px;
+        }
+    }
+</style>
