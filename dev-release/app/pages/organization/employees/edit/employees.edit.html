@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-2" style="padding-right:0px; margin-right:0px;  ">
+        <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="Search Option" ng-model="menuFilter">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="menuFilter=''">
+                                    <i class="ion-close"></i>
+                                </button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+                <table>
+                    <tr>
+                        <td><span><img ng-src="{{ editCtrl.picture }}" height="50px" width="50px"></span></td>
+                        <td>
+                            <label ng-bind="editCtrl.empBasicDetail.TitleName"></label>
+                            <label ng-bind="editCtrl.empBasicDetail.EmpName"></label>
+                        </td>
+                    </tr>
+                </table>
+
+                <br/>
+
+                <span ng-bind="editCtrl.empBasicDetail.DeptName"></span><br/>
+                <span ng-bind="editCtrl.empBasicDetail.DesgName"></span>
+
+                <br/>
+                <ul class="list-unstyled side-menu">
+                    <li ng-repeat="t in editCtrl.tabs| filter: {name: menuFilter}" ui-sref-active="active" ui-sref="organization.employees.edit.tab({name:t.name, pageId: t.id})">
+                        <a href>{{t.text}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10" style="padding-left:15px; margin-left:0px;">
+        <ui-view></ui-view>
+    </div>
+</div>

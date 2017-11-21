@@ -158,9 +158,9 @@
                     else
                         $scope.page.boxOptions.getPageData();
                 }
-                function _refreshData() {
+                function _refreshData(userSearchList) {
                     if ($scope.page.boxOptions.refreshData == null) {
-                        _getTableData();
+                        _getTableData(userSearchList);
                     }
                     else
                         $scope.page.boxOptions.refreshData();
@@ -593,7 +593,7 @@
                         }
                     }
                     else {
-                        
+
                         if ($scope.page.boxOptions.buttonPermission) {
                             result.pageinfo.uibuttons.create.IsAllowed = true;
                             result.pageinfo.uibuttons.edit.IsAllowed = true;
@@ -630,7 +630,7 @@
                 //end get page data
                 //====================================================================
                 //get table data
-                function _getTableData() {
+                function _getTableData(userSearchList) {
 
                     if (!$scope.page.boxOptions.showDataOnLoad && $scope.page.boxOptions.requiredFilter) {
                         if ($scope.page.searchList && $scope.page.searchList.length <= 0) {
@@ -650,6 +650,9 @@
                             if (oldSearch == null)
                                 $scope.page.searchList.push(search)
                         })
+                    }
+                    if (userSearchList !== undefined) {
+                        $scope.page.searchList = userSearchList;
                     }
                     var data = {
                         searchList: $scope.page.searchList,

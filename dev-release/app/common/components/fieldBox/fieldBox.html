@@ -1,0 +1,204 @@
+<div ng-hide="page.isAllowEdit" class="form-group">
+    <div ng-switch="col.type">
+        <select ng-disabled="true" ng-switch-when="select|strapselect|uiselect" ng-switch-when-separator="|" ng-model="entity[col.name]"
+            class="form-control input-disabled hideIcon" ng-options="opt.value as opt.name for opt in col.options"></select>
+
+        <div ng-switch-when="checkbox">
+            <label class="checkbox-inline custom-checkbox nowrap">
+                <input  ng-disabled="true" type="checkbox" value="option1" id="{{col.name}}" ng-model="entity[col.name]" >
+                <span></span>
+            </label>
+        </div>
+        <span ng-switch-when="currency" class="form-control">{{entity[col.name]| currency : currencySymbol }}</span>
+        <span ng-switch-when="currency_3decimal" class="form-control">{{entity[col.name]| currency : currencySymbol : 3 }}</span>
+        <span ng-switch-when="currency_2decimal" class="form-control">{{entity[col.name]| currency : currencySymbol : 2 }}</span>
+        <span ng-switch-default class="form-control">{{entity[col.name]}}</span>
+    </div>
+</div>
+<div ng-show="page.isAllowEdit" popover-animation="true" uib-popover-html="col.errorText" popover-trigger="manual" popover-is-open="col.showError"
+    popover-placement="right" ng-switch="col.type" class="form-group  has-feedback" ng-class="{'has-success': !editForm[col.name].$isEmpty(editForm[col.name]['$modelValue']) && (editForm[col.name]['$valid'] && editForm[col.name]['$dirty']),
+        'has-error': editForm[col.name].$isEmpty(editForm[col.name]['$modelValue']) && (editForm[col.name]['$invalid'] && !editForm[col.name]['$pristine'])}">
+    <div class="input-group">
+        <!--Textbox-->
+        <!--<span class="input-group-addon  addon-left" ng-show="col.required">
+              <i aria-hidden="true" class="fa font-red fa-asterisk"></i>
+        </span>-->
+
+        <!--left icon-->
+        <span class="input-group-addon  addon-left" ng-show="col.type=='email'">
+              <i class="fa fa-at" aria-hidden="true"></i>
+        </span>
+        <span class="input-group-addon  addon-left" ng-show="col.type=='mobile'">
+                <i class="fa fa-mobile" aria-hidden="true"></i>
+        </span>
+        <span class="input-group-addon  addon-left" ng-show="col.type=='phone'">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+        </span>
+        <span class="input-group-addon  addon-left" ng-show="col.type=='password'">
+                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+        </span>
+        <!--<span class="input-group-addon" ng-show="col.type=='datepicker'">
+            <i class="glyphicon glyphicon-calendar"></i>
+        </span>-->
+
+        <input valid-text ng-column="col" ng-switch-when="textbox|email|zipcode|pincode|number_nodecimal|number_decimal|number_dash|number_dash_plus|number_plus|number_plus_dash_dot|alphanum_nospace|alphanum_space|alpha_nospace|alpha_space"
+            ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" ng-model="entity[col.name]"
+            type="text" class="form-control" ng-minlength="col.minLength" ng-maxlength="col.maxLength" ng-required="col.required"
+            class="form-control" />
+
+        <input valid-text ng-column="col" ng-switch-when="mobile" ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}"
+            placeholder="{{col.place}}" ng-model="entity[col.name]" type="text" class="form-control" ng-minlength="col.minLength"
+            ng-maxlength="col.maxLength" ng-required="col.required" class="form-control" ui-br-phone-number/>
+
+
+        <input valid-text ng-column="col" ng-switch-when="currency_2decimal|currency_2decimal|currency" ng-switch-when-separator="|"
+            name="{{col.name}}" id="{{col.name}}" placeholder="{{col.place}}" ng-model="entity[col.name]" type="number" class="form-control"
+            ng-minlength="col.minLength" ng-maxlength="col.maxLength" ng-required="col.required" class="form-control" />
+
+        <!--datepicker-->
+        <div ng-switch-when="datepicker|datetimepicker" ng-switch-when-separator="|">
+            <!--<div id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" moment-picker="entity[col.name]" format="dd-MMM-yyyy">
+                <i class="glyphicon glyphicon-time"></i>&nbsp; {{ entity[col.name] || "Pick any date" }}
+            </div>-->
+
+            <div class="input-group" moment-picker="entity[col.name]" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                min-date="col.minDate">
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                    ng-model="entity[col.name]"  ng1-model-options="{ updateOn: 'blur' }">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" ng-click="entity[col.name]=''" type="button"><i class="fa fa-close"></i></button>
+                </span>
+            </div>
+
+        </div>
+        <!--timepicker-->
+        <div ng-switch-when="timepicker">
+
+            <div class="input-group" moment-picker="entity[col.name]" format="hh:mm A" max-date="col.maxDate" min-date="col.minDate">
+                <span class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                </span>
+                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Pick any time"
+                    ng-model="entity[col.name]" ng-model-options="{ updateOn: 'blur' }">
+            </div>
+
+            <!--<div id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" moment-picker="entity[col.name]" 
+            format="hh:mm A">
+                <i class="glyphicon glyphicon-time"></i>&nbsp; {{ entity[col.name] || "Pick any time" }}
+            </div>-->
+        </div>
+        <!--datetimepicker-->
+        <div ng-switch-when="datetimepicker" ng-switch-when-separator="|">
+            <div id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]"  moment-picker="entity[col.name]" format="dd-MMM-yyyy hh:mm A">
+                <i class="glyphicon glyphicon-time"></i>&nbsp; {{ entity[col.name] || "Pick any date/time" }}
+            </div>
+        </div>
+
+        <!--Aadhar/Panno/timepicker -->
+        <input ui-mask="{{col.format}}" placeholder="Please enter valid {{col.text}}" ui-mask-placeholder="" ui-mask-placeholder-char="_"
+            valid-text ng-column="col" ng-switch-when="aadharno|pancard" ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}"
+            ng-model="entity[col.name]" type="text" class="form-control" ng-required="col.required" class="form-control" />
+        <!--phoneno-->
+        <input valid-text ng-column="col" ng-switch-when="phoneno" ng-switch-when-separator="|" name="{{col.name}}" id="{{col.name}}"
+            ng-model="entity[col.name]" type="tel" default-area-code="+91" international="true" default-area-code="+91" ng-required="col.required"
+            class="form-control" />
+
+
+        <!--Select-->
+        <select valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-model="entity[col.name]" class="form-control"
+            ng-options="opt.value as opt.name for opt in col.options" ng-switch-when="select" placeholder="{{col.place}}" ng-required="col.required"></select>
+
+        <!--UISelect-->
+        <select valid-text ng-column="col" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" class="form-control"
+            ng-options="opt.id as opt.name for opt in col.options" ng-switch-when="uiselect" placeholder="{{col.place}}" ng-required="col.required"></select>
+
+        <!--strapselect-->
+        <select valid-text ng-column="col" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" class="form-control"
+            ng-options="opt.value as opt.name for opt in col.options | filter:{ '{{col.propColName}}': entity[col.propColName] }"
+            ng-switch-when="strapselect" data-placeholder="{{col.place}}" ng-required="col.required"></select>
+
+        <!--multi-select-->
+        <select valid-text ng-column="col" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" type="date" class="form-control"
+            ng-options="opt.value as opt.name for opt in col.options" ng-switch-when="multi-select" multiple placeholder="{{col.place}}"
+            ng-required="col.required"></select>
+        <!--Checkbox-->
+        <div ng-switch-when="checkbox">
+            <!--<label class="checkbox-inline custom-checkbox nowrap">-->
+            <input name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="checkbox" id="{{col.name}}" checked
+                class="custom-checkbox">
+            <!--</label>-->
+        </div>
+        <!--Linklabel-->
+        <label id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-switch-when="linklabel">{{entity[col.name]}}</label>
+        <!--sequence-->
+        <label id="{{col.name}}" name="{{col.name}}" ng-switch-when="sequence">{{entity[col.name]}}</label>
+        <!--YesNo-->
+        <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" ng-switch-when="YesNo"
+            type="checkbox" data-on-color="primary" class="input-switch" checked data-size="medium" data-on-text="On" data-off-text="Off">
+        <!--Textarea-->
+        <textarea id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="textarea" class="form-control"
+            ng-switch-when="textarea" placeholder="{{col.place}}"></textarea>
+        <!--Password-->
+        <input ng-switch-when="password" id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required"
+            type="text" class="form-control" placeholder="{{col.place}}">
+
+        <!--html-->
+        <!--datetimepicker-->
+        <!--<input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" datetimepicker
+            class="form-control" ng-switch-when="datetimepicker" placeholder="{{col.place}}" />-->
+        <!--datepicker-->
+        <!--<datepicker date-format="dd-MMMM-yyyy" ng-switch-when="datepicker">
+            <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" ng-required="col.required" type="text" class="form-control"
+                placeholder="{{col.place}}" />
+        </datepicker>-->
+
+
+        <!--list-->
+        <div ng-switch-when="list" angucomplete-alt id="{{col.name}}" placeholder="{{col.place}}" pause="300" selected-object="entity[col.name]"
+            local-data="col.options" local-search="localObjSearch" title-field="name" minlength="1" input-class="form-control form-control-small"
+            match-class="highlight" name="{{col.name}}"></div>
+        <!--number-->
+        <input id="{{col.name}}" name="{{col.name}}" ng-model="entity[col.name]" type="number" class="form-control" ng-switch-when="number"
+            placeholder="{{col.place}}" />
+
+        <!--right icon-->
+        <!--<span class="input-group-addon" ng-if="col.type!='linklabel' && col.type !='sequence' && col.type != 'checkbox'" style="max-width: 40px">
+            <i aria-hidden="true" class="fa font-green fa-check" ng-show="(editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty'])"></i>
+            <i aria-hidden="true" class="fa font-red fa-times" ng-show="(editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'] && editForm[col.name]['$touched'])"></i>
+            <i aria-hidden="true" class="fa font-red fa-asterisk" ng-show="(editForm[col.name]['$viewValue']===undefined ||editForm[col.name]['$viewValue']=='' ) && col.required"></i>
+        </span>-->
+
+
+    </div>
+    <!--error icon-->
+    <!--<i class="ion-android-cancel form-control-feedback" aria-hidden="true"></i>-->
+    <!--warning icon-->
+    <!--<i ng-show="(editForm[col.name]['$viewValue']!='' && !editForm[col.name]['$valid'] && editForm[col.name]['$touched'])" class="ion-alert-circled form-control-feedback"
+        aria-hidden="true"></i>-->
+    <!--success icon-->
+    <!--<i ng-show="(editForm[col.name]['$viewValue']!='' && editForm[col.name]['$valid'] && editForm[col.name]['$dirty'])"
+    ="ion-checkmark-circled form-control-feedback"
+        aria-hidden="true"></i>-->
+
+    <i ng-class="{'form-control-feedback': true, 
+            'ion-checkmark-circled': !editForm[col.name].$isEmpty(editForm[col.name]['$modelValue']) && (editForm[col.name]['$valid'] && editForm[col.name]['$dirty']), 
+            'ion-android-cancel':  !editForm[col.name].$isEmpty(editForm[col.name]['$modelValue']) &&  (editForm[col.name]['$invalid'] && !editForm[col.name]['$pristine']), 
+            'ion-ios-medical font-red': (col.required && !(editForm[col.name]['$valid'] && editForm[col.name]['$dirty']) && !(editForm[col.name]['$invalid'] && !editForm[col.name]['$pristine'])), 
+            'ion-alert-circled': hasWarning(), 
+            }">
+
+    </i>
+    <!--info area-->
+    <!--<span id="inputGroupSuccess1Status" class="sr-only">(success)</span>-->
+    <!--<span ng-show="editForm[col.name]['$error']['blacklist']">
+          The phrase "{{entity[col.name]}}" is blacklisted</span>
+    <span  ng-show="editForm[col.name]['$error']['required']">required</span>-->
+    <span ng-show="editForm['$submitted'] && editForm[col.name]['$error']['required']" class="help-block" for="col.name">{{col.text}} is required</span>
+    <span ng-show="editForm['$submitted'] && editForm[col.name]['$error']['emailError']" class="help-block" for="col.name">{{col.text}} is not valid</span>
+    <span ng-show="editForm['$submitted'] && editForm[col.name]['$error']['pincode']" class="help-block" for="col.name">{{col.text}} must be 6 digit long</span>
+    <span ng-show="editForm['$submitted'] && editForm[col.name]['$error']['zipcode']" class="help-block" for="col.name">{{col.text}} must be 5 digit long</span>
+    <span ng-show="editForm['$submitted'] && editForm[col.name]['$error']['aadhar']" class="help-block" for="col.name">{{col.format}}</span>
+</div>

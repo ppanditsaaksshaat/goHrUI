@@ -1,0 +1,143 @@
+<div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll" ng-controller="employeeDocumentDetail">
+
+    <div ng-show="documentList" class="panel-heading clearfix">
+        Document List
+        <button ng-click="list()" class="btn btn-xs btn-default pull-right" style="margin-left:10px">List</button>
+        <!-- <button ng-click="addRecord()" class="btn btn-xs btn-default pull-right" style="margin-left:10px"><i class="fa fa-plus-circle"  aria-hidden="true"></i>Add</button>        &nbsp; &nbsp;&nbsp; &nbsp; -->
+        <button ng-click="refresh()" class="btn btn-xs btn-default pull-right"><i class="ion-refresh" aria-hidden="true"></i>Refresh</button>
+    </div>
+
+    <div ng-show="documentList" class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <button ng-click="addRecord()" class="btn" style="background-color:#2C60C6; color:white;">New Document</button>
+                <div class="btn-group" uib-dropdown dropdown-append-to-body>
+                    <button type="button" class="btn" style="background-color: #E1E1E0 ;font-weight: bold" uib-dropdown-toggle>
+                          Action <span class="caret"></span>
+                        </button>
+                    <ul uib-dropdown-menu>
+                        <li ng-show="actionOption"><a>Please select row <br> for show more option</a></li>
+                        <li ng-hide="actionOption"><a ng-click="editRecord()">Edit</a></li>
+                        <li ng-hide="actionOption"><a>View</a></li>
+                    </ul>
+                </div>
+                <span ng-click="refresh()"><i  class="ion-refresh pull-right" aria-hidden="true"></i></span>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div ui-grid="documentOptions" ui-grid-edit ui-grid-expandable ui-grid-auto-resize ui-grid-selection class="grid" style="height:200px"></div>
+            </div>
+        </div>
+        <hr>
+        <div ng-hide="tab" ba-panel ba-panel-class="horizontal-tabs tabs-panel">
+
+            <uib-tabset active="$tabSetStatus.activeTab">
+                <uib-tab class="ppUL" heading="General">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Type Name </label>
+                                <label class="col-lg-offset-2" ng-bind="document.DTName"></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Revial Next Day</label>
+                                <label class="col-lg-offset-2" ng-bind="document.EDocDRevivalNxtDt"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Valid From</label>
+                                <label class="col-lg-offset-2" ng-bind="document.EDocDValidFrom"></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Valid To</label>
+                                <label class="col-lg-offset-2" ng-bind="document.EDocValidTo"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <label class="col-lg-offset-2" for="inputDepartment" ng-bind="document.EDocDDescription"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                </uib-tab>
+                <uib-tab heading="Property">
+
+                </uib-tab>
+            </uib-tabset>
+            <hr />
+        </div>
+    </div>
+
+
+    <div ng-hide="documentList" class="panel-heading clearfix">
+        Employee Document Detail
+    </div>
+    <div ng-hide="documentList" class="panel-body">
+        <form name="editForm" ng-submit="save(entity,editForm)">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputDepartment" ng-bind="page.pageinfo.fields.EDocDDTId.text"></label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.EDocDDTId" ng-entity="entity" form="editForm"></field-box>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Select a file to upload:</label>
+                        <label class="btn btn-success btn-file"> Browse
+                     <input type="file" file-Model="file"  style="display: none;">
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputDepartment" ng-bind="page.pageinfo.fields.EDocDValidFrom.text"></label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.EDocDValidFrom" ng-entity="entity" form="editForm"></field-box>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputDepartment" ng-bind="page.pageinfo.fields.EDocValidTo.text"></label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.EDocValidTo" ng-entity="entity" form="editForm"></field-box>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputDepartment" ng-bind="page.pageinfo.fields.EDocDRevivalNxtDt.text"></label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.EDocDRevivalNxtDt" ng-entity="entity" form="editForm"></field-box>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputDepartment" ng-bind="page.pageinfo.fields.EDocDDescription.text"></label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.EDocDDescription" ng-entity="entity" form="editForm"></field-box>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <button class="btn btn-primary">Save</button>
+                <button type="button" ng-click="close()" class="btn btn-danger">Close</button>
+
+            </div>
+        </form>
+    </div>
+
+</div>

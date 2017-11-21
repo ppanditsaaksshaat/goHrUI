@@ -1,0 +1,33 @@
+<div class="modal-header dialog-header-confirm">
+    <button type="button" class="close" ng-click="no()">&times;</button>
+    <h4 class="modal-title">
+        <span class="glyphicon glyphicon-check"></span>Page Activity
+    </h4>
+</div>
+
+<div class="modal-body row">
+
+{{activityList}}
+<div ng-repeat="opt in activityList">
+        <span>{{opt.ActText}}</span>
+</div>
+    <ul>
+        <li ng-repeat="opt in activityList">
+            <div class="checkbox">
+                <label class="custom-checkbox">      
+                    <input  type="checkbox"  ng-model="opt.IsAllowed"> 
+                    <span>{{opt.ActText}}</span>
+                   </label>
+            </div>
+        </li>
+    </ul>
+    <div class="col-xs-4">
+
+  </label>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="yes()">Save</button>
+    <button type="button" class="btn btn-danger" ng-click="no()">Cancel</button>
+</div>

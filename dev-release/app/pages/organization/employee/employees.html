@@ -1,0 +1,94 @@
+<div class="col-md-12">
+    <div ba-panel ba-panel-class="xmedium-panel mail-panel">
+        <div class="mail-messages-control side-message-navigation-item">
+            <div class="toggle-navigation-container">
+                <a href class="collapse-navigation-link ion-navicon" ng-click="tabCtrl.navigationCollapsed=!tabCtrl.navigationCollapsed"></a>
+            </div>
+            <div class="row">
+                <div class="col-md-6"><span class="bold-text">{{listCtrl.page.pageinfo.title}}</span><br/>
+                    <span ng-show="(rows.length!==undefined)" class="font-bold">Total {{rows.length}} Record(s) found</span>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button type="button" class="btn  btn-icon refresh-button" ng-click="listCtrl.refreshData()"><i class="ion-refresh"></i>Refresh</button>
+                    <button type="button" class="btn  btn-icon refresh-button" ui-sref="organization.empadd({action:'create'})">
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>Add</button>
+                    <button type="button" class="btn  btn-icon refresh-button">
+          <i class="fa fa-filter" aria-hidden="true"></i></button>
+                    <select ng-show="(listCtrl.page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="listCtrl.selectedUcvItem" ng-options="opt.name for opt in listCtrl.page.pageinfo.ucvlist"
+                        ng-change="listCtrl.ucvOnChange(listCtrl.selectedUcvItem)">
+                    </select>
+
+                </div>
+            </div>
+            <style>
+                .djTable {
+                    width: 100%;
+                }
+
+                .djTable td,
+                th {
+                    overflow: hidden;
+                }
+
+                .djTable td:first,
+                th:first {
+                    width: 30px;
+                }
+
+                .djTable td:last-child,
+                th:last-child {
+                    width: 30px;
+                }
+            </style>
+
+            <table class="table table-bordered table-hover table-condensed djTable" st-table="displayedCollection" st-safe-src="rows"
+                st-pagination-scroll>
+                <thead>
+                    <tr class="sortable">
+                        <th class="col-md-1" ng-show="gridObject.enableSrNo" st-sort="$index">Sno</th>
+                        <th class="col-md-5" ng-repeat="col in gridObject.columns" st-sort="{{col.name}}">{{col.text}}</th>
+                        <th class="col-md-1">Actions</th>
+                    </tr>
+                    <tr ng-show="gridObject.enableFilter">
+                        <th ng-show="gridObject.enableSrNo"></th>
+                        <th ng-show="gridObject.enableTitleFilter"><input st-search="{{searchName}}" placeholder="Search" class="input-sm form-control search-input"
+                                type="search" /></th>
+                        <th ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
+                            <input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
+                    </tr>
+                </thead>
+                <tbody ng-show="displayedCollection.length>0">
+                    <tr ng-repeat="row in displayedCollection">
+                        <td cursor="pointer" ui-sref="organization.empedit({action:'view',empId:row.EmpId})" ng-show="gridObject.enableSrNo">
+                            {{$index+1}}
+                        </td>
+                        <td cursor="pointer" ui-sref="organization.empedit({action:'view',empId:row.EmpId})" ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
+                        <td ng-show="gridObject.enableAction">
+                            <a ui-sref="organization.empedit({action:'edit',empId:row.EmpId})">
+                                <i class="fa fa-pencil-square-o"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-show="displayedCollection.length<=0&&isLoaded">
+                    <tr>
+                        <td colspan="6">No {{listCtrl.page.pageinfo.title}} found</td>
+                    </tr>
+                </tbody>
+                <tbody ng-show="isLoading">
+                    <tr>
+                        <td colspan="6">Loading {{listCtrl.page.pageinfo.title}} Please wait..<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i></td>
+                    </tr>
+                </tbody>
+                <tfoot ng-show="gridObject.enablePagination">
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            <div st-pagination="" st-items-by-page="gridObject.paginationLength" st-displayed-pages="5"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+</div>
+</div>

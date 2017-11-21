@@ -26,7 +26,7 @@
         $scope.doLogin = _doLogin;
 
         function _loadController() {
-            _getAppData();
+            //_getAppData();
         }
 
         function _getAppData() {
@@ -60,13 +60,20 @@
 
             var userName = $("#userName").val();
             var userPwd = $("#userPassword").val();
+            var userCorpoId = $("#userCorpoId").val();
             if (userName == "") {
                 alert('Please enter User Name');
                 console.log(userName)
                 return;
             }
             if (userName == "") {
-                userPwd('Please enter Password');
+                alert('Please enter Password');
+                console.log(userName)
+                return;
+            }
+
+            if (userCorpoId == "") {
+                alert('Please enter Corporate Id');
                 console.log(userName)
                 return;
             }
@@ -75,6 +82,7 @@
             $("#userPassword").prop("disabled", true);
             $("#btnlogin").prop("disabled", true);
             $("#userLanguage").prop("disabled", true);
+            $("#userCorpoId").prop("disabled", true);
             $("#btnlogin").text("Please Wait..");
 
             var loginData = {
@@ -82,10 +90,12 @@
                 "password": userPwd
             };
 
-            authService.login(loginData).then(function (response) {
+            DJWebStore.SetValue('CorpoId', userCorpoId);
+
+            authService.login(loginData, userCorpoId).then(function (response) {
                 console.log(response)
                 pageService.getAppUserData().then(function (result) {
-                    
+
                     console.log(result)
                     var profileData = result;//angular.fromJson(response.data);
                     DJWebStore.SetUserProfile(profileData.user);

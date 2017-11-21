@@ -1,0 +1,42 @@
+<div>
+    <div class="row">
+        <div class="col-md-3" ng-show="page.showFilter" style="padding-right:0px; margin-right:0px;">
+            <filter-box page="page"></filter-box>
+        </div>
+        <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
+            <div class="panel panel-default bootstrap-panel xmedium-panel" ng-hide="page.showViewRecord || page.showAddRecord">
+                <div class="panel-heading clearfix">
+                    <div class="row">
+                        <div class="col-md-3">
+                            {{page.pageinfo.report.URReportHeaderKey}}
+                            <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                        </div>
+                        <div class="col-md-9">
+                            <button id="print-button" class="btn btn-xs btn-primary  pull-right" data-toggle="modal" ng-click="callReportPrint();">
+                                Print
+                            </button>
+                            <button id="reset-button" class="btn btn-xs btn-default  pull-right" data-toggle="modal" ng-click="reset();">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-body">
+                    <button ng-show="page.boxOptions.showFilter" id="image" style="width:3px;
+                        height:30px;
+                        position:absolute;
+                        top:200px;
+                        left:0px;" ng-click="page.showFilter=!page.showFilter">
+                            <i ng-class="{'ion-arrow-right-b':!page.showFilter, 'ion-arrow-left-b':page.showFilter}"></i>
+                    </button>
+
+
+
+                    <i id="progress-bar" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                    <iframe ng-src="{{reportUrl}}" class="iframe" scrolling="yes" frameborder="0" height="400px" width="100%" iframe-onload="iframeLoadedCallBack()"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
