@@ -1178,6 +1178,18 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 });
         }
 
+         var _employeeBonusUpload = function (data) {
+            var url = serviceBase + 'api/Upload/EmployeeBonus';
+            return $http.post(url, JSON.stringify(JSON.stringify(data)),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
+        }
+
 
         pageServiceFactory.serviceBase = serviceBase;
         pageServiceFactory.getPagData = _getPagData;
@@ -1297,6 +1309,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.getMultiEntity = _getMultiEntity;
         pageServiceFactory.uploadManualAttendance = _uploadManualAttendance;
         pageServiceFactory.generateFullAndFinalSalary = _generateFullAndFinalSalary;
+        pageServiceFactory.employeeBonusUpload = _employeeBonusUpload;
+
+        
 
 
 
