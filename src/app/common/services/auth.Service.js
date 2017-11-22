@@ -33,12 +33,13 @@ angular.module('BlurAdmin.common').factory('authService', ['$http', '$q', 'DJWeb
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
 
         var deferred = $q.defer();
+
+        var headers = {}
+        headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        headers['CorpoId_' + corpoId] = corpoId;
+
         $http.post(urlLogin, data, {
-            headers:
-                {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'CorpoId': corpoId
-                }
+            headers: headers 
         })
             .then(function (response) {
                 var result = angular.fromJson(response.data);

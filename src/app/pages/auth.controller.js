@@ -18,7 +18,11 @@
         })
 
         $scope.languageList.push({
-            label: 'Hindi', value: 'hi'
+            label: 'हिन्दी (Hindi)', value: 'hi'
+        })
+
+        $scope.languageList.push({
+            label: 'Kiswahili (Swahili)', value: 'sw'
         })
 
         $scope.selectedLanguage = $scope.languageList[0];
@@ -77,6 +81,8 @@
                 console.log(userName)
                 return;
             }
+             
+            console.log($scope.selectedLanguage)
 
             $("#userName").prop("disabled", true);
             $("#userPassword").prop("disabled", true);
@@ -91,8 +97,9 @@
             };
 
             DJWebStore.SetValue('CorpoId', userCorpoId);
+            DJWebStore.SetValue('UserLang', $scope.selectedLanguage.value);
 
-            authService.login(loginData, userCorpoId).then(function (response) {
+            authService.login(loginData, userCorpoId, $scope.selectedLanguage.value).then(function (response) {
                 console.log(response)
                 pageService.getAppUserData().then(function (result) {
 
