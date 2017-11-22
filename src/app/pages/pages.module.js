@@ -14,6 +14,7 @@
     // 'BlurAdmin.pages.tables',
     // 'BlurAdmin.pages.charts',
     // 'BlurAdmin.pages.maps',
+    'BlurAdmin.pages.help',
     'BlurAdmin.pages.urm',
     'BlurAdmin.pages.organization',
     'BlurAdmin.pages.time',
