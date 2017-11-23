@@ -18,11 +18,15 @@
     $scope.saveActivity = _saveActivity;
     $scope.activityOnChange = _activityOnChange;
     $scope.cancelActivity = _cancelActivity;
+    var helpPageId = 477;
 
     $scope.reset = _reset;
     $scope.selectedRoleId = 0;
     var vm = this;
     vm.navigationCollapsed = true;
+    vm.oldEntity = {};
+    $scope.entity = {};
+
     function _getTabs() {
       var mastersMenu = [];
 
@@ -275,29 +279,36 @@
             field: 'UIMenuId',
             operand: '=',
             value: menuId
-          },
-          {
-            field: 'RoleId',
-            operand: '=',
-            value: roleId
           }
+          // ,
+          // {
+          //   field: 'RoleId',
+          //   operand: '=',
+          //   value: roleId
+          // }
         ],
         orderByList: []
       }
-      pageService.getCustomQuery(data, 570).then(_getRoleMenuActivitySuccess, _getRoleMenuActivityError)
-
+      pageService.getCustomQuery(data, 598).then(_getRoleMenuActivitySuccess, _getRoleMenuActivityError)
+      //570
     }
 
     function _getRoleMenuActivitySuccess(result) {
       $scope.isShowActivity = true;
-      $scope.activityList = result[0];
-      if ($scope.activityList.length > 0) {
-        $scope.activityList.splice(0, 0, { 'MenuActivityId': 0, 'MenuActivityName': 'all', 'ActText': 'All' })
-      }
-      else {
-        $scope.isShowActivity = false;
-      }
-      $scope.oldActivityList = angular.copy($scope.activityList)
+
+      console.log(result)
+      $scope.selectedRoleId = result[0][0].HELDUIMenuId
+      $scope.HELPContent = result[0][0].HELPContent;
+
+      $scope.entity = result[0][0];
+      // $scope.activityList = result[0];
+      // if ($scope.activityList.length > 0) {
+      //   $scope.activityList.splice(0, 0, { 'MenuActivityId': 0, 'MenuActivityName': 'all', 'ActText': 'All' })
+      // }
+      // else {
+      //   $scope.isShowActivity = false;
+      // }
+      // $scope.oldActivityList = angular.copy($scope.activityList)
 
     }
     function _activityOnChange(value, isSelected) {
@@ -332,37 +343,62 @@
       }
     }
     function _saveActivity() {
-      if (!_validate($scope.activityList, $scope.oldActivityList)) {
-        $scope.isSavingActivity = true;
-        $scope.isActivitySaved = false;
-        $scope.isApplyingChanges = true;
+      // if (!_validate($scope.activityList, $scope.oldActivityList)) {
+      $scope.isSavingActivity = true;
+      $scope.isActivitySaved = false;
+      $scope.isApplyingChanges = true;
 
-        console.log($scope.activityList)
-        var selectedActivity = '';
-        for (var i = 0; i < $scope.activityList.length; i++) {
-          if ($scope.activityList[i].IsAllowed) {
-            selectedActivity += $scope.activityList[i].MenuActivityId + ',';
-          }
-        }
-        if (selectedActivity != '')
-          selectedActivity = selectedActivity.substr(0, selectedActivity.length - 1);
+      // console.log($scope.activityList)
+      // var selectedActivity = '';
+      // for (var i = 0; i < $scope.activityList.length; i++) {
+      //   if ($scope.activityList[i].IsAllowed) {
+      //     selectedActivity += $scope.activityList[i].MenuActivityId + ',';
+      //   }
+      // }
+      // if (selectedActivity != '')
+      //   selectedActivity = selectedActivity.substr(0, selectedActivity.length - 1);
 
-        var data = {
-          searchList: [],
-          orderByList: []
-        }
-        data.searchList.push({ field: 'roleId', operand: '=', value: $scope.selectedRoleId });
-        data.searchList.push({ field: 'menuId', operand: '=', value: $scope.selectedMenuId });
-        data.searchList.push({ field: 'actId', operand: '=', value: selectedActivity });
-        data.searchList.push({ field: 'createdBy', operand: '=', value: 'itsl_admin' });
+      // var data = {
+      //   searchList: [],
+      //   orderByList: []
+      // }
+      // data.searchList.push({ field: 'roleId', operand: '=', value: $scope.selectedRoleId });
+      // data.searchList.push({ field: 'menuId', operand: '=', value: $scope.selectedMenuId });
+      // data.searchList.push({ field: 'actId', operand: '=', value: selectedActivity });
+      // data.searchList.push({ field: 'createdBy', operand: '=', value: 'itsl_admin' });
 
 
-        pageService.getCustomQuery(data, 571).then(_saveActivitySuccess, _saveActivityError)
-      }
-      else {
-        $scope.showMsg("info", "Nothing to save");
-      }
+      // pageService.getCustomQuery(data, 571).then(_saveActivitySuccess, _saveActivityError)
+
+      $scope.entity.HELDUIMenuId = $scope.selectedMenuId
+      $scope.entity.HELPContent = $scope.HELPContent;
+
+      console.log($scope.entity);
+
+      editFormService.saveForm(helpPageId, $scope.entity, vm.oldEntity,
+        $scope.entity.HELDId == undefined ? "create" : "edit", "Help Content Detail", $scope.editForm, true)
+        .then(_saveFormSuccessResult, _saveFormErrorResult)
+      // }
+      // else {
+      //   $scope.showMsg("info", "Nothing to save");
+      // }
     }
+
+    function _saveFormSuccessResult(result) {
+      $scope.isSavingActivity = false;
+      $scope.isActivitySaved = true;
+      $scope.isApplyingChanges = false;
+      $scope.showMsg('success', 'Saved Successfully.')
+
+      $scope.entity = {};
+      // $scope.page.refreshData();
+
+    }
+
+    function _saveFormErrorResult(error) {
+      console.log(error);
+    }
+
     function _saveActivitySuccess(result) {
       $scope.isSavingActivity = false;
       $scope.isActivitySaved = true;

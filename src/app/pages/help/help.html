@@ -6,30 +6,30 @@
     <div class="panel-body" style="overflow: scroll">
 
         <!--<uib-tabset class="tabs-left">-->
-            <!--<uib-tab heading="Roles">-->
-                <div class="row">
-                    <div class="col-md-3">
-                        <!--<select name="roles" id="roles" ng-model="selectedRoleId" class="form-control" ng-options="opt.RoleId as opt.RoleName for opt in roleList"
+        <!--<uib-tab heading="Roles">-->
+        <div class="row">
+            <div class="col-md-3">
+                <!--<select name="roles" id="roles" ng-model="selectedRoleId" class="form-control" ng-options="opt.RoleId as opt.RoleName for opt in roleList"
                             ng-change="callMenu(selectedRoleId)"></select>-->
 
-                        <div ng-scrollbars ng-scrollbars-config="config" style="max-height: 350px">
-                            <tree-view checkbox click="myClick(node)" model="nodes" ng-show="isPermissionLoaded"></tree-view>
-                        </div>
+                <div ng-scrollbars ng-scrollbars-config="config" style="max-height: 350px">
+                    <tree-view checkbox click="myClick(node)" model="nodes" ng-show="isPermissionLoaded"></tree-view>
+                </div>
 
-                        <!--<button ng-hide="isShowActivity" ng-click="savePermission()" class="btn btn-info btn-lg" ng-disabled="isApplyingChanges">
+                <!--<button ng-hide="isShowActivity" ng-click="savePermission()" class="btn btn-info btn-lg" ng-disabled="isApplyingChanges">
                             <i ng-show="isApplyingChanges" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
                             <span ng-hide="isApplyingChanges">Apply Changes</span>
                             <span ng-show="isApplyingChanges">Applying..</span>
                         </button>
 
                         <button ng-hide="isShowActivity" type="button" class="btn btn-danger btn-lg" ng-click="reset()">Reset</button>-->
-                    </div>
-                    <div class="col-md-9">
-                        <div ng-show="isShowActivity">
+            </div>
+            <div class="col-md-9">
+                <div ng-show="isShowActivity">
 
-                            <!--<div text-angular ng-model="htmlVariable"></div>-->
-                           <text-angular ng-model="htmlVariable"></text-angular>
-                            <!--<div class="modal-header dialog-header-confirm">
+                    <!--<div text-angular ng-model="htmlVariable"></div>-->
+                    <text-angular ng-model="HELPContent"></text-angular>
+                    <!--<div class="modal-header dialog-header-confirm">
 
                                 <div class="modal-title">
                                     <span class="glyphicon glyphicon-check"></span>Page Activity of {{selectedMenuName}}
@@ -48,21 +48,21 @@
                                     </li>
                                 </ul>
                             </div>-->
-                            <div class="modal-footer">
-                                <button ng-click="saveActivity()" class="btn btn-info btn-lg" ng-disabled="isSavingActivity">
+                    <div class="modal-footer">
+                        <button ng-click="saveActivity()" class="btn btn-info btn-lg" ng-disabled="isSavingActivity">
                                             <i ng-show="isSavingActivity" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
                                             <span ng-hide="isSavingActivity">Save</span>
                                             <span ng-show="isSavingActivity">Saving..</span>
                                 </button>
 
-                                <button type="button" class="btn btn-danger" ng-click="cancelActivity()">Cancel</button>
-                            </div>
-                        </div>
+                        <button type="button" class="btn btn-danger" ng-click="cancelActivity()">Cancel</button>
                     </div>
                 </div>
+            </div>
+        </div>
 
-            <!--</uib-tab>-->
-            <!--<uib-tab heading="Users">
+        <!--</uib-tab>-->
+        <!--<uib-tab heading="Users">
                 <div class="row" ng-hide="true">
                     <div class="col-md-2">
                         <lable>Location</lable>
