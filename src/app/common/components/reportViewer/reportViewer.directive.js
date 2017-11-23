@@ -149,7 +149,7 @@
                         //   var result = angular.fromJson(response.data);
                         console.log(result)
                         var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
-                            '&?crid=' + corpoId + '&lang=' + lang
+                            '&crid=' + corpoId + '&lang=' + lang
                         console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 
