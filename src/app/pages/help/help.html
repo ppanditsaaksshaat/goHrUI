@@ -1,0 +1,102 @@
+<div class="panel panel-default bootstrap-panel xmedium-panel">
+    <div class="panel-heading panHead" style="vertical-align: super">
+        Help
+    </div>
+
+    <div class="panel-body" style="overflow: scroll">
+
+        <!--<uib-tabset class="tabs-left">-->
+            <!--<uib-tab heading="Roles">-->
+                <div class="row">
+                    <div class="col-md-3">
+                        <!--<select name="roles" id="roles" ng-model="selectedRoleId" class="form-control" ng-options="opt.RoleId as opt.RoleName for opt in roleList"
+                            ng-change="callMenu(selectedRoleId)"></select>-->
+
+                        <div ng-scrollbars ng-scrollbars-config="config" style="max-height: 350px">
+                            <tree-view checkbox click="myClick(node)" model="nodes" ng-show="isPermissionLoaded"></tree-view>
+                        </div>
+
+                        <!--<button ng-hide="isShowActivity" ng-click="savePermission()" class="btn btn-info btn-lg" ng-disabled="isApplyingChanges">
+                            <i ng-show="isApplyingChanges" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                            <span ng-hide="isApplyingChanges">Apply Changes</span>
+                            <span ng-show="isApplyingChanges">Applying..</span>
+                        </button>
+
+                        <button ng-hide="isShowActivity" type="button" class="btn btn-danger btn-lg" ng-click="reset()">Reset</button>-->
+                    </div>
+                    <div class="col-md-9">
+                        <div ng-show="isShowActivity">
+
+                            <!--<div text-angular ng-model="htmlVariable"></div>-->
+                           <text-angular ng-model="htmlVariable"></text-angular>
+                            <!--<div class="modal-header dialog-header-confirm">
+
+                                <div class="modal-title">
+                                    <span class="glyphicon glyphicon-check"></span>Page Activity of {{selectedMenuName}}
+                                    Menu for {{selectedRoleName}}
+                                </div>
+                            </div>
+                            <div class="modal-body row" ng-scrollbars ng-scrollbars-config="config" style="max-height: 330px">
+                                <ul style="list-style:none;">
+                                    <li ng-repeat="opt in activityList">
+                                        <div class="checkbox">
+                                            <label class="custom-checkbox">      
+                                                    <input ng-change="activityOnChange(opt.MenuActivityId,opt.IsAllowed)"   type="checkbox"  ng-model="opt.IsAllowed"> 
+                                                    <span>{{opt.ActText}}</span>
+                                                </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>-->
+                            <div class="modal-footer">
+                                <button ng-click="saveActivity()" class="btn btn-info btn-lg" ng-disabled="isSavingActivity">
+                                            <i ng-show="isSavingActivity" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                                            <span ng-hide="isSavingActivity">Save</span>
+                                            <span ng-show="isSavingActivity">Saving..</span>
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="cancelActivity()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!--</uib-tab>-->
+            <!--<uib-tab heading="Users">
+                <div class="row" ng-hide="true">
+                    <div class="col-md-2">
+                        <lable>Location</lable>
+                        <select name="location" id="location" ng-model="selectedLocationId" class="form-control" ng-options="opt.LocationId as opt.LocationName for opt in locationList"
+                            ng-change="changeLocation(selectedLocationId)"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <lable>Branch</lable>
+                        <select name="branch" id="branch" ng-model="selectedBranchId" class="form-control" ng-options="opt.BRId as opt.BRName for opt in branchList"
+                            ng-change="changeBranch(selectedBranchId)"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <lable>Sub Unit</lable>
+                        <select name="sunit" id="sunit" ng-model="selectedSUnitId" class="form-control" ng-options="opt.SUId as opt.SUName for opt in subUnitList"
+                            ng-change="changeSUnit(selectedSUnitId)"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <lable>Employee</lable>
+                        <select name="emp" id="emp" ng-model="selectedEmpId" class="form-control" ng-options="opt.EmpId as opt.EmpName for opt in empList"
+                            ng-change="changeEmp(selectedSUnitId)"></select>
+                    </div>
+                </div>
+                <div>
+                    <ui-select ng-model="selectedEmp" class="btn-group bootstrap-select form-control" ng-disabled="false" append-to-body="true"
+                        search-enabled="true">
+                        <ui-select-match placeholder="Select Employee">
+                            {{$select.selected.EmpName}} ( {{$select.selected.EmpCode}} )
+                        </ui-select-match>
+                        <ui-select-choices repeat="withSearchItem in empList | filter: $select.search">
+                            <span>{{withSearchItem.EmpName}} ( {{withSearchItem.EmpCode}}  )</span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </uib-tab>-->
+        </uib-tabset>
+    </div>
+</div>

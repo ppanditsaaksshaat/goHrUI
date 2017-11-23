@@ -325,7 +325,7 @@
         $scope.showMsg("error", gridErrorMsg);
         return false;
       }
-      if ($scope.oldData!="NoDataFound") {
+      if ($scope.oldData != "NoDataFound") {
         var groupExist = false;
         angular.forEach($scope.oldData, function (data) {
           var groupIds = data.WOSGroupId.split(',');
@@ -364,7 +364,7 @@
     }
 
     function _weekOffSave(editForm, entity) {
-
+      
       if (_validateWeekOff(entity)) {
         var groupIds = "";
         var groupNames = "";

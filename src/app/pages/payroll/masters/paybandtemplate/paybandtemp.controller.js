@@ -537,34 +537,35 @@
                 if (shGross != null) {
                     grossId = shGross.value;
                 }
-                var isBasicOrGrossOnRightRow = false;
-                if (shBasic != null || shGross != null) {
-                    if (shBasic.value == newValue || shGross.value == newValue) {
-                        isBasicOrGrossOnRightRow = true;
-                    }
-                    else {
-                        if ($scope.payTempGridOptions.data.length == 2) {
-                            if (($scope.payTempGridOptions.data[0].PBTRSHId == shBasic.value || $scope.payTempGridOptions.data[1].PBTRSHId == shBasic.value) && ($scope.payTempGridOptions.data[0].PBTRSHId == shGross.value || $scope.payTempGridOptions.data[1].PBTRSHId == shGross.value)) {
-                                isBasicOrGrossOnRightRow = true;
-                            }
-                            else {
-                                isBasicOrGrossOnRightRow = false;
-                                rowEntity.PBTRSHId = '';
-                                rowEntity.SHeadType = '';
-                                $scope.showMsg("warning", "you can place gross or basic head in first or second row")
-                            }
-                        }
-                        else if ($scope.payTempGridOptions.data[0].PBTRSHId == shBasic.value || $scope.payTempGridOptions.data[0].PBTRSHId == shGross.value) {
-                            isBasicOrGrossOnRightRow = true;
-                        }
-                        else {
-                            isBasicOrGrossOnRightRow = false;
-                            rowEntity.PBTRSHId = '';
-                            rowEntity.SHeadType = '';
-                            $scope.showMsg("warning", "you can place gross or basic head in first or second row")
-                        }
-                    }
-                }
+                var isBasicOrGrossOnRightRow = true;
+                //WILL BE USED ONCE REQUIRED
+                // if (shBasic != null || shGross != null) {
+                //     if (shBasic.value == newValue || shGross.value == newValue) {
+                //         isBasicOrGrossOnRightRow = true;
+                //     }
+                //     else {
+                //         if ($scope.payTempGridOptions.data.length == 2) {
+                //             if (($scope.payTempGridOptions.data[0].PBTRSHId == shBasic.value || $scope.payTempGridOptions.data[1].PBTRSHId == shBasic.value) && ($scope.payTempGridOptions.data[0].PBTRSHId == shGross.value || $scope.payTempGridOptions.data[1].PBTRSHId == shGross.value)) {
+                //                 isBasicOrGrossOnRightRow = true;
+                //             }
+                //             else {
+                //                 isBasicOrGrossOnRightRow = false;
+                //                 rowEntity.PBTRSHId = '';
+                //                 rowEntity.SHeadType = '';
+                //                 $scope.showMsg("warning", "you can place gross or basic head in first or second row")
+                //             }
+                //         }
+                //         else if ($scope.payTempGridOptions.data[0].PBTRSHId == shBasic.value || $scope.payTempGridOptions.data[0].PBTRSHId == shGross.value) {
+                //             isBasicOrGrossOnRightRow = true;
+                //         }
+                //         else {
+                //             isBasicOrGrossOnRightRow = false;
+                //             rowEntity.PBTRSHId = '';
+                //             rowEntity.SHeadType = '';
+                //             $scope.showMsg("warning", "you can place gross or basic head in first or second row")
+                //         }
+                //     }
+                // }
                 if (isBasicOrGrossOnRightRow) {
 
                     var totalAmount = 0;
