@@ -1,0 +1,88 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+<div class="panel panel-default bootstrap-panel xmedium-panel">
+
+    <div class="panel-heading">
+        Employees Payband Entitilement
+
+        <button ng-show="gridShow" ng-click="saveEmpPayband()" class="btn btn-xs btn-default pull-right">Save</button> &nbsp;
+        &nbsp;
+        <button ng-show="gridShow" ng-click="refreshEmpPayband()" class="btn btn-xs btn-default pull-right"><i ng-show="gridShow" class="ion-refresh" aria-hidden="true"></i>Refresh</button>
+        <button ng-show="gridShow" ng-click="uploadRecord()" class="btn btn-xs btn-default pull-right"><i ng-show="gridShow" class=" fa fa-plus-circle" aria-hidden="true"></i>  Upload</button> &nbsp; 
+        <button ng-show="gridShow" ng-click="downLoadTemplate()" class="btn btn-xs btn-default pull-right"><i ng-show="gridShow" class="ion-archive" aria-hidden="true"></i> Download Template</button>
+
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label ng-bind="paybandPage.pageinfo.fields.PBEmpGradeId.text"></label>
+                        <div>
+                            <select class="form-control" ng-model="entity.PBEmpGradeId" ng-options="grade.value as grade.name for grade in paybandPage.pageinfo.selects.PBEmpGradeId"></select>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label ng-bind="paybandPage.pageinfo.fields.PBEmpLevelId.text"></label>
+                        <div>
+                            <select class="form-control" ng-model="entity.PBEmpLevelId" ng-options="level.value as level.name for level in paybandPage.pageinfo.selects.PBEmpLevelId"></select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <label></label>
+                        <div>
+                            <button class="btn btn-primary" ng-click=serachEmpPayBand()>Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12" ng-show="gridShow">
+                <div class="row">
+                    <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-cellNav ui-grid-edit ui-grid-auto-resize ui-grid-pagination ui-grid-selection
+                        ui-grid-expandable class="djGrid">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script type="text/ng-template" id="uiSelectMulti">
+        <ui-select-wrap>
+            <ui-select multiple ng-model="MODEL_COL_FIELD" theme="select2" ng-disabled="disabled" search-enabled="true" append-to-body="true">
+                <ui-select-match placeholder="Choose..">
+                    {{$item.name}}
+                </ui-select-match>
+                <ui-select-choices repeat="item in col.colDef.editDropdownOptionsArray | filter: $select.search">
+                    <span>{{ item.name }}</span>
+                </ui-select-choices>
+            </ui-select>
+        </ui-select-wrap>
+
+
+    </script>
+
+    <style>
+        .ui-grid-cell {
+            overflow: visible;
+            z-index: 99999;
+        }
+
+        .ui-grid-cell,
+        ui-select-wrap {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        /* Make sure the container doesn't shrink too small */
+
+        .ui-select-container {
+            min-width: 100px;
+        }
+    </style>

@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-md-6">
+
+        <form class="form-horizontal" name="editForm" ng-submit="addCtrl.saveForm(editForm)">
+            <div class="form-group">
+                <label       class="col-sm-4 control-label">Qualification</label>
+                <div class="col-sm-8">
+                    <input name="QualificationName" maxlength="50" ng-model="addCtrl.entity.QualificationName" type="text" ng-required="true" class="form-control"
+                              placeholder="Enter Qualification">
+                </div>
+            </div>
+            <div class="form-group">
+                <label       class="col-sm-4 control-label">Description</label>
+                <div class="col-sm-8">
+                    <!--<input name="QualificationDesc" ng-model="addCtrl.entity.QualificationDesc" type="text" ng-required="true" class="form-control"       placeholder="Enter Description"
+                         >-->
+                    <textarea type="text" maxlength="200" class="form-control" placeholder="Enter Description" ng-required="true" ng-model="addCtrl.entity.QualificationDesc"
+                        text-only-with-space/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label       class="col-sm-4 control-label">Post Graduate</label>
+                <div class="col-sm-8">
+                    <input style=" width: auto; box-shadow: none;" name="QualificationIsPostGraduate" ng-model="addCtrl.entity.QualificationIsPostGraduate"
+                        type="checkbox" class="form-control"       text-only-with-space>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <button ng-disabled="!editForm.$valid" type="submit" class="btn btn-warning">Save</button>
+                    <button type="button" class="btn btn-danger" ng-click="back('organization.masters.list')">Cancel</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

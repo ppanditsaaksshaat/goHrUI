@@ -1,0 +1,64 @@
+
+<style>
+    .djTable {
+        width: 100%;
+    }
+    
+    .djTable td, th {
+        overflow: hidden;
+    }
+    
+    .djTable td:first , th:first{
+        width: 30px;
+    }
+    
+    .djTable td:last-child , th:last-child{
+        width: 30px;
+    }
+</style>
+<table class="table table-bordered table-hover table-condensed djTable" st-table="displayedCollection" st-safe-src="rows"
+    st-pagination-scroll>
+    <thead>
+        <tr class="sortable">
+            <th ng-show="gridObject.enableSrNo" st-sort="$index">Sno</th>
+            <th ng-repeat="col in gridObject.columns" st-sort="{{col.name}}">{{col.text}}</th>
+            <th>Actions</th>
+        </tr>
+        <tr ng-show="gridObject.enableFilter">
+            <th ng-show="gridObject.enableSrNo"></th>
+            <th ng-show="gridObject.enableTitleFilter"><input st-search="{{gridObject.titleField}}" placeholder="Search" class="input-sm form-control search-input" type="search"
+                /></th>
+            <th  ng-show="gridObject.enableGlobalFilter && (gridObject.enableTitleFilter && gridObject.columns.length!=1)" colspan="{{gridObject.columns.length-1}}">
+                <input st-search="" placeholder="Global Search" class="input-sm form-control search-input" type="search" /></th>
+        </tr>
+    </thead>
+    <tbody ng-show="displayedCollection.length>0">
+        <tr ng-repeat="row in displayedCollection">
+            <td ng-show="gridObject.enableSrNo">
+                {{$index+1}}
+            </td>
+            <td ng-repeat="col in gridObject.columns">{{row[col.name]}}</td>
+            <td ng-show="gridObject.enableAction">
+                <a ui-sref="leave.masters.edit({name:listCtrl.tempName, pageId: gridObject.pageId, action:'edit', pkId: row[gridObject.page.pageinfo.idencolname]})">
+                    <i class="fa fa-pencil-square-o"></i></a>
+            </td>
+        </tr>
+    </tbody>
+    <tbody ng-show="displayedCollection.length<=0&&isLoaded">
+        <tr>
+            <td colspan="6">No {{listCtrl.page.pageinfo.title}} found</td>
+        </tr>
+    </tbody>
+    <tbody ng-show="isLoading">
+        <tr>
+            <td colspan="6">Loading {{listCtrl.page.pageinfo.title}} Please wait..<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i></td>
+        </tr>
+    </tbody>
+    <tfoot ng-show="gridObject.enablePagination">
+        <tr>
+            <td colspan="6" class="text-center">
+                <div st-pagination="" st-items-by-page="gridObject.paginationLength" st-displayed-pages="5"></div>
+            </td>
+        </tr>
+    </tfoot>
+</table>

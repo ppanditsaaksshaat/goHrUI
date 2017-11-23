@@ -1,10 +1,69 @@
-<div class="row">
-    <div class="col-md-3" ng-show="page.showFilter" style="padding-right:0px; margin-right:0px;  ">
-        <filter-box page="page"></filter-box>
-    </div>
-    <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
-        <grid-box page="page" box-options="boxSetting">
-        </grid-box>
-    </div>
-</div>
+<grid-box ng-model="page" ng-hide="showEditForm">
+</grid-box>
 
+
+<!--<form name="editForm " class="form-horizontal" novalidate ng-submit="saveForm() " ng-show="showEditForm ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="false " show-list="false
+ " show-reset="false " condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.EBDSubUnitId.text}}</label>
+                <div class="col-xs-4">
+                    <select class="form-control" ng-model="entity.selectedSubUnit" ng-options="subUnit.name  for subUnit in page.pageinfo.selects.EBDSubUnitId">
+                            </select>
+                </div>
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.EBDCategoryId.text}}</label>
+                <div class="col-xs-4">
+                    <select class="form-control" ng-model="entity.selectedEmployee" ng-disabled="disabledEmp" ng-change="selectedDesignDept()"
+                        ng-options="employee.name  for employee in page.pageinfo.selects.EBDCategoryId">
+                            </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.EBDFromYear.text}}</label>
+                <div class="col-xs-4">
+                    <div class="input-group" moment-picker="entity.EBDFromYear" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                        min-date="col.minDate">
+                        <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                </span>
+                        <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                            ng-model="entity.EBDFromYear" ng-model-options="{ updateOn: 'blur' }">
+                        <span class="input-group-btn">
+                                                <button class="btn btn-secondary" ng-click="entity.EBDFromYear=''" type="button"><i class="fa fa-close"></i></button>
+                                                 </span>
+                    </div>
+                </div>
+                <label for="inputEmail" class="control-label col-xs-2">{{page.pageinfo.fields.EBDToYear.text}}</label>
+                <div class="col-xs-4">
+                    <div class="input-group" moment-picker="entity.EBDToYear" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                        min-date="col.minDate">
+                        <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                </span>
+                        <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                            ng-model="entity.EBDToYear" ng-model-options="{ updateOn: 'blur' }">
+                        <span class="input-group-btn">
+                                                <button class="btn btn-secondary" ng-click="entity.EBDToYear=''" type="button"><i class="fa fa-close"></i></button>
+                                                 </span>
+                    </div>
+                </div>
+                <label></label>
+                <div>
+                    <button class="btn btn-primary" ng-click=downloadAttendanceDataList()>Search</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="control-label col-xs-2">{{page.pageinfo.fields.EBDBonusPercentage.text}}</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type="text" ng-model="entity.EBDBonusPercentage">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>-->

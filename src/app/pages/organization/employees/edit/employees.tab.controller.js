@@ -228,6 +228,7 @@
             $scope.page.pageIsLoading = false;
             var linkFieldName;
             if (result.pageinfo.pageid == 114) {
+                
                 console.log(result.pageinfo.selects)
                 console.log(result.pageinfo.selects.BRId)
                 if (result.pageinfo.selects.LocationId.length == 1) {
@@ -268,6 +269,7 @@
                 if (result.pageinfo.pageid == 35 || result.pageinfo.pageid == 36) {
                     var emgTableId = 57, contTableId = 45, personalTableId = 43;
                     var searchList = [];
+                    $scope.entity.PDAnniversaryDate = moment().format('DD/MMMM/YYYY');
                     if (result.pageinfo.pageid == 35) {
                         var searchFields = {
                             field: linkFieldName,
@@ -633,7 +635,7 @@
                     // vm.entity.JDDesgId = 10;
                     vm.entity.JDSUId = vm.entity.JDSubUnitID;
                     if (vm.entity.JDIsHasLeft) {
-                        vm.entity.JDHasLeftDate = moment();
+                        // vm.entity.JDHasLeftDate = moment();
                     }
                     if (vm.entity.JDIsOT == false) {
                         vm.entity.SingleOT = false;
@@ -673,6 +675,7 @@
 
                     if (vm.entity.PdId === undefined) {
                         vm.entity.PdEmpId = vm.empPKId;
+
                         _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
                     }
                     else {

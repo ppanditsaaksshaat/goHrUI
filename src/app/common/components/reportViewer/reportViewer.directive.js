@@ -5,7 +5,7 @@
         .directive('reportViewer', reportViewer);
     /** @ngInject */
     function reportViewer($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
-        editFormService, focus, $sce) {
+        editFormService, focus, $sce, DJWebStore) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/reportViewer/reportViewer.html',
@@ -38,7 +38,7 @@
                 reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx);
 
                 // reportBaseURL = 'http://itsllive.rudra.hrm/';
-                reportBaseURL = 'http://web400.hrms/';
+                //reportBaseURL = 'http://web400.hrms/';
                 console.log(reportBaseURL)
 
                 var boxSetting = {
@@ -134,6 +134,8 @@
                     //     nosp: 'UserEmpId',
                     //     selectedValue: userEmpId
                     // })
+                    var corpoId = DJWebStore.GetValue('CorpoId');
+                    var lang = DJWebStore.GetValue('UserLang');
 
                     console.log(userFilterData);
                     var data = { reportId: $scope.page.reportId, filterData: userFilterData, userEmpId: $rootScope.user.profile.empId }
@@ -146,7 +148,8 @@
                     pageService.rptHandshake($scope.page.reportId, JSON.stringify(encData)).then(function (result) {
                         //   var result = angular.fromJson(response.data);
                         console.log(result)
-                        var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth;
+                        var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                            '&?crid=' + corpoId + '&lang=' + lang
                         console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 

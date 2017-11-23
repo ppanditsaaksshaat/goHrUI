@@ -1,0 +1,604 @@
+<div ng-hide="verifyCancelRequestForm">
+    <div ng-hide="verifySanctionForm">
+        <div ng-hide="showSanctionForm">
+            <grid-box ng-model="page" ng-hide="showEditForm">
+            </grid-box>
+            <div ng-show="showEditForm">
+                <div class="row">
+                    <div ba-panel ba-panel-class="x-medium" ba-panel-title="{{page.pageinfo.tagline}}">
+                        <!--<h3>{{page.pageinfo.tagline}}</h3>-->
+                        <div class="panel-body">
+                            <div>
+                                <form name="editForm" ng-submit="saveForm(editForm)">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-12">
+
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
+                                                        <select ng-disabled="disabledEmp" class="form-control" ng-model="entity.selectedEmp" ng-change="fetchDetail();leaveCtrl.validateLeave=true"
+                                                            ng-options="employee.name for employee in page.pageinfo.selects.LEADEmpId">
+                                                </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="showSlider">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label ng-bind="page.pageinfo.fields.LEADDateFrom.text"></label>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <field-box page="page" ng-column="page.pageinfo.fields.LEADDateFrom" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
+                                                            </div>
+                                                            <div class="col-md-1" ng-if="entity.LEADDateFrom && !isgreaterJoinDate">
+                                                                <div class="form-group">
+                                                                    <label ng-bind="page.pageinfo.fields.LEADDateTo.text"></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-5" ng-if="entity.LEADDateFrom  && !isgreaterJoinDate">
+                                                                <field-box page="page" ng-column="page.pageinfo.fields.LEADDateTo" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6" ng-if="entity.LEADDateFrom && !isgreaterJoinDate">
+                                                        <div class="form-group">
+                                                            <rzslider rz-slider-model="fromSlider.minValue" rz-slider-high="fromSlider.maxValue" rz-slider-options="fromSlider.options"></rzslider>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6" ng-if="entity.LEADDateTo && showToSlider">
+                                                        <div class="form-group">
+                                                            <rzslider rz-slider-model="toSlider.minValue" rz-slider-high="toSlider.maxValue" rz-slider-options="toSlider.options"></rzslider>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-if="leaveCtrl.appliedDays!=undefined">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>No. Of Days Applied</label>
+                                                            <span ng-bind="leaveCtrl.appliedDays"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label ng-bind="page.pageinfo.fields.LeadComment.text"></label>
+                                                            <field-box page="page" ng-column="page.pageinfo.fields.LeadComment" ng-entity="entity" form="editForm"></field-box>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label ng-bind="page.pageinfo.fields.LEADAddress.text"></label>
+                                                            <field-box page="page" ng-column="page.pageinfo.fields.LEADAddress" ng-entity="entity" form="editForm"></field-box>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label ng-bind="page.pageinfo.fields.LEADContactName.text"></label>
+                                                            <field-box page="page" ng-column="page.pageinfo.fields.LEADContactName" ng-entity="entity" form="editForm"></field-box>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label ng-bind="page.pageinfo.fields.LEADContactNo.text"></label>
+                                                            <field-box page="page" ng-column="page.pageinfo.fields.LEADContactNo" ng-entity="entity" form="editForm"></field-box>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row" ng-if="leaveCtrl.appliedDays>0">
+                                                <div class="col-md-5">
+                                                    <div class="checkbox">
+                                                        <label class="custom-checkbox">      
+                                                <input  type="checkbox"  ng-model="entity.isConditiaonal" ng-change="onConditionalCheckbox()"> 
+                                                <span>Apply for Condtional Leave</span>
+                                               </label>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="entity.isConditiaonal" class="col-md-2">
+                                                    <select class="form-control" ng-model="entity.conditinalLeaveTypeId" ng-options="leaveType.value as leaveType.name for leaveType in page.pageinfo.selects.LEADLTId  | filter: filter"
+                                                        ng-change="onConditionalLeaveTypeChange()">
+                                            </select>
+                                                </div>
+                                            </div>
+                                            <div class="row" ng-if="leaveCtrl.appliedDays>0">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Leave days distribution as per leave type</label>
+                                                                <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="col-md-2">Type</th>
+                                                                            <th class="col-md-1">Available Balance</th>
+                                                                            <th class="col-md-2">Leave Debit</th>
+                                                                            <th class="col-md-1">Half Day</th>
+                                                                            <th class="col-md-2">Min</th>
+                                                                            <th class="col-md-2">Max</th>
+                                                                            <th class="col-md-2">Unclear Balance</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+
+                                                                        <tr ng-repeat="value in showLeave">
+                                                                            <td ng-bind="value.LTName"></td>
+                                                                            <td ng-bind="value.LeaveBalance"></td>
+                                                                            <td>
+                                                                                <select ng-if="!value.isUnpaid && value.days.length>0" ng-model="value.leaveDr" ng-options="opt.id as opt.name for opt in value.days"
+                                                                                    ng-change="onLeaveDrChange(value,'{{value.leaveDr}}' )"></select>
+                                                                                <div ng-if="value.isUnpaid">{{value.leaveDr}} Days</div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="checkbox" ng-if="!value.isUnpaid">
+                                                                                    <label class="custom-checkbox">      
+                                                                        <input  type="checkbox" ng-model="value.isHalfDay" ng-change="onHalfDayChange(value,'{{value.isHalfDay}}')"/> 
+                                                                        <span></span>
+                                                                        </label>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td ng-bind="value.minDays"></td>
+                                                                            <td ng-bind="value.maxDays"></td>
+                                                                            <td ng-bind="value.unClearBal"></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    <tfoot>
+                                                                        <tr>
+                                                                            <td>Total</td>
+                                                                            <td>{{getTotal('LeaveBalance')}}</td>
+                                                                            <td>{{getTotal('leaveDr')}}</td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                    </tfoot>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12" ng-hide="pendingLeave">
+                                                            <div class="form-group">
+                                                                <label>Previous Applications</label>
+                                                                <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Status</th>
+                                                                            <th>Application Date</th>
+                                                                            <th>Leave From</th>
+                                                                            <th>Leave To</th>
+                                                                            <th>Days</th>
+                                                                            <th>-</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="leave in prevLeaveList">
+                                                                            <td ng-bind="leave.status"></td>
+                                                                            <td ng-bind="leave.appDate"></td>
+                                                                            <td ng-bind="leave.from"></td>
+                                                                            <td ng-bind="leave.to"></td>
+                                                                            <td ng-bind="leave.days"></td>
+                                                                            <td ng-bind="leave.distribution"></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-6">
+                                            <button type="submit" class="btn btn-info btn-lg" ng-disabled="isSavingLeave || !leaveCtrl.validateLeave">
+                                    <i ng-show="isSavingLeave" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                                    <span ng-hide="isSavingLeave">Apply Leave</span>
+                                    <span ng-show="isSavingLeave">Applying..</span>
+                                    </button>
+                                            <button type="button" class="btn btn-danger btn-lg" ng-click="closeForm()">Close</button>
+                                            <button ng-if="entity.LEADId!=undefined" type="button" class="btn btn-danger btn-lg" ng-click="deleteForm()">Delete</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4"><label for=""></label></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="showSanctionForm">
+            <div class="row">
+                <div ba-panel ba-panel-class="x-medium" ba-panel-title="Sanction Leave Application">
+                    <form ng-submit="leaveSanction()" name="editForm">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
+                                                        <span class="form-control" ng-bind="entity.EmpName"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.TotalLeaveDays123.text"></label>
+                                                        <span class="form-control" ng-bind="entity.TotalLeaveDays123"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.LEADDateFrom.text"></label>
+                                                        <span class="form-control" ng-bind="entity.LEADDateFrom"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.LEADDateTo.text"></label>
+                                                        <span class="form-control" ng-bind="entity.LEADDateTo"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.LEADFromHalfDayId.text"></label>
+                                                        <span class="form-control" ng-bind="entity.fromHalf"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.LEADToHalfDayId.text"></label>
+                                                        <span class="form-control" ng-bind="entity.toHalf"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+
+
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.LEADContactName.text"></label>
+                                                        <span class="form-control" ng-bind="entity.LEADContactName"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.LEADContactNo.text"></label>
+                                                        <span class="form-control" ng-bind="entity.LEADContactNo"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.LEADAddress.text"></label>
+                                                        <span class="form-control" ng-bind="entity.LEADAddress"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="page.pageinfo.fields.LeadComment.text"></label>
+                                                        <span class="form-control" ng-bind="entity.LeadComment"></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <div class="row" ng-if="leaveDetails!=undefined">
+                                                <div class "col-md-6">
+                                                    <div class="form-group">
+                                                        <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="col-md-2">Type</th>
+                                                                    <th class="col-md-1">Balance</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="leaveDetail in leaveDetails">
+                                                                    <td ng-bind="leaveDetail.type"></td>
+                                                                    <td ng-bind="leaveDetail.balance"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="sanctionPage.pageinfo.fields.ELSDSanctionFromDate.text"></label>
+                                                        <div class="input-group" moment-picker="sanctionEntity.ELSDSanctionFromDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                                            min-date="col.minDate">
+                                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                </span>
+                                                            <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                                                ng-model="sanctionEntity.ELSDSanctionFromDate" ng-model-options="{ updateOn: 'blur' }">
+                                                            <span class="input-group-btn">
+                                                <button class="btn btn-secondary" ng-click="sanctionEntity.ELSDSanctionFromDate=''" type="button"><i class="fa fa-close"></i></button>
+                                                 </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label ng-bind="sanctionPage.pageinfo.fields.ELSDSanctionToDate.text"></label>
+                                                        <div class="input-group" moment-picker="sanctionEntity.ELSDSanctionToDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                                            min-date="col.minDate">
+                                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                                </span>
+                                                            <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                                                ng-model="sanctionEntity.ELSDSanctionToDate" ng-model-options="{ updateOn: 'blur' }">
+                                                            <span class="input-group-btn">
+                                                <button class="btn btn-secondary" ng-click="sanctionEntity.ELSDSanctionToDate=''" type="button"><i class="fa fa-close"></i></button>
+                                                 </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Status<span style="color:red">*</span></label>
+                                                        <select class="form-control" ng-model="sanctionEntity.StatusId" ng-options="status.value as status.name for status in sanctionPage.pageinfo.statuslist"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Comment<span style="color:red">* </label>
+                                                        <textarea class="form-control" ng-model="sanctionEntity.ELSDComment"></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-info btn-lg">Save</button>
+                                <button type="button" class="btn btn-danger btn-lg" ng-click="closeSanction()">Close</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="verifySanctionForm">
+        <div class="row">
+            <div ba-panel ba-panel-class="x-medium" ba-panel-title="Cancel Leave Application">
+                <form ng-submit="cancelLeave()" name="editForm">
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.EmpName"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="page.pageinfo.fields.TotalLeaveDays123.text"></label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.TotalLeaveDays123"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="page.pageinfo.fields.LEADDateFrom.text"></label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.LEADDateFrom"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="page.pageinfo.fields.LEADDateTo.text"></label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.LEADDateTo"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="page.pageinfo.fields.ELSDSanctionFromDate.text"></label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.ELSDSanctionFromDate"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label ng-bind="page.pageinfo.fields.ELSDSanctionToDate.text"></label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.ELSDSanctionToDate"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Created By</label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.CreatedBy"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Created On</label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.CreatedOn"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Employee Comment</label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.LeadComment"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Admin Comment</label>
+                                    <span class="form-control" ng-bind="cancelRequestEntity.LEADAdminComment"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div ng-if="!status.isRejected" class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select ng-disabled="true" class="form-control" ng-model="cancelRequestEntity.StatusId" ng-options="status.value as status.name for status in page.pageinfo.statuslist"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Comment<span style="color:red">* </label>
+                                    <textarea class="form-control" ng-model="cancelRequestEntity.CRComment"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="text-center">
+                            <button ng-if="!status.isRejected" type="submit" class="btn btn-info btn-lg">Cancel Leave</button>
+                            <button type="button" class="btn btn-danger btn-lg" ng-click="closeViewSanctionForm()">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div ng-show="verifyCancelRequestForm">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Cancel Request Approval Application">
+            <form ng-submit="replyOnCancelLeave(cancelRequestEntity)" name="editForm">
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LEADEmpId.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.EmpName"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.TotalLeaveDays123.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.TotalLeaveDays123"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LEADDateFrom.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.LEADDateFrom"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.LEADDateTo.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.LEADDateTo"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.ELSDSanctionFromDate.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.ELSDSanctionFromDate"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.ELSDSanctionToDate.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.ELSDSanctionToDate"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Created By</label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.LEADContactName"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Created On</label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.LEADContactNo"></span>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employee Comment</label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.CRComment"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status<span style="color:red">*</label>
+                                <select class="form-control" ng-model="cancelRequestEntity.StatusId" ng-options="status.value as status.name for status in cancelRequestPage.pageinfo.statuslist"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Comment <span style="color:red">* </label>
+                                <textarea class="form-control" ng-model="cancelRequestEntity.CRCommentAfterCanReq"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info btn-lg">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeVerifyCancelRequestForm()">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

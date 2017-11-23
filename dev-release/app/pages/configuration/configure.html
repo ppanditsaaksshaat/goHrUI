@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-12">
+        <div ba-panel ba-panel-title="Organization Configuration" ba-panel-class="with-scroll">
+            <div ng-repeat="configure in configureList">
+                <div class="row text-centre">
+                    <div class="well col-lg-12">
+                        <h5 class="col-lg-9"><i class="col-lg-1 {{configure.logo}}" aria-hidden="true"></i> {{configure.heading}}
+                            <p>{{configure.paragraph}}</p>
+                        </h5>
+                        <i ng-show="configure.show" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
+                        <a href="#" class="col-lg-1" ui-sref="{{configure.href}}" ng-click="openConfigure(configure.name)">Configure</a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="well col-lg-12">
+                    <h5 class="col-lg-9"><i class="col-lg-1 fa fa-anchor fa-2x" aria-hidden="true"></i>Location
+                        <p>Location Master</p>
+                    </h5>
+                    <i ng-show="locationExist" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
+                    <a href="#" class="col-lg-1" ng-click="openConfigure('location')" ui-sref="organization.employees.masters()">Configure</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="well col-lg-12">
+                    <h5 class="col-lg-9"><i class="col-lg-1 fa fa-anchor fa-2x" aria-hidden="true"></i>Branch
+                        <p>Branch Master</p>
+                    </h5>
+                    <i ng-show="branchExist" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
+                    <a href="#" class="col-lg-1" ng-click="openConfigure('branch')" ui-sref="organization.employees.masters.list({name:'branch',pageId:109})">Configure</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="well col-lg-12">
+                    <h5 class="col-lg-9"><i class="col-lg-1 fa fa-anchor fa-2x" aria-hidden="true"></i>SubUnit
+                        <p>SubUnit Master</p>
+                    </h5>
+                    <i ng-show="subUnitExist" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
+                    <a href="#" class="col-lg-1" ng-click="openConfigure('subunit')" ui-sref="organization.employees.masters.list({name: 'sub-unit', pageId:111})">Configure</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="well col-lg-12">
+                    <h5 class="col-lg-9"><i class="col-lg-1 fa fa-anchor fa-2x" aria-hidden="true"></i>Department
+                        <p>Department Master</p>
+                    </h5>
+                    <i ng-show="departmentExist" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
+                    <a href="#" class="col-lg-1" ng-click="openConfigure('department')" ui-sref="organization.employees.masters.list({name: 'department', pageId:29})">Configure</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="well col-lg-12">
+                    <h5 class="col-lg-9"><i class="col-lg-1 fa fa-anchor fa-2x" aria-hidden="true"></i>Designation
+                        <p>Designation Master</p>
+                    </h5>
+                    <i ng-show="designationExist" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
+                    <a href="#" class="col-lg-1" ng-click="openConfigure('designation')" ui-sref="organization.employees.masters.list({name: 'designation', pageId:29})">Configure</a>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

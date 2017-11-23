@@ -1,0 +1,236 @@
+<!--<div class="row">
+    <div class="col-md-12">
+
+        <form class="form-horizontal" name="editForm" ng-submit="addCtrl.saveForm(editForm)">
+            <div class="row">
+                <div class="col-md-6">
+
+                </div>
+                <div class="col-md-6">
+
+                </div>
+                <div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label       class="col-sm-4 control-label">Shift Set</label>
+                        <div class="col-sm-8">
+                            <input name="SSName" maxlength="50" ng-model="addCtrl.entity.SSName"  type="text" ng-required="true" class="form-control" 
+                                placeholder="Enter Shift Name" >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label        class="col-sm-4 control-label">Shift Name</label>
+                        <div class="col-sm-8">
+                            <input name="SMName" maxlength="50" ng-model="addCtrl.entity.SMName" type="text" ng-required="true" class="form-control" 
+                                placeholder="Enter Branch Name" >
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label       class="col-sm-4 control-label">Lunch Time</label>
+                        <div class="col-sm-8">  
+                         <input name="SMLunchTime" maxlength="15" ui-timepicker ng-model="addCtrl.entity.SMLunchTime" type="text" placeholder="Enter IFSC Code" class="form-control" >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label       class="col-sm-4 control-label">From Time</label>
+                        <div class="col-sm-8">
+
+
+   <input name="SMFromTime" maxlength="15" ui-timepicker ng-model="addCtrl.entity.SMFromTime" base-date"someDateObject" type="text" ng-required="true" placeholder="Enter IFSC Code" class="form-control" >
+                   
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label       class="col-sm-4 control-label">To Time</label>
+                        <div class="col-sm-8">
+                         
+
+<input name="SMToTime" maxlength="15" ui-timepicker ng-model="addCtrl.entity.SMToTime" type="text" ng-required="true" placeholder="Enter To Time " class="form-control" >
+ 
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Set Max Time For Half Day</label>
+                        <div class="col-sm-8">
+                            <input name="SMsetMaxWorkingTimeForHalfDay" maxlength="100" ng-model="addCtrl.entity.SMsetMaxWorkingTimeForHalfDay" type="text" ng-required="true" class="form-control"
+                                   placeholder="Enter Branch Name">
+
+
+
+                                   
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Late Allowed Applicable</label>
+                        <div class="col-sm-8">
+                           <input style=" width: auto; box-shadow: none;" name="SMLateAllowed" ng-model="addCtrl.entity.SMLateAllowed" type="checkbox"
+                        class="form-control "      >
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Over Time Allowed</label>
+                        <div class="col-sm-8">
+
+                            <input style=" width: auto; box-shadow: none;" name="SMOverTimeAllowed" ng-model="addCtrl.entity.SMOverTimeAllowed" type="checkbox"
+                        class="form-control "      >
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+
+             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Compensatory-Off Allowed</label>
+                        <div class="col-sm-8">
+                           <input style=" width: auto; box-shadow: none;" name="SMCOffAllowed" ng-model="addCtrl.entity.SMCOffAllowed" type="checkbox"
+                        class="form-control "      >
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Early Going Allowed</label>
+                        <div class="col-sm-8">
+
+                            <input style=" width: auto; box-shadow: none;" name="SMEarlyGoingAllowed" ng-model="addCtrl.entity.SMEarlyGoingAllowed" type="checkbox"
+                        class="form-control "      >
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+
+             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Field Duty Allowed</label>
+                        <div class="col-sm-8">
+                           <input style=" width: auto; box-shadow: none;" name="SMFDAllowed" ng-model="addCtrl.entity.SMFDAllowed" type="checkbox"
+                        class="form-control "      >
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Shift Exchange Allowed</label>
+                        <div class="col-sm-8">
+
+                            <input style=" width: auto; box-shadow: none;" name="SMShiftExchangeAllowed" ng-model="addCtrl.entity.SMShiftExchangeAllowed" type="checkbox"
+                        class="form-control "      >
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+
+             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Supervisor can Edit Attendance Records</label>
+                        <div class="col-sm-8">
+                           <input style=" width: auto; box-shadow: none;" name="SMSupervisorCanEdit" ng-model="addCtrl.entity.SMSupervisorCanEdit" type="checkbox"
+                        class="form-control "      >
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Shift Flexibility Allowed</label>
+                        <div class="col-sm-8">
+
+                            <input style=" width: auto; box-shadow: none;" name="SMShiftFlexibility" ng-model="addCtrl.entity.SMShiftFlexibility" type="checkbox"
+                        class="form-control "      >
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+
+             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Half day Allowed</label>
+                        <div class="col-sm-8">
+                           <input style=" width: auto; box-shadow: none;" name="SMHalfDayAllowed" ng-model="addCtrl.entity.SMHalfDayAllowed" type="checkbox"
+                        class="form-control "      >
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label"></label>
+                        <div class="col-sm-8">
+
+                            
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+
+
+
+            
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <button ng-disabled="!editForm.$valid" type="submit" class="btn btn-warning">Save</button>
+                    <button type="button" class="btn btn-danger" ng-click="back('attendance.masters.list')">Cancel</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>-->

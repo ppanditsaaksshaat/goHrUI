@@ -1,0 +1,60 @@
+
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+      <em class="ion-ios-close-empty sn-link-close"></em>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">Family Details</h4>
+  </div>
+  <div class="modal-body">
+   
+<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="inputDepartment">Name*</label>
+        <input type="text" class="form-control" ng-model="family.FdName">
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="inputDesignation">RelationShip*</label>
+      <select id="empdesignation_{{$index}}"
+                      name="empdesignation_{{$index}}"
+                      ng-model="family.FdRelationshipId"
+                      class="form-control"
+                      ng-options="relationship.value as relationship.name for relationship in relationships"
+                      ng-change="vm.typeOnChange(vm.section.SecType,'Add')"
+                      data-placeholder="Select Nav Menu"
+                      ng-required="true">
+               </select>
+    </div>
+  </div>
+  
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="inputDepartment">Date Of Birth*</label>
+        <input type="text" class="form-control" ng-model="family.FdDateOfBirth">
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <div class="checkbox">
+      <label class="custom-checkbox">      
+      <input type="checkbox" ng-model="family.FdDependents" >   
+      <span>Dependent</span>
+    </label>
+   </div>
+    </div>
+  </div>
+  
+</div>
+  </div>
+  <div class="modal-footer">
+    <div class="text-center">
+    <button type="button" class="btn btn-primary" ng-click="addFamily()">Save</button>
+    <button type="button" class="btn btn-primary" ng-click="$dismiss()">Cancel</button>
+  </div>
+   </div> 
+</div>

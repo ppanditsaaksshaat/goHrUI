@@ -2,7 +2,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     toastr, toastrConfig, pageService, $timeout, $location, Idle, dialogModal) {
 
 
-    
+
     $rootScope.user = DJWebStore.ValidateUser();
 
     $rootScope.sideMenu = DJWebStore.GetValue('sidemenu');
@@ -58,14 +58,16 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         $rootScope.previousState_params = fromParams;
     });
 
-    pageService.getBGClass().then(function (result) {
-        var bgClass = result;//angular.fromJson(response.data);
-        DJWebStore.SetBGClass(bgClass);
-    }, function (err) {
-        console.log(err);
-    });
+    $rootScope.GetBGClass = function () {
 
+        pageService.getBGClass().then(function (result) {
+            var bgClass = result;//angular.fromJson(response.data);
+            DJWebStore.SetBGClass(bgClass);
+        }, function (err) {
+            console.log(err);
+        });
 
+    }
     var sheet = (function () {
         // Create the <style> tag
         var style = document.createElement("style");
