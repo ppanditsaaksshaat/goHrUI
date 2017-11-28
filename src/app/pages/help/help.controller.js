@@ -4,7 +4,7 @@
  */
 (function () {
   'use strict';
-  
+
 
   angular.module('BlurAdmin.pages.help')
     .controller('helpPermissionController', helpPermissionController);
@@ -449,7 +449,7 @@
 
   ////////////////////////////////////////////////////////////////////////////////////////////
   /// DIALOG  ////////////////////////////////////////////////////////////////////////////////
-  angular.module('BlurAdmin.pages.help.permission').controller('dialogConfirmCtrl', ['$scope', '$uibModalInstance', 'pageService', 'param',
+  angular.module('BlurAdmin.pages.help').controller('dialogConfirmCtrl', ['$scope', '$uibModalInstance', 'pageService', 'param',
     function ($scope, $uibModalInstance, pageService, param) {
       //-- Variables -----//
       console.log(param)
