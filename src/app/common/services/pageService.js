@@ -391,13 +391,13 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     'fileID': fileId
                 }
             }).then(function (response) {
-                
+
                 console.log(response)
 
                 var data = response.data;
                 var status = response.status;
                 var headers = response.headers;
-                
+
                 var octetStreamMime = 'application/octet-stream';
                 var success = false;
 
@@ -1178,7 +1178,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 });
         }
 
-         var _employeeBonusUpload = function (data) {
+        var _employeeBonusUpload = function (data) {
             var url = serviceBase + 'api/Upload/EmployeeBonus';
             return $http.post(url, JSON.stringify(JSON.stringify(data)),
                 {
@@ -1188,9 +1188,33 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 }).then(function (results) {
                     return results;
                 });
+            var url = serviceBase + 'api/Payroll/GenerateFullAndFinalSalary/';
+            console.log(url)
+            return $http.post(url, JSON.stringify(JSON.stringify(filterData)),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+
+                });
         }
 
+        var _getResources = function (data) {
 
+            var url = serviceBase + 'api/Resource/ByKey';
+            console.log(url)
+            return $http.post(url, JSON.stringify(JSON.stringify(data)),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+
+                });
+        }
         pageServiceFactory.serviceBase = serviceBase;
         pageServiceFactory.getPagData = _getPagData;
         pageServiceFactory.deletePageData = _deletePageData;
@@ -1216,8 +1240,8 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.getPrintBuilder = _getPrintBuilder;
         pageServiceFactory.getMapColumns = _getMapColumns;
         pageServiceFactory.getCustomQuery = _getCustomQuery;
-
         pageServiceFactory.getTableData = _getTableData;
+
         //report builder
         pageServiceFactory.getReport = _getReport;
         pageServiceFactory.getReportBuilder = _getReportBuilder;
@@ -1235,42 +1259,29 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         //File Repo
         pageServiceFactory.getFile = _getFile;
         pageServiceFactory.saveFile = _saveFile;
-
-
-
         pageServiceFactory.getBGClass = _getBGClass;
-
-
         pageServiceFactory.sendJdToCand = _sendJdToCand;
 
         //reminder
         pageServiceFactory.saveRemind = _saveRemind;
         pageServiceFactory.getRemind = _getRemind;
         pageServiceFactory.getRemindList = _getRemindList;
-
         pageServiceFactory.getAssignedUser = _getAssignedUser;
         pageServiceFactory.saveUserAssigned = _saveUserAssigned;
 
         //dashboard
         pageServiceFactory.getCVSummary = _getCVSummary;
-
         pageServiceFactory.getCalendar = _getCalendar;
-
         pageServiceFactory.changePassword = _changePassword;
-
         pageServiceFactory.studentSession = _studentSession;
         pageServiceFactory.sendEmail = _sendEmail;
         pageServiceFactory.sendCustomEmail = _sendCustomEmail;
-
         pageServiceFactory.getEmailTempList = _getEmailTempList;
         pageServiceFactory.getBuilderPageList = _getBuilderPageList;
-
         pageServiceFactory.getFieldSetting = _getFieldSetting;
-
         pageServiceFactory.getQuesPaper = _getQuesPaper;
         pageServiceFactory.ansQuesPaper = _ansQuesPaper;
         pageServiceFactory.rptHandshake = _rptHandshake;
-
         pageServiceFactory.updateField = _updateField;
 
         // FIle  Repo attchment by Nitesh
@@ -1280,21 +1291,13 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         //Test FIle  Repo attchment by Nitesh
         pageServiceFactory.saveTestFileAttach = _saveTestFileAttach;
         pageServiceFactory.getTestFileAttach = _getTestFileAttach;
-
         pageServiceFactory.getCustomReport = _getCustomReport;
         pageServiceFactory.updateMultiField = _updateMultiField;
         pageServiceFactory.generateSalary = _generateSalary;
         pageServiceFactory.getFieldSetting = _getFieldSetting;
-
-
-
-
         pageServiceFactory.getDashboard = _getDashboard;
-
         pageServiceFactory.migrateData = _migrateData;
-
         pageServiceFactory.getRowCount = _getRowCount;
-
         pageServiceFactory.uploadEmployeeData = _uploadEmployeeData;
 
         //User Custom View
@@ -1311,8 +1314,8 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.generateFullAndFinalSalary = _generateFullAndFinalSalary;
         pageServiceFactory.employeeBonusUpload = _employeeBonusUpload;
 
-        
-
+        //Resources
+        pageServiceFactory.getResources = _getResources;
 
 
         return pageServiceFactory;
