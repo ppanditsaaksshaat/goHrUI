@@ -95,7 +95,7 @@ angular.module('BlurAdmin.common').directive('treeView', function ($compile) {
                 var text = '';
 
                 text += '<li ng-repeat="n in ' + collection + '" >';
-                text += '<span ng-show= (n) class="show-hide" ng-click="showHide(n.id, n)"><i ng-show="!n.expanded" class="fa fa-plus-square"></i><i ng-show="n.expanded" class="fa fa-minus-square"></i></span>';
+                text += '<span ng-show=showIcon(n) class="show-hide" ng-click="showHide(n.id, n)"><i ng-show="!n.expanded" class="fa fa-plus-square"></i><i ng-show="n.expanded" class="fa fa-minus-square"></i></span>';
                 text += '<span ng-show=!showIcon(n) style="padding-right: 13px"></span>';
 
                 if (hasCheckBox) {
