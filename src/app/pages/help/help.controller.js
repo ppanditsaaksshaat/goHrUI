@@ -4,6 +4,7 @@
  */
 (function () {
   'use strict';
+  
 
   angular.module('BlurAdmin.pages.help')
     .controller('helpPermissionController', helpPermissionController);
@@ -347,6 +348,10 @@
       $scope.isSavingActivity = true;
       $scope.isActivitySaved = false;
       $scope.isApplyingChanges = true;
+
+      if ($scope.entity == "N") {
+        $scope.entity = {};
+      }
 
       // console.log($scope.activityList)
       // var selectedActivity = '';
