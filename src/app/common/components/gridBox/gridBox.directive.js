@@ -394,7 +394,6 @@
                             }
                             $scope.isAdmin = $rootScope.user.profile.isAdmin;
                             $scope.isManager = $rootScope.user.profile.isManager;
-
                             if ($scope.page.pageinfo.uibuttons.edit.IsAllowed || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
                                 isEdit = true;
                             else
@@ -593,7 +592,7 @@
                         }
                     }
                     else {
-
+                        
                         if ($scope.page.boxOptions.buttonPermission) {
                             result.pageinfo.uibuttons.create.IsAllowed = true;
                             result.pageinfo.uibuttons.edit.IsAllowed = true;

@@ -102,6 +102,7 @@
       $scope.showWeeklyOffList = true;
     }
     function _editRecord(row) {
+      debugger
       isWeekOffEdit = true;
       $scope.showWeeklyOffList = true;
       var multiSelect = {
