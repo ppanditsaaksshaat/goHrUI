@@ -81,7 +81,7 @@
                 console.log(userName)
                 return;
             }
-             
+
             console.log($scope.selectedLanguage)
 
             $("#userName").prop("disabled", true);
@@ -101,6 +101,7 @@
 
             authService.login(loginData, userCorpoId, $scope.selectedLanguage.value).then(function (response) {
                 console.log(response)
+                $scope.GetBGClass()
                 pageService.getAppUserData().then(function (result) {
 
                     console.log(result)

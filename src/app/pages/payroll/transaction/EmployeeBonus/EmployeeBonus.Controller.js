@@ -72,26 +72,31 @@
 
     var totalSavingRecord = 0;
     function _saveMidMonthClick() {
-
-
-      var upload = {
-        fieldRow: $scope.page.gridOptions.data,
-        // groupName: 'Attendance'
+      if ($scope.page.gridOptions.data.length > 0) {
+        var upload = {
+          fieldRow: $scope.page.gridOptions.data,
+          // groupName: 'Attendance'
+        }
+        var postData = JSON.stringify(upload);
+        console.log(upload)
+        console.log(postData)
+        var compressed = LZString.compressToEncodedURIComponent(postData);
+        var data = { lz: true, data: compressed }
+        pageService.employeeBonusUpload(data).then(function (result) {
+          console.log(result)
+          if (result.successList.length > 0) {
+            $scope.showMsg("success", "Bonus Saved Successfully");
+          }
+          else {
+            $scope.showMsg("error", result);
+          }
+        })
       }
-      var postData = JSON.stringify(upload);
-      console.log(upload)
-      console.log(postData)
-      var compressed = LZString.compressToEncodedURIComponent(postData);
-      var data = { lz: true, data: compressed }
-      pageService.employeeBonusUpload(data).then(function (result) {
-        console.log(result)
-        if (result.successList.length > 0) {
-          $scope.showMsg("success", "Bonus Saved Successfully");
-        }
-        else {
-          $scope.showMsg("error", result);
-        }
-      })
+      else {
+        $scope.showMsg("success", "Please filter data and then save record");
+      }
+
+
 
       // totalSavingRecord = $scope.page.gridOptions.data.length - 1;
 

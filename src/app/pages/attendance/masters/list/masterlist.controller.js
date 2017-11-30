@@ -75,6 +75,7 @@
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null,
+      buttonPermission:true,
       dataResult: _dataResult
     }
     if (pageId == 455) {
@@ -102,6 +103,7 @@
       $scope.showWeeklyOffList = true;
     }
     function _editRecord(row) {
+      debugger
       isWeekOffEdit = true;
       $scope.showWeeklyOffList = true;
       var multiSelect = {

@@ -404,7 +404,6 @@
                             }
                             $scope.isAdmin = $rootScope.user.profile.isAdmin;
                             $scope.isManager = $rootScope.user.profile.isManager;
-
                             if ($scope.page.pageinfo.uibuttons.edit.IsAllowed || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
                                 isEdit = true;
                             else
@@ -607,6 +606,7 @@
                         if ($scope.page.boxOptions.buttonPermission) {
                             result.pageinfo.uibuttons.create.IsAllowed = true;
                             result.pageinfo.uibuttons.edit.IsAllowed = true;
+                            result.pageinfo.uibuttons.refresh.IsAllowed = true
                         }
                         $scope.page = angular.extend({}, $scope.page, result);
                         //console.log(result)
@@ -696,7 +696,7 @@
                         // _startMsgTimer();
                     }
                     else {
-
+                        
                         $scope.page.gridOptions.data = result;
                     }
 
