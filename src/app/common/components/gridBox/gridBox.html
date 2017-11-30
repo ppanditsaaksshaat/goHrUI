@@ -16,16 +16,22 @@
                             <div class="col-md-9">
 
                                 <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
-                                    <button ng-show="page.boxOptions.showBack" type="button" class="btn btn-xs btn-default" ng-click="page.goBack()"><i class="ion-backspace"></i>List</button>
-                                    <button ng-show="page.boxOptions.showUpload && (page.pageinfo.uibuttons.upload.IsAllowed || (isAdmin && isManager))"
-                                        type="button" class="btn btn-xs btn-default" ng-click="page.uploadRecord()">
-                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>
-                                    <button ng-show="page.boxOptions.showRefresh && (page.pageinfo.uibuttons.refresh.IsAllowed || (isAdmin && isManager))"
-                                        type="button" class="btn btn-xs btn-default" ng-click="page.refreshData()"><i 
-                                class="ion-refresh"></i>Refresh</button> &nbsp;
-                                    <button ng-show="page.boxOptions.showAdd && (page.pageinfo.uibuttons.create.IsAllowed || (isAdmin && isManager))"
-                                        type=" button " class="btn btn-xs btn-default " ng-click="page.addRecord(editForm) ">
-                                 <i class="fa fa-plus-circle " aria-hidden="true "></i>Add</button>                                    &nbsp; &nbsp;
+                                    <button ng-show="page.boxOptions.showBack" type="button" class="btn btn-xs btn-default" ng-click="page.goBack()">
+                                        <i class="ion-backspace"></i>List</button>
+                                    <button ng-show="page.boxOptions.showUpload && (page.pageinfo.uibuttons.upload.IsAllowed || (isAdmin && isManager))" type="button"
+                                        class="btn btn-xs btn-default" ng-click="page.uploadRecord()">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Upload</button>
+                                    <button ng-show="page.boxOptions.showRefresh && (page.pageinfo.uibuttons.refresh.IsAllowed || (isAdmin && isManager))" type="button"
+                                        class="btn btn-xs btn-default" ng-click="page.refreshData()">
+                                        <i class="ion-refresh"></i>Refresh</button> &nbsp;
+                                    <button ng-show="page.boxOptions.showAdd && (page.pageinfo.uibuttons.create.IsAllowed || (isAdmin && isManager))" type=" button "
+                                        class="btn btn-xs btn-default " ng-click="page.addRecord(editForm) ">
+                                        <i class="fa fa-plus-circle " aria-hidden="true "></i>Add</button>
+
+                                    <button type="button"
+                                        class="btn btn-xs btn-default " ng-click="page.openHelp()">
+                                        <i class="fa fa-question-circle" aria-hidden="true "></i></button>
+
 
                                     <select ng-show="page.boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
                                         ng-options="opt.name for opt in page.pageinfo.ucvlist" ng-change="ucvOnChange(selectedUcvItem)">
@@ -33,9 +39,11 @@
                                 </div>
                                 <div class="pull-right" ng-show="page.boxOptions.customButtons.length>0 || page.boxOptions.customButtonsWithDefault.length>0">
                                     <button ng-if="page.boxOptions.customButtons.length>0" ng-repeat="button in page.boxOptions.customButtons" type="button"
-                                        class="btn btn-xs" ng-class="button.type" ng-click="button.onClick()"><i ng-class="button.icon"></i>{{button.text}}</button>                                    &nbsp;
+                                        class="btn btn-xs" ng-class="button.type" ng-click="button.onClick()">
+                                        <i ng-class="button.icon"></i>{{button.text}}</button> &nbsp;
                                     <button ng-if="page.boxOptions.customButtonsWithDefault.length>0" ng-repeat="button in page.boxOptions.customButtonsWithDefault"
-                                        type="button" class="btn btn-xs" ng-class="button.type" ng-click="button.onClick()"><i ng-class="button.icon"></i>{{button.text}}</button>                                    &nbsp;
+                                        type="button" class="btn btn-xs" ng-class="button.type" ng-click="button.onClick()">
+                                        <i ng-class="button.icon"></i>{{button.text}}</button> &nbsp;
                                 </div>
                             </div>
                         </div>
@@ -43,17 +51,23 @@
                     </div>
                     <div class="panel-heading" ng-show="(page.selectedRows.length>0)">
                         <div class="row">
-                            <div class="col-md-3">{{page.selectedRows.length}} Rows Selected [<a href ng-click="page.clearSelected()">Clear</a>]</div>
+                            <div class="col-md-3">{{page.selectedRows.length}} Rows Selected [
+                                <a href ng-click="page.clearSelected()">Clear</a>]</div>
                             <div class="col-md-9">
                                 <div class="pull-right" ng-show="page.boxOptions.selectedRowButtons.length>0">
                                     <button type="button" ng-show="page.selectedRows.length==1 && page.pageinfo.buttons.edit.isvisible && page.boxOptions.selectedRowButtons.defaultButton"
-                                        class="btn btn-xs btn-primary" ng-click="page.editRecord(page.selectedRows[0])"><i ng-class="button.icon"></i>Edit</button>
-                                    <button type="button" ng-show="page.pageinfo.buttons.view.isvisible" class="btn btn-xs" ng-click="page.viewRecord(page.selectedRows[0])"><i ng-class="button.icon"></i>View</button>
-                                    <button type="button" ng-show="page.pageinfo.buttons.update.isvisible" class="btn btn-xs" ng-click="page.updateRecord(page.selectedRows)"><i ng-class="button.icon"></i>Update</button>
+                                        class="btn btn-xs btn-primary" ng-click="page.editRecord(page.selectedRows[0])">
+                                        <i ng-class="button.icon"></i>Edit</button>
+                                    <button type="button" ng-show="page.pageinfo.buttons.view.isvisible" class="btn btn-xs" ng-click="page.viewRecord(page.selectedRows[0])">
+                                        <i ng-class="button.icon"></i>View</button>
+                                    <button type="button" ng-show="page.pageinfo.buttons.update.isvisible" class="btn btn-xs" ng-click="page.updateRecord(page.selectedRows)">
+                                        <i ng-class="button.icon"></i>Update</button>
                                     <button type="button" ng-show="page.pageinfo.buttons.delete.isvisible && page.boxOptions.selectedRowButtons.defaultButton"
-                                        class="btn btn-xs btn-danger" ng-click="page.deleteRecord(page.selectedRows)"><i ng-class="button.icon"></i>Delete</button>
+                                        class="btn btn-xs btn-danger" ng-click="page.deleteRecord(page.selectedRows)">
+                                        <i ng-class="button.icon"></i>Delete</button>
                                     <button ng-repeat="button in page.boxOptions.selectedRowButtons" type="button" class="btn btn-xs" ng-class="button.type"
-                                        ng-click="button.onClick()"><i ng-class="button.icon"></i>{{button.text}}</button>
+                                        ng-click="button.onClick()">
+                                        <i ng-class="button.icon"></i>{{button.text}}</button>
                                 </div>
 
                             </div>
@@ -65,8 +79,8 @@
                 position:absolute;
                 top:200px;
                 left:0px;" ng-click="page.showFilter=!page.showFilter">
-                    <i ng-class="{'ion-arrow-right-b':!page.showFilter, 'ion-arrow-left-b':page.showFilter}"></i>
-                </button>
+                            <i ng-class="{'ion-arrow-right-b':!page.showFilter, 'ion-arrow-left-b':page.showFilter}"></i>
+                        </button>
 
                         <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning ui-grid-edit
                             ui-grid-expandable class="djGrid">
@@ -81,7 +95,8 @@
                     <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
                         <div class="row">
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-xs btn-default" ng-click="page.closeViewRecord()"><i class="ion-back"></i>Back</button>                                {{page.pageinfo.tagline}}
+                                <button type="button" class="btn btn-xs btn-default" ng-click="page.closeViewRecord()">
+                                    <i class="ion-back"></i>Back</button> {{page.pageinfo.tagline}}
                             </div>
                             <div class="col-md-6">
                                 <div class="pull-right">
@@ -115,8 +130,8 @@
                             </div>
                         </div>
                     </div>-->
-                    
-                        <edit-panel-head  page="page" page-title="page.pageinfo.tagline" show-save="editForm.untouch" reset-form="resetForm(editForm)"
+
+                        <edit-panel-head page="page" page-title="page.pageinfo.tagline" show-save="editForm.untouch" reset-form="resetForm(editForm)"
                             clear-form="clearForm(editForm)" condition="true" show-list="false" show-close="true" close-form="closeForm(editForm)"></edit-panel-head>
 
                         <div class="panel-body">
