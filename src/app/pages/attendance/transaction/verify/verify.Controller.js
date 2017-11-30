@@ -185,31 +185,65 @@
       }
     }
     function _downloadTemplate() {
-
+      console.log($scope.page)
       var tempColumns = [];
-      var row = {
-        'EmployeeCode': '',
-        'TotalWeekOff': '',
-        'WeekOffPresent': '',
-        'TotalDays': '',
-        'TotalPresentDays': '',
-        'TotalHolidays': '',
-        'HolidayPresent': '',
-        'TotalLeaves': '',
-        'TotalLWP': '',
-        'TotalSalaryDays': '',
-        'LateCount': '',
-        'LateDays': '',
-        'AbsentDays': '',
-        'IncentiveDays': '',
-        'SingleOTMinute': '',
-        'SingleOTHours': '',
-        'DoubleOTMinute': '',
-        'DoubleOTHours': '',
-
+      if ($scope.page.gridOptions.data.length > 0) {
+        angular.forEach($scope.page.gridOptions.data, function (data) {
+          
+          var row = {
+            'EmployeeCode': data.EmpCode,
+            'EmployeeName': data.EmpName,
+            'Department': data.Department,
+            'TotalWeekOff': data.TotalWeekoff,
+            'WeekOffPresent': data.WeekOffPresent,
+            'TotalDays': data.TotalDays,
+            'TotalPresentDays': data.TotalPresentDays,
+            'TotalHolidays': data.TotalHolidays,
+            'HolidayPresent': data.HolidayPresent,
+            'TotalLeaves': data.TotalLeaves,
+            'TotalLWP': data.TotalLWP,
+            'TotalSalaryDays': data.TotalSalaryDays,
+            'LateCount': data.DeductableLateCount,
+            'LateDays': data.DeductableLateDays,
+            'AbsentDays': data.AbsentDays,
+            'IncentiveDays': data.IncentiveDays,
+            'SingleOTMinute': data.SingleOvertimeMin,
+            'SingleOTHours': data.SingleOvertimeHours,
+            'DoubleOTMinute': data.DoubleOvertimeMin,
+            'DoubleOTHours': data.DoubleOvertimeHours
+          }
+          tempColumns.push(row);
+        })
+        DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'Verify', false, true, true);
       }
-      tempColumns.push(row)
-      DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'Verify', false, true, true);
+      else {
+        $scope.showMsg("error", "Please use filter to show data.")
+      }
+      //return
+
+      // var row = {
+      //   'EmployeeCode': '',
+      //   'TotalWeekOff': '',
+      //   'WeekOffPresent': '',
+      //   'TotalDays': '',
+      //   'TotalPresentDays': '',
+      //   'TotalHolidays': '',
+      //   'HolidayPresent': '',
+      //   'TotalLeaves': '',
+      //   'TotalLWP': '',
+      //   'TotalSalaryDays': '',
+      //   'LateCount': '',
+      //   'LateDays': '',
+      //   'AbsentDays': '',
+      //   'IncentiveDays': '',
+      //   'SingleOTMinute': '',
+      //   'SingleOTHours': '',
+      //   'DoubleOTMinute': '',
+      //   'DoubleOTHours': '',
+
+      // }
+      // tempColumns.push(row)
+
     }
     function _uploadRecord() {
 

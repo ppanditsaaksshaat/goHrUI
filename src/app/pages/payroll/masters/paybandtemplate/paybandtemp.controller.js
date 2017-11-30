@@ -294,7 +294,7 @@
 
         function _addRuleGridColumns() {
             var cellTemplateCheck = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
-            cellTemplateCheck += "<a href ng-click=\"grid.appScope.changeFormula(row)\" ng-show=\"row.entity.PBTRCalcOnSHId.length>1 && !row.entity.PBTRIsSlab   \"> <i class=\"fa font-green\" ng-class=\"{'fa-check-square-o': row.entity.PBTRIsFormula, 'fa-square-o': !row.entity.PBTRIsFormula }\" aria-hidden=\"true\" ></i></a>";
+            cellTemplateCheck += "<a href ng-click=\"grid.appScope.changeFormula(row)\" ng-show=\"row.entity.PBTRCalcOnSHId.length>0 && !row.entity.PBTRIsSlab   \"> <i class=\"fa font-green\" ng-class=\"{'fa-check-square-o': row.entity.PBTRIsFormula, 'fa-square-o': !row.entity.PBTRIsFormula }\" aria-hidden=\"true\" ></i></a>";
             cellTemplateCheck += "</div>"
 
             var cellTemplateSlab = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
@@ -454,29 +454,49 @@
         function _cellEditableCondition(scope) {
             
             if (scope.col.name == "PBTRSHId") {
-                return true;
+                if (scope.row.entity.SHIsTotalEarning == "True" || scope.row.entity.SHIsTotalDeduction == "True") {
+                    return false;
+                }
+                else {
+                    return true;
+                }
             }
             else if (scope.col.name == "PBTRPercentage") {
+                if (scope.row.entity.SHIsTotalEarning == "True" || scope.row.entity.SHIsTotalDeduction == "True") {
+                    return false;
+                }
+                else {
+                    if (scope.row.entity.PBTRCalcOnSHId) {
+                        if (scope.row.entity.PBTRCalcOnSHId.length > 0) {
+                            if (scope.row.entity.PBTRIsFormula) {
+                                return true;
+                            }
 
-                if (scope.row.entity.PBTRCalcOnSHId) {
-                    if (scope.row.entity.PBTRCalcOnSHId.length > 0) {
-                        if (scope.row.entity.PBTRIsFormula) {
-                            return true;
-                        }
-
-                        else if (!scope.row.entity.PBTRIsFormula && !scope.row.entity.PBTRIsSlab) {
-                            return true;
+                            else if (!scope.row.entity.PBTRIsFormula && !scope.row.entity.PBTRIsSlab) {
+                                return true;
+                            }
                         }
                     }
+                    return false;
                 }
-                return false;
             }
-            // else if (scope.col.name == "PBTRCalcOnSHId") {
-            //     if ($scope.payTempGridOptions.data.length > 0) {
+            else if (scope.col.name == "PBTRCalcOnSHId") {
+                if (scope.row.entity.SHIsTotalEarning == "True" || scope.row.entity.SHIsTotalDeduction == "True") {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
 
-            //     }
-            //     return false;
-            // }
+            else if (scope.col.name == "PBTRIsFormula") {
+                if (scope.row.entity.SHIsTotalEarning == "True" || scope.row.entity.SHIsTotalDeduction == "True") {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
             else if (scope.row.entity.PBTRSHId) {
 
                 return true;
@@ -544,7 +564,7 @@
                 }
             }
             else {
-                $scope.showMsg("error", "ThisHead already exist");
+                $scope.showMsg("error", "This Head already exist");
             }
 
         }
@@ -702,7 +722,7 @@
                         if (checkDeductionHead != null) {
                             if (checkDeductionHead.SHType == "Deduction") {
                                 if ($scope.payTempGridOptions.data.length == 1) {
-                                    $scope.showMsg('warning', 'You can not add earning head first.')
+                                    $scope.showMsg('warning', 'You can add earning head first.')
                                     rowEntity.PBTRSHId = 0;
                                     rowEntity.SHeadType = '';
                                     return
@@ -997,12 +1017,12 @@
         function _changeFormula(row) {
 
             row.entity.PBTRIsFormula = !row.entity.PBTRIsFormula;
-            debugger
+
             if (row.entity.PBTRIsFormula) {
                 _getSubGridOptions(row.entity, row.entity.PBTRIsFormula)
                 if (row.entity.PBTRCalcOnSHId.length > 0) {
-                    if (row.entity.PBTRCalcOnSHId.length == 1) {
-                        $scope.showMsg('warning', 'Select atleast two heads in calculation part.')
+                    if (row.entity.PBTRCalcOnSHId.length == 0) {
+                        $scope.showMsg('warning', 'Select atleast one heads in calculation part.')
                         row.entity.PBTRIsFormula = false;
                     }
                     else {

@@ -75,6 +75,7 @@
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null,
+      buttonPermission:true,
       dataResult: _dataResult
     }
     if (pageId == 455) {

@@ -40,7 +40,8 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      uploadRecord: null
+      uploadRecord: null,
+      buttonPermission:true
     }
 
 

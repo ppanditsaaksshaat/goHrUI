@@ -592,10 +592,11 @@
                         }
                     }
                     else {
-                        
+
                         if ($scope.page.boxOptions.buttonPermission) {
                             result.pageinfo.uibuttons.create.IsAllowed = true;
                             result.pageinfo.uibuttons.edit.IsAllowed = true;
+                            result.pageinfo.uibuttons.refresh.IsAllowed = true
                         }
                         $scope.page = angular.extend({}, $scope.page, result);
                         //console.log(result)
@@ -685,7 +686,7 @@
                         // _startMsgTimer();
                     }
                     else {
-
+                        
                         $scope.page.gridOptions.data = result;
                     }
 
