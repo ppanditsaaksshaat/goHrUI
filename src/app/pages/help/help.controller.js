@@ -15,8 +15,7 @@
     toastr, dialog, $filter) {
 
 
-    $scope.savePermission = _savePermission;
-    $scope.saveActivity = _saveActivity;
+    $scope.saveHelp = _saveHelp;
     $scope.activityOnChange = _activityOnChange;
     $scope.cancelActivity = _cancelActivity;
     var helpPageId = 477;
@@ -121,19 +120,7 @@
      * ROLE LIST
      */
     function _getRoleList() {
-      // var rolePageId = 20;
-      // var roleTableId = 25;
-      // var data = {
-      //   searchList: [],
-      //   orderByList: []
-      // }
-      // var tableData = pageService.getTableData(
-      //   roleTableId,
-      //   rolePageId,
-      //   '', '',
-      //   false, data);
 
-      // tableData.then(_getTableSuccessResult, _getTableErrorResult)
 
       var data = {
         searchList: [],
@@ -202,55 +189,7 @@
     }
 
 
-    function _savePermission() {
-      if (!_validate($scope.nodes, $scope.oldNodes)) {
-        $scope.selectedNodes = [];
-        for (var n = 0; n < $scope.nodes.length; n++) {
-          if ($scope.nodes[n].checked) {
-            $scope.selectedNodes.push($scope.nodes[n].id)
-          }
-          if ($scope.nodes[n].children) {
-            _getSelectedChild($scope.nodes[n].children)
-          }
-        }
 
-        var selectedNodeString = '';
-        for (var s = 0; s < $scope.selectedNodes.length; s++) {
-          selectedNodeString += $scope.selectedNodes[s] + ','
-        }
-
-        if (selectedNodeString != '')
-          selectedNodeString = selectedNodeString.substr(0, selectedNodeString.length - 1)
-
-        var data = {
-          searchList: [],
-          orderByList: []
-        }
-        data.searchList.push({ field: 'roleId', operand: '=', value: $scope.selectedRoleId });
-        data.searchList.push({ field: 'menuId', operand: '=', value: selectedNodeString });
-        data.searchList.push({ field: 'userId', operand: '=', value: 'itel_admin' });
-
-        $scope.isApplyingChanges = true;
-        pageService.getCustomQuery(data, 569).then(_getApplyChangesSuccess, _getApplyChangesError)
-
-      }
-      else {
-        $scope.showMsg("info", "Nothing to save");
-      }
-    }
-    function _getApplyChangesSuccess(result) {
-      $scope.isApplyingChanges = false;
-      console.log(result)
-      if (result[0][0].result == 'success') {
-        $scope.showMsg('success', 'Saved Successfully.')
-        _generateNodes();
-      }
-    }
-    function _getApplyChangesError(err) {
-      $scope.isApplyingChanges = false;
-      console.log(err)
-      $scope.showMsg('error', 'Something went wrong')
-    }
     function _getSelectedChild(childList) {
       console.log(childList)
 
@@ -281,12 +220,6 @@
             operand: '=',
             value: menuId
           }
-          // ,
-          // {
-          //   field: 'RoleId',
-          //   operand: '=',
-          //   value: roleId
-          // }
         ],
         orderByList: []
       }
@@ -298,19 +231,10 @@
       $scope.isShowActivity = true;
 
       console.log(result)
-      $scope.selectedRoleId = result[0][0].HELDUIMenuId
+      // $scope.selectedRoleId = result[0][0].HELDUIMenuId
       $scope.HELPContent = result[0][0].HELPContent;
 
       $scope.entity = result[0][0];
-      // $scope.activityList = result[0];
-      // if ($scope.activityList.length > 0) {
-      //   $scope.activityList.splice(0, 0, { 'MenuActivityId': 0, 'MenuActivityName': 'all', 'ActText': 'All' })
-      // }
-      // else {
-      //   $scope.isShowActivity = false;
-      // }
-      // $scope.oldActivityList = angular.copy($scope.activityList)
-
     }
     function _activityOnChange(value, isSelected) {
       console.log(value)
@@ -343,7 +267,7 @@
         return false;
       }
     }
-    function _saveActivity() {
+    function _saveHelp() {
       // if (!_validate($scope.activityList, $scope.oldActivityList)) {
       $scope.isSavingActivity = true;
       $scope.isActivitySaved = false;
@@ -353,27 +277,6 @@
         $scope.entity = {};
       }
 
-      // console.log($scope.activityList)
-      // var selectedActivity = '';
-      // for (var i = 0; i < $scope.activityList.length; i++) {
-      //   if ($scope.activityList[i].IsAllowed) {
-      //     selectedActivity += $scope.activityList[i].MenuActivityId + ',';
-      //   }
-      // }
-      // if (selectedActivity != '')
-      //   selectedActivity = selectedActivity.substr(0, selectedActivity.length - 1);
-
-      // var data = {
-      //   searchList: [],
-      //   orderByList: []
-      // }
-      // data.searchList.push({ field: 'roleId', operand: '=', value: $scope.selectedRoleId });
-      // data.searchList.push({ field: 'menuId', operand: '=', value: $scope.selectedMenuId });
-      // data.searchList.push({ field: 'actId', operand: '=', value: selectedActivity });
-      // data.searchList.push({ field: 'createdBy', operand: '=', value: 'itsl_admin' });
-
-
-      // pageService.getCustomQuery(data, 571).then(_saveActivitySuccess, _saveActivityError)
 
       $scope.entity.HELDUIMenuId = $scope.selectedMenuId
       $scope.entity.HELPContent = $scope.HELPContent;
@@ -395,42 +298,20 @@
       $scope.isApplyingChanges = false;
       $scope.showMsg('success', 'Saved Successfully.')
 
-      $scope.entity = {};
+      // $scope.entity = {};
       // $scope.page.refreshData();
 
     }
 
     function _saveFormErrorResult(error) {
       console.log(error);
-    }
-
-    function _saveActivitySuccess(result) {
-      $scope.isSavingActivity = false;
-      $scope.isActivitySaved = true;
-      $scope.isApplyingChanges = false;
-
-      // console.log(result)
-      // console.log(result[0])
-      // console.log(result[0][0])
-      console.log(result[0][0].result)
-      if (result[0][0].result == 'success') {
-        _getRoleMenuActivity($scope.menuId, $scope.roleId)
-        $scope.showMsg('success', 'Saved Successfully.')
-      }
-      // if (result.length > 0) {
-      //   if (result[0][0].result) {
-      //     if (result[0][0].result == 'success') {
-      //       $scope.showMsg('success', 'Saved Successfully.')
-      //     }
-      //   }
-      // }
-    }
-    function _saveActivityError(err) {
       console.log(err)
       $scope.isApplyingChanges = false;
       $scope.isSavingActivity = false;
       $scope.isActivitySaved = false;
     }
+
+   
 
     $scope.myClick = function (node) {
 
@@ -494,26 +375,7 @@
         $uibModalInstance.close('yes');
       }; // end yes
     }
-  ]).service('dialog', ["$uibModal", function ($uibModal) {
-    var _confirm = function (param, stat) {
-      return $uibModal.open({
-        templateUrl: 'app/pages/help/permission/confirm.html',
-        controller: 'dialogConfirmCtrl',
-        backdrop: (stat ? 'static' : true),
-        keyboard: (stat ? false : true),
-        resolve: {
-          param: function () {
-            return angular.copy(param);
-          }
-        }
-      }); // end modal.open
-    };
-
-    return {
-      confirm: _confirm
-    };
-
-  }]);
+  ])
 })();
 
 
