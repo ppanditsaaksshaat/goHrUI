@@ -10,9 +10,9 @@
 
   /** @ngInject */
   function PayMastersController() {
-   
+
     var vm = this;
-   
+
 
     vm.tabs = _getTabs();
 
@@ -20,6 +20,7 @@
 
       var mastersMenu = [];
       mastersMenu.push({ name: 'PayrollSetting', text: 'Payroll Setting', id: 331 })
+      mastersMenu.push({ name: 'BonusSetting', text: 'Bonus Setting', id: 474 })
       // mastersMenu.push({ name: 'ESIRule', text: 'ESI Rule', id: 345 })
       // mastersMenu.push({ name: 'OT Rule', text: 'OT Rule', id: 321 })
       // mastersMenu.push({ name: 'SalaryCycleMaster', text: 'Salary Cycle Master', id: 329 })
@@ -31,7 +32,7 @@
       // mastersMenu.push({ name: 'PayBandRule', text: 'Pay Band  Rule', id: 134 })
       // mastersMenu.push({ name: 'PayBandSlab', text: 'Pay Band Slab', id: 135 })
       // mastersMenu.push({ name: 'EmployeeEntitlement', text: 'Employee Entitlement', id: 183 })
-      
+
       return mastersMenu;
 
     }
