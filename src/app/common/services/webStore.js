@@ -29,9 +29,16 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     }
 
     var _getUserProfile = function () {
-        return localStorageService.get(profileDataKey);
+
+        var profileData = localStorageService.get(profileDataKey);
+        if (profileData.profilePhoto != "data:image/jpeg;base64,")
+            $rootScope.profilePicture = profileData.profilePhoto;
+        return profileData;
     }
     var _setUserProfile = function (profileData) {
+        if (profileData.profilePhoto != "data:image/jpeg;base64,")
+            $rootScope.profilePicture = profileData.profilePhoto;
+        console.log(profileData)
         return localStorageService.set(profileDataKey, profileData);
     }
 
@@ -91,12 +98,12 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         // serviceBase = 'http://localhost/api/';
         // serviceBase = 'http://itsllive.rudra.hrm/api/';
         // serviceBase = 'http://seacliffnew.rudra.hrm/api/'
-        serviceBase = null;
+        // serviceBase = null;
         // console.log($location)
         if (serviceBase == null) {
             var host = $location.host();
             // serviceBase = 'http://' + host + '/api/'
-            
+
             // console.log($location)
             var absUrl = $location.absUrl();
             if (absUrl.indexOf('.html') > 0) {
