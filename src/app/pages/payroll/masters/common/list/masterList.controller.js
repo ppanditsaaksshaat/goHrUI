@@ -22,7 +22,7 @@
     $scope.saveForm = _saveForm;
     $scope.clearAllEntity = true;
 
-    
+
     $scope.salaryCalculatedOn = _salaryCalculatedOn;
 
 
@@ -60,12 +60,17 @@
       linkColumns: [],
       getPageData: null,
       refreshData: null,
-      addRecord: _addRecord,
-      editRecord: _editRecord,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null
+    }
+
+    if ($scope.page.pageId == 331) {
+      $scope.page.boxOptions.addRecord = _addRecord;
+      $scope.page.boxOptions.editRecord = _editRecord;
     }
 
     function _addRecord() {

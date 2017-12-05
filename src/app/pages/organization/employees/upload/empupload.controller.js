@@ -115,7 +115,7 @@
             // var resultDataList = [];
             var data = {
                 searchList: [],
-                orderByList: orderBy 
+                orderByList: orderBy
             }
 
             pageService.getTableData(uploadHistoryTableId, uploadHistoryPageId, '', '', false, data).then(function (result) {
@@ -1238,6 +1238,7 @@
                 DateOfBirth: 'Date(20/11/1992)-[DD/MM/YYYY]',
                 Gender: 'Alpha-numeric (Male) Size(50)',
                 MobileNo: 'Numeric(9919876570) Size(10)',
+                DateOfJoining: 'Date(20/11/2016)-[DD/MM/YYYY]',
                 EmpName: 'Only alphabet (Atul Kumar Singh) Size(100)',
 
             }
