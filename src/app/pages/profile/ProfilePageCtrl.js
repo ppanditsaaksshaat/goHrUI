@@ -116,7 +116,7 @@
         .then(_updateSuccessResult, _updateErrorResult)
     }
     function _updateSuccessResult(result) {
-      alert(JSON.stringify(result))
+      $scope.showMsg("success","Profile Update Successfully");
     }
     function _updateErrorResult(err) {
 
