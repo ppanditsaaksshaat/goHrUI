@@ -9,15 +9,47 @@
     .controller('OrgMastersController1', OrgMastersController1);
 
   /** @ngInject */
-  function OrgMastersController1() {
-   console.log('this controller')
+  function OrgMastersController1($scope, $filter, pageService) {
+    console.log('this controller')
     var vm = this;
     vm.navigationCollapsed = true;
 
     vm.tabs = _getTabs();
 
+    function _loadController() {
+      var tabKeys = ''
+      angular.forEach(vm.tabs, function (tab) {
+        tabKeys += tab.name + ',';
+      })
+      tabKeys = tabKeys.substr(0, tabKeys.length - 1)
+      console.log(tabKeys)
+      var postData = JSON.stringify(tabKeys);
+
+      console.log(postData)
+      var compressed = LZString.compressToEncodedURIComponent(postData);
+      var data = { lz: true, data: compressed }
+      pageService.getTranslateData(data).then(_getSuccessTranslateData, _getErrorTranslateData)
+
+    }
+
+    function _getSuccessTranslateData(result) {
+      console.log(result[0]);
+      angular.forEach(vm.tabs, function (tab) {
+        var resKey = $filter('findObj')(result[0], tab.name, 'ResourceKey')
+        console.log(resKey)
+        if (resKey != null) {
+          tab.text = resKey.ResourceText;
+          console.log(tab.text)
+        }
+      })
+    }
+
+    function _getErrorTranslateData(error) {
+      console.log(error);
+    }
+
     function _getTabs() {
-      
+
       var mastersMenu = [];
       mastersMenu.push({ name: 'location', text: 'Location', id: 34 })
       mastersMenu.push({ name: 'branch', text: 'Branch', id: 109 })
@@ -36,11 +68,13 @@
       mastersMenu.push({ name: 'bank-branch', text: 'Bank Branch ', id: 37 })
       mastersMenu.push({ name: 'qualification', text: 'Qualification ', id: 38 })
       mastersMenu.push({ name: 'other-qualification', text: 'Other Qualification ', id: 43 })
-      mastersMenu.push({ name: 'skill', text: 'Skill ', id: 45 })
-     
+      // mastersMenu.push({ name: 'skill', text: 'Skill ', id: 45 })
+
       return mastersMenu;
 
     }
+
+    _loadController()
 
   }
 
