@@ -1,3 +1,5 @@
+//import { error } from "util";
+
 /**
  * @author deepak.jain
  * created on 10.07.2017
@@ -114,18 +116,27 @@
                 });
             },
                 function (err) {
-                    console.log(err);
-                    if (err.error_description !== undefined) {
+                    console.log(err)
+                    if (err.status) {
+                        if (err.status == 400) {
+                            alert('The user name or password is incorrect.');
+                        }
+                        else if (err.status == 500) {
+                            alert('Please check your Customer.Id');
+                        }
+                        else if (err.status == -1) {
+                            alert('Cross Authentication Failed')
+                        }
+                    }
+                    else if (err.error_description !== undefined) {
                         alert(err.error_description);
-                        console.log('New controller');
                     }
-                    else {
-                        alert('Something went wront, please try again.');
-                    }
+
                     $("#userName").prop("disabled", false);
                     $("#userPassword").prop("disabled", false);
                     $("#userLanguage").prop("disabled", false);
                     $("#btnlogin").prop("disabled", false);
+                    $("#userCorpoId").prop("disabled", false);
                     $("#btnlogin").text("Sign in");
                 });
         }

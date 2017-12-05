@@ -31,6 +31,7 @@
                 if (absUrl.indexOf('.html') > 0) {
                     absUrl = absUrl.substring(0, absUrl.indexOf('.html'))
                 }
+                console.log(host);
                 console.log(absUrl);
                 var lastIdx = absUrl.lastIndexOf('/');
                 var firstIdx = absUrl.indexOf('/');
@@ -38,8 +39,19 @@
                 reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx);
 
                 // reportBaseURL = 'http://itsllive.rudra.hrm/';
-                reportBaseURL = 'http://rudra.hrm/';
-                console.log(reportBaseURL)
+                // reportBaseURL = 'http://rudra.hrm/';
+
+
+                if (host.indexOf('/#!') > -1) {
+                    reportBaseURL = host.substring(0, host.indexOf('/#!')).replace()
+                } 
+                else if (host.toLowerCase().indexOf('/index.html#!') > -1) {
+                    reportBaseURL = host.substring(0, host.toLowerCase().indexOf('/index.html#!'))
+                }
+                else {
+                    reportBaseURL = host;
+                }
+                console.log('converted', reportBaseURL)
 
                 var boxSetting = {
                     selfLoading: true,//gridBox will fetch data from api on its own
@@ -148,7 +160,7 @@
                     pageService.rptHandshake($scope.page.reportId, JSON.stringify(encData)).then(function (result) {
                         //   var result = angular.fromJson(response.data);
                         console.log(result)
-                        var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                        var rptUrl = '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
                             '&crid=' + corpoId + '&lang=' + lang
                         console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);

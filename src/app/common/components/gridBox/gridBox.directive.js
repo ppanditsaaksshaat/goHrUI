@@ -59,7 +59,8 @@
                     afterCellEdit: null,//external cell edit event
                     onRegisterApi: null,
                     fieldEvents: [],
-                    buttonPermission: false
+                    buttonPermission: false,
+                    openHelp: null//external help option
                 }
 
                 //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
@@ -140,6 +141,7 @@
                 $scope.page.closeForm = _closeForm;
                 $scope.page.goBack = _goBack;
                 $scope.page.gridOptions.onRegisterApi = _onRegisterApi;
+                $scope.page.openHelp = _openHelp;
                 $scope.saveForm = _saveForm;
                 $scope.resetForm = _resetForm;
                 $scope.closeForm = _closeForm;
@@ -363,6 +365,14 @@
 
                 function _clearForm(editForm) {
 
+                }
+
+                function _openHelp() {
+                    if ($scope.page.boxOptions.openHelp == null) {
+                        window.open('help.html?p=' + $scope.page.pageId, 'helpWindow', '_blank')
+                    }
+                    else
+                        $scope.page.boxOptions.openHelp(row);
                 }
 
                 //END: button function  
@@ -592,10 +602,11 @@
                         }
                     }
                     else {
-                        
+
                         if ($scope.page.boxOptions.buttonPermission) {
                             result.pageinfo.uibuttons.create.IsAllowed = true;
                             result.pageinfo.uibuttons.edit.IsAllowed = true;
+                            result.pageinfo.uibuttons.refresh.IsAllowed = true
                         }
                         $scope.page = angular.extend({}, $scope.page, result);
                         //console.log(result)
@@ -685,7 +696,7 @@
                         // _startMsgTimer();
                     }
                     else {
-
+                        
                         $scope.page.gridOptions.data = result;
                     }
 

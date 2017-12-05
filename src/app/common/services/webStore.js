@@ -29,9 +29,17 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     }
 
     var _getUserProfile = function () {
-        return localStorageService.get(profileDataKey);
+
+        var profileData = localStorageService.get(profileDataKey);
+        console.log(profileData)
+        if (profileData.profilePhoto != "data:image/jpeg;base64,")
+            $rootScope.profilePicture = profileData.profilePhoto;
+        return profileData;
     }
     var _setUserProfile = function (profileData) {
+        if (profileData.profilePhoto != "data:image/jpeg;base64,")
+            $rootScope.profilePicture = profileData.profilePhoto;
+        console.log(profileData)
         return localStorageService.set(profileDataKey, profileData);
     }
 
@@ -82,21 +90,21 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
 
         var serviceBase = _getValue('serviceBase');
         //uncomment for your choice
-
-        serviceBase = 'http://rudra.hrm/api/';
+        serviceBase = 'http://localhost:51877/';
+        //serviceBase = 'http://rudra.hrm/api/';
         // serviceBase = 'http://rudraitsl.com/api/';// _getValue('serviceBase');
         //serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
         // serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
-       // serviceBase = 'http://web400.hrms/api/';
+        // serviceBase = 'http://web400.hrms/api/';
         // serviceBase = 'http://localhost/api/';
         // serviceBase = 'http://itsllive.rudra.hrm/api/';
         // serviceBase = 'http://seacliffnew.rudra.hrm/api/'
-        //serviceBase = null;
+        // serviceBase = null;
         // console.log($location)
         if (serviceBase == null) {
             var host = $location.host();
             // serviceBase = 'http://' + host + '/api/'
-            
+
             // console.log($location)
             var absUrl = $location.absUrl();
             if (absUrl.indexOf('.html') > 0) {
