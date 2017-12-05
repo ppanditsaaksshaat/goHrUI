@@ -1215,6 +1215,20 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
 
                 });
         }
+
+        var _getTranslateData = function (data) {
+            var url = serviceBase + 'api/Data/Translate';
+            return $http.post(url, JSON.stringify(JSON.stringify(data)),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
+        }
+
+
         pageServiceFactory.serviceBase = serviceBase;
         pageServiceFactory.getPagData = _getPagData;
         pageServiceFactory.deletePageData = _deletePageData;
@@ -1316,6 +1330,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
 
         //Resources
         pageServiceFactory.getResources = _getResources;
+        pageServiceFactory.getTranslateData = _getTranslateData;
 
 
         return pageServiceFactory;

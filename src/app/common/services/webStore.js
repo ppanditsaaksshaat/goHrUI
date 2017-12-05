@@ -31,6 +31,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     var _getUserProfile = function () {
 
         var profileData = localStorageService.get(profileDataKey);
+        console.log(profileData)
         if (profileData.profilePhoto != "data:image/jpeg;base64,")
             $rootScope.profilePicture = profileData.profilePhoto;
         return profileData;
@@ -89,8 +90,8 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
 
         var serviceBase = _getValue('serviceBase');
         //uncomment for your choice
-
-        serviceBase = 'http://rudra.hrm/api/';
+        serviceBase = 'http://localhost:51877/';
+        //serviceBase = 'http://rudra.hrm/api/';
         // serviceBase = 'http://rudraitsl.com/api/';// _getValue('serviceBase');
         //serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
         // serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
