@@ -19,7 +19,7 @@
       <div class="panel-body" style="overflow: scroll">
         <ul class="list-unstyled side-menu maxHeight450">
           <li ng-repeat="t in tabCtrl.tabs| filter: {name: menuFilter}" ui-sref-active="active" 
-          ui-sref="payroll.masters.list({name:t.name, pageId: t.id})">
+          ui-sref="payroll.masters.common.list({name:t.name, pageId: t.id})">
             <a href>{{t.text}}</a>
           </li>
         </ul>
