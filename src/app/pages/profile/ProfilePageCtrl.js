@@ -9,9 +9,14 @@
     .controller('ProfilePageCtrl', ProfilePageCtrl);
 
   /** @ngInject */
-  function ProfilePageCtrl($scope, fileReader, $filter, $uibModal, editFormService) {
+  function ProfilePageCtrl($scope, $rootScope, fileReader, $filter, $uibModal, editFormService) {
     // $scope.picture = $filter('profilePicture')('Nasta');
-    $scope.picture = $filter('appImage')('theme/no-photo.png');
+    if ($scope.user.profile.profilePhoto == 'data:image/jpeg;base64,') {
+      $scope.picture = $filter('appImage')('theme/no-photo.png');
+    }
+    else {
+      $scope.picture = $scope.user.profile.profilePhoto;
+    }
 
     $scope.removePicture = function () {
       $scope.picture = $filter('appImage')('theme/no-photo.png');
@@ -31,17 +36,7 @@
       reader.readAsDataURL(e.target.files[0], $scope);
       reader.onload = function (event) {
         $scope.picture = reader.result;
-        console.log($scope.picture)
       }
-
-      // alert(ds);
-      // //alert(reader.readAsDataURL());
-      // var c = document.getElementById("myCanvas");
-      // var ctx = c.getContext("2d");
-      // var img = document.getElementById("preview");
-      // ctx.drawImage($scope.picture, 0, 0);
-      // console.log(c.toDataURL())
-      // alert(c.toDataURL());
     }
 
 
@@ -108,7 +103,7 @@
     $scope.switches = [true, true, false, true, true, false];
     $scope.updateProfile = function () {
       var entity = {
-        EmpId:$scope.user.profile.empId,
+        EmpId: $scope.user.profile.empId,
         EmpPhoto1_64URL: $scope.picture
       }
       editFormService.saveForm(25, entity, {},
@@ -116,10 +111,12 @@
         .then(_updateSuccessResult, _updateErrorResult)
     }
     function _updateSuccessResult(result) {
-      $scope.showMsg("success","Profile Update Successfully");
+      if (result.success_message == "Record Updated.") {
+        $rootScope.profilePicture = result.entity.EmpPhoto1_64URL;
+        $scope.showMsg("success", "Profile Update Successfully");
+      }
     }
     function _updateErrorResult(err) {
-
     }
   }
 })();

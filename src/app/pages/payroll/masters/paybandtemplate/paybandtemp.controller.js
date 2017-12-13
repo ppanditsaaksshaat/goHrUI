@@ -209,14 +209,19 @@
                         //find head type
                         var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRSHId.options, row.PBTRSHId, 'value')
                         if (foundPB != null) {
-                            if (foundPB.SHIsForEmployer == "True") {
-                                row.SHeadType = 'Employer';
-                            }
-                            else if (foundPB.SHIsDeduction == "False") {
-                                row.SHeadType = 'Earning';
+                            if (foundPB.SHIsTotal == "True") {
+                                row.SHeadType = 'Total';
                             }
                             else {
-                                row.SHeadType = 'Deduction';
+                                if (foundPB.SHIsForEmployer == "True") {
+                                    row.SHeadType = 'Employer';
+                                }
+                                else if (foundPB.SHIsDeduction == "False") {
+                                    row.SHeadType = 'Earning';
+                                }
+                                else {
+                                    row.SHeadType = 'Deduction';
+                                }
                             }
                         }
                         row.PBTRPercentage = row.PBTRPercentage == 0.00 ? '' : row.PBTRPercentage;
@@ -294,7 +299,7 @@
 
         function _addRuleGridColumns() {
             var cellTemplateCheck = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
-            cellTemplateCheck += "<a href ng-click=\"grid.appScope.changeFormula(row)\" ng-show=\"row.entity.PBTRCalcOnSHId.length>0 && !row.entity.PBTRIsSlab   \"> <i class=\"fa font-green\" ng-class=\"{'fa-check-square-o': row.entity.PBTRIsFormula, 'fa-square-o': !row.entity.PBTRIsFormula }\" aria-hidden=\"true\" ></i></a>";
+            cellTemplateCheck += "<a href ng-click=\"grid.appScope.changeFormula(row)\" ng-show=\"row.entity.PBTRCalcOnSHId.length>0 && !row.entity.PBTRIsSlab && row.entity.PBTRPercentage=='' \"> <i class=\"fa font-green\" ng-class=\"{'fa-check-square-o': row.entity.PBTRIsFormula, 'fa-square-o': !row.entity.PBTRIsFormula }\" aria-hidden=\"true\" ></i></a>";
             cellTemplateCheck += "</div>"
 
             var cellTemplateSlab = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
@@ -410,7 +415,7 @@
         function _cellClass(grid, row, col, rowRenderIndex, colRenderIndex) {
 
             if (row.entity.PBTRSHId == -1) {
-                return 'status-bg YELLOW-300 cell-border-right';
+                return 'YELLOW-300 status-bg cell-border-right';
             }
             else if (row.entity.PBTRSHId > 0) {
                 var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsGross')
@@ -452,7 +457,7 @@
 
 
         function _cellEditableCondition(scope) {
-            
+
             if (scope.col.name == "PBTRSHId") {
                 if (scope.row.entity.SHIsTotalEarning == "True" || scope.row.entity.SHIsTotalDeduction == "True") {
                     return false;
@@ -508,9 +513,9 @@
         }
 
         function _addToltalEarningDeductionRule(headId) {
+
             var headExist = $filter("findObj")($scope.payTempGridOptions.data, headId, "PBTRSHId")
             if (headExist == null) {
-
                 if ($scope.payTempGridOptions.data.length > 0) {
                     var lastRow = $scope.payTempGridOptions.data[$scope.payTempGridOptions.data.length - 1];
                     if (lastRow.PBTRSHId) {
@@ -547,7 +552,6 @@
                                         var deductionHead = deductionHeads[dh];
                                         var dHeads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, deductionHead.PBTRSHId, "value")
                                         if (dHeads != null) {
-
                                             PBTRCalcOnSHId.push({ value: dHeads.value, name: dHeads.name })
                                         }
                                     }
@@ -557,8 +561,30 @@
                                     return
                                 }
                             }
+                            else if (headTotal.SHIsGross == "True" || headTotal.SHIsNetPay == "True") {
+                                for (var edh = 0; edh < $scope.payTempGridOptions.data.length; edh++) {
+                                    var earDecheads = $scope.payTempGridOptions.data[edh];
+                                    if (earDecheads.SHeadType != "Total") {
+                                        var earDecShId = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, earDecheads.PBTRSHId, "value")
+                                        if (earDecShId != null) {
+                                            PBTRCalcOnSHId.push({ value: earDecShId.value, name: earDecShId.name, SHeadType: earDecShId.SHTy })
+                                        }
+                                    }
+                                }
+                            }
+                            _addRuleGridRow(0, true, false, '', 0, 0, headId, '', 'Total', '', PBTRCalcOnSHId, SHIsTotalEarning, SHIsTotalDeduction);
+                        }
+                    }
 
-                            _addRuleGridRow(0, true, 0, 0, headId, '', 'Total', '', PBTRCalcOnSHId, SHIsTotalEarning, SHIsTotalDeduction);
+                }
+                else {
+                    var heads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, headId, "value")
+                    if (heads != null) {
+                        if (heads.SHIsNetPay == "True" || heads.SHIsGross == "True") {
+                            _addRuleGridRow(0, true, false, '', 0, 0, headId, '', 'Total', '', '', '', '');
+                        }
+                        else {
+                            $scope.showMsg("warning", "Please add earing heads");
                         }
                     }
                 }
@@ -576,20 +602,22 @@
                 var lastRow = $scope.payTempGridOptions.data[$scope.payTempGridOptions.data.length - 1];
                 if (lastRow.PBTRSHId) {
 
-                    _addRuleGridRow(0, false, 0, 0, 0, '', '', '', '', 0);
+                    _addRuleGridRow(0, false, false, '', 0, 0, 0, '', '', '', '', 0);
 
                 }
             }
             else {
-                _addRuleGridRow(0, false, 0, 0, 0, '', '', '', '', 0);
+                _addRuleGridRow(0, false, false, '', 0, 0, 0, '', '', '', '', 0);
             }
         }
 
-        function _addRuleGridRow(PBTRId, PBTRIsFormula, PBSId, PBRPBId, PBTRSHId, SHName, SHeadType, PBRRuleName, PBTRCalcOnSHId, SHIsTotalEarning, SHIsTotalDeduction) {
+        function _addRuleGridRow(PBTRId, PBTRIsFormula, PBTRIsSlab, PBTRPercentage, PBSId, PBRPBId, PBTRSHId, SHName, SHeadType, PBRRuleName, PBTRCalcOnSHId, SHIsTotalEarning, SHIsTotalDeduction) {
 
             $scope.payTempGridOptions.data.push({
                 PBTRId: PBTRId,
                 PBTRIsFormula: PBTRIsFormula,
+                PBTRIsSlab: PBTRIsSlab,
+                PBTRPercentage: PBTRPercentage,
                 PBSId: PBSId,
                 PBRPBId: PBRPBId,
                 PBTRSHId: PBTRSHId,
@@ -1072,6 +1100,8 @@
 
             var existingTotalEarningHead = $filter("findObj")($scope.payTempGridOptions.data, 'True', "SHIsTotalEarning");
             var existingTotalDeductionHead = $filter("findObj")($scope.payTempGridOptions.data, 'True', "SHIsTotalDeduction");
+            //  var existingGrossHead = $filter("findObj")($scope.payTempGridOptions.data, 'True', "SHIsGross");
+            // var existingNetPayHead = $filter("findObj")($scope.payTempGridOptions.data, 'True', "SHIsNetPay");
             if (existingTotalEarningHead != null && row.entity.SHeadType == "Earning") {
                 if (row.entity.SHeadType != "Total") {
                     $scope.showMsg("warning", "Please delete Total " + row.entity.SHeadType + " head first")
@@ -1084,14 +1114,25 @@
                     return
                 }
             }
+            // if (existingTotalEarningHead != null) {
+            //     if (row.entity.SHeadType != "Total") {
+            //         $scope.showMsg("warning", "Please delete " + row.entity.SHeadType + " head first")
+            //         return
+            //     }
+            // }
+            // if (existingNetPayHead != null) {
+            //     if (row.entity.SHeadType != "Total") {
+            //         $scope.showMsg("warning", "Please delete " + row.entity.SHeadType + " head first")
+            //         return
+            //     }
+            // }
             var index = $scope.payTempGridOptions.data.indexOf(row.entity);
             $scope.payTempGridOptions.data.splice(index, 1);
             _getNetPayable();
         }
 
         function _getSubGridOptions(row, PBTRIsFormula, entitlement) {
-
-
+            debugger
             row.subGridOptions = {
                 enableCellEditOnFocus: true,
                 columnDefs: [],
@@ -1103,13 +1144,28 @@
                 if (row.PBTRCalcOnSHId.length > 0) {
                     for (var i = 0; i < row.PBTRCalcOnSHId.length; i++) {
                         // var headAmt = parseFloat(_getHeadAmount(row.PBTRCalcOnSHId[i].value, entitlement))
+                        var operator = "";
+                        var head = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, row.PBTRSHId, 'value')
+                        if (head != null) {
+                            if (head.SHIsGross) {
+                                operator = '+'
+                            }
+                            if (head.SHIsNetPay) {
 
+                                if (row.PBTRCalcOnSHId[i].SHeadType == "Earning") {
+                                    operator = '+'
+                                }
+                                if (row.PBTRCalcOnSHId[i].SHeadType == "Deduction") {
+                                    operator = '-'
+                                }
+                            }
+                        }
                         row.subGridOptions.data.push({
                             PFTDId: 0,
                             PFTDPBTRId: 0,
                             PFTDCalcHeadId: [row.PBTRCalcOnSHId[i]],
                             PFTDPercentage: 100,
-                            PFTDOperator: '',
+                            PFTDOperator: operator,
                         })
                     }
                 }

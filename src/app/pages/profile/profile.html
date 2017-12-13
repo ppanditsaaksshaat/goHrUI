@@ -1,14 +1,6 @@
 <div ba-panel ba-panel-class="profile-page">
   <div class="panel-content">
-    <div class="progress-info">Your profile is 70% Complete</div>
-    <div class="progress">
-      <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar" aria-valuenow="70" aria-valuemin="0"
-        aria-valuemax="100" style="width: 70%">
-      </div>
-    </div>
-
-    <h3 class="with-line">General Information</h3>
-
+    <h3 class="with-line">Profile Information</h3>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row clearfix">
@@ -44,18 +36,64 @@
 
       <div class="col-md-6">
         <div class="form-group row clearfix">
-          <label class="col-sm-3 control-label">Designation</label>
+          <label class="col-sm-3 control-label">Role</label>
 
           <div class="col-sm-9">
-            <span type="text" class="form-control" ng-bind="user.profile.designation"></span>
+            <span type="text" class="form-control" ng-bind="user.profile.roleName"></span>
           </div>
         </div>
 
 
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row clearfix">
+          <label for="inputFirstName" class="col-sm-3 control-label">Department</label>
+
+          <div class="col-sm-9">
+            <span type="text" class="form-control" ng-bind="user.profile.deptName"></span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group row clearfix">
+          <label class="col-sm-3 control-label">Designation</label>
+
+          <div class="col-sm-9">
+            <span type="text" class="form-control" ng-bind="user.profile.desgName"></span>
+          </div>
+        </div>
 
 
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row clearfix">
+          <label for="inputFirstName" class="col-sm-3 control-label">Location</label>
+
+          <div class="col-sm-9">
+            <span type="text" class="form-control" ng-bind="user.profile.locationName"></span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group row clearfix">
+          <label class="col-sm-3 control-label">Unit</label>
+
+          <div class="col-sm-9">
+            <span type="text" class="form-control" ng-bind="user.profile.unitName"></span>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
 
     <button type="button" ng-click="updateProfile()" class="btn btn-primary btn-with-icon save-profile">
       <i class="ion-android-checkmark-circle"></i>Update Profile
