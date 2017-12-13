@@ -295,9 +295,6 @@
         $scope.birthdayOption.columnDefs.push({ name: 'DayName', displayName: 'Day' })
         $scope.birthdayOption.data = [];
 
-
-
-
         var searchLists = [];
         var searchListData = {
           field: 'EmpId',
@@ -325,6 +322,7 @@
         pageService.getCustomQuery(data, empDashBoardQueryId).then(_getEmpDashboardQuerySuccess, _getEmpDashboardQueryError)
       }
     }
+
     function _getCustomQuerySuccess(result) {
       console.log(result);
       var totalemployee = result[0][0].TotalActiveEmployee
@@ -346,14 +344,10 @@
       $scope.TodayBirthday = result[11];
       $scope.Next7daysonBirthdayEmployee = result[12];
 
-
       $scope.joinGridOpt.data = $scope.TotalNewJoinList;
       $scope.LeftGridOpt.data = $scope.TotalNewLeftList;
-
       $scope.LeaveTodayGridOpt.data = $scope.TodayonLeaveEmployee;
-
       $scope.LeaveNextWeekGridOpt.data = $scope.Next7daysonLeaveEmployee;
-
       $scope.BirthdayTodayGridOpt = $scope.TodayBirthday;
       $scope.BirthdayNextWeekGridOpt = $scope.Next7daysonBirthdayEmployee;
       $scope.HolidayNextWeekGridOpt = $scope.Next7Hodidays;
