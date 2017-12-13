@@ -112,24 +112,30 @@
                     _loadSideMenu();
                     // window.location.href = 'index.html'
                 }, function (err) {
-                    console.log(err);
+                    $scope.showMsg('error',err)
                 });
             },
                 function (err) {
+
                     console.log(err)
                     if (err.status) {
                         if (err.status == 400) {
-                            alert('The user name or password is incorrect.');
+                            $scope.showMsg('warning', 'The user name or password is incorrect.')
+                            //alert('The user name or password is incorrect.');
                         }
                         else if (err.status == 500) {
-                            alert('Please check your Customer.Id');
+                            $scope.showMsg('warning', 'Please check your Customer.Id');
                         }
                         else if (err.status == -1) {
-                            alert('Cross Authentication Failed')
+                            $scope.showMsg('error', 'Cross Authentication Failed')
                         }
                     }
                     else if (err.error_description !== undefined) {
-                        alert(err.error_description);
+                        //alert(err.error_description);
+                        $scope.showMsg('error', err.error_description)
+                    }
+                    else {
+                        $scope.showMsg('error', err)
                     }
 
                     $("#userName").prop("disabled", false);

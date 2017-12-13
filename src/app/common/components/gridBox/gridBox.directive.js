@@ -369,7 +369,11 @@
 
                 function _openHelp() {
                     if ($scope.page.boxOptions.openHelp == null) {
-                        window.open('help.html?p=' + $scope.page.pageId, 'helpWindow', '_blank')
+
+                        var queryString = 'pid=' + $scope.page.pageId + '&cid='+ 
+                        'lang=' ;
+
+                        window.open('/help/?' + queryString, 'helpWindow', '_blank')
                     }
                     else
                         $scope.page.boxOptions.openHelp(row);
