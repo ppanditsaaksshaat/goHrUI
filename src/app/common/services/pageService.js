@@ -381,6 +381,13 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 fileUrl = serviceBase + "api/Upload/GetAttach";
             }
 
+            _downloadFile(fileUrl, fileId)
+        };
+
+        var _downloadFile = function (fileUrl, fileId, filename) {
+            if (filename === undefined) {
+                'download.csv'
+            }
             $http({
                 method: 'GET',
                 cache: false,
@@ -388,7 +395,8 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 responseType: 'arraybuffer',
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8',
-                    'fileID': fileId
+                    'fileID': fileId,
+                    'fileName': filename
                 }
             }).then(function (response) {
 
@@ -402,10 +410,10 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 var success = false;
 
                 // Get the headers
-                headers = headers();
+                //qq    aaq2headers = headers();
 
                 // Get the filename from the x-filename header or default to "download.bin"
-                var filename = headers['x-filename'] || 'download.bin';
+                var filename = headers['x-filename'] || response.config.headers.fileName;
 
                 // Determine the content type from the header or default to "application/octet-stream"
                 var contentType = headers['content-type'] || octetStreamMime;
@@ -488,14 +496,179 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     window.open(httpPath, '_blank', '');
                 }
 
-            }).error(function (data) {
-                alert('Something went wrong, please retry.');
-            });
-        };
+            }, function (err) {
+                console.log(err)
+            })
+        }
+
+        var _downloadFileAsExcel = function (fileUrl, filename) {
+            $http({
+                method: 'GET',
+                cache: false,
+                url: fileUrl,
+                responseType: 'arraybuffer',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'fileName': filename
+                }
+            }).then(function (response) {
+
+                //console.log(response)
+
+                var data = response.data;
+                var status = response.status;
+                var headers = response.headers;
+
+                var octetStreamMime = 'application/octet-stream';
+                var success = false;
+
+                // Get the headers
+                //qq    aaq2headers = headers();
+
+                // Get the filename from the x-filename header or default to "download.bin"
+                var filename = headers['x-filename'] || response.config.headers.fileName;
+
+                // Determine the content type from the header or default to "application/octet-stream"
+                var contentType = headers['content-type'] || octetStreamMime;
+
+                let arraybuffer = data;
+                /* convert data to binary string */
+                let dataArr = new Uint8Array(arraybuffer);
+                let arr = new Array();
+
+                for (let i = 0; i != dataArr.length; ++i)
+                    arr[i] = String.fromCharCode(dataArr[i]);
+
+                let bstr = arr.join("");
+
+                let workbook = XLSX.read(bstr, { type: "binary" });
+                console.log(workbook)
 
 
+                var sheet = workbook.Sheets[workbook.SheetNames[0]]; // get the first worksheet
 
+                //sheet.getCell("A1").setValue("hi");
+                var range = XLSX.utils.decode_range(sheet['!ref']); // get the range
+                console.log(range)
+                console.log(sheet.cell('A1'))
+                // var cellref = XLSX.utils.encode_cell({ c: 'A', r: 1 });
+                // var cell = sheet[cellref];
+                // cell.v = 'deepak';
 
+                // /* loop through every cell manually */
+                // var range = XLSX.utils.decode_range(sheet['!ref']); // get the range
+                // for (var R = range.s.r; R <= range.e.r; ++R) {
+                //     for (var C = range.s.c; C <= range.e.c; ++C) {
+                //         /* find the cell object */
+                //         var cellref = XLSX.utils.encode_cell({ c: C, r: R }); // construct A1 reference for cell
+                //         if (!sheet[cellref]) continue; // if cell doesn't exist, move on
+                //         var cell = sheet[cellref];
+
+                //         /* if the cell is a text cell with the old string, change it */
+                //         if (!(cell.t == 's' || cell.t == 'str')) continue; // skip if cell is not text
+                //         if (cell.v === oldtext) cell.v = MOMENT(); // change the cell value
+                //     }
+                // }
+
+                /* write workbook (use type 'binary') */
+                var wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+                var dataBinary = s2ab(wbout);
+                // saveFileAs(dataBinary, contentType, filename)
+                saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "sheetjs.xlsx");
+            }, function (err) {
+                console.log(err)
+            })
+        }
+        /* generate a download */
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i != s.length; ++i)
+                view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        function saveFileAs(data, contentType, filename) {
+            var success = false;
+            try {
+
+                console.log(filename);
+                // Try using msSaveBlob if supported
+                console.log("Trying saveBlob method ...");
+                var blob = new Blob([data], { type: contentType });
+                if (navigator.msSaveBlob)
+                    navigator.msSaveBlob(blob, filename);
+                else {
+                    // Try using other saveBlob implementations, if available
+                    var saveBlob = navigator.webkitSaveBlob || navigator.mozSaveBlob || navigator.saveBlob;
+                    if (saveBlob === undefined) throw "Not supported";
+                    saveBlob(blob, filename);
+                }
+                console.log("saveBlob succeeded");
+                success = true;
+            } catch (ex) {
+                console.log("saveBlob method failed with the following exception:");
+                console.log(ex);
+            }
+
+            if (!success) {
+                // Get the blob url creator
+                var urlCreator = window.URL || window.webkitURL || window.mozURL || window.msURL;
+                if (urlCreator) {
+                    // Try to use a download link
+                    var link = document.createElement('a');
+                    if ('download' in link) {
+                        // Try to simulate a click
+                        try {
+                            // Prepare a blob URL
+                            console.log("Trying download link method with simulated click ...");
+                            var blob = new Blob([data], { type: contentType });
+                            var url = urlCreator.createObjectURL(blob);
+                            link.setAttribute('href', url);
+
+                            // Set the download attribute (Supported in Chrome 14+ / Firefox 20+)
+                            link.setAttribute("download", filename);
+
+                            // Simulate clicking the download link
+                            var event = document.createEvent('MouseEvents');
+                            event.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+                            link.dispatchEvent(event);
+                            console.log("Download link method with simulated click succeeded");
+                            success = true;
+
+                        } catch (ex) {
+                            console.log("Download link method with simulated click failed with the following exception:");
+                            console.log(ex);
+                        }
+                    }
+
+                    if (!success) {
+                        // Fallback to window.location method
+                        try {
+                            // Prepare a blob URL
+                            // Use application/octet-stream when using window.location to force download
+                            console.log("Trying download link method with window.location ...");
+                            var blob = new Blob([data], { type: octetStreamMime });
+                            var url = urlCreator.createObjectURL(blob);
+                            window.location = url;
+                            console.log("Download link method with window.location succeeded");
+                            success = true;
+                        } catch (ex) {
+                            console.log("Download link method with window.location failed with the following exception:");
+                            console.log(ex);
+                        }
+                    }
+
+                }
+            }
+
+            if (!success) {
+                // Fallback to window.open method
+                console.log("No methods worked for saving the arraybuffer, using last resort window.open");
+                window.open(httpPath, '_blank', '');
+            }
+
+        }
         var _sendJdToCand = function (data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Email/JDToCand';
@@ -1229,6 +1402,10 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         }
 
 
+        var _getAttSummaryFile = function () {
+            var url = serviceBase + 'api/Files/AttendanceSummary';
+            _downloadFileAsExcel(url, 'AttSummary.xlsm');
+        }
         pageServiceFactory.serviceBase = serviceBase;
         pageServiceFactory.getPagData = _getPagData;
         pageServiceFactory.deletePageData = _deletePageData;
@@ -1332,6 +1509,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.getResources = _getResources;
         pageServiceFactory.getTranslateData = _getTranslateData;
 
+        pageServiceFactory.getAttSummaryFile = _getAttSummaryFile;
 
         return pageServiceFactory;
 

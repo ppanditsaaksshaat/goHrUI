@@ -88,7 +88,10 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
         }
         else if (response.config.url.indexOf('/api/') > -1) {
             var result = {};
-            if (response.data !== undefined) {
+            if (response.config.responseType == "arraybuffer") {
+                result = angular.copy(response);
+            }
+            else if (response.data !== undefined) {
                 var result_data = angular.fromJson(response.data);
                 result = result_data;
                 //console.log(result_data.lz,'lz')
