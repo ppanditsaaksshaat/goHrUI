@@ -26,7 +26,8 @@
     'BlurAdmin.pages.advance',
     'BlurAdmin.pages.mis',
     'BlurAdmin.pages.configuration',
-    'BlurAdmin.pages.profile'
+    'BlurAdmin.pages.profile',
+    'BlurAdmin.pages.tds'
 
   ])
     .config(routeConfig);

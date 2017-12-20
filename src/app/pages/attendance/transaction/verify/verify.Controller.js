@@ -247,6 +247,8 @@
     }
     function _uploadRecord() {
 
+      pageService.getAttSummaryFile();
+      
       var options = {
         url: "app/common/forms/browseModal/browseModal.html",
         controller: "",

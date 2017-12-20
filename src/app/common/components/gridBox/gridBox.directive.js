@@ -9,7 +9,7 @@
         .directive('gridBox', gridBox);
     /** @ngInject */
     function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
-        editFormService, focus, $filter) {
+        editFormService, focus, $filter, DJWebStore) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/gridBox/gridBox.html',
@@ -370,8 +370,11 @@
                 function _openHelp() {
                     if ($scope.page.boxOptions.openHelp == null) {
 
-                        var queryString = 'pid=' + $scope.page.pageId + '&cid='+ 
-                        'lang=' ;
+                        var corpoId = DJWebStore.GetValue('CorpoId');
+                        var userLang = DJWebStore.GetValue('UserLang');
+
+                        var queryString = 'pid=' + $scope.page.pageId + '&cid=' + corpoId +
+                            '&lang=' + userLang;
 
                         window.open('/help/?' + queryString, 'helpWindow', '_blank')
                     }
@@ -700,7 +703,7 @@
                         // _startMsgTimer();
                     }
                     else {
-                        
+
                         $scope.page.gridOptions.data = result;
                     }
 

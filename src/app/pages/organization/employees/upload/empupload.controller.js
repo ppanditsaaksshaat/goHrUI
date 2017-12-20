@@ -196,6 +196,15 @@
             addFieldCheck('doubleot', 'rate', 0, 7, 1);
             addFieldCheck('doublerate', '', 0, 7, 1);
 
+            //Has Left
+            addFieldCheck('has', 'left', 0, 8, 0);
+            addFieldCheck('hasleft', '', 0, 8, 0);
+
+            //Has Left Date
+            addFieldCheck('has', 'leftDate', 0, 8, 1);
+            addFieldCheck('hasleftdate', '', 0, 8, 1);
+
+
             //emp code
             addFieldCheck('emp', 'code', 1, 0, 0);
             addFieldCheck('employee', 'code', 1, 0, 0);
@@ -371,6 +380,11 @@
             table1.rows.push({
                 column1: { name: 'JDSingleOTRate', text: 'Single OT Rate', type: 'decimal', required: false, value: 'none' },
                 column2: { name: 'DoubleOTRate', text: 'Double OT Rate', type: 'decimal', required: false, value: 'none' }
+            })
+
+            table1.rows.push({
+                column1: { name: 'JDIsHasLeft', text: 'Has Left', type: 'bool', required: false, value: 'none' },
+                column2: { name: 'JDHasLeftDate', text: 'Has Left Date', type: 'date', required: false, value: 'none' }
             })
 
 
@@ -1322,7 +1336,9 @@
                 ESIStartDate: 'Date(20/11/2016)-[DD/MM/YYYY]',
                 BankAccountNo: 'Numeric(12003988209911)',
                 Religion: 'Alpha-numeric (Hindu) Size(50)',
-                Nationality: 'Alpha-numeric (Indian) Size(50)'
+                Nationality: 'Alpha-numeric (Indian) Size(50)',
+                HasLeft: '0 OR 1',
+                HasLeftDate: 'Date(20/11/2016)-[DD/MM/YYYY]'
 
 
             }
