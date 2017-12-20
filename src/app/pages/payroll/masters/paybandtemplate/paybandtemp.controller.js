@@ -656,7 +656,7 @@
             });
             $scope.rulePage.gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 // console.log(colD ef)
-                // debugger
+                
                 if (rowEntity.PBTRCalcOnSHId.length <= 0) {
                     rowEntity.PBTRPercentage = '';
                 }

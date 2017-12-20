@@ -1,3 +1,5 @@
+// import { parse } from "path";
+
 
 /**
  * @author v.lugovsky
@@ -197,8 +199,10 @@
       enableHorizontalScrollbar: 0,
       enableVerticalScrollbar: 0,
       enableScrollbars: false,
-      paginationPageSize: 10
+      paginationPageSize: 10,
     }
+
+
 
 
     $scope.gridLine = false;
@@ -408,8 +412,8 @@
       console.log(result)
       $scope.sevenAGridOptions.columnDefs = [
         { name: 'TDName', displayName: 'Sec 87 A', width: 300, enableCellEdit: false },
-        { name: 'TSDAmount', displayName: 'Amount', width: 130, enableCellEdit: false },
-        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true, }
+        { name: 'TSDAmount', displayName: 'Tax Credit Amount', width: 130, enableCellEdit: false },
+        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: false, }
       ]
 
       $scope.sevenAGridOptions.data = result[1];
@@ -423,7 +427,21 @@
     function _calculateAmount() {
       $scope.entity.totalDeductionBenefits = vm.hraMinAmount + vm.sixATotalAmount + vm.eightyCTotalAmount;
       console.log(vm.hraMinAmount, vm.sixATotalAmount, vm.eightyCTotalAmount)
+      $scope.entity.taxableAmount = $scope.entity.SalAmount - ($scope.entity.totalDeductionBenefits);
+
+      if ($scope.entity.taxableAmount != undefined) {
+        _calculateSevenAGridOption();
+      }
     }
+
+    function _calculateSevenAGridOption() {
+      angular.forEach($scope.sevenAGridOptions.data, function (row, rdx) {
+        if ($scope.entity.taxableAmount > 0) {
+          row.Amount = 10;
+        }
+      })
+    }
+
 
     _loadController()
 

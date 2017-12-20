@@ -120,7 +120,7 @@
 
                         angular.forEach(empEntitlement.subGridOptions.data, function (head) {
                             angular.forEach(uploadGridData.columnDefs, function (col) {
-                              
+
                                 if (head.SHName == col.field) {
                                     head.PBRAmount = newHead[col.field];
                                     head.GrossPercentage = "";
@@ -201,7 +201,7 @@
             $timeout(function () {
 
 
-               
+
                 pageService.getPagData(pageIds.payband.pageId).then(function (result) {
                     console.log(result)
                     $scope.paybandPage = result;
@@ -290,7 +290,7 @@
                         }],
                         orderByList: []
                     }
-    
+
                     pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccess, _getCustomQueryError)
                     //feteching payband rule detail with multi calling facility
                     _fetchPaybandRuleDetail(selectedPaybandMaster.PBId)
@@ -332,7 +332,7 @@
             }
             else {
 
-                $scope.employeeList = result;              
+                $scope.employeeList = result;
                 _getGradeLevelPaybandDetail($scope.entity.PBEmpGradeId, $scope.entity.PBEmpLevelId)
 
             }
@@ -912,7 +912,7 @@
                                     }
                                 }
                             }
-                            rowEntity.PBRAmount = lastTotal.toFixed(2);
+                            rowEntity.PBRAmount = parseInt(lastTotal).toFixed(2);
                         }
                     }
 

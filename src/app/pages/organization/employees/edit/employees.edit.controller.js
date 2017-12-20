@@ -102,7 +102,8 @@
       mastersMenu.push({ name: 'leave', text: 'Leave Detail', id: 36 })
       //mastersMenu.push({ name: 'benefit', text: 'Benefit', id: 448 })
       mastersMenu.push({ name: 'resignation', text: 'Resignation', id: 360 })
-      mastersMenu.push({ name: 'user', text: 'User', id: 21 })
+      mastersMenu.push({ name: 'role', text: 'Role', id: 21 })
+      mastersMenu.push({ name: 'user', text: 'User', id: 'register' })
       // mastersMenu.push({ name: 'report', text: 'Reporting', id: 21 })
       return mastersMenu;
 

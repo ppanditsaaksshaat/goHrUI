@@ -1400,6 +1400,40 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     return results;
                 });
         }
+        var _userRegister = function (data) {
+            var url = serviceBase + 'api/Account/Register';
+            return $http.post(url, data,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
+        }
+        
+        var _setNewPassword = function (data) {
+            var url = serviceBase + 'api/Account/NewPassword';
+            return $http.post(url, data,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
+        }
+        var _updateUser = function (data) {
+            var url = serviceBase + 'api/Account/UpdateUser';
+            return $http.post(url, data,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
+        }
 
 
         var _getAttSummaryFile = function () {
@@ -1504,6 +1538,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.uploadManualAttendance = _uploadManualAttendance;
         pageServiceFactory.generateFullAndFinalSalary = _generateFullAndFinalSalary;
         pageServiceFactory.employeeBonusUpload = _employeeBonusUpload;
+        pageServiceFactory.userRegister = _userRegister;
+        pageServiceFactory.setNewPassword = _setNewPassword;
+        pageServiceFactory.updateUser = _updateUser;
 
         //Resources
         pageServiceFactory.getResources = _getResources;
