@@ -167,6 +167,9 @@
                         $scope.page = _getLocalPageObject(vm.pageId)
                         console.log($scope.page);
                     }
+                    if (vm.pageId == 'register') {
+                        vm.templateUrlPath = "app/pages/organization/employees/templates/user/user-view.html";
+                    }
                 }
 
                 else {
@@ -228,7 +231,7 @@
             $scope.page.pageIsLoading = false;
             var linkFieldName;
             if (result.pageinfo.pageid == 114) {
-                
+
                 console.log(result.pageinfo.selects)
                 console.log(result.pageinfo.selects.BRId)
                 if (result.pageinfo.selects.LocationId.length == 1) {

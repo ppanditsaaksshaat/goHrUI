@@ -84,7 +84,10 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
         }
         if (response.config.url.endsWith('token')
             || response.config.url.endsWith('GetFile')
-            || response.config.url.endsWith('GetAttach')) {
+            || response.config.url.endsWith('GetAttach')
+            || response.config.url.endsWith('Register')
+            || response.config.url.endsWith('NewPassword')
+            || response.config.url.endsWith('UpdateUser')) {
         }
         else if (response.config.url.indexOf('/api/') > -1) {
             var result = {};

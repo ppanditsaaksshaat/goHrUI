@@ -118,9 +118,7 @@
         }
         function _createErrorResult(error) {
         }
-        // save employee form
-
-        //page load function
+      
         _loadController();
     }
 })();
