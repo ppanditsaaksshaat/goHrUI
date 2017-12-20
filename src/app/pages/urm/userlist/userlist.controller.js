@@ -26,7 +26,7 @@
         $scope.userUpdate = _userUpdate;
 
         $scope.gridOptions = {
-            enableCellEditOnFocus: true,
+            enableCellEditOnFocus: false,
             enableRowSelection: false,
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 0,
@@ -49,7 +49,7 @@
                     name: '-',
                     width: 130,
                     cellEditableCondition: false,
-                    cellTemplate: '<button class="btn btn-xs btn-primary" ng-click="grid.appScope.newPassword(row)"> New Password</button>'
+                    cellTemplate: '<button class="btn btn-xs btn-primary" ng-click="grid.appScope.newPassword(row)"> Set Password</button>'
                 }
             ]
             var searchList = [];
