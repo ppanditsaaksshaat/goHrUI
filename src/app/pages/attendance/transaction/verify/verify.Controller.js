@@ -186,49 +186,91 @@
     }
     function _downloadTemplate() {
 
+      // the Workbook object gives you more control and stores multiple sheets 
+      var Workbook = require('xlsx-workbook').Workbook;
 
-      // /* original data */
-      // var data = [[1, 2, 3], [true, false, null, "sheetjs"], ["foo", "bar", "0.3"], ["baz", null, "qux"]]
+      var workbook = new Workbook();
+
+      var sales = workbook.add("Sales");
+      var costs = workbook.add("Costs");
+
+      sales[0][0] = 304.50;
+      sales[1][0] = 159.24;
+      sales[2][0] = 493.38;
+
+      costs[0][0] = 102.50;
+      costs[1][0] = 59.14;
+      costs[2][0] = 273.32;
+
+      // automatically appends the '.xlsx' extension 
+      workbook.save("Revenue-Summary");
+
+
+      // /* this line is only needed if you are not adding a script tag reference */
+      // if (typeof XLSX == 'undefined') XLSX = require('xlsx');
+
+
+      // // /* original data */
+      // // // // var data = [[1, 2, 3], [true, false, null, "sheetjs"], ["foo", "bar", "0.3"], ["baz", null, "qux"]]
       // var ws_name = "SheetJS";
 
-      // /* require XLSX */
-      // // var XLSX = require('xlsx')
+      // // /* require XLSX */
+      // // // var XLSX = require('xlsx')
 
-      // /* set up workbook objects -- some of these will not be required in the future */
+      // // /* set up workbook objects -- some of these will not be required in the future */
       // var wb = {}
       // wb.Sheets = {};
       // wb.Props = {};
       // wb.SSF = {};
       // wb.SheetNames = [];
 
-      // /* create worksheet: */
+      // // /* create worksheet: */
       // var ws = {}
 
       // /* the range object is used to keep track of the range of the sheet */
-      // var range = { s: { c: 0, r: 0 }, e: { c: 0, r: 0 } };
+      // var range = { s: { c: 0, r: 0 }, e: { c: 50, r: 1 } };
 
-      // /* Iterate through each element in the structure */
-      // for (var R = 0; R != data.length; ++R) {
-      //   if (range.e.r < R) range.e.r = R;
-      //   for (var C = 0; C != data[R].length; ++C) {
-      //     if (range.e.c < C) range.e.c = C;
 
-      //     /* create cell object: .v is the actual data */
-      //     var cell = { v: data[R][C] };
-      //     if (cell.v == null) continue;
+      // for (var R = 0; R != $scope.page.gridOptions.columnDefs.length; ++R) {
 
-      //     /* create the correct cell reference */
-      //     var cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
+      //   var cell_address = { c: R, r: 1 };
 
-      //     /* determine the cell type */
-      //     if (typeof cell.v === 'number') cell.t = 'n';
-      //     else if (typeof cell.v === 'boolean') cell.t = 'b';
-      //     else cell.t = 's';
+      //   cell_address.v = $scope.page.gridOptions.columnDefs[R].displayName;
 
-      //     /* add to structure */
-      //     ws[cell_ref] = cell;
-      //   }
+      //   var cell_ref = XLSX.utils.encode_cell(cell_address);
+
+      //   /* add to structure */
+      //   ws[cell_ref] = cell_address;
       // }
+      // // /* Iterate through each element in the structure */
+      // // for (var R = 0; R != $scope.page.gridOptions.data.length; ++R) {
+      // //   var dataRow = $scope.page.gridOptions.data[R]
+
+
+
+      // //   if (range.e.r < R) range.e.r = R;
+
+
+      // //   for (var C = 0; C != data[R].length; ++C) {
+      // //     if (range.e.c < C) range.e.c = C;
+
+      // //     /* create cell object: .v is the actual data */
+      // //     var cell = { v: dataRow[C] };
+      // //     if (cell.v == null) continue;
+
+      // //     /* create the correct cell reference */
+      // //     var cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
+
+      // //     /* determine the cell type */
+      // //     if (typeof cell.v === 'number') cell.t = 'n';
+      // //     else if (typeof cell.v === 'boolean') cell.t = 'b';
+      // //     else cell.t = 's';
+
+      // //     /* add to structure */
+      // //     ws[cell_ref] = cell;
+      // //   }
+      // // }
+
       // ws['!ref'] = XLSX.utils.encode_range(range);
 
       // /* add worksheet to workbook */
@@ -245,7 +287,7 @@
       // /* write file */
       // XLSX.writeFile(wb, 'test.xlsx');
 
-
+      return;
       console.log($scope.page)
       var tempColumns = [];
       if ($scope.page.gridOptions.data.length > 0) {
