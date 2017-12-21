@@ -1,6 +1,3 @@
-//This Factory Inherting Our own factory called DJWebStore - /// <reference path="assets/angular-appJS/app-04-webstore-service.js" />
-//This Factory is used to call get & set data method through our own c# WebAPI  
-
 'use strict';
 angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore', 'fileUpload',
     function ($http, DJWebStore, fileUpload) {
@@ -531,17 +528,17 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 // Determine the content type from the header or default to "application/octet-stream"
                 var contentType = headers['content-type'] || octetStreamMime;
 
-                let arraybuffer = data;
+                var arraybuffer = data;
                 /* convert data to binary string */
-                let dataArr = new Uint8Array(arraybuffer);
-                let arr = new Array();
+                var dataArr = new Uint8Array(arraybuffer);
+                var arr = new Array();
 
-                for (let i = 0; i != dataArr.length; ++i)
+                for (var i = 0; i != dataArr.length; ++i)
                     arr[i] = String.fromCharCode(dataArr[i]);
 
-                let bstr = arr.join("");
+                var bstr = arr.join("");
 
-                let workbook = XLSX.read(bstr, { type: "binary" });
+                var workbook = XLSX.read(bstr, { type: "binary" });
                 console.log(workbook)
 
 
