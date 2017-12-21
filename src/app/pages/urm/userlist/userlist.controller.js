@@ -60,9 +60,9 @@
             }
 
             pageService.getCustomQuery(data, 603).then(_customQuerySuccessResult, _customQueryErrorResult)
-
         }
         function _customQuerySuccessResult(result) {
+            console.log(result)
             if (result != "NoDataFound") {
                 $scope.gridOptions.data = result;
             }
@@ -71,12 +71,30 @@
 
         }
 
+        function _getUserRole() {
+            var data = {
+                searchList: [],
+                orderByList: []
+            }
+            pageService.getCustomQuery(data, 15).then(_roleCustomQuerySuccessResult, _roleCustomQueryErrorResult)
+        }
+        function _roleCustomQuerySuccessResult(result) {
+            if (result != "NoDataFound") {
+                $scope.userRole = result;
+            }
+        }
+        function _roleCustomQueryErrorResult(err) {
+
+        }
+
+
         function _addRecord() {
             $scope.userlist = true;
             $scope.entity = {};
         }
 
         function _userRegister(entity) {
+
             if (_validate(entity, false)) {
                 pageService.userRegister(entity).then(_userRegisteSuccess, _userRegisterError)
             }
@@ -119,6 +137,10 @@
             }
             if (entity.ConfirmPassword == undefined || entity.ConfirmPassword == '') {
                 $scope.showMsg("error", "Confirm password is required");
+                return false;
+            }
+            if (entity.Role == undefined || entity.Role == '') {
+                $scope.showMsg("error", "Please Select Role");
                 return false;
             }
 
@@ -197,6 +219,7 @@
         }
 
         _loadController();
+        _getUserRole();
     }
 })();
 
