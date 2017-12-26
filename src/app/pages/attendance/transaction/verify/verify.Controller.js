@@ -187,65 +187,149 @@
     function _downloadTemplate() {
 
 
+
+
+      // console.log(Workbook)
+      // // the Workbook object gives you more control and stores multiple sheets 
+      // var Workbook = require('Workbook').Workbook;
+
+      // var workbook = new Workbook();
+
+      // var sales = workbook.add("Sales");
+      // var costs = workbook.add("Costs");
+
+      // sales[0][0] = 304.50;
+      // sales[1][0] = 159.24;
+      // sales[2][0] = 493.38;
+
+      // costs[0][0] = 102.50;
+      // costs[1][0] = 59.14;
+      // costs[2][0] = 273.32;
+
+      // // automatically appends the '.xlsx' extension 
+      // workbook.save("Revenue-Summary");
+
+
+      /* this line is only needed if you are not adding a script tag reference */
+      if (typeof XLSX == 'undefined') XLSX = require('xlsx');
+
+
       // /* original data */
-      // var data = [[1, 2, 3], [true, false, null, "sheetjs"], ["foo", "bar", "0.3"], ["baz", null, "qux"]]
-      // var ws_name = "SheetJS";
+      // // // var data = [[1, 2, 3], [true, false, null, "sheetjs"], ["foo", "bar", "0.3"], ["baz", null, "qux"]]
+      var ws_name = "SheetJS";
 
       // /* require XLSX */
       // // var XLSX = require('xlsx')
 
       // /* set up workbook objects -- some of these will not be required in the future */
-      // var wb = {}
-      // wb.Sheets = {};
-      // wb.Props = {};
-      // wb.SSF = {};
-      // wb.SheetNames = [];
+      var wb = {}
+      wb.Sheets = {};
+      wb.Props = {};
+      wb.SSF = {};
+      wb.SheetNames = [];
 
       // /* create worksheet: */
-      // var ws = {}
+      var ws = {}
 
-      // /* the range object is used to keep track of the range of the sheet */
-      // var range = { s: { c: 0, r: 0 }, e: { c: 0, r: 0 } };
-
-      // /* Iterate through each element in the structure */
-      // for (var R = 0; R != data.length; ++R) {
-      //   if (range.e.r < R) range.e.r = R;
-      //   for (var C = 0; C != data[R].length; ++C) {
-      //     if (range.e.c < C) range.e.c = C;
-
-      //     /* create cell object: .v is the actual data */
-      //     var cell = { v: data[R][C] };
-      //     if (cell.v == null) continue;
-
-      //     /* create the correct cell reference */
-      //     var cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
-
-      //     /* determine the cell type */
-      //     if (typeof cell.v === 'number') cell.t = 'n';
-      //     else if (typeof cell.v === 'boolean') cell.t = 'b';
-      //     else cell.t = 's';
-
-      //     /* add to structure */
-      //     ws[cell_ref] = cell;
-      //   }
-      // }
-      // ws['!ref'] = XLSX.utils.encode_range(range);
-
-      // /* add worksheet to workbook */
-      // wb.SheetNames.push(ws_name);
-      // wb.Sheets[ws_name] = ws;
+      /* the range object is used to keep track of the range of the sheet */
+      var range = { s: { c: 0, r: 0 }, e: { c: 15, r: 10000 } };
 
 
-      // var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-      // var dataBinary = s2ab(wbout);
-      // // saveFileAs(dataBinary, contentType, filename)
-      // saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "sheetjs.xlsx");
+      // ws['A1'] = {
+      //   v: '2.4.2014',
+      //   t: 's',
+      //   r: '<t>2.4.2014</t>',
+      //   h: '2.4.2014',
+      //   w: '2.4.2014',
+      //   s:
+      //     {
+      //       patternType: 'solid',
+      //       fgColor: { theme: 8, tint: 0.3999755851924192 },
+      //       bgColor: { indexed: 64 }
+      //     }
+      // };
+
+      // ws['D1'] = { v: $scope.page.gridOptions.columnDefs.length, t: 'n' };
+      // ws['E1'] = { v: 'Month', t: 's' };
+      // ws['F1'] = { v: moment().format('M'), t: 's' };
+      // ws['G1'] = { v: 'Year', t: 's' };
+      // ws['H1'] = { v: moment().format('YYYY'), t: 's' };
+      // ws['I1'] = { v: 'Max. Weekoff', t: 's' };
+      // ws['J1'] = { v: '4', t: 's' };
+      // ws['K1'] = { v: 'Max. Holiday', t: 's' };
+      // ws['L1'] = { v: '3', t: 's' };
+
+      //WRITE DATA ROW HEADER
+      ws['A1'] = { v: 'Sno', t: 's' };
+      ws['B1'] = { v: 'Code', t: 's' };
+      ws['C1'] = { v: 'Name', t: 's' };
+      ws['D1'] = { v: 'Total Days', t: 's' };
+      ws['E1'] = { v: 'Present Days', t: 's' };
+      ws['F1'] = { v: 'Absent', t: 's' };
+      ws['G1'] = { v: 'Week Off', t: 's' };
+      ws['H1'] = { v: 'Holiday', t: 's' };
+      ws['I1'] = { v: 'Leave', t: 's' };
+      ws['J1'] = { v: 'LWP', t: 's' };
+      ws['K1'] = { v: 'Normal Overtime (Hours)', t: 's' };
+      ws['L1'] = { v: 'Holiday Overtime (Days)', t: 's' };
+      ws['M1'] = { v: 'Salary Days', t: 's' };
+      ws['N1'] = { v: 'Month', t: 's' };
+      ws['O1'] = { v: 'Year', t: 's' };
+
+      console.log($scope.page.gridOptions.data)
+      for (var i = 0; i < $scope.page.gridOptions.data.length; i++) {
+        var rowIndex = i + 2;
+        var row = $scope.page.gridOptions.data[i];
+        //WRITE DATA ROW HEADER
+        ws['A' + rowIndex] = { v: i + 1, t: 's' };
+        ws['B' + rowIndex] = { v: row['EmpCode'], t: 's' };//Emp Code
+        ws['C' + rowIndex] = { v: row['EmpName'], t: 's' };//Emp Name
+        ws['D' + rowIndex] = {
+          f: '=DAY(DATE(YEAR(O' + rowIndex + '),N' + rowIndex + '+1,1)-1)', t: 's',
+          s: {
+            alignment: { textRotation: 90 },
+            font: { sz: 14, bold: true, color: '#FF00FF' }
+          }
+        };//Total Days
+        ws['E' + rowIndex] = { v: row['TotalPresentDays'], t: 's' };//Present Days
+        ws['F' + rowIndex] = { v: row['AbsentDays'] };//Absent 
+        ws['G' + rowIndex] = { v: row['TotalWeekoff'], t: 's' };//Week Off
+        ws['H' + rowIndex] = { v: row['TotalHolidays'], t: 's' };//Holiday
+        ws['I' + rowIndex] = { v: row['TotalLeaves'], t: 's' };//Leave
+        ws['J' + rowIndex] = { v: row['TotalLWP'], t: 's' };//LWP
+        ws['K' + rowIndex] = { v: row['SingleOvertimeHours'], t: 's' };//OT
+        ws['L' + rowIndex] = { v: row['DoubleOvertimeHours'], t: 's' };//Double OT
+        ws['M' + rowIndex] = {
+          f: '=E' + rowIndex + '+I' + rowIndex + '+G' + rowIndex + '+H' + rowIndex, t: 's',
+          s:
+            {
+              patternType: 'solid',
+              fgColor: { theme: 8, tint: 0.3999755851924192, rgb: '9ED2E0' },
+              bgColor: { indexed: 64 }
+            }
+        };//Salary Days
+        ws['N' + rowIndex] = { v: moment().format('MM'), t: 's' };
+        ws['O' + rowIndex] = { v: moment().format('YYYY'), t: 's' };
+
+      }
+
+      ws['!ref'] = XLSX.utils.encode_range(range);
+
+      /* add worksheet to workbook */
+      wb.SheetNames.push(ws_name);
+      wb.Sheets[ws_name] = ws;
+
+
+      var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+      var dataBinary = s2ab(wbout);
+      // saveFileAs(dataBinary, contentType, filename)
+      saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "Attendance_" + moment().format('ddMMhhss') + ".xlsx");
 
 
       // /* write file */
       // XLSX.writeFile(wb, 'test.xlsx');
 
-
+      return;
       console.log($scope.page)
       var tempColumns = [];
       if ($scope.page.gridOptions.data.length > 0) {
@@ -335,25 +419,52 @@
 
       if ($scope.page.gridOptions.data.length > 0) {
         angular.forEach(uploadGridData.data, function (newEmpDetail) {
-          var oldEmpDetail = $filter("findObj")($scope.page.gridOptions.data, newEmpDetail.EmployeeCode, "EmpCode")
+          var oldEmpDetail = $filter("findObj")($scope.page.gridOptions.data, newEmpDetail['Code'], "EmpCode")
           if (oldEmpDetail != null) {
 
-            oldEmpDetail.TotalWeekoff = parseInt(newEmpDetail.TotalWeekOff);
-            oldEmpDetail.TotalDays = newEmpDetail.TotalDays;
-            oldEmpDetail.TotalPresentDays = newEmpDetail.TotalPresentDays;
-            oldEmpDetail.TotalHolidays = newEmpDetail.TotalHolidays;
-            oldEmpDetail.HolidayPresent = newEmpDetail.HolidayPresent;
-            oldEmpDetail.TotalLeaves = newEmpDetail.TotalLeaves;
-            oldEmpDetail.TotalLWP = newEmpDetail.TotalLWP;
-            oldEmpDetail.TotalSalaryDays = newEmpDetail.TotalSalaryDays;
-            oldEmpDetail.DeductableLateCount = newEmpDetail.LateCount;
-            oldEmpDetail.DeductableLateDays = newEmpDetail.LateDays;
-            oldEmpDetail.AbsentDays = parseInt(newEmpDetail.AbsentDays);
-            oldEmpDetail.IncentiveDays = parseInt(newEmpDetail.IncentiveDays);
-            oldEmpDetail.SingleOvertimeMin = parseFloat(newEmpDetail.SingleOTMinute);
-            oldEmpDetail.SingleOvertimeHours = parseFloat(newEmpDetail.SingleOTHours);
-            oldEmpDetail.DoubleOvertimeMin = parseFloat(newEmpDetail.DoubleOTMinute);
-            oldEmpDetail.DoubleOvertimeHours = parseFloat(newEmpDetail.DoubleOTHours);
+            var totalDays, presentDays, weekoffDays, holidays, absentDays, salaryDays, holidayPresent, overtimeHours, leaveDays;
+
+            totalDays = parseFloat(newEmpDetail['Total Days'])
+            presentDays = parseFloat(newEmpDetail['Present Days'])
+            weekoffDays = parseFloat(newEmpDetail['Week Off'])
+            holidays = parseFloat(newEmpDetail['Holiday'])
+            absentDays = parseFloat(newEmpDetail['Absent'])
+            salaryDays = parseFloat(newEmpDetail['Salary Days'])
+            holidayPresent = parseFloat(newEmpDetail['Holiday Overtime (Days)'])
+            overtimeHours = parseFloat(newEmpDetail['Normal Overtime (Hours)'])
+            leaveDays = parseFloat(newEmpDetail['Leave'])
+
+            if (absentDays > totalDays - (presentDays + weekoffDays + holidays + leaveDays)) {
+              absentDays = totalDays - (presentDays + weekoffDays + holidays + leaveDays);
+              //oldEmpDetail.StatusBGClass = 'RED-500'
+            }
+
+            if (salaryDays > totalDays) {
+              // salaryDays = totalDays;
+              oldEmpDetail.StatusBGClass = 'RED-500'
+            }
+
+            if (presentDays > totalDays - (leaveDays + absentDays + holidays + weekoffDays)) {
+              // presentDays = totalDays - (leaveDays + absentDays + holidays + weekoffDays)
+              oldEmpDetail.StatusBGClass = 'RED-500'
+            }
+
+            oldEmpDetail.TotalWeekoff = weekoffDays;
+            oldEmpDetail.TotalDays = totalDays;
+            oldEmpDetail.TotalPresentDays = presentDays;
+            oldEmpDetail.TotalHolidays = holidays;
+            oldEmpDetail.HolidayPresent = holidayPresent;
+            oldEmpDetail.TotalLeaves = leaveDays;
+            oldEmpDetail.TotalLWP = newEmpDetail['LWP'];
+            oldEmpDetail.TotalSalaryDays = salaryDays;
+            //oldEmpDetail.DeductableLateCount = newEmpDetail.LateCount;
+            //oldEmpDetail.DeductableLateDays = newEmpDetail.LateDays;
+            oldEmpDetail.AbsentDays = absentDays;
+            //oldEmpDetail.IncentiveDays = parseInt(newEmpDetail.IncentiveDays);
+            // oldEmpDetail.SingleOvertimeMin = parseFloat(newEmpDetail.SingleOTMinute);
+            oldEmpDetail.SingleOvertimeHours = newEmpDetail['Normal Overtime (Hours)'];
+            // oldEmpDetail.DoubleOvertimeMin = parseFloat(newEmpDetail.DoubleOTMinute);
+            oldEmpDetail.DoubleOvertimeHours = newEmpDetail['Holiday Overtime (Days)'];
             flag = true;
 
           }

@@ -1,5 +1,5 @@
 <div ba-panel ba-panel-class="profile-page">
-  <div class="panel-content">
+  <div class="panel-content" ng-hide="empUserProfile">
     <h3 class="with-line">Profile Information</h3>
     <div class="row">
       <div class="col-md-6">
@@ -96,6 +96,59 @@
     </div>
 
     <button type="button" ng-click="updateProfile()" class="btn btn-primary btn-with-icon save-profile">
+      <i class="ion-android-checkmark-circle"></i>Update Profile
+    </button>
+  </div>
+  <div class="panel-content" ng-show="empUserProfile">
+    <h3 class="with-line">Profile Information</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row clearfix">
+          <label for="inputFirstName" class="col-sm-3 control-label">Picture</label>
+
+          <div class="col-sm-9">
+            <div class="userpic">
+              <div class="userpic-wrapper">
+                <img id="preview" ng-src="{{ picture }}" ng-click="uploadPicture()">
+              </div>
+              <i class="ion-ios-close-outline" ng-click="removePicture()" ng-if="!noPicture"></i>
+              <a href class="change-userpic" ng-click="uploadPicture()">Change Profile Picture</a>
+              <input type="file" ng-show="false" id="uploadFile" ng-file-select="onFileSelect($files)">
+              <canvas id="myCanvas" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row clearfix">
+          <label for="inputFirstName" class="col-sm-3 control-label">Employee Name</label>
+
+          <div class="col-sm-9">
+            <span type="text" class="form-control" ng-bind="user.profile.empName"></span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group row clearfix">
+          <label class="col-sm-3 control-label">Role</label>
+
+          <div class="col-sm-9">
+            <span type="text" class="form-control" ng-bind="user.profile.roleName"></span>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <button type="button" ng-click="updateUserProfile()" class="btn btn-primary btn-with-icon save-profile">
       <i class="ion-android-checkmark-circle"></i>Update Profile
     </button>
   </div>

@@ -42,7 +42,14 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         console.log(profileData)
         return localStorageService.set(profileDataKey, profileData);
     }
-
+    var _getSysParam = function () {
+        var sysParam = localStorageService.get('sysParamKey');          
+        return sysParam;
+    }
+    var _setSysParam = function (data) {
+      
+        return localStorageService.set('sysParamKey', data);
+    }
     var _getAuthorization = function () {
         return localStorageService.get(authorizationDataKey);
     }
@@ -90,13 +97,13 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
 
         var serviceBase = _getValue('serviceBase');
         //uncomment for your choice
-        // serviceBase = 'http://localhost:51877/';
+        serviceBase = 'http://localhost:51877/';
         // serviceBase = 'http://app.rudrahr.com/api/';
         // serviceBase = 'http://rudraitsl.com/api/';// _getValue('serviceBase');
         //serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
         // serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
         // serviceBase = 'http://web400.hrms/api/';
-        serviceBase = 'http://rudra.hrm/api/';
+        // serviceBase = 'http://rudra.hrm/api/';
         // serviceBase = 'http://itsllive.rudra.hrm/api/';
         // serviceBase = 'http://seacliffnew.rudra.hrm/api/'
         // serviceBase = null;
@@ -156,8 +163,9 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
 
         var profileData = _getUserProfile();
         var appData = _getAppData();
+        var sysParam = _getSysParam();
 
-        var data = { app: appData, profile: profileData, auth: authData }
+        var data = { app: appData, profile: profileData, auth: authData, sysparam :sysParam }
 
         $rootScope.user = data;
 
@@ -198,6 +206,8 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     //func
     djWebStoreFactory.GetUserProfile = _getUserProfile;
     djWebStoreFactory.SetUserProfile = _setUserProfile;
+    djWebStoreFactory.SetSysParam=_setSysParam;
+    djWebStoreFactory.GetSysParam=_getSysParam;
     djWebStoreFactory.GetAuthorization = _getAuthorization;
     djWebStoreFactory.SetAuthorization = _setAuthorization;
     djWebStoreFactory.GetPageData = _getPageData;
