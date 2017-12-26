@@ -102,11 +102,11 @@
             DJWebStore.SetValue('UserLang', $scope.selectedLanguage.value);
 
             authService.login(loginData, userCorpoId, $scope.selectedLanguage.value).then(function (response) {
-                
+
                 console.log(response)
                 $scope.GetBGClass()
                 pageService.getAppUserData().then(function (result) {
-
+                    
                     console.log(result)
                     var profileData = result;//angular.fromJson(response.data);
                     DJWebStore.SetUserProfile(profileData.user);
