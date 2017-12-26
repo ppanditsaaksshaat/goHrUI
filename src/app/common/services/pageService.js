@@ -1113,6 +1113,22 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     return results;
                 });
         }
+        var _updateSingleField = function (tableId, searchColName, searchColValue, field, fieldValue) {
+
+            var data = {
+                tableId: tableId, searchColName: searchColName, searchColValue: searchColValue, field: field, fieldValue: fieldValue
+            }
+
+            var url = serviceBase + 'api/Data/UpdateSingleField/';
+            return $http.post(url, JSON.stringify(JSON.stringify(data)),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
+        }
 
         var _getDashboard = function (appMode) {
             var rndVal = Math.round((Math.random() * 10) * 10);
@@ -1408,7 +1424,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     return results;
                 });
         }
-        
+
         var _setNewPassword = function (data) {
             var url = serviceBase + 'api/Account/NewPassword';
             return $http.post(url, data,
@@ -1505,6 +1521,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.ansQuesPaper = _ansQuesPaper;
         pageServiceFactory.rptHandshake = _rptHandshake;
         pageServiceFactory.updateField = _updateField;
+        pageServiceFactory.updateSingleField = _updateSingleField;
 
         // FIle  Repo attchment by Nitesh
         pageServiceFactory.getFileAttach = _getFileAttach;

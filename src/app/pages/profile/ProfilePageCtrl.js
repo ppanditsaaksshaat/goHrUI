@@ -9,13 +9,40 @@
     .controller('ProfilePageCtrl', ProfilePageCtrl);
 
   /** @ngInject */
-  function ProfilePageCtrl($scope, $rootScope, fileReader, $filter, $uibModal, editFormService) {
+  function ProfilePageCtrl($scope, $rootScope, fileReader, $filter, $uibModal, editFormService, pageService) {
     // $scope.picture = $filter('profilePicture')('Nasta');
-    if ($scope.user.profile.profilePhoto == 'data:image/jpeg;base64,') {
-      $scope.picture = $filter('appImage')('theme/no-photo.png');
+
+
+
+    function _loadController() {
+      if ($scope.user.profile.profilePhoto == 'data:image/jpeg;base64,') {
+        $scope.picture = $filter('appImage')('theme/no-photo.png');
+      }
+      else {
+        $scope.picture = $scope.user.profile.profilePhoto;
+        $scope.olpEmpPic = angular.copy($scope.user.profile.profilePhoto);
+      }
+      if ($scope.user.profile.empId == 0 && $scope.user.profile.userId != "ITSL_ADMIN" && $scope.user.profile.userId != "ITSL_TEST") {
+        $scope.empUserProfile = true;
+        var searchList = [];
+        searchList.push({ field: 'AspNetUserId', operand: '=', value: $scope.user.profile.userId })
+        var data = {
+          searchList: searchList,
+          orderByList: []
+        }
+        pageService.getTableData(24, 19, '', '', false, data).then(_getTableDataSuccess, _getTableDataError)
+      }
+      else {
+        $scope.empUserProfile = false;
+      }
     }
-    else {
-      $scope.picture = $scope.user.profile.profilePhoto;
+    function _getTableDataSuccess(result) {
+      $scope.picture = result[0].UserPhoto1_64URL;
+      $rootScope.profilePicture = result[0].UserPhoto1_64URL;
+      $scope.oldProfilePictrue = angular.copy(result[0].UserPhoto1_64URL);
+    }
+    function _getTableDataError(err) {
+
     }
 
     $scope.removePicture = function () {
@@ -102,13 +129,22 @@
 
     $scope.switches = [true, true, false, true, true, false];
     $scope.updateProfile = function () {
-      var entity = {
-        EmpId: $scope.user.profile.empId,
-        EmpPhoto1_64URL: $scope.picture
+      if ($scope.picture == $scope.olpEmpPic) {
+        $scope.showMsg("info", "Nothing to save");
+        return;
       }
-      editFormService.saveForm(25, entity, {},
-        'edit', 'Employee Profile', undefined, true)
-        .then(_updateSuccessResult, _updateErrorResult)
+      if ($scope.picture != "assets/img/theme/no-photo.png") {
+        var entity = {
+          EmpId: $scope.user.profile.empId,
+          EmpPhoto1_64URL: $scope.picture
+        }
+        editFormService.saveForm(25, entity, {},
+          'edit', 'Employee Profile', undefined, true)
+          .then(_updateSuccessResult, _updateErrorResult)
+      }
+      else {
+        $scope.showMsg("error", "Please select profile pictrue");
+      }
     }
     function _updateSuccessResult(result) {
       if (result.success_message == "Record Updated.") {
@@ -118,5 +154,28 @@
     }
     function _updateErrorResult(err) {
     }
+    $scope.updateUserProfile = function () {
+      if ($scope.picture == $scope.oldProfilePictrue) {
+        $scope.showMsg("info", "Nothing to save");
+        return;
+      }
+      if ($scope.picture != "assets/img/theme/no-photo.png") {
+        pageService.updateSingleField(24, "AspNetUserId", $scope.user.profile.userId, "UserPhoto1_64URL", $scope.picture).then(_updateUserSuccessResult, _updateUserErrorResult)
+      }
+      else {
+        $scope.showMsg("error", "Please select profile pictrue");
+      }
+    }
+    function _updateUserSuccessResult(result) {
+      console.log(result)
+      if (result.success_message == "Updated") {
+        $scope.showMsg("success", "User Profile Picture Updted Successfully");
+        _loadController();
+      }
+    }
+    function _updateUserErrorResult(err) {
+    }
+
+    _loadController();
   }
 })();
