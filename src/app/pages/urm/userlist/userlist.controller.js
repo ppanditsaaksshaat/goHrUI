@@ -139,7 +139,7 @@
                 $scope.showMsg("error", "Confirm password is required");
                 return false;
             }
-            if (entity.Role == undefined || entity.Role == '') {
+            if (entity.RoleId == undefined || entity.RoleId == '') {
                 $scope.showMsg("error", "Please Select Role");
                 return false;
             }
