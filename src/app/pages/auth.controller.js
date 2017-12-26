@@ -102,17 +102,19 @@
             DJWebStore.SetValue('UserLang', $scope.selectedLanguage.value);
 
             authService.login(loginData, userCorpoId, $scope.selectedLanguage.value).then(function (response) {
+
                 console.log(response)
                 $scope.GetBGClass()
                 pageService.getAppUserData().then(function (result) {
-
+                    
                     console.log(result)
                     var profileData = result;//angular.fromJson(response.data);
                     DJWebStore.SetUserProfile(profileData.user);
+                    DJWebStore.SetSysParam(profileData.sys.param);
                     _loadSideMenu();
                     // window.location.href = 'index.html'
                 }, function (err) {
-                    $scope.showMsg('error',err)
+                    $scope.showMsg('error', err)
                 });
             },
                 function (err) {

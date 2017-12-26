@@ -52,23 +52,32 @@
                 </div>
             </div>
             <div class="row" ng-hide="userPwd">
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label>UserName*</label>
                         <input type="textbox" class="form-control" ng-model="entity.UserName">
                     </div>
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label>Password*</label>
                         <input type="password" class="form-control" ng-model="entity.Password">
                     </div>
                 </div>
-                <div class="col-sm-4">
+            </div>
+            <div class="row">
+                <div class="col-sm-6" ng-hide="userPwd">
                     <div class="form-group">
                         <label>Confirm Password*</label>
                         <input type="password" class="form-control" ng-model="entity.ConfirmPassword">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Role*</label>
+                        <select name="roles" id="roles" ng-model="entity.RoleId" class="form-control" ng-options="role.Id as role.Name for role in userRole"
+                            ng-change="callMenu(selectedRoleId)"></select>
                     </div>
                 </div>
             </div>

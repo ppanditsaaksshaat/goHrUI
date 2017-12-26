@@ -305,13 +305,13 @@
         var searchListData = {
           field: 'DepartmentId',
           operand: '=',
-          value: $scope.user.profile.deptId
+          value: $scope.user.profile.deptId != undefined ? $scope.user.profile.deptId : 0
         }
         searchLists.push(searchListData)
         var searchListData = {
           field: 'SubUnitId',
           operand: '=',
-          value: $scope.user.profile.suId
+          value: $scope.user.profile.suId != undefined ? $scope.user.profile.suId : 0
         }
         searchLists.push(searchListData)
 
