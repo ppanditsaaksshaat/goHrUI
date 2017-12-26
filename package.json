@@ -52,6 +52,7 @@
     "angular-bootstrap-datetimepicker": "^1.1.4",
     "angularjs-slider": "^6.2.2",
     "eslint-config-defaults": "^9.0.0",
-    "eslint-plugin-react": "^6.10.3"
+    "eslint-plugin-react": "^6.10.3",
+    "xlsx-workbook": "^1.0.3"
   }
 }
