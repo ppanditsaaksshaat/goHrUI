@@ -111,6 +111,7 @@
                     var profileData = result;//angular.fromJson(response.data);
                     DJWebStore.SetUserProfile(profileData.user);
                     DJWebStore.SetSysParam(profileData.sys.param);
+                    DJWebStore.SetCompany(profileData.company);
                     _loadSideMenu();
                     // window.location.href = 'index.html'
                 }, function (err) {
