@@ -27,7 +27,8 @@
                                         <select ng-model="selectedOtherHead" ng-options="opt.name for opt in rulePage.pageinfo.fields.PBRSHId.options"></select>
                                     </div>
                                     <div class="pull-right">
-                                        <button ng-click="addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button>
+                                        <button ng-click="addTotal()" type="button" class="btn btn-danger btn-xs">
+                                            <i class="fa fa-calculator"></i> Calculate Diffrences</button>
                                     </div>
 
                                 </div>
@@ -35,19 +36,21 @@
 
 
                             <div id="djGridPay" ui-grid="payTempGridOptions" ui-grid-expandable ui-grid-auto-resize ui-grid-pagination ui-grid-selection
-                                ui-grid-pinning ui-grid-edit class="paybandgrid">
+                                ui-grid-pinning ui-grid-edit class="paybandgrid payband">
                             </div>
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="col-md-3  pull-left">
-                                        <button ng-click="addNewRule()" type="button" class="btn btn-info"><i class="fa fa-plus"></i> Add New Head</button>
+                                        <button ng-click="addNewRule()" type="button" class="btn btn-info">
+                                            <i class="fa fa-plus"></i> Add New Head</button>
                                     </div>
                                     <div class="col-lg-3">
                                         <select class="form-control" ng-model="headId" ng-change="existHeadId=true" ng-options="head.value as head.name for  head in rulePage.pageinfo.fields.PBTRSHId.options | filter:{SHIsTotal:true}">
                                         </select>
                                     </div>
                                     <div ng-show="existHeadId" class="col-lg-2">
-                                        <button ng-click="addToltalEarningDeductionRule(headId)" type="button" class="btn btn-info"><i class="fa fa-plus"></i> Add</button>
+                                        <button ng-click="addToltalEarningDeductionRule(headId)" type="button" class="btn btn-info">
+                                            <i class="fa fa-plus"></i> Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +69,7 @@
             <ui-select-match placeholder="Choose..">
                 {{$item.name}}
             </ui-select-match>
-            <ui-select-choices repeat="item in col.colDef.editDropdownOptionsArray | filter: $select.search">
+            <ui-select-choices class="Select-menu-outer" repeat="item in col.colDef.editDropdownOptionsArray | filter: $select.search">
                 <span>{{ item.name }}</span>
             </ui-select-choices>
         </ui-select>
@@ -82,6 +85,7 @@
 </script>
 
 <style>
+   
     .ui-grid-cell {
         overflow: visible;
         z-index: 99999;
@@ -96,9 +100,10 @@
         -ms-user-select: none;
         user-select: none;
     }
+
     /* Make sure the container doesn't shrink too small */
 
     .ui-select-container {
-        min-width: 100px;
+        min-width: 50%;
     }
 </style>

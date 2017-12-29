@@ -136,7 +136,7 @@
                         var isRequiredFailed = false;
                         angular.forEach($scope.page.pageinfo.filters, function (filter) {
 
-                            
+
                             if (!isRequiredFailed) {
 
                                 if (filter.required) {
@@ -348,7 +348,7 @@
                     search.value = filter.value;
                     $scope.page.filterData[filter.name] = search;
 
-                    if ($scope.page.boxOptions.filterOnChange !== undefined) {
+                    if ($scope.page.boxOptions.filterOnChange !== undefined && $scope.page.boxOptions.filterOnChange !== null) {
                         $scope.page.boxOptions.filterOnChange(filter);
                     }
                 }
@@ -366,7 +366,7 @@
                              * assigning dateOption to filters
                              */
                             angular.forEach($scope.page.pageinfo.filters, function (filter, indx) {
-                               
+
                                 if (filter.type == 'datetime') {
                                     filter.datePicker = { option1: {}, option2: {}, format: '' }
 

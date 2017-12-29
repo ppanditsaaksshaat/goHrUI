@@ -810,13 +810,13 @@
 
                 })
                 $scope.$on('apply-filter', function (successEvent, searchList) {
-
+                   debugger
                     // //console.log(searchList)
                     // //console.log('from gridbox', $scope.page)
                     if (searchList) {
                         $scope.page.searchList = searchList;
                         // //console.log(searchList)
-                        _refreshData();
+                        _refreshData(searchList);
                     }
                 })
                 $scope.getGridHeight = function () {
