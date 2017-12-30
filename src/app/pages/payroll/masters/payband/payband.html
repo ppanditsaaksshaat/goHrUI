@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 <grid-box ng-model="page" ng-hide="page.showEditForm"></grid-box>
-<form name="editForm" ng-submit="saveForm(editForm)" novalidate>
+<form name="editForm" ng-submit="saveForm(entity,editForm)" novalidate>
     <div id="editForm" class="panel panel-default bootstrap-panel xmedium-panel" ng-show="page.showEditForm">
         <edit-panel-head page="page" page-title="page.pageinfo.tagline" show-save="editForm.untouch" reset-form="resetForm(editForm)"
             clear-form="clearForm(editForm)" condition="true" show-list="false" show-close="true" close-form="closeForm(editForm)"></edit-panel-head>

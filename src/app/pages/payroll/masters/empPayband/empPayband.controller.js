@@ -993,7 +993,18 @@
                                 }
                             }
                             else {
-                                rowEntity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
+                                if (rowEntity.PBRCalcOnSHId[0].SHIsBasic == "True") {
+                                    rowEntity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
+                                }
+                                else if (rowEntity.PBRCalcOnSHId[0].SHIsGross == "True") {
+                                    if (dependHeadTotal <= 21000) {
+                                        rowEntity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
+                                    }
+                                    else {
+                                        rowEntity.PBRAmount = 0;
+                                    }
+                                }
+                                // rowEntity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
                                 if (grossAmt > 0)
                                     rowEntity.GrossPercentage = ((calculatedAmt * 100) / grossAmt).toFixed(2)
                                 else
