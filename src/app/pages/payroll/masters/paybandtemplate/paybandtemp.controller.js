@@ -29,6 +29,7 @@
         $scope.rulePage = {};
         $scope.slabPage = {};
         $scope.toggleExpandOnAdd = false;
+        $scope.edit = false;
 
         /**end of local variable declaration */
 
@@ -142,6 +143,7 @@
         /**default grid add function */
 
         function _addRecord(result) {
+            $scope.edit = false;
             $scope.action = 'create';
             $scope.page.showEditForm = true;
             $scope.payTempGridOptions.data = [];
@@ -152,7 +154,7 @@
 
         /**default grid edit function */
         function _editRecord(row) {
-
+            $scope.edit = true;
             $scope.page.showEditForm = true;
             $scope.entity = angular.copy(row.entity);
             $scope.page.isAllowEdit = true;
@@ -252,7 +254,7 @@
                                             else if (child.tableid == $scope.paybandTemp.FormulaTableId) {//formula table
 
                                                 angular.forEach(child.rows, function (formula) {
-                                                    debugger
+
                                                     formula.PFTDCalcHeadId = formula.PFTDCalcHeadId.replace('[', '').replace(']', '')
                                                     if (formula.PFTDCalcHeadId != '') {
                                                         var dependHeadList = formula.PFTDCalcHeadId.split(',');
@@ -349,7 +351,7 @@
                 cellClass: _cellClass,
                 cellEditableCondition: _cellEditableCondition,
                 colIndex: 2
-                
+
             })
 
             // editDropdownOptionsArray: $scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options,
@@ -1137,8 +1139,26 @@
             //         return
             //     }
             // }
+
+            // if ($scope.edit) {
+            //     row.entity.IsDeleted = true;
+            //     row.entity.DeletedOn = moment().format("DD/MM/YYYY");
+            //     row.entity.DeletedBy = $scope.user.profile.userId;
+            //     if (row.entity.subGridOptions != undefined) {
+            //         if (row.entity.PBTRIsFormula || row.entity.PBTRIsSlab) {
+            //             angular.forEach(row.entity.subGridOptions.data, function (data) {
+            //                 data.IsDeleted = true;
+            //                 data.DeletedOn = moment().format("DD/MM/YYYY");
+            //                 data.DeletedBy = $scope.user.profile.userId;
+            //             })
+            //         }
+            //     }
+            // }
+
+
             var index = $scope.payTempGridOptions.data.indexOf(row.entity);
             $scope.payTempGridOptions.data.splice(index, 1);
+
             _getNetPayable();
         }
 
@@ -1654,7 +1674,7 @@
 
                                     for (var c = 0; c < row.subGridOptions.data.length; c++) {
                                         var ent = row.subGridOptions.data[c];
-                                        debugger
+
                                         var formulaEntity = {};
                                         formulaEntity.PFTDId = ent.PFTDId;
                                         formulaEntity.PFTDPBRId = ent.PFTDPBTRId;
