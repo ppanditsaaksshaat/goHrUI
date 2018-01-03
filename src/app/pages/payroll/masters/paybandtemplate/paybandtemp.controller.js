@@ -154,6 +154,7 @@
 
         /**default grid edit function */
         function _editRecord(row) {
+           console.log($scope.rulePage.pageinfo.fields.PBTRSHId.options);
             $scope.edit = true;
             $scope.page.showEditForm = true;
             $scope.entity = angular.copy(row.entity);
@@ -285,6 +286,7 @@
                 }
             }
             _getNetPayable();
+            _addDependentHeadList();
         }
         function _getMultiEntityError(err) {
             console.log(err)
