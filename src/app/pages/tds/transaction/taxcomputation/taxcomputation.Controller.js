@@ -35,7 +35,9 @@
     $scope.taxComSave = _taxComSave;
     $scope.closeForm = _closeForm;
     var TDSTacComEmpHeaderAndCalAmount = 606;
+    var categoryQueryId = 607;
     $scope.showGrid = true;
+    vm.oldEntity = {};
 
 
     // var TDSTacComEmpHeaderAndCalAmount
@@ -68,10 +70,12 @@
 
     //loadController
     function _loadController() {
+
+
       pageService.getPagData(vm.pageId).then(function (result) {
         console.log(result)
         $scope.manualAttendance = result;
-        // var currentDate = moment().format("DD-MM-YYYY");
+        // var currentDate = moment().format('YYYY-MM-DD');
         // console.log(currentDate)
 
         console.log($scope.manualAttendance)
@@ -107,6 +111,7 @@
       // paginationPageSize: 10,
       cellEditableCondition: _weekGridCellEditableCondition,
       onRegisterApi: _weekGridOnRegisterApi,
+      enablePaginationControls: false
       // afterCellEdit: _afterCellEdit
     }
     function _getWeekGridOptions() {
@@ -129,40 +134,54 @@
       pageService.getCustomQuery(data, vm.queryId).then(__getWeekGridOptionsResult, __getWeekGridOptionsErrorResult)
     }
     function __getWeekGridOptionsResult(result) {
-      $scope.gridLine = true;
+      // $scope.gridLine = true;
       console.log(result)
       $scope.weekGridOptions.columnDefs = [
         { name: 'THDName', displayName: 'HRA Exemption Calculation', width: 300, enableCellEdit: false },
         { name: 'TGLDLimitAmount', displayName: 'Limit Amount', width: 130, enableCellEdit: false },
-        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true, }
+        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true, },
+        { name: 'EnterAmount', displayName: 'Enter Amount', width: 130, enableCellEdit: false, }
       ]
-
-
-      $scope.weekGridOptions.data = result[0];
-
+      if (result[0].length > 0) {
+        $scope.weekGridOptions.data = result[0];
+        if (result[0][0].THDIsBasic == 1) {
+          $scope.basicSalary = result[0][0].Amount;
+          console.log($scope.basicSalary)
+        }
+        if (isNaN($scope.basicSalary)) {
+          $scope.basicSalary = 0;
+        }
+        if ($scope.basicSalary > 0) {
+          _getSecEightC()
+          $scope.gridLine = true;
+        }
+        else {
+          $scope.gridLine = false;
+          $scope.showMsg("error", "Employee basic salary does not exist.")
+        }
+      }
+      else {
+        $scope.showMsg("error", "No data found in this financial year.")
+        $scope.gridLine = false;
+        $scope.isYear = false;
+      }
+      console.log(result[0].length)
       minimumAmount = Math.min.apply(Math, $scope.weekGridOptions.data.map(function (item) { return item.Amount; }));
       console.log(minimumAmount);
       vm.hraMinAmount = minimumAmount;
-
-      if (result[0][0].THDIsBasic == 1) {
-        $scope.basicSalary = result[0][0].Amount;
-        console.log($scope.basicSalary)
-      }
-
-
+      $scope.hraMinAmounts = minimumAmount;
       // console.log($scope.weekGridOptions.data)
-
       if ($scope.weekGridOptions.data.length > 0) {
         // angular.forEach(uploadGridData.data, function (newEmpDetail) {
         //   var oldEmpDetail = $filter("findObj")($scope.weekGridOptions.data, newEmpDetail.EmpId, "EmpId")
         // })
       }
-      _getSecEightC()
     }
     function __getWeekGridOptionsErrorResult(error) {
       $scope.showMsg("error", error)
     }
     function _weekGridCellEditableCondition(scope) {
+      console.log(scope.row.entity)
       if (scope.col.name == 'Amount') {
         if (scope.row.entity.THDIsBasic == 1) {
           return false;
@@ -170,7 +189,7 @@
         else if (scope.row.entity.THDIsHra == 1) {
           return false;
         }
-        else if (scope.row.entity.THDIsHra == 1) {
+        else if (scope.row.entity.THDDisplayIndex == 3) {
           return false;
         }
         else {
@@ -186,6 +205,8 @@
         console.log(rowEntity, 'rowEntity', colDef, 'colDef', newValue, 'newValue', oldValue, 'oldValue')
         var headLimitAmount = parseFloat(rowEntity.THLDLimitAmount)
         var cellAmount = rowEntity.Amount;
+        rowEntity.EnterAmount = rowEntity.Amount;
+
 
 
 
@@ -198,6 +219,12 @@
           else {
             rowEntity.Amount = cellAmount
             $scope.actualRentReceived = cellAmount;
+
+            // $scope.basicSalary
+            if (isNaN($scope.basicSalary)) {
+              $scope.basicSalary = 0;
+            }
+
             angular.forEach($scope.weekGridOptions.data, function (row, rdx) {
               if (rdx == 3) {
                 if (row.THDDisplayIndex == 3) {
@@ -205,9 +232,24 @@
                     $scope.actualRentReceived = 0;
                   }
                   if ($scope.actualRentReceived > 0) {
-                    var tenPerOfBasic = $scope.actualRentReceived - ($scope.basicSalary / 10);
-                    row.Amount = tenPerOfBasic;
-                    _minAmount();
+                    if ($scope.basicSalary !== undefined) {
+                      if ($scope.basicSalary != '') {
+                        if ($scope.basicSalary != null) {
+                          var tenPerOfBasic = $scope.actualRentReceived - ($scope.basicSalary / 10);
+                          row.Amount = tenPerOfBasic;
+                          _minAmount();
+                        }
+                        else {
+                          $scope.showMsg("warning", "Employee basic salary does not exist.")
+                        }
+                      }
+                      else {
+                        $scope.showMsg("warning", "Employee basic salary does not exist.")
+                      }
+                    }
+                    else {
+                      $scope.showMsg("warning", "Employee basic salary does not exist.")
+                    }
                   }
                   else {
                     row.Amount = 0;
@@ -240,7 +282,8 @@
       enableScrollbars: false,
       paginationPageSize: 10,
       cellEditableCondition: _eightCCellEditableCondition,
-      onRegisterApi: _eightCOnRegisterApi
+      onRegisterApi: _eightCOnRegisterApi,
+      enablePaginationControls: false
     }
     function _getSecEightC() {
       var searchLists = [];
@@ -263,15 +306,19 @@
       $scope.eightyCGridOptions.columnDefs = [
         { name: 'THDName', displayName: 'Deduction Under Chapter VI (Sec-80C)', width: 300, enableCellEdit: false },
         { name: 'TGLDLimitAmount', displayName: 'Limit Amount', width: 130, enableCellEdit: false },
-        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true }
+        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true },
+        { name: 'EnterAmount', displayName: 'Enter Amount', width: 130, enableCellEdit: false, }
       ]
 
       $scope.eightyCGridOptions.data = result[0];
+      $scope.eightyCGridSecLimitAmount = result[0][0].TGLDLimitAmount;
       angular.forEach($scope.eightyCGridOptions.data, function (row, rdx) {
         if (row.Amount !== undefined)
           eightyCfinalTotal += parseInt(row.Amount);
       })
       vm.eightyCTotalAmount = eightyCfinalTotal;
+      $scope.eightyCTotalAmounts = eightyCfinalTotal;
+
       _getSecSixA()
     }
     function _getSecEightCErrorResult(error) {
@@ -292,6 +339,7 @@
         eightyCfinalTotal = 0;
         var groupHeadLimitAmount = parseFloat(rowEntity.TGLDLimitAmount)
         var eightCCellAmount = rowEntity.Amount;
+        rowEntity.EnterAmount = rowEntity.Amount;
         angular.forEach($scope.eightyCGridOptions.data, function (row, rdx) {
           if (row.Amount !== undefined)
             eightyCfinalTotal += parseInt(row.Amount);
@@ -332,7 +380,8 @@
       enableVerticalScrollbar: 0,
       enableScrollbars: false,
       paginationPageSize: 10,
-      onRegisterApi: _sixARegisterApi
+      onRegisterApi: _sixARegisterApi,
+      enablePaginationControls: false
     }
     function _getSecSixA() {
       var searchLists = [];
@@ -355,7 +404,8 @@
       $scope.sixAGridOptions.columnDefs = [
         { name: 'THDName', displayName: 'Deduction Under Chapter VI-A', width: 300, enableCellEdit: false },
         { name: 'THLDLimitAmount', displayName: 'Limit Amount', width: 130, enableCellEdit: false },
-        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true, }
+        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true, },
+        { name: 'EnterAmount', displayName: 'Enter Amount', width: 130, enableCellEdit: false, }
       ]
 
       $scope.sixAGridOptions.data = result[0];
@@ -365,6 +415,7 @@
           sixAFinalTotal += parseInt(row.Amount);
       })
       vm.sixATotalAmount = sixAFinalTotal;
+      $scope.sixATotalAmounts = sixAFinalTotal;
 
       _getASvenA();
     }
@@ -375,6 +426,7 @@
       gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
         var sixALimitAmount = parseFloat(rowEntity.THLDLimitAmount);
         var sixAAmount = parseFloat(rowEntity.Amount);
+        rowEntity.EnterAmount = rowEntity.Amount;
         if (rowEntity.THDDisplayIndex == 7 || rowEntity.THDDisplayIndex == 8 || rowEntity.THDDisplayIndex == 9 || rowEntity.THDDisplayIndex == 10 || rowEntity.THDDisplayIndex == 11) {
           if (sixALimitAmount >= sixAAmount) {
             rowEntity.Amount = sixAAmount;
@@ -404,6 +456,7 @@
       enableVerticalScrollbar: 0,
       enableScrollbars: false,
       paginationPageSize: 10,
+      enablePaginationControls: false
     }
     function _getASvenA() {
       var searchLists = [];
@@ -448,13 +501,40 @@
 
       var grossSalary = parseFloat($scope.entity.selectedEmp.SalAmount);
       if (isNaN(grossSalary))
-        hFFDTZHOTHours = 0;
+        grossSalary = 0;
       $scope.entity.SalAmount = grossSalary * 12;
 
+      console.log($scope.entity.selectedEmp.PdDateOfBirth)
+      var birthDate = moment($scope.entity.selectedEmp.PdDateOfBirth).format('DD/MM/YYYY');
+      var startDate = moment(birthDate, "DD/MM/YYYY");
+      var endDate = moment(new Date(), "DD/MM/YYYY");
+      var totalAge = endDate.diff(startDate, 'years');
+      // console.log(result)
 
-      // $scope.entity.subUnitId = $scope.entity.selectedEmp.JDSubUnitID;
-      // _getEmpFullAndFinal();
+      if (totalAge !== undefined) {
+        if (totalAge != '') {
+          var searchLists = [];
+          searchLists.push({ field: 'EmpAge', operand: '=', value: totalAge })
+          var data = {
+            searchList: searchLists,
+            orderByList: []
+          }
+          pageService.getCustomQuery(data, categoryQueryId).then(_getCategorySuccessResult, _getCategoryErrorResult)
+        }
+      }
     }
+
+    function _getCategorySuccessResult(result) {
+      console.log(result)
+      $scope.entity.Category = result[0][0].Category;
+    }
+
+    function _getCategoryErrorResult(error) {
+      $scope.showMsg("error", error);
+      console.log(error)
+    }
+
+
     function _calculateAmount() {
       $scope.isCalculated = true;
       $scope.entity.totalDeductionBenefits = vm.hraMinAmount + vm.sixATotalAmount + vm.eightyCTotalAmount;
@@ -555,124 +635,145 @@
 
 
     //Save Record
-    function _taxComSave(editForm, entity) {
-
-
-      // if (_validateWeekOff(entity)) {
-
-      var taxComEmpHeaderDt = {
-        TCEHDId: $scope.entity.TCEHDId == undefined ? undefined : $scope.entity.TCEHDId,
-        TCEHDEmpId: $scope.entity.selectedEmp.value,
-        TCEHDFiscalId: $scope.entity.yearId.value,
-        TCEHDMonthId: $scope.entity.monthId.value,
-        TCEHDDepId: 1,
-        TCEHDDesgId: 1,
-        TCEHDGrossIncome: $scope.entity.SalAmount,
-        TCEHDTotalDedOrBenefit: $scope.entity.totalDeductionBenefits,
-        TCEHDTaxableAmount: $scope.entity.taxableAmount,
-        TCEHDTaxOnTotalIncome: $scope.entity.taxOnTotalIncome,
-        TCEHDTaxWithSurcharge: $scope.entity.taxWithSurcharge,
-        TCEHDTaxWithCess: $scope.entity.taxWithCess,
-        TCEHDTaxLiablityMonthly: $scope.entity.taxLiabilityMonthly,
-        TCCADtaxableAmountYearly: $scope.entity.taxableAmountYearly
-
-
+    function _validateTaxComp() {
+      if ($scope.entity.selectedEmp == undefined || $scope.entity.selectedEmp == "") {
+        $scope.showMsg("error", "Please select employee name.");
+        return false;
       }
-
-      $scope.multiEntity = {};
-      $scope.multiEntity.parent = {
-        newEntity: taxComEmpHeaderDt,
-        oldEntity: {},
-        action: $scope.entity.TCEHDId == undefined ? 'create' : 'edit',
-        tableid: $scope.taxComEmpHeaderPage.pageinfo.tableid,
-        pageid: $scope.taxComEmpHeaderPage.pageinfo.pageid
+      if ($scope.entity.yearId == undefined || $scope.entity.yearId == "") {
+        $scope.showMsg("error", "Please select year.");
+        return false;
       }
-      $scope.multiEntity.child = [];
-      var child = {
-        tableid: $scope.taxComCalAmtPage.pageinfo.tableid,
-        pageid: $scope.taxComCalAmtPage.pageinfo.pageid,
-        parentColumn: $scope.taxComCalAmtPage.pageinfo.idencolname,
-        linkColumn: 'TCCADTCHDId',
-        idenColName: $scope.taxComCalAmtPage.pageinfo.idencolname,
-        rows: []
+      if ($scope.entity.monthId == undefined || $scope.entity.monthId == "") {
+        $scope.showMsg("error", "Please select month.");
+        return false;
       }
-      // for (var i = 0; i < $scope.weekGridOptions.data.length; i++) {
-      //   var col = {
-      //     SGWDId: $scope.weekGridOptions.data[i].SGWDId == undefined ? 0 : $scope.weekGridOptions.data[i].SGWDId,
-      //     SGWDWeekDayId: $scope.weekGridOptions.data[i].value == undefined ? $scope.weekGridOptions.data[i].SGWDWeekDayId : $scope.weekGridOptions.data[i].value,
-      //     SGWDFirst: $scope.weekGridOptions.data[i].SGWDFirst == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDFirst,
-      //     SGWDSecond: $scope.weekGridOptions.data[i].SGWDSecond == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDSecond,
-      //     SGWDThird: $scope.weekGridOptions.data[i].SGWDThird == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDThird,
-      //     SGWDFourth: $scope.weekGridOptions.data[i].SGWDFourth == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDFourth,
-      //     SGWDFifth: $scope.weekGridOptions.data[i].SGWDFifth == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDFifth,
-      //   }
-      //   console.log($scope.weekGridOptions.data[i].SGWDFirst)
-      //   child.rows.push(col);
-      // }
-
-      angular.forEach($scope.weekGridOptions.data, function (row, rdx) {
-        var rowData = {
-          TCCADId: row.TCCADId == undefined ? 0 : row.TCCADId,
-          TCCADTHDId: row.THDId,
-          TCCADAmount: row.Amount,
-          TCCADTHGMId: row.THGMId
-        }
-        console.log(row, rdx)
-        child.rows.push(rowData);
-      })
-
-      angular.forEach($scope.eightyCGridOptions.data, function (row, rdx) {
-        var rowData = {
-          TCCADId: row.TCCADId == undefined ? 0 : row.TCCADId,
-          TCCADTHDId: row.THDId,
-          TCCADAmount: row.Amount,
-          TCCADTHGMId: row.THGMId
-        }
-        console.log(row, rdx)
-        child.rows.push(rowData);
-      })
-
-      angular.forEach($scope.sixAGridOptions.data, function (row, rdx) {
-        var rowData = {
-          TCCADId: row.TCCADId == undefined ? 0 : row.TCCADId,
-          TCCADTHDId: row.THDId,
-          TCCADAmount: row.Amount,
-          TCCADTHGMId: row.THGMId
-        }
-        console.log(row, rdx)
-        child.rows.push(rowData);
-      })
-
-      angular.forEach($scope.sevenAGridOptions.data, function (row, rdx) {
-        var rowData = {
-          TCCADId: row.TCCADId == undefined ? 0 : row.TCCADId,
-          TCCADTHDId: row.TDId,
-          TCCADAmount: row.Amount,
-          TCCADTHGMId: row.THGMId
-        }
-        console.log(row, rdx)
-        child.rows.push(rowData);
-      })
+      return true;
+    }
 
 
-      console.log($scope.multiEntity)
-      $scope.multiEntity.child.push(child);
-      $scope.multiEntity.lz = false;
-      pageService.multiSave($scope.multiEntity).then(function (result) {
-        console.log(result)
-        if (result == "done") {
-          $scope.showMsg("success", "Record Saved Successfully");
-          $scope.showWeeklyOffList = false;
-          $scope.page.refreshData();
+    function _taxComSaves() {
+
+
+      if (_validateTaxComp()) {
+
+        var taxComEmpHeaderDt = {
+          TCEHDId: $scope.entity.TCEHDId == undefined ? undefined : $scope.entity.TCEHDId,
+          TCEHDEmpId: $scope.entity.selectedEmp.value,
+          TCEHDFiscalId: $scope.entity.yearId.value,
+          TCEHDMonthId: $scope.entity.monthId.value,
+          TCEHDDepId: $scope.entity.selectedEmp.JDDeptId,
+          TCEHDDesgId: $scope.entity.selectedEmp.JDDesgId,
+          TCEHDGrossIncome: $scope.entity.SalAmount,
+          TCEHDTotalDedOrBenefit: $scope.entity.totalDeductionBenefits,
+          TCEHDTaxableAmount: $scope.entity.taxableAmount,
+          TCEHDTaxOnTotalIncome: $scope.entity.taxOnTotalIncome,
+          TCEHDTaxWithSurcharge: $scope.entity.taxWithSurcharge,
+          TCEHDTaxWithCess: $scope.entity.taxWithCess,
+          TCEHDTaxLiablityMonthly: $scope.entity.taxLiabilityMonthly,
+          TCCADtaxableAmountYearly: $scope.entity.taxableAmountYearly,
+          TCCADHRAMinAmount: vm.hraMinAmount,
+          TCCADEightCTotalAmount: vm.eightyCTotalAmount,
+          TCCADSixATotalAmount: vm.sixATotalAmount
         }
-        else if (result.error_message.Message == "Record Already Added.") {
-          $scope.showMsg("error", "Record Already Added.");
+
+        $scope.multiEntity = {};
+        $scope.multiEntity.parent = {
+          newEntity: taxComEmpHeaderDt,
+          oldEntity: {},
+          action: $scope.entity.TCEHDId == undefined ? 'create' : 'edit',
+          tableid: $scope.taxComEmpHeaderPage.pageinfo.tableid,
+          pageid: $scope.taxComEmpHeaderPage.pageinfo.pageid
         }
-      }, function (err) {
-        $scope.showMsg("error", err);
-        console.log(err)
-      })
-      // }
+        $scope.multiEntity.child = [];
+        var child = {
+          tableid: $scope.taxComCalAmtPage.pageinfo.tableid,
+          pageid: $scope.taxComCalAmtPage.pageinfo.pageid,
+          parentColumn: $scope.taxComCalAmtPage.pageinfo.idencolname,
+          linkColumn: 'TCCADTCHDId',
+          idenColName: $scope.taxComCalAmtPage.pageinfo.idencolname,
+          rows: []
+        }
+        // for (var i = 0; i < $scope.weekGridOptions.data.length; i++) {
+        //   var col = {
+        //     SGWDId: $scope.weekGridOptions.data[i].SGWDId == undefined ? 0 : $scope.weekGridOptions.data[i].SGWDId,
+        //     SGWDWeekDayId: $scope.weekGridOptions.data[i].value == undefined ? $scope.weekGridOptions.data[i].SGWDWeekDayId : $scope.weekGridOptions.data[i].value,
+        //     SGWDFirst: $scope.weekGridOptions.data[i].SGWDFirst == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDFirst,
+        //     SGWDSecond: $scope.weekGridOptions.data[i].SGWDSecond == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDSecond,
+        //     SGWDThird: $scope.weekGridOptions.data[i].SGWDThird == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDThird,
+        //     SGWDFourth: $scope.weekGridOptions.data[i].SGWDFourth == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDFourth,
+        //     SGWDFifth: $scope.weekGridOptions.data[i].SGWDFifth == -2 ? -1 : $scope.weekGridOptions.data[i].SGWDFifth,
+        //   }
+        //   console.log($scope.weekGridOptions.data[i].SGWDFirst)
+        //   child.rows.push(col);
+        // }
+
+        angular.forEach($scope.weekGridOptions.data, function (row, rdx) {
+          var rowData = {
+            TCCADId: row.TCCADId == undefined ? 0 : row.TCCADId,
+            TCCADTHDId: row.THDId,
+            TCCADAmount: row.Amount,
+            TCCADTHGMId: row.THGMId,
+            TCCADEnterAmount: row.EnterAmount
+          }
+          console.log(row, rdx)
+          child.rows.push(rowData);
+        })
+
+        angular.forEach($scope.eightyCGridOptions.data, function (row, rdx) {
+          var rowData = {
+            TCCADId: row.TCCADId == undefined ? 0 : row.TCCADId,
+            TCCADTHDId: row.THDId,
+            TCCADAmount: row.Amount,
+            TCCADTHGMId: row.THGMId,
+            TCCADEnterAmount: row.EnterAmount
+          }
+          console.log(row, rdx)
+          child.rows.push(rowData);
+        })
+
+        angular.forEach($scope.sixAGridOptions.data, function (row, rdx) {
+          var rowData = {
+            TCCADId: row.TCCADId == undefined ? 0 : row.TCCADId,
+            TCCADTHDId: row.THDId,
+            TCCADAmount: row.Amount,
+            TCCADTHGMId: row.THGMId,
+            TCCADEnterAmount: row.EnterAmount
+          }
+          console.log(row, rdx)
+          child.rows.push(rowData);
+        })
+
+        angular.forEach($scope.sevenAGridOptions.data, function (row, rdx) {
+          var rowData = {
+            TCCADId: row.TCCADId == undefined ? 0 : row.TCCADId,
+            TCCADTHDId: row.TDId,
+            TCCADAmount: row.Amount,
+            TCCADTHGMId: row.THGMId
+          }
+          console.log(row, rdx)
+          child.rows.push(rowData);
+        })
+
+
+        console.log($scope.multiEntity)
+        $scope.multiEntity.child.push(child);
+        $scope.multiEntity.lz = false;
+        pageService.multiSave($scope.multiEntity).then(function (result) {
+          console.log(result)
+          if (result == "done") {
+            $scope.showMsg("success", "Record Saved Successfully");
+            $scope.showWeeklyOffList = false;
+            $scope.page.refreshData();
+          }
+          else if (result.error_message.Message == "Record Already Added.") {
+            $scope.showMsg("error", "Record Already Added.");
+          }
+        }, function (err) {
+          $scope.showMsg("error", err);
+          console.log(err)
+        })
+      }
     }
     //End Save Record
 
@@ -697,7 +798,7 @@
     function _editRecord(row) {
       $scope.page.isAllowEdit = true;
       $scope.showGrid = false;
-      $scope.isCalculated = true;
+      // $scope.isCalculated = true;
       $scope.isYear = true;
       console.log(row)
 
@@ -720,6 +821,8 @@
 
       console.log($scope.entity.selectedEmp)
       $scope.headId = row.entity.TCEHDId;
+
+      vm.oldEntity = angular.copy(row.entity);
 
       // var multiSelect = {
       //   lz: false,
@@ -768,9 +871,12 @@
       $scope.weekGridOptions.columnDefs = [
         { name: 'THDName', displayName: 'HRA Exemption Calculation', width: 300, enableCellEdit: false },
         { name: 'TGLDLimitAmount', displayName: 'Limit Amount', width: 130, enableCellEdit: false },
-        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true, }
+        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true, },
+        { name: 'EnterAmount', displayName: 'Enter Amount', width: 130, enableCellEdit: false, }
       ]
       $scope.weekGridOptions.data = result[1];
+
+      _minAmount();
       _editEightyC()
       // angular.forEach(result.child, function (child) {
       //   $scope.weekGridOptions.data = child.rows;
@@ -800,11 +906,27 @@
       console.log(result)
       $scope.eightyCGridOptions.columnDefs = [
         { name: 'THDName', displayName: 'Deduction Under Chapter VI (Sec-80C)', width: 300, enableCellEdit: false },
-        { name: 'TGLDLimitAmount ', displayName: 'Limit Amount', width: 130, enableCellEdit: false },
-        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true }
+        { name: 'TGLDLimitAmount', displayName: 'Limit Amount', width: 130, enableCellEdit: false },
+        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true },
+        { name: 'EnterAmount', displayName: 'Enter Amount', width: 130, enableCellEdit: false, }
       ]
 
       $scope.eightyCGridOptions.data = result[1];
+      console.log(result[1][0].TGLDLimitAmount)
+      $scope.eightyCGridSecLimitAmount = result[1][0].TGLDLimitAmount;
+      console.log(result[3][0].BasicAmount)
+
+      if (result[3][0].BasicAmount !== undefined) {
+        $scope.basicSalary = result[3][0].BasicAmount;
+        console.log($scope.basicSalary);
+      }
+
+      angular.forEach($scope.eightyCGridOptions.data, function (row, rdx) {
+        if (row.Amount !== undefined)
+          eightyCfinalTotal += parseInt(row.Amount);
+      })
+      vm.eightyCTotalAmount = eightyCfinalTotal;
+
 
       _editSecSixA()
     }
@@ -835,10 +957,18 @@
       $scope.sixAGridOptions.columnDefs = [
         { name: 'THDName', displayName: 'Deduction Under Chapter VI-A', width: 300, enableCellEdit: false },
         { name: 'THLDLimitAmount', displayName: 'Limit Amount', width: 130, enableCellEdit: false },
-        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true, }
+        { name: 'Amount', displayName: 'Amount', width: 130, enableCellEdit: true, },
+        { name: 'EnterAmount', displayName: 'Enter Amount', width: 130, enableCellEdit: false, }
       ]
 
       $scope.sixAGridOptions.data = result[1];
+      sixAFinalTotal = 0;
+      angular.forEach($scope.sixAGridOptions.data, function (row, rdx) {
+        if (row.Amount !== undefined)
+          sixAFinalTotal += parseInt(row.Amount);
+      })
+      vm.sixATotalAmount = sixAFinalTotal;
+      $scope.isCalculated = true;
       _editSevenA();
     }
     function _editSecSixAErrorResult(error) {
@@ -875,7 +1005,70 @@
     function _editSevenErrorResult(error) {
       $scope.showMsg("error", error)
     }
-    //End editSevenAGrid
+    //End 
+
+
+
+    function _taxComSave(editForm, entity) {
+      var searchLists = [];
+      var searchListData = { field: 'FinacialYear', operand: '=', value: 0 }
+      searchLists.push(searchListData)
+      var searchListData = { field: 'DisplayIndex', operand: '=', value: 0 }
+      searchLists.push(searchListData)
+      var searchListData = { field: 'EmpId', operand: '=', value: $scope.entity.selectedEmp.value }
+      searchLists.push(searchListData)
+      var data = {
+        searchList: searchLists,
+        orderByList: []
+      }
+      pageService.getCustomQuery(data, vm.queryId).then(_getTDSAmountSuccessResult, _getTDSAmountErrorResult)
+    }
+
+    function _getTDSAmountSuccessResult(result) {
+      var empPayBandRuleTableId = 437
+      console.log(result);
+      console.log(result[2].length);
+      if (result[2].length > 0) {
+        if ($scope.entity.taxLiabilityMonthly !== undefined) {
+          if ($scope.entity.taxLiabilityMonthly != '') {
+            var pkName = 'EPBRId'
+            var pkId = result[2][0].EPBRId
+            var field = 'EPBRAmount'
+            var fieldValue = $scope.entity.taxLiabilityMonthly
+            console.log(fieldValue)
+            pageService.updateField(empPayBandRuleTableId, pkName, pkId, field, fieldValue).then(_updateTDSAmountSuccessResult, _updateTDSAmountErrorResult)
+          }
+          else {
+            $scope.showMsg("error", "TDS monthly amount not available.");
+          }
+        }
+        else {
+          $scope.showMsg("error", "TDS monthly amount not available.");
+        }
+      }
+      else {
+        $scope.showMsg("error", "TDS head not available in employee salary head");
+      }
+    }
+
+    function _updateTDSAmountSuccessResult(result) {
+      console.log(result)
+      if (result.success_message == 'Updated') {
+        _taxComSaves()
+      }
+      else {
+        $scope.showMsg("error", result.error_message);
+      }
+    }
+
+    function _updateTDSAmountErrorResult(error) {
+      $scope.showMsg("error", error);
+      console.log(error)
+    }
+
+    function _getTDSAmountErrorResult(error) {
+      console.log(error)
+    }
 
 
 

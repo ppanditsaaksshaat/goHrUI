@@ -12,6 +12,11 @@
     function authController($scope, pageService, DJWebStore, authService) {
 
         var vm = this;
+        //fetching dev api url
+        if (DJWebStore.IsDev()) {
+            $scope.devAPIUrl = DJWebStore.GetValue('devAPIUrl');
+            // alert($scope.devAPIUrl)
+        }
 
         $scope.languageList = [];
 
@@ -63,10 +68,23 @@
 
         function _doLogin() {
 
-
             var userName = $("#userName").val();
             var userPwd = $("#userPassword").val();
             var userCorpoId = $("#userCorpoId").val();
+
+            if (DJWebStore.IsDev()) {
+                //only for development mode - dj@03.01.2017
+                //it will handle the re writing of api url from webStore
+                if (userCorpoId == '~d') {
+                    $("#userCorpoId").val('')
+                    if (!$scope.showDevAPI) {
+                        $scope.showDevAPI = true
+                        return;
+                    }
+                }
+                DJWebStore.SetValue('devAPIUrl', $scope.devAPIUrl);
+            }
+
             if (userName == "") {
                 alert('Please enter User Name');
                 console.log(userName)
@@ -106,7 +124,7 @@
                 console.log(response)
                 $scope.GetBGClass()
                 pageService.getAppUserData().then(function (result) {
-                    
+
                     console.log(result)
                     var profileData = result;//angular.fromJson(response.data);
                     DJWebStore.SetUserProfile(profileData.user);
