@@ -28,8 +28,10 @@
             <div class="col-lg-3 ">
                 <ui-knob value="totalLeaveTodayValuePercentage" options="totalLeaveToday"></ui-knob>
             </div>
-            <div class="col-lg-3 ">
-                <ui-knob value="totalAbsentValuePercentage" options="totalAbsent"></ui-knob>
+            <div class="col-lg-3 " >
+
+        
+                <ui-knob value="totalAbsentValuePercentage" options="totalAbsent" ng-click="listAbsent()"  ></ui-knob>
             </div>
 
 
@@ -50,7 +52,8 @@
             </div>
 
             <div class="col-lg-3 ">
-                <ui-knob value="totalAbsentValuePercentageCount" options="totalAbsentCount"></ui-knob>
+                   
+                     <ui-knob value="totalAbsentValuePercentageCount" options="totalAbsentCount" ng-click="listAbsent()" ></ui-knob>
             </div>
         </div>
 
