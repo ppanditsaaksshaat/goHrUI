@@ -861,6 +861,7 @@
 
 
         function _getMultiEntitySuccess(result) {
+            
             $scope.entity = result;
             $scope.payGridOptions.data = [];
             if (result.child) {
@@ -2031,6 +2032,7 @@
 
                 }
                 else if (rowEntity.PBRIsSlab) {
+                    
                     var dependHeadTotal = 0;
                     for (var c = 0; c < rowEntity.PBRCalcOnSHId.length; c++) {
                         dependHeadTotal += parseFloat(_getHeadAmount(rowEntity.PBRCalcOnSHId[c].value, rowEntity.subGridOptions.data));
@@ -2104,17 +2106,35 @@
                                 }
                             }
                             else {
-                                if (rowEntity.PBRCalcOnSHId[0].SHIsBasic == "True") {
-                                    rowEntity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
-                                }
-                                else if (rowEntity.PBRCalcOnSHId[0].SHIsGross == "True") {
-                                    if (dependHeadTotal <= 21000) {
+
+                                var salaryHead = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, rowEntity.PBRSHId, 'value')
+                                if (salaryHead != null) {
+                                    if (salaryHead.SHIsEPF == "True") {
                                         rowEntity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
                                     }
+                                    else if (salaryHead.SHIsESIC == "True") {
+                                        if (dependHeadTotal <= 21000) {
+                                            rowEntity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
+                                        }
+                                        else {
+                                            rowEntity.PBRAmount = 0;
+                                        }
+                                    }
                                     else {
-                                        rowEntity.PBRAmount = 0;
+                                        rowEntity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
                                     }
                                 }
+                                // if (rowEntity.PBRCalcOnSHId[0].SHIsBasic == "True") {
+                                //     rowEntity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
+                                // }
+                                // else if (rowEntity.PBRCalcOnSHId[0].SHIsGross == "True") {
+                                //     if (dependHeadTotal <= 21000) {
+                                //         rowEntity.PBRAmount = Math.round(parseFloat(calculatedAmt)).toFixed(2);
+                                //     }
+                                //     else {
+                                //         rowEntity.PBRAmount = 0;
+                                //     }
+                                // }
 
                                 if (grossAmt > 0)
                                     rowEntity.GrossPercentage = ((calculatedAmt * 100) / grossAmt).toFixed(2)
