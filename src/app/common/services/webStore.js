@@ -110,13 +110,9 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         //uncomment for your choice
         // serviceBase = 'http://localhost:51877/';
         // serviceBase = 'http://app.rudrahr.com/api/';
-        // serviceBase = 'http://rudraitsl.com/api/';// _getValue('serviceBase');
-        // serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
-        // serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
         // serviceBase = 'http://web400.hrms/api/';
         // serviceBase = 'http://rudra.hrm/api/';
-        // serviceBase = 'http://itsllive.rudra.hrm/api/';
-        // serviceBase = 'http://seacliffnew.rudra.hrm/api/'
+        
          
         // console.log($location)
         if (serviceBase == null) {
