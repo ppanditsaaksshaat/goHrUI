@@ -9,7 +9,7 @@
     .controller('knobCtrl', knobCtrl);
 
   /** @ngInject */
-  function knobCtrl($scope, $state, $timeout, pageService, $filter) {
+  function knobCtrl($scope, $state, $timeout, pageService, $filter, $uibModal,dialogModal) {
 
     //creating Join Employee  grids
     $scope.joinGridOpt = $scope.getGridSetting();
@@ -82,16 +82,26 @@
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDName', displayName: 'Holiday-Name', Width: '5px' })
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDFromDate', displayName: 'From-Day' })
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDToDate', displayName: 'To-Day' })
-
     $scope.HolidayNextWeekGridOpt.data = [];
 
 
+//creating Employee  Today Birthday grids
+$scope.AbsentlistGrid = $scope.getGridSetting();
+$scope.AbsentlistGrid.columnDefs = []
+$scope.AbsentlistGrid.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+$scope.AbsentlistGrid.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
+$scope.AbsentlistGrid.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
+$scope.AbsentlistGrid.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
+//  $scope.BirthdayTodayGridOpt.columnDefs.push({  name: 'DateOfBirth', displayName: 'Birthday  Date' })
+$scope.AbsentlistGrid.data = [];
+
+    
 
     var queryId = 577;
     var empDashBoardQueryId = 587;
     var sktest = 100
     $scope.onChange = _onChange;
-
+    $scope.listAbsent = _listAbsent;
 
     // $scope.value = 100;
     // $scope.valuennew = 50;
@@ -342,8 +352,8 @@
       $scope.Next7daysonLeaveEmployee = result[9];
       $scope.Next7Hodidays = result[10];
       $scope.TodayBirthday = result[11];
-      $scope.Next7daysonBirthdayEmployee = result[12];
-
+      $scope.Next7daysonBirthdayEmployee = result[5];
+      $scope.absentlist = result[13];
       $scope.joinGridOpt.data = $scope.TotalNewJoinList;
       $scope.LeftGridOpt.data = $scope.TotalNewLeftList;
       $scope.LeaveTodayGridOpt.data = $scope.TodayonLeaveEmployee;
@@ -351,10 +361,28 @@
       $scope.BirthdayTodayGridOpt = $scope.TodayBirthday;
       $scope.BirthdayNextWeekGridOpt = $scope.Next7daysonBirthdayEmployee;
       $scope.HolidayNextWeekGridOpt = $scope.Next7Hodidays;
+      $scope.AbsentlistGrid.data = $scope.absentlist;
+
     }
     function _getCustomQueryError(err) {
       console.log(err);
     }
+
+    function _listAbsent() {
+     
+      var options = {
+        url: "app/pages/dashboard/absentmodal.html",
+        controller: "",
+        controllerAs: "",
+      }
+      dialogModal.open(options)
+
+
+    }
+
+    
+
+
     function _getEmpDashboardQuerySuccess(result) {
       console.log(result)
 

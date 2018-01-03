@@ -17,7 +17,7 @@
           url: '/tds',
           template : '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',
           abstract: true,
-          title: 'tds',
+          title: 'TDS',
           headerCode: 'payroll',
           sidebarMeta: {
             icon: 'ion-briefcase',

@@ -180,7 +180,7 @@
                                             if (filter.operator == "/b")
                                                 value2 = moment(filter.value2).endOf('month').format('YYYY-MM-DD');
                                             else
-                                                value2 = moment(filter.value1).endOf('month').format('YYYY-MM-DD');
+                                                value2 = moment(filter.value).endOf('month').format('YYYY-MM-DD');
 
                                         } else if (filter.datePicker.option1.minMode == 'year') {
                                             //finding year starting and ending dates
@@ -188,7 +188,7 @@
                                             if (filter.operator == "/b")
                                                 value2 = moment(filter.value2).endOf('year').format('YYYY-MM-DD');
                                             else
-                                                value2 = moment(filter.value1).endOf('year').format('YYYY-MM-DD');
+                                                value2 = moment(filter.value).endOf('year').format('YYYY-MM-DD');
                                         }
 
 
