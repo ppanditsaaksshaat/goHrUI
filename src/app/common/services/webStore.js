@@ -103,20 +103,25 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         window.location.href = 'auth.html';
     }
     var _getServiceBase = function () {
+        var host = $location.host();
+        var port = $location.$$port;
 
         var serviceBase = _getValue('serviceBase');
         serviceBase = null;
 
-        //uncomment for your choice
-        // serviceBase = 'http://localhost:51877/';
-        // serviceBase = 'http://app.rudrahr.com/api/';
-        // serviceBase = 'http://web400.hrms/api/';
-        // serviceBase = 'http://rudra.hrm/api/';
-        
-         
+        if (host.toLowerCase() == 'localhost' && port == '3000') {
+            console.log('debug mode')
+            //uncomment for your choice only for development
+            // serviceBase = 'http://localhost:51877/';
+            // serviceBase = 'http://app.rudrahr.com/api/';
+            // serviceBase = 'http://web400.hrms/api/';
+            serviceBase = 'http://rudra.hrm/api/';
+            //NO NEED TO COMMENT FOR PUBLISH
+        }
+
         // console.log($location)
         if (serviceBase == null) {
-            var host = $location.host();
+
             // serviceBase = 'http://' + host + '/api/'
 
             // console.log($location)
