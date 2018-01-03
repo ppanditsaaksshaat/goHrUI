@@ -29,12 +29,14 @@
 </head>
 
 <body ng-controller="authController" ng-cloak>
-    <div id="google_translate_element"></div><script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-      }
-      </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-              
+  <div id="google_translate_element"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
   <main class="auth-main">
     <div class="auth-block">
       <h4>Sign in to ITSL Rudra</h4>
@@ -62,11 +64,11 @@
             <input type="text" class="form-control" id="userCorpoId" placeholder="Customer Id">
           </div>
         </div>
-        <div class="form-group"> 
+        <div class="form-group">
           <label for="userLanguage" class="col-sm-2 control-label">Language</label>
 
           <div class="col-sm-10">
-            <select class="form-control" ng-model="selectedLanguage" ng-options="lang.label  for lang in languageList" ></select>
+            <select class="form-control" ng-model="selectedLanguage" ng-options="lang.label  for lang in languageList"></select>
             <!-- <ui-select name="userLanguage" ng-model="selectedLanguage" class="btn-group bootstrap-select form-control" ng-disabled="false"
               append-to-body="true" search-enabled="false">
               <ui-select-match placeholder="Standard Select">
@@ -75,7 +77,7 @@
               <ui-select-choices repeat="standardItem in languageList | filter: $select.search">
                 <span ng-bind-html="standardItem.label"></span>
               </ui-select-choices>
-            </ui-select> -->  
+            </ui-select> -->
 
           </div>
         </div>
@@ -87,14 +89,31 @@
         </div>
       </form>
 
-      <div class="auth-sep"><span><span>or Sign in with one click</span></span>
-      </div>
+      <div class="auth-sep">
+        <span>
+          <span>or Sign in with one click</span>
+        </span>
+      </div> 
+      <div>
+        <div class="form-group" ng-show="showDevAPI">
+          <label for="api" class="col-sm-2 control-label">API Url</label>
 
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="api" placeholder="Dev API URL" ng-model="devAPIUrl">
+          </div>
+        </div>
+      </div>
       <div class="al-share-auth" ng-hide="true">
         <ul class="al-share clearfix">
-          <li><i class="socicon socicon-facebook" title="Share on Facebook"></i></li>
-          <li><i class="socicon socicon-twitter" title="Share on Twitter"></i></li>
-          <li><i class="socicon socicon-google" title="Share on Google Plus"></i></li>
+          <li>
+            <i class="socicon socicon-facebook" title="Share on Facebook"></i>
+          </li>
+          <li>
+            <i class="socicon socicon-twitter" title="Share on Twitter"></i>
+          </li>
+          <li>
+            <i class="socicon socicon-google" title="Share on Google Plus"></i>
+          </li>
         </ul>
       </div>
     </div>

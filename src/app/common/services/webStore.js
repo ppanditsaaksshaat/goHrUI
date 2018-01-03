@@ -1,7 +1,25 @@
 'use strict';
 angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService', '$location', '$rootScope', function (localStorageService, $location, $rootScope) {
 
+    //CHANGE API URL HERE FOR YOUR NEED
+    var serviceStaticBaseURL = 'http://rudra.hrm/api/';
+
+    var host = $location.host();
+    var port = $location.$$port;
+
     var _serviceBaseURL = '/API/';
+    _serviceBaseURL = null;
+    //added by dj@03.03.2017
+    if (host.toLowerCase() == 'localhost' && port == '3000') {
+        _serviceBaseURL = localStorageService.get('devAPIUrl');
+        console.log('debug mode', _serviceBaseURL)
+        if (_serviceBaseURL == null) {
+            console.log('loading api from web sotre file.')
+            _serviceBaseURL = serviceStaticBaseURL;
+        }
+        //NO NEED TO COMMENT FOR PUBLISH
+    }
+
 
     var authorizationDataKey = 'authorizationData';
     var profileDataKey = 'profileData';
@@ -13,6 +31,13 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
 
 
     var djWebStoreFactory = {};
+
+    var _isDev = function () {
+        if (host.toLowerCase() == 'localhost' && port == '3000') {
+            return true;
+        }
+        return false;
+    }
 
     var _setRequestIsBusy = function () {
         return localStorageService.set(pageRequest, true);
@@ -86,6 +111,9 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         return localStorageService.get(key);
     }
     var _removeAllKey = function () {
+
+        var devApi = localStorageService.get('devAPIUrl');
+
         localStorageService.remove(authorizationDataKey);
         localStorageService.remove(profileDataKey);
         localStorageService.remove(pageDataKey);
@@ -93,6 +121,8 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         localStorageService.remove('serviceBase');
         localStorageService.clearAll();
         //$localStorage.$reset()
+
+        localStorageService.set('devAPIUrl', devApi)
     }
     var _removeKey = function (key) {
         localStorageService.remove(key);
@@ -104,26 +134,11 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     }
     var _getServiceBase = function () {
 
-        var serviceBase = _getValue('serviceBase');
-        serviceBase = null;
+        //FOR CHANGE IN URL GO TO LINE NO 1 (TOP OF THIS FILE) -dj 03.01.2017
+        //added handler for development mode url handling at top of this file
 
-        //uncomment for your choice
-        // serviceBase = 'http://localhost:51877/';
-        // serviceBase = 'http://app.rudrahr.com/api/';
-        // serviceBase = 'http://rudraitsl.com/api/';// _getValue('serviceBase');
-        // serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
-        // serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
-        // serviceBase = 'http://web400.hrms/api/';
-        // serviceBase = 'http://rudra.hrm/api/';
-        // serviceBase = 'http://itsllive.rudra.hrm/api/';
-        // serviceBase = 'http://seacliffnew.rudra.hrm/api/'
-         
-        // console.log($location)
-        if (serviceBase == null) {
-            var host = $location.host();
-            // serviceBase = 'http://' + host + '/api/'
+        if (_serviceBaseURL == null) {
 
-            // console.log($location)
             var absUrl = $location.absUrl();
             if (absUrl.indexOf('.html') > 0) {
                 absUrl = absUrl.substring(0, absUrl.indexOf('.html'))
@@ -132,11 +147,11 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
             var lastIdx = absUrl.lastIndexOf('/');
             var firstIdx = absUrl.indexOf('/');
             var hostIdx = absUrl.indexOf(host);
-            serviceBase = absUrl.substring(hostIdx + host.length, lastIdx) + '/api/';
-            _setValue('serviceBase', serviceBase);
-            console.log(serviceBase)
+            _serviceBaseURL = absUrl.substring(hostIdx + host.length, lastIdx) + '/api/';
+            _setValue('serviceBase', _serviceBaseURL);
+            console.log(_serviceBaseURL)
         }
-        return serviceBase;
+        return _serviceBaseURL;
     }
 
     var _getBaseUrl = function () {
@@ -218,6 +233,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         $rootScope.param = undefined;
     }
 
+    djWebStoreFactory.IsDev = _isDev;
     //func
     djWebStoreFactory.GetUserProfile = _getUserProfile;
     djWebStoreFactory.SetUserProfile = _setUserProfile;
