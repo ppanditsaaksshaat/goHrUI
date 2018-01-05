@@ -18,6 +18,7 @@
     vm.filterOpt = {};
     vm.searchList = [];
     vm.orderByList = [];
+    vm.queryId = 421;
 
     this.applyFilter = _applyFilter;
     // this.uploadRecord = _uploadRecord;
@@ -46,9 +47,51 @@
       viewRecord: null,
       deleteRecord: null,
       fieldEvents: [{ name: 'AttDate', onChangeEvent: _funcDateChange }],
-      uploadRecord: _uploadRecord
+      uploadRecord: _uploadRecord,
+      pageResult: _pageResult
       // readonlyColumns: ['col1', 'col2']
     }
+
+    function _loadController() {
+      $scope.page.searchList.push({
+        field: 'AttDate', operand: '=', value: moment().format('YYYY-MM-DD')
+      })
+
+      // isAdmin
+      // isManager
+
+      // empId
+
+      console.log($scope.user.profile)
+
+    }
+
+    function _pageResult(result) {
+      angular.forEach(result.pageinfo.filters, function (filter) {
+
+        if (!$scope.user.profile.isAdmin && !$scope.user.profile.isManager) {
+          if (filter.name == 'EmpId') {
+            filter.value = $scope.user.profile.empId;
+            filter.disabled = true;
+            console.log(filter.value)
+          }
+        }
+        console.log(filter.name)
+
+        // if (filter.name == 'Month') {
+        //   filter.value = parseInt(moment().format('MM'));
+        // }
+        // if (filter.name == 'Year') {
+        //   filter.value = parseInt(moment().format('YYYY'));
+        // }
+        // if (filter.name == 'VADepartmentId') {
+        //   filter.value = -1;
+        //   filter.disabled = true;
+        // }
+      })
+    }
+
+
 
     console.log($scope.page)
 
@@ -129,10 +172,13 @@
           }
         }
       })
+      console.log($scope.page.pageinfo.filters)
 
       $scope.page.refreshData();
 
     }
+
+    _loadController()
   }
 
 })();

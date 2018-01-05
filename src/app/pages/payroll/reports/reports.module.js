@@ -21,6 +21,7 @@
     'BlurAdmin.pages.payroll.reports.eSIChallanForm',
     'BlurAdmin.pages.payroll.reports.ECREPFDetail',
     'BlurAdmin.pages.payroll.reports.ECRESIDetail',
+    'BlurAdmin.pages.payroll.reports.taxComputation',
 
     // 'BlurAdmin.pages.payroll.reports.Challan',
     // 'BlurAdmin.pages.payroll.reports.test'
