@@ -118,6 +118,9 @@
                     console.log(result)
                     $scope.rulePage = angular.extend({}, $scope.rulePage, result);
                     // $scope.differenceHeadList = $scope.rulePage.pageinfo.fields.PBTRSHId.options;
+                    if ($scope.isDependListToBeUpdate) {
+                        _addDependentHeadList();
+                    }
                     _addRuleGridColumns();
                 }, function (err) {
                 })
@@ -154,7 +157,7 @@
 
         /**default grid edit function */
         function _editRecord(row) {
-           console.log($scope.rulePage.pageinfo.fields.PBTRSHId.options);
+            console.log($scope.rulePage.pageinfo.fields.PBTRSHId.options);
             $scope.edit = true;
             $scope.page.showEditForm = true;
             $scope.entity = angular.copy(row.entity);
@@ -964,16 +967,29 @@
         }
         function _addDependentHeadList() {
 
-            //update dependent dropdown
-            var dependList = [];
-            for (var v = 0; v < $scope.payTempGridOptions.data.length; v++) {
-                var shead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRSHId.options, $scope.payTempGridOptions.data[v].PBTRSHId, 'value')
-                if (shead != null) {
-                    dependList.push(shead);
+            var isListUpdate = false;
+            if ($scope.rulePage) {
+                if ($scope.rulePage.pageinfo) {
+                    if ($scope.rulePage.pageinfo.fields) {
+
+
+                        //update dependent dropdown
+                        var dependList = [];
+                        for (var v = 0; v < $scope.payTempGridOptions.data.length; v++) {
+                            var shead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRSHId.options, $scope.payTempGridOptions.data[v].PBTRSHId, 'value')
+                            if (shead != null) {
+                                dependList.push(shead);
+                            }
+                        }
+
+                        $scope.payTempGridOptions.columnDefs[2].editDropdownOptionsArray = dependList;
+                        isListUpdate = true;
+                    }
                 }
             }
-
-            $scope.payTempGridOptions.columnDefs[2].editDropdownOptionsArray = dependList;
+            if (!isListUpdate) {
+                $scope.isDependListToBeUpdate = true;
+            }
         }
 
         function _getNetPayable() {

@@ -24,6 +24,9 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
         else
             config.headers.UserLang = userLang;
 
+        var currentPeriodLastDate = moment($rootScope.currentPeriod);
+        config.headers.CurrentPeriod = currentPeriodLastDate.endOf('month').format('YYYY-MM-DD');
+
         if (config.url.indexOf('/api/') > 0) {
             //console.log(config.url)
             cfpLoadingBar.start();

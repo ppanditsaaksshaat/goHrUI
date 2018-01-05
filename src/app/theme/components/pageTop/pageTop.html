@@ -1,27 +1,80 @@
 <div class="page-top clearfix" scroll-position="scrolled" max-height="50" ng-class="{'scrolled': scrolled}">
-  <a href="#/dashboard" class="al-logo clearfix"><span>ITSL</span>Rudra</a>
+  <a href="#/dashboard" class="al-logo clearfix">
+    <span>ITSL</span>Rudra</a>
   <a href class="collapse-menu-link ion-navicon" ba-sidebar-toggle-menu></a>
 
   <div class="search">
     <!-- <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
     <input id="searchInput" type="text" placeholder="Search for..."> -->
     <h3>{{company.name}}</h3>
+
   </div>
 
   <div class="user-profile clearfix">
     <div class="al-user-profile" uib-dropdown>
       <a uib-dropdown-toggle class="profile-toggle-link">
         <!-- <img ng-src="{{::( 'Nasta' | profilePicture )}}"> -->
-        <img src="{{profilePicture}}"/>
+        <img src="{{profilePicture}}" />
 
       </a>
-      <ul  class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
-        <li><i class="dropdown-arr"></i></li>
-        <li><a href ng-click="openUserProfile()"><i class="fa fa-user"></i>Profile</a></li>
-        <li><a href><i class="fa fa-cog"></i>Settings</a></li>
-        <li><a href class="signout" ng-click="logoutSession()"><i class="fa fa-power-off"></i>Sign out</a></li>
+      <ul class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
+        <li>
+          <i class="dropdown-arr"></i>
+        </li>
+        <li>
+          <a href ng-click="openUserProfile()">
+            <i class="fa fa-user"></i>Profile</a>
+        </li>
+        <li>
+          <a href>
+            <i class="fa fa-cog"></i>Settings</a>
+        </li>
+        <li>
+          <a href class="signout" ng-click="logoutSession()">
+            <i class="fa fa-power-off"></i>Sign out</a>
+        </li>
       </ul>
     </div>
+
+    
+
+    </div>
+
+    <div ng-controller="currentPeriodController">
+      <div class="row">
+        <div class="col-xs-offset-3 col-xs-6 col-md-2">
+          <p class="input-group">
+            <input type="text" class="form-control date-picker" uib-datepicker-popup="{{format}}" ng-model="currentPeriod" is-open="status.opened"
+              min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+              close-text="Close" ng-click="open($event)" ng-readonly="true" />
+          </p>
+        </div>
+      </div>
     <!-- <msg-center></msg-center> -->
   </div>
 </div>
+
+<script id="template/datepicker/popup.html" type="text/ng-template">
+  <ul class="uib-datepicker-popup dropdown-menu" dropdown-nested ng-if="isOpen" style="display: block" ng-style="{top: position.top+'px', left: position.left+'px'}" ng-keydown="keydown($event)" ng-click="$event.stopPropagation()">
+    <!-- Extra code -->
+    
+    <div class="popup-header">When is your Birthday?</div>
+    
+    <!-- Extra code -->
+    <li ng-transclude></li>
+    <li ng-if="showButtonBar" style="padding:10px 9px 2px" class="uib-button-bar">
+      <span class="btn-group pull-left">
+    <button type="button" class="btn btn-sm btn-info uib-datepicker-current" ng-click="select('today')" ng-disabled="isDisabled('today')">{{ getText('current') }}</button>
+    <button type="button" class="btn btn-sm btn-danger uib-clear" ng-click="select(null)">{{ getText('clear') }}</button>
+  </span>
+      <button type="button" class="btn btn-sm btn-success pull-right uib-close" ng-click="close()">{{ getText('close') }}</button>
+    </li>
+  </ul>
+</script>
+<style>
+  .popup-header {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+  }
+</style>
