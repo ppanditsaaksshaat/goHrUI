@@ -75,7 +75,7 @@
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null,
-      buttonPermission:true,
+      buttonPermission: true,
       dataResult: _dataResult
     }
     if (pageId == 455) {
@@ -89,8 +89,9 @@
     }
 
     function _addRecord() {
+      // $scope.weekGridOptions.data = [];
       isWeekOffEdit = false;
-      $scope.entity = [];
+      $scope.entity = {};
       angular.forEach($scope.weekGridOptions.data, function (data) {
         data.SGWDFirst = -1;
         data.SGWDSecond = -1;
@@ -366,7 +367,7 @@
     }
 
     function _weekOffSave(editForm, entity) {
-      
+
       if (_validateWeekOff(entity)) {
         var groupIds = "";
         var groupNames = "";
@@ -431,7 +432,10 @@
     }
 
     function _closeWeekOffAdd() {
+      _loadController();
       $scope.showWeeklyOffList = false;
+      $scope.entity = {};
+
     }
 
     // function _loadController() {

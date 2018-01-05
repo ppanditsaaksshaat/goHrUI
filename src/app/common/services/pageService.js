@@ -1286,6 +1286,20 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     return results;
                 });
         }
+
+        var _multiSaveRows = function (data) {
+
+            var url = serviceBase + 'api/Multi/SaveRows';
+            return $http.post(url, JSON.stringify(JSON.stringify(data)),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
+        }
+
         var _getMultiEntity = function (data) {
 
             var url = serviceBase + 'api/Multi/FindEntity';
@@ -1548,6 +1562,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.commonUploder = _commonUploder;
         pageServiceFactory.leaveTypeUpload = _leaveTypeUpload;
         pageServiceFactory.multiSave = _multiSave;
+        pageServiceFactory.multiSaveRows = _multiSaveRows;
         pageServiceFactory.getMultiEntity = _getMultiEntity;
         pageServiceFactory.uploadManualAttendance = _uploadManualAttendance;
         pageServiceFactory.generateFullAndFinalSalary = _generateFullAndFinalSalary;
