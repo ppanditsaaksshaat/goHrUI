@@ -800,6 +800,8 @@
 
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
 
+               
+
                 if (grossHead) {
                     if (colDef.name == 'SH_' + grossHead.value) {
                         //updating subgrid gross amount
@@ -823,7 +825,8 @@
                                                 }
                                             })
                                         }
-                                        if (newValue != oldvalue) {
+                                       
+                                        if (newValue != oldValue) {
                                             employeeEnt.push(rowEntity)
                                         }
                                         // console.log(rowEntity);
@@ -1443,7 +1446,7 @@
                 }
 
             }
-            else if(scope.col.name=="PBRCalcOnSHId"){
+            else if (scope.col.name == "PBRCalcOnSHId") {
                 return false
             }
             // else if (scope.col.name == "PBRCalcOnSHId") {
@@ -1626,7 +1629,7 @@
                         { value: '+', name: 'Plus' },
                         { value: '-', name: 'Minus' }
                     ],
-                    
+
 
                 })
             row.subGridOptions.columnDefs.push(
@@ -1704,6 +1707,7 @@
                     cellTemplate: cellTemplateAvoid,
                     // editableCellTemplate: cellTemplateAvoid,
                     width: 50, visible: true, cellFilter: '', cellEditableCondition: false
+
                 })
 
 
