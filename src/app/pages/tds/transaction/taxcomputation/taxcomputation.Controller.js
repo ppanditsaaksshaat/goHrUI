@@ -757,9 +757,15 @@
 
 
         console.log($scope.multiEntity)
-        $scope.multiEntity.child.push(child);
-        $scope.multiEntity.lz = false;
-        pageService.multiSave($scope.multiEntity).then(function (result) {
+        // $scope.multiEntity.child.push(child);
+        // $scope.multiEntity.lz = false;
+
+        var postData = JSON.stringify($scope.multiEntity);
+        var compressed = LZString.compressToEncodedURIComponent(postData);
+
+        var data = { lz: true, data: compressed }
+
+        pageService.multiSave(data).then(function (result) {
           console.log(result)
           if (result == "done") {
             $scope.showMsg("success", "Record Saved Successfully");

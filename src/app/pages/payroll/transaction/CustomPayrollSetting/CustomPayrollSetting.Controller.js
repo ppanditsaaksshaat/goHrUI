@@ -498,6 +498,9 @@
           $scope.showAcFromDate = moment(getFromDate).format("DD-MMM-YYYY");
           $scope.showAcToDate = moment(getToDate).format("DD-MMM-YYYY");;
 
+          $scope.acFromDate = moment(getFromDate).format("DD-MMM-YYYY");
+          $scope.acToDate = moment(getToDate).format("DD-MMM-YYYY");;
+
           console.log($scope.acFromDate, $scope.acToDate);
           if (($scope.page.filterData.SubUnitId.value !== undefined && $scope.page.filterData.SalMonth.value != null && $scope.page.filterData.SalYear.value != null) || ($scope.page.filterData.SalMonth.value != null && $scope.page.filterData.SalYear.value != null && $scope.page.filterData.SubUnitId.value !== undefined)) {
             // console.log($scope.filterData.SubUnitId.value, $scope.filterData.SalMonth.value, $scope.filterData.SalYear.value)
