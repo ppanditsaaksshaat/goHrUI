@@ -97,12 +97,32 @@ $scope.AbsentlistGrid.data = [];
 
     
 
+//creating Employee  Today Present grids
+$scope.PresentlistGrid = $scope.getGridSetting();
+$scope.PresentlistGrid.columnDefs = []
+$scope.PresentlistGrid.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+$scope.PresentlistGrid.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
+$scope.PresentlistGrid.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
+$scope.PresentlistGrid.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
+$scope.PresentlistGrid.columnDefs.push({ name: 'loginInTime', displayName: 'InTime' })
+$scope.PresentlistGrid.columnDefs.push({ name: 'loginOutTime', displayName: 'OutTime' })
+
+
+//  $scope.BirthdayTodayGridOpt.columnDefs.push({  name: 'DateOfBirth', displayName: 'Birthday  Date' })
+$scope.PresentlistGrid.data = [];
+
+
+
+
+
     var queryId = 577;
     var empDashBoardQueryId = 587;
     var sktest = 100
     $scope.onChange = _onChange;
     $scope.listAbsent = _listAbsent;
-
+    $scope.listPresent = _listPresent;
+    $scope.listLeave = _listLeave;
+    
     // $scope.value = 100;
     // $scope.valuennew = 50;
 
@@ -354,6 +374,7 @@ $scope.AbsentlistGrid.data = [];
       $scope.TodayBirthday = result[11];
       $scope.Next7daysonBirthdayEmployee = result[5];
       $scope.absentlist = result[13];
+      $scope.presentlist = result[14];
       $scope.joinGridOpt.data = $scope.TotalNewJoinList;
       $scope.LeftGridOpt.data = $scope.TotalNewLeftList;
       $scope.LeaveTodayGridOpt.data = $scope.TodayonLeaveEmployee;
@@ -362,6 +383,24 @@ $scope.AbsentlistGrid.data = [];
       $scope.BirthdayNextWeekGridOpt = $scope.Next7daysonBirthdayEmployee;
       $scope.HolidayNextWeekGridOpt = $scope.Next7Hodidays;
       $scope.AbsentlistGrid.data = $scope.absentlist;
+      $scope.PresentlistGrid.data = $scope.presentlist;
+
+
+
+      angular.forEach($scope.TotalNewJoinList, function (data) {
+        data.JDDate = moment(data.JDDate).format("DD/MM/YYYY");
+      })
+
+      angular.forEach($scope.TotalNewLeftList,function (data) {
+        data.JDHasLeftDate= moment(data.JDHasLeftDate).format("DD/MM/YYYY")
+      })
+
+      angular.forEach($scope.TotalNewLeftList,function (data) {
+        data.JDHasLeftDate= moment(data.JDHasLeftDate).format("DD/MMM/YYYY")
+      })
+
+
+
 
     }
     function _getCustomQueryError(err) {
@@ -379,6 +418,33 @@ $scope.AbsentlistGrid.data = [];
 
 
     }
+
+    function _listPresent() {
+     
+      var options = {
+        url: "app/pages/dashboard/presentmodal.html",
+        controller: "",
+        controllerAs: "",
+      }
+      dialogModal.open(options)
+
+
+    }
+
+
+    function _listLeave() {
+     
+      var options = {
+        url: "app/pages/dashboard/leavemodal.html",
+        controller: "",
+        controllerAs: "",
+      }
+      dialogModal.open(options)
+
+
+    }
+
+    
 
     
 
