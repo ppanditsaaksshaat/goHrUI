@@ -112,6 +112,20 @@
         $scope.entity.monthType = "1";
       }
 
+      if ($scope.entity.LSCFixDay) {
+        $scope.entity.salaryCalOn = 3
+      }
+      else if ($scope.entity.LSCTotalWorkingDay) {
+        $scope.entity.salaryCalOn = 2
+      }
+      else if ($scope.entity.LSCTotalDayInCycle) {
+        $scope.entity.salaryCalOn = 1
+      }
+
+      $scope.entity.LSCFixDay = 0
+      $scope.entity.LSCTotalDayInCycle = 1
+      $scope.entity.LSCTotalWorkingDay = 0
+
     }
     function _closeForm(editForm) {
       $scope.showEditForm = false;
