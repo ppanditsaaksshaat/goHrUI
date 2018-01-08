@@ -48,7 +48,8 @@
       deleteRecord: null,
       fieldEvents: [{ name: 'AttDate', onChangeEvent: _funcDateChange }],
       uploadRecord: _uploadRecord,
-      pageResult: _pageResult
+      pageResult: _pageResult,
+      defaultEntity: { 'AttDate': moment() }
       // readonlyColumns: ['col1', 'col2']
     }
 
