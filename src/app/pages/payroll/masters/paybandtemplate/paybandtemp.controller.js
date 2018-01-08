@@ -1129,10 +1129,11 @@
         }
         function _removeRuleSlab(row) {
 
+            console.log(row)
+            console.log($scope.payTempGridOptions.data)
             var existingTotalEarningHead = $filter("findObj")($scope.payTempGridOptions.data, 'True', "SHIsTotalEarning");
             var existingTotalDeductionHead = $filter("findObj")($scope.payTempGridOptions.data, 'True', "SHIsTotalDeduction");
-            //  var existingGrossHead = $filter("findObj")($scope.payTempGridOptions.data, 'True', "SHIsGross");
-            // var existingNetPayHead = $filter("findObj")($scope.payTempGridOptions.data, 'True', "SHIsNetPay");
+            var dependsHead = $filter("findObj")($scope.payTempGridOptions.data, row.entity.PBTRSHId, "PBTRSHId");
             if (existingTotalEarningHead != null && row.entity.SHeadType == "Earning") {
                 if (row.entity.SHeadType != "Total") {
                     $scope.showMsg("warning", "Please delete Total " + row.entity.SHeadType + " head first")
@@ -1145,34 +1146,20 @@
                     return
                 }
             }
-            // if (existingTotalEarningHead != null) {
-            //     if (row.entity.SHeadType != "Total") {
-            //         $scope.showMsg("warning", "Please delete " + row.entity.SHeadType + " head first")
-            //         return
-            //     }
-            // }
-            // if (existingNetPayHead != null) {
-            //     if (row.entity.SHeadType != "Total") {
-            //         $scope.showMsg("warning", "Please delete " + row.entity.SHeadType + " head first")
-            //         return
-            //     }
-            // }
-
-            // if ($scope.edit) {
-            //     row.entity.IsDeleted = true;
-            //     row.entity.DeletedOn = moment().format("DD/MM/YYYY");
-            //     row.entity.DeletedBy = $scope.user.profile.userId;
-            //     if (row.entity.subGridOptions != undefined) {
-            //         if (row.entity.PBTRIsFormula || row.entity.PBTRIsSlab) {
-            //             angular.forEach(row.entity.subGridOptions.data, function (data) {
-            //                 data.IsDeleted = true;
-            //                 data.DeletedOn = moment().format("DD/MM/YYYY");
-            //                 data.DeletedBy = $scope.user.profile.userId;
-            //             })
+            // if ($scope.payTempGridOptions.data.length > 0) {
+            //     for (var i = 0; i < $scope.payTempGridOptions.data.length; i++) {
+            //         var head= $scope.payTempGridOptions.data[i];
+            //         if (head.PBTRCalcOnSHId.length > 0) {
+            //             for (var j = 0; j < head.PBTRCalcOnSHId.length; j++) {
+            //                 var calHead=head.PBTRCalcOnSHId[j]
+            //                 if (head.PBTRSHId == calHead.value) {
+            //                     break;
+            //                 }
+            //             }
+            //             break;
             //         }
-            //     }
+            //     }            
             // }
-
 
             var index = $scope.payTempGridOptions.data.indexOf(row.entity);
             $scope.payTempGridOptions.data.splice(index, 1);
@@ -1760,7 +1747,7 @@
                 var compressed = LZString.compressToEncodedURIComponent(postData);
 
                 var data = { lz: true, data: compressed }
-             //   $scope.multiEntity.lz = false;
+                //   $scope.multiEntity.lz = false;
 
                 pageService.multiSave(data).then(function (result) {
 

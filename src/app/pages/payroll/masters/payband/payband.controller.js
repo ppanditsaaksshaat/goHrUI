@@ -817,14 +817,14 @@
             });
         }
         function _addRecord() {
-           
+
             $scope.entity = { PBId: 0 }
             $scope.page.showEditForm = true;
             $scope.payGridOptions.data = [];
             $scope.action = 'create';
         }
         function _editRecord(row) {
-          
+
             $scope.page.showEditForm = true;
             $scope.entity = angular.copy(row.entity);
             $scope.page.isAllowEdit = true;
@@ -1889,16 +1889,19 @@
             if ($scope.payGridOptions.data.length > 0) {
                 var salaryHead = $filter('findObj')($scope.payGridOptions.data, headId, $scope.rulePage.pageinfo.fields.PBRSHId.name)
                 if (salaryHead != null) {
-                    if (salaryHead.PBRCalcOnSHId.length <= 0) {
+                    //salaryHead.PBRCalcOnSHId.length
+                    if (salaryHead.PBRAmount > 0) {
                         return salaryHead.PBRAmount;
                     }
                     else {
+                        if (salaryHead.PBRCalcOnSHId.length >= 0) {
+                            for (var i = 0; i < salaryHead.PBRCalcOnSHId.length; i++) {
+                                var shId = salaryHead.PBRCalcOnSHId[i].value;
+                                var shAmt = _getHeadAmount(shId)
+                                if (salaryHead.PBRPercantage) {
+                                    totalAmt += (salaryHead.PBRPercantage / 100) * shAmt
+                                }
 
-                        for (var i = 0; i < salaryHead.PBRCalcOnSHId.length; i++) {
-                            var shId = salaryHead.PBRCalcOnSHId[i].value;
-                            var shAmt = _getHeadAmount(shId)
-                            if (salaryHead.PBRPercantage) {
-                                totalAmt += (salaryHead.PBRPercantage / 100) * shAmt
                             }
                         }
                     }
@@ -2032,21 +2035,21 @@
                                 subRow.PFDAmount = Math.round(parseFloat(subAmtTotal)).toFixed(2);
 
                                 if (x == 0) {
-                                    lastTotal = subRow.PFDAmount
+                                    lastTotal = parseInt(subRow.PFDAmount)
                                 }
                                 else {
                                     var shAmt = parseFloat(subRow.PFDAmount);
                                     var shPer = parseFloat(subRow.PFDPercentage)
                                     var calcAmt = (shPer / 100) * shAmt;
                                     if (subRow.PFDOperator == '+') {
-                                        lastTotal = lastTotal + calcAmt
+                                        lastTotal = parseInt(lastTotal) + calcAmt
                                     }
                                     else if (subRow.PFDOperator == '-') {
-                                        lastTotal = lastTotal - calcAmt
+                                        lastTotal = parseInt(lastTotal) - calcAmt
                                     }
                                 }
                             }
-                            rowEntity.PBRAmount = lastTotal.toFixed(2);
+                            rowEntity.PBRAmount = parseInt(lastTotal.toFixed(2));
                         }
                     }
 
