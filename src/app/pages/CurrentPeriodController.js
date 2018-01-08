@@ -9,7 +9,7 @@
 
     angular.module('BlurAdmin.pages')
         .controller('currentPeriodController', currentPeriodController);
-    function currentPeriodController($scope, $rootScope, pageService, DJWebStore, authService) {
+    function currentPeriodController($scope, $rootScope, pageService, DJWebStore, authService, $state, $stateParams) {
 
         $scope.today = function () {
             $scope.dt = new Date();
@@ -62,9 +62,13 @@
                 $scope.setDate(moment().year(), moment().month(), moment().date())
                 alert('Period Can Not Greater than current date.')
             }
-            // else{
-            //     $rootScope.currentPeriod = selected;
-            // }
+            else{
+                $rootScope.currentPeriod = selected;
+
+                var current = $state.current;
+                var params = angular.copy($stateParams);
+                $state.transitionTo(current, params, { reload: true, inherit: true, notify: true });
+            }
         })
 
         var tomorrow = new Date();
