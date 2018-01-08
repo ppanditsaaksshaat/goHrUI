@@ -2050,6 +2050,19 @@
                                 }
                             }
                             rowEntity.PBRAmount = parseInt(lastTotal.toFixed(2));
+                            var roundOffHead = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, rowEntity.PBRSHId, 'value')
+                            if (roundOffHead != null) {
+                                if (roundOffHead.SHIsRoundOff) {
+                                    var netPayROA = $filter('findObj')($scope.user.sysparam, "Net_Pay_Round_Off_Amt", 'key')
+                                    if (netPayROA != null) {
+                                        rowEntity.PBRAmount = (Math.round(parseInt(rowEntity.PBRAmount) / parseFloat(netPayROA.value)) * parseFloat(netPayROA.value)) - parseInt(rowEntity.PBRAmount);
+                                    }
+                                    else {
+                                        rowEntity.PBRAmount = 0;
+                                    }
+                                }
+                            }
+                            console.log(rowEntity)
                         }
                     }
 
