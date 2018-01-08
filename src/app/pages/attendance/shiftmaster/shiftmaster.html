@@ -133,21 +133,21 @@
                     </div>
                 </div>
             </div>
-            
-                <div class="checkbox">
-                    <label class="custom-checkbox"> 
-                            <input type="checkbox" ng-model="entity.SMAllowedNegitiveVerify"> 
-                             <span style="font:bold">{{page.pageinfo.fields.SMAllowedNegitiveVerify.place}}</span>
-                         </label>
-                </div>
-            
+
+            <div class="checkbox">
+                <label class="custom-checkbox">
+                    <input type="checkbox" ng-model="entity.SMAllowedNegitiveVerify">
+                    <span style="font:bold">{{page.pageinfo.fields.SMAllowedNegitiveVerify.place}}</span>
+                </label>
+            </div>
+
 
             <h3 class="with-line ">Minimum Working Criteria </h3>
             <div class="checkbox">
-                <label class="custom-checkbox"> 
-                        <input type="checkbox" ng-model="entity.SMMinimumDurationForHalfOrFullDay"> 
-                         <span style="font:bold">{{page.pageinfo.fields.SMMinimumDurationForHalfOrFullDay.place}}</span>
-                     </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" ng-model="entity.SMMinimumDurationForHalfOrFullDay">
+                    <span style="font:bold">{{page.pageinfo.fields.SMMinimumDurationForHalfOrFullDay.place}}</span>
+                </label>
             </div>
 
 
@@ -163,7 +163,8 @@
 
             <div class="row" ng-if="entity.SMMinimumDurationForHalfOrFullDay">
                 <div class="form-group col-md-5 col-md-offset-1">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinimumHourForFullDay.text}}</label> </div>
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinimumHourForFullDay.text}}</label>
+                </div>
                 <div class="form-group col-md-3">
                     <field-box page="page" ng-column="page.pageinfo.fields.SMMinimumHourForFullDay " ng-entity="entity " form="editForm "></field-box>
                 </div>
@@ -172,15 +173,16 @@
 
 
             <div class="checkbox">
-                <label class="custom-checkbox"> 
-                        <input type="checkbox" ng-model="entity.SMShiftFlexibility"> 
-                         <span style="font:bold">{{page.pageinfo.fields.SMShiftFlexibility.place}}</span>
-                     </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" ng-model="entity.SMShiftFlexibility">
+                    <span style="font:bold">{{page.pageinfo.fields.SMShiftFlexibility.place}}</span>
+                </label>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinWorkCrtFWeekOffCr.text}}</label> </div>
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.SMMinWorkCrtFWeekOffCr.text}}</label>
+                </div>
                 <div class="form-group col-md-1">
                     <select class="form-control" ng-model="entity.SMMinWorkCrtFWeekOffCr" ng-options="y for (x, y) in minWorkForWeekOff"></select>
                     <!--<select class="form-control" ng-model="entity.SMMinWorkCrtFWeekOffCr" ng-options="y for (x, y) in [1,2,3,4]"></select>-->
@@ -189,10 +191,10 @@
             </div>
 
             <div class="checkbox">
-                <label class="custom-checkbox"> 
-                        <input type="checkbox" ng-model="entity.SMIsAllowWOfBefAtten"> 
-                         <span style="font:bold">{{page.pageinfo.fields.SMIsAllowWOfBefAtten.place}}</span>
-                     </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" ng-model="entity.SMIsAllowWOfBefAtten">
+                    <span style="font:bold">{{page.pageinfo.fields.SMIsAllowWOfBefAtten.place}}</span>
+                </label>
             </div>
 
 
@@ -217,10 +219,10 @@
 
             <h3 class="with-line ">Compensatory Off</h3>
             <div class="checkbox">
-                <label class="custom-checkbox"> 
-                        <input type="checkbox"   ng-show="numberOfLV" ng-model="entity.SMCOffAllowed" ng-click="entity.SMIsCompOffCash=false;entity.SMCompOffLeaveValidAsEndOfSameMonth=false;entity.SMIsCompOffLeave=false;entity.SMIsCompOffCash=false;"> 
-                         <span style="font:bold">{{page.pageinfo.fields.SMCOffAllowed.place}}</span>
-                     </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" ng-show="numberOfLV" ng-model="entity.SMCOffAllowed" ng-click="entity.compOffCash=false;entity.cOffInDaySameMonth=false;entity.SMIsCompOffLeave=false;entity.compOffCash=false;">
+                    <span style="font:bold">{{page.pageinfo.fields.SMCOffAllowed.place}}</span>
+                </label>
             </div>
 
 
@@ -228,11 +230,18 @@
                 <div ng-if="entity.SMCOffAllowed" class="form-group col-md-10 col-md-offset-1">
                     Compensatory off will be converted as &nbsp;
                     <label class="radio-inline custom-radio nowrap font-bold">
-                        <input type="radio" name="compoffconversion" id="compoffconversion1" value="true" ng-click="entity.SMIsCompOffLeave = false" ng-model="entity.SMIsCompOffCash">
+                        <input type="radio" name="compoffconversion" id="compoffconversion1" ng-model="entity.compOffCash" ng-change="cOffConverted(entity.compOffCash)"
+                            value="1">
+
+                        <!-- <input type="radio" name="compoffconversion" id="compoffconversion1" value="true" ng-click="entity.SMIsCompOffLeave = false" ng-model="entity.compOffCash"> -->
+
                         <span>{{page.pageinfo.fields.SMIsCompOffCash.place}}</span>
                     </label>
                     <label class="radio-inline custom-radio nowrap font-bold">
-                        <input type="radio" name="compoffconversion" id="compoffconversion2" value="false" ng-click="entity.SMIsCompOffLeave = true;entity.SMCompOffLeaveValidAsInDays = false; entity.SMNumberOfLeaveForCompOffLeave = 0"  ng-model="entity.SMIsCompOffCash">
+                        <input type="radio" name="compoffconversion" id="compoffconversion2" ng-model="entity.compOffCash" ng-change="cOffConverted(entity.compOffCash)"
+                            value="2">
+
+                        <!-- <input type="radio" name="compoffconversion" id="compoffconversion2" value="false" ng-click="entity.SMIsCompOffLeave = true;entity.SMCompOffLeaveValidAsInDays = false; entity.SMNumberOfLeaveForCompOffLeave = 0"  ng-model="entity.compOffCash"> -->
                         <span>{{page.pageinfo.fields.SMIsCompOffLeave.place}}</span>
                     </label>
                 </div>
@@ -242,19 +251,25 @@
                 <div ng-show="entity.SMIsCompOffLeave && entity.SMCOffAllowed" class="form-group col-md-10 col-md-offset-1">
                     Validity of Leave against Compensatory off will be &nbsp;
                     <label class="radio-inline custom-radio nowrap font-bold">
-                        <input type="radio" name="validitytype" id="validitytype1" value="true" ng-click="entity.SMCompOffLeaveValidAsInDays = false; entity.SMNumberOfLeaveForCompOffLeave = 0"
-                         ng-model="entity.SMCompOffLeaveValidAsEndOfSameMonth">
+                        <input type="radio" name="validitytype" id="validitytype1" ng-model="entity.cOffInDaySameMonth" ng-change="validityLeaveAgCOff(entity.cOffInDaySameMonth)"
+                            value="1">
+
+                        <!-- <input type="radio" name="validitytype" id="validitytype1" value="true" ng-click="entity.SMCompOffLeaveValidAsInDays = false; entity.SMNumberOfLeaveForCompOffLeave = 0"
+                         ng-model="entity.cOffInDaySameMonth"> -->
                         <span>{{page.pageinfo.fields.SMCompOffLeaveValidAsEndOfSameMonth.place}}</span>
                     </label>
                     <label class="radio-inline custom-radio nowrap font-bold">
-                        <input type="radio" name="validitytype" id="validitytype2" value="false" ng-click="entity.SMCompOffLeaveValidAsInDays = true"  
-                        ng-model="entity.SMCompOffLeaveValidAsEndOfSameMonth">
+                        <input type="radio" name="validitytype" id="validitytype2" ng-model="entity.cOffInDaySameMonth" ng-change="validityLeaveAgCOff(entity.cOffInDaySameMonth)"
+                            value="2">
+
+                        <!-- <input type="radio" name="validitytype" id="validitytype2" value="false" ng-click="entity.SMCompOffLeaveValidAsInDays = true"  
+                        ng-model="entity.cOffInDaySameMonth"> -->
                         <span>{{page.pageinfo.fields.SMCompOffLeaveValidAsInDays.place}}</span>
                     </label>
                 </div>
             </div>
 
-            <div class="row" ng-if="entity.SMCompOffLeaveValidAsInDays && entity.SMCOffAllowed && entity.SMIsCompOffLeave">
+            <div class="row" ng-if="entity.SMCompOffLeaveValidAsInDays && entity.SMCOffAllowed && entity.SMIsCompOffLeave && entity.cOffInDaySameMonth">
                 <div class="form-group col-md-5 col-md-offset-1 ">
                     <label class="bold-text" for="inputPassword3 ">{{page.pageinfo.fields.SMNumberOfLeaveForCompOffLeave.text}}</label>
                 </div>
@@ -265,10 +280,10 @@
 
             <h3 class="with-line ">Over Time</h3>
             <div class="checkbox">
-                <label class="custom-checkbox"> 
-                        <input type="checkbox" ng-model="entity.SMOverTimeAllowed"  ng-click="entity.SMIsCalulatedAfterLeaveDuration=false;entity.SMIsOTCalculatedOnBasicSalary=false;entity.SHApplicableOverTimeAfterMinute=0;entity.SMIsAllowOverTimeMargin=false"> 
-                         <span style="font:bold">{{page.pageinfo.fields.SMOverTimeAllowed.place}}</span>
-                     </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" ng-model="entity.SMOverTimeAllowed" ng-click="entity.SMIsCalulatedAfterLeaveDuration=false;entity.SMIsOTCalculatedOnBasicSalary=false;entity.SHApplicableOverTimeAfterMinute=0;entity.SMIsAllowOverTimeMargin=false">
+                    <span style="font:bold">{{page.pageinfo.fields.SMOverTimeAllowed.place}}</span>
+                </label>
             </div>
             <!--<div class="form-group col-md-12">
                     <label><input type="checkbox" ng-model="entity.SMOverTimeAllowed" value="true"></label>
@@ -280,13 +295,19 @@
                 <div class="form-group col-md-10 col-md-offset-1">
                     Calculation of overtime after &nbsp;
                     <label class="radio-inline custom-radio nowrap font-bold">
-                        <input type="radio" name="forBasicOrGross" id="basicORGross1" value="true" ng-click="entity.SMIsAllowOverTimeMargin = false"
-                         ng-model="entity.SMIsCalulatedAfterLeaveDuration">
+                        <input type="radio" name="shiftTiming" id="calAfterLeaveDuration" ng-model="entity.allowOverTimeMargin" ng-change="calAfterLeaveAndOTMargin(entity.allowOverTimeMargin)"
+                            value="1">
+
+                        <!-- <input type="radio" name="forBasicOrGross" id="basicORGross1" value="true" ng-click="entity.SMIsAllowOverTimeMargin = false"
+                            ng-model="entity.SMIsCalulatedAfterLeaveDuration"> -->
                         <span>{{page.pageinfo.fields.SMIsCalulatedAfterLeaveDuration.place}}</span>
                     </label>
                     <label class="radio-inline custom-radio nowrap font-bold">
-                        <input type="radio" name="forBasicOrGross" id="basicORGross2" value="false" ng-click="entity.SMIsAllowOverTimeMargin=true"  
-                        ng-model="entity.SMIsCalulatedAfterLeaveDuration">
+                        <input type="radio" name="shiftTiming" id="calAfterLeaveDuration2" ng-model="entity.allowOverTimeMargin" ng-change="calAfterLeaveAndOTMargin(entity.allowOverTimeMargin)"
+                            value="2">
+
+                        <!-- <input type="radio" name="forBasicOrGross" id="basicORGross2" value="false" ng-click="entity.SMIsAllowOverTimeMargin=true"
+                            ng-model="entity.SMIsCalulatedAfterLeaveDuration"> -->
                         <span>{{page.pageinfo.fields.SMIsAllowOverTimeMargin.place}}</span>
                     </label>
 
@@ -312,13 +333,19 @@
                 <div ng-if="entity.SMOverTimeAllowed" class="form-group col-md-10 col-md-offset-1">
                     Amount Calculation on the basis of &nbsp;
                     <label class="radio-inline custom-radio nowrap font-bold">
-                        <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross1" value="true" ng-click="entity.SMIsOTCalculatedOnGrossSalary = false"
-                         ng-model="entity.SMIsOTCalculatedOnBasicSalary">
+                        <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross1" ng-model="entity.basicOrGross" ng-change="calOnBasicOrGross(entity.basicOrGross)"
+                            value="1">
+
+                        <!-- <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross1" value="true" ng-click="entity.SMIsOTCalculatedOnGrossSalary = false"
+                            ng-model="entity.SMIsOTCalculatedOnBasicSalary"> -->
                         <span>{{page.pageinfo.fields.SMIsOTCalculatedOnBasicSalary.place}}</span>
                     </label>
                     <label class="radio-inline custom-radio nowrap font-bold">
-                        <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross1" value="false" ng-click="entity.SMIsOTCalculatedOnGrossSalary = true"  
-                        ng-model="entity.SMIsOTCalculatedOnBasicSalary">
+                        <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross2" ng-model="entity.basicOrGross" ng-change="calOnBasicOrGross(entity.basicOrGross)"
+                            value="2">
+
+                        <!-- <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross1" value="false" ng-click="entity.SMIsOTCalculatedOnGrossSalary = true"
+                            ng-model="entity.SMIsOTCalculatedOnBasicSalary"> -->
                         <span>{{page.pageinfo.fields.SMIsOTCalculatedOnGrossSalary.place}}</span>
                     </label>
                 </div>
@@ -342,7 +369,8 @@
 
             <div class="row" ng-if="entity.SMOverTimeAllowed">
                 <div class="form-group col-md-4 col-md-offset-2">
-                    <label for="inputPassword3 ">{{page.pageinfo.fields.SHOTDoubleRate.text}}</label> </div>
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.SHOTDoubleRate.text}}</label>
+                </div>
                 <div class="form-group col-md-3">
                     <field-box page="page" ng-column="page.pageinfo.fields.SHOTDoubleRate " ng-entity="entity " form="editForm "></field-box>
                 </div>
@@ -354,9 +382,9 @@
                     <ul style="list-style-type:none" ng-repeat="value in groupList">
                         <li>
                             <div class="checkbox">
-                                <label class="custom-checkbox"> 
-                                <input type="checkbox" ng-model="value.isSelected" required="true"> 
-                                <span ng-bind="value.GMCName"></span>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" ng-model="value.isSelected" required="true">
+                                    <span ng-bind="value.GMCName"></span>
                                 </label>
                             </div>
                         </li>

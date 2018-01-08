@@ -31,8 +31,11 @@
     $scope.resetLunchDuration = _resetLunchDuration;
     $scope.isResetShifAndLunch = false;
     $scope.entity.SMCOffAllowed = 'true';
-
     $scope.hideNumberOfLeave = _hideNumberOfLeave;
+    $scope.cOffConverted = _cOffConverted;
+    $scope.validityLeaveAgCOff = _validityLeaveAgCOff;
+    $scope.calOnBasicOrGross = _calOnBasicOrGross;
+    $scope.calAfterLeaveAndOTMargin = _calAfterLeaveAndOTMargin;
 
     function _hideNumberOfLeave() {
       $scope.numberOfLV = false;
@@ -261,6 +264,34 @@
       vm.oldEntity = angular.copy(row.entity)
       $scope.entity = row.entity;
       $scope.isResetShifAndLunch = false;
+
+      if ($scope.entity.SMIsCompOffLeave) {
+        $scope.entity.compOffCash = "2";
+      }
+      else if ($scope.entity.SMIsCompOffCash) {
+        $scope.entity.compOffCash = "1";
+      }
+
+      if ($scope.entity.SMCompOffLeaveValidAsInDays) {
+        $scope.entity.cOffInDaySameMonth = "2";
+      }
+      else if ($scope.entity.SMCompOffLeaveValidAsEndOfSameMonth) {
+        $scope.entity.cOffInDaySameMonth = "1";
+      }
+
+      if ($scope.entity.SMIsOTCalculatedOnGrossSalary) {
+        $scope.entity.basicOrGross = "2";
+      }
+      else if ($scope.entity.SMIsOTCalculatedOnBasicSalary) {
+        $scope.entity.basicOrGross = "1";
+      }
+
+      if ($scope.entity.SMIsAllowOverTimeMargin) {
+        $scope.entity.allowOverTimeMargin = "2";
+      }
+      else if ($scope.entity.SMIsCalulatedAfterLeaveDuration) {
+        $scope.entity.allowOverTimeMargin = "1";
+      }
     }
 
     function _shiftDuration(entity) {
@@ -634,6 +665,56 @@
 
     function _closeForm(editForm) {
       $scope.showEditForm = false;
+    }
+
+    function _cOffConverted(compOffCash) {
+      if (compOffCash == "1") {
+        $scope.entity.SMIsCompOffCash = true;
+        $scope.entity.SMIsCompOffLeave = false;
+        $scope.entity.cOffInDaySameMonth = false;
+        entity.SMNumberOfLeaveForCompOffLeave = 0
+      }
+      else if (compOffCash == "2") {
+        $scope.entity.SMIsCompOffCash = false;
+        $scope.entity.SMIsCompOffLeave = true;
+        $scope.entity.cOffInDaySameMonth = false;
+        $scope.entity.SMNumberOfLeaveForCompOffLeave = 0;
+      }
+    }
+
+    function _validityLeaveAgCOff(cOffInDaySameMonth) {
+      if (cOffInDaySameMonth == "1") {
+        $scope.entity.SMCompOffLeaveValidAsEndOfSameMonth = true;
+        $scope.entity.SMCompOffLeaveValidAsInDays = false;
+        $scope.entity.SMNumberOfLeaveForCompOffLeave = 0
+      }
+      else if (cOffInDaySameMonth == "2") {
+        $scope.entity.SMCompOffLeaveValidAsEndOfSameMonth = false;
+        $scope.entity.SMCompOffLeaveValidAsInDays = true;
+      }
+    }
+
+    function _calOnBasicOrGross(basicOrGross) {
+      if (basicOrGross == 1) {
+        $scope.entity.SMIsOTCalculatedOnBasicSalary = true;
+        $scope.entity.SMIsOTCalculatedOnGrossSalary = false;
+      }
+      else if (basicOrGross == 2) {
+        $scope.entity.SMIsOTCalculatedOnBasicSalary = false;
+        $scope.entity.SMIsOTCalculatedOnGrossSalary = true;
+      }
+    }
+
+    function _calAfterLeaveAndOTMargin(allowOverTimeMargin) {
+      if ($scope.entity.allowOverTimeMargin == "1") {
+        $scope.entity.SMIsCalulatedAfterLeaveDuration = true;
+        $scope.entity.SMIsAllowOverTimeMargin = false;
+        $scope.entity.SHApplicableOverTimeAfterMinute = 0;
+      }
+      else if ($scope.entity.allowOverTimeMargin == "2") {
+        $scope.entity.SMIsCalulatedAfterLeaveDuration = false;
+        $scope.entity.SMIsAllowOverTimeMargin = true;
+      }
     }
   }
 
