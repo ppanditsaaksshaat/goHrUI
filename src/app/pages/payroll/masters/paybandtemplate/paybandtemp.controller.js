@@ -1759,10 +1759,10 @@
                 var postData = JSON.stringify($scope.multiEntity);
                 var compressed = LZString.compressToEncodedURIComponent(postData);
 
-                var data = { lz: false, data: compressed }
-                $scope.multiEntity.lz = false;
+                var data = { lz: true, data: compressed }
+             //   $scope.multiEntity.lz = false;
 
-                pageService.multiSave($scope.multiEntity).then(function (result) {
+                pageService.multiSave(data).then(function (result) {
 
                     if (result == "done") {
                         $scope.page.showEditForm = false;
