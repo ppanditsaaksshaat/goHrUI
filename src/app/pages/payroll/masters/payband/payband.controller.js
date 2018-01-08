@@ -108,36 +108,39 @@
 
 
         function _templateOnchange(paybandTemplateId) {
-            $timeout(function () {
-                var multiData = {
-                    lz: false,
-                    parent: {
-                        tableid: $scope.paybandTemp.TableId,
-                        pkValue: paybandTemplateId
-                    }, child: [
-                        {
-                            tableid: $scope.paybandTemp.RuleTableId,
-                            linkColumn: 'PBTRPBTId',
-                            orderByList: [
-                                { column: 'PBTRId', isDesc: false }
-                            ],
-                            child: [
-                                {
-                                    tableid: $scope.paybandTemp.FormulaTableId,//formula table
-                                    linkColumn: 'PFTDPBTRId',
-                                    orderByList: []
-                                },
-                                {
-                                    tableid: $scope.paybandTemp.SlabTableId,
-                                    linkColumn: 'PBTSPBTRId',
-                                    orderByList: []
-                                }]
-                        }
-                    ]
-                };
-                var tableData = pageService.getMultiEntity(multiData);
-                tableData.then(_getTempMultiEntitySuccess, _getTempMultiEntityError)
-            });
+
+            if ($scope.action == "create") {
+                $timeout(function () {
+                    var multiData = {
+                        lz: false,
+                        parent: {
+                            tableid: $scope.paybandTemp.TableId,
+                            pkValue: paybandTemplateId
+                        }, child: [
+                            {
+                                tableid: $scope.paybandTemp.RuleTableId,
+                                linkColumn: 'PBTRPBTId',
+                                orderByList: [
+                                    { column: 'PBTRId', isDesc: false }
+                                ],
+                                child: [
+                                    {
+                                        tableid: $scope.paybandTemp.FormulaTableId,//formula table
+                                        linkColumn: 'PFTDPBTRId',
+                                        orderByList: []
+                                    },
+                                    {
+                                        tableid: $scope.paybandTemp.SlabTableId,
+                                        linkColumn: 'PBTSPBTRId',
+                                        orderByList: []
+                                    }]
+                            }
+                        ]
+                    };
+                    var tableData = pageService.getMultiEntity(multiData);
+                    tableData.then(_getTempMultiEntitySuccess, _getTempMultiEntityError)
+                });
+            }
 
         }
 
@@ -814,13 +817,14 @@
             });
         }
         function _addRecord() {
+           
             $scope.entity = { PBId: 0 }
             $scope.page.showEditForm = true;
             $scope.payGridOptions.data = [];
             $scope.action = 'create';
         }
         function _editRecord(row) {
-
+          
             $scope.page.showEditForm = true;
             $scope.entity = angular.copy(row.entity);
             $scope.page.isAllowEdit = true;
@@ -905,10 +909,24 @@
                                     var child = row.child[c];
                                     if (child.rows) {
                                         if (child.rows.length > 0) {
-                                            if (child.tableid == 140) {//slab table
+                                            if (child.tableid == 141) {//slab table
                                                 _getSubGridOptions(row, false);
                                             }
                                             else if (child.tableid == 434) {//formula table
+
+                                                angular.forEach(child.rows, function (formula) {
+                                                    var salaryHeads = [];
+                                                    formula.PFDCalcHeadId = formula.PFDCalcHeadId.replace('[', '').replace(']', '')
+                                                    if (formula.PFDCalcHeadId != '') {
+                                                        var shead = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, formula.PFDCalcHeadId, 'value')
+                                                        if (shead != null) {
+                                                            salaryHeads.push(shead)
+                                                            formula.PFDCalcHeadId = salaryHeads;
+                                                        }
+
+                                                    }
+
+                                                })
                                                 _getSubGridOptions(row, true);
                                             }
                                             if (row.subGridOptions) {
@@ -1086,8 +1104,8 @@
                     displayName: $scope.rulePage.pageinfo.fields.PBRCalcOnSHId.text,
                     width: 250, visible: true,
                     editableCellTemplate: 'uiSelectMulti',
-                    // editDropdownIdLabel: 'value',
-                    // editDropdownValueLabel: 'name',
+                    editDropdownIdLabel: 'value',
+                    editDropdownValueLabel: 'name',
                     editDropdownOptionsArray: $scope.rulePage.pageinfo.fields.PBRCalcOnSHId.options,
                     cellFilter: "mapMultiDropdown:grid.appScope.rulePage.pageinfo.fields.PBRCalcOnSHId.options:'value':'name'",
                     cellClass: _cellClass,
@@ -1626,6 +1644,7 @@
 
             $scope.rulePage.gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
                 if (row.isExpanded) {
+                    console.log(row)
                     if (row.entity.PBRCalcOnSHId.length == 0) {
                         //stop expanding if no dependent head found.
                         $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
@@ -2334,10 +2353,10 @@
                 var postData = JSON.stringify($scope.multiEntity);
                 var compressed = LZString.compressToEncodedURIComponent(postData);
 
-                var data = { lz: false, data: compressed }
-                $scope.multiEntity.lz = false;
+                var data = { lz: true, data: compressed }
+                // $scope.multiEntity.lz = false;
 
-                pageService.multiSave($scope.multiEntity).then(function (result) {
+                pageService.multiSave(data).then(function (result) {
                     if (result == "done") {
                         $scope.page.showEditForm = false;
                         $scope.page.refreshData();
