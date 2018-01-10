@@ -921,7 +921,7 @@
                                 subRow.PFDAmount = Math.round(parseFloat(subAmtTotal)).toFixed(2);
 
                                 if (x == 0) {
-                                    lastTotal =  parseInt(subRow.PFDAmount)
+                                    lastTotal = parseInt(subRow.PFDAmount)
                                 }
                                 else {
                                     var shAmt = parseFloat(subRow.PFDAmount);
@@ -942,6 +942,7 @@
                                     var netPayROA = $filter('findObj')($scope.user.sysparam, "Net_Pay_Round_Off_Amt", 'key')
                                     if (netPayROA != null) {
                                         rowEntity.PBRAmount = (Math.round(parseInt(rowEntity.PBRAmount) / parseFloat(netPayROA.value)) * parseFloat(netPayROA.value)) - parseInt(rowEntity.PBRAmount);
+                                        rowEntity.PBRAmount = 0;
                                     }
                                     else {
                                         rowEntity.PBRAmount = 0;
@@ -1425,9 +1426,40 @@
             }
             else if (row.entity.PBRSHId > 0) {
                 var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsGross')
+                var shTotalEarning = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsTotalEarning')
+                var shTotalDeduction = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsTotalDeduction')
+                var shNetPay = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsNetPay')
+                var shRoundOff = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsRoundOff')
+                var shTaxableSalary = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsTaxableSalary')
+
                 if (shGross != null) {
                     if (row.entity.PBRSHId == shGross.value) {
                         return 'status-bg ORANGE-500'
+                    }
+                }
+                if (shTotalEarning != null) {
+                    if (row.entity.PBRSHId == shTotalEarning.value) {
+                        return 'status-bg CYAN-100'
+                    }
+                }
+                if (shTotalDeduction != null) {
+                    if (row.entity.PBRSHId == shTotalDeduction.value) {
+                        return 'status-bg GREEN-500'
+                    }
+                }
+                if (shNetPay != null) {
+                    if (row.entity.PBRSHId == shNetPay.value) {
+                        return 'status-bg BLUE-300'
+                    }
+                }
+                if (shRoundOff != null) {
+                    if (row.entity.PBRSHId == shRoundOff.value) {
+                        return 'status-bg YELLOW-300'
+                    }
+                }
+                if (shTaxableSalary != null) {
+                    if (row.entity.PBRSHId == shTaxableSalary.value) {
+                        return 'status-bg PINK-300'
                     }
                 }
             }

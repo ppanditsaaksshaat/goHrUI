@@ -879,14 +879,19 @@
                         //find head type
                         var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, row.PBRSHId, 'value')
                         if (foundPB != null) {
-                            if (foundPB.SHIsForEmployer == "True") {
-                                row.SHeadType = 'Employer';
-                            }
-                            else if (foundPB.SHIsDeduction == "False") {
-                                row.SHeadType = 'Earning';
+                            if (foundPB.SHIsTotal == "True") {
+                                row.SHeadType = 'Total';
                             }
                             else {
-                                row.SHeadType = 'Deduction';
+                                if (foundPB.SHIsForEmployer == "True") {
+                                    row.SHeadType = 'Employer';
+                                }
+                                else if (foundPB.SHIsDeduction == "False") {
+                                    row.SHeadType = 'Earning';
+                                }
+                                else {
+                                    row.SHeadType = 'Deduction';
+                                }
                             }
                         }
 
@@ -1064,17 +1069,17 @@
                     colIndex: 6
                 })
 
-            $scope.payGridOptions.columnDefs.push(
-                {
-                    cellTemplate: cellTemplateRemove,
-                    name: 'ruleRemove',
-                    displayName: '-',
-                    width: 30, visible: true,
-                    cellClass: _cellClass,
-                    cellEditableCondition: false,
-                    colIndex: 7
+            // $scope.payGridOptions.columnDefs.push(
+            //     {
+            //         cellTemplate: cellTemplateRemove,
+            //         name: 'ruleRemove',
+            //         displayName: '-',
+            //         width: 30, visible: true,
+            //         cellClass: _cellClass,
+            //         cellEditableCondition: false,
+            //         colIndex: 7
 
-                })
+            //     })
 
             $scope.payGridOptions.columnDefs.push(
                 {
@@ -1155,6 +1160,9 @@
                 var shTotalEarning = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsTotalEarning')
                 var shTotalDeduction = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsTotalDeduction')
                 var shNetPay = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsNetPay')
+                var shRoundOff = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsRoundOff')
+                var shTaxableSalary = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsTaxableSalary')
+
                 if (shGross != null) {
                     if (row.entity.PBRSHId == shGross.value) {
                         return 'status-bg ORANGE-500'
@@ -1162,7 +1170,7 @@
                 }
                 if (shTotalEarning != null) {
                     if (row.entity.PBRSHId == shTotalEarning.value) {
-                        return 'status-bg PURPLE-500'
+                        return 'status-bg CYAN-100'
                     }
                 }
                 if (shTotalDeduction != null) {
@@ -1173,6 +1181,16 @@
                 if (shNetPay != null) {
                     if (row.entity.PBRSHId == shNetPay.value) {
                         return 'status-bg BLUE-300'
+                    }
+                }
+                if (shRoundOff != null) {
+                    if (row.entity.PBRSHId == shRoundOff.value) {
+                        return 'status-bg YELLOW-300'
+                    }
+                }
+                if (shTaxableSalary != null) {
+                    if (row.entity.PBRSHId == shTaxableSalary.value) {
+                        return 'status-bg PINK-300'
                     }
                 }
             }
@@ -1944,7 +1962,8 @@
                             totAmt -= Math.round(parseFloat($scope.payGridOptions.data[i].PBRAmount))
                         }
                         else {
-                            $scope.salary.employerAmt += Math.round(parseFloat($scope.payGridOptions.data[i].PBRAmount));
+                            if ($scope.payGridOptions.data[i].SHeadType != 'Total')
+                                $scope.salary.employerAmt += Math.round(parseFloat($scope.payGridOptions.data[i].PBRAmount));
                         }
                     }
                 }
@@ -2056,6 +2075,7 @@
                                     var netPayROA = $filter('findObj')($scope.user.sysparam, "Net_Pay_Round_Off_Amt", 'key')
                                     if (netPayROA != null) {
                                         rowEntity.PBRAmount = (Math.round(parseInt(rowEntity.PBRAmount) / parseFloat(netPayROA.value)) * parseFloat(netPayROA.value)) - parseInt(rowEntity.PBRAmount);
+                                        rowEntity.PBRAmount = 0;
                                     }
                                     else {
                                         rowEntity.PBRAmount = 0;
