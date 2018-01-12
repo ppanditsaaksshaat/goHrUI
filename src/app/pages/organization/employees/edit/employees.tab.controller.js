@@ -718,6 +718,8 @@
 
                     if (vm.empContactDetail.CDId === undefined) {
                         vm.empContactDetail.CDEmpId = vm.empPKId;
+
+                        console.log(vm.empContactDetai);
                         _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create', vm.oldempContactDetail, editForm, true);
                     }
                     else {
@@ -913,7 +915,7 @@
                 vm.empContactDetail.CDPAddLine2 = vm.empContactDetail.CDAddLine2;
                 vm.empContactDetail.PCountryId = vm.empContactDetail.CountryId;
                 vm.empContactDetail.PStateId = vm.empContactDetail.StateId;
-                vm.empContactDetail.PCityId = vm.empContactDetail.CityId;
+                vm.empContactDetail.PCityId = vm.empContactDetail.CDCityId;
                 vm.empContactDetail.CDPPincode = vm.empContactDetail.CDPincode;
                 vm.empContactDetail.CDPAreaId = vm.empContactDetail.CDAreaId;
             }
