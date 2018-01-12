@@ -420,14 +420,19 @@
                             //find head type
                             var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, row.PBRSHId, 'value')
                             if (foundPB != null) {
-                                if (foundPB.SHIsForEmployer == "True") {
-                                    row.SHeadType = 'Employer';
-                                }
-                                else if (foundPB.SHIsDeduction == "False") {
-                                    row.SHeadType = 'Earning';
+                                if (foundPB.SHIsTotal == "True") {
+                                    row.SHeadType = 'Total';
                                 }
                                 else {
-                                    row.SHeadType = 'Deduction';
+                                    if (foundPB.SHIsForEmployer == "True") {
+                                        row.SHeadType = 'Employer';
+                                    }
+                                    else if (foundPB.SHIsDeduction == "False") {
+                                        row.SHeadType = 'Earning';
+                                    }
+                                    else {
+                                        row.SHeadType = 'Deduction';
+                                    }
                                 }
                             }
 
@@ -800,7 +805,7 @@
 
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
 
-               
+
 
                 if (grossHead) {
                     if (colDef.name == 'SH_' + grossHead.value) {
@@ -825,7 +830,7 @@
                                                 }
                                             })
                                         }
-                                       
+
                                         if (newValue != oldValue) {
                                             employeeEnt.push(rowEntity)
                                         }
@@ -916,21 +921,34 @@
                                 subRow.PFDAmount = Math.round(parseFloat(subAmtTotal)).toFixed(2);
 
                                 if (x == 0) {
-                                    lastTotal = subRow.PFDAmount
+                                    lastTotal = parseInt(subRow.PFDAmount)
                                 }
                                 else {
                                     var shAmt = parseFloat(subRow.PFDAmount);
                                     var shPer = parseFloat(subRow.PFDPercentage)
                                     var calcAmt = (shPer / 100) * shAmt;
                                     if (subRow.PFDOperator == '+') {
-                                        lastTotal = lastTotal + calcAmt
+                                        lastTotal = parseInt(lastTotal + calcAmt)
                                     }
                                     else if (subRow.PFDOperator == '-') {
-                                        lastTotal = lastTotal - calcAmt
+                                        lastTotal = parseInt(lastTotal - calcAmt)
                                     }
                                 }
                             }
                             rowEntity.PBRAmount = parseInt(lastTotal).toFixed(2);
+                            var roundOffHead = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, rowEntity.PBRSHId, 'value')
+                            if (roundOffHead != null) {
+                                if (roundOffHead.SHIsRoundOff) {
+                                    var netPayROA = $filter('findObj')($scope.user.sysparam, "Net_Pay_Round_Off_Amt", 'key')
+                                    if (netPayROA != null) {
+                                        rowEntity.PBRAmount = (Math.round(parseInt(rowEntity.PBRAmount) / parseFloat(netPayROA.value)) * parseFloat(netPayROA.value)) - parseInt(rowEntity.PBRAmount);
+                                        rowEntity.PBRAmount = 0;
+                                    }
+                                    else {
+                                        rowEntity.PBRAmount = 0;
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -1130,16 +1148,17 @@
             if (gridData.length > 0) {
                 var salaryHead = $filter('findObj')(gridData, headId, $scope.rulePage.pageinfo.fields.PBRSHId.name)
                 if (salaryHead != null) {
-                    if (salaryHead.PBRCalcOnSHId.length <= 0) {
+                    if (salaryHead.PBRAmount > 0) {
                         return salaryHead.PBRAmount;
                     }
                     else {
-
-                        for (var i = 0; i < salaryHead.PBRCalcOnSHId.length; i++) {
-                            var shId = salaryHead.PBRCalcOnSHId[i].value;
-                            var shAmt = _getHeadAmount(shId, gridData)
-                            if (salaryHead.PBRPercantage) {
-                                totalAmt += (salaryHead.PBRPercantage / 100) * shAmt
+                        if (salaryHead.PBRCalcOnSHId.length >= 0) {
+                            for (var i = 0; i < salaryHead.PBRCalcOnSHId.length; i++) {
+                                var shId = salaryHead.PBRCalcOnSHId[i].value;
+                                var shAmt = _getHeadAmount(shId, gridData)
+                                if (salaryHead.PBRPercantage) {
+                                    totalAmt += (salaryHead.PBRPercantage / 100) * shAmt
+                                }
                             }
                         }
                     }
@@ -1407,9 +1426,40 @@
             }
             else if (row.entity.PBRSHId > 0) {
                 var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsGross')
+                var shTotalEarning = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsTotalEarning')
+                var shTotalDeduction = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsTotalDeduction')
+                var shNetPay = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsNetPay')
+                var shRoundOff = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsRoundOff')
+                var shTaxableSalary = $filter('findObj')($scope.rulePage.pageinfo.selects.PBRSHId, 'True', 'SHIsTaxableSalary')
+
                 if (shGross != null) {
                     if (row.entity.PBRSHId == shGross.value) {
                         return 'status-bg ORANGE-500'
+                    }
+                }
+                if (shTotalEarning != null) {
+                    if (row.entity.PBRSHId == shTotalEarning.value) {
+                        return 'status-bg CYAN-100'
+                    }
+                }
+                if (shTotalDeduction != null) {
+                    if (row.entity.PBRSHId == shTotalDeduction.value) {
+                        return 'status-bg GREEN-500'
+                    }
+                }
+                if (shNetPay != null) {
+                    if (row.entity.PBRSHId == shNetPay.value) {
+                        return 'status-bg BLUE-300'
+                    }
+                }
+                if (shRoundOff != null) {
+                    if (row.entity.PBRSHId == shRoundOff.value) {
+                        return 'status-bg YELLOW-300'
+                    }
+                }
+                if (shTaxableSalary != null) {
+                    if (row.entity.PBRSHId == shTaxableSalary.value) {
+                        return 'status-bg PINK-300'
                     }
                 }
             }

@@ -431,6 +431,8 @@
                 var shTotalEarning = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTotalEarning')
                 var shTotalDeduction = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTotalDeduction')
                 var shNetPay = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsNetPay')
+                var shRoundOff = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsRoundOff')
+                var shTaxableSalary = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTaxableSalary')
                 if (shGross != null) {
                     if (row.entity.PBTRSHId == shGross.value) {
                         return 'status-bg ORANGE-500'
@@ -438,7 +440,7 @@
                 }
                 if (shTotalEarning != null) {
                     if (row.entity.PBTRSHId == shTotalEarning.value) {
-                        return 'status-bg PURPLE-500'
+                        return 'status-bg CYAN-100'
                     }
                 }
                 if (shTotalDeduction != null) {
@@ -449,6 +451,16 @@
                 if (shNetPay != null) {
                     if (row.entity.PBTRSHId == shNetPay.value) {
                         return 'status-bg BLUE-300'
+                    }
+                }
+                if (shRoundOff != null) {
+                    if (row.entity.PBTRSHId == shRoundOff.value) {
+                        return 'status-bg YELLOW-300'
+                    }
+                }
+                if (shTaxableSalary != null) {
+                    if (row.entity.PBTRSHId == shTaxableSalary.value) {
+                        return 'status-bg PINK-300'
                     }
                 }
             }
@@ -575,9 +587,15 @@
                             else if (headTotal.SHIsGross == "True" || headTotal.SHIsNetPay == "True") {
                                 for (var edh = 0; edh < $scope.payTempGridOptions.data.length; edh++) {
                                     var earDecheads = $scope.payTempGridOptions.data[edh];
+                                    var earDecShId = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, earDecheads.PBTRSHId, "value")
                                     if (earDecheads.SHeadType != "Total") {
-                                        var earDecShId = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, earDecheads.PBTRSHId, "value")
+
                                         if (earDecShId != null) {
+                                            PBTRCalcOnSHId.push({ value: earDecShId.value, name: earDecShId.name, SHeadType: earDecShId.SHType })
+                                        }
+                                    }
+                                    else {
+                                        if (earDecShId.SHIsRoundOff == "True") {
                                             PBTRCalcOnSHId.push({ value: earDecShId.value, name: earDecShId.name, SHeadType: earDecShId.SHType })
                                         }
                                     }
@@ -625,7 +643,7 @@
 
         function _addRuleGridRow(PBTRId, PBTRIsFormula, PBTRIsSlab, PBTRPercentage, PBSId, PBRPBId, PBTRSHId, SHName, SHeadType, PBRRuleName, PBTRCalcOnSHId, SHIsTotalEarning, SHIsTotalDeduction) {
 
-            $scope.payTempGridOptions.data.push({
+            var row = {
                 PBTRId: PBTRId,
                 PBTRIsFormula: PBTRIsFormula,
                 PBTRIsSlab: PBTRIsSlab,
@@ -639,9 +657,14 @@
                 PBTRCalcOnSHId: PBTRCalcOnSHId,
                 SHIsTotalEarning: SHIsTotalEarning,
                 SHIsTotalDeduction: SHIsTotalDeduction
+            }
+            $scope.payTempGridOptions.data.push(row);
+            if ($scope.toggleExpandOnAdd) {
+                _getSubGridOptions(row, true)
+                _addDependentHeadList();
 
-            })
-
+                $scope.toggleExpandOnAdd = false;
+            }
         }
 
 
@@ -1187,6 +1210,9 @@
                             if (head.SHIsGross == "True") {
                                 operator = '+'
                             }
+                            else if (head.SHIsTotalDeduction == "True") {
+                                operator = '+'
+                            }
                             else if (head.SHIsTotal == "True") {
 
                                 if (row.PBTRCalcOnSHId[i].SHeadType == "Earning") {
@@ -1390,6 +1416,16 @@
                         else {
                             if (calcPercentage > 0 && calcPercentage <= 100) {
                                 rowEntity.PBTSPercentage = calcPercentage.toFixed(2);
+                                //calculating max amount as per percentage input
+                                if (rowEntity.PBTSMaxCalcOnAmount > 0) {
+                                    var inputMaxAmt = parseFloat(rowEntity.PBTSMaxCalcOnAmount);
+                                    var inputMinAmt = parseFloat(rowEntity.PBTSMinCalcOnAmount);
+                                    rowEntity.PBTSMaxCalcOnAmount = inputMaxAmt.toFixed(2);
+                                    var calcMaxAmt = Math.round((calcPercentage / 100) * inputMaxAmt);
+                                    if (calcPercentage > 0) {
+                                        rowEntity.PBTSMaxAmount = calcMaxAmt.toFixed(2);
+                                    }
+                                }
                             }
                             else {
                                 rowEntity.PBTSPercentage = '';
