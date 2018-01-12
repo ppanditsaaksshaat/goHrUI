@@ -104,6 +104,7 @@
       mastersMenu.push({ name: 'resignation', text: 'Resignation', id: 360 })
       mastersMenu.push({ name: 'role', text: 'Role', id: 21 })
       mastersMenu.push({ name: 'user', text: 'User', id: 'register' })
+      mastersMenu.push({ name: 'roster', text: 'Roster', id: 481 })
       // mastersMenu.push({ name: 'report', text: 'Reporting', id: 21 })
       return mastersMenu;
 
