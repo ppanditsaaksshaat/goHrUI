@@ -5,17 +5,20 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.roster', [])
+    angular.module('BlurAdmin.pages.roster.roster', [])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('roster', {
+            .state('rosterplan.roster', {
                 url: '/roster',
                 title: 'Roster',
-                templateUrl: 'app/pages/roster/roster.html',
+                templateUrl: 'app/pages/roster/roster/roster.html',
                 controller: 'RosterPageCtrl',
+                sidebarMeta: {
+                    order: 2,
+                },
             });
     }
 

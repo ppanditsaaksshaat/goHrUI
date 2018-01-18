@@ -1,0 +1,100 @@
+<div ng-hide="roasterPage">
+    <grid-box ng-model="page"></grid-box>
+</div>
+<div ng-show="roasterPage">
+    <form name="editForm" ng-submit="saveRoster(entity,editForm)" novalidate>
+        <div id="editForm" class="panel panel-default bootstrap-panel xmedium-panel" ng-show="roasterPage">
+            <edit-panel-head page="page" page-title="page.pageinfo.tagline" show-save="editForm.untouch" reset-form="resetForm(editForm)"
+                clear-form="clearForm(editForm)" condition="true" show-list="false" show-close="true" close-form="closeForm(editForm)"></edit-panel-head>
+            <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RODEmpId.text"></label>
+                                <div>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.RODEmpId" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RODRosterPlanId.text"></label>
+                                <div>
+                                    <select class="form-control" ng-model="entity.plan" ng-change="planOnChange(entity.plan)" ng-options="plan.name for plan in page.pageinfo.fields.RODRosterPlanId.options">
+                                    </select>
+                                    <!-- <field-box page="page" ng-column="page.pageinfo.fields.RODRosterPlanId" ng-entity="entity" form="editForm" fb-change="planOnChange(entity.RODRosterPlanId)"></field-box> -->
+                                </div>
+
+                            </div>
+                        </div>
+                        <div ng-show="planDetail">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label ng-bind="page.pageinfo.fields.RODShiftId.text"></label>
+                                    <div>
+                                        <select disabled="disabled" class="form-control" ng-model="entity.RODShiftId" ng-options="shift.value as shift.name for shift in page.pageinfo.fields.RODShiftId.options">
+                                        </select>
+                                        <!-- <field-box page="page" ng-column="page.pageinfo.fields.RODShiftId" ng-entity="entity" form="editForm"></field-box> -->
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label ng-bind="page.pageinfo.fields.RODWeekOffSetId.text"></label>
+                                    <div>
+                                        <select disabled="disabled" class="form-control" ng-model="entity.RODWeekOffSetId" ng-options="weekOffSet.value as weekOffSet.name for weekOffSet in page.pageinfo.fields.RODWeekOffSetId.options">
+                                        </select>
+                                        <!-- <field-box page="page" ng-column="page.pageinfo.fields.RODWeekOffSetId" ng-entity="entity" form="editForm"></field-box> -->
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label ng-bind="page.pageinfo.fields.RODFromDate.text"></label>
+                                    <div>
+                                        <span class="form-control" ng-bind="entity.RODFromDate"></span>
+                                    </div>
+
+                                    <!-- <div class="input-group" moment-picker="entity.RODFromDate" format="DD-MMM-YYYY" start-view="month">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input disabled="disabled" valid-text ng-column="col" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                            ng-model="entity.RODFromDate" ng-model-options="{ updateOn: 'blur' }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" ng-click="entity.RODFromDate=''" type="button">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </span>
+                                    </div> -->
+                                    <!-- <field-box page="page" ng-column="page.pageinfo.fields.RODFromDate" ng-entity="entity" form="editForm"></field-box> -->
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label ng-bind="page.pageinfo.fields.RODToDate.text"></label>
+                                    <div>
+                                        <span class="form-control" ng-bind="entity.RODToDate"></span>
+                                    </div>
+                                    <!-- <div class="input-group" moment-picker="entity.RODToDate" format="DD-MMM-YYYY" start-view="month">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input disabled="disabled" valid-text ng-column="col" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                            ng-model="entity.RODToDate" ng-model-options="{ updateOn: 'blur' }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" ng-click="entity.RODToDate=''" type="button">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </span>
+                                    </div> -->
+                                    <!-- <div>
+                                        <field-box page="page" ng-column="page.pageinfo.fields.RODToDate" ng-entity="entity" form="editForm"></field-box>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+    </div>

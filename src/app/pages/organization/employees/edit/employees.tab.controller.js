@@ -352,6 +352,9 @@
                 case 448://benefit
                     linkFieldName = 'EBDEmpId'
                     break;
+                case 481://roster
+                    linkFieldName = 'RODEmpId'
+                    break;
 
             }
 
