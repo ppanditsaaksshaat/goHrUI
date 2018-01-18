@@ -18,6 +18,7 @@
 
         $scope.saveRoster = _save;
         $scope.closeForm = _closeForm;
+        $scope.planOnChange = _planOnChange;
 
 
 
@@ -74,48 +75,61 @@
         }
         function _closeForm() {
             $scope.roasterPage = false;
+            $scope.planDetail = false;
             $scope.page.refreshData();
+        }
+        function _planOnChange(plan) {
+            console.log(plan)
+            $scope.planDetail = true;
+            $scope.entity.RODShiftId = plan.RPDShiftId;
+            $scope.entity.RODWeekOffSetId = plan.RPDWeekOffSetId;
+            $scope.entity.RODFromDate = angular.copy(moment(plan.RPDFromDate).format("DD-MMM-YYYY"));
+            $scope.entity.RODToDate = angular.copy(moment(plan.RPDToDate).format("DD-MMM-YYYY"));
+
+
+            console.log($scope.entity.plan)
+
         }
 
         function _validate(entity, oldEntity) {
 
-            // var equal = angular.equals(entity, oldEntity);
-            // if (equal) {
-            //     $scope.showMsg("info", "Nothing To Save");
-            //     return false;
-            // }
+
             if (entity.RODEmpId == undefined) {
                 $scope.showMsg("error", "Please Select Employee");
                 return false;
             }
-            if (entity.RODWeekOffSetId == undefined) {
-                $scope.showMsg("error", "Please Select WeekOff Set");
+            if (entity.plan == undefined) {
+                $scope.showMsg("error", "Please Select Roster Plan");
                 return false;
             }
-            if (entity.RODFromDate == undefined) {
-                $scope.showMsg("error", "Please Select From Date");
-                return false;
-            }
-            if (entity.RODToDate == undefined) {
-                $scope.showMsg("error", "Please Select To Date");
-                return false;
-            }
-            var currentDate = moment();
-            var fromDate = moment(entity.RODFromDate)
-            var toDate = moment(entity.RODToDate);
-            var valiDate = toDate.isSameOrAfter(fromDate);
-            if (!valiDate) {
-                $scope.showMsg("error", "To Date Less Than Or Equal To From Date");
-                return false;
-            }
-            if (currentDate.format('YYYY') != fromDate.format('YYYY')) {
-                $scope.showMsg("error", "From Date Should Be Current Year");
-                return false;
-            }
-            if (currentDate.format('YYYY') != toDate.format('YYYY')) {
-                $scope.showMsg("error", "To Date Should Be Current Year");
-                return false;
-            }
+            // if (entity.RODWeekOffSetId == undefined) {
+            //     $scope.showMsg("error", "Please Select WeekOff Set");
+            //     return false;
+            // }
+            // if (entity.RODFromDate == undefined) {
+            //     $scope.showMsg("error", "Please Select From Date");
+            //     return false;
+            // }
+            // if (entity.RODToDate == undefined) {
+            //     $scope.showMsg("error", "Please Select To Date");
+            //     return false;
+            // }
+            // var currentDate = moment();
+            // var fromDate = moment(entity.RODFromDate)
+            // var toDate = moment(entity.RODToDate);
+            // var valiDate = toDate.isSameOrAfter(fromDate);
+            // if (!valiDate) {
+            //     $scope.showMsg("error", "To Date Less Than Or Equal To From Date");
+            //     return false;
+            // }
+            // if (currentDate.format('YYYY') != fromDate.format('YYYY')) {
+            //     $scope.showMsg("error", "From Date Should Be Current Year");
+            //     return false;
+            // }
+            // if (currentDate.format('YYYY') != toDate.format('YYYY')) {
+            //     $scope.showMsg("error", "To Date Should Be Current Year");
+            //     return false;
+            // }
 
             return true;
 
@@ -149,6 +163,14 @@
             searchLists.push(searchListData)
 
             searchListData = {
+                field: 'RODRosterPlanId',
+                operand: '=',
+                value: entity.plan.value
+            }
+            searchLists.push(searchListData)
+
+
+            searchListData = {
                 field: 'RODToDate',
                 operand: '=',
                 value: entity.RODToDate
@@ -163,8 +185,9 @@
 
         }
         function _getCustomQuerySuccessResult(result) {
-           
+
             $scope.roasterPage = false;
+            $scope.planDetail = false;
             $scope.page.refreshData();
             $scope.showMsg("success", "New Roaster Added Successfully");
         }
@@ -176,6 +199,7 @@
             if (_validate(entity, $scope.oldEntity)) {
 
                 if ($scope.addRecord) {
+                    
                     _saveRoster(entity);
                 }
                 else {
