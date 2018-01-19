@@ -106,14 +106,14 @@
                 PDOtherNumber: vm.empAdd.PDOtherNumber,
                 PdEmail: vm.empAdd.PdEmail
             }
-            var roster = {
-                RODWeekOffSetId: $scope.RosterPlan.RPDWeekOffSetId,
-                RODFromDate: moment($scope.RosterPlan.RPDFromDate).format("DD-MMM-YYYY"),
-                RODToDate: moment($scope.RosterPlan.RPDToDate).format("DD-MMM-YYYY"),
-                RODShiftId: $scope.RosterPlan.RPDWeekOffSetId,
-                RODRosterPlanId: $scope.RosterPlan.value,
-            }
-            var employeeData = { basic: basic, job: job, personal: personal,roster:roster };
+            // var roster = {
+            //     RODWeekOffSetId: $scope.RosterPlan.RPDWeekOffSetId,
+            //     RODFromDate: moment($scope.RosterPlan.RPDFromDate).format("DD-MMM-YYYY"),
+            //     RODToDate: moment($scope.RosterPlan.RPDToDate).format("DD-MMM-YYYY"),
+            //     RODShiftId: $scope.RosterPlan.RPDWeekOffSetId,
+            //     RODRosterPlanId: $scope.RosterPlan.value,
+            // }
+            var employeeData = { basic: basic, job: job, personal: personal };
             pageService.create(JSON.stringify(employeeData)).then(_createSuccessResult, _createErrorResult)
 
         }

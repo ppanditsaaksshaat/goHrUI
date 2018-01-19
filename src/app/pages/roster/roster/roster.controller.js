@@ -97,39 +97,39 @@
             if (entity.RODEmpId == undefined) {
                 $scope.showMsg("error", "Please Select Employee");
                 return false;
-            }
-            if (entity.plan == undefined) {
-                $scope.showMsg("error", "Please Select Roster Plan");
+            }    
+            if (entity.RODShiftId == undefined) {
+                $scope.showMsg("error", "Please Select Shift");
+                return false;
+            }     
+            if (entity.RODFromDate == undefined) {
+                $scope.showMsg("error", "Please Select From Date");
                 return false;
             }
-            // if (entity.RODWeekOffSetId == undefined) {
-            //     $scope.showMsg("error", "Please Select WeekOff Set");
-            //     return false;
-            // }
-            // if (entity.RODFromDate == undefined) {
-            //     $scope.showMsg("error", "Please Select From Date");
-            //     return false;
-            // }
-            // if (entity.RODToDate == undefined) {
-            //     $scope.showMsg("error", "Please Select To Date");
-            //     return false;
-            // }
-            // var currentDate = moment();
-            // var fromDate = moment(entity.RODFromDate)
-            // var toDate = moment(entity.RODToDate);
-            // var valiDate = toDate.isSameOrAfter(fromDate);
-            // if (!valiDate) {
-            //     $scope.showMsg("error", "To Date Less Than Or Equal To From Date");
-            //     return false;
-            // }
-            // if (currentDate.format('YYYY') != fromDate.format('YYYY')) {
-            //     $scope.showMsg("error", "From Date Should Be Current Year");
-            //     return false;
-            // }
-            // if (currentDate.format('YYYY') != toDate.format('YYYY')) {
-            //     $scope.showMsg("error", "To Date Should Be Current Year");
-            //     return false;
-            // }
+            if (entity.RODToDate == undefined) {
+                $scope.showMsg("error", "Please Select To Date");
+                return false;
+            }
+            if (entity.RODWeekOffSetId == undefined) {
+                $scope.showMsg("error", "Please Select WeekOff Set");
+                return false;
+            }
+            var currentDate = moment();
+            var fromDate = moment(entity.RODFromDate)
+            var toDate = moment(entity.RODToDate);
+            var valiDate = toDate.isSameOrAfter(fromDate);
+            if (!valiDate) {
+                $scope.showMsg("error", "To Date Less Than Or Equal To From Date");
+                return false;
+            }
+            if (currentDate.format('YYYY') != fromDate.format('YYYY')) {
+                $scope.showMsg("error", "From Date Should Be Current Year");
+                return false;
+            }
+            if (currentDate.format('YYYY') != toDate.format('YYYY')) {
+                $scope.showMsg("error", "To Date Should Be Current Year");
+                return false;
+            }
 
             return true;
 
@@ -162,12 +162,12 @@
             }
             searchLists.push(searchListData)
 
-            searchListData = {
-                field: 'RODRosterPlanId',
-                operand: '=',
-                value: entity.plan.value
-            }
-            searchLists.push(searchListData)
+            // searchListData = {
+            //     field: 'RODRosterPlanId',
+            //     operand: '=',
+            //     value: entity.plan.value
+            // }
+            // searchLists.push(searchListData)
 
 
             searchListData = {
@@ -187,7 +187,6 @@
         function _getCustomQuerySuccessResult(result) {
 
             $scope.roasterPage = false;
-            $scope.planDetail = false;
             $scope.page.refreshData();
             $scope.showMsg("success", "New Roaster Added Successfully");
         }
