@@ -16,7 +16,7 @@
       .state('organization.reports.empJoiningDt', {
         url: '/empJoiningDt',
         // abstract: true,
-        templateUrl: 'app/pages/organization/reports/empJoiningDt/empJoiningDt.html?v=1',
+        templateUrl: 'app/pages/organization/reports/empJoiningDt/empJoiningDt.html',
         controller: "empJoiningDtReportController",
         controllerAs: "payCtrl",
         title: 'Joining Detail',
