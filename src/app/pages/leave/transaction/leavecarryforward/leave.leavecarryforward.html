@@ -1,0 +1,71 @@
+<grid-box ng-model="page" ng-show="showGrid">
+</grid-box>
+
+
+<form name="editForm " ng-submit="saveCarryForward(editForm,entity)" class="form-horizontal" novalidate ng-submit="saveForm() "
+    ng-hide="showGrid ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="false " show-save="false " show-clear="false " show-list="false
+     " show-reset="false " condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+            <div class="form-group">
+
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.YearId.text}}</label>
+                    <!-- {{page.pageinfo.fields.CFLDRemaing}}
+                    {{page.pageinfo}} -->
+                    <select class="form-control" ng-model="entity.yearId" ng-change="getTaxComputation()" ng-options="employee.name  for employee in page.pageinfo.selects.YearId">
+                    </select>
+                </div>
+
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.LeaveTypeId.text}}</label>
+                    <select class="form-control" ng-model="entity.leaveTypeId" ng-change="getTaxComputation()" ng-options="employee.name  for employee in page.pageinfo.selects.LeaveTypeId">
+                    </select>
+                </div>
+
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.SubUnitId.text}}</label>
+                    <select class="form-control" ng-model="entity.subUnitId" ng-change="getTaxComputation()" ng-options="employee.name  for employee in page.pageinfo.selects.SubUnitId">
+                    </select>
+                </div>
+                <!--<div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.DeptId.text}}</label>
+                    <select class="form-control" ng-model="entity.deptId" ng-change="getTaxComputation()" ng-options="employee.name  for employee in page.pageinfo.selects.DeptId">
+                    </select>
+                </div> -->
+                <!-- <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.StatusId.text}}</label>
+                    <select class="form-control" ng-model="entity.statusId" ng-change="getTaxComputation()" ng-options="status.name  for status in page.pageinfo.selects.CFLDStatusId">
+                    </select>
+                </div> -->
+                <div class="col-xs-1">
+                    <button class="btn btn-primary" type="button" ng-click="getEmployeeList();">Search</button>
+                </div>
+                <div class="col-xs-1" ng-show="isApproved">
+                    <button class="btn btn-primary" type="button" ng-click="approvedCarry();">Approved</button>
+                </div>
+
+            </div>
+
+
+
+
+
+
+            <div class="form-group" ng-show="gridLine">
+                <div class="col-xs-12">
+                    <h3 class="with-line " ng-show="gridLine">Carry Forward Leave Detail - Maximum Carry Forward Leave {{entity.maxCarryForwardLeave}}</h3>
+                    <div class="row" ng-if="carryForwordGridOptions.data.length>0">
+                        <div class="col-md-12">
+                            <div style="height: 200px;" ui-grid="carryForwordGridOptions" ui-grid-cellNav ui-grid-pagination ui-grid-edit ui-grid-expandable
+                                ui-grid-auto-resize ui-grid-selection class="grid paybandgrid payband"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
