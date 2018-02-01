@@ -490,8 +490,25 @@
           var toDay = result.LSCToDay;
           var fromDate = new Date(ACYear, ACMonth, fromDay);
           var toDate = new Date(ACYear, ACMonth + 1, toDay);
-          var getFromDate = (fromDate.getMonth()) + 1 + "-" + fromDate.getDate() + "-" + fromDate.getFullYear();
-          var getToDate = (toDate.getMonth()) + 1 + "-" + toDate.getDate() + "-" + toDate.getFullYear();
+          // if(ACMonth==11){
+          //   fromDate = new Date(ACYear, ACMonth, fromDay);
+          //   toDate = new Date(ACYear, ACMonth + 1, toDay);
+          // }
+          // else{
+          //   fromDate = new Date(ACYear, ACMonth, fromDay);
+          //   toDate = new Date(ACYear, ACMonth + 1, toDay);
+          // }
+          var getFromDate = (fromDate.getMonth()) + "-" + fromDate.getDate() + "-" + fromDate.getFullYear();
+          var getToDate = (toDate.getMonth()) + "-" + toDate.getDate() + "-" + toDate.getFullYear();
+
+          if (ACMonth == 11) {
+            getToDate = (toDate.getMonth()) + 12 + "-" + toDate.getDate() + "-" + toDate.getFullYear();
+          }
+          if (ACMonth == 0) {
+            getFromDate = (fromDate.getMonth()) + 12 + "-" + fromDate.getDate() + "-" + fromDate.getFullYear();
+          }
+
+
           console.log(getFromDate)
           // $scope.acFromDate = getFromDate;
           // $scope.acToDate = getToDate;
