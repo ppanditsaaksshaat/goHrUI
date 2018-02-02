@@ -57,7 +57,7 @@
       var currentDate = new Date();
       var aAMonth = $scope.page.filterData.Month.value - 1
       var aAYear = $scope.page.filterData.Year.value
-      currentDay = currentDate.getDate();
+      currentDay = 15;
       console.log(currentDay)
       var aADate = new Date(aAYear, aAMonth, currentDay);
       $scope.entity.advanceDate = moment(aADate).format("YYYY-MM-DD");
