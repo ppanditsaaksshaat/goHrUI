@@ -502,10 +502,16 @@
           var getToDate = (toDate.getMonth()) + "-" + toDate.getDate() + "-" + toDate.getFullYear();
 
           if (ACMonth == 11) {
-            getToDate = (toDate.getMonth()) + 12 + "-" + toDate.getDate() + "-" + toDate.getFullYear();
+            getFromDate = (fromDate.getMonth()) + "-" + fromDate.getDate() + "-" + fromDate.getFullYear();
+            var fromYear = parseInt(toDate.getFullYear());
+            var fromYears = fromYear - 1;
+            getToDate = (toDate.getMonth()) + 12 + "-" + toDate.getDate() + "-" + fromYears;
           }
           if (ACMonth == 0) {
-            getFromDate = (fromDate.getMonth()) + 12 + "-" + fromDate.getDate() + "-" + fromDate.getFullYear();
+            var toYear = parseInt(toDate.getFullYear());
+            var toYears = toYear - 1;
+            getFromDate = (fromDate.getMonth()) + 12 + "-" + fromDate.getDate() + "-" + toYears;
+            getToDate = (toDate.getMonth()) + "-" + toDate.getDate() + "-" + toDate.getFullYear();
           }
 
 
