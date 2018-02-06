@@ -386,6 +386,9 @@
                 buttonPermission: true
             }
 
+            if (pageId == 438) {
+                pageObject.boxOptions.afterCellEdit = _afteraCellEdit;
+            }
             if (pageId == 448) {
                 pageObject.boxOptions.showFilter = false;
                 pageObject.boxOptions.pageResult = _pageResultForBenefit;
@@ -405,7 +408,9 @@
 
             return pageObject;
         }
-
+        function _afteraCellEdit() {
+            alert("hello")
+        }
         //Resignation Edit
         function _editRecord(row) {
             console.log(row.entity)

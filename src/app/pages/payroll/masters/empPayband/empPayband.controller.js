@@ -64,6 +64,7 @@
         $scope.slabPage.pageId = pageIds.slabPage.pageId;
         $scope.formulaPage = {}
         $scope.formulaPage.pageId = pageIds.formulaPage.pageId;
+        $scope.uploader = false;
 
         var employeeEnt = [];
 
@@ -143,6 +144,7 @@
                     }
                 })
                 if (flag) {
+                    $scope.uploader = true;
                     $scope.showMsg("success", "Your file uploaded successfully")
                 }
 
@@ -779,6 +781,7 @@
 
             //    $scope.oldData = dataList;
             $scope.page.gridOptions.data = dataList;
+         
 
         }
 
@@ -1792,7 +1795,11 @@
 
         // save employee payband detail
         function _saveEmpPayband() {
-            if (_validate(employeeEnt)) {
+
+            if (_validate(employeeEnt) || $scope.uploader) {
+                if (employeeEnt.length == 0) {
+                    employeeEnt = $scope.page.gridOptions.data
+                }
                 var count = 0;
                 $scope.multi = {
                     parentRows: [],
@@ -1976,6 +1983,7 @@
                     if (result == "done") {
                         $scope.showMsg("success", "Record Saved Successfully");
                         employeeEnt = [];
+                        $scope.uploader = false;
                     }
 
                 }, function (err) {
