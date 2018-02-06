@@ -48,27 +48,24 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      showDataOnLoad: false
+      showDataOnLoad: false,
+      filterOnChange: _filterChange,
     }
-    // $scope.page.boxOptions = {
-    //   selfLoading: true,
-    //   showRefresh: true,
-    //   showFilter: true,
-    //   showAdd: true,
-    //   showRowMenu: true,
-    //   showCustomView: true,
-    //   showUpload: false,
-    //   showDialog: false,
-    //   enableRefreshAfterUpdate: true,
-    //   gridHeight: 450,
-    //   getPageData: null,
-    //   refreshData: null,
-    //   addRecord: _addRecord,
-    //   editRecord: null,
-    //   updateRecord: null,
-    //   viewRecord: null,
-    //   deleteRecord: null,
-    // }
+
+    function _filterChange() {
+      var currentDay;
+      var currentDate = new Date();
+      var aAMonth = $scope.page.filterData.Month.value - 1
+      var aAYear = $scope.page.filterData.Year.value
+      currentDay = 15;
+      console.log(currentDay)
+      var aADate = new Date(aAYear, aAMonth, currentDay);
+      $scope.entity.advanceDate = moment(aADate).format("YYYY-MM-DD");
+      console.log($scope.entity.advanceDate)
+      // 'yyyy-MM-dd'
+
+    }
+
     $scope.page.boxOptions.customButtons = [];
     $scope.page.boxOptions.customButtons.push({ text: 'Save', icon: 'ion-refresh', onClick: _saveMidMonthClick, type: 'btn-danger' })
 
@@ -78,45 +75,47 @@
       $scope.newEntity = {};
     }
 
+
     var totalSavingRecord = 0;
     function _saveMidMonthClick() {
 
       totalSavingRecord = $scope.page.gridOptions.data.length - 1;
 
       if ($scope.page.gridOptions.data.length > 0) {
-      angular.forEach($scope.page.gridOptions.data, function (row) {
-        //                    console.log(row)
+        angular.forEach($scope.page.gridOptions.data, function (row) {
+          //                    console.log(row)
 
-        var data = {
-          // EBDId: row.EBDId == null ? undefined : row.EBDId,
-          // EBDAccountNumber: row.EBDAccountNumber,
-          // EBDBenefitId: row.EBDBenefitId,
-          // EBDEmpId: row.EBDEmpId,
-          // EBDIsOnPercentage: row.EBDIsOnPercentage,
-          // EBDFiexedAmount: row.EBDFiexedAmount,
-          // EBDPercentage: row.EBDPercentage,
-          // EBDIsCalOnBasic: row.EBDIsCalOnBasic
+          var data = {
+            // EBDId: row.EBDId == null ? undefined : row.EBDId,
+            // EBDAccountNumber: row.EBDAccountNumber,
+            // EBDBenefitId: row.EBDBenefitId,
+            // EBDEmpId: row.EBDEmpId,
+            // EBDIsOnPercentage: row.EBDIsOnPercentage,
+            // EBDFiexedAmount: row.EBDFiexedAmount,
+            // EBDPercentage: row.EBDPercentage,
+            // EBDIsCalOnBasic: row.EBDIsCalOnBasic
 
-          AAId: row.AAId == null ? undefined : row.AAId,
-          AAEmpId: row.EBDEmpId,
-          AAAmount: row.MidMonth,
-          AAIsGiven: 1
-        }
-        console.log(data)
-        var form = {}
+            AAId: row.AAId == null ? undefined : row.AAId,
+            AAEmpId: row.EBDEmpId,
+            AAAmount: row.MidMonth,
+            AAIsGiven: 1,
+            AADate: $scope.entity.advanceDate
+          }
+          console.log(data)
+          var form = {}
 
-        // editFormService.saveForm(advancePageId, data,
-        //   {}, 'create', 'Benefit', form, false).then(_successMidMonthResult, _errorMidMonthResult);
+          // editFormService.saveForm(advancePageId, data,
+          //   {}, 'create', 'Benefit', form, false).then(_successMidMonthResult, _errorMidMonthResult);
 
-        if (data.AAId == undefined) {
-          editFormService.saveForm(advancePageId, data,
-            {}, 'create', 'MidNonth', form, false).then(_successMidMonthResult, _errorMidMonthResult);
-        }
-        else {
-          editFormService.saveForm(advancePageId, data,
-            {}, 'edit', 'MidNonth', form, false).then(_successMidMonthResult, _errorMidMonthResult);
-        }
-      })
+          if (data.AAId == undefined) {
+            editFormService.saveForm(advancePageId, data,
+              {}, 'create', 'MidNonth', form, false).then(_successMidMonthResult, _errorMidMonthResult);
+          }
+          else {
+            editFormService.saveForm(advancePageId, data,
+              {}, 'edit', 'MidNonth', form, false).then(_successMidMonthResult, _errorMidMonthResult);
+          }
+        })
       }
       else {
         $scope.showMsg("error", "Please search data then save");
