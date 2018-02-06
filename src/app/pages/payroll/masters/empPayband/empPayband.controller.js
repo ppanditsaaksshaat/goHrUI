@@ -1788,6 +1788,7 @@
                 return false;
             }
             return true;
+            
         }
 
         //END: third level grid functions
