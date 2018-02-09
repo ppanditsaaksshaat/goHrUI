@@ -318,7 +318,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                     }
                     else if (column.editable.controltype == 'timepicker') {
                         //console.log(column)
-                        cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'HH:mm a'}}</div>"
+                        cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'HH:mm'}}</div>"
                     }
                     // if(column.controltype)
 
