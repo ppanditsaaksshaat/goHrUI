@@ -1,101 +1,169 @@
 <grid-box ng-model="page" ng-hide="showEditForm">
 </grid-box>
 
-<!--<form name="editForm" novalidate ng-submit="saveForm(editForm)" ng-show="showEditForm">
-    <div class="panel panel-default xmedium-panel">
-        <edit-panel-head page-title="page.pageinfo.title" reset-form="resetFormCommon(editForm)" clear-form="clearFormCommon(editForm)"
-            close-form="closeForm(editForm)" show-close="true" show-save="true" show-clear="true" show-list="false" show-reset="true"
-            condition="true"></edit-panel-head>
+<form name="editForm " novalidate ng-submit="saveForm() " ng-show="showEditForm ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
+ " show-reset="true " condition="true "></edit-panel-head>
 
         <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
             <div class="row">
-               
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AEADAARDIdKey.text}}</label>
-                        </div>
-                        <div class="col-md-8">
-                            <field-box ng-column="page.pageinfo.fields.AEADAARDIdKey" ng-entity="entity" form="editForm"></field-box>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="col-md-6">
                     <div class="row">
-
                         <div class="col-md-4">
-                            <label for="inputPassword4" class="control-label">{{page.pageinfo.fields.AEADEmpId.text}}</label>
+                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.EmpId.text}}</label>
                         </div>
-                        <div class="col-md-8">
-                            <field-box ng-column="page.pageinfo.fields.AEADEmpId" ng-entity="entity" form="editForm"></field-box>
+                        <div class="col-md-4">
+                            <field-box page="page" ng-column="page.pageinfo.fields.EmpId" ng-entity="entity" form="editForm"></field-box>
                         </div>
                     </div>
                 </div>
-            </div>
-             <div class="row">
-                <div class="form-group col-md-6">
+
+                <div class="col-md-6">
                     <div class="row">
 
                         <div class="col-md-4">
-                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AEADAPPDateKey.text}}</label>
+                            <label for="inputPassword4" class="control-label">{{page.pageinfo.fields.AttDate.text}}</label>
                         </div>
                         <div class="col-md-8">
-                            <field-box ng-column="page.pageinfo.fields.AEADAPPDateKey" ng-entity="entity" form="editForm"></field-box>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="form-group col-md-6">
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AEADAttInTimeKey.text}}</label>
-                        </div>
-                        <div class="col-md-8">
-                            <field-box ng-column="page.pageinfo.fields.AEADAttInTimeKey" ng-entity="entity" form="editForm"></field-box>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="row">
-                <div class="form-group col-md-6">
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AEADAttOutTimeKey.text}}</label>
-                        </div>
-                        <div class="col-md-8">
-                            <field-box ng-column="page.pageinfo.fields.AEADAttOutTimeKey" ng-entity="entity" form="editForm"></field-box>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="form-group col-md-6">
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AEADRemarksKey.text}}</label>
-                        </div>
-                        <div class="col-md-8">
-                            <field-box ng-column="page.pageinfo.fields.AEADRemarksKey" ng-entity="entity" form="editForm"></field-box>
+                            <field-box page="page" ng-column="page.pageinfo.fields.AttDate" ng-entity="entity" form="editForm"></field-box>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="inputPassword3">{{page.pageinfo.fields.AEADEmpId.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.AEADEmpId" ng-entity="entity" form="editForm"></field-box>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.InTime.text}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <field-box page="page" ng-column="page.pageinfo.fields.InTime" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+
+
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputPassword3" class="col-sm-3 control-label">{{page.pageinfo.fields.AEADEmpId.text}}</label>
-                    <field-box ng-column="page.pageinfo.fields.AEADEmpId" ng-entity="entity" form="editForm"></field-box>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.OutTime.text}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <field-box page="page" ng-column="page.pageinfo.fields.OutTime" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.ODReason.text}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <field-box page="page" ng-column="page.pageinfo.fields.ODReason" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="form-group col-md-6">
+
+                </div>
+            </div>
+
+            <div ng-show="showAdmin_Panel">
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="inputPassword3">{{page.pageinfo.fields.AttTypeId.text}}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <field-box page="page" ng-column="page.pageinfo.fields.AttTypeId" ng-entity="entity" form="editForm"></field-box>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="inputPassword3">{{page.pageinfo.fields.TotalTime.text}}</label>
+                            </div>
+                            <div class="col-md-4">
+                                    <input readonly class="form-control" type="text" ng-model="shiftDurations">   
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="inputPassword3">{{page.pageinfo.fields.org_InTime.text}}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <field-box page="page" ng-column="page.pageinfo.fields.org_InTime" ng-entity="entity" form="editForm"></field-box>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="inputPassword3">{{page.pageinfo.fields.org_OutTime.text}}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <field-box page="page" ng-column="page.pageinfo.fields.org_OutTime" ng-entity="entity" form="editForm"></field-box>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.ReportMgrRemark.text}}</label>
+                             
+                            </div>
+                            <div class="col-md-8">
+                                  <field-box page="page" ng-column="page.pageinfo.fields.ReportMgrRemark" ng-entity="entity" form="editForm"></field-box>
+                          
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                    <div class="form-group col-md-6" ng-hide="true"  >
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                 <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.EmpRemark.text}}</label>
+                          
+                            </div>
+                            <div class="col-md-8">
+                                <field-box page="page" ng-column="page.pageinfo.fields.EmpRemark" ng-entity="entity" form="editForm"></field-box>
+                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
     </div>
 
-</form>-->
+</form>
