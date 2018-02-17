@@ -53,7 +53,7 @@
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null,
-      buttonPermission:true
+      buttonPermission: true
     }
 
     if ($scope.page.pageId == 445) {
@@ -74,8 +74,7 @@
           })
 
 
-        }
-        else {
+        } else {
           angular.forEach($scope.groupList, function (data) {
             data.isSelected = false;
           })
@@ -96,13 +95,14 @@
         var toDate = moment($scope.entity.LRCToDate);
         var diff = toDate.diff(wefDate, "days") + 1
         $scope.entity.calculateDays = diff;
-        
+
 
         console.log(diff)
       }
 
 
     }
+
     function _loadController() {
       var data = {
         searchList: [],
@@ -110,11 +110,16 @@
       }
       pageService.getCustomQuery(data, vm.queryId).then(getCustomQuerySuccessResult, getCustomQueryErrorResult)
     }
+
     function getCustomQuerySuccessResult(result) {
       $scope.groupList = result;
-      $scope.groupList.splice(0, 0, { 'GMCId': 0, 'GMCName': 'All' })
+      $scope.groupList.splice(0, 0, {
+        'GMCId': 0,
+        'GMCName': 'All'
+      })
 
     }
+
     function getCustomQueryErrorResult(eerr) {
 
     }
@@ -176,10 +181,11 @@
     function _addRecord() {
       $scope.entity = {};
       $scope.showEditForm = true;
-        angular.forEach($scope.groupList, function (group) {
-          group.isSelected = false;
-        })
+      angular.forEach($scope.groupList, function (group) {
+        group.isSelected = false;
+      })
     }
+
     function _editRecord(row) {
       $scope.showEditForm = true;
       $scope.page.isAllowEdit = true;
@@ -195,8 +201,7 @@
       }
       if (row.entity.LRCCarryFwdMonthly == true || row.entity.LRCCarryFwdYearly == true || row.entity.LRCMaxCarryDays != undefined) {
         $scope.allowCarryForward = true;
-      }
-      else {
+      } else {
         $scope.allowCarryForward = false;
       }
 
@@ -247,11 +252,9 @@
       if (result.success_message == 'Added New Record.') {
         $scope.showEditForm = false;
         // editForm.$setPristine();
-      }
-      else if (result.success_message == 'Record Updated.') {
+      } else if (result.success_message == 'Record Updated.') {
         $scope.showEditForm = false;
-      }
-      else
+      } else
         $scope.showEditForm = true;
     }
 
@@ -345,10 +348,9 @@
         var value = $scope.entity.LRCNoOfDaysInCycle / $scope.entity.LRCCycleIntervalDays;
         if (!isNaN($scope.entity.LRCCRDaysInInterval))
           $scope.entity.totalTenure = parseInt(value) * $scope.entity.LRCCRDaysInInterval;
-        else
-          $scope.showMsg("error", "Please enter numeric value in Number Of Leave Field");
-      }
-      else if ($scope.entity.totalTenure != undefined) {
+        // else
+        //   $scope.showMsg("error", "Please enter numeric value in Number Of Leave Field");
+      } else if ($scope.entity.totalTenure != undefined) {
         $scope.entity.totalTenure = "";
       }
     }
@@ -366,7 +368,7 @@
         entity.LRCGroupIds = selectedGroups;
       }
       editFormService.saveForm(pageId, entity, vm.oldEntity,
-        entity.LRCId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
+          entity.LRCId == undefined ? "create" : "edit", $scope.page.pageinfo.title, editForm, true)
         .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
     }
 
@@ -375,6 +377,7 @@
       $scope.showEditForm = false;
       $scope.showMsg("success", "Record Saved Successfully");
     }
+
     function _saveWizardFormErrorResult(err) {
 
     }

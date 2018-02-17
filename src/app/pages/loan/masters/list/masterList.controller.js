@@ -17,6 +17,7 @@
     var tempName = $stateParams.name;
     var currentState = $state.current;
     $scope.oldEntity = {};
+    vm.loanCatRulMasterPageId = 104;
 
     $scope.saveForm = _saveForm;
     $scope.page = $scope.createPage();
@@ -42,7 +43,39 @@
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null,
-      buttonPermission:true
+      buttonPermission: true
+    }
+
+    function _loadController() {
+
+      pageService.getPagData(vm.loanCatRulMasterPageId).then(
+        _getPageDataSuccessResult, _getPageDataErrorResult);
+    }
+
+    function _getPageDataSuccessResult(result) {
+      console.log($scope.page.searchList)
+      console.log($scope.entity)
+      console.log(result);
+
+      if (result.pageinfo.selects.LocationId[2].IsDefault) {
+        $scope.locationId = result.pageinfo.selects.LocationId[2].value
+      }
+      if (result.pageinfo.selects.BRId[2].IsDefault) {
+        $scope.branchId = result.pageinfo.selects.BRId[2].value
+      }
+      if (result.pageinfo.selects.LTRSubUnitId[2].IsDefault) {
+        $scope.subUnitId = result.pageinfo.selects.LTRSubUnitId[2].value
+      }
+      $scope.page.boxOptions.defaultEntity = {
+        'LocationId': $scope.locationId,
+        'BRId': $scope.branchId,
+        'LTRSubUnitId': $scope.subUnitId,
+
+      }
+    }
+
+    function _getPageDataErrorResult(errorResult) {
+
     }
 
     if ($scope.page.pageId == 261) {
@@ -68,6 +101,7 @@
         }
       }
     })
+
     function _addRecord() {
       // $state.go("leave.masters.list", "{action:'create'}");
       $scope.showEditForm = true;
@@ -81,6 +115,7 @@
 
       return true;
     }
+
     function _showToast(type, msg, title) {
       toastOption.type = type;
       angular.extend(toastrConfig, toastOption);
@@ -119,39 +154,7 @@
 
     $scope.isLoading = true;
     $scope.isLoaded = false;
-
-
-    // function _addRecord() {
-    //   if ($scope.page.pageinfo.pageid == 1) {
-
-    //   }
-    //   else {
-    //     var param = {
-    //       action: 'create',
-    //       page: $scope.page,
-    //       linkColumns: []
-    //     };
-    //     var options = {
-    //       param: param
-    //     }
-    //     dialogModal.openFormVertical(options);
-    //   }
-    // }
-
-    // function _editRecord(row) {
-    //   var param = {
-    //     action: 'create',
-    //     page: $scope.page,
-    //     entity: row.entity,
-    //     linkColumns: []
-    //   };
-    //   var options = {
-    //     param: param
-    //   }
-    //   dialogModal.openFormVertical(options);
-    // }
-
-
+    _loadController()
   }
 
 })();

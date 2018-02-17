@@ -27,7 +27,7 @@
 
     // this.uploadRecord = _uploadRecord
 
-    $scope.closeView = _closeView;
+
     /**For all list of verify attendance grid setting */
     $scope.entity = {}
     $scope.page = $scope.createPage();
@@ -60,7 +60,7 @@
       addRecord: null,
       editRecord: _editRecord,
       updateRecord: null,
-      viewRecord: _viewRecord,
+      viewRecord: null,
       deleteRecord: null,
       pageResult: _pageResult,
       dataResult: _dataResult,
@@ -522,7 +522,6 @@
 
       console.log(row)
       /**For list of edit verify attendance grid setting */
-      vm.showDayWise = true;
       vm.showVerifyAttendance = false
       var startDate = "", endDate = "";
       if ($scope.page.filterData === undefined) {
@@ -551,19 +550,10 @@
     }
     function _viewRecord(row) {
       var empId = row.entity.EmpId;
-      console.log(row.entity)
-      $scope.emp = row.entity;
-      vm.showEmpVerifyDetail = true;
-      vm.showVerifyAttendance = false;
-      vm.showDayWise = false;
+      alert('_viewRecord called:' + empId)
     }
     function _openView() {
       alert('view opened')
-    }
-    function _closeView() {
-      vm.showEmpVerifyDetail = false;
-      vm.showVerifyAttendance = true;
-      vm.showDayWise = false;
     }
 
     function _applyFilter() {

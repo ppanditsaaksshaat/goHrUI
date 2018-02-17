@@ -114,14 +114,14 @@
                 $scope.showMsg("error", "Please Select WeekOff Set");
                 return false;
             }
-            var currentDate = moment();
-            var fromDate = moment(entity.RODFromDate)
-            var toDate = moment(entity.RODToDate);
-            var valiDate = toDate.isSameOrAfter(fromDate);
-            if (!valiDate) {
-                $scope.showMsg("error", "To Date Less Than Or Equal To From Date");
-                return false;
-            }
+            // var currentDate = moment();
+            // var fromDate = moment(entity.RODFromDate)
+            // var toDate = moment(entity.RODToDate);
+            // var valiDate = toDate.isSameOrAfter(fromDate);
+            // if (!valiDate) {
+            //     $scope.showMsg("error", "To Date Less Than Or Equal To From Date");
+            //     return false;
+            // }
             // if (currentDate.format('YYYY') != fromDate.format('YYYY')) {
             //     $scope.showMsg("error", "From Date Should Be Current Year");
             //     return false;

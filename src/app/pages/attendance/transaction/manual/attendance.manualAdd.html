@@ -1,0 +1,12 @@
+<form name="editForm" novalidate ng-submit="saveForm(editForm)">
+{{addCtrl}}
+    <div class="panel panel-default xmedium-panel">
+        <edit-panel-head page-title="page.pageinfo.title" reset-form="resetFormCommon(editForm)" clear-form="clearFormCommon(editForm)"
+            condition="true"></edit-panel-head>
+
+        <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+            {{page.pageinfo.fields.AEADAARDIdKey}}
+        </div>
+    </div>
+
+</form>

@@ -51,7 +51,7 @@ angular.module('BlurAdmin.common').config(['$provide', function ($provide) {
     };
     return $delegate;
   }]);
- }]).directive('iframeSetDimensionsOnload', [function () {
+}]).directive('iframeSetDimensionsOnload', [function () {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
@@ -65,7 +65,7 @@ angular.module('BlurAdmin.common').config(['$provide', function ($provide) {
       })
     }
   }
- }]).directive('iframeOnload', [function () {
+}]).directive('iframeOnload', [function () {
   return {
     scope: {
       callBack: '&iframeOnload'
@@ -84,19 +84,3 @@ angular.module('BlurAdmin.common').config(['cfpLoadingBarProvider', function (cf
   // cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner">Loading...</div>';
   cfpLoadingBarProvider.includeBar = true;
 }])
-
-
-
-// angular.module('BlurAdmin.common').config(['$translateProvider', function ($translateProvider) {
-//   $translateProvider.translations('en', {
-//     'TITLE': 'Hello',
-//     'FOO': 'This is a paragraph'
-//   });
- 
-//   $translateProvider.translations('de', {
-//     'TITLE': 'Hallo',
-//     'FOO': 'Dies ist ein Absatz'
-//   });
- 
-//   $translateProvider.preferredLanguage('de');
-// }]);

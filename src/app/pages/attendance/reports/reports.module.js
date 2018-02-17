@@ -20,6 +20,7 @@
 
 
   /** @ngInject */
+  
   function routeConfig($stateProvider) {
     $stateProvider
       .state('attendance.reports', {

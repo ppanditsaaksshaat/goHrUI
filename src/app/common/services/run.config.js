@@ -314,11 +314,11 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                         cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'dd-MMM-yyyy'}}</div>"
                     }
                     else if (column.editable.controltype == 'datetimepicker') {
-                        cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'dd-MMM-yyyy HH:mm'}}</div>"
+                        cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'dd-MMM-yyyy hh:mm'}}</div>"
                     }
                     else if (column.editable.controltype == 'timepicker') {
                         //console.log(column)
-                        cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'HH:mm'}}</div>"
+                        cellTemplate = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity." + colName + " | date :'hh:mm a'}}</div>"
                     }
                     // if(column.controltype)
 

@@ -191,11 +191,10 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         var appData = _getAppData();
         var sysParam = _getSysParam();
         var company = _getCompany();
-        var resource = _getValue('resourceKey');
+
         var data = {
             app: appData, profile: profileData,
-            auth: authData, sysparam: sysParam, comapny: company,
-            rp: resource
+            auth: authData, sysparam: sysParam, comapny: company
         }
 
         $rootScope.user = data;

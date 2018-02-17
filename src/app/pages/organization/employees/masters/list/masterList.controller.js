@@ -19,6 +19,11 @@
     vm.filterOpt = {};
     vm.searchList = [];
     vm.orderByList = [];
+    var locationPageId = 34;
+    var branchPageId = 109;
+    var subUnitPageId = 111;
+    var bankBranchPageId = 37;
+
 
     $scope.page = $scope.createPage();
     $scope.page.pageId = $stateParams.pageId;
@@ -41,8 +46,99 @@
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null,
-      buttonPermission:true
+      buttonPermission: true
     }
+
+
+
+    function _loadController() {
+      pageService.getPagData(locationPageId).then(
+        _getLocationPageDataSuccessResult, _getLocationPageDataErrorResult);
+    }
+
+    function _getLocationPageDataSuccessResult(result) {
+      if (result.pageinfo.selects.CountryId[1].IsDefault) {
+        $scope.countryId = result.pageinfo.selects.CountryId[1].value
+      }
+      if (result.pageinfo.selects.StateId[1].IsDefault) {
+        $scope.stateId = result.pageinfo.selects.StateId[1].value
+      }
+      if (result.pageinfo.selects.LocationCityId[1].IsDefault) {
+        $scope.cityId = result.pageinfo.selects.LocationCityId[1].value
+      }
+      if (result.pageinfo.selects.LocationCCOId[0].IsDefault) {
+        $scope.companyId = result.pageinfo.selects.LocationCCOId[0].value
+      }
+
+      pageService.getPagData(branchPageId).then(
+        _getBranchPageDataSuccessResult, _getBranchPageDataErrorResult);
+    }
+
+    function _getLocationPageDataErrorResult(result) {
+
+    }
+
+    function _getBranchPageDataSuccessResult(result) {
+      if (result.pageinfo.selects.BRLocationId[2].IsDefault) {
+        $scope.branchLocationId = result.pageinfo.selects.BRLocationId[2].value
+      }
+
+      pageService.getPagData(bankBranchPageId).then(
+        _getBankPageDataSuccessResult, _getBankPageDataErrorResult);
+
+    }
+
+    function _getBranchPageDataErrorResult(error) {
+
+    }
+
+    function _getBankPageDataSuccessResult(result) {
+      if (result.pageinfo.selects.BranchAreaId[1].IsDefault) {
+        $scope.branchAreaId = result.pageinfo.selects.BranchAreaId[1].value
+      }
+      if (result.pageinfo.selects.CityId[1].IsDefault) {
+        $scope.cityId = result.pageinfo.selects.CityId[1].value
+      }
+
+
+      pageService.getPagData(subUnitPageId).then(
+        _getSubUnitPageDataSuccessResult, _getSubUnitDataErrorResult);
+
+    }
+
+    function _getBankPageDataErrorResult(error) {
+
+    }
+
+
+    function _getSubUnitPageDataSuccessResult(result) {
+
+      if (result.pageinfo.selects.LocationId[2].IsDefault) {
+        $scope.subUnitLocationId = result.pageinfo.selects.LocationId[2].value
+      }
+      if (result.pageinfo.selects.SUBranchId[2].IsDefault) {
+        $scope.branchId = result.pageinfo.selects.SUBranchId[2].value
+      }
+
+      $scope.page.boxOptions.defaultEntity = {
+        'CountryId': $scope.countryId,
+        'StateId': $scope.stateId,
+        'LocationCityId': $scope.cityId,
+        'BRLocationId': $scope.branchLocationId,
+        'LocationId': $scope.subUnitLocationId,
+        'SUBranchId': $scope.branchId,
+        'LocationCCOId': $scope.companyId,
+        'BranchAreaId': $scope.branchAreaId,
+        'CityId': $scope.cityId
+
+      }
+    }
+
+    function _getSubUnitDataErrorResult(errorResult) {
+
+    }
+
+
 
 
     function _applyFilter() {
@@ -66,6 +162,8 @@
       this.refreshData();
 
     }
+
+    _loadController();
   }
 
 })();

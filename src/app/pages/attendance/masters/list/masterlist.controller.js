@@ -20,6 +20,7 @@
     var groupQueryId = 528;
     var weekOffSetDetailPageId = 455;
     var weekOffSetDetailTableId = 435;
+    vm.holidayConfByLcPageId = 292;
 
 
     var isWeekOffEdit = false;
@@ -52,7 +53,13 @@
       $scope.entity.WOSWET = "31-Dec-" + date.getFullYear();
     }
 
-    $scope.weekGridOptions = { enableCellEditOnFocus: true, enableRowSelection: false, enableHorizontalScrollbar: 0, enableVerticalScrollbar: 0, enableScrollbars: false }
+    $scope.weekGridOptions = {
+      enableCellEditOnFocus: true,
+      enableRowSelection: false,
+      enableHorizontalScrollbar: 0,
+      enableVerticalScrollbar: 0,
+      enableScrollbars: false
+    }
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
     $scope.page.boxOptions = {
@@ -76,7 +83,8 @@
       deleteRecord: null,
       uploadRecord: null,
       buttonPermission: true,
-      dataResult: _dataResult
+      dataResult: _dataResult,
+
     }
     if (pageId == 455) {
       $scope.page.boxOptions.addRecord = _addRecord;
@@ -103,6 +111,7 @@
       // _loadController();
       $scope.showWeeklyOffList = true;
     }
+
     function _editRecord(row) {
       debugger
       isWeekOffEdit = true;
@@ -142,6 +151,7 @@
       })
 
     }
+
     function _getMultiEntityErrorResult(err) {
       console.log(err)
     }
@@ -169,16 +179,54 @@
       pageService.getPagData(weekOffSetDetailPageId).then(_successWeekOffSetCustomQuery, _errorweekOffSetCustomQuery)
       pageService.getPagData(pageId).then(_successGetPage, _errorGetPage)
       pageService.getCustomQuery(data, groupQueryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+      pageService.getPagData(vm.holidayConfByLcPageId).then(
+        _getPageDataSuccessResult, _getPageDataErrorResult);
     }
+
+    function _getPageDataSuccessResult(result) {
+      console.log($scope.page.searchList)
+      console.log($scope.entity)
+      console.log(result);
+
+      if (result.pageinfo.selects.LocationId[2].IsDefault) {
+        $scope.locationId = result.pageinfo.selects.LocationId[2].value
+      }
+      if (result.pageinfo.selects.BRId[2].IsDefault) {
+        $scope.branchId = result.pageinfo.selects.BRId[2].value
+      }
+      if (result.pageinfo.selects.HDCBLSubUnitId[2].IsDefault) {
+        $scope.subUnitId = result.pageinfo.selects.HDCBLSubUnitId[2].value
+      }
+      $scope.page.boxOptions.defaultEntity = {
+        'LocationId': $scope.locationId,
+        'BRId': $scope.branchId,
+        'HDCBLSubUnitId': $scope.subUnitId,
+
+      }
+    }
+
+    function _getPageDataErrorResult(error) {
+
+    }
+
     function _successShiftWeekOffCustomQuery(result) {
       console.log(result)
       $scope.weekOffPage = result;
       result.pageinfo.selects.SGWDWeekDayId.splice(0, 1);
-      result.pageinfo.selects.SGWDFirst.splice(0, 0, { value: -2, name: "None" });
-      $scope.weekGridOptions.columnDefs = [
-        { name: 'name', displayName: 'Day', width: 130, enableCellEdit: false },
+      result.pageinfo.selects.SGWDFirst.splice(0, 0, {
+        value: -2,
+        name: "None"
+      });
+      $scope.weekGridOptions.columnDefs = [{
+          name: 'name',
+          displayName: 'Day',
+          width: 130,
+          enableCellEdit: false
+        },
         {
-          name: result.pageinfo.fields.SGWDFirst.name, displayName: result.pageinfo.fields.SGWDFirst.text, width: 130,
+          name: result.pageinfo.fields.SGWDFirst.name,
+          displayName: result.pageinfo.fields.SGWDFirst.text,
+          width: 130,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -187,7 +235,9 @@
 
         },
         {
-          name: result.pageinfo.fields.SGWDSecond.name, displayName: result.pageinfo.fields.SGWDSecond.text, width: 130,
+          name: result.pageinfo.fields.SGWDSecond.name,
+          displayName: result.pageinfo.fields.SGWDSecond.text,
+          width: 130,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -195,7 +245,9 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'"
         },
         {
-          name: result.pageinfo.fields.SGWDThird.name, displayName: result.pageinfo.fields.SGWDThird.text, width: 130,
+          name: result.pageinfo.fields.SGWDThird.name,
+          displayName: result.pageinfo.fields.SGWDThird.text,
+          width: 130,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -203,7 +255,9 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
         },
         {
-          name: result.pageinfo.fields.SGWDFourth.name, displayName: result.pageinfo.fields.SGWDFourth.text, width: 130,
+          name: result.pageinfo.fields.SGWDFourth.name,
+          displayName: result.pageinfo.fields.SGWDFourth.text,
+          width: 130,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -211,7 +265,9 @@
           cellFilter: "mapDropdown:grid.appScope.weekOffPage.pageinfo.selects.SGWDFirst:'value':'name'",
         },
         {
-          name: result.pageinfo.fields.SGWDFifth.name, displayName: result.pageinfo.fields.SGWDFifth.text, width: 130,
+          name: result.pageinfo.fields.SGWDFifth.name,
+          displayName: result.pageinfo.fields.SGWDFifth.text,
+          width: 130,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
@@ -229,18 +285,22 @@
       // })
       console.log($scope.weekDays)
     }
+
     function _errorShiftWeekOffCustomQuery(err) {
       $scope.showMsg("error", err);
     }
+
     function _successWeekOffSetCustomQuery(result) {
       console.log(result)
       $scope.weekOffSetPage = result;
       $scope.weekOffSetPage.isAllowEdit = true;
 
     }
+
     function _errorweekOffSetCustomQuery(err) {
 
     }
+
     function _successGetPage(result) {
       console.log(result)
       $scope.page = angular.extend($scope.page, result);
@@ -248,6 +308,7 @@
       $scope.page.gridOptions = $scope.gridSetupColumns($scope.page.gridOptions, result.pageinfo.columns, result, true, true, true, true);
       // _getTableData([], []);
     }
+
     function _errorGetPage(err) {
 
       var minute = shiftTo.diff(shiftFrom, 'minutes')
@@ -280,6 +341,7 @@
     function _getCustomQuerySuccessResult(result) {
       $scope.groups = result;
     }
+
     function _getCustomQueryErrorResult(er) {
 
     }
@@ -318,8 +380,7 @@
           if ((row.SGWDFirst != -1 && row.SGWDFirst != -2) || (row.SGWDSecond != -1 && row.SGWDSecond != -2) || (row.SGWDThird != -1 && row.SGWDThird != -2) || (row.SGWDFourth != -1 && row.SGWDFourth != -2) || (row.SGWDFifth != -1 && row.SGWDFifth != -2)) {
             gridErrorMsg = "";
             break;
-          }
-          else {
+          } else {
             gridErrorMsg = "Please select atleast one weekoff from grid";
           }
         }
@@ -421,7 +482,10 @@
         var postData = JSON.stringify($scope.multiEntity);
         var compressed = LZString.compressToEncodedURIComponent(postData);
 
-        var data = { lz: true, data: compressed }
+        var data = {
+          lz: true,
+          data: compressed
+        }
 
         // $scope.multiEntity.lz = false;
         pageService.multiSave(data).then(function (result) {
