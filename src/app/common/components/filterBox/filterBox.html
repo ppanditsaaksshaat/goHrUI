@@ -2,19 +2,22 @@
     <div class="panel-heading panHead">
         <div ng-hide="page.showAddRecord">
             <div class="row" ng-hide="showSearchFilter">
-                <div class="col-md-9">Filter data by</div>
-                <div class="col-md-3"><button type="button" class="btn btn-default btn-sm" ng-click="openSearchFilter()">
-                        <i class="ion-search"></i> </button></div>
+                <div class="col-md-9">{{'FilterDataBy'| translate}}</div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-default btn-sm" ng-click="openSearchFilter()">
+                        <i class="ion-search"></i>
+                    </button>
+                </div>
             </div>
             <div class="row" ng-show="showSearchFilter">
                 <div class="col-md-12">
                     <div class="input-group input-group-sm">
                         <input type="text" class="form-control" placeholder="Search Filter" ng-model="filterSearchText">
                         <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" ng-click="showSearchFilter=false">
-                            <i class="ion-close"></i>
-                        </button>
-                    </span>
+                            <button class="btn btn-default" type="button" ng-click="showSearchFilter=false">
+                                <i class="ion-close"></i>
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -28,7 +31,8 @@
                 <div class="row">
                     <div class="col-md-8">
                         <label class="checkbox-inline custom-checkbox nowrap">
-                            <input type="checkbox" id="inlineCheckbox01" ng-model="filter.showFilter" ng-init="filter.showFilter=filter.required;filter.operator='='" ng-disabled="filter.required">
+                            <input type="checkbox" id="inlineCheckbox01" ng-model="filter.showFilter" ng-init="filter.showFilter=filter.required;filter.operator='='"
+                                ng-disabled="filter.required">
                             <span>{{filter.displayName}}</span>
                         </label>
                     </div>
@@ -45,41 +49,36 @@
                     <div ng-switch on="filter.controlType" class="col-md-offset-1">
                         <div ng-switch-when="textbox">
                             <select ng-options="opt.value as opt.name for opt in filterOpt.textbox" ng-model="filter.operator">
-                                    </select>
+                            </select>
                             <input type="text" placeholder="Enter Value" ng-model="filter.value" ng-change="selectChange(filter)" />
                         </div>
                         <div ng-switch-when="select">
                             <div class="row" ng-show="filter.isMultiAllow">
                                 <div class="col-md-offset-1">
                                     <label class="checkbox-inline custom-checkbox nowrap">
-                                    <input type="checkbox" id="inlineCheckbox01"  
-                                    ng-model="filter.isMultiple">
-                                    <span>Multiple</span>
-                                </label>
+                                        <input type="checkbox" id="inlineCheckbox01" ng-model="filter.isMultiple">
+                                        <span>Multiple</span>
+                                    </label>
                                 </div>
                             </div>
-                            <select ng-options="opt.value as opt.name for opt in filter.titleMap" ng-disabled="filter.disabled" ng-model="filter.value" ng-change="selectChange(filter)">
-                                    </select>
+                            <select ng-options="opt.value as opt.name for opt in filter.titleMap" ng-disabled="filter.disabled" ng-model="filter.value"
+                                ng-change="selectChange(filter)">
+                            </select>
                         </div>
                         <div ng-switch-when="datepicker">
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="radio-inline custom-radio nowrap">
-                                        <input type="radio" name="{{filter.name}}" id="inlineRadio1" value="day" checked 
-                                        ng-model="filter.datePicker.option1.minMode" 
-                                        ng-click="dateModeChanged(filter)" >
+                                        <input type="radio" name="{{filter.name}}" id="inlineRadio1" value="day" checked ng-model="filter.datePicker.option1.minMode"
+                                            ng-click="dateModeChanged(filter)">
                                         <span>Date</span>
                                     </label>
                                     <label class="radio-inline custom-radio nowrap">
-                                        <input type="radio" name="{{filter.name}}" id="inlineRadio1" value="month" 
-                                        ng-model="filter.datePicker.option1.minMode" 
-                                        ng-click="dateModeChanged(filter)">
+                                        <input type="radio" name="{{filter.name}}" id="inlineRadio1" value="month" ng-model="filter.datePicker.option1.minMode" ng-click="dateModeChanged(filter)">
                                         <span>Monthly</span>
                                     </label>
                                     <label class="radio-inline custom-radio nowrap">
-                                        <input type="radio" name="{{filter.name}}" id="inlineRadio1" value="year" 
-                                        ng-model="filter.datePicker.option1.minMode" 
-                                        ng-click="dateModeChanged(filter)">
+                                        <input type="radio" name="{{filter.name}}" id="inlineRadio1" value="year" ng-model="filter.datePicker.option1.minMode" ng-click="dateModeChanged(filter)">
                                         <span>Yearly</span>
                                     </label>
                                 </div>
@@ -115,8 +114,7 @@
                                     <div class="col-md-12" ng-class="{'col-md-10':(filter.operator=='/b'), 'col-md-12':(filter.operator!='/b')}">
 
                                         <div moment-picker="filter.value" format="hh:mm A">
-                                            <i class="glyphicon glyphicon-time"></i>&nbsp; {{ filter.value || "Pick any time"
-                                            }}
+                                            <i class="glyphicon glyphicon-time"></i>&nbsp; {{ filter.value || "Pick any time" }}
                                         </div>
                                     </div>
                                 </div>
@@ -125,8 +123,7 @@
                                     <label for="inputPassword3" class="col-sm-2 control-label">To:</label>
                                     <div class="col-md-10">
                                         <div moment-picker="filter.value2" format="hh:mm A" min-date="filter.value">
-                                            <i class="glyphicon glyphicon-time"></i>&nbsp; {{ filter.value2 || "Pick any
-                                            time" }}
+                                            <i class="glyphicon glyphicon-time"></i>&nbsp; {{ filter.value2 || "Pick any time" }}
                                         </div>
                                     </div>
                                 </div>

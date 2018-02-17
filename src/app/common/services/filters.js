@@ -138,4 +138,15 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
                 return value;
             };
         }
-    });
+    }).filter('translate', function ($rootScope) {
+        return function (input) {
+            console.log($rootScope.user.rp)
+            var i = 0, len = $rootScope.user.rp.length;
+            for (; i < len; i++) {
+                if ($rootScope.user.rp[i]['ResourceKey'] == input) {
+                    return $rootScope.user.rp[i].ResourceText;
+                }
+            }
+            return input
+        }
+    })

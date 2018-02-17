@@ -1,10 +1,103 @@
 <div ng-show="attVerifyCtrl.showVerifyAttendance">
-
-   
     <grid-box ng-model="page">
     </grid-box>
 </div>
-<div ng-hide="attVerifyCtrl.showVerifyAttendance" width=100%>
+<div ng-show="attVerifyCtrl.showDayWise" width=100%>
     <grid-box ng-model="editPage">
     </grid-box>
+</div>
+
+
+<div id="empVeriDetail" ng-show="attVerifyCtrl.showEmpVerifyDetail" class="panel panel-default bootstrap-panel xmedium-panel">
+    <div class="panel-heading clearfix">
+
+
+        <div class="row">
+            <div class="col-md-9">
+                Attendance Detail of
+                <b>{{emp.EmpName}}</b> for the month of
+                <b> {{'Month-Year'}}</b>
+            </div>
+            <div class="col-md-3">
+
+                <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
+
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="closeView()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>
+                        Total Days
+                    </th>
+                    <th>
+                        Present Days
+                    </th>
+                    <th>
+                        Week Off
+                    </th>
+                    <th>
+                        Holiday
+                    </th>
+                    <th>
+                        Absent
+                    </th>
+                    <th>
+                        Leave
+                    </th>
+                    <th>
+                        LWP
+                    </th>
+                    <th>Total Late Count</th>
+                    <th>
+                        Late Count (Deductable)
+                    </th>
+                    <th>
+                        Late Days
+                    </th>
+                    <th>
+                        Deductiable Days
+                    </th>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>
+                        {{emp.TotalDays}}
+                    </td>
+                    <td>
+                        {{emp.TotalPresentDays}}
+                    </td>
+                    <td>
+                        {{emp.TotalWeekoff}}
+                    </td>
+                    <td>
+                        {{emp.TotalHolidays}}
+                    </td>
+                    <td>
+                        {{emp.AbsentDays}}
+                    </td>
+                    <td>
+                        {{emp.TotalLeaves}}
+                    </td>
+                    <td>
+                        {{emp.TotalLWP}}
+                    </td>
+                    <td>
+                        {{emp.TotalLateCount}}
+                    </td>
+                    <td>{{emp.DeductableLateCount}}</td>
+                    <td>
+                        {{emp.DeductableLateDays}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
