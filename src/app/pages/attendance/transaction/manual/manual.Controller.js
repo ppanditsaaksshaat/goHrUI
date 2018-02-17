@@ -14,8 +14,6 @@
     var vm = this;
     var currentState = $state.current;
 
-
-
     $scope.showAdmin_Panel = false;
     $scope.showadminremark = false;
     vm.filterOpt = {};
