@@ -2,7 +2,7 @@
  * @author deepak.jain
  * created on 14/04/2017
  */
-(function () {
+(function () { 
   'use strict';
 
   angular.module('BlurAdmin.common')

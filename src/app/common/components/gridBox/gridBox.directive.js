@@ -231,7 +231,7 @@
                             }
                             dialogModal.openFormVertical(options);
                         }
-                        else {
+                        else { 
                             $scope.page.showAddRecord = true;
                             $scope.entity = row.entity;
 

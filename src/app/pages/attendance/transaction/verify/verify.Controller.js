@@ -302,7 +302,7 @@
         ws['M' + rowIndex] = {
           f: '=E' + rowIndex + '+I' + rowIndex + '+G' + rowIndex + '+H' + rowIndex, t: 's',
           s:
-            {
+            { 
               patternType: 'solid',
               fgColor: { theme: 8, tint: 0.3999755851924192, rgb: '9ED2E0' },
               bgColor: { indexed: 64 }

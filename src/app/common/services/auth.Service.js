@@ -48,7 +48,7 @@ angular.module('BlurAdmin.common').factory('authService', ['$http', '$q', 'DJWeb
                     token: result.access_token,
                     expires: result['.expires'],
                     issued: result['.issued'],
-                    userName: loginData.userName,
+                    userName: loginData.userName, 
                     userPwd: loginData.password
                 }
                 _authentication.isAuth = true;

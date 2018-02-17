@@ -4,7 +4,7 @@ angular.module('BlurAdmin.common').factory('helper', ['$http', '$rootScope', '$f
 
         function _getColumns(userColumns) {
             var colList = [];
-            var page = $rootScope.currentPage;
+            var page = $rootScope.currentPage; 
             userColumns.forEach(function (col) {
                 var sysCol = $filter('findObj')(page.pageinfo.columns, col, 'name');
                 if (sysCol != null) {
