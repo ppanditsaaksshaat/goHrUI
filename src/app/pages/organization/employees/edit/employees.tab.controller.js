@@ -15,8 +15,8 @@
         console.log('empTabController')
 
 
-        var benefintSavecount = 0;//for counting saving record of benefits
-        var totalSavingRecord = 0;//for totaling of saving record of benefits
+        var benefintSavecount = 0; //for counting saving record of benefits
+        var totalSavingRecord = 0; //for totaling of saving record of benefits
 
         var toastOption = {};
         var defaultConfig = angular.copy(toastrConfig);
@@ -40,17 +40,29 @@
         };
         var vm = this;
         $scope.entity = {}
-        $scope.page = { isAllowEdit: false };
-        $scope.contactPage = { isAllowEdit: false };
-        $scope.emgContactPage = { isAllowEdit: false };
+        $scope.page = {
+            isAllowEdit: false
+        };
+        $scope.contactPage = {
+            isAllowEdit: false
+        };
+        $scope.emgContactPage = {
+            isAllowEdit: false
+        };
         $scope.showResignation = true;
         vm.entity = {};
 
 
         vm.empContactDetail = {};
         vm.pageIds = {
-            familyPageId: "52", nomineePageId: "438", experiencPageId: "56", contactPageId: "36",
-            emgContactPageId: "53", educationPageId: "112", skillPageId: "439", immigrationPageId: "119"
+            familyPageId: "52",
+            nomineePageId: "438",
+            experiencPageId: "56",
+            contactPageId: "36",
+            emgContactPageId: "53",
+            educationPageId: "112",
+            skillPageId: "439",
+            immigrationPageId: "119"
         }
         vm.empEmgContact = {};
         vm.pageId = $stateParams.pageId;
@@ -93,13 +105,11 @@
                     var installmentDate = moment($scope.empTabCtrl.entity.JDDate)
                     $scope.empTabCtrl.entity.JDProbationValidity = installmentDate.add($scope.empTabCtrl.entity.JDNumberOfProbationInDays, 'd')
 
-                }
-                else {
+                } else {
                     $scope.showMsg("error", "please provide employee joining date.")
                     // alert('please provide employee joining date.')
                 }
-            }
-            else {
+            } else {
                 $scope.showMsg("error", "please provide employee joining date.")
             }
 
@@ -109,11 +119,13 @@
         function _goToEmployeeList() {
             $state.go("organization.employees.list");
         }
+
         function _showToast(type, msg, title) {
             toastOption.type = type;
             angular.extend(toastrConfig, toastOption);
             openedToasts.push(toastr[toastOption.type](msg, title));
         }
+
         function _loadController() {
             $scope.gridOptions = $scope.getGridSetting();
             // $scope.gridOptions.onRegisterApi = _onRegisterApi;
@@ -146,8 +158,16 @@
                     var isBenifitSalaryHeadQueryId = 559;
                     var searchLists = [];
                     // var searchListData = { field: 'EmpId', operand: '=',value: vm.empPKId}
-                    searchLists.push({ field: 'EmpId', operand: '=', value: vm.empPKId })
-                    searchLists.push({ field: 'SHIsBenefit', operand: '=', value: 1 })
+                    searchLists.push({
+                        field: 'EmpId',
+                        operand: '=',
+                        value: vm.empPKId
+                    })
+                    searchLists.push({
+                        field: 'SHIsBenefit',
+                        operand: '=',
+                        value: 1
+                    })
                     console.log(searchLists)
                     var data = {
                         searchList: searchLists,
@@ -155,8 +175,7 @@
                     }
                     pageService.getCustomQuery(data, isBenifitSalaryHeadQueryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
                 }
-            }
-            else {
+            } else {
                 // vm.templateUrlPath = "app/pages/organization/employees/templates/grid-view.html?" + rndValu2 + "=" + rndValu;
                 // console.log(vm.empPKId)
                 // $scope.page = _getLocalPageObject(vm.pageId, 'WEEmpId', vm.guempPKId)
@@ -170,9 +189,7 @@
                     if (vm.pageId == 'register') {
                         vm.templateUrlPath = "app/pages/organization/employees/templates/user/user-view.html";
                     }
-                }
-
-                else {
+                } else {
 
                     $scope.page = _getLocalPageObject(vm.pageId)
                     console.log($scope.page)
@@ -184,8 +201,20 @@
         function _getCustomQuerySuccessResult(result) {
             console.log(result)
             if (result !== "NoDataFound") {
-                var colSalaryHead = { name: 'SHName', field: 'SHName', displayName: 'Salary Head', width: 100, visible: true };
-                var colSalaryAmount = { name: 'SalAmount', field: 'SalAmount', displayName: 'Account Number', width: 100, visible: true };
+                var colSalaryHead = {
+                    name: 'SHName',
+                    field: 'SHName',
+                    displayName: 'Salary Head',
+                    width: 100,
+                    visible: true
+                };
+                var colSalaryAmount = {
+                    name: 'SalAmount',
+                    field: 'SalAmount',
+                    displayName: 'Account Number',
+                    width: 100,
+                    visible: true
+                };
                 $scope.gridOptions.columnDefs.push(colSalaryHead);
                 $scope.gridOptions.columnDefs.push(colSalaryAmount);
 
@@ -204,13 +233,16 @@
             console.log(result)
             if (result) {
                 if (result.pageinfo) {
+
+
+                    console.log($scope.entity.CountryId)
                     if (result.fields) {
 
                         if (result.pageinfo.fields.PdDateOfBirth) {
                             result.pageinfo.fields.PdDateOfBirth.maxDate = 'today';
                         }
-
                     }
+
                 }
             }
 
@@ -219,6 +251,37 @@
                 $scope.contactPage = angular.extend({}, $scope.contactPage, result);
                 $scope.contactPage.pageIsLoaded = true;
                 $scope.contactPage.pageIsLoading = false;
+                console.log(result.pageinfo.selects.CountryId[1].IsDefault)
+                if (result.pageinfo.selects.CountryId[1].IsDefault) {
+                    vm.empContactDetail.CountryId = result.pageinfo.selects.CountryId[1].value
+                }
+
+                if (result.pageinfo.selects.StateId[1].IsDefault) {
+                    vm.empContactDetail.StateId = result.pageinfo.selects.StateId[1].value
+                }
+
+                if (result.pageinfo.selects.CDCityId[1].IsDefault) {
+                    vm.empContactDetail.CDCityId = result.pageinfo.selects.CDCityId[1].value
+                }
+
+                if (result.pageinfo.selects.PCountryId[1].IsDefault) {
+                    vm.empContactDetail.PCountryId = result.pageinfo.selects.CountryId[1].value
+                }
+
+                if (result.pageinfo.selects.PStateId[1].IsDefault) {
+                    vm.empContactDetail.PStateId = result.pageinfo.selects.StateId[1].value
+                }
+
+                if (result.pageinfo.selects.PCityId[1].IsDefault) {
+                    vm.empContactDetail.PCityId = result.pageinfo.selects.CDCityId[1].value
+                }
+
+
+
+
+                if (result.pageinfo.selects.CountryId[1].IsDefault) {
+
+                }
             }
             if (result.pageinfo.pageid == 53) {
 
@@ -234,18 +297,29 @@
 
                 console.log(result.pageinfo.selects)
                 console.log(result.pageinfo.selects.BRId)
-                if (result.pageinfo.selects.LocationId.length == 1) {
-                    $scope.entity.LocationId = result.pageinfo.selects.LocationId[1].value;
+
+                if (result.pageinfo.selects.LocationId[1].IsDefault) {
+                    // $scope.empTabCtrl.entity.LocationId = result.pageinfo.selects.LocationId[1].value
+                    $scope.jobLocationId = result.pageinfo.selects.LocationId[1].value;
                 }
-                if (result.pageinfo.selects.BRId.length == 1) {
-                    $scope.entity.BRId = result.pageinfo.selects.BRId[1].value;
+
+                if (result.pageinfo.selects.BRId[1].IsDefault) {
+                    // $scope.empTabCtrl.entity.BRId = result.pageinfo.selects.BRId[1].value
+                    $scope.jobBranchId =result.pageinfo.selects.BRId[1].value
                 }
-                if (result.pageinfo.selects.JDSubUnitID.length == 1) {
-                    $scope.entity.JDSubUnitID = result.pageinfo.selects.JDSubUnitID[1].value;
+
+                if (result.pageinfo.selects.JDSubUnitID[1].IsDefault) {
+                    // $scope.empTabCtrl.entity.JDSubUnitID = result.pageinfo.selects.JDSubUnitID[1].value
+                    $scope.jobSubUnitId =result.pageinfo.selects.JDSubUnitID[1].value
                 }
+                // console.log(empTabCtrl)
+
                 linkFieldName = 'JDEmpId';
             } else if (result.pageinfo.pageid == 35) {
                 linkFieldName = 'PdEmpId';
+                $scope.NationalityId = result.pageinfo.selects.PdNationalityId[1].value
+                console.log($scope.empTabCtrl.entity)
+                console.log($scope.empTabCtrl.entity)
             } else if (result.pageinfo.pageid == 125) {
                 linkFieldName = 'ADEmpId';
             } else if (result.pageinfo.pageid == 21) {
@@ -270,7 +344,9 @@
                         _findEntitySuccessResult, _findEntityErrorResult);
                 }
                 if (result.pageinfo.pageid == 35 || result.pageinfo.pageid == 36) {
-                    var emgTableId = 57, contTableId = 45, personalTableId = 43;
+                    var emgTableId = 57,
+                        contTableId = 45,
+                        personalTableId = 43;
                     var searchList = [];
                     $scope.entity.PDAnniversaryDate = moment().format('DD/MMMM/YYYY');
                     if (result.pageinfo.pageid == 35) {
@@ -295,8 +371,7 @@
                         searchList.push(searchFields);
                         pageService.findEntity(emgTableId, undefined, searchList).then(
                             _findEntitySuccessResult, _findEntityErrorResult);
-                    }
-                    else {
+                    } else {
 
                         //call contact address entity
                         searchList = [];
@@ -312,47 +387,49 @@
                 }
             })
         }
+
         function _getPageDataErrorResult(error) {
             $scope.page.pageIsLoaded = true;
             $scope.page.pageIsLoading = false;
         }
+
         function _getLocalPageObject(pageId) {
 
             var linkFieldName, linkFieldValue;
             linkFieldValue = vm.empPKId;
             pageId = parseInt(pageId);
             switch (pageId) {
-                case 56://experience
+                case 56: //experience
                     linkFieldName = 'WEEmpId'
                     break;
-                case 112://education
+                case 112: //education
                     linkFieldName = 'QualiEmpId'
                     break;
-                case 439://skills
+                case 439: //skills
                     linkFieldName = 'SEmpId'
                     break;
-                case 119://immigration
+                case 119: //immigration
                     linkFieldName = 'EmpId'
                     break;
-                case 360://regination
+                case 360: //regination
                     linkFieldName = 'RDEmpId'
                     break;
-                case 36://salary
+                case 36: //salary
                     linkFieldName = ''
                     break;
-                case 52://family
+                case 52: //family
                     linkFieldName = 'FdEmpId'
                     break;
-                case 438://nominee
+                case 438: //nominee
                     linkFieldName = 'NDEmpId'
                     break;
-                case 442://identity
+                case 442: //identity
                     linkFieldName = 'IEmpId'
                     break;
-                case 448://benefit
+                case 448: //benefit
                     linkFieldName = 'EBDEmpId'
                     break;
-                case 481://roster
+                case 481: //roster
                     linkFieldName = 'RODEmpId'
                     break;
 
@@ -373,7 +450,10 @@
                 enableRefreshAfterUpdate: true,
                 enableAutoRefresh: true,
                 gridHeight: 450,
-                linkColumns: [{ name: linkFieldName, value: linkFieldValue }],
+                linkColumns: [{
+                    name: linkFieldName,
+                    value: linkFieldValue
+                }],
                 goBack: _goToEmployeeList,
                 getPageData: null,
                 refreshData: null,
@@ -394,9 +474,12 @@
                 pageObject.boxOptions.pageResult = _pageResultForBenefit;
                 pageObject.boxOptions.dataResult = _dataResultForBenefit;
                 pageObject.boxOptions.afterCellEdit = _afterCellEdit;
-                pageObject.boxOptions.customButtons = [
-                    { text: 'Save', icon: '', onClick: _saveBenefit, type: 'btn btn-primary' }
-                ]
+                pageObject.boxOptions.customButtons = [{
+                    text: 'Save',
+                    icon: '',
+                    onClick: _saveBenefit,
+                    type: 'btn btn-primary'
+                }]
             }
             if (pageId == 360) {
                 pageObject.boxOptions.addRecord = _addRecord;
@@ -408,6 +491,7 @@
 
             return pageObject;
         }
+
         function _afteraCellEdit() {
             alert("hello")
         }
@@ -424,6 +508,7 @@
             $scope.entity.RDResignationDate = moment().format('DD/MMMM/YYYY');
             $scope.showResignation = false;
         }
+
         function _resignList() {
             $scope.showResignation = true;
             $scope.page.refreshData();
@@ -432,6 +517,7 @@
         function _payByEmpOnChange() {
 
         }
+
         function _manageNoticeDayOnResignDate() {
             $scope.entity.RDFromDate = moment($scope.entity.RDResignationDate).format('DD/MMMM/YYYY');
             $scope.entity.RDTodate = moment($scope.entity.RDResignationDate).add(45, 'days').format('DD/MMMM/YYYY');
@@ -439,19 +525,20 @@
             $scope.entity.RDNotice = 45;
             $scope.entity.RDIsCountResignSameDay = true;
         }
+
         function checkDate(fromDate, toDate) {
             var fromDt = moment(fromDate);
             var toDt = moment(toDate);
             var diff = toDt.diff(fromDt, 'days');
             return diff;
         }
+
         function _changeNoticeDayOnFromDate() {
             var diff = checkDate($scope.entity.RDFromDate, $scope.entity.RDTodate)
             if (parseInt(diff) >= 0) {
                 $scope.entity.RDNotice = diff;
                 $scope.entity.RDRelievingDate = toDate;
-            }
-            else {
+            } else {
                 $scope.showMsg("error", "Fromdate is less than or equal to ToDate")
             }
         }
@@ -468,14 +555,12 @@
 
                 if (entity.RDId == undefined) {
                     _formSave(entity, vm.pageId, 'create', vm.oldEntity == undefined ? {} : vm.oldEntity, editForm, false);
-                }
-                else {
+                } else {
                     _formSave(entity, vm.pageId, 'edit', vm.oldEntity == undefined ? {} : vm.oldEntity, editForm, false);
                 }
                 // $scope.showResignation = true;
                 // $scope.page.refreshData();
-            }
-            else {
+            } else {
                 $scope.showMsg("error", "Fromdate is less than or equal to ToDate")
             }
         }
@@ -501,19 +586,16 @@
                     }
                     var form = {}
                     if (data.EBDId == undefined) {
-                        editFormService.saveForm(vm.pageId, data,
-                            {}, 'create', 'Benefit', form, false).then(_successBenefitResult, _errorBenefitResult);
-                    }
-                    else {
-                        editFormService.saveForm(vm.pageId, data,
-                            {}, 'edit', 'Benefit', form, false).then(_successBenefitResult, _errorBenefitResult);
+                        editFormService.saveForm(vm.pageId, data, {}, 'create', 'Benefit', form, false).then(_successBenefitResult, _errorBenefitResult);
+                    } else {
+                        editFormService.saveForm(vm.pageId, data, {}, 'edit', 'Benefit', form, false).then(_successBenefitResult, _errorBenefitResult);
                     }
                 })
-            }
-            else {
+            } else {
                 $scope.showMsg("error", "Please select any row before save");
             }
         }
+
         function _successBenefitResult(result) {
             console.log(result)
             benefintSavecount++;
@@ -524,6 +606,7 @@
             }
 
         }
+
         function _errorBenefitResult(err) {
             alert(JSON.stringify(err))
         }
@@ -534,23 +617,19 @@
             if (colDef.name == 'EBDIsOnPercentage') {
                 if (newValue) {
                     rowEntity.EBDFiexedAmount = '';
-                }
-                else {
+                } else {
                     rowEntity.EBDPercentage = '';
                 }
-            }
-            else if (colDef.name == 'EBDFiexedAmount') {
+            } else if (colDef.name == 'EBDFiexedAmount') {
                 if (rowEntity.EBDIsOnPercentage) {
                     rowEntity.EBDFiexedAmount = '';
                     $scope.showMsg("error", "If you want to fill fixed field than unchecked the Onpercentage")
                 }
-            }
-            else if (colDef.name == 'EBDPercentage') {
+            } else if (colDef.name == 'EBDPercentage') {
                 if (!rowEntity.EBDIsOnPercentage) {
                     rowEntity.EBDPercentage = '';
                     $scope.showMsg("error", "If you want to fill percentage field than checked the Onpercentage")
-                }
-                else {
+                } else {
                     var percentage = parseFloat(rowEntity.EBDPercentage)
                     if (percentage > 100) {
                         rowEntity.EBDPercentage = '100.00'
@@ -558,9 +637,11 @@
                 }
             }
         }
+
         function _pageResultForBenefit(result) {
             console.log(result)
         }
+
         function _dataResultForBenefit(result) {
             // angular.forEach(result, function (data, index) {
             //     var EBDFiexedAmount = parseFloat(data.EBDFiexedAmount)
@@ -570,32 +651,39 @@
             //     }
             // })
         }
+
         function _findEntitySuccessResult(result) {
 
-            if (result.ECEmpId !== undefined) {//check if entity is emg contact page contact
+            if (result.ECEmpId !== undefined) { //check if entity is emg contact page contact
                 vm.oldEmpEmgContact = angular.copy(result);
                 vm.empEmgContact = result;
-            }
-            else if (result.CDId !== undefined) {//check if entity is  contact page contact
+            } else if (result.CDId !== undefined) { //check if entity is  contact page contact
                 vm.oldempContactDetail = angular.copy(result);
                 vm.empContactDetail = result;
                 if (result.CDAddLine1 == result.CDPAddLine1 && result.CDAddLine2 == result.CDPAddLine2 && result.CountryId == result.PCountryId &&
-                    result.StateId == result.PStateId && result.CityId == result.PCityId && result.CDAreaId == result.CDPAreaId
-                    && parseInt(result.CDPincode) == result.CDPPincode) {
+                    result.StateId == result.PStateId && result.CityId == result.PCityId && result.CDAreaId == result.CDPAreaId &&
+                    parseInt(result.CDPincode) == result.CDPPincode) {
                     console.log("same")
                     vm.CDPermanent = true;
-                }
-                else {
+                } else {
                     vm.CDPermanent = false;
                 }
-            }
-            else {
+            } else {
 
                 console.log(result)
                 vm.oldEntity = angular.copy(result);
+                vm.entity.PdNationalityId = $scope.NationalityId;
                 vm.entity = result;
+                vm.entity.PdNationalityId = $scope.NationalityId;
+                console.log($scope.NationalityId)
+
+                $scope.empTabCtrl.entity.LocationId = $scope.jobLocationId
+                $scope.empTabCtrl.entity.BRId = $scope.jobBranchId
+                $scope.empTabCtrl.entity.JDSubUnitID = $scope.jobSubUnitId
+
             }
         }
+
         function _findEntityErrorResult() {
 
         }
@@ -609,17 +697,18 @@
             }
             return data;
         }
+
         function _saveAddress(editForm) {
             console.log()
             if (vm.empContactDetail.CDId === undefined) {
                 vm.empContactDetail.CDEmpId = vm.empPKId;
                 _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create', vm.oldempContactDetail, editForm, true);
-            }
-            else {
+            } else {
                 _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit', vm.oldempContactDetail, editForm, true);
             }
 
         }
+
         function _saveForm(editForm) {
             if ($scope.page.pageinfo.idencolname !== undefined && $scope.page.pageinfo.idencolname !== null) {
                 if (vm.pageId == 125) {
@@ -635,14 +724,12 @@
                         console.log("test")
                         vm.entity.ADEmpId = vm.empPKId;
                         _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
-                    }
-                    else {
+                    } else {
                         console.log("test1")
                         console.log(vm.entity);
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
-                }
-                else if (vm.pageId == 114) {
+                } else if (vm.pageId == 114) {
                     // vm.entity.JDDesgId = 10;
                     vm.entity.JDSUId = vm.entity.JDSubUnitID;
                     if (vm.entity.JDIsHasLeft) {
@@ -655,11 +742,9 @@
                         vm.entity.DoubleOTRate = 0;
 
 
-                    }
-                    else if (vm.entity.SingleOT == false) {
+                    } else if (vm.entity.SingleOT == false) {
                         vm.entity.JDSingleOTRate = 0;
-                    }
-                    else if (vm.entity.JDDoubleOT == false) {
+                    } else if (vm.entity.JDDoubleOT == false) {
                         vm.entity.DoubleOTRate = 0;
                     }
 
@@ -674,28 +759,23 @@
 
 
                         _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
-                    }
-                    else {
+                    } else {
                         console.log(vm.entity);
                         //vm.entity.JDSubUnitID = 2;
 
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
-                }
-                else if (vm.pageId == 35) {
+                } else if (vm.pageId == 35) {
 
                     if (vm.entity.PdId === undefined) {
                         vm.entity.PdEmpId = vm.empPKId;
 
                         _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
-                    }
-                    else {
+                    } else {
                         console.log(vm.entity);
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
-                }
-
-                else if (vm.pageId == 21) {
+                } else if (vm.pageId == 21) {
                     var userQueryId = 579;
                     if (vm.entity.LinkRoleUserId === undefined) {
                         // vm.entity.EmpId = vm.empPKId;
@@ -715,8 +795,7 @@
                         // _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
 
                         pageService.getCustomQuery(data, userQueryId).then(_saveUserSuccessResult, _saveUserErrorResult)
-                    }
-                    else {
+                    } else {
                         console.log(vm.entity);
                         _formSave(vm.entity, vm.pageId, 'edit', vm.oldEntity, editForm, true);
                     }
@@ -729,17 +808,17 @@
 
                         console.log(vm.empContactDetai);
                         _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create', vm.oldempContactDetail, editForm, true);
-                    }
-                    else {
+                    } else {
                         _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'edit', vm.oldempContactDetail, editForm, true);
                     }
                 }
 
             }
         }
+
         function _formSave(entity, pageId, action, oldEntity, editForm, showConfirmation) {
             editFormService.saveForm(pageId, entity, (oldEntity === undefined) ? vm.oldEntity : oldEntity,
-                action, ($scope.page.pageinfo.title === undefined) ? 'Resination' : $scope.page.pageinfo.title, editForm, showConfirmation)
+                    action, ($scope.page.pageinfo.title === undefined) ? 'Resination' : $scope.page.pageinfo.title, editForm, showConfirmation)
                 .then(_updateSuccessResult, _updateErrorResult)
         }
 
@@ -751,8 +830,7 @@
                 vm.entity.UserId = result[0].UserId;
                 console.log(vm.entity);
                 _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
-            }
-            else {
+            } else {
                 $scope.showMsg('warning', 'Joining date does not exist.');
             }
 
@@ -788,18 +866,15 @@
                         if (vm.empEmgContact.ECId === undefined) {
                             vm.empEmgContact.ECEmpId = vm.empPKId;
                             _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'create', vm.oldempContactDetail, $scope.editForm, false)
-                        }
-                        else {
+                        } else {
                             _formSave(vm.empEmgContact, vm.pageIds.emgContactPageId, 'edit', vm.oldempContactDetail, $scope.editForm, false)
                         }
-                    }
-                    else if (result.entity.ECEmpId !== undefined) {
+                    } else if (result.entity.ECEmpId !== undefined) {
                         isSuccess = true;
                         vm.oldEmpEmgContact = angular.copy(result.entity);
                     }
                 }
-            }
-            else {
+            } else {
                 isSuccess = false;
                 $scope.showMsg('error', result.error_message.Message);
             }
@@ -810,17 +885,21 @@
             }
 
         }
+
         function _updateErrorResult(error) {
             console.log(error)
             //$scope.showMsg('error', 'Something went worng', 'Save Error')
         }
+
         function _resetPersonal() {
             vm.entity = angular.copy(vm.oldEntity);
             vm.empEmgContact = angular.copy(vm.oldEmpEmgContact);
         }
+
         function _resetAddress() {
             vm.empContactDetail = angular.copy(vm.oldempContactDetail);
         }
+
         function _clearPersonal() {
             var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
             vm.entity = {};
@@ -831,6 +910,7 @@
             vm.empContactDetail = {};
             vm.empContactDetail[$scope.page.pageinfo.idencolname] = oldPkId;
         }
+
         function _clearAddress() {
             var oldPkId = vm.entity[$scope.page.pageinfo.idencolname]
             vm.empContactDetail = {};
@@ -847,8 +927,7 @@
                         angular.forEach(localForm.$error.required, function (errCtrl) {
                             if (!errCtrl.hasOwnProperty('$modelValue')) {
                                 localForm.$removeControl(errCtrl)
-                            }
-                            else if (errCtrl.$name == "") {
+                            } else if (errCtrl.$name == "") {
                                 localForm.$removeControl(errCtrl);
                             }
                         })
@@ -860,15 +939,13 @@
                         valid = false;
                     }
                 }
-            }
-            else if (vm.pageId == 36) {
+            } else if (vm.pageId == 36) {
                 //localForm = form.addressForm;
                 if (angular.equals(vm.empContactDetail, vm.oldempContactDetail)) {
                     _showToast('info', 'Nothing to save', "")
                     valid = false;
                 }
-            }
-            else {
+            } else {
                 if (angular.equals(vm.entity, vm.oldEntity)) {
                     _showToast('info', 'Nothing to save', "")
                     valid = false;
@@ -878,25 +955,26 @@
                 valid = editFormService.validateForm(localForm);
             return valid;
         }
+
         function _saveFormCommon(editForm) {
             if (_validateFormCommon(editForm)) {
                 _saveForm(editForm);
             }
         }
+
         function _resetFormCommon(editForm) {
 
             // editForm.$setPristine();           
             if (vm.pageId == 35) {
                 _resetPersonal();
-            }
-            else if (vm.pageId == 36) {
+            } else if (vm.pageId == 36) {
                 vm.CDPermanent = true;
                 _resetAddress();
-            }
-            else {
+            } else {
                 vm.entity = angular.copy(vm.oldEntity);
             }
         }
+
         function _clearFormCommon() {
 
 
@@ -917,6 +995,7 @@
             vm.entity = {};
             vm.entity[$scope.page.pageinfo.idencolname] = oldPkId;
         }
+
         function _permanentAddress() {
             if (vm.CDPermanent) {
                 vm.empContactDetail.CDPAddLine1 = vm.empContactDetail.CDAddLine1;
@@ -926,8 +1005,7 @@
                 vm.empContactDetail.PCityId = vm.empContactDetail.CDCityId;
                 vm.empContactDetail.CDPPincode = vm.empContactDetail.CDPincode;
                 vm.empContactDetail.CDPAreaId = vm.empContactDetail.CDAreaId;
-            }
-            else {
+            } else {
                 vm.empContactDetail.CDPAddLine1 = '';
                 vm.empContactDetail.CDPAddLine2 = '';
                 vm.empContactDetail.PContryId = '';
@@ -938,5 +1016,5 @@
             }
         }
         _loadController();
-    }//controller end
+    } //controller end
 })();
