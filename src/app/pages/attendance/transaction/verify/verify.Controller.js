@@ -466,7 +466,6 @@
       //   t: 's'
       // };
 
-<<<<<<< HEAD
       // console.log($scope.page.gridOptions.data)
       // for (var i = 0; i < $scope.page.gridOptions.data.length; i++) {
       //   var rowIndex = i + 2;
@@ -547,87 +546,6 @@
       //     v: moment().format('YYYY'),
       //     t: 's'
       //   };
-=======
-      // ws['D1'] = { v: $scope.page.gridOptions.columnDefs.length, t: 'n' };
-      // ws['E1'] = { v: 'Month', t: 's' };
-      // ws['F1'] = { v: moment().format('M'), t: 's' };
-      // ws['G1'] = { v: 'Year', t: 's' };
-      // ws['H1'] = { v: moment().format('YYYY'), t: 's' };
-      // ws['I1'] = { v: 'Max. Weekoff', t: 's' };
-      // ws['J1'] = { v: '4', t: 's' };
-      // ws['K1'] = { v: 'Max. Holiday', t: 's' };
-      // ws['L1'] = { v: '3', t: 's' };
-
-      //WRITE DATA ROW HEADER
-      ws['A1'] = { v: 'Sno', t: 's' };
-      ws['B1'] = { v: 'Code', t: 's' };
-      ws['C1'] = { v: 'Name', t: 's' };
-      ws['D1'] = { v: 'Total Days', t: 's' };
-      ws['E1'] = { v: 'Present Days', t: 's' };
-      ws['F1'] = { v: 'Absent', t: 's' };
-      ws['G1'] = { v: 'Week Off', t: 's' };
-      ws['H1'] = { v: 'Holiday', t: 's' };
-      ws['I1'] = { v: 'Leave', t: 's' };
-      ws['J1'] = { v: 'LWP', t: 's' };
-      ws['K1'] = { v: 'Normal Overtime (Hours)', t: 's' };
-      ws['L1'] = { v: 'Holiday Overtime (Days)', t: 's' };
-      ws['M1'] = { v: 'Salary Days', t: 's' };
-      ws['N1'] = { v: 'Month', t: 's' };
-      ws['O1'] = { v: 'Year', t: 's' };
-
-      console.log($scope.page.gridOptions.data)
-      for (var i = 0; i < $scope.page.gridOptions.data.length; i++) {
-        var rowIndex = i + 2;
-        var row = $scope.page.gridOptions.data[i];
-        //WRITE DATA ROW HEADER
-        ws['A' + rowIndex] = { v: i + 1, t: 's' };
-        ws['B' + rowIndex] = { v: row['EmpCode'], t: 's' };//Emp Code
-        ws['C' + rowIndex] = { v: row['EmpName'], t: 's' };//Emp Name
-        ws['D' + rowIndex] = {
-          f: '=DAY(DATE(YEAR(O' + rowIndex + '),N' + rowIndex + '+1,1)-1)', t: 's',
-          s: {
-            alignment: { textRotation: 90 },
-            font: { sz: 14, bold: true, color: '#FF00FF' }
-          }
-        };//Total Days
-        ws['E' + rowIndex] = { v: row['TotalPresentDays'], t: 's' };//Present Days
-        ws['F' + rowIndex] = { v: row['AbsentDays'] };//Absent 
-        ws['G' + rowIndex] = { v: row['TotalWeekoff'], t: 's' };//Week Off
-        ws['H' + rowIndex] = { v: row['TotalHolidays'], t: 's' };//Holiday
-        ws['I' + rowIndex] = { v: row['TotalLeaves'], t: 's' };//Leave
-        ws['J' + rowIndex] = { v: row['TotalLWP'], t: 's' };//LWP
-        ws['K' + rowIndex] = { v: row['SingleOvertimeHours'], t: 's' };//OT
-        ws['L' + rowIndex] = { v: row['DoubleOvertimeHours'], t: 's' };//Double OT
-        ws['M' + rowIndex] = {
-          f: '=E' + rowIndex + '+I' + rowIndex + '+G' + rowIndex + '+H' + rowIndex, t: 's',
-          s:
-            {
-              patternType: 'solid',
-              fgColor: { theme: 8, tint: 0.3999755851924192, rgb: '9ED2E0' },
-              bgColor: { indexed: 64 }
-            }
-        };//Salary Days
-        ws['N' + rowIndex] = { v: moment().format('MM'), t: 's' };
-        ws['O' + rowIndex] = { v: moment().format('YYYY'), t: 's' };
-
-      }
-
-      ws['!ref'] = XLSX.utils.encode_range(range);
-
-      /* add worksheet to workbook */
-      wb.SheetNames.push(ws_name);
-      wb.Sheets[ws_name] = ws;
-
-
-      var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-      var dataBinary = s2ab(wbout);
-      // saveFileAs(dataBinary, contentType, filename)
-      saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "Attendance_" + moment().format('ddMMhhss') + ".xlsx");
-
-
-      // /* write file */
-      // XLSX.writeFile(wb, 'test.xlsx');
->>>>>>> b4952580a5cccaf5633b5ba9c79106fcb824996b
 
       // }
 
@@ -637,7 +555,7 @@
       // wb.SheetNames.push(ws_name);
       // wb.Sheets[ws_name] = ws;
 
-      
+
 
       // var wbout = XLSX.write(wb, {
       //   bookType: 'xlsx',
@@ -857,7 +775,8 @@
       /**For list of edit verify attendance grid setting */
       vm.showDayWise = true;
       vm.showVerifyAttendance = false
-      var startDate = "", endDate = "";
+      var startDate = "",
+        endDate = "";
       if ($scope.page.filterData === undefined) {
         startDate = moment().startOf('month').format('YYYY-MM-DD');
         endDate = moment().endOf('month').format('YYYY-MM-DD');
@@ -915,6 +834,7 @@
     function _openView() {
       alert('view opened')
     }
+
     function _closeView() {
       vm.showEmpVerifyDetail = false;
       vm.showVerifyAttendance = true;
@@ -1306,6 +1226,9 @@
 
     function _closeVerify() {
       vm.showVerifyAttendance = true;
+      vm.showVerifyAttendances = false;
+      vm.showEmpVerifyDetail = false;
+      vm.showApprovedEmployee = false;
     }
 
     function _presentDays() {
@@ -1719,6 +1642,9 @@
       console.log(result)
       if (result[0][0].Result == "Approved Record") {
         vm.showVerifyAttendance = true;
+        vm.showApprovedEmployee = false;
+        vm.showVerifyAttendances = false;
+        vm.showEmpVerifyDetail = false;
         $scope.showMsg("success", "Record Approved")
       }
     }
@@ -1743,7 +1669,7 @@
     function _loadController() {
       pageService.getPagData(446).then(_getPageDataSuccessResult, _getPageDataErrorResult)
     }
- 
+
     function _getPageDataSuccessResult(result) {
       console.log(result)
       $scope.monthlySummaryResultData = result;
