@@ -7,7 +7,7 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     var host = $location.host();
     var port = $location.$$port;
 
-    var _serviceBaseURL = '/API/'; 
+    var _serviceBaseURL = '/API/';
     _serviceBaseURL = null;
     //added by dj@03.03.2017
     if (host.toLowerCase() == 'localhost' && port == '3000') {

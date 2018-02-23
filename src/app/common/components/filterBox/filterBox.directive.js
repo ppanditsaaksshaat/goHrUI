@@ -61,7 +61,7 @@
                     formatYear: 'yyyy',
                     startingDay: 1,
                     minMode: 'day'
-                }; 
+                };
 
                 /**
                  * setup time options

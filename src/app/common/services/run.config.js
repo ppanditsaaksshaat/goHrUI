@@ -78,7 +78,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
         }, function (err) {
             console.log(err);
         });
- 
+
     }
     var sheet = (function () {
         // Create the <style> tag

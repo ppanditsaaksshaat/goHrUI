@@ -14,8 +14,6 @@
     var vm = this;
     var currentState = $state.current;
 
-
-
     $scope.showAdmin_Panel = false;
     $scope.showadminremark = false;
     vm.filterOpt = {};
@@ -197,6 +195,7 @@
         .then(_saveFormSuccessResult, _saveFormErrorResult);
     }
 
+    
     function _saveFormSuccessResult(result) {
 
       alert('save');

@@ -186,7 +186,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
             return $http.get(url).then(function (results) {
                 return results;
             });
-        } 
+        }
 
         var _getAppUserData = function () {
             var url = serviceBase + 'api/AppUserData';
