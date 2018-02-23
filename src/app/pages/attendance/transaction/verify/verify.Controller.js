@@ -1562,11 +1562,11 @@
       console.log($scope.page.selectedRows);
       $scope.selectedEmpData = $scope.page.selectedRows;
       console.log($scope.selectedEmpData)
-      console.log($scope.page.pageinfo)
-      console.log($scope.page.pageinfo.statuslist)
+      // console.log($scope.page.pageinfo)
+      // console.log($scope.page.pageinfo.statuslist)
 
-      console.log($scope.editPage.pageinfo)
-      console.log($scope.editPage.pageinfo.statuslist)
+      // console.log($scope.editPage.pageinfo)
+      // console.log($scope.editPage.pageinfo.statuslist)
 
       vm.showApprovedEmployee = true;
       vm.showVerifyAttendance = false;
