@@ -1215,6 +1215,9 @@
     function _saveVerifySuccessResult(result) {
       if (result[0][0].result == "Verify Attendance") {
         $scope.showMsg("success", "Verify attendance updated.")
+        vm.showVerifyAttendance = true;
+        vm.showVerifyAttendances = false;
+        vm.showEmpVerifyDetail = false;
       }
       // $scope.page.refreshData();
       console.log(result)
