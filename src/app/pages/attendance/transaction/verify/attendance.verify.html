@@ -18,7 +18,8 @@
             <div class="col-md-9">
                 Attendance Detail of
                 <b>{{emp.EmpName}}</b> for the month of
-                <b> {{'Month-Year'}}</b>
+                <b> {{emp.Month}} - {{emp.Year}}</b>
+                {{emp}}
             </div>
             <div class="col-md-3">
 
@@ -81,7 +82,7 @@
                         {{emp.Org_TotalWeekoff}}
                     </td>
                     <td>
-                        <input class="form-control" readonly="true" ng-model="newEmp.TotalWeekoff" type="number" name="lname">
+                        <input class="form-control"  ng-model="newEmp.TotalWeekoff" type="number" name="lname">
                     </td>
                 </tr>
                 <tr>
@@ -92,7 +93,7 @@
                         {{emp.Org_TotalHolidays}}
                     </td>
                     <td>
-                        <input class="form-control" readonly="true" ng-model="newEmp.TotalHolidays" type="number" name="lname">
+                        <input class="form-control"  ng-model="newEmp.TotalHolidays" type="number" name="lname">
                     </td>
                 </tr>
                 <tr>
@@ -148,7 +149,7 @@
                         {{emp.Org_DeductableLateCount}}
                     </td>
                     <td>
-                        <input ng-model="newEmp.DeductableLateCount" class="form-control" readonly="true" type="number" name="lname">
+                        <input ng-model="newEmp.DeductableLateCount" class="form-control"  type="number" name="lname">
                     </td>
                 </tr>
                 <!-- <tr >
@@ -171,7 +172,7 @@
                     </td>
                     <td>
                         <!-- <span class="form-control" ng-model="newEmp.TotalDeductableDays"></span> -->
-                        <input class="form-control" readonly="true" ng-model="newEmp.TotalDeductableDays" type="number" name="lname">
+                        <input class="form-control"  ng-model="newEmp.TotalDeductableDays" type="number" name="lname">
                     </td>
                 </tr>
                 <tr>
@@ -182,7 +183,7 @@
                         {{emp.Org_TotalSalaryDays }}
                     </td>
                     <td>
-                        <input class="form-control" readonly="true" ng-model="newEmp.TotalSalaryDays" type="number" name="lname">
+                        <input class="form-control"  ng-model="newEmp.TotalSalaryDays" type="number" name="lname">
                     </td>
                 </tr>
 
@@ -278,7 +279,7 @@
             <tbody>
                 <tr ng-repeat-start="aprrovedEmp in selectedEmpData">
 
-                    <td   style="text-align: left; color:brown">{{aprrovedEmp.EmpName}}</td>
+                    <td style="text-align: left; color:brown">{{aprrovedEmp.EmpName}}</td>
                     <td style="text-align: left">{{aprrovedEmp.TotalDays}}</td>
                     <td style="text-align: left">{{aprrovedEmp.TotalPresentDays}}</td>
                     <td style="text-align: left">{{aprrovedEmp.TotalWeekoff}}</td>
