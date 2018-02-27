@@ -1131,6 +1131,18 @@
           $scope.newEmp.TotalSalaryDays = 0
         $scope.newEmp.TotalSalaryDays = $scope.newEmp.TotalSalaryDays;
 
+        if (isNaN($scope.newEmp.TotalHolidays))
+          $scope.newEmp.TotalHolidays = 0
+        $scope.newEmp.TotalHolidays = $scope.newEmp.TotalHolidays;
+
+        if (isNaN($scope.newEmp.TotalWeekoff))
+          $scope.newEmp.TotalWeekoff = 0
+        $scope.newEmp.TotalWeekoff = $scope.newEmp.TotalWeekoff;
+
+        if (isNaN($scope.newEmp.DeductableLateCount))
+          $scope.newEmp.DeductableLateCount = 0
+        $scope.newEmp.DeductableLateCount = $scope.newEmp.DeductableLateCount;
+
         // if (isNaN($scope.newEmp.AMSRemark))
         //   $scope.newEmp.AMSRemark = 0
         // $scope.newEmp.AMSRemark = $scope.newEmp.AMSRemark;
@@ -1203,6 +1215,24 @@
           field: 'AMSTotalSalaryDays',
           operand: '=',
           value: $scope.newEmp.TotalSalaryDays
+        })
+
+        searchLists.push({
+          field: 'AMSDeductableLateCount',
+          operand: '=',
+          value: $scope.newEmp.DeductableLateCount
+        })
+
+        searchLists.push({
+          field: 'AMSTotalWeekOff',
+          operand: '=',
+          value: $scope.newEmp.TotalWeekoff
+        })
+
+        searchLists.push({
+          field: 'AMSTotalHolidays',
+          operand: '=',
+          value: $scope.newEmp.TotalHolidays
         })
         var data = {
           searchList: searchLists,
