@@ -19,11 +19,11 @@
                 Attendance Detail of
                 <b>{{emp.EmpName}}</b> for the month of
                 <b> {{emp.Month}} - {{emp.Year}}</b>
-                
+
             </div>
             <div class="col-md-3">
 
-                <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
+                <!-- <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
 
                     <button type="button" class="btn btn-xs btn-danger" ng-click="attVerifyCtrl.closeVerify()">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Close</button>
@@ -32,7 +32,7 @@
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Save</button>
 
 
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -82,7 +82,7 @@
                         {{emp.Org_TotalWeekoff}}
                     </td>
                     <td>
-                        <input class="form-control"  ng-model="newEmp.TotalWeekoff" type="number" name="lname">
+                        <input class="form-control" ng-model="newEmp.TotalWeekoff" type="number" name="lname">
                     </td>
                 </tr>
                 <tr>
@@ -93,7 +93,7 @@
                         {{emp.Org_TotalHolidays}}
                     </td>
                     <td>
-                        <input class="form-control"  ng-model="newEmp.TotalHolidays" type="number" name="lname">
+                        <input class="form-control" ng-model="newEmp.TotalHolidays" type="number" name="lname">
                     </td>
                 </tr>
                 <tr>
@@ -127,7 +127,7 @@
                         {{emp.Org_TotalLWP}}
                     </td>
                     <td>
-                        <input readonly="true" class="form-control" ng-model="newEmp.TotalLWP" type="number" name="lname">
+                        <input  class="form-control" ng-model="newEmp.TotalLWP" type="number" name="lname">
                     </td>
                 </tr>
                 <!-- <tr>
@@ -149,7 +149,7 @@
                         {{emp.Org_DeductableLateCount}}
                     </td>
                     <td>
-                        <input ng-model="newEmp.DeductableLateCount" class="form-control"  type="number" name="lname">
+                        <input ng-model="newEmp.DeductableLateCount" class="form-control" type="number" name="lname">
                     </td>
                 </tr>
                 <!-- <tr >
@@ -172,7 +172,7 @@
                     </td>
                     <td>
                         <!-- <span class="form-control" ng-model="newEmp.TotalDeductableDays"></span> -->
-                        <input class="form-control"  ng-model="newEmp.TotalDeductableDays" type="number" name="lname">
+                        <input class="form-control" ng-model="newEmp.TotalDeductableDays" type="number" name="lname">
                     </td>
                 </tr>
                 <tr>
@@ -183,7 +183,7 @@
                         {{emp.Org_TotalSalaryDays }}
                     </td>
                     <td>
-                        <input class="form-control"  ng-model="newEmp.TotalSalaryDays" type="number" name="lname">
+                        <input class="form-control" ng-model="newEmp.TotalSalaryDays" type="number" name="lname">
                     </td>
                 </tr>
 
@@ -205,7 +205,16 @@
                         <input class="form-control" ng-model="newEmp.AMSRemark" type="text" name="lname">
                     </td>
                 </tr>
+                <br>
+                <tr>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-info btn-lg" ng-click="attVerifyCtrl.saveVerify()">Verify</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="attVerifyCtrl.closeVerify()">Close</button>
+
+                    </td>
+                </tr>
             </tbody>
+
         </table>
     </div>
 </div>
@@ -229,6 +238,9 @@
 
                     <button type="button" class="btn btn-xs btn-danger" ng-click="approvedData()">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Approved</button>
+
+                        <!-- <button type="button" class="btn btn-info btn-lg" ng-click="attVerifyCtrl.saveVerify()">Verify</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="attVerifyCtrl.closeVerify()">Close</button> -->
 
 
                 </div>

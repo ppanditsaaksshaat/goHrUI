@@ -1163,7 +1163,7 @@
         searchLists.push({
           field: 'EmpId',
           operand: '=',
-          value: 3
+          value: $scope.emp.EmpId
         })
 
         searchLists.push({
@@ -1234,6 +1234,12 @@
           operand: '=',
           value: $scope.newEmp.TotalHolidays
         })
+
+        searchLists.push({
+          field: 'AMSTIsVarified',
+          operand: '=',
+          value: 1
+        })
         var data = {
           searchList: searchLists,
           orderByList: []
@@ -1262,6 +1268,10 @@
       vm.showVerifyAttendances = false;
       vm.showEmpVerifyDetail = false;
       vm.showApprovedEmployee = false;
+      // $scope.editPage.refreshData();
+
+      // $scope.newEmp = {}
+      // $scope.emp = {}
     }
 
     function _presentDays() {
@@ -1678,6 +1688,7 @@
         vm.showApprovedEmployee = false;
         vm.showVerifyAttendances = false;
         vm.showEmpVerifyDetail = false;
+        $scope.editPage.refreshData();
         $scope.showMsg("success", "Record Approved")
       }
     }
