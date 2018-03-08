@@ -283,7 +283,7 @@
       $scope.showMsg("error", err);
     }
     function _getLeaveDebitSuccessResult(result) {
-
+      console.log(result)
       if (result != "NoDataFound") {
         var balLeave = vm.appliedDays;
         $scope.leaveRuleList = result;
@@ -551,14 +551,14 @@
 
     /**Get How many day of leave apply */
     function _appliedDays() {
-
+      
       var joiningDate = moment($scope.employeeJoiningDate);
       var fromDate = moment($scope.entity.LEADDateFrom);
       var diff = fromDate.diff(joiningDate, 'days')
       var queryId = 530;
       if (diff > 0) {
-        // debugger;
-        if ($scope.entity.selectedEmp.JDIsProbation != null && $scope.entity.selectedEmp.JDIsProbation != undefined && $scope.entity.selectedEmp.JDIsProbation != '') {
+        
+        if ($scope.entity.selectedEmp.JDIsProbation!="False" && $scope.entity.selectedEmp.JDIsProbation != null && $scope.entity.selectedEmp.JDIsProbation != undefined && $scope.entity.selectedEmp.JDIsProbation != '') {
           if ($scope.entity.selectedEmp.JDProbationValidity != null && $scope.entity.selectedEmp.JDProbationValidity != undefined && $scope.entity.selectedEmp.JDProbationValidity != '') {
             if (moment($scope.entity.selectedEmp.JDProbationValidity) >= moment($scope.entity.LEADDateFrom)) {
 

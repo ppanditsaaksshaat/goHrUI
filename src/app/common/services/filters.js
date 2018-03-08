@@ -16,6 +16,7 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
         var i = 0, len = list.length;
         for (; i < len; i++) {
             if (list[i][propName] == value) {
+                list[i].index = i;
                 result.push(list[i]);
             }
         }
@@ -138,4 +139,15 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
                 return value;
             };
         }
-    });
+    }).filter('range', function() {
+        return function(input, total) {
+          total = parseInt(total);
+      
+          for (var i=0; i<total; i++) {
+            input.push(i);
+          }
+      
+          return input;
+        };
+    })
+    
