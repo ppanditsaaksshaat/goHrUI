@@ -139,6 +139,7 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
                 return value;
             };
         }
+<<<<<<< HEAD
     }).filter('range', function() {
         return function(input, total) {
           total = parseInt(total);
@@ -151,3 +152,17 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
         };
     })
     
+=======
+    }).filter('translate', function ($rootScope) {
+        return function (input) {
+            console.log($rootScope.user.rp)
+            var i = 0, len = $rootScope.user.rp.length;
+            for (; i < len; i++) {
+                if ($rootScope.user.rp[i]['ResourceKey'] == input) {
+                    return $rootScope.user.rp[i].ResourceText;
+                }
+            }
+            return input
+        }
+    })
+>>>>>>> 4872cd5ca3c3d8ad5c454bec87ee8ea5efa9a128

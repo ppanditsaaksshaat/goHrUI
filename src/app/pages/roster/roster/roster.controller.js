@@ -122,14 +122,14 @@
                 $scope.showMsg("error", "To Date Less Than Or Equal To From Date");
                 return false;
             }
-            if (currentDate.format('YYYY') != fromDate.format('YYYY')) {
-                $scope.showMsg("error", "From Date Should Be Current Year");
-                return false;
-            }
-            if (currentDate.format('YYYY') != toDate.format('YYYY')) {
-                $scope.showMsg("error", "To Date Should Be Current Year");
-                return false;
-            }
+            // if (currentDate.format('YYYY') != fromDate.format('YYYY')) {
+            //     $scope.showMsg("error", "From Date Should Be Current Year");
+            //     return false;
+            // }
+            // if (currentDate.format('YYYY') != toDate.format('YYYY')) {
+            //     $scope.showMsg("error", "To Date Should Be Current Year");
+            //     return false;
+            // }
 
             return true;
 

@@ -11,6 +11,40 @@
         .controller('authController', authController);
     function authController($scope, pageService, DJWebStore, authService) {
 
+
+        // // Set the original/default language
+        // var lang = "en";
+
+        // google.load("elements", "1", {
+        //     packages: "transliteration"
+        // });
+        // console.log(google)
+        // function onLoad() {
+        //     var options = {
+        //         sourceLanguage:
+        //             google.elements.transliteration.LanguageCode.ENGLISH,
+        //         destinationLanguage:
+        //             [google.elements.transliteration.LanguageCode.HINDI],
+        //         shortcutKey: 'ctrl+g',
+        //         transliterationEnabled: true
+        //     };
+
+        //     // Create an instance on TransliterationControl with the required
+        //     // options.
+        //     var control =
+        //         new google.elements.transliteration.TransliterationControl(options);
+
+        //     // Enable transliteration in the textbox with id
+        //     // 'transliterateTextarea'.
+        //     // control.makeTransliteratable(['transliterateTextarea']);
+
+        //     google.language.transliterate('my name is deepak jain', 'en', 'fr', callback)
+        // }
+        // function callback(result)
+        // {
+        //     console.log(result);
+        // }
+        // google.setOnLoadCallback(onLoad);
         var vm = this;
         //fetching dev api url
         if (DJWebStore.IsDev()) {
@@ -30,6 +64,10 @@
 
         $scope.languageList.push({
             label: 'Kiswahili (Swahili)', value: 'sw'
+        })
+
+        $scope.languageList.push({
+            label: 'français (French)', value: 'fr'
         })
 
         $scope.selectedLanguage = $scope.languageList[0];
@@ -130,6 +168,10 @@
                     DJWebStore.SetUserProfile(profileData.user);
                     DJWebStore.SetSysParam(profileData.sys.param);
                     DJWebStore.SetCompany(profileData.company);
+                    if (profileData.resource) {
+                        console.log(profileData.resource)
+                        DJWebStore.SetValue('resourceKey', profileData.resource);
+                    }
                     _loadSideMenu();
                     // window.location.href = 'index.html'
                 }, function (err) {
