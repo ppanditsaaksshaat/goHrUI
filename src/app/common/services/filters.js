@@ -79,6 +79,7 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
                 valueReturn += input[i][valueField] + ', ';
             }
             if (valueReturn.length > 2) {
+            
                 valueReturn = valueReturn.substr(0, valueReturn.length - 1)
             }
 
@@ -139,20 +140,6 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
                 return value;
             };
         }
-<<<<<<< HEAD
-    }).filter('range', function() {
-        return function(input, total) {
-          total = parseInt(total);
-      
-          for (var i=0; i<total; i++) {
-            input.push(i);
-          }
-      
-          return input;
-        };
-    })
-    
-=======
     }).filter('translate', function ($rootScope) {
         return function (input) {
             console.log($rootScope.user.rp)
@@ -165,4 +152,3 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
             return input
         }
     })
->>>>>>> 4872cd5ca3c3d8ad5c454bec87ee8ea5efa9a128
