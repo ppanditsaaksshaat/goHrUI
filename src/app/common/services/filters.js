@@ -66,6 +66,8 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
                     return map[i][valueField];
                 }
             }
+
+            
         }
         return '';
     };
