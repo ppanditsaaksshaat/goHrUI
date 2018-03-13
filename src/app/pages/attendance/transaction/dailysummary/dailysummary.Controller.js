@@ -228,6 +228,13 @@
       // console.log(moment(row.AttDate).format("DD-MM-YYYY"));
       $scope.entity = row.entity;
 
+      $scope.showGrid = false;
+      $scope.showEditForm = true;
+      $scope.isLateOrEarlyExempted = false;
+      $scope.isOvertimeApproved = false;
+      $scope.isCompOffApproved = false;
+      // showEditForm=true;
+
       //  $scope.entity = angular.copy(row.entity);
       // console.log($scope.entity);
       // _shiftDuration($scope.entity);
@@ -411,6 +418,16 @@
         field: 'ODReason',
         operand: "=",
         value: $scope.entity.ODReason
+      })
+      searchLists.push({
+        field: 'InTime',
+        operand: "=",
+        value: $scope.entity.InTime
+      })
+      searchLists.push({
+        field: 'OutTime',
+        operand: "=",
+        value: $scope.entity.OutTime
       })
       console.log(searchLists)
       var data = {
