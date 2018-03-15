@@ -34,10 +34,12 @@
     $scope.isLateOrEarlyExempted = false;
     $scope.isOvertimeApproved = false;
     $scope.isCompOffApproved = false;
+    $scope.isApprovedAttendence = false;
 
     $scope.saveLateEarlyExempted = _saveLateEarlyExempted;
     $scope.saveOTApproved = _saveOTApproved;
     $scope.saveCOffApproved = _saveCOffApproved;
+    $scope.approvedData = _approvedData;
 
 
     $scope.page.boxOptions = {
@@ -53,6 +55,13 @@
       enableAutoRefresh: true,
       showDataOnLoad: true,
       linkColumns: null,
+      selectedRowButtons: [{
+        text: "Approved",
+        icon: '',
+        onClick: _approvedAttendance,
+        type: "btn-default",
+        defaultButton: false
+      }],
       gridHeight: 450,
       getPageData: null,
       refreshData: null,
@@ -90,6 +99,22 @@
       // readonlyColumns: ['col1', 'col2']
     }
 
+    function _approvedAttendance() {
+      $scope.AttApprovedRemark = '';
+      $scope.StatusId = '';
+      console.log($scope.page.selectedRows);
+      $scope.selectedEmpData = $scope.page.selectedRows;
+      console.log($scope.selectedEmpData)
+
+      $scope.showGrid = false;
+      $scope.showEditForm = false;
+      $scope.isLateOrEarlyExempted = false;
+      $scope.isOvertimeApproved = false;
+      $scope.isCompOffApproved = false;
+      $scope.isApprovedAttendence = true;
+
+    }
+
     function _lateOrEarlyExepted(row) {
       console.log(row)
 
@@ -102,6 +127,7 @@
         $scope.showEditForm = false;
         $scope.isOvertimeApproved = false;
         $scope.isCompOffApproved = false;
+        $scope.isApprovedAttendence = false;
         // vm.oldEntity = row.entity;
 
 
@@ -129,10 +155,11 @@
         $scope.showEditForm = false;
         $scope.isOvertimeApproved = true;
         $scope.isCompOffApproved = false;
+        $scope.isApprovedAttendence = false;
         $scope.entity = row.entity;
         $scope.entity.IsOverTimeApproved = row.entity.ADSIsOvertimeApproved;
         $scope.entity.OverTimeMinute = row.entity.ADSOTMinute;
-        
+
 
 
 
@@ -159,6 +186,7 @@
           $scope.showEditForm = false;
           $scope.isOvertimeApproved = false;
           $scope.isCompOffApproved = true;
+          $scope.isApprovedAttendence = false;
         } else {
           $scope.showMsg("info", "You can not apply c-off.")
         }
@@ -233,6 +261,8 @@
       $scope.isLateOrEarlyExempted = false;
       $scope.isOvertimeApproved = false;
       $scope.isCompOffApproved = false;
+      $scope.isApprovedAttendence = false;
+
       // showEditForm=true;
 
       //  $scope.entity = angular.copy(row.entity);
@@ -251,9 +281,11 @@
       $scope.isLateOrEarlyExempted = false;
       $scope.isOvertimeApproved = false;
       $scope.isCompOffApproved = false;
+      $scope.isApprovedAttendence = false;
     }
 
     function _loadController() {
+      var attendanceSheetPageId = 320;
       // $scope.page.searchList.push({
       //   field: 'AttDate',
       //   operand: '=',
@@ -263,6 +295,16 @@
       // // isManager
       // // empId
       // console.log($scope.user.profile)
+      pageService.getPagData(attendanceSheetPageId).then(_getPageDataSuccessResult, _getPageDataErrorResult)
+    }
+
+    function _getPageDataSuccessResult(result) {
+      console.log(result)
+      $scope.attendanceSheetData = result;
+    }
+
+    function _getPageDataErrorResult(error) {
+      console.log(error)
     }
 
     function _pageResult(result) {
@@ -323,6 +365,7 @@
       $scope.isLateOrEarlyExempted = false;
       $scope.isOvertimeApproved = false;
       $scope.isCompOffApproved = false;
+      $scope.isApprovedAttendence = false;
       // _saveLateEarlyExempted();
       $scope.entity = {};
       $scope.page.refreshData();
@@ -348,6 +391,7 @@
       $scope.isLateOrEarlyExempted = false;
       $scope.isOvertimeApproved = false;
       $scope.isCompOffApproved = false;
+      $scope.isApprovedAttendence = false;
       $scope.entity = {};
     }
 
@@ -449,6 +493,7 @@
         $scope.isLateOrEarlyExempted = false;
         $scope.isOvertimeApproved = false;
         $scope.isCompOffApproved = false;
+        $scope.isApprovedAttendence = false;
         $scope.page.refreshData();
       }
     }
@@ -504,6 +549,7 @@
         $scope.isLateOrEarlyExempted = false;
         $scope.isOvertimeApproved = false;
         $scope.isCompOffApproved = false;
+        $scope.isApprovedAttendence = false;
         $scope.page.refreshData();
       }
     }
@@ -552,6 +598,7 @@
         $scope.isLateOrEarlyExempted = false;
         $scope.isOvertimeApproved = false;
         $scope.isCompOffApproved = false;
+        $scope.isApprovedAttendence = false;
         $scope.page.refreshData();
       }
       console.log(result)
@@ -559,6 +606,78 @@
 
     function _cOffApprovedErrorResult(error) {
       console.log(error)
+    }
+
+    function _validateApprovedData() {
+      if ($scope.StatusId == undefined || $scope.StatusId == null) {
+        $scope.showMsg("error", "Please Select Status");
+        return true;
+      }
+      if ($scope.AttApprovedRemark == undefined || $scope.AttApprovedRemark == null || $scope.AttApprovedRemark == '') {
+        $scope.showMsg("error", "Please Enter Comment");
+        return true;
+      }
+      return false;
+    }
+
+    function _approvedData() {
+      if (!_validateApprovedData()) {
+        console.log($scope.page.selectedRows);
+        var AttId = '';
+
+        angular.forEach($scope.page.selectedRows, function (data, index) {
+          AttId += data.AttId + ',';
+        })
+        AttId = AttId.substring(0, AttId.length - 1)
+
+        var searchLists = [];
+        searchLists.push({
+          field: 'IsApprovedAttendance',
+          operand: "=",
+          value: 1
+        })
+        searchLists.push({
+          field: 'AttId',
+          operand: "=",
+          value: AttId
+        })
+        searchLists.push({
+          field: 'StatusId',
+          operand: "=",
+          value: $scope.StatusId
+        })
+
+        searchLists.push({
+          field: 'AttApprovedRemark',
+          operand: "=",
+          value: $scope.AttApprovedRemark
+        })
+        console.log(searchLists)
+
+        var data = {
+          searchList: searchLists,
+          orderByList: []
+        }
+        pageService.getCustomQuery(data, 622).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+      }
+    }
+
+    function _getCustomQuerySuccessResult(result) {
+      console.log(result)
+      if (result[0][0].Result == "Approved Attendance") {
+        $scope.showGrid = true;
+        $scope.showEditForm = false;
+        $scope.isLateOrEarlyExempted = false;
+        $scope.isOvertimeApproved = false;
+        $scope.isCompOffApproved = false;
+        $scope.isApprovedAttendence = false;
+        $scope.page.refreshData();
+        $scope.showMsg("success", "Approved Attendance")
+      }
+    }
+
+    function _getCustomQueryErrorResult(error) {
+      $scope.showMsg("error", error)
     }
 
     _loadController()
