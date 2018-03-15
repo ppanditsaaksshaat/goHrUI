@@ -8,9 +8,11 @@
     <div class="modal-body">
         <div class="row">
             <div ng-repeat="emp in employeeList" class="col-md-4">
-                <input id="{{$index}}" type="checkbox" ng-model="emp.checked"> {{emp.EmpName}}
+                <label>
+                    <input id="{{$index}}" type="checkbox" ng-model="emp.checked"> {{emp.EmpName}}
+                </label>
             </div>
-           <label ng-show="empNotFound" class="text-center">No data found</label>
+            <label ng-show="empNotFound" class="text-center">No data found</label>
         </div>
     </div>
     <div class="modal-footer">
