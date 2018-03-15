@@ -25,7 +25,7 @@
 
         $scope.saveRosterPlan = _saveRosterPlan;
         $scope.closeForm = _closeForm;
-        $scope.saveEmployee = _saveEmployee;
+        $scope.addEmployee = _addEmployee;
         $scope.addShift = _addShift;
         $scope.onChangeDepartment = _onChangeDepartment;
         $scope.weekList = _weekList;
@@ -90,134 +90,183 @@
             $scope.page.refreshData();
         }
 
-        function _validate(entity, oldEntity) {
+        function _validate(entity) {
 
-            if (entity.RPDPlanName == undefined) {
+            if ($scope.entity.RPPlanName == undefined) {
                 $scope.showMsg("error", "Please Enter Plan Name");
                 return false;
             }
 
-            if (entity.RPDShiftId == undefined) {
-                $scope.showMsg("error", "Please Select Shift");
+            // if (entity.RPDShiftId == undefined) {
+            //     $scope.showMsg("error", "Please Select Shift");
+            //     return false;
+            // }
+            if ($scope.entity.RPStartDay == undefined) {
+                $scope.showMsg("error", "Please Select WeekStartDay Name");
                 return false;
             }
-            if (entity.RPDWeekOffSetId == undefined) {
-                $scope.showMsg("error", "Please Select WeekOff Set");
+            if ($scope.entity.RPWEF == undefined) {
+                $scope.showMsg("error", "Please Select WEF DATE");
                 return false;
             }
-            if (entity.RPDFromDate == undefined) {
-                $scope.showMsg("error", "Please Select From Date");
+            if ($scope.entity.RPWET == undefined) {
+                $scope.showMsg("error", "Please Select WET DATE");
                 return false;
             }
-            if (entity.RPDToDate == undefined) {
-                $scope.showMsg("error", "Please Select To Date");
+            if ($scope.entity.RPDurationForEachShift == undefined) {
+                $scope.showMsg("error", "Please Select Duration For Each Shift");
+                return false;
+            }
+            if ($scope.entity.RPRecurringWeek == undefined) {
+                $scope.showMsg("error", "Please Select Recurring Week");
+                return false;
+            }
+            if ($scope.entity.RPDeptId == undefined) {
+                $scope.showMsg("error", "Please Select Department");
+                return false;
+            }
+            if ($scope.entity.RPIsDay == undefined) {
+                $scope.showMsg("error", "Please Select Day/Weekly Wise");
                 return false;
             }
             var currentDate = moment();
-            var fromDate = moment(entity.RPDFromDate)
-            var toDate = moment(entity.RPDToDate);
+            var fromDate = moment($scope.entity.RPWEF)
+            var toDate = moment($scope.entity.RPWET);
             var valiDate = toDate.isSameOrAfter(fromDate);
             if (!valiDate) {
-                $scope.showMsg("error", "To Date Less Than Or Equal To From Date");
+                $scope.showMsg("error", "WET Date Less Than Or Equal To WEF Date");
                 return false;
             }
-            if (currentDate.format('YYYY') != fromDate.format('YYYY')) {
-                $scope.showMsg("error", "From Date Should Be Current Year");
-                return false;
-            }
-            if (currentDate.format('YYYY') != toDate.format('YYYY')) {
-                $scope.showMsg("error", "To Date Should Be Current Year");
-                return false;
-            }
+            // if (currentDate.format('YYYY') != fromDate.format('YYYY')) {
+            //     $scope.showMsg("error", "From Date Should Be Current Year");
+            //     return false;
+            // }
+            // if (currentDate.format('YYYY') != toDate.format('YYYY')) {
+            //     $scope.showMsg("error", "To Date Should Be Current Year");
+            //     return false;
+            // }
 
             return true;
 
         }
 
         function _saveRosterPlan(entity) {
-            $scope.multiEntity = {};
-            $scope.multiEntity.parent = {
-                newEntity: entity,
-                oldEntity: {},
-                action: $scope.entity.RPId == undefined ? 'create' : 'edit',
-                tableid: $scope.page.pageinfo.tableid,
-                pageid: $scope.page.pageinfo.pageid
-            }
-            $scope.multiEntity.child = [];
-            var planDetailchild = {
-                tableid: rosterPlanDetailTableId,
-                pageid: rosterPlanDetailPageId,
-                parentColumn: $scope.page.pageinfo.idencolname,
-                linkColumn: 'RPDRPId',
-                idenColName: "RPDId",
-                rows: []
-            }
-            var rosterPlanDetail = [];
-            for (var i = 0; i < $scope.weekOffSetList.length; i++) {
-                var weekOff = $scope.weekOffSetList[i];
-                var empIds = "";
-                var rosterPlan = {};
-                if (weekOff.selectedEmp.length > 0) {
-                    angular.forEach(weekOff.selectedEmp, function (data) {
-                        empIds += data.EmpId + ",";
-                    })
-                    if (empIds != "") {
-                        empIds = empIds.substring(0, empIds.length - 1)
-                    }
-                    rosterPlan.RPDId = 0;
-                    rosterPlan.RPDWeekOffSetId = weekOff.WOSId;
-                    rosterPlan.RPDEmpIds = empIds;
-                    // rosterPlanDetail.push(rosterPlan);
+            if (_validate()) {
+                $scope.multiEntity = {};
+                $scope.multiEntity.parent = {
+                    newEntity: entity,
+                    oldEntity: {},
+                    action: $scope.entity.RPId == undefined ? 'create' : 'edit',
+                    tableid: $scope.page.pageinfo.tableid,
+                    pageid: $scope.page.pageinfo.pageid
                 }
-
-                var shiftDetailChild = {
-                    tableid: rosterShiftDetailTableId,
-                    pageid: rosterShiftDetailPageId,
-                    parentColumn: "RPDId",
-                    linkColumn: 'RSDRPDId',
-                    idenColName: 'RSDId',
+                $scope.multiEntity.child = [];
+                var planDetailchild = {
+                    tableid: rosterPlanDetailTableId,
+                    pageid: rosterPlanDetailPageId,
+                    parentColumn: $scope.page.pageinfo.idencolname,
+                    linkColumn: 'RPDRPId',
+                    idenColName: "RPDId",
                     rows: []
                 }
-                var count = 1;
-                for (var j = 0; j < entity.RPRecurringWeek; j++) {
-                    if (j > 0) {
-                        count = count + entity.RPDurationForEachShift;
+                var rosterPlanDetail = [];
+                for (var i = 0; i < $scope.weekOffSetList.length; i++) {
+                    var weekOff = $scope.weekOffSetList[i];
+                    var empIds = "";
+                    var rosterPlan = {};
+                    if (weekOff.selectedEmp != undefined) {
+                        if (weekOff.selectedEmp.length > 0) {
+                            angular.forEach(weekOff.selectedEmp, function (data) {
+                                empIds += data.EmpId + ",";
+                            })
+                            if (empIds != "") {
+                                empIds = empIds.substring(0, empIds.length - 1)
+                            }
+                            rosterPlan.RPDId = 0;
+                            rosterPlan.RPDWeekOffSetId = weekOff.WOSId;
+                            rosterPlan.RPDEmpIds = empIds;
+                            // rosterPlanDetail.push(rosterPlan);
+                        }
                     }
-                    var rosterShift = {};
-                    rosterShift.RSDId = 0;
-                    rosterShift.RSDShiftId = weekOff[j].Id;
-                    rosterShift.RSDDayFrom = (j == 0 ? 1 : count)
-                    rosterShift.RSDDayTo = (entity.RPDurationForEachShift) * (j + 1);
-                    shiftDetailChild.rows.push(rosterShift);
-                }
-                
-                rosterPlan.child = [];
+                    else {
+                        $scope.showMsg("error", "Please Add Employee in " + weekOff.WOSName)
+                        return;
+                    }
 
-                rosterPlan.child.push(shiftDetailChild);
-                planDetailchild.rows.push(rosterPlan);
-                // $scope.multiEntity.child.push(planDetailchild);
+                    var shiftDetailChild = {
+                        tableid: rosterShiftDetailTableId,
+                        pageid: rosterShiftDetailPageId,
+                        parentColumn: "RPDId",
+                        linkColumn: 'RSDRPDId',
+                        idenColName: 'RSDId',
+                        rows: []
+                    }
+                    var count = 1;
+                    for (var j = 0; j < entity.RPRecurringWeek; j++) {
+                        if (weekOff[j] != undefined) {
+                            if (j > 0) {
+                                count = count + entity.RPDurationForEachShift;
+                            }
+                            var rosterShift = {};
+                            rosterShift.RSDId = 0;
+                            rosterShift.RSDShiftId = weekOff[j].Id;
+                            rosterShift.RSDDayFrom = (j == 0 ? 1 : count)
+                            rosterShift.RSDDayTo = (entity.RPDurationForEachShift) * (j + 1);
+                            shiftDetailChild.rows.push(rosterShift);
+                        }
+                        else {
+                            count=1+j;
+                            $scope.showMsg("error", "Please add shift in " + weekOff.WOSName + " " + count + " Week");
+                            count++;
+                            return
+                        }
+                    }
+
+                    rosterPlan.child = [];
+
+                    rosterPlan.child.push(shiftDetailChild);
+                    planDetailchild.rows.push(rosterPlan);
+                    // $scope.multiEntity.child.push(planDetailchild);
+                }
+                //  planDetailchild.rows.push(rosterPlanDetail);
+                console.log(planDetailchild)
+
+                $scope.multiEntity.child.push(planDetailchild);
+                console.log($scope.multiEntity)
+
+                var postData = JSON.stringify($scope.multiEntity);
+                var compressed = LZString.compressToEncodedURIComponent(postData);
+                var data = { lz: true, data: compressed }
+
+                // $scope.multiEntity.lz = false;
+                pageService.multiSave(data).then(function (result) {
+                    console.log(result)
+                    if (result.success_message == "success") {
+
+                        var data = {
+                            searchList: [{
+                                field: 'RPId',
+                                operand: "=",
+                                value: result.entity.Id
+                            }],
+                            orderByList: []
+                        }
+                        pageService.getCustomQuery(data, 625).then(_addRosterSuccessResult, _addRosterErrorResult)
+
+                        $scope.showMsg("success", "Record Saved Successfully");
+                        $scope.showWeeklyOffList = false;
+                        $scope.page.refreshData();
+                    }
+                }, function (err) {
+                    console.log(err)
+                })
             }
-            //  planDetailchild.rows.push(rosterPlanDetail);
-            console.log(planDetailchild)
+        }
+        function _addRosterSuccessResult(result) {
 
-            $scope.multiEntity.child.push(planDetailchild);
-            console.log($scope.multiEntity)
-            
-            var postData = JSON.stringify($scope.multiEntity);
-            var compressed = LZString.compressToEncodedURIComponent(postData);
-            var data = { lz: true, data: compressed }
+        }
+        function _addRosterErrorResult(err) {
 
-            // $scope.multiEntity.lz = false;
-            pageService.multiSave(data).then(function (result) {
-                console.log(result)
-                if (result == "done") {
-                    $scope.showMsg("success", "Record Saved Successfully");
-                    $scope.showWeeklyOffList = false;
-                    $scope.page.refreshData();
-                }
-            }, function (err) {
-                console.log(err)
-            })
         }
         function _saveSuccessResult(result) {
             console.log(result);
@@ -238,6 +287,11 @@
             $scope.currentWeekOffSet.selectedEmp = [];
         }
         function _loadController() {
+
+            $scope.durationForEachShift = [{ Id: 1, Name: "1" }, { Id: 2, Name: "2" }, { Id: 3, Name: "3" }, { Id: 4, Name: "4" }, { Id: 5, Name: "5" }, { Id: 6, Name: "6" }, { Id: 7, Name: "7" }];
+            $scope.recurring = [{ Id: 1, Name: "1" }, { Id: 2, Name: "2" }, { Id: 3, Name: "3" }, { Id: 4, Name: "4" }, { Id: 5, Name: "5" }];
+            $scope.dayAndWeekWise = [{ Id: 1, Name: "Day Wise" }, { Id: 2, Name: "Weekly Wise" }];
+
             var data = {
                 searchList: [],
                 orderByList: []
@@ -261,21 +315,26 @@
 
         }
 
-        function _saveEmployee(currentWeekOfSet) {
-            var paramData = {
-                empList: $scope.viewEmpList,
-                deptId: $scope.entity.RPDeptId,
-                currentWeek: currentWeekOfSet,
-                callBack: _selectEmpCallBack
+        function _addEmployee(currentWeekOfSet) {
+            if ($scope.entity.RPDeptId != undefined) {
+                var paramData = {
+                    empList: $scope.viewEmpList,
+                    deptId: $scope.entity.RPDeptId,
+                    currentWeek: currentWeekOfSet,
+                    callBack: _selectEmpCallBack
+                }
+                console.log(paramData)
+                var options = {
+                    url: "app/pages/roster/plan/addEmployee.html",
+                    controller: "addRosterEmpController",
+                    controllerAs: "",
+                    param: paramData,
+                }
+                dialogModal.open(options)
             }
-            console.log(paramData)
-            var options = {
-                url: "app/pages/roster/plan/addEmployee.html",
-                controller: "addRosterEmpController",
-                controllerAs: "",
-                param: paramData,
+            else {
+                $scope.showMsg("error", "Please Select Department");
             }
-            dialogModal.open(options)
         }
 
         function _selectEmpCallBack(empList, currentweekOfSet) {

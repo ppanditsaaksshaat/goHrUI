@@ -31,14 +31,17 @@
                                 <label ng-bind="page.pageinfo.fields.RPDurationForEachShift.text"></label>
                                 <div>
                                     <!-- <field-box page="page" ng-column="page.pageinfo.fields.RPDurationForEachShift" ng-entity="entity" form="editForm"></field-box> -->
-                                    <select class="form-control" ng-model="entity.RPDurationForEachShift" ng-options="duration in [] | range:7"></select>
+                                    <select ng-model="entity.RPDurationForEachShift" ng-options="duration.Id as duration.Name for duration in durationForEachShift"
+                                        class="form-control"></select>
+                                    <!-- <select class="form-control" ng-model="entity.RPDurationForEachShift" ng-options="duration in [] | range:7"></select> -->
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label ng-bind="page.pageinfo.fields.RPRecurringWeek.text"></label>
                                 <div>
+                                    <select ng-model="entity.RPRecurringWeek" ng-options="rec.Id as rec.Name for rec in recurring" class="form-control"></select>
                                     <!-- <field-box page="page" ng-column="page.pageinfo.fields.RPRecurringWeek" ng-entity="entity" form="editForm"></field-box> -->
-                                    <select class="form-control" ng-model="entity.RPRecurringWeek" ng-options="recurring in [] | range:5"></select>
+                                    <!-- <select class="form-control" ng-model="entity.RPRecurringWeek" ng-options="recurring in [] | range:5"></select> -->
                                 </div>
                             </div>
                         </div>
@@ -64,16 +67,24 @@
                                     <field-box page="page" ng-column="page.pageinfo.fields.RPDeptId" ng-entity="entity" form="editForm" fb-change="onChangeDepartment()"></field-box>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RPIsDay.text"></label>
+                                <div>
+                                    <select ng-model="entity.RPIsDay" ng-options="day.Id as day.Name for day in dayAndWeekWise" class="form-control"></select>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div ng-repeat="weekOffSet in weekOffSetList" class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <button id="{{$index}}" type="button" ng-click="saveEmployee(weekOffSet)" class="btn btn-primary">Add Employee</button>
+                                        <button id="{{$index}}" type="button" ng-click="addEmployee(weekOffSet)" class="btn btn-primary">Add Employee</button>
                                     </div>
                                 </div>
                                 <div class="col-md-2 well scrollbar force-overflow">
+                                    <label>{{weekOffSet.WOSName}}</label>
                                     <ul class="emp" ng-repeat="emp in weekOffSet.selectedEmp">
+                                       
                                         <li>{{emp.EmpName}}</li>
                                     </ul>
                                 </div>
