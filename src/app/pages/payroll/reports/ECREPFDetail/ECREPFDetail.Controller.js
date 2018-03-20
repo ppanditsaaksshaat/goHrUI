@@ -33,9 +33,9 @@
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
-      showFilter: false,
+      showFilter: true,
       filterOpened: true,
-      showAdd: true,
+      showAdd: false,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
@@ -49,7 +49,7 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      showDataOnLoad: true
+      showDataOnLoad: false
     }
 
 

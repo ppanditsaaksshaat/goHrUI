@@ -723,7 +723,12 @@
 
     /**Close edit list */
     function _close() {
+      // vm.showVerifyAttendance = true;
+
       vm.showVerifyAttendance = true;
+      vm.showVerifyAttendances = false;
+      vm.showEmpVerifyDetail = false;
+      vm.showApprovedEmployee = false;
     }
 
 
