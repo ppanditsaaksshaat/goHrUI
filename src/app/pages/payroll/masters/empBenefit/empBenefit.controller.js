@@ -31,7 +31,8 @@
 
         $scope.changeFormula = _changeFormula;
         $scope.saveEmpBenefit = _saveEmpBenefit;
-
+        $scope.uploadRecord = _uploadRecord;
+        $scope.downLoadTemp = _downLoadTemp;
 
 
         $scope.oldEntity = {};
@@ -245,7 +246,7 @@
         }
 
         function _getWeekGridOptions() {
-
+            console.log($scope.entity.EBDDeptId)
             if ($scope.entity.EBDDeptId !== undefined && $scope.entity.EBDDeptId != '') {
                 if ($scope.entity.EBDSHId !== undefined && $scope.entity.EBDSHId != '') {
                     var searchLists = [];
@@ -364,5 +365,63 @@
 
         _loadController();
         //End WeekGridOptions
+
+        function _uploadRecord() {
+            // $scope.deepak = 'is my name';
+            var options = {
+                url: "app/common/forms/browseModal/browseModal.html",
+                controller: "",
+                controllerAs: "",
+            }
+            dialogModal.open(options)
+        }
+
+
+
+        $scope.$on('uploadGridData', _upload)
+
+        function _upload(evt, uploadGridData) {
+
+            var flag = false;
+
+            if ($scope.weekGridOptions.data.length > 0) {
+                angular.forEach(uploadGridData.data, function (newEmpDetail) {
+                    var oldEmpDetail = $filter("findObj")($scope.weekGridOptions.data, newEmpDetail.EmpCode, "EmpCode")
+                    console.log(oldEmpDetail)
+                    console.log(uploadGridData.data)
+                    console.log(newEmpDetail)
+                    console.log($scope.weekGridOptions.data)
+                    if (oldEmpDetail != null) {
+                        oldEmpDetail.EBDIsActive = newEmpDetail.IsActive;
+                        oldEmpDetail.EBDFiexedAmount = newEmpDetail.BenefitAmount
+                        flag = true;
+                    } else {
+
+                    }
+                })
+                if (flag) {
+                    $scope.showMsg("success", "Your file uploaded successfully")
+                }
+            }
+        }
+
+        function _downLoadTemp() {
+
+            // alert('download temp is working');
+            var tempColumns = [];
+
+            var row = {
+                EmpCode: 'Alpha-numeric (ITSL000001) Size(10)',
+                EmpName: 'Only alphabet (Atul Kumar Singh) Size(100)',
+                IsActive: 'Only 0 Or 1 Size(1)',
+                BenefitAmount: 'Only numeric Or Decimal (1000) Size(10)',
+            }
+
+            tempColumns.push(row)
+
+
+
+            DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'EmployeeBenefit', false, true, true);
+        }
     }
 })();
