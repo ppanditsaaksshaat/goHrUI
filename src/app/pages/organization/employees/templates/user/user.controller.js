@@ -34,10 +34,11 @@
             pageService.getTableData(24, 19, '', '', false, data).then(_getTableSuccessResult, _getTableErrorResult)
         }
         function _getTableSuccessResult(result) {
-           
+            console.log(result)
             if (result != 'NoDataFound') {
                 $scope.newRegister = false;
                 $scope.entity.UserName = result[0].UserName;
+                $scope.entity.AspNetUserId=result[0].AspNetUserId
             }
         }
         function _getTableErrorResult(err) {
