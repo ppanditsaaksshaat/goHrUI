@@ -52,6 +52,10 @@
                                         <button ng-click="addToltalEarningDeductionRule(headId)" type="button" class="btn btn-info">
                                             <i class="fa fa-plus"></i> Add</button>
                                     </div>
+                                    <div ng-show="deletedRows.length>0" class="col-lg-2">
+                                        <button ng-click="restoreData()" type="button" class="btn btn-info">
+                                            <i class="fa fa-plus"></i>Restore</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -85,7 +89,6 @@
 </script>
 
 <style>
-   
     .ui-grid-cell {
         overflow: visible;
         z-index: 99999;

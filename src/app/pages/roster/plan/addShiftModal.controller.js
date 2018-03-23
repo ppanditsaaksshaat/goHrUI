@@ -13,7 +13,7 @@
         pageService, param) {
 
 
-        var shiftQueryId = 345;
+        var shiftQueryId = 132;
         $scope.save = _save;
 
 
