@@ -12,6 +12,7 @@
     'BlurAdmin.pages.payroll.masters.paybandtemplate',
     'BlurAdmin.pages.payroll.masters.payband',
     'BlurAdmin.pages.payroll.masters.empPayband',
+    'BlurAdmin.pages.payroll.masters.empBenefit',
   ])
     .config(routeConfig);
 
