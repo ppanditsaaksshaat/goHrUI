@@ -560,7 +560,15 @@
             }
         }
         function _toggleRowExpand(row) {
-            $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+            var heads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBRSHId.options, row.entity.PBRSHId, "value")
+
+            var param = {
+                expandedGridOptions: row.entity.subGridOptions,
+                title: 'Expanded for ' + heads.name
+            };
+            dialogModal.openExpandGrid(param);
+
+            // $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
         }
         function _changeSlab(row) {
             console.log(row)

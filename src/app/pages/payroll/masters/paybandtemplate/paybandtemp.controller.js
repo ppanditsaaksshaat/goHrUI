@@ -1186,17 +1186,28 @@
                     $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
                 }
             }
-
         }
         function _toggleRowExpand(row) {
-            if (row.entity.PBTRIsFormula && $scope.toggleExpandOnAdd) {
-                _getSubGridOptions(row.entity, row.entity.PBTRIsFormula)
-                $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
-                $scope.toggleExpandOnAdd = false;
-            }
-            else {
-                $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
-            }
+            console.log(row);
+
+            var heads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRSHId.options, row.entity.PBTRSHId, "value")
+
+            var param = {
+                expandedGridOptions: row.entity.subGridOptions,
+                title: 'Expanded for ' + heads.name
+            };
+            dialogModal.openExpandGrid(param);
+
+            // if (row.entity.PBTRIsFormula && $scope.toggleExpandOnAdd) {
+            //     _getSubGridOptions(row.entity, row.entity.PBTRIsFormula)
+            //     $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+            //     $scope.toggleExpandOnAdd = false;
+
+
+            // }
+            // else {
+            //     $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+            // }
         }
 
         function _removeRuleSlab(row) {

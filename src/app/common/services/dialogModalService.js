@@ -93,7 +93,7 @@
         keyboard: false
       });
       return $rootScope.modalInstance;
-    }
+    } 
 
     this.openIdleTimeout = function () {
       $rootScope.modalInstance = $uibModal.open({
@@ -129,6 +129,22 @@
       return modalInstance;
     }
     
+    this.openExpandGrid = function (param) {
+      $rootScope.modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: 'app/pages/expandGrid/expand.grid.html',
+        controller: 'expandGridController',
+        size: 'top-center-500',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          param: function () {
+            return param;
+          }
+        }
+      });
+      return $rootScope.modalInstance;
+    }
   }
 
 })();
