@@ -392,11 +392,14 @@
                     console.log(newEmpDetail)
                     console.log($scope.weekGridOptions.data)
                     if (oldEmpDetail != null) {
-                        oldEmpDetail.EBDIsActive = newEmpDetail.IsActive;
-                        oldEmpDetail.EBDFiexedAmount = newEmpDetail.BenefitAmount
-                        flag = true;
-                    } else {
+                        if (newEmpDetail.IsActive == 1) {
+                            oldEmpDetail.EBDIsActive = newEmpDetail.IsActive;
+                            oldEmpDetail.EBDFiexedAmount = newEmpDetail.BenefitAmount
+                            flag = true;
+                        } else {
 
+                            
+                        }
                     }
                 })
                 if (flag) {
