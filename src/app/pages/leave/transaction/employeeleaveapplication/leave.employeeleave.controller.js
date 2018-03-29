@@ -696,6 +696,7 @@
       var leaveFromDate = moment($scope.entity.LEADDateFrom);
       var month = leaveFromDate.format('M');
       var year = leaveFromDate.format('YYYY');
+      console.log(year)
       if (!$scope.entity.selectedEmp.AMSTIsVarified) {
         if (_validateForm(form)) {}
       } else if ($scope.entity.selectedEmp.AMSMonth == parseInt(month) && $scope.entity.selectedEmp.AMSYear == parseInt(year)) {
@@ -710,7 +711,7 @@
       if (valid) {
         $scope.entity.LEADTransation = ''
         angular.forEach($scope.showLeave, function (leave, idx) {
-
+          console.log($scope.showLeave)
           if (leave.leaveDr) {
             if (leave.leaveDr > 0 || leave.isHalfDay) {
               if (leave.LTName == "LWP" && leave.leaveDr != 0) {
@@ -763,6 +764,7 @@
 
       if (result == "NoDataFound") {
         $scope.isSavingLeave = true;
+        console.log($scope.entity)
         _commonSaveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
       } else {
         if ($scope.entity.LEADId != undefined) {
