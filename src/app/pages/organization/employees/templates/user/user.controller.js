@@ -38,7 +38,7 @@
             if (result != 'NoDataFound') {
                 $scope.newRegister = false;
                 $scope.entity.UserName = result[0].UserName;
-                $scope.entity.AspNetUserId=result[0].AspNetUserId
+                $scope.entity.AspNetUserId = result[0].AspNetUserId
             }
         }
         function _getTableErrorResult(err) {
@@ -115,7 +115,12 @@
         }
 
         function _setNewPasswordSuccess(result) {
-            $scope.showMsg("success", "New Password Set Successfully");
+            console.log(result)
+            if (result.status == 200) {
+                $scope.showMsg("success", "New Password Set Successfully");
+                $scope.entity.NewPassword = undefined;
+                $scope.entity.ConfirmPassword = undefined;
+            }
 
         }
         function _setNewPasswordError(err) {
