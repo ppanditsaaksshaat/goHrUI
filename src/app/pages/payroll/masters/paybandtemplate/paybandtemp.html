@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 <grid-box ng-model="page" ng-hide="page.showEditForm"></grid-box>
 <form name="editForm" ng-submit="saveForm(editForm)" novalidate>
-    <div id="editForm" class="panel panel-default bootstrap-panel xmedium-panel" ng-show="page.showEditForm">
+    <div id="editForm" class="panel panel-default bootstrap-panel" ng-show="page.showEditForm">
         <edit-panel-head page="page" page-title="page.pageinfo.tagline" show-save="editForm.untouch" reset-form="resetForm(editForm)"
             clear-form="clearForm(editForm)" condition="true" show-list="false" show-close="true" close-form="closeForm(editForm)"></edit-panel-head>
 
-        <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
+        <div class="panel-body">
 
             <div class="row">
                 <div class="col-md-12">
@@ -16,7 +16,22 @@
                                 <field-box page="page" ng-column="page.pageinfo.fields.PBTName" ng-entity="entity" form="editForm"></field-box>
                             </div>
                         </div>
-
+                        <div class="col-md-2">
+                            <button ng-click="addNewRule()" type="button" class="btn btn-info">
+                                <i class="fa fa-plus"></i> Add New Head</button>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" ng-model="headId" ng-change="existHeadId=true" ng-options="head.value as head.name for  head in rulePage.pageinfo.fields.PBTRSHId.options | filter:{SHIsTotal:true}">
+                            </select>
+                        </div>
+                        <div ng-show="existHeadId" class="col-lg-2">
+                            <button ng-click="addToltalEarningDeductionRule(headId)" type="button" class="btn btn-info">
+                                <i class="fa fa-plus"></i> Add</button>
+                        </div>
+                        <div ng-show="deletedRows.length>0" class="col-lg-2">
+                            <button ng-click="restoreData()" type="button" class="btn btn-info">
+                                <i class="fa fa-plus"></i>Restore</button>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-10">
@@ -38,28 +53,7 @@
                             <div id="djGridPay" ui-grid="payTempGridOptions" ui-grid-expandable ui-grid-auto-resize ui-grid-pagination ui-grid-selection
                                 ui-grid-pinning ui-grid-edit class="paybandgrid payband">
                             </div>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="col-md-3  pull-left">
-                                        <button ng-click="addNewRule()" type="button" class="btn btn-info">
-                                            <i class="fa fa-plus"></i> Add New Head</button>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <select class="form-control" ng-model="headId" ng-change="existHeadId=true" ng-options="head.value as head.name for  head in rulePage.pageinfo.fields.PBTRSHId.options | filter:{SHIsTotal:true}">
-                                        </select>
-                                    </div>
-                                    <div ng-show="existHeadId" class="col-lg-2">
-                                        <button ng-click="addToltalEarningDeductionRule(headId)" type="button" class="btn btn-info">
-                                            <i class="fa fa-plus"></i> Add</button>
-                                    </div>
-                                    <div ng-show="deletedRows.length>0" class="col-lg-2">
-                                        <button ng-click="restoreData()" type="button" class="btn btn-info">
-                                            <i class="fa fa-plus"></i>Restore</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -78,8 +72,6 @@
             </ui-select-choices>
         </ui-select>
     </ui-select-wrap>
-
-
 </script>
 
 <script type="text/ng-template" id="multiCell">

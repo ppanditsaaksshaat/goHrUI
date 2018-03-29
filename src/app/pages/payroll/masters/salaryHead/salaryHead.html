@@ -16,25 +16,25 @@
                     <field-box class="row col-md-12" page="page" ng-column="page.pageinfo.fields.SHDescription" ng-entity="entity" form="editForm"></field-box>
                     <hr/>
                     <label class="checkbox-inline custom-checkbox nowrap">
-                    <input type="checkbox" ng-disabled="!page.isAllowEdit" id="inlineCheckbox01" value="true" ng-model="entity.SHDependOnSalaryDay">
-                    <span>{{page.pageinfo.fields.SHDependOnSalaryDay.place}}</span>
+                        <input type="checkbox" ng-disabled="!page.isAllowEdit" id="inlineCheckbox01" value="true" ng-model="entity.SHDependOnSalaryDay">
+                        <span>{{page.pageinfo.fields.SHDependOnSalaryDay.place}}</span>
                     </label>
 
                     <hr/>
                     <label class="checkbox-inline custom-checkbox nowrap">
-                    <input type="checkbox" ng-disabled="!page.isAllowEdit" id="inlineCheckbox01" value="true" ng-model="entity.SHIsIncludeInGross">
-                    <span>{{page.pageinfo.fields.SHIsIncludeInGross.place}}</span>
+                        <input type="checkbox" ng-disabled="!page.isAllowEdit" id="inlineCheckbox01" value="true" ng-model="entity.SHIsIncludeInGross">
+                        <span>{{page.pageinfo.fields.SHIsIncludeInGross.place}}</span>
                     </label>
 
                     <hr/>
                     <label class="checkbox-inline custom-checkbox nowrap">
-                    <input type="checkbox" ng-disabled="!page.isAllowEdit" id="inlineCheckbox01" value="true" ng-model="entity.SHIsIncludeInPaySleep">
-                    <span>{{page.pageinfo.fields.SHIsIncludeInPaySleep.place}}</span>
+                        <input type="checkbox" ng-disabled="!page.isAllowEdit" id="inlineCheckbox01" value="true" ng-model="entity.SHIsIncludeInPaySleep">
+                        <span>{{page.pageinfo.fields.SHIsIncludeInPaySleep.place}}</span>
                     </label>
                     <hr/>
                     <label class="checkbox-inline custom-checkbox nowrap">
-                    <input type="checkbox" ng-disabled="!page.isAllowEdit" id="inlineCheckbox01" value="true" ng-model="entity.SHIsDependsOnMonth">
-                    <span>{{page.pageinfo.fields.SHIsDependsOnMonth.place}}</span>
+                        <input type="checkbox" ng-disabled="!page.isAllowEdit" id="inlineCheckbox01" value="true" ng-model="entity.SHIsDependsOnMonth">
+                        <span>{{page.pageinfo.fields.SHIsDependsOnMonth.place}}</span>
                     </label>
 
                 </div>
@@ -44,26 +44,30 @@
                     <div class="input-demo radio-demo row">
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headType" id="deduction" ng-model="entity.headType" ng-change="changeHeadType(entity.headType)" value="1">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headType" id="employerContribution" ng-model="entity.headType"
+                                    ng-change="changeHeadType(entity.headType)" value="4">
+                                <span>Total</span>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="radio-inline custom-radio nowrap">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headType" id="deduction" ng-model="entity.headType" ng-change="changeHeadType(entity.headType)"
+                                    value="1">
                                 <span>Deduction</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headType" id="earning" ng-model="entity.headType" ng-change="changeHeadType(entity.headType)" value="2">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headType" id="earning" ng-model="entity.headType" ng-change="changeHeadType(entity.headType)"
+                                    value="2">
                                 <span>Earning</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headType" id="employerContribution" ng-model="entity.headType" ng-change="changeHeadType(entity.headType)" value="3">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headType" id="employerContribution" ng-model="entity.headType"
+                                    ng-change="changeHeadType(entity.headType)" value="3">
                                 <span>Employer Contribution</span>
-                            </label>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headType" id="employerContribution" ng-model="entity.headType" ng-change="changeHeadType(entity.headType)" value="4">
-                                <span>Total</span>
                             </label>
                         </div>
                     </div>
@@ -72,153 +76,158 @@
                     <div class="input-demo radio-demo row">
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="1" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="1" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsGrossSalary.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="basic" ng-model="entity.headCat"  value="2" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="basic" ng-model="entity.headCat" value="2" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsBasic.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="allowance" ng-model="entity.headCat"  value="3" ng-change="changeHeadCat(entity.headCat)">
-                                 <span>{{page.pageinfo.fields.SHIsAllowance.text}}</span>
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="allowance" ng-model="entity.headCat" value="3"
+                                    ng-change="changeHeadCat(entity.headCat)">
+                                <span>{{page.pageinfo.fields.SHIsAllowance.text}}</span>
                             </label>
                         </div>
                     </div>
                     <div class="input-demo radio-demo row">
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="4" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="4" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsSpecielAllowance.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="basic" ng-model="entity.headCat"  value="5" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="basic" ng-model="entity.headCat" value="5" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsBonus.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="allowance" ng-model="entity.headCat"  value="6" ng-change="changeHeadCat(entity.headCat)">
-                                 <span>{{page.pageinfo.fields.SHIsReimbursement.text}}</span>
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="allowance" ng-model="entity.headCat" value="6"
+                                    ng-change="changeHeadCat(entity.headCat)">
+                                <span>{{page.pageinfo.fields.SHIsReimbursement.text}}</span>
                             </label>
                         </div>
                     </div>
-                     <div class="input-demo radio-demo row">
+                    <div class="input-demo radio-demo row">
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="7" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="7" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsESIC.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="basic" ng-model="entity.headCat"  value="8" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="basic" ng-model="entity.headCat" value="8" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsEPF.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="allowance" ng-model="entity.headCat"  value="9" ng-change="changeHeadCat(entity.headCat)">
-                                 <span>{{page.pageinfo.fields.SHIsTds.text}}</span>
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="allowance" ng-model="entity.headCat" value="9"
+                                    ng-change="changeHeadCat(entity.headCat)">
+                                <span>{{page.pageinfo.fields.SHIsTds.text}}</span>
                             </label>
                         </div>
                     </div>
-                     <div class="input-demo radio-demo row">
+                    <div class="input-demo radio-demo row">
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="10" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="10" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsLoan.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="basic" ng-model="entity.headCat"  value="11" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="basic" ng-model="entity.headCat" value="11" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsAdvanceSalary.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="allowance" ng-model="entity.headCat"  value="12" ng-change="changeHeadCat(entity.headCat)">
-                                 <span>{{page.pageinfo.fields.SHIsOvertime.text}}</span>
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="allowance" ng-model="entity.headCat" value="12"
+                                    ng-change="changeHeadCat(entity.headCat)">
+                                <span>{{page.pageinfo.fields.SHIsOvertime.text}}</span>
                             </label>
                         </div>
                     </div>
                     <div class="input-demo radio-demo row">
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="13" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="13" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsLeave.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="basic" ng-model="entity.headCat"  value="14" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="basic" ng-model="entity.headCat" value="14" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsAbsence.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="allowance" ng-model="entity.headCat"  value="15" ng-change="changeHeadCat(entity.headCat)">
-                                 <span>{{page.pageinfo.fields.SHIsSingleOT.text}}</span>
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="allowance" ng-model="entity.headCat" value="15"
+                                    ng-change="changeHeadCat(entity.headCat)">
+                                <span>{{page.pageinfo.fields.SHIsSingleOT.text}}</span>
                             </label>
                         </div>
                     </div>
                     <div class="input-demo radio-demo row">
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="16" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="16" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsBenefit.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="17" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="17" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsTotalEarning.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="18" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="18" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsTotalDeduction.text}}</span>
                             </label>
                         </div>
-                        
+
                     </div>
                     <div class="input-demo radio-demo row">
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="19" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="19" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsNetPay.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="20" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="20" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsRoundOff.text}}</span>
                             </label>
                         </div>
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="21" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="21" ng-change="changeHeadCat(entity.headCat)">
                                 <span>{{page.pageinfo.fields.SHIsTaxableSalary.text}}</span>
                             </label>
                         </div>
-                        
+
                     </div>
                     <div class="input-demo radio-demo row">
                         <div class="col-md-3">
                             <label class="radio-inline custom-radio nowrap">
-                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat"  value="100" ng-change="changeHeadCat(entity.headCat)">
+                                <input type="radio" ng-disabled="!page.isAllowEdit" name="headCategory" id="gros" ng-model="entity.headCat" value="100" ng-change="changeHeadCat(entity.headCat)">
                                 <span>None</span>
                             </label>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

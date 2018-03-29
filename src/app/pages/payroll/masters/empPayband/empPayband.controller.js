@@ -1170,7 +1170,12 @@
             return totalAmt;
         }
         function _toggleRowExpand(row) {
+            // var heads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBRSHId.options, row.entity.PBRSHId, "value")
 
+            // var param = {
+            //     expandedGridOptions: row.entity.subGridOptions,
+            //     title: 'Expanded for ' + heads.name
+            // };
             $scope.secondGridApi.expandable.toggleRowExpansion(row.entity);
         }
         function _changeSlab(row) {
