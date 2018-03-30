@@ -194,11 +194,13 @@
             if ($scope.weekGridOptions.data.length > 0) {
                 angular.forEach($scope.weekGridOptions.data, function (row) {
                     console.log($scope.weekGridOptions.data)
+                    console.log($scope.entity.EBDSHId.value)
+                    console.log($scope.entity)
                     // if (row.EBDFiexedAmount !== undefined && row.EBDFiexedAmount != null && row.EBDFiexedAmount != 0) {
                     var data = {
                         EBDId: row.EBDId == null ? undefined : row.EBDId,
                         EBDEmpId: row.EBDEmpId,
-                        EBDSHId: $scope.entity.EBDSHId.value,
+                        EBDSHId: $scope.entity.EBDSHId,
                         EBDIsActive: row.EBDIsActive,
                         EBDFiexedAmount: row.EBDFiexedAmount,
                         EBDDate: $scope.entity.benefitDate
@@ -206,6 +208,7 @@
                         // IsDeleted: 0
                     }
                     var form = {}
+                    console.log(data)
                     if (data.EBDId == undefined) {
                         editFormService.saveForm(benefitPageId, data, {}, 'create', 'EmployeeBenefit', form, false).then(_successEmployeeBenefitResult, _errorEmployeeBenefitResult);
                     } else {
@@ -395,10 +398,11 @@
                         if (newEmpDetail.IsActive == 1) {
                             oldEmpDetail.EBDIsActive = newEmpDetail.IsActive;
                             oldEmpDetail.EBDFiexedAmount = newEmpDetail.BenefitAmount
+                            
                             flag = true;
                         } else {
 
-                            
+
                         }
                     }
                 })
