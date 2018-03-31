@@ -33,6 +33,8 @@
                 $scope.selectChange = _selectChange;
                 /**END Public Function */
 
+               
+
                 var resourse = {
                     equals: 'equals',
                     doesnotequal: 'does not equal',

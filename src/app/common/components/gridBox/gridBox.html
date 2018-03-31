@@ -14,7 +14,30 @@
                                 <i ng-show="page.isLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
                             </div>
                             <div class="col-md-9">
-
+                                <div class="dropdown pull-left">
+                                    <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                                            {{'ShowDataFor'| translate}} {{selectedQueryType | translate}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="-1" href ng-click="showDataFor('0')">{{'ShowDataOnlyMe'| translate}}</a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="-1" href ng-click="showDataFor('1')">{{'ShowDataLevel1'| translate}}</a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="-1" href ng-click="showDataFor('2')">{{'ShowDataLevel2'| translate}}</a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="-1" href ng-click="showDataFor('3')">{{'ShowDataLevel3'| translate}}</a>
+                                        </li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="-1" href ng-click="showDataFor('100')">{{'ShowDataAllLevel'| translate}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
                                 <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
                                     <button ng-show="page.boxOptions.showBack" type="button" class="btn btn-xs btn-default" ng-click="page.goBack()">
                                         <i class="ion-backspace"></i>List</button>
@@ -28,9 +51,9 @@
                                         class="btn btn-xs btn-default " ng-click="page.addRecord(editForm) ">
                                         <i class="fa fa-plus-circle " aria-hidden="true "></i>Add</button>
 
-                                    <button type="button"
-                                        class="btn btn-xs btn-default " ng-click="page.openHelp()">
-                                        <i class="fa fa-question-circle" aria-hidden="true "></i></button>
+                                    <button type="button" class="btn btn-xs btn-default " ng-click="page.openHelp()">
+                                        <i class="fa fa-question-circle" aria-hidden="true "></i>
+                                    </button>
 
 
                                     <select ng-show="page.boxOptions.showCustomView && (page.pageinfo.ucvlist.length>1)" title="Select Status" ng-model="selectedUcvItem"
