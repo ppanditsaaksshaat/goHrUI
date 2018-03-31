@@ -14,8 +14,9 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>{{page.pageinfo.fields.FADEmpId.text}}</label>
-                        <select class="form-control" ng-model="entity.selectedEmp" ng-change="shiftInOutTime()" ng-options="employee.name  for employee in page.pageinfo.selects.FADEmpId">
-                            </select>
+                        <select class="form-control" ng-model="entity.selectedEmp"  ng-options="employee.name  for employee in page.pageinfo.selects.FADEmpId">
+                            <!-- ng-change="shiftInOutTime()" -->
+                        </select>
                     </div>
                 </div>
 
@@ -56,12 +57,7 @@
                         <field-box page="page" ng-column="page.pageinfo.fields.FDAOutTime " ng-entity="entity " form="editForm "></field-box>
                     </div>
                 </div>
-                <!--<div class="col-md-4">
-                    <div class="form-group">
-                        <label >{{page.pageinfo.fields.FADAppDate.text}}</label>
-                        <field-box page="page" ng-column="page.pageinfo.fields.FDAFromDate " ng-entity="entity " form="editForm "></field-box>
-                    </div>
-                </div>-->
+               
             </div>
 
             <div class="row">
@@ -71,6 +67,16 @@
                         <field-box page="page" ng-column="page.pageinfo.fields.FDARemark " ng-entity="entity " form="editForm "></field-box>
                     </div>
                 </div>
+
+                 <div class="col-md-4">
+                    <div class="form-group">
+                        <label >{{page.pageinfo.fields.AFDADIsIncludeShift.text}}</label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.AFDADIsIncludeShift " ng-entity="entity " form="editForm "></field-box>
+                    </div>
+                 </div>
+
+
+
 
             </div>
 
@@ -232,7 +238,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Status<span style="color:red">*</span></label>
                                                 <!--<select class="form-control" ng-model="entity.StatusId" ng-options="status.value as status.name for status in sanctionPage.pageinfo.statuslist"></select>-->
@@ -240,7 +246,17 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label >{{page.pageinfo.fields.AFDADIsIncludeShift.text}}</label>
+                                                <field-box page="page" ng-column="page.pageinfo.fields.AFDADIsIncludeShift " ng-entity="entity " form="editForm "></field-box>
+                                          
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Comment<span style="color:red">* </label>
                                                 <textarea class="form-control" ng-model="sanctionEntity.AFDADRemark"></textarea>
