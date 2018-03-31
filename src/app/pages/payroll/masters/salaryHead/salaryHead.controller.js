@@ -43,7 +43,12 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      showDataOnLoad: true
+      showDataOnLoad: true,
+      pageResult: _pageResult
+    }
+
+    function _pageResult(result) {
+      console.log(result)
     }
     $scope.saveForm = _saveForm;
     $scope.closeForm = _closeForm;
@@ -57,6 +62,7 @@
       $scope.entity = {};
       $scope.oldEntity = {};
     }
+
     function _editRecord(row) {
 
       $scope.page.showCustomEditView = true;
@@ -69,11 +75,9 @@
       }
       if ($scope.entity.SHIsForEmployer) {
         $scope.entity.headType = "3";
-      }
-      else if ($scope.entity.SHIsDeduction) {
+      } else if ($scope.entity.SHIsDeduction) {
         $scope.entity.headCat = "1";
-      }
-      else if (!$scope.entity.SHIsDeduction) {
+      } else if (!$scope.entity.SHIsDeduction) {
         $scope.entity.headType = "2";
       }
 
@@ -110,7 +114,7 @@
         $scope.entity.headCat = "15";
       else if ($scope.entity.SHIsBenefit)
         $scope.entity.headCat = "16";
-        else if ($scope.entity.SHIsTotalEarning)
+      else if ($scope.entity.SHIsTotalEarning)
         $scope.entity.headCat = "17";
       else if ($scope.entity.SHIsTotalDeduction)
         $scope.entity.headCat = "18";
@@ -121,24 +125,29 @@
       else if ($scope.entity.SHIsTaxableSalary)
         $scope.entity.headCat = "21";
     }
+
     function _closeForm(editForm) {
       $scope.page.showCustomEditView = false;
       $scope.entity = {};
     }
+
     function _resetForm(editForm) {
 
     }
+
     function _clearForm(editForm) {
 
     }
+
     function _validateForm(editForm) {
       return true;
     }
+
     function _saveForm(editForm) {
       $scope.currentForm = editForm;
       if (_validateForm(editForm)) {
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
-          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+            $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
           .then(_saveFormSuccess, _saveFormError)
       }
     }
@@ -149,6 +158,7 @@
       _closeForm($scope.currentForm);
 
     }
+
     function _saveFormError(err) {
       $scope.showMsg('error', 'Unable to save ' + $scope.page.pageinfo.tagline + ", Something went wrong.")
       console.log(err)
@@ -159,19 +169,16 @@
         $scope.entity.SHIsTotal = false;
         $scope.entity.SHIsDeduction = true;
         $scope.entity.SHIsForEmployer = false;
-      }
-      else if (headType == "2") {
+      } else if (headType == "2") {
         $scope.entity.SHIsTotal = false;
         $scope.entity.SHIsDeduction = false;
         $scope.entity.SHIsForEmployer = false;
-      }
-      else if (headType == "3") {
+      } else if (headType == "3") {
         $scope.entity.SHIsTotal = false;
         $scope.entity.SHIsDeduction = false;
         $scope.entity.SHIsForEmployer = true;
 
-      }
-      else if (headType == "4") {
+      } else if (headType == "4") {
         $scope.entity.SHIsTotal = true;
         $scope.entity.SHIsDeduction = false;
         $scope.entity.SHIsForEmployer = false;

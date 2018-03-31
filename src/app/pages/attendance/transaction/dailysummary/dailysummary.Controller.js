@@ -53,7 +53,7 @@
       showDialog: false,
       enableRefreshAfterUpdate: true,
       enableAutoRefresh: true,
-      showDataOnLoad: true,
+      showDataOnLoad: false,
       linkColumns: null,
       selectedRowButtons: [{
         text: "Approved",
