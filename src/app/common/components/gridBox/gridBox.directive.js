@@ -9,7 +9,7 @@
         .directive('gridBox', gridBox);
     /** @ngInject */
     function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
-        editFormService, focus, $filter, DJWebStore) {
+        editFormService, focus, $filter, DJWebStore, $stateParams) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/gridBox/gridBox.html',
@@ -63,6 +63,35 @@
                     openHelp: null//external help option
                 }
 
+
+                $scope.showDataFor = _showDataFor;
+
+                function _showDataFor(idx, isFromLoad) {
+
+                    if (idx == 0) {
+                        $scope.selectedQueryType = 'ShowDataOnlyMe';
+                    }
+                    else if (idx == 1) {
+                        $scope.selectedQueryType = 'ShowDataLevel1';
+                    }
+                    else if (idx == 2) {
+                        $scope.selectedQueryType = 'ShowDataLevel2';
+                    }
+                    else if (idx == 3) {
+                        $scope.selectedQueryType = 'ShowDataLevel3';
+                    }
+                    else if (idx == 100) {
+                        $scope.selectedQueryType = 'ShowDataAllLevel';
+                    }
+                    DJWebStore.SetValue('LevelQueried', idx)
+                    DJWebStore.SetValue('GetAllLevel', 1)
+
+                    if (!isFromLoad) {
+                        var current = $state.current;
+                        var params = angular.copy($stateParams);
+                        $state.transitionTo(current, params, { reload: true, inherit: true, notify: true });
+                    }
+                }
                 //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
                 //customColumns:text,click,type:a|button|text|dd,pin:true|false,
                 var gridOptions = $rootScope.getGridSetting();
@@ -149,6 +178,9 @@
 
 
                 function _loadDirective() {
+                    var idxval = DJWebStore.GetValue('LevelQueried')
+                    _showDataFor(idxval, true);
+
                     if ($scope.page.boxOptions.selfLoading) {
                         _getPageData();
                     }
@@ -810,7 +842,7 @@
 
                 })
                 $scope.$on('apply-filter', function (successEvent, searchList) {
-                   debugger
+                    debugger
                     // //console.log(searchList)
                     // //console.log('from gridbox', $scope.page)
                     if (searchList) {

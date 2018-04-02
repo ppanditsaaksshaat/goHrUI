@@ -26,6 +26,7 @@
             link: function ($scope, elm, attrs, ctrl) {
                 // var reportBaseURL = 'http://itsllive.rudra.hrm/';
                 var reportBaseURL = 'http://rudra.hrm/';
+                // var reportBaseURL = 'http://web400.hrms/';
                 var host = $location.host();
                 var absUrl = $location.absUrl();
                 if (absUrl.indexOf('.html') > 0) {
@@ -77,6 +78,7 @@
                     dataResult: null,
                     saveResult: null
                 }
+
 
                 //var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
@@ -160,10 +162,17 @@
                     pageService.rptHandshake($scope.page.reportId, JSON.stringify(encData)).then(function (result) {
                         //   var result = angular.fromJson(response.data);
                         console.log(result)
-                        var rptUrl = '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                        // var rptUrl = '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                        //     '&crid=' + corpoId + '&lang=' + lang
+                        // console.log(rptUrl)
+                        // $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
+
+                        // reportBaseURL = 'http://rudra.hrm'
+                        var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
                             '&crid=' + corpoId + '&lang=' + lang
                         console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
+
 
 
                     }, function (err) {
@@ -174,16 +183,25 @@
 
                 }
 
-                function _loadReport() {
+                  function _loadReport() {
 
                     pageService.getListReport($scope.reportId).then(function (result) {
 
                         $scope.page.pageinfo = result;
+                        console.log(result)
+                        _getPageResult(result)
+
                         //setPageTitle();
                         console.log($scope.page)
                     }, function (err) {
                         //console.log(err);
                     });
+                }
+
+                function _getPageResult(result) {
+                    // $scope.pageResult = result;
+                    console.log(result)
+                    $scope.page.boxOptions.pageResult(result);
                 }
                 $scope.$on('apply-filter', function (successEvent, searchList) {
 

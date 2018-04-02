@@ -14,6 +14,9 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
 
         var corpoId = DJWebStore.GetValue('CorpoId');
         var userLang = DJWebStore.GetValue('UserLang');
+        var levelQueried = DJWebStore.GetValue('LevelQueried');
+        var getAllLevel = DJWebStore.GetValue('GetAllLevel');
+        
         if (corpoId == null)
             config.headers.CorpoId = '';
         else
@@ -23,6 +26,16 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
             config.headers.UserLang = 'en';
         else
             config.headers.UserLang = userLang;
+
+        if (levelQueried == null)
+            config.headers.LevelQueried = '0';
+        else
+            config.headers.LevelQueried = levelQueried;
+            
+        if (getAllLevel == null)
+            config.headers.GetAllLevel = '1';
+        else
+            config.headers.GetAllLevel = getAllLevel;    
 
         var currentPeriodLastDate = moment($rootScope.currentPeriod);
         config.headers.CurrentPeriod = currentPeriodLastDate.endOf('month').format('YYYY-MM-DD');

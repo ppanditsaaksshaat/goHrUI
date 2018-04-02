@@ -19,8 +19,6 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         }
         //NO NEED TO COMMENT FOR PUBLISH
     }
-
-
     var authorizationDataKey = 'authorizationData';
     var profileDataKey = 'profileData';
     var pageDataKey = 'pageData';
