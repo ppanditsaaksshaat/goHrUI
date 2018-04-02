@@ -28,7 +28,7 @@
 
         <ul class="list-unstyled filters filter-panel">
             <li>
-                    
+
             </li>
             <li ng-repeat="filter in page.pageinfo.filters|filter: {displayName: filterSearchText}">
                 <div class="row">
@@ -39,7 +39,7 @@
                             <span>{{filter.displayName}}</span>
                         </label>
                     </div>
-                    <div class="col-md-4" ng-show="filter.showFilter && filter.isAllowChangeOperator">
+                    <div class="col-md-4" ng-show="filter.showFilter">
                         <a ng-show="(filter.operator)" href class="pull-left" title="{{filter.selectedOpt.name}}" popover-animation="true" uib-popover-html="filter.selectedOpt.name"
                             popover-trigger="manual" popover-is-open="filter.showPop" popover-placement="{{($index==0)?'bottom': ($index==page.pageinfo.filters.length-1)?'top':'left'}}"
                             ng-mouseover="filter.showPop=true" ng-mouseleave="filter.showPop=false">[{{filter.operator}}]</a>
@@ -60,7 +60,7 @@
                                 <div class="col-md-offset-1">
                                     <label class="checkbox-inline custom-checkbox nowrap">
                                         <input type="checkbox" id="inlineCheckbox01" ng-model="filter.isMultiple">
-                                        <span>Multiple</span>
+                                        <span>{{'Multiple'|translate}}</span>
                                     </label>
                                 </div>
                             </div>
@@ -70,25 +70,25 @@
                         </div>
                         <div ng-switch-when="datepicker">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12" style="font-size: 8px">
                                     <label class="radio-inline custom-radio nowrap">
                                         <input type="radio" name="{{filter.name}}" id="inlineRadio1" value="day" checked ng-model="filter.datePicker.option1.minMode"
                                             ng-click="dateModeChanged(filter)">
-                                        <span>Date</span>
+                                        <span>{{'Date'|translate}}</span>
                                     </label>
                                     <label class="radio-inline custom-radio nowrap">
                                         <input type="radio" name="{{filter.name}}" id="inlineRadio1" value="month" ng-model="filter.datePicker.option1.minMode" ng-click="dateModeChanged(filter)">
-                                        <span>Monthly</span>
+                                        <span>{{'Monthly'|translate}}</span>
                                     </label>
                                     <label class="radio-inline custom-radio nowrap">
                                         <input type="radio" name="{{filter.name}}" id="inlineRadio1" value="year" ng-model="filter.datePicker.option1.minMode" ng-click="dateModeChanged(filter)">
-                                        <span>Yearly</span>
+                                        <span>{{'Yearly'|translate}}</span>
                                     </label>
                                 </div>
                             </div>
                             <div ng-show="filter.datePicker.option1.minMode">
                                 <div class="row">
-                                    <label ng-show="filter.operator=='/b'" for="inputPassword3" class="col-sm-2 control-label">From:</label>
+                                    <label ng-show="filter.operator=='/b'" for="inputPassword3" class="col-sm-2 control-label">{{'From'|translate}}:</label>
                                     <div class="col-md-12" ng-class="{'col-md-10':(filter.operator=='/b'), 'col-md-12':(filter.operator!='/b')}">
                                         <input ng-click="filter.datePicker.opened1 = true" ng-readonly="true" type="text" uib-datepicker-popup="{{filter.datePicker.format}}"
                                             ng-model="filter.value" is-open="filter.datePicker.opened1" datepicker-options="filter.datePicker.option1"
@@ -99,7 +99,7 @@
                                 </div>
                                 <!--show this box on between selection-->
                                 <div class="row" ng-show="filter.operator=='/b'">
-                                    <label for="inputPassword3" class="col-sm-2 control-label">To:</label>
+                                    <label for="inputPassword3" class="col-sm-2 control-label">{{'To'|translate}}:</label>
                                     <div class="col-md-10">
                                         <input ng-click="filter.datePicker.opened2 = true" ng-readonly="true" type="text" uib-datepicker-popup="{{filter.datePicker.format}}"
                                             ng-model="filter.value2" is-open="filter.datePicker.opened2" datepicker-options="filter.datePicker.option2"

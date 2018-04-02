@@ -11,7 +11,7 @@
         .controller('authController', authController);
     function authController($scope, pageService, DJWebStore, authService) {
 
-
+        DJWebStore.RemoveAll();
         // // Set the original/default language
         // var lang = "en";
 
@@ -175,6 +175,15 @@
                     _loadSideMenu();
                     // window.location.href = 'index.html'
                 }, function (err) {
+
+
+                    $("#userName").prop("disabled", false);
+                    $("#userPassword").prop("disabled", false);
+                    $("#userLanguage").prop("disabled", false);
+                    $("#btnlogin").prop("disabled", false);
+                    $("#userCorpoId").prop("disabled", false);
+                    $("#btnlogin").text("Sign in");
+                    DJWebStore.RemoveAll();
                     $scope.showMsg('error', err)
                 });
             },
