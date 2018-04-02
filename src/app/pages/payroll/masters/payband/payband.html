@@ -33,15 +33,11 @@
                             </div>
 
                         </div>
-                        <!-- <div class="col-md-2">
-
-                            <label ng-bind="page.pageinfo.fields.PBGrossSalary.text"></label>
-                            <div>
-                                <field-box page="page" ng-column="page.pageinfo.fields.PBGrossSalary" ng-entity="entity" form="editForm" fb-change="onGrossChange()"></field-box>
-                            </div>
+                        <div class="col-md-2" ng-show="!addRecord">
+                            <button type="button" class="btn btn-primary" ng-click="Reload()">ReLoad</button>
 
                         </div>
-                        <div class="col-md-2">
+                        <!--  <div class="col-md-2">
 
                             <label ng-bind="page.pageinfo.fields.PBBasicPerctange.text"></label>
                             <div>
@@ -88,7 +84,8 @@
                                         <select ng-model="selectedOtherHead" ng-options="opt.name for opt in rulePage.pageinfo.fields.PBRSHId.options"></select>
                                     </div>
                                     <div class="pull-right">
-                                        <button ng-click="addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button>
+                                        <button ng-click="addTotal()" type="button" class="btn btn-danger btn-xs">
+                                            <i class="fa fa-calculator"></i> Calculate Diffrences</button>
                                     </div>
 
                                 </div>
@@ -174,6 +171,7 @@
         -ms-user-select: none;
         user-select: none;
     }
+
     /* Make sure the container doesn't shrink too small */
 
     .ui-select-container {
