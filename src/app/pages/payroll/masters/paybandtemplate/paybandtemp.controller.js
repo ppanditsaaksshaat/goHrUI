@@ -150,6 +150,7 @@
         /**default grid add function */
 
         function _addRecord(result) {
+            $scope.deletedRows = [];
             $scope.edit = false;
             $scope.action = 'create';
             $scope.page.showEditForm = true;
@@ -161,7 +162,7 @@
 
         /**default grid edit function */
         function _editRecord(row) {
-            console.log($scope.rulePage.pageinfo.fields.PBTRSHId.options);
+            $scope.deletedRows = [];
             $scope.edit = true;
             $scope.page.showEditForm = true;
             $scope.entity = angular.copy(row.entity);
@@ -326,6 +327,8 @@
             cellTemplateRemove += " <a href ng-click=grid.appScope.removeRuleSlab(row) title=\"Remove Rule\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a>";
             cellTemplateRemove += "</div>"
 
+
+
             $scope.payTempGridOptions.columnDefs.push({
                 name: $scope.rulePage.pageinfo.fields.PBTRSHId.name,
                 displayName: $scope.rulePage.pageinfo.fields.PBTRSHId.text, width: 170, visible: true,
@@ -422,6 +425,11 @@
                     cellEditableCondition: false,
                     colIndex: 8
                 })
+            $scope.payTempGridOptions.columnDefs.push({
+                visible: false,
+                name: 'PBTRGridIndex',
+                sort: { direction: 'asc', priority: 0 }
+            })
         }
 
 
@@ -671,7 +679,16 @@
                 $scope.payTempGridOptions.data.push(row);
             }
             else {
+                if ($scope.edit) {
+                    row.PBTRGridIndex = $scope.selectedRow.entity.index + 0.1;
+                }
                 $scope.payTempGridOptions.data.splice($scope.selectedRow.entity.index + 1, 0, row)
+                // angular.forEach($scope.payTempGridOptions.data,function(data){
+                //     if(data.PBTRGridIndex==$scope.selectedRow.entity.index + 1)
+                //     {
+                //         data.PBTRGridIndex= data.PBTRGridIndex
+                //     }
+                // })
                 $scope.selectedRow.isSelected = false;
                 $scope.selectedRowIndex = angular.copy($scope.selectedRow.entity.index)
                 $scope.selectedRow = undefined
@@ -689,8 +706,13 @@
             $scope.rulePage.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row, index) {
                 if (row.isSelected) {
-                    var removeRowIndex = $scope.payTempGridOptions.data.indexOf(row.entity);
-                    row.entity.index = removeRowIndex;
+                    if (!$scope.edit) {
+                        var removeRowIndex = $scope.payTempGridOptions.data.indexOf(row.entity);
+                        row.entity.index = removeRowIndex;
+                    }
+                    else {
+                        row.entity.index = row.entity.PBTRGridIndex;
+                    }
                     $scope.selectedRow = row;
                 }
                 else {
@@ -1144,27 +1166,35 @@
 
             if (row.entity.PBTRIsFormula) {
                 _getSubGridOptions(row.entity, row.entity.PBTRIsFormula)
-                if (row.entity.PBTRCalcOnSHId.length > 0) {
-                    if (row.entity.PBTRCalcOnSHId.length == 0) {
-                        $scope.showMsg('warning', 'Select atleast one heads in calculation part.')
-                        row.entity.PBTRIsFormula = false;
-                    }
-                    else {
-                        // row.entity.PBTRPercentage = '';
-                        if (!row.isExpanded)
-                            $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
-                    }
-                }
-                else {
-                    row.entity.subGridOptions = { data: [], columnDefs: [] };
-                    row.entity.PBTRIsFormula = false;
-                }
+                var heads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRSHId.options, row.entity.PBTRSHId, "value")
+
+                var param = {
+                    expandedGridOptions: row.entity.subGridOptions,
+                    title: 'Expanded for ' + heads.name
+                };
+                dialogModal.openExpandGrid(param);
+
+                // if (row.entity.PBTRCalcOnSHId.length > 0) {
+                //     if (row.entity.PBTRCalcOnSHId.length == 0) {
+                //         $scope.showMsg('warning', 'Select atleast one heads in calculation part.')
+                //         row.entity.PBTRIsFormula = false;
+                //     }
+                //     else {
+                //         // row.entity.PBTRPercentage = '';
+                //         if (!row.isExpanded)
+                //             $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                //     }
+                // }
+                // else {
+                //     row.entity.subGridOptions = { data: [], columnDefs: [] };
+                //     row.entity.PBTRIsFormula = false;
+                // }
             }
             else {
                 // row.entity.PBTRPercentage = '';
                 if (row.isExpanded) {
                     row.entity.subGridOptions = { data: [], columnDefs: [] };
-                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                  //  $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
                 }
             }
         }
@@ -1176,15 +1206,23 @@
             if (row.entity.PBTRIsSlab) {
 
                 _getSubGridOptions(row.entity, row.entity.PBTRIsFormula)
-                if (!row.isExpanded) {//expand row 
-                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
-                }
+                var heads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRSHId.options, row.entity.PBTRSHId, "value")
+
+                var param = {
+                    expandedGridOptions: row.entity.subGridOptions,
+                    title: 'Expanded for ' + heads.name
+                };
+                dialogModal.openExpandGrid(param);
+
+                // if (!row.isExpanded) {//expand row 
+                //     $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                // }
             }
             else {
                 row.entity.subGridOptions = { data: [], columnDefs: [] }
-                if (row.isExpanded) {//collapse row
-                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
-                }
+                // if (row.isExpanded) {//collapse row
+                //    // $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                // }
             }
         }
         function _toggleRowExpand(row) {
@@ -1229,7 +1267,27 @@
                     return
                 }
             }
-            $scope.deletedRows.push(row.entity)
+
+            if ($scope.payTempGridOptions.data.length > 0) {
+                //    angular.forEach($scope.payTempGridOptions.data, function (data) {
+
+                for (var i = 0; i < $scope.payTempGridOptions.data.length; i++) {
+                    var data = $scope.payTempGridOptions.data[i];
+                    if (data.PBTRSHId != row.entity.PBTRSHId)
+                        if (data.PBTRCalcOnSHId != undefined) {
+                            var dependentHead = $filter("findObj")(data.PBTRCalcOnSHId, row.entity.PBTRSHId, 'value');
+                            if (dependentHead != null) {
+                                alert('Please remove dependent head first');
+                                return
+                            }
+                        }
+                }
+                // })
+            }
+
+            if (row.entity.PBTRSHId != 0) {
+                $scope.deletedRows.push(row.entity)
+            }
             var index = $scope.payTempGridOptions.data.indexOf(row.entity);
             $scope.payTempGridOptions.data.splice(index, 1);
 
@@ -1709,6 +1767,26 @@
 
 
         function _saveForm(form) {
+            if ($scope.deletedRows != undefined) {
+                if ($scope.deletedRows.length > 0) {
+                    angular.forEach($scope.deletedRows, function (data) {
+                        data.IsDeleted = true;
+                        if (data.child.length > 0) {
+                            if (data.child[0].rows.length > 0) {
+                                angular.forEach(data.child[0].rows, function (child1) {
+                                    child1.IsDeleted = true;
+                                })
+                            }
+                            if (data.child[1].rows.length > 0) {
+                                angular.forEach(data.child[1].rows, function (child2) {
+                                    child2.IsDeleted = true;
+                                })
+                            }
+                        }
+                        $scope.payTempGridOptions.data.push(data)
+                    })
+                }
+            }
             if ($scope.entity.PBTName != undefined && $scope.entity.PBTName != '') {
                 $scope.multiEntity = {};
                 $scope.multiEntity.parent = {
@@ -1753,7 +1831,8 @@
                     ruleEntity.PBTRCalcOnSHId = '[' + calcHeads + ']'
                     ruleEntity.PBTRIsSlab = row.PBTRIsSlab;
                     ruleEntity.PBTRIsFormula = row.PBTRIsFormula;
-                    ruleEntity.IsDeleted = true;
+                    ruleEntity.PBTRGridIndex = r;
+                    ruleEntity.IsDeleted = row.IsDeleted == undefined ? false : row.IsDeleted;
 
                     if (row.subGridOptions) {
                         if (row.subGridOptions.data) {
@@ -1789,6 +1868,7 @@
 
                                         formulaEntity.PFTDPercentage = ent.PFTDPercentage;
                                         formulaEntity.PFTDOperator = ent.PFTDOperator;
+                                        formulaEntity.IsDeleted = ent.IsDeleted == undefined ? false : ent.IsDeleted;
                                         formulaChild.rows.push(formulaEntity);
 
                                     }
@@ -1817,6 +1897,7 @@
                                             slabEntity.PBTSMinAmount = ent.PBTSMinAmount;
                                             slabEntity.PBTSMaxAmount = ent.PBTSMaxAmount;
                                             slabEntity.PBTSPercentage = ent.PBTSPercentage;
+                                            slabEntity.IsDeleted = ent.IsDeleted == undefined ? false : ent.IsDeleted;
                                             // slabEntity.PBTRRuleName = ent.PBTRRuleName;
                                             slabEntity.PBTSAvoidExcessCalc = ent.PBTSAvoidExcessCalc;
 
@@ -1839,11 +1920,11 @@
                 var compressed = LZString.compressToEncodedURIComponent(postData);
 
                 var data = { lz: true, data: compressed }
-                //   $scope.multiEntity.lz = false;
+                //   $scope.multiEntity.lz = false
 
                 pageService.multiSave(data).then(function (result) {
 
-                    if (result == "done") {
+                    if (result.success_message = "success") {
                         $scope.page.showEditForm = false;
                         $scope.page.refreshData();
                         $scope.showMsg("success", "Record Saved Successfully");

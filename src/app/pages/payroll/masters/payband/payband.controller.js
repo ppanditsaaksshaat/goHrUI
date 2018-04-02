@@ -43,6 +43,7 @@
             gridFooterTemplate: '<div class="row"> <div class="col-md-8"> <div class="pull-left" ng-show="grid.appScope.isShowCalculatediff">  Diffrences of earning to be added in <select ng-model="grid.appScope.selectedOtherHead" ng-options="opt.name group by opt.SHType for opt in grid.appScope.differenceHeadList| orderBy:\'name\'"></select></div><div class="pull-right" ng-show="grid.appScope.isShowCalculatediff"><button ng-click="grid.appScope.addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button></div></div><div class="col-md-4"><div class="pull-right"></div></div></div>'
             // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
         }
+
         $scope.differenceHeadList = [];
         $scope.entity = {}
         $scope.page = $scope.createPage();
@@ -74,6 +75,7 @@
         $scope.rulePage.pageId = 134;
         $scope.slabPage = {}
         var grossHead = {};
+        $scope.reload = false;
         $scope.slabPage.pageId = 135;
         $scope.paybandTemp = {
             TableId: 441,
@@ -86,7 +88,19 @@
             SlabPageId: 464,
 
         }
+        $scope.payband = {
+            TableId: 441,
+            PageId: 461,
+            RuleTableId: 140,
+            RulePageId: 462,
+            FormulaTableId: 434,
+            FormulaPageId: 463,
+            SlabTableId: 141,
+            SlabPageId: 464,
 
+        }
+
+        $scope.Reload = _Reload;
         $scope.closeForm = _closeForm;
         $scope.templateOnchange = _templateOnchange;
         $scope.basedOnchange = _basedOnchange;
@@ -105,11 +119,18 @@
         $scope.getDifferenceHeadList = _getDifferenceHeadList;
         $scope.saveForm = _saveForm;
 
+        function _Reload() {
+            $scope.oldPayGridOptions = angular.copy($scope.payGridOptions.data);
+            $scope.payGridOptions.data = [];
+            $scope.reload = true;
+            _templateOnchange($scope.entity.PBPaybandTemplateId)
+
+        }
 
 
         function _templateOnchange(paybandTemplateId) {
 
-            if ($scope.action == "create") {
+            if ($scope.action == "create" || $scope.reload) {
                 $timeout(function () {
                     var multiData = {
                         lz: false,
@@ -162,21 +183,20 @@
 
                         for (var i = 0; i < result.child[0].rows.length; i++) {
                             var row = result.child[0].rows[i];
-
-                            // row.PBRAmount = parseFloat(row.PBRAmount).toFixed(2);
-                            //find head type
-
+                            var oldRule = null;
+                            if ($scope.reload) {
+                                oldRule = $filter("findObj")($scope.oldPayGridOptions, row.PBTRSHId, "PBRSHId")
+                            }
                             var entity = {};
-
                             entity.PBRId = 0;
                             entity.PBRSHId = row.PBTRSHId;
                             entity.PBRPBId = 0;
                             entity.PBRRuleName = '';
-                            entity.PBRAmount = 0;
+                            entity.PBRAmount = oldRule != null ? oldRule.PBRAmount : 0;
                             entity.PBRPercantage = row.PBTRPercentage == undefined ? '' : row.PBTRPercentage == 0.000 ? '' : row.PBTRPercentage;
                             entity.PBRIsFormula = row.PBTRIsFormula;
                             entity.PBRIsSlab = row.PBTRIsSlab;
-                            entity.IsDeleted = true;
+                            // entity.IsDeleted = true;
                             var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBRSHId.options, row.PBTRSHId, 'value')
                             if (foundPB != null) {
                                 if (foundPB.SHIsTotal == "True") {
@@ -278,6 +298,9 @@
                     }
                 }
                 _getNetPayable();
+                if ($scope.reload) {
+                    _reviseGrid();
+                }
             }
         }
         function _getTempMultiEntityError(err) {
@@ -825,14 +848,14 @@
             });
         }
         function _addRecord() {
-
+            $scope.addRecord = true;
             $scope.entity = { PBId: 0 }
             $scope.page.showEditForm = true;
             $scope.payGridOptions.data = [];
             $scope.action = 'create';
         }
         function _editRecord(row) {
-
+            $scope.addRecord = false;
             $scope.page.showEditForm = true;
             $scope.entity = angular.copy(row.entity);
             $scope.page.isAllowEdit = true;
@@ -1940,6 +1963,8 @@
 
         }
         function _closeForm(form) {
+            $scope.reload = false;
+           // $scope.addRecord=false;
             $scope.page.showEditForm = false;
             $scope.entity = {};
         }
@@ -2276,7 +2301,7 @@
                     oldEntity: {},
                     action: $scope.action,
                     tableid: $scope.page.pageinfo.tableid,
-                    pageid: $scope.page.pageinfo.pageid
+                    pageid: $scope.page.pageinfo.pageid,
                 }
                 $scope.multiEntity.child = [];
 
@@ -2394,23 +2419,39 @@
 
                 $scope.multiEntity.child.push(child1)
 
+
                 var postData = JSON.stringify($scope.multiEntity);
                 var compressed = LZString.compressToEncodedURIComponent(postData);
 
                 var data = { lz: true, data: compressed }
                 // $scope.multiEntity.lz = false;
-
-                pageService.multiSave(data).then(function (result) {
-                    if (result == "done") {
-                        $scope.page.showEditForm = false;
-                        $scope.page.refreshData();
-                        $scope.showMsg("success", "Record Saved Successfully");
-                        //  _recalculatingSecondGrid($scope.page.gridOptions)
-                    }
-                }, function (err) {
-                    console.log(err)
-                })
-                console.log($scope.multiEntity)
+                if (!$scope.reload) {
+                    pageService.multiSave(data).then(function (result) {
+                        if (result.success_message = "success") {
+                            $scope.page.showEditForm = false;
+                            $scope.page.refreshData();
+                            $scope.showMsg("success", "Record Saved Successfully");
+                            //  _recalculatingSecondGrid($scope.page.gridOptions)
+                        }
+                    }, function (err) {
+                        console.log(err)
+                    })
+                    console.log($scope.multiEntity)
+                }
+                else {
+                    pageService.restorePayband(data).then(function (result) {
+                        if (result.success_message = "success") {
+                            $scope.reload = false;
+                            $scope.page.showEditForm = false;
+                            $scope.page.refreshData();
+                            $scope.showMsg("success", "Record Saved Successfully");
+                            //  _recalculatingSecondGrid($scope.page.gridOptions)
+                        }
+                    }, function (err) {
+                        console.log(err)
+                    })
+                    console.log($scope.multiEntity)
+                }
             }
         }
         _loadController();

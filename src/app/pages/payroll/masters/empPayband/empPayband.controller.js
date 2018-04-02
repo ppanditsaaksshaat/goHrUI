@@ -781,7 +781,7 @@
 
             //    $scope.oldData = dataList;
             $scope.page.gridOptions.data = dataList;
-         
+
 
         }
 
@@ -1793,7 +1793,7 @@
                 return false;
             }
             return true;
-            
+
         }
 
         //END: third level grid functions
@@ -1986,7 +1986,7 @@
 
                 console.log('multi save' + moment(), employeeEnt, $scope.multi)
                 pageService.multiSaveRows(data).then(function (result) {
-                    if (result == "done") {
+                    if (result.success_message = "success") {
                         $scope.showMsg("success", "Record Saved Successfully");
                         employeeEnt = [];
                         $scope.uploader = false;
