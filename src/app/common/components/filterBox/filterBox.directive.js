@@ -414,7 +414,7 @@
                     }
                     // filter.operator = '/=';
                     // filter.value = moment().utc();
-                    console.log($rootScope.user.sysparam[13].key)
+                    // console.log($rootScope.user.sysparam[13].key)
 
 
                     var dayForFromDate = 0;
