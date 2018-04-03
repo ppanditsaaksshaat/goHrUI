@@ -387,17 +387,17 @@ $scope.PresentlistGrid.data = [];
 
 
 
-      angular.forEach($scope.TotalNewJoinList, function (data) {
-        data.JDDate = moment(data.JDDate).format("DD/MM/YYYY");
-      })
+      // angular.forEach($scope.TotalNewJoinList, function (data) {
+      //   data.JDDate = moment(data.JDDate).format("DD/MM/YYYY");
+      // })
 
-      angular.forEach($scope.TotalNewLeftList,function (data) {
-        data.JDHasLeftDate= moment(data.JDHasLeftDate).format("DD/MM/YYYY")
-      })
+      // angular.forEach($scope.TotalNewLeftList,function (data) {
+      //   data.JDHasLeftDate= moment(data.JDHasLeftDate).format("DD/MM/YYYY")
+      // })
 
-      angular.forEach($scope.TotalNewLeftList,function (data) {
-        data.JDHasLeftDate= moment(data.JDHasLeftDate).format("DD/MMM/YYYY")
-      })
+      // angular.forEach($scope.TotalNewLeftList,function (data) {
+      //   data.JDHasLeftDate= moment(data.JDHasLeftDate).format("DD/MMM/YYYY")
+      // })
 
 
 
