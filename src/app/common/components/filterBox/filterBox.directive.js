@@ -33,7 +33,7 @@
                 $scope.selectChange = _selectChange;
                 /**END Public Function */
 
-                console.log($rootScope.user)
+                // console.log($rootScope.user)
 
                 var resourse = {
                     equals: 'equals',
@@ -268,7 +268,7 @@
                                             $rootScope.showMsg('warning', 'Please choose option from ' + filter.displayName)
                                         else
                                             $rootScope.showMsg('warning', 'Please enter value in ' + filter.displayName)
-                                        console.log(filter);
+                                        // console.log(filter);
                                     }
                                 }
 
@@ -363,7 +363,7 @@
                             }
                         })
                     }
-                    console.log($scope.page)
+                    // console.log($scope.page)
                     if (isRequiredFailed)
                         $scope.page.filterData = undefined;
                     else
@@ -424,12 +424,9 @@
                         dayForFromDate = dayList.value;
                         var currentdate = new Date();
                         var updateDate = currentdate.setDate(currentdate.getDate() - dayForFromDate);
-                        console.log(updateDate.toLocaleString())
                         filter.value = new Date(updateDate);
                         filter.value2 = new Date();
                         filter.datePicker.option2.minDate = filter.value;
-                        console.log(filter)
-                        console.log(dayForFromDate)
                     }
 
 
@@ -460,7 +457,6 @@
                  * @param {object} filter - A GDM Filter object
                  */
                 function _firstDateChange(filter) {
-                    console.log(filter)
                     if (filter.value) {
                         filter.datePicker.option2.minDate = filter.value;
                         filter.value2 = filter.value;
@@ -537,7 +533,7 @@
 
 
                                 } else if (filter.controlType == 'timepicker') {
-                                    console.log(filter.controlType)
+                                    // console.log(filter.controlType)
                                     filter.timePicker = {};
                                     filter.timePicker.option1 = angular.copy($scope.timeCal)
                                     filter.timePicker.option2 = angular.copy($scope.timeCal)
