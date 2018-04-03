@@ -9,7 +9,7 @@
     .controller('knobCtrl', knobCtrl);
 
   /** @ngInject */
-  function knobCtrl($scope, $state, $timeout, pageService, $filter, $uibModal,dialogModal) {
+  function knobCtrl($scope, $state, $timeout, pageService, $filter, $uibModal, dialogModal) {
 
     //creating Join Employee  grids
     $scope.joinGridOpt = $scope.getGridSetting();
@@ -18,7 +18,11 @@
     $scope.joinGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.joinGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
     $scope.joinGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-    $scope.joinGridOpt.columnDefs.push({ name: 'JDDate', displayName: 'Joining' })
+    $scope.joinGridOpt.columnDefs.push({ name: 'JDDate', displayName: 'Joining' ,
+    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.JDDate | date :'dd-MMM-yyyy'}}</div>"
+ 
+  
+  })
     $scope.joinGridOpt.data = [];
 
 
@@ -29,7 +33,9 @@
     $scope.LeftGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.LeftGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
     $scope.LeftGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-    $scope.LeftGridOpt.columnDefs.push({ name: 'JDHasLeftDate', displayName: 'Left' })
+    $scope.LeftGridOpt.columnDefs.push({ name: 'JDHasLeftDate', displayName: 'Left' ,
+    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.JDHasLeftDate | date :'dd-MMM-yyyy'}}</div>"
+})
     $scope.LeftGridOpt.data = [];
 
 
@@ -40,7 +46,10 @@
     $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
     $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-    $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'ELSDSanctionFromDate', displayName: 'Leave' })
+    $scope.LeaveTodayGridOpt.columnDefs.push({
+      name: 'ELSDSanctionFromDate', displayName: 'Leave',
+      cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.ELSDSanctionFromDate | date :'dd-MMM-yyyy'}}</div>"
+    })
     $scope.LeaveTodayGridOpt.data = [];
 
 
@@ -51,7 +60,9 @@
     $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
     $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'ELSDSanctionFromDate', displayName: 'Leave' })
+    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'ELSDSanctionFromDate', displayName: 'Leave' ,
+    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.ELSDSanctionFromDate | date :'dd-MMM-yyyy'}}</div>"
+})
     $scope.LeaveNextWeekGridOpt.data = [];
 
     //creating Employee  Today Birthday grids
@@ -72,7 +83,9 @@
     $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
     $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-    $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'DateOfBirth', displayName: 'Date' })
+    $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'DateOfBirth', displayName: 'Date' ,
+    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.DateOfBirth | date :'dd-MMM-yyyy'}}</div>"
+})
     $scope.BirthdayNextWeekGridOpt.data = [];
 
     //creating Holiday  Next 7 days  grids
@@ -80,36 +93,42 @@
     $scope.HolidayNextWeekGridOpt.columnDefs = []
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDName', displayName: 'Holiday-Name', Width: '5px' })
-    $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDFromDate', displayName: 'From-Day' })
-    $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDToDate', displayName: 'To-Day' })
+    $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDFromDate', displayName: 'From-Day' ,
+    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDFromDate | date :'dd-MMM-yyyy'}}</div>"
+})
+    $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDToDate', displayName: 'To-Day' ,
+    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDToDate | date :'dd-MMM-yyyy'}}</div>"
+
+
+  })
     $scope.HolidayNextWeekGridOpt.data = [];
 
 
-//creating Employee  Today Birthday grids
-$scope.AbsentlistGrid = $scope.getGridSetting();
-$scope.AbsentlistGrid.columnDefs = []
-$scope.AbsentlistGrid.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
-$scope.AbsentlistGrid.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
-$scope.AbsentlistGrid.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
-$scope.AbsentlistGrid.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-//  $scope.BirthdayTodayGridOpt.columnDefs.push({  name: 'DateOfBirth', displayName: 'Birthday  Date' })
-$scope.AbsentlistGrid.data = [];
-
-    
-
-//creating Employee  Today Present grids
-$scope.PresentlistGrid = $scope.getGridSetting();
-$scope.PresentlistGrid.columnDefs = []
-$scope.PresentlistGrid.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
-$scope.PresentlistGrid.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
-$scope.PresentlistGrid.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
-$scope.PresentlistGrid.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-$scope.PresentlistGrid.columnDefs.push({ name: 'loginInTime', displayName: 'InTime' })
-$scope.PresentlistGrid.columnDefs.push({ name: 'loginOutTime', displayName: 'OutTime' })
+    //creating Employee  Today Birthday grids
+    $scope.AbsentlistGrid = $scope.getGridSetting();
+    $scope.AbsentlistGrid.columnDefs = []
+    $scope.AbsentlistGrid.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+    $scope.AbsentlistGrid.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
+    $scope.AbsentlistGrid.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
+    $scope.AbsentlistGrid.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
+    //  $scope.BirthdayTodayGridOpt.columnDefs.push({  name: 'DateOfBirth', displayName: 'Birthday  Date' })
+    $scope.AbsentlistGrid.data = [];
 
 
-//  $scope.BirthdayTodayGridOpt.columnDefs.push({  name: 'DateOfBirth', displayName: 'Birthday  Date' })
-$scope.PresentlistGrid.data = [];
+
+    //creating Employee  Today Present grids
+    $scope.PresentlistGrid = $scope.getGridSetting();
+    $scope.PresentlistGrid.columnDefs = []
+    $scope.PresentlistGrid.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+    $scope.PresentlistGrid.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
+    $scope.PresentlistGrid.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
+    $scope.PresentlistGrid.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
+    $scope.PresentlistGrid.columnDefs.push({ name: 'loginInTime', displayName: 'InTime' })
+    $scope.PresentlistGrid.columnDefs.push({ name: 'loginOutTime', displayName: 'OutTime' })
+
+
+    //  $scope.BirthdayTodayGridOpt.columnDefs.push({  name: 'DateOfBirth', displayName: 'Birthday  Date' })
+    $scope.PresentlistGrid.data = [];
 
 
 
@@ -122,7 +141,7 @@ $scope.PresentlistGrid.data = [];
     $scope.listAbsent = _listAbsent;
     $scope.listPresent = _listPresent;
     $scope.listLeave = _listLeave;
-    
+
     // $scope.value = 100;
     // $scope.valuennew = 50;
 
@@ -385,30 +404,13 @@ $scope.PresentlistGrid.data = [];
       $scope.AbsentlistGrid.data = $scope.absentlist;
       $scope.PresentlistGrid.data = $scope.presentlist;
 
-
-
-      // angular.forEach($scope.TotalNewJoinList, function (data) {
-      //   data.JDDate = moment(data.JDDate).format("DD/MM/YYYY");
-      // })
-
-      // angular.forEach($scope.TotalNewLeftList,function (data) {
-      //   data.JDHasLeftDate= moment(data.JDHasLeftDate).format("DD/MM/YYYY")
-      // })
-
-      // angular.forEach($scope.TotalNewLeftList,function (data) {
-      //   data.JDHasLeftDate= moment(data.JDHasLeftDate).format("DD/MMM/YYYY")
-      // })
-
-
-
-
     }
     function _getCustomQueryError(err) {
       console.log(err);
     }
 
     function _listAbsent() {
-     
+
       var options = {
         url: "app/pages/dashboard/absentmodal.html",
         controller: "",
@@ -420,7 +422,7 @@ $scope.PresentlistGrid.data = [];
     }
 
     function _listPresent() {
-     
+
       var options = {
         url: "app/pages/dashboard/presentmodal.html",
         controller: "",
@@ -433,7 +435,7 @@ $scope.PresentlistGrid.data = [];
 
 
     function _listLeave() {
-     
+
       var options = {
         url: "app/pages/dashboard/leavemodal.html",
         controller: "",
@@ -444,9 +446,9 @@ $scope.PresentlistGrid.data = [];
 
     }
 
-    
 
-    
+
+
 
 
     function _getEmpDashboardQuerySuccess(result) {
