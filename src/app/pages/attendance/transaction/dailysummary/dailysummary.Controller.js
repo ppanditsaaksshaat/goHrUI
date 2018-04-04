@@ -95,10 +95,11 @@
         click: _compOffApproved,
         pin: true
       }],
+     
       //defaultEntity: { 'AttDate': moment() }
       // readonlyColumns: ['col1', 'col2']
     }
-
+  
     function _approvedAttendance() {
       $scope.AttApprovedRemark = '';
       $scope.StatusId = '';
@@ -353,7 +354,7 @@
       }
 
       editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
-          $scope.entity.AttId === undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+        $scope.entity.AttId === undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
         .then(_saveFormSuccessResult, _saveFormErrorResult);
     }
 
