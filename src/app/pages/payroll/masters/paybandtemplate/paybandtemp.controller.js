@@ -546,6 +546,94 @@
         }
 
         function _addToltalEarningDeductionRule(headId) {
+
+            var isGross = true;
+            var shTotalEarning = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTotalEarning')
+            var shTotalDeduction = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTotalDeduction')
+            var shRoundOff = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsRoundOff')
+            var shTaxableSalary = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTaxableSalary')
+            var shNetPay = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsNetPay')
+            var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsGross')
+
+
+            // add gross head in first when add from totalhead
+            if ($scope.payTempGridOptions.data.length == 0) {
+                var head = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, headId, 'value')
+                if (head != null) {
+                    if (head.SHIsGross != "True") {
+                        isGross = false;
+                    }
+                }
+            }
+            else {
+                isGross = false;
+                if (shTotalEarning != null) {
+                    var totalEarningheadExist = $filter("findObj")($scope.payTempGridOptions.data, shTotalEarning.value, "PBTRSHId")
+                    if (totalEarningheadExist != null) {
+                        if ($scope.selectedRow != undefined) {
+                            if ($scope.selectedRow.entity.index < totalEarningheadExist.index) {
+                                alert("You are not allowed to add this head here");
+                                return
+                            }
+                        }
+                    }
+                }
+            }
+            if (!isGross) {
+
+                if (shTotalEarning != null) {
+                    if (shTotalEarning.value != headId) {
+                        var totalEarningheadExist = $filter("findObj")($scope.payTempGridOptions.data, shTotalEarning.value, "PBTRSHId")
+                        if (totalEarningheadExist == null) {
+                            alert("Please Add Total Earning  Or Earning Heads First");
+                            return
+                        }
+                    }
+                }
+            }
+            if ($scope.payTempGridOptions.data.length > 0) {
+                var tempGross = $filter("findAll")($scope.payTempGridOptions.data, shGross.value, "PBTRSHId")
+                var tempTaxable = $filter("findAll")($scope.payTempGridOptions.data, shTaxableSalary.value, "PBTRSHId")
+                var tempRoundOff = $filter("findAll")($scope.payTempGridOptions.data, shRoundOff.value, "PBTRSHId")
+                if (tempTaxable == null && tempGross == null) {
+                    if (headId == shNetPay.value || headId == shRoundOff.value) {
+                        alert("Please add gross or taxable total head first");
+                        return
+                    }
+                }
+                if (tempGross == null) {
+                    if (headId == shNetPay.value || headId == shRoundOff.value) {
+                        alert("Please add gross total head first");
+                        return
+                    }
+                }
+                if (tempTaxable == null && tempGross != null) {
+                    if (headId == shNetPay.value || headId == shRoundOff.value) {
+                        alert("Please add taxable total head first");
+                        return
+                    }
+                }
+                if (tempRoundOff == null && tempGross != null) {
+                    if (headId == shNetPay.value) {
+                        alert("Please add roundoff total head first");
+                        return
+                    }
+                    else if (headId == shRoundOff.value && $scope.selectedRow != undefined) {
+                        alert("You are not allowed to add this head here.");
+                        return
+                    }
+                }
+                if (headId == shNetPay.value && $scope.selectedRow != undefined) {
+                    alert("You are not allowed to add this head here.");
+                    return
+                }
+
+            }
+
+
+
+
+
             var headExist = $filter("findObj")($scope.payTempGridOptions.data, headId, "PBTRSHId")
             if (headExist == null) {
                 $scope.toggleExpandOnAdd = true;
@@ -743,6 +831,16 @@
             $scope.rulePage.gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 // console.log(colD ef)
 
+                var salHead = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, rowEntity.PBTRSHId, 'value')
+                if (salHead != null) {
+                    if (salHead.SHIsTotal == "True") {
+                        rowEntity.PBTRSHId = 0;
+                        rowEntity.SHType = "";
+                        alert("You cannot add " + salHead.name + " salary head from here, if you want to add " + salHead.name + " salary head than add from TotalHead DropDown")
+                        return
+                    }
+                }
+
                 if (rowEntity.PBTRCalcOnSHId.length <= 0) {
                     rowEntity.PBTRPercentage = '';
                 }
@@ -862,8 +960,28 @@
                                         return
                                     }
                                     else {
-                                        existingTotalEarningHead.PBTRCalcOnSHId.push({ value: exitHead.value, name: exitHead.name, SHeadType: exitHead.SHType })
-                                        _getSubGridOptions(existingTotalEarningHead, true)
+                                        var childExist = false;
+                                        // var existChildShid = existingTotalEarningHead.subGridOptions.data.PFTDCalcHeadId[0].value;
+                                        // $filter("findObj")(existingTotalEarningHead.subGridOptions.data, )
+                                        // angular.forEach($scope.payTempGridOptions.data, function (parent) {
+                                        //     for (var i = 0; i < existingTotalEarningHead.subGridOptions.data.length; i++) {
+                                        //         var childShid = existingTotalEarningHead.subGridOptions.data[i];
+                                        //         if (childShid.PFTDCalcHeadId[0].value != parent.PBTRSHId) {
+                                        //             childShid.PFTDCalcHeadId[0].value=[];
+                                        //         }
+                                        //     }
+                                        // })
+                                        for (var i = 0; i < existingTotalEarningHead.subGridOptions.data.length; i++) {
+                                            var childShid = existingTotalEarningHead.subGridOptions.data[i];
+                                            if (childShid.PFTDCalcHeadId[0].value == exitHead.value) {
+                                                childExist = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!childExist) {
+                                            existingTotalEarningHead.PBTRCalcOnSHId.push({ value: exitHead.value, name: exitHead.name, SHeadType: exitHead.SHType })
+                                            _getSubGridOptions(existingTotalEarningHead, true)
+                                        }
                                     }
                                 }
                                 if (exitHead.SHType == "Deduction" && existingTotalDeductionHead != null) {
@@ -1039,8 +1157,9 @@
 
                     //     //_getSubGridOptions(rowEntity, rowEntity.PBTRIsFormula)
                     // }
-
-                    $scope.netPayableAmount = _getNetPayable();
+                    if (existingHead == null) {
+                        $scope.netPayableAmount = _getNetPayable();
+                    }
                 }
             });
 
@@ -1194,7 +1313,7 @@
                 // row.entity.PBTRPercentage = '';
                 if (row.isExpanded) {
                     row.entity.subGridOptions = { data: [], columnDefs: [] };
-                  //  $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                    //  $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
                 }
             }
         }
