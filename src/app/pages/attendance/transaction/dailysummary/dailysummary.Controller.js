@@ -631,11 +631,7 @@
         AttId = AttId.substring(0, AttId.length - 1)
 
         var searchLists = [];
-        searchLists.push({
-          field: 'IsApprovedAttendance',
-          operand: "=",
-          value: 1
-        })
+
         searchLists.push({
           field: 'AttId',
           operand: "=",
@@ -658,13 +654,13 @@
           searchList: searchLists,
           orderByList: []
         }
-        pageService.getCustomQuery(data, 622).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+        pageService.getCustomQuery(data, 632).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
       }
     }
 
     function _getCustomQuerySuccessResult(result) {
       console.log(result)
-      if (result[0][0].Result == "Approved Attendance") {
+      if (result[0][0].Result == "Approved Record") {
         $scope.showGrid = true;
         $scope.showEditForm = false;
         $scope.isLateOrEarlyExempted = false;
@@ -673,12 +669,22 @@
         $scope.isApprovedAttendence = false;
         $scope.page.refreshData();
         $scope.showMsg("success", "Approved Attendance")
+      } else {
+        $scope.showGrid = true;
+        $scope.showEditForm = false;
+        $scope.isLateOrEarlyExempted = false;
+        $scope.isOvertimeApproved = false;
+        $scope.isCompOffApproved = false;
+        $scope.isApprovedAttendence = false;
+        // $scope.page.refreshData();
+        $scope.showMsg("info", "Please update Exempted/OT/COff.")
       }
     }
 
     function _getCustomQueryErrorResult(error) {
       $scope.showMsg("error", error)
     }
+    
 
     _loadController()
   }

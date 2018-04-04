@@ -13,7 +13,8 @@
     //  'BlurAdmin.pages.attendance.reports.otsummarydetail',
     //  'BlurAdmin.pages.attendance.reports.emplateattendance' ,
 
-    'BlurAdmin.pages.attendance.reports.musterMonthWise'
+    'BlurAdmin.pages.attendance.reports.musterMonthWise',
+    'BlurAdmin.pages.attendance.reports.compoffdetail'
 
   ])
     .config(routeConfig);
