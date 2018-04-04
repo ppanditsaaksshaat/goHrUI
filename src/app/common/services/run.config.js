@@ -2,6 +2,23 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     toastr, toastrConfig, pageService, $timeout, $location, Idle, dialogModal) {
 
 
+    var pgList = DJWebStore.GetValue('pageList');
+    if (pgList == null) {
+        console.log('calling page list')
+        pageService.getAllPageList().then(_successPageAll, _errorPageAll);
+
+    }
+    else{
+        console.log(pgList)
+    }
+    function _successPageAll(result) {
+        $rootScope.pageList = result;
+        DJWebStore.SetValue('pageList', result);
+    }
+    function _errorPageAll(err) {
+        console.log(err)
+    }
+
     $rootScope.company = { name: 'ITSL Rudra' };
     $rootScope.user = DJWebStore.ValidateUser();
     $rootScope.sideMenu = DJWebStore.GetValue('sidemenu');

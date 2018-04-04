@@ -1,6 +1,6 @@
 'use strict';
-angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore', 'fileUpload',
-    function ($http, DJWebStore, fileUpload) {
+angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore', 'fileUpload', '$q',
+    function ($http, DJWebStore, fileUpload, $q) {
         var title = 'default';
 
         var serviceBase = DJWebStore.GetServiceBase();
@@ -87,11 +87,42 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
 
 
         var _getPagData = function (pageCode) {
-            var rndVal = Math.round((Math.random() * 10) * 10);
-            var url = serviceBase + 'api/values/' + pageCode + "?" + rndVal;
-            return $http.get(url).then(function (results) {
-                return results;
-            });
+            var isFound = false;
+            var pgList = DJWebStore.GetValue('pageList');
+            var page = null;
+            if (pgList != null) {
+                page = pgList['pg_' + pageCode];
+                if (page != null) {
+                    isFound = true;
+                }
+            }
+
+            var dfd = $q.defer();
+
+            if (!isFound) {
+                var rndVal = Math.round((Math.random() * 10) * 10);
+                var url = serviceBase + 'api/values/' + pageCode + "?" + rndVal;
+                $http.get(url).then(function (results) {
+                    var pgList = DJWebStore.GetValue('pageList');
+
+                    pgList['pg_' + results.pageinfo.pageid] = results;
+
+                    DJWebStore.SetValue('pageList', pgList);
+                    console.log(results)
+                    dfd.resolve(results);
+                },
+                    function (error) {
+                        dfd.reject(error);
+                    }
+                );
+            }
+            else {
+
+                dfd.resolve(page);
+
+            }
+
+            return dfd.promise;
         };
 
         var _getInnerPageData = function (pageId, actColName, idenColVal) {
@@ -1479,6 +1510,14 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
             var url = serviceBase + 'api/Files/AttendanceSummary';
             _downloadFileAsExcel(url, 'AttSummary.xlsm');
         }
+
+        var _getAllPageList = function () {
+            var rndVal = Math.round((Math.random() * 10) * 10);
+            var url = serviceBase + 'api/AppData/PageAll/'
+            return $http.get(url).then(function (results) {
+                return results;
+            });
+        }
         pageServiceFactory.serviceBase = serviceBase;
         pageServiceFactory.getPagData = _getPagData;
         pageServiceFactory.deletePageData = _deletePageData;
@@ -1589,6 +1628,8 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.getTranslateData = _getTranslateData;
 
         pageServiceFactory.getAttSummaryFile = _getAttSummaryFile;
+
+        pageServiceFactory.getAllPageList = _getAllPageList;
 
         return pageServiceFactory;
 
