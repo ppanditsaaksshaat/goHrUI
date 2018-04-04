@@ -11,6 +11,7 @@
   /** @ngInject */
   function knobCtrl($scope, $state, $timeout, pageService, $filter, $uibModal, dialogModal) {
 
+    
     //creating Join Employee  grids
     $scope.joinGridOpt = $scope.getGridSetting();
     $scope.joinGridOpt.columnDefs = []
@@ -18,11 +19,12 @@
     $scope.joinGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.joinGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
     $scope.joinGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-    $scope.joinGridOpt.columnDefs.push({ name: 'JDDate', displayName: 'Joining' ,
-    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.JDDate | date :'dd-MMM-yyyy'}}</div>"
- 
-  
-  })
+    $scope.joinGridOpt.columnDefs.push({
+      name: 'JDDate', displayName: 'Joining',
+      cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.JDDate | date :'dd-MMM-yyyy'}}</div>"
+
+
+    })
     $scope.joinGridOpt.data = [];
 
 
@@ -33,9 +35,10 @@
     $scope.LeftGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.LeftGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
     $scope.LeftGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-    $scope.LeftGridOpt.columnDefs.push({ name: 'JDHasLeftDate', displayName: 'Left' ,
-    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.JDHasLeftDate | date :'dd-MMM-yyyy'}}</div>"
-})
+    $scope.LeftGridOpt.columnDefs.push({
+      name: 'JDHasLeftDate', displayName: 'Left',
+      cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.JDHasLeftDate | date :'dd-MMM-yyyy'}}</div>"
+    })
     $scope.LeftGridOpt.data = [];
 
 
@@ -48,7 +51,7 @@
     $scope.LeaveTodayGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
     $scope.LeaveTodayGridOpt.columnDefs.push({
       name: 'ELSDSanctionFromDate', displayName: 'Leave',
-      cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.ELSDSanctionFromDate | date :'dd-MMM-yyyy'}}</div>"
+      cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.ELSDSanctionFromDate | date :'dd-MMM-yyyy'}}</div>"
     })
     $scope.LeaveTodayGridOpt.data = [];
 
@@ -60,9 +63,10 @@
     $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
     $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-    $scope.LeaveNextWeekGridOpt.columnDefs.push({ name: 'ELSDSanctionFromDate', displayName: 'Leave' ,
-    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.ELSDSanctionFromDate | date :'dd-MMM-yyyy'}}</div>"
-})
+    $scope.LeaveNextWeekGridOpt.columnDefs.push({
+      name: 'ELSDSanctionFromDate', displayName: 'Leave',
+      cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.ELSDSanctionFromDate | date :'dd-MMM-yyyy'}}</div>"
+    })
     $scope.LeaveNextWeekGridOpt.data = [];
 
     //creating Employee  Today Birthday grids
@@ -83,9 +87,10 @@
     $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'EmpId', displayName: 'Emp Id', Width: '5px' })
     $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'EmpName', displayName: 'Name' })
     $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'DeptName', displayName: 'Department' })
-    $scope.BirthdayNextWeekGridOpt.columnDefs.push({ name: 'DateOfBirth', displayName: 'Date' ,
-    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.DateOfBirth | date :'dd-MMM-yyyy'}}</div>"
-})
+    $scope.BirthdayNextWeekGridOpt.columnDefs.push({
+      name: 'DateOfBirth', displayName: 'Date',
+      cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.DateOfBirth | date :'dd-MMM-yyyy'}}</div>"
+    })
     $scope.BirthdayNextWeekGridOpt.data = [];
 
     //creating Holiday  Next 7 days  grids
@@ -93,14 +98,16 @@
     $scope.HolidayNextWeekGridOpt.columnDefs = []
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDName', displayName: 'Holiday-Name', Width: '5px' })
-    $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDFromDate', displayName: 'From-Day' ,
-    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDFromDate | date :'dd-MMM-yyyy'}}</div>"
-})
-    $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDToDate', displayName: 'To-Day' ,
-    cellTemplate : "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDToDate | date :'dd-MMM-yyyy'}}</div>"
+    $scope.HolidayNextWeekGridOpt.columnDefs.push({
+      name: 'HDFromDate', displayName: 'From-Day',
+      cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDFromDate | date :'dd-MMM-yyyy'}}</div>"
+    })
+    $scope.HolidayNextWeekGridOpt.columnDefs.push({
+      name: 'HDToDate', displayName: 'To-Day',
+      cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDToDate | date :'dd-MMM-yyyy'}}</div>"
 
 
-  })
+    })
     $scope.HolidayNextWeekGridOpt.data = [];
 
 
@@ -213,9 +220,6 @@
       barColor: 'rgba(52,152,219,.5)'
     };
 
-
-
-
     $scope.totalAbsent = {
       skin: {
         type: 'tron'
@@ -237,8 +241,6 @@
       step: 5,
       displayPrevious: true
     };
-
-
 
     $scope.totalAbsentCount = {
       unit: "",
@@ -289,8 +291,6 @@
       barColor: 'rgba(255,221,51,1)'
 
     };
-
-
 
     function _loadController() {
       if ($scope.user.profile.isAdmin && $scope.user.profile.isManager) {
@@ -404,23 +404,6 @@
       $scope.AbsentlistGrid.data = $scope.absentlist;
       $scope.PresentlistGrid.data = $scope.presentlist;
 
-
-
-      angular.forEach($scope.TotalNewJoinList, function (data) {
-        data.JDDate = moment(data.JDDate).format("DD/MM/YYYY");
-      })
-
-      angular.forEach($scope.TotalNewLeftList, function (data) {
-        data.JDHasLeftDate = moment(data.JDHasLeftDate).format("DD/MM/YYYY")
-      })
-
-      angular.forEach($scope.TotalNewLeftList, function (data) {
-        data.JDHasLeftDate = moment(data.JDHasLeftDate).format("DD/MMM/YYYY")
-      })
-
-
-
-
     }
     function _getCustomQueryError(err) {
       console.log(err);
@@ -450,7 +433,6 @@
 
     }
 
-
     function _listLeave() {
 
       var options = {
@@ -462,11 +444,6 @@
 
 
     }
-
-
-
-
-
 
     function _getEmpDashboardQuerySuccess(result) {
       console.log(result)

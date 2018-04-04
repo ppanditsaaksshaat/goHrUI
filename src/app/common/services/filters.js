@@ -144,7 +144,7 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
         }
     }).filter('translate', function ($rootScope) {
         return function (input) {
-            console.log($rootScope.user.rp)
+            //console.log($rootScope.user.rp)
             var i = 0, len = $rootScope.user.rp.length;
             for (; i < len; i++) {
                 if ($rootScope.user.rp[i]['ResourceKey'] == input) {

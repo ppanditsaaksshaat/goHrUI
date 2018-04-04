@@ -17,19 +17,23 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <button ng-click="addNewRule()" type="button" class="btn btn-info">
+                            <label></label>
+                            <button ng-click="addNewRule()" type="button" class="btn btn-info form-control">
                                 <i class="fa fa-plus"></i> Add New Head</button>
                         </div>
                         <div class="col-md-3">
+                            <label>TotalHead</label>
                             <select class="form-control" ng-model="headId" ng-change="existHeadId=true" ng-options="head.value as head.name for  head in rulePage.pageinfo.fields.PBTRSHId.options | filter:{SHIsTotal:true}">
                             </select>
                         </div>
                         <div ng-show="existHeadId" class="col-lg-2">
-                            <button ng-click="addToltalEarningDeductionRule(headId)" type="button" class="btn btn-info">
+                            <label></label>
+                            <button ng-click="addToltalEarningDeductionRule(headId)" type="button" class="btn btn-info form-control">
                                 <i class="fa fa-plus"></i> Add</button>
                         </div>
                         <div ng-show="deletedRows.length>0 && edit" class="col-lg-2">
-                            <button ng-click="restoreData()" type="button" class="btn btn-info">
+                            <label></label>
+                            <button ng-click="restoreData()" type="button" class="btn btn-info form-control">
                                 <i class="fa fa-plus"></i>Restore</button>
                         </div>
                     </div>
