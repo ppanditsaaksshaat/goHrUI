@@ -296,6 +296,7 @@
 
 
     function _pageResult(result) {
+      console.log(result)
       angular.forEach(result.pageinfo.filters, function (filter) {
         if (filter.name == 'Month') {
           filter.value = parseInt(moment().format('MM'));
@@ -810,6 +811,7 @@
         column: 'AttDate',
         isDesc: false
       }]
+      console.log($scope.editPage.searchList)
       $scope.editPage.refreshData();
     }
 

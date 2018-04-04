@@ -8,7 +8,7 @@
     angular.module('BlurAdmin.common.components')
         .directive('filterBox', filterBox);
     /** @ngInject */
-    function filterBox($location, $state, $timeout, $rootScope) {
+    function filterBox($location, $state, $timeout, $rootScope, $filter) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/filterBox/filterBox.html',
@@ -33,7 +33,7 @@
                 $scope.selectChange = _selectChange;
                 /**END Public Function */
 
-               
+                // console.log($rootScope.user)
 
                 var resourse = {
                     equals: 'equals',
@@ -82,47 +82,165 @@
 
                 $scope.filterOpt = {}
                 $scope.filterOpt.textbox = [];
-                $scope.filterOpt.textbox.push({ value: '=', name: resourse.equals });
-                $scope.filterOpt.textbox.push({ value: '!=', name: resourse.doesnotequal });
-                $scope.filterOpt.textbox.push({ value: '/l', name: resourse.like });
-                $scope.filterOpt.textbox.push({ value: '/nl', name: resourse.notlike });
-                $scope.filterOpt.textbox.push({ value: '/s', name: resourse.starts });
-                $scope.filterOpt.textbox.push({ value: '/ns', name: resourse.notstarts });
-                $scope.filterOpt.textbox.push({ value: '/e', name: resourse.ends });
-                $scope.filterOpt.textbox.push({ value: '/ne', name: resourse.notends });
-                $scope.filterOpt.textbox.push({ value: '/i', name: resourse.empty });
-                $scope.filterOpt.textbox.push({ value: '/ni', name: resourse.notempty });
+                $scope.filterOpt.textbox.push({
+                    value: '=',
+                    name: resourse.equals
+                });
+                $scope.filterOpt.textbox.push({
+                    value: '!=',
+                    name: resourse.doesnotequal
+                });
+                $scope.filterOpt.textbox.push({
+                    value: '/l',
+                    name: resourse.like
+                });
+                $scope.filterOpt.textbox.push({
+                    value: '/nl',
+                    name: resourse.notlike
+                });
+                $scope.filterOpt.textbox.push({
+                    value: '/s',
+                    name: resourse.starts
+                });
+                $scope.filterOpt.textbox.push({
+                    value: '/ns',
+                    name: resourse.notstarts
+                });
+                $scope.filterOpt.textbox.push({
+                    value: '/e',
+                    name: resourse.ends
+                });
+                $scope.filterOpt.textbox.push({
+                    value: '/ne',
+                    name: resourse.notends
+                });
+                $scope.filterOpt.textbox.push({
+                    value: '/i',
+                    name: resourse.empty
+                });
+                $scope.filterOpt.textbox.push({
+                    value: '/ni',
+                    name: resourse.notempty
+                });
 
                 $scope.filterOpt.select = [];
-                $scope.filterOpt.select.push({ value: '=', name: resourse.equals, type: 'single' });
-                $scope.filterOpt.select.push({ value: '!=', name: resourse.doesnotequal, type: 'single' });
-                $scope.filterOpt.select.push({ value: '/i', name: resourse.empty, type: 'single' });
-                $scope.filterOpt.select.push({ value: '/ni', name: resourse.notempty, type: 'single' });
-                $scope.filterOpt.select.push({ value: '/in', name: resourse.in, type: 'multiple' });
-                $scope.filterOpt.select.push({ value: '/nin', name: resourse.notin, type: 'multiple' });
+                $scope.filterOpt.select.push({
+                    value: '=',
+                    name: resourse.equals,
+                    type: 'single'
+                });
+                $scope.filterOpt.select.push({
+                    value: '!=',
+                    name: resourse.doesnotequal,
+                    type: 'single'
+                });
+                $scope.filterOpt.select.push({
+                    value: '/i',
+                    name: resourse.empty,
+                    type: 'single'
+                });
+                $scope.filterOpt.select.push({
+                    value: '/ni',
+                    name: resourse.notempty,
+                    type: 'single'
+                });
+                $scope.filterOpt.select.push({
+                    value: '/in',
+                    name: resourse.in,
+                    type: 'multiple'
+                });
+                $scope.filterOpt.select.push({
+                    value: '/nin',
+                    name: resourse.notin,
+                    type: 'multiple'
+                });
 
                 $scope.filterOpt.date = [];
-                $scope.filterOpt.date.push({ value: '/c', name: resourse.currentdate, type: 'all' });
+                $scope.filterOpt.date.push({
+                    value: '/c',
+                    name: resourse.currentdate,
+                    type: 'all'
+                });
                 // $scope.filterOpt.date.push({ value: '=', name: resourse.currentweek, type: 'day' });
                 // $scope.filterOpt.date.push({ value: '/c', name: resourse.currentmonth, type: 'month' });
                 // $scope.filterOpt.date.push({ value: '/c', name: resourse.currentyear, type: 'year' });
-                $scope.filterOpt.date.push({ value: '=', name: resourse.equals, type: 'all' });
-                $scope.filterOpt.date.push({ value: '!=', name: resourse.doesnotequal, type: 'all' });
-                $scope.filterOpt.date.push({ value: '>', name: resourse.greater, type: 'all' });
-                $scope.filterOpt.date.push({ value: '=>', name: resourse.greaterequal, type: 'all' });
-                $scope.filterOpt.date.push({ value: '<', name: resourse.less, type: 'all' });
-                $scope.filterOpt.date.push({ value: '<=', name: resourse.lessequal, type: 'all' });
-                $scope.filterOpt.date.push({ value: '/b', name: resourse.between, type: 'all' });
+                $scope.filterOpt.date.push({
+                    value: '=',
+                    name: resourse.equals,
+                    type: 'all'
+                });
+                $scope.filterOpt.date.push({
+                    value: '!=',
+                    name: resourse.doesnotequal,
+                    type: 'all'
+                });
+                $scope.filterOpt.date.push({
+                    value: '>',
+                    name: resourse.greater,
+                    type: 'all'
+                });
+                $scope.filterOpt.date.push({
+                    value: '=>',
+                    name: resourse.greaterequal,
+                    type: 'all'
+                });
+                $scope.filterOpt.date.push({
+                    value: '<',
+                    name: resourse.less,
+                    type: 'all'
+                });
+                $scope.filterOpt.date.push({
+                    value: '<=',
+                    name: resourse.lessequal,
+                    type: 'all'
+                });
+                $scope.filterOpt.date.push({
+                    value: '/b',
+                    name: resourse.between,
+                    type: 'all'
+                });
 
                 $scope.filterOpt.time = [];
-                $scope.filterOpt.time.push({ value: '/c', name: resourse.currenttime, type: 'all' });
-                $scope.filterOpt.time.push({ value: '=', name: resourse.equals, type: 'all' });
-                $scope.filterOpt.time.push({ value: '!=', name: resourse.doesnotequal, type: 'all' });
-                $scope.filterOpt.time.push({ value: '>', name: resourse.greater, type: 'all' });
-                $scope.filterOpt.time.push({ value: '=>', name: resourse.greaterequal, type: 'all' });
-                $scope.filterOpt.time.push({ value: '<', name: resourse.less, type: 'all' });
-                $scope.filterOpt.time.push({ value: '<=', name: resourse.lessequal, type: 'all' });
-                $scope.filterOpt.time.push({ value: '/b', name: resourse.between, type: 'all' });
+                $scope.filterOpt.time.push({
+                    value: '/c',
+                    name: resourse.currenttime,
+                    type: 'all'
+                });
+                $scope.filterOpt.time.push({
+                    value: '=',
+                    name: resourse.equals,
+                    type: 'all'
+                });
+                $scope.filterOpt.time.push({
+                    value: '!=',
+                    name: resourse.doesnotequal,
+                    type: 'all'
+                });
+                $scope.filterOpt.time.push({
+                    value: '>',
+                    name: resourse.greater,
+                    type: 'all'
+                });
+                $scope.filterOpt.time.push({
+                    value: '=>',
+                    name: resourse.greaterequal,
+                    type: 'all'
+                });
+                $scope.filterOpt.time.push({
+                    value: '<',
+                    name: resourse.less,
+                    type: 'all'
+                });
+                $scope.filterOpt.time.push({
+                    value: '<=',
+                    name: resourse.lessequal,
+                    type: 'all'
+                });
+                $scope.filterOpt.time.push({
+                    value: '/b',
+                    name: resourse.between,
+                    type: 'all'
+                });
 
                 function _openSearchFilter() {
                     $scope.showSearchFilter = true;
@@ -150,7 +268,7 @@
                                             $rootScope.showMsg('warning', 'Please choose option from ' + filter.displayName)
                                         else
                                             $rootScope.showMsg('warning', 'Please enter value in ' + filter.displayName)
-                                        console.log(filter);
+                                        // console.log(filter);
                                     }
                                 }
 
@@ -204,8 +322,7 @@
                                             search.operand = '<=';
                                             search.value = value2;
                                             $scope.page.searchList.push(search)
-                                        }
-                                        else {
+                                        } else {
                                             if (filter.operator == '/c')
                                                 search.operand = '=';
                                             else
@@ -218,8 +335,7 @@
                                             search.operand = filter.operator;
                                             $scope.page.searchList.push(search)
                                         }
-                                    }
-                                    else if (filter.controlType == "timepicker") {
+                                    } else if (filter.controlType == "timepicker") {
                                         if (filter.operator == "/b") {
                                             search.value = moment(filter.value).format('HH:mm:ss')
                                             search.operand = '>=';
@@ -230,8 +346,7 @@
                                             search.operand = '<=';
                                             search.value = moment(filter.value2).format('HH:mm:ss')
                                             $scope.page.searchList.push(search)
-                                        }
-                                        else {
+                                        } else {
                                             if (filter.operator == '/c')
                                                 search.operand = '=';
                                             else
@@ -240,8 +355,7 @@
                                             search.operand = filter.operator;
                                             $scope.page.searchList.push(search)
                                         }
-                                    }
-                                    else {
+                                    } else {
 
                                         $scope.page.searchList.push(search)
                                     }
@@ -249,7 +363,7 @@
                             }
                         })
                     }
-                    console.log($scope.page)
+                    // console.log($scope.page)
                     if (isRequiredFailed)
                         $scope.page.filterData = undefined;
                     else
@@ -269,8 +383,7 @@
                             filter.showFilter = true;
                             filter.value = undefined;
                             filter.operator = '=';
-                        }
-                        else {
+                        } else {
                             filter.showFilter = false;
                             filter.value = undefined;
                             filter.operator = '=';
@@ -285,6 +398,7 @@
 
                     }
                 }
+
                 function _dateModeChanged(filter) {
 
                     filter.value2 = undefined;
@@ -293,16 +407,50 @@
 
                     if (filter.datePicker.option1.minMode == 'day') {
                         filter.datePicker.format = $scope.dateCal.dayFormat
-                    }
-                    else if (filter.datePicker.option1.minMode == 'month') {
+                    } else if (filter.datePicker.option1.minMode == 'month') {
                         filter.datePicker.format = $scope.dateCal.monthFormat
-                    }
-                    else if (filter.datePicker.option1.minMode == 'year') {
+                    } else if (filter.datePicker.option1.minMode == 'year') {
                         filter.datePicker.format = $scope.dateCal.yearFormat
                     }
                     // filter.operator = '/=';
-                    filter.value = moment();
-                    filter.datePicker.option2.minDate = filter.value;
+                    // filter.value = moment().utc();
+                    // console.log($rootScope.user.sysparam[13].key)
+
+
+                    var dayForFromDate = 0;
+                    var dayList = $filter("findObj")($rootScope.user.sysparam, 'DAYS_FOR_FROMDATE', 'key')
+                    if (dayList != null) {
+                        // dayForFromDate = $rootScope.user.sysparam[13].value
+                        dayForFromDate = dayList.value;
+                        var currentdate = new Date();
+                        var updateDate = currentdate.setDate(currentdate.getDate() - dayForFromDate);
+                        filter.value = new Date(updateDate);
+                        filter.value2 = new Date();
+                        filter.datePicker.option2.minDate = filter.value;
+                    }
+
+
+                    // angular.forEach($rootScope.user.sysparam.key, function (key) {
+                    //     console.log(key)
+                    //     if (key == "DAYS_FOR_FROMDATE") {
+
+                    //     }
+                    // })
+
+
+                    // dayForFromDate = $rootScope.user.sysparam[13].value;
+                    // var currentdate = new Date();
+                    // var updateDate = currentdate.setDate(currentdate.getDate() - dayForFromDate);
+                    // console.log(updateDate.toLocaleString())
+                    // filter.value = new Date(updateDate);
+
+                    // if ($rootScope.user.sysparam[13].key == "DAYS_FOR_FROMDATE") {
+                    //     dayForFromDate = $rootScope.user.sysparam[13].value;
+                    // }
+                    // filter.value = new Date();
+                    // filter.value2 = new Date();
+                    // filter.datePicker.option2.minDate = filter.value;
+                    // console.log(filter)
                 }
                 /**
                  * First Datepicker Value change event
@@ -324,14 +472,11 @@
                     // console.log(filter)
                     if (filter.controlType == "textbox") {
                         return $scope.filterOpt.textbox;
-                    }
-                    else if (filter.controlType == 'select') {
+                    } else if (filter.controlType == 'select') {
                         return $scope.filterOpt.select;
-                    }
-                    else if (filter.controlType == 'datepicker') {
+                    } else if (filter.controlType == 'datepicker') {
                         return $scope.filterOpt.date;
-                    }
-                    else if (filter.controlType == 'timepicker') {
+                    } else if (filter.controlType == 'timepicker') {
                         return $scope.filterOpt.time;
                     }
 
@@ -369,19 +514,35 @@
                              */
                             angular.forEach($scope.page.pageinfo.filters, function (filter, indx) {
 
-                                if (filter.type == 'datetime') {
-                                    filter.datePicker = { option1: {}, option2: {}, format: '' }
+                                if (filter.controlType == 'datepicker') {
+                                    filter.datePicker = {
+                                        option1: {},
+                                        option2: {},
+                                        format: ''
+                                    }
 
                                     filter.datePicker.option1 = angular.copy($scope.dateCal.options)
                                     filter.datePicker.option2 = angular.copy($scope.dateCal.options)
                                     filter.datePicker.format = angular.copy($scope.dateCal.dayFormat)
-                                }
-                                else if (filter.type == 'datetime') {
+
+                                    //--if date filter data is required on load can be manage from sysparam in future (02.04.18)@nm
+                                    filter.datePicker.option1.minMode = 'day'
+                                    filter.operator = "/b"
+                                    filter.showFilter = true;
+                                    _dateModeChanged(filter);
+
+
+                                } else if (filter.controlType == 'timepicker') {
+                                    // console.log(filter.controlType)
                                     filter.timePicker = {};
                                     filter.timePicker.option1 = angular.copy($scope.timeCal)
                                     filter.timePicker.option2 = angular.copy($scope.timeCal)
-                                    filter.value = moment().format('YYYY-MM-DD');
-                                    filter.value2 = moment().format('YYYY-MM-DD');
+
+                                    //--if date filter data is required on load can be manage from sysparam in future (02.04.18)@nm
+                                    filter.datePicker.option1.minMode = 'day'
+                                    filter.operator = "/b"
+                                    filter.showFilter = true;
+                                    _dateModeChanged(filter);
                                 }
 
                             })
