@@ -104,8 +104,12 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 var url = serviceBase + 'api/values/' + pageCode + "?" + rndVal;
                 $http.get(url).then(function (results) {
                     var pgList = DJWebStore.GetValue('pageList');
-
-                    pgList['pg_' + results.pageinfo.pageid] = results;
+                    if (pgList == null) {
+                        pgList = {};
+                    }
+                    if (results.pageinfo)
+                        if (results.pageinfo.pageid)
+                            pgList['pg_' + results.pageinfo.pageid] = results;
 
                     DJWebStore.SetValue('pageList', pgList);
                     console.log(results)
