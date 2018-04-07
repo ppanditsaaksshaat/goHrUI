@@ -60,7 +60,9 @@
                     onRegisterApi: null,
                     fieldEvents: [],
                     buttonPermission: false,
-                    openHelp: null//external help option
+                    openHelp: null,//external help option
+                    isVerifyButton: false,
+                    verifyResult: null,
                 }
 
 
@@ -175,6 +177,7 @@
                 $scope.resetForm = _resetForm;
                 $scope.closeForm = _closeForm;
                 $scope.clearForm = _clearForm;
+                $scope.verifyEntity = _verifyEntity;
 
 
                 function _loadDirective() {
@@ -184,6 +187,7 @@
                     if ($scope.page.boxOptions.selfLoading) {
                         _getPageData();
                     }
+
                 }
                 function _getPageData() {
                     if ($scope.page.boxOptions.getPageData == null) {
@@ -550,6 +554,7 @@
                                 }
                             }
                             //console.log($scope.page)
+                            _addVerifyButton();
                             if ($scope.page.boxOptions.customColumns) {
                                 if ($scope.page.boxOptions.customColumns != null) {
                                     angular.forEach($scope.page.boxOptions.customColumns, function (col) {
@@ -837,6 +842,35 @@
                 function _findEntityErrorResult(err) {
                     $scope.form.isLoaded = true;
                     $scope.form.isLoading = false;
+                }
+                function _addVerifyButton() {
+                    // $scope.page[col.name + "_click"] = col.click;
+                    if ($scope.page.boxOptions.isVerifyButton) {
+                        if ($rootScope.user.profile.isHeadEmployee) {
+                            var custColumn = {};
+                            var cellTemplate = "<div class='ui-grid-cell-contents' ng-if='row.entity." + $scope.page.pageinfo.titleempcolname + " != "+$rootScope.user.profile.empId+"' title='Verify'><a ng-click='grid.appScope.verifyEntity(row)' style='cursor: pointer'>Verify</a></div>"
+                            custColumn.name = "Option"
+                            custColumn.field = "Verify"
+                            custColumn.cellTemplate = '';
+                            custColumn['cellTemplate'] = cellTemplate;
+                            custColumn['visible'] = true;
+                            custColumn["cellClass"] = function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                                if (row.entity.StatusBGClass !== undefined) {
+                                    return 'status-bg ' + row.entity.StatusBGClass;
+                                }
+                            }
+                            custColumn.pinnedRight = true;
+                            custColumn.width = 100;
+                            //console.log($scope.page.gridOptions.columnDefs);
+                            $scope.page.gridOptions.columnDefs.push(custColumn);
+                        }
+                    }
+                }
+
+                function _verifyEntity(row) {
+                    if ($scope.page.boxOptions.verifyResult != null) {
+                        $scope.page.boxOptions.verifyResult(row);
+                    }
                 }
                 $scope.$on('form-success', function (successEvent, result) {
 
