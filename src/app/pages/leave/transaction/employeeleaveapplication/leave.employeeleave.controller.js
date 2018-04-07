@@ -159,13 +159,15 @@
       updateRecord: null,
       viewRecord: _viewRecord,
       deleteRecord: _deleteForm,
-      customColumns: ((!$scope.user.profile.isAdmin && !$scope.user.profile.isManager) ? null : [{
-        text: 'Verify',
-        type: 'a',
-        name: 'Option',
-        click: _leaveVerify,
-        pin: true
-      }]),
+      isVerifyButton: true,
+      verifyResult: _leaveVerify,
+      // customColumns: (((!$scope.user.profile.isAdmin && !$scope.user.profile.isManager) || !$scope.user.profile.isHeadEmployee) ? null : [{
+      //   text: 'Verify',
+      //   type: 'a',
+      //   name: 'Option',
+      //   click: _leaveVerify,
+      //   pin: true
+      // }]),
       pageResult: _pageResult,
       dataResult: _dataResult,
     }
@@ -173,6 +175,7 @@
 
     function _dataResult(result) {
       console.log(result);
+      console.log($scope.page)
     }
 
     function _pageResult(result) {
@@ -194,6 +197,8 @@
       })
 
     }
+
+ 
 
     /**Fetching  credit,debit and LWP leave for employee */
 
@@ -698,11 +703,11 @@
       var year = leaveFromDate.format('YYYY');
       console.log(year)
       if (!$scope.entity.selectedEmp.AMSTIsVarified) {
-        if (_validateForm(form)) {}
+        if (_validateForm(form)) { }
       } else if ($scope.entity.selectedEmp.AMSMonth == parseInt(month) && $scope.entity.selectedEmp.AMSYear == parseInt(year)) {
         $scope.showMsg("error", "You are not allowed to apply leave because this month attendance verified");
       } else {
-        if (_validateForm(form)) {}
+        if (_validateForm(form)) { }
       }
     }
 
@@ -964,7 +969,7 @@
     function _formSave(entity, pageId, action, oldEntity, editForm, showConfirmation, title) {
 
       editFormService.saveForm(pageId, entity, oldEntity,
-          action, title, editForm, showConfirmation)
+        action, title, editForm, showConfirmation)
         .then(_saveSuccessResult, _saveErrorResult)
     }
 
@@ -1033,6 +1038,7 @@
       $scope.disabledEmp = false;
       $scope.entity.LEADFromHalfDayId = 2;
       $scope.entity.LEADToHalfDayId = 2;
+     
     }
 
 
@@ -1438,7 +1444,7 @@
 
     function _commonSaveForm(pageId, newEntity, oldEntity, action, pageTagLine) {
       editFormService.saveForm(pageId, newEntity,
-          oldEntity, action, pageTagLine)
+        oldEntity, action, pageTagLine)
         .then(_saveFormSuccess, _saveFormError)
     }
 
