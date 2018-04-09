@@ -26,18 +26,18 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
 
             if (searchList !== undefined) {
 
-                var data = { searchList: searchList };
-                return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                    {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(function (results) {
-                        return results;
-                    });
+                var data = {
+                    searchList: searchList
+                };
+                return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
 
-            }
-            else {
+            } else {
                 return $http.get(url).then(function (results) {
                     return results;
                 });
@@ -45,6 +45,18 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
 
         }
         var _getTableData = function (tableId, pageId, search, value, forAllUser, searchList) {
+            var titleempcolname = '';
+            var isFound = false;
+            var pgList = DJWebStore.GetValue('pageList');
+            var page = null;
+            if (pgList != null) {
+                page = pgList['pg_' + pageId];
+                if (page != null) {
+                    titleempcolname = page.pageinfo.titleempcolname;
+                    isFound = true;
+                }
+            }
+
 
             var apiUrl = serviceBase + 'api/Data/GetData/' + tableId + "/" + pageId;
 
@@ -66,18 +78,19 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     apiUrl += '/' + forAllUser
                 }
                 var data = angular.copy(searchList)
+                if (titleempcolname == null) {
+                    titleempcolname = '';
+                }
+                data.titleempcolname = titleempcolname;
+                return $http.post(apiUrl, JSON.stringify(JSON.stringify(data)), {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (results) {
+                    return results;
+                });
 
-                return $http.post(apiUrl, JSON.stringify(JSON.stringify(data)),
-                    {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(function (results) {
-                        return results;
-                    });
-
-            }
-            else {
+            } else {
                 return $http.get(apiUrl).then(function (results) {
                     return results;
                 });
@@ -103,24 +116,23 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 var rndVal = Math.round((Math.random() * 10) * 10);
                 var url = serviceBase + 'api/values/' + pageCode + "?" + rndVal;
                 $http.get(url).then(function (results) {
-                    var pgList = DJWebStore.GetValue('pageList');
-                    if (pgList == null) {
-                        pgList = {};
-                    }
-                    if (results.pageinfo)
-                        if (results.pageinfo.pageid)
-                            pgList['pg_' + results.pageinfo.pageid] = results;
+                        var pgList = DJWebStore.GetValue('pageList');
+                        if (pgList == null) {
+                            pgList = {};
+                        }
+                        if (results.pageinfo)
+                            if (results.pageinfo.pageid)
+                                pgList['pg_' + results.pageinfo.pageid] = results;
 
-                    DJWebStore.SetValue('pageList', pgList);
-                    console.log(results)
-                    dfd.resolve(results);
-                },
+                        DJWebStore.SetValue('pageList', pgList);
+                        console.log(results)
+                        dfd.resolve(results);
+                    },
                     function (error) {
                         dfd.reject(error);
                     }
                 );
-            }
-            else {
+            } else {
 
                 dfd.resolve(page);
 
@@ -148,19 +160,21 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         var _editPageData = function (pageCode, entity) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/values/';
-            return $http.post(url, JSON.stringify(entity),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(entity), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
 
         var _setMsg = function (type, text) {
             if (this.msg === undefined) {
-                this.msg = { type: '', text: '' };
+                this.msg = {
+                    type: '',
+                    text: ''
+                };
             }
             this.msg.type = type;
             this.msg.text = text;
@@ -179,8 +193,12 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 return results;
             });
         }
-        var _getTitle = function () { return title; };
-        var _setTitle = function (newTitle) { title = newTitle; };
+        var _getTitle = function () {
+            return title;
+        };
+        var _setTitle = function (newTitle) {
+            title = newTitle;
+        };
 
         var _getIdenVal = function (pageId) {
 
@@ -268,14 +286,13 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         var _saveGridSetting = function (postData) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/UIGrid/SaveSetting/';
-            return $http.post(url, JSON.stringify(postData),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(postData), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
 
         var _getReport = function (reportId, filterData) {
@@ -283,14 +300,13 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Report/GetReport/' + reportId;
             console.log(url);
-            return $http.post(url, JSON.stringify(filterData),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(filterData), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
 
         var _getReportBuilder = function (reportId) {
@@ -303,14 +319,13 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         var _saveReportBuilder = function (uReportId, data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Report/Save/' + uReportId;
-            return $http.post(url, JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
 
         var _getFilterColumn = function (columnId) {
@@ -358,27 +373,25 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         var _processUpload = function (data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Upload/Process';
-            return $http.post(url, JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _uploadValidator = function (data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Upload/Validator';
-            return $http.post(url, JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
 
@@ -400,8 +413,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 var serviceBase = DJWebStore.GetServiceBase();
                 var uploadUrl = serviceBase + "api/Upload/SaveFile";
                 fileUpload.uploadFileToUrl(file, uploadUrl);
-            }
-            else {
+            } else {
                 console.log('No File Selected');
             }
         };
@@ -455,7 +467,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     console.log(filename);
                     // Try using msSaveBlob if supported
                     console.log("Trying saveBlob method ...");
-                    var blob = new Blob([data], { type: contentType });
+                    var blob = new Blob([data], {
+                        type: contentType
+                    });
                     if (navigator.msSaveBlob)
                         navigator.msSaveBlob(blob, filename);
                     else {
@@ -482,7 +496,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                             try {
                                 // Prepare a blob URL
                                 console.log("Trying download link method with simulated click ...");
-                                var blob = new Blob([data], { type: contentType });
+                                var blob = new Blob([data], {
+                                    type: contentType
+                                });
                                 var url = urlCreator.createObjectURL(blob);
                                 link.setAttribute('href', url);
 
@@ -508,7 +524,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                                 // Prepare a blob URL
                                 // Use application/octet-stream when using window.location to force download
                                 console.log("Trying download link method with window.location ...");
-                                var blob = new Blob([data], { type: octetStreamMime });
+                                var blob = new Blob([data], {
+                                    type: octetStreamMime
+                                });
                                 var url = urlCreator.createObjectURL(blob);
                                 window.location = url;
                                 console.log("Download link method with window.location succeeded");
@@ -573,7 +591,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
 
                 var bstr = arr.join("");
 
-                var workbook = XLSX.read(bstr, { type: "binary" });
+                var workbook = XLSX.read(bstr, {
+                    type: "binary"
+                });
                 console.log(workbook)
 
 
@@ -603,10 +623,15 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 // }
 
                 /* write workbook (use type 'binary') */
-                var wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+                var wbout = XLSX.write(workbook, {
+                    bookType: 'xlsx',
+                    type: 'binary'
+                });
                 var dataBinary = s2ab(wbout);
                 // saveFileAs(dataBinary, contentType, filename)
-                saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "sheetjs.xlsx");
+                saveAs(new Blob([s2ab(wbout)], {
+                    type: "application/octet-stream"
+                }), "sheetjs.xlsx");
             }, function (err) {
                 console.log(err)
             })
@@ -627,7 +652,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 console.log(filename);
                 // Try using msSaveBlob if supported
                 console.log("Trying saveBlob method ...");
-                var blob = new Blob([data], { type: contentType });
+                var blob = new Blob([data], {
+                    type: contentType
+                });
                 if (navigator.msSaveBlob)
                     navigator.msSaveBlob(blob, filename);
                 else {
@@ -654,7 +681,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                         try {
                             // Prepare a blob URL
                             console.log("Trying download link method with simulated click ...");
-                            var blob = new Blob([data], { type: contentType });
+                            var blob = new Blob([data], {
+                                type: contentType
+                            });
                             var url = urlCreator.createObjectURL(blob);
                             link.setAttribute('href', url);
 
@@ -680,7 +709,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                             // Prepare a blob URL
                             // Use application/octet-stream when using window.location to force download
                             console.log("Trying download link method with window.location ...");
-                            var blob = new Blob([data], { type: octetStreamMime });
+                            var blob = new Blob([data], {
+                                type: octetStreamMime
+                            });
                             var url = urlCreator.createObjectURL(blob);
                             window.location = url;
                             console.log("Download link method with window.location succeeded");
@@ -704,27 +735,25 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         var _sendJdToCand = function (data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Email/JDToCand';
-            return $http.post(url, JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _saveRemind = function (data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Remind/SaveRemind';
-            return $http.post(url, JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _getRemind = function (remindId) {
@@ -755,14 +784,13 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         var _saveUserAssigned = function (data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/UIGrid/SaveAssigned';
-            return $http.post(url, JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _getCVSummary = function () {
@@ -784,52 +812,48 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         var _changePassword = function (data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Account/ChangePassword';
-            return $http.post(url, data,
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
 
         var _sendEmail = function (data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Email/SendEmail';
-            return $http.post(url, JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
 
         var _sendCustomEmail = function (data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Email/CustomEmail';
-            return $http.post(url, JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
         var _studentSession = function (data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Account/';
-            return $http.post(url, data,
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
 
         var _getEmailTempList = function (activityId) {
@@ -860,27 +884,25 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         var _ansQuesPaper = function (qpId, stId, data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Ques/Answer/' + qpId + '/' + stId;
-            return $http.post(url, JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
 
         var _rptHandshake = function (udrId, data) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Report/Handshake/' + udrId;
-            return $http.post(url, JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
 
         ////  add by nitesh   new fuction for  upload file
@@ -892,8 +914,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 var serviceBase = DJWebStore.GetServiceBase();
                 var uploadUrl = serviceBase + "api/Upload/SaveAttachmentFile/" + pageId + '/' + tableId + '/' + pkId + '/' + docTypeId;
                 fileUpload.uploadFileToUrl(file, uploadUrl);
-            }
-            else {
+            } else {
                 console.log('No File Selected');
             }
         };
@@ -930,7 +951,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     console.log(filename);
                     // Try using msSaveBlob if supported
                     console.log("Trying saveBlob method ...");
-                    var blob = new Blob([data], { type: contentType });
+                    var blob = new Blob([data], {
+                        type: contentType
+                    });
                     if (navigator.msSaveBlob)
                         navigator.msSaveBlob(blob, filename);
                     else {
@@ -957,7 +980,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                             try {
                                 // Prepare a blob URL
                                 console.log("Trying download link method with simulated click ...");
-                                var blob = new Blob([data], { type: contentType });
+                                var blob = new Blob([data], {
+                                    type: contentType
+                                });
                                 var url = urlCreator.createObjectURL(blob);
                                 link.setAttribute('href', url);
 
@@ -983,7 +1008,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                                 // Prepare a blob URL
                                 // Use application/octet-stream when using window.location to force download
                                 console.log("Trying download link method with window.location ...");
-                                var blob = new Blob([data], { type: octetStreamMime });
+                                var blob = new Blob([data], {
+                                    type: octetStreamMime
+                                });
                                 var url = urlCreator.createObjectURL(blob);
                                 window.location = url;
                                 console.log("Download link method with window.location succeeded");
@@ -1015,8 +1042,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 var uploadUrl = serviceBase + "api/Upload/SaveTestAttachmentFile/" + pageId + '/' + tableId + '/' + pkId + '/' + docTypeId;
                 console.log(uploadUrl);
                 fileUpload.uploadFileToUrl(file, uploadUrl);
-            }
-            else {
+            } else {
                 console.log('No File Selected');
             }
         };
@@ -1053,7 +1079,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                     console.log(filename);
                     // Try using msSaveBlob if supported
                     console.log("Trying saveBlob method ...");
-                    var blob = new Blob([data], { type: contentType });
+                    var blob = new Blob([data], {
+                        type: contentType
+                    });
                     if (navigator.msSaveBlob)
                         navigator.msSaveBlob(blob, filename);
                     else {
@@ -1080,7 +1108,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                             try {
                                 // Prepare a blob URL
                                 console.log("Trying download link method with simulated click ...");
-                                var blob = new Blob([data], { type: contentType });
+                                var blob = new Blob([data], {
+                                    type: contentType
+                                });
                                 var url = urlCreator.createObjectURL(blob);
                                 link.setAttribute('href', url);
 
@@ -1106,7 +1136,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                                 // Prepare a blob URL
                                 // Use application/octet-stream when using window.location to force download
                                 console.log("Trying download link method with window.location ...");
-                                var blob = new Blob([data], { type: octetStreamMime });
+                                var blob = new Blob([data], {
+                                    type: octetStreamMime
+                                });
                                 var url = urlCreator.createObjectURL(blob);
                                 window.location = url;
                                 console.log("Download link method with window.location succeeded");
@@ -1135,34 +1167,40 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         var _updateField = function (tableId, pkName, pkId, field, fieldValue) {
 
             var data = {
-                tableId: tableId, pkColName: pkName, pkId: pkId, field: field, fieldValue: fieldValue
+                tableId: tableId,
+                pkColName: pkName,
+                pkId: pkId,
+                field: field,
+                fieldValue: fieldValue
             }
 
             var url = serviceBase + 'api/Data/Field/';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
         var _updateSingleField = function (tableId, searchColName, searchColValue, field, fieldValue) {
 
             var data = {
-                tableId: tableId, searchColName: searchColName, searchColValue: searchColValue, field: field, fieldValue: fieldValue
+                tableId: tableId,
+                searchColName: searchColName,
+                searchColValue: searchColValue,
+                field: field,
+                fieldValue: fieldValue
             }
 
             var url = serviceBase + 'api/Data/UpdateSingleField/';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _getDashboard = function (appMode) {
@@ -1176,53 +1214,49 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
 
         var _migrateData = function (data) {
             var url = serviceBase + 'api/Upload/Migrate/';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _uploadEmployeeData = function (data) {
             var url = serviceBase + 'api/Upload/EmployeeUpload';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
 
 
         var _getRowCount = function (data, tableId, pageId) {
             var url = serviceBase + 'api/Data/RowCount/' + tableId + "/" + pageId;
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
 
         var _ucvSaveUSV = function (data, pageId) {
             var url = serviceBase + 'api/Data/SaveUCV/' + pageId;
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
 
@@ -1247,266 +1281,248 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Report/GetCustomReport/' + reportId;
             console.log(url);
-            return $http.post(url, JSON.stringify(filterData),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(filterData), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
         var _updateMultiField = function (tableId, pkName, pkId, fieldList) {
 
             var data = {
-                tableId: tableId, pkColName: pkName, pkId: pkId, fieldList: fieldList
+                tableId: tableId,
+                pkColName: pkName,
+                pkId: pkId,
+                fieldList: fieldList
             }
 
             var url = serviceBase + 'api/Data/UpdateMultiField/';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
         var _generateSalary = function (filterData) {
             var url = serviceBase + 'api/Payroll/GenerateSalary/';
             console.log(url)
-            return $http.post(url, JSON.stringify(JSON.stringify(filterData)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
+            return $http.post(url, JSON.stringify(JSON.stringify(filterData)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
 
-                });
+            });
         }
 
         var _getCustomQuery = function (data, queryId) {
             var url = serviceBase + 'api/Data/Query/' + queryId;
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
         var _getAllSelect = function (columnIds) {
             var url = serviceBase + 'api/GetSelect/All';
-            return $http.post(url, JSON.stringify(JSON.stringify(columnIds)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(columnIds)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _multiSave = function (data) {
 
             var url = serviceBase + 'api/Multi/Save';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _multiSaveRows = function (data) {
 
             var url = serviceBase + 'api/Multi/SaveRows';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
         var _restorePayband = function (data) {
 
             var url = serviceBase + 'api/Multi/RestorePayband';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _getMultiEntity = function (data) {
 
             var url = serviceBase + 'api/Multi/FindEntity';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
 
         var _create = function (entity) {
             var rndVal = Math.round((Math.random() * 10) * 10);
             var url = serviceBase + 'api/Employee/Add';
-            return $http.post(url, JSON.stringify(entity),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(entity), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         };
 
         var _commonUploder = function (data) {
             var url = serviceBase + 'api/Upload/CommonUpload';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
 
         var _leaveTypeUpload = function (data) {
             var url = serviceBase + 'api/Upload/LeaevTypeUpload';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _uploadManualAttendance = function (data) {
             var url = serviceBase + 'api/Upload/UploadManualAttendance';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _generateFullAndFinalSalary = function (filterData) {
             var url = serviceBase + 'api/Payroll/GenerateFullAndFinalSalary/';
             console.log(url)
-            return $http.post(url, JSON.stringify(JSON.stringify(filterData)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
+            return $http.post(url, JSON.stringify(JSON.stringify(filterData)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
 
-                });
+            });
         }
 
         var _employeeBonusUpload = function (data) {
             var url = serviceBase + 'api/Upload/EmployeeBonus';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
             var url = serviceBase + 'api/Payroll/GenerateFullAndFinalSalary/';
             console.log(url)
-            return $http.post(url, JSON.stringify(JSON.stringify(filterData)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
+            return $http.post(url, JSON.stringify(JSON.stringify(filterData)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
 
-                });
+            });
         }
 
         var _getResources = function (data) {
 
             var url = serviceBase + 'api/Resource/ByKey';
             console.log(url)
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
 
-                });
+            });
         }
 
         var _getTranslateData = function (data) {
             var url = serviceBase + 'api/Data/Translate';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)),
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
         var _userRegister = function (data) {
             var url = serviceBase + 'api/Account/Register';
-            return $http.post(url, data,
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
         var _setNewPassword = function (data) {
             var url = serviceBase + 'api/Account/NewPassword';
-            return $http.post(url, data,
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
         var _updateUser = function (data) {
             var url = serviceBase + 'api/Account/UpdateUser';
-            return $http.post(url, data,
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (results) {
-                    return results;
-                });
+            return $http.post(url, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
         }
 
 
@@ -1530,7 +1546,10 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.getMsg = _getMsg;
         pageServiceFactory.setMsgUndef = _setMsgUndef;
         pageServiceFactory.getNavigation = _getNavigation;
-        pageServiceFactory.msg = { type: '', text: '' };
+        pageServiceFactory.msg = {
+            type: '',
+            text: ''
+        };
         pageServiceFactory.getTitle = _getTitle;
         pageServiceFactory.setTitle = _setTitle;
         pageServiceFactory.getIdenVal = _getIdenVal;
@@ -1637,7 +1656,8 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
 
         return pageServiceFactory;
 
-    }]);
+    }
+]);
 
 //Service Created by Deepak Jain http://deepjain1290.blogspot.com
 //Email : deepjain1290@gmail.com
