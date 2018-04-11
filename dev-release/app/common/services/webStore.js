@@ -1,8 +1,24 @@
 'use strict';
 angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService', '$location', '$rootScope', function (localStorageService, $location, $rootScope) {
 
-    var _serviceBaseURL = '/API/';
+    //CHANGE API URL HERE FOR YOUR NEED
+    var serviceStaticBaseURL = 'http://rudra.hrm/api/';
 
+    var host = $location.host();
+    var port = $location.$$port;
+
+    var _serviceBaseURL = '/API/';
+    _serviceBaseURL = null;
+    //added by dj@03.03.2017
+    if (host.toLowerCase() == 'localhost' && port == '3000') {
+        _serviceBaseURL = localStorageService.get('devAPIUrl');
+        console.log('debug mode', _serviceBaseURL)
+        if (_serviceBaseURL == null) {
+            console.log('loading api from web sotre file.')
+            _serviceBaseURL = serviceStaticBaseURL;
+        }
+        //NO NEED TO COMMENT FOR PUBLISH
+    }
     var authorizationDataKey = 'authorizationData';
     var profileDataKey = 'profileData';
     var pageDataKey = 'pageData';
@@ -13,6 +29,13 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
 
 
     var djWebStoreFactory = {};
+
+    var _isDev = function () {
+        if (host.toLowerCase() == 'localhost' && port == '3000') {
+            return true;
+        }
+        return false;
+    }
 
     var _setRequestIsBusy = function () {
         return localStorageService.set(pageRequest, true);
@@ -29,12 +52,36 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     }
 
     var _getUserProfile = function () {
-        return localStorageService.get(profileDataKey);
+
+        var profileData = localStorageService.get(profileDataKey);
+        console.log(profileData)
+        if (profileData.profilePhoto != "data:image/jpeg;base64,")
+            $rootScope.profilePicture = profileData.profilePhoto;
+        return profileData;
     }
     var _setUserProfile = function (profileData) {
+        if (profileData.profilePhoto != "data:image/jpeg;base64,")
+            $rootScope.profilePicture = profileData.profilePhoto;
+        console.log(profileData)
         return localStorageService.set(profileDataKey, profileData);
     }
+    var _getSysParam = function () {
+        var sysParam = localStorageService.get('sysParamKey');
+        return sysParam;
+    }
+    var _setSysParam = function (data) {
 
+        return localStorageService.set('sysParamKey', data);
+    }
+    var _getCompany = function () {
+        var company = localStorageService.get('companyKey');
+        $rootScope.company = { name: company.name }
+        return company;
+    }
+    var _setCompany = function (company) {
+        $rootScope.company = { name: company.name }
+        return localStorageService.set('companyKey', company);
+    }
     var _getAuthorization = function () {
         return localStorageService.get(authorizationDataKey);
     }
@@ -62,6 +109,9 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         return localStorageService.get(key);
     }
     var _removeAllKey = function () {
+
+        var devApi = localStorageService.get('devAPIUrl');
+
         localStorageService.remove(authorizationDataKey);
         localStorageService.remove(profileDataKey);
         localStorageService.remove(pageDataKey);
@@ -69,6 +119,8 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         localStorageService.remove('serviceBase');
         localStorageService.clearAll();
         //$localStorage.$reset()
+
+        localStorageService.set('devAPIUrl', devApi)
     }
     var _removeKey = function (key) {
         localStorageService.remove(key);
@@ -80,24 +132,11 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
     }
     var _getServiceBase = function () {
 
-        var serviceBase = _getValue('serviceBase');
-        //uncomment for your choice
+        //FOR CHANGE IN URL GO TO LINE NO 1 (TOP OF THIS FILE) -dj 03.01.2017
+        //added handler for development mode url handling at top of this file
 
-        //serviceBase = 'http://localhost:51877/';
-        // serviceBase = 'http://rudraitsl.com/api/';// _getValue('serviceBase');
-        //serviceBase = 'http://web300.com/api/';// _getValue('serviceBase');
-        // serviceBase ='http://web200.com/api/';// _getValue('serviceBase');
-       // serviceBase = 'http://web400.hrms/api/';
-        // serviceBase = 'http://localhost/api/';
-        serviceBase = 'http://itsllive.rudra.hrm/api/';
-        // serviceBase = 'http://seacliffnew.rudra.hrm/api/'
-        //  serviceBase = null;
-        // console.log($location)
-        if (serviceBase == null) {
-            var host = $location.host();
-            // serviceBase = 'http://' + host + '/api/'
-            
-            // console.log($location)
+        if (_serviceBaseURL == null) {
+
             var absUrl = $location.absUrl();
             if (absUrl.indexOf('.html') > 0) {
                 absUrl = absUrl.substring(0, absUrl.indexOf('.html'))
@@ -106,11 +145,11 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
             var lastIdx = absUrl.lastIndexOf('/');
             var firstIdx = absUrl.indexOf('/');
             var hostIdx = absUrl.indexOf(host);
-            serviceBase = absUrl.substring(hostIdx + host.length, lastIdx) + '/api/';
-            _setValue('serviceBase', serviceBase);
-            console.log(serviceBase)
+            _serviceBaseURL = absUrl.substring(hostIdx + host.length, lastIdx) + '/api/';
+            _setValue('serviceBase', _serviceBaseURL);
+            console.log(_serviceBaseURL)
         }
-        return serviceBase;
+        return _serviceBaseURL;
     }
 
     var _getBaseUrl = function () {
@@ -148,8 +187,14 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
 
         var profileData = _getUserProfile();
         var appData = _getAppData();
-
-        var data = { app: appData, profile: profileData, auth: authData }
+        var sysParam = _getSysParam();
+        var company = _getCompany();
+        var resource = _getValue('resourceKey');
+        var data = {
+            app: appData, profile: profileData,
+            auth: authData, sysparam: sysParam, comapny: company,
+            rp: resource
+        }
 
         $rootScope.user = data;
 
@@ -187,9 +232,14 @@ angular.module('BlurAdmin.common').factory('DJWebStore', ['localStorageService',
         $rootScope.param = undefined;
     }
 
+    djWebStoreFactory.IsDev = _isDev;
     //func
     djWebStoreFactory.GetUserProfile = _getUserProfile;
     djWebStoreFactory.SetUserProfile = _setUserProfile;
+    djWebStoreFactory.SetSysParam = _setSysParam;
+    djWebStoreFactory.GetSysParam = _getSysParam;
+    djWebStoreFactory.GetCompany = _getCompany;
+    djWebStoreFactory.SetCompany = _setCompany;
     djWebStoreFactory.GetAuthorization = _getAuthorization;
     djWebStoreFactory.SetAuthorization = _setAuthorization;
     djWebStoreFactory.GetPageData = _getPageData;

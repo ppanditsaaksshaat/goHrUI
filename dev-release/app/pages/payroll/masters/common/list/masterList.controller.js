@@ -22,7 +22,9 @@
     $scope.saveForm = _saveForm;
     $scope.clearAllEntity = true;
 
-    
+    $scope.changeMonthType = _changeMonthType;
+
+
     $scope.salaryCalculatedOn = _salaryCalculatedOn;
 
 
@@ -60,12 +62,17 @@
       linkColumns: [],
       getPageData: null,
       refreshData: null,
-      addRecord: _addRecord,
-      editRecord: _editRecord,
+      addRecord: null,
+      editRecord: null,
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null
+    }
+
+    if ($scope.page.pageId == 331) {
+      $scope.page.boxOptions.addRecord = _addRecord;
+      $scope.page.boxOptions.editRecord = _editRecord;
     }
 
     function _addRecord() {
@@ -98,10 +105,43 @@
       console.log($scope.entity)
 
       $scope.showEditForm = true;
+      if ($scope.entity.LSInBetMonthId) {
+        $scope.entity.monthType = "2";
+      }
+      else if ($scope.entity.LSCEndOfMonth) {
+        $scope.entity.monthType = "1";
+      }
+
+      if ($scope.entity.LSCFixDay) {
+        $scope.entity.salaryCalOn = 3
+      }
+      else if ($scope.entity.LSCTotalWorkingDay) {
+        $scope.entity.salaryCalOn = 2
+      }
+      else if ($scope.entity.LSCTotalDayInCycle) {
+        $scope.entity.salaryCalOn = 1
+      }
+
+      $scope.entity.LSCFixDay = 0
+      $scope.entity.LSCTotalDayInCycle = 1
+      $scope.entity.LSCTotalWorkingDay = 0
 
     }
     function _closeForm(editForm) {
       $scope.showEditForm = false;
+    }
+
+    function _changeMonthType(monthType) {
+      if (monthType == "1") {
+        $scope.entity.LSCEndOfMonth = true;
+        $scope.entity.LSInBetMonthId = false;
+        $scope.entity.LSCFromDay = 0;
+        $scope.entity.LSCToDay = 0
+      }
+      else if (monthType == "2") {
+        $scope.entity.LSCEndOfMonth = false;
+        $scope.entity.LSInBetMonthId = true;
+      }
     }
 
     function _saveForm(editForm) {

@@ -10,10 +10,8 @@
 
   /** @ngInject */
   function empDetailReportController($scope) {
-    $scope.page = { reportId: 8 }
-
-    // function empLoanDetailController($scope) {
-    //   $scope.page = { reportId: 10 }
+    $scope.page = { reportId: 63 }
+    
 
   }
 

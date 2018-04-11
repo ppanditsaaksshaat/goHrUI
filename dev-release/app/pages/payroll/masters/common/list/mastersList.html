@@ -51,15 +51,23 @@
             </div>-->
                         <div class="form-group col-md-6">
                             <label class="radio-inline custom-radio nowrap font-bold">
-                                <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross1" ng-click="entity.LSInBetMonthId=false" value="true" 
-                            ng-model="entity.LSCEndOfMonth">
-                            <span>{{page.pageinfo.fields.LSCEndOfMonth.text}}</span>
-                        </label>
+
+                                <!-- <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross1" ng-click="entity.LSInBetMonthId=false;entity.LSCFromDay=0;entity.LSCToDay=0" value="true" 
+                            ng-model="entity.LSCEndOfMonth"> -->
+
+                                <input type="radio" name="monthType" id="endOfMonth" ng-model="entity.monthType" ng-change="changeMonthType(entity.monthType)"
+                                    value="1"> 
+                                <span>{{page.pageinfo.fields.LSCEndOfMonth.text}}</span>
+                            </label>
                             <label class="radio-inline custom-radio nowrap font-bold">
-                            <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross2" value="false" ng-click="entity.LSInBetMonthId=true;entity.LSCFromDay=0;entity.LSCToDay=0"  
-                            ng-model="entity.LSCEndOfMonth">
-                            <span>{{page.pageinfo.fields.LSInBetMonthId.text}}</span>
-                        </label>
+
+                                <!-- <input type="radio" name="forBasicOrGrossss" id="calculatedOnBasicOrGross2" value="false" ng-click="entity.LSInBetMonthId=true;entity.LSCFromDay=0;entity.LSCToDay=0"  
+                            ng-model="entity.LSCEndOfMonth"> -->
+
+                                <input type="radio" name="monthType" id="inBitweenMonth" ng-model="entity.monthType" ng-change="changeMonthType(entity.monthType)"
+                                    value="2"> 
+                                <span>{{page.pageinfo.fields.LSInBetMonthId.text}}</span>
+                            </label>
                         </div>
 
                         <!--<div class="form-group col-md-3">
@@ -82,32 +90,24 @@
                     <h3 class="">Salary Calculated On (For Day Based Salary) </h3>
                     <hr>
                     <div class="row">
-                        <!--<div class="form-group col-md-3">
-                            <label for="inputPassword3">{{page.pageinfo.fields.LSCTotalDayInCycle.text}}</label>
-                            <field-box page="page" ng-column="page.pageinfo.fields.LSCTotalDayInCycle" ng-entity="entity" form="editForm"></field-box>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputPassword3">{{page.pageinfo.fields.LSCTotalWorkingDay.text}}</label>
-                            <field-box page="page" ng-column="page.pageinfo.fields.LSCTotalWorkingDay" ng-entity="entity" form="editForm"></field-box>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputPassword3">{{page.pageinfo.fields.LSCFixDay.text}}</label>
-                            <field-box page="page" ng-column="page.pageinfo.fields.LSCFixDay" ng-entity="entity" form="editForm"></field-box>
-                        </div>-->
+                      
 
                         <div class="form-group col-md-6">
                             <label class="radio-inline custom-radio nowrap font-bold">
-                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false;entity.LSCFixedDays=0;salaryCalculatedOn(entity.salaryCalOn)" ng-model="entity.salaryCalOn" value="1" >
-                            <span>{{page.pageinfo.fields.LSCTotalDayInCycle.text}}</span>
-                        </label>
+                                <input type="radio" name="salaryCalculatedOn" ng-click="fixedDays=false;entity.LSCFixedDays=0;salaryCalculatedOn(entity.salaryCalOn)"
+                                    ng-model="entity.salaryCalOn" value="1">
+                                <span>{{page.pageinfo.fields.LSCTotalDayInCycle.text}}</span>
+                            </label>
                             <label class="radio-inline custom-radio nowrap font-bold">
-                            <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false;entity.LSCFixedDays=0;salaryCalculatedOn(entity.salaryCalOn)" ng-model="entity.salaryCalOn" value="2" >
-                            <span>{{page.pageinfo.fields.LSCTotalWorkingDay.text}}</span>
-                        </label>
+                                <input type="radio" name="salaryCalculatedOn" ng-click="fixedDays=false;entity.LSCFixedDays=0;salaryCalculatedOn(entity.salaryCalOn)"
+                                    ng-model="entity.salaryCalOn" value="2">
+                                <span>{{page.pageinfo.fields.LSCTotalWorkingDay.text}}</span>
+                            </label>
                             <label class="radio-inline custom-radio nowrap font-bold">
-                            <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=true;entity.LSCFixedDays=0;salaryCalculatedOn(entity.salaryCalOn)" ng-model="entity.salaryCalOn" value="3">
-                            <span>{{page.pageinfo.fields.LSCFixDay.text}}</span>
-                        </label>
+                                <input type="radio" name="salaryCalculatedOn" ng-click="fixedDays=true;entity.LSCFixedDays=0;salaryCalculatedOn(entity.salaryCalOn)"
+                                    ng-model="entity.salaryCalOn" value="3">
+                                <span>{{page.pageinfo.fields.LSCFixDay.text}}</span>
+                            </label>
                         </div>
                         <div class="form-group col-md-3" ng-show="fixedDays">
                             <label for="inputPassword3">{{page.pageinfo.fields.LSCFixedDays.text}}</label>

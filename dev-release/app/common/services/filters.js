@@ -16,6 +16,7 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
         var i = 0, len = list.length;
         for (; i < len; i++) {
             if (list[i][propName] == value) {
+                list[i].index = i;
                 result.push(list[i]);
             }
         }
@@ -65,6 +66,8 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
                     return map[i][valueField];
                 }
             }
+
+            
         }
         return '';
     };
@@ -78,6 +81,7 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
                 valueReturn += input[i][valueField] + ', ';
             }
             if (valueReturn.length > 2) {
+            
                 valueReturn = valueReturn.substr(0, valueReturn.length - 1)
             }
 
@@ -138,4 +142,25 @@ angular.module('BlurAdmin.common').filter('findObj', function () {
                 return value;
             };
         }
-    });
+    }).filter('translate', function ($rootScope) {
+        return function (input) {
+            //console.log($rootScope.user.rp)
+            var i = 0, len = $rootScope.user.rp.length;
+            for (; i < len; i++) {
+                if ($rootScope.user.rp[i]['ResourceKey'] == input) {
+                    return $rootScope.user.rp[i].ResourceText;
+                }
+            }
+            return input
+        }
+    }).filter('range', function() {
+        return function(input, total) {
+          total = parseInt(total);
+      
+          for (var i=0; i<total; i++) {
+            input.push(i);
+          }
+      
+          return input;
+        };
+    })

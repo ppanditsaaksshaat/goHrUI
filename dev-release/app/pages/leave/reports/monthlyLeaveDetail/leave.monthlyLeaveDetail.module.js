@@ -16,7 +16,7 @@
       .state('leave.reports.monthlyLeaveDetail', {
         url: '/monthlyLeaveDetail',
         // abstract: true,
-        templateUrl: 'app/pages/leave/reports/monthlyLeaveDetail/leave.monthlyLeaveDetail.html?v=1',
+        templateUrl: 'app/pages/leave/reports/monthlyLeaveDetail/leave.monthlyLeaveDetail.html',
         controller: "monthlyLeaveDetailController",
         controllerAs: "payCtrl",
         title: 'Monthly Leave Detail',

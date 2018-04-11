@@ -1,10 +1,340 @@
 <div ng-show="attVerifyCtrl.showVerifyAttendance">
-
-   
     <grid-box ng-model="page">
     </grid-box>
 </div>
-<div ng-hide="attVerifyCtrl.showVerifyAttendance" width=100%>
+<div ng-show="attVerifyCtrl.showVerifyAttendances" width=100%>
     <grid-box ng-model="editPage">
     </grid-box>
+</div>
+
+
+
+
+<div id="empVeriDetail" ng-show="attVerifyCtrl.showEmpVerifyDetail" class="panel panel-default bootstrap-panel xmedium-panel">
+    <div class="panel-heading clearfix">
+
+
+        <div class="row">
+            <div class="col-md-9">
+                Attendance Detail of
+                <b>{{emp.EmpName}}</b> for the month of
+                <b> {{emp.Month}} - {{emp.Year}}</b>
+
+            </div>
+            <div class="col-md-3">
+
+                <!-- <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
+
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="attVerifyCtrl.closeVerify()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Close</button>
+
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="attVerifyCtrl.saveVerify()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Save</button>
+
+
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+
+        <!-- <table class="table" style="width:50%">
+            <tbody>
+                <tr>
+                    <td>Total Days</td>
+                    <td>31</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Present DAYYYYYY Days</td>
+                    <td>24</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+            </tbody>
+        </table> -->
+        <table class="table" style="width:70%">
+            <tbody>
+                <tr>
+
+
+                    <td style="text-align: left">{{page.pageinfo.fields.TotalDays.text}} </td>
+                    <td> {{emp.Org_TotalDays}}</td>
+                    <td>
+                        <input class="form-control" readonly="true" ng-model="newEmp.TotalDays" type="number" name="lname">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left">{{page.pageinfo.fields.TotalPresentDays.text}} </td>
+                    <td> {{emp.Org_TotalPresentDays}}</td>
+                    <td>
+                        <input class="form-control" ng-model="newEmp.TotalPresentDays" ng-change="presentDays()" type="number" name="lname">
+                    </td>
+                </tr>
+                <tr>
+
+                    <td style="text-align: left">{{page.pageinfo.fields.TotalWeekoff.text}} </td>
+
+                    <td>
+                        {{emp.Org_TotalWeekoff}}
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newEmp.TotalWeekoff" type="number" name="lname">
+                    </td>
+                </tr>
+                <tr>
+
+                    <td style="text-align: left">{{page.pageinfo.fields.TotalHolidays.text}} </td>
+
+                    <td>
+                        {{emp.Org_TotalHolidays}}
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newEmp.TotalHolidays" type="number" name="lname">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left">
+                        <!-- <label ng-bind="page.pageinfo.fields.AbsentDays.text"></label> -->
+                        {{page.pageinfo.fields.AbsentDays.text}}
+                    </td>
+                    <td>
+                        {{emp.Org_AbsentDays}}
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newEmp.AbsentDays" ng-change="absentDays()" type="number" name="lname">
+                    </td>
+                </tr>
+                <tr>
+
+                    <td style="text-align: left">{{page.pageinfo.fields.TotalLeaves.text}} </td>
+
+                    <td>
+                        {{emp.Org_TotalLeaves}}
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newEmp.TotalLeaves" ng-change="leaveDays()" type="number" name="lname">
+                    </td>
+                </tr>
+                <tr>
+
+                    <td style="text-align: left">{{page.pageinfo.fields.TotalLWP.text}} </td>
+
+                    <td>
+                        {{emp.Org_TotalLWP}}
+                    </td>
+                    <td>
+                        <input  class="form-control" ng-model="newEmp.TotalLWP" type="number" name="lname">
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td style="text-align: left">
+                        Total Late Count
+                    </td>
+                    <td>
+                        {{emp.TotalLateCount}}
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newEmp.TotalLateCount" ng-click="lateDays()" type="number" name="lname">
+                    </td>
+                </tr> -->
+                <tr>
+
+                    <td style="text-align: left">{{page.pageinfo.fields.DeductableLateCount.text}} </td>
+
+                    <td>
+                        {{emp.Org_DeductableLateCount}}
+                    </td>
+                    <td>
+                        <input ng-model="newEmp.DeductableLateCount" class="form-control" type="number" name="lname">
+                    </td>
+                </tr>
+                <!-- <tr >
+                        <td  >
+                            Late Days
+                        </td>
+                        <td >
+                            {{emp.DeductableLateCount}}
+                        </td>
+                        <td >
+                            <input  type="number" name="lname">
+                        </td>
+                    </tr> -->
+                <tr>
+
+                    <td style="text-align: left">{{page.pageinfo.fields.TotalDeductableDays.text}} </td>
+
+                    <td>
+                        {{emp.Org_TotalDeductableDays }}
+                    </td>
+                    <td>
+                        <!-- <span class="form-control" ng-model="newEmp.TotalDeductableDays"></span> -->
+                        <input class="form-control" ng-model="newEmp.TotalDeductableDays" type="number" name="lname">
+                    </td>
+                </tr>
+                <tr>
+
+                    <td style="text-align: left">{{page.pageinfo.fields.TotalSalaryDays.text}} </td>
+
+                    <td>
+                        {{emp.Org_TotalSalaryDays }}
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newEmp.TotalSalaryDays" type="number" name="lname">
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td style="text-align: left">Carry-Forward </td>
+
+                    <td>
+                        <input class="form-control" ng-model="newEmp.CarryForwardNextMonth" ng-change="carryForwardNextMonth()" type="number" name="lname">
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td style="text-align: left">Remark </td>
+
+
+                    <td>
+                        <input class="form-control" ng-model="newEmp.AMSRemark" type="text" name="lname">
+                    </td>
+                </tr>
+                <br>
+                <tr>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-info btn-lg" ng-click="attVerifyCtrl.saveVerify()">Verify</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="attVerifyCtrl.closeVerify()">Close</button>
+
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+<div id="empVeriDetail" ng-show="attVerifyCtrl.showApprovedEmployee" class="panel panel-default bootstrap-panel large-panel">
+
+    <div class="panel-heading clearfix">
+
+
+        <div class="row">
+            <div class="col-md-9">
+                Attendance Approved Detail
+            </div>
+            <div class="col-md-3">
+
+                <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
+
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="attVerifyCtrl.closeVerify()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Close</button>
+
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="approvedData()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Approved</button>
+
+                        <!-- <button type="button" class="btn btn-info btn-lg" ng-click="attVerifyCtrl.saveVerify()">Verify</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="attVerifyCtrl.closeVerify()">Close</button> -->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <td>
+                        <label ng-bind="page.pageinfo.fields.EmpName.text"></label>
+                        <!-- {{page.pageinfo.fields.EmpName.text}} -->
+                    </td>
+                    <td>
+                        <label ng-bind="page.pageinfo.fields.TotalDays.text"></label>
+                        <!-- {{page.pageinfo.fields.TotalDays.text}}</td> -->
+                        <td>
+                            <label ng-bind="page.pageinfo.fields.TotalPresentDays.text"></label>
+                            <!-- {{page.pageinfo.fields.TotalPresentDays.text}} -->
+                        </td>
+                        <td>
+                            <label ng-bind="page.pageinfo.fields.TotalWeekoff.text"></label>
+                            <!-- {{page.pageinfo.fields.TotalWeekoff.text}} -->
+                        </td>
+                        <td>
+                            <label ng-bind="page.pageinfo.fields.TotalHolidays.text"></label>
+                            <!-- {{page.pageinfo.fields.TotalHolidays.text}} -->
+                        </td>
+                        <td>
+                            <label ng-bind="page.pageinfo.fields.AbsentDays.text"></label>
+                            <!-- {{page.pageinfo.fields.AbsentDays.text}} -->
+                        </td>
+                        <td>
+                            <label ng-bind="page.pageinfo.fields.TotalLeaves.text"></label>
+                            <!-- {{page.pageinfo.fields.TotalLeaves.text}} -->
+                        </td>
+                        <td>
+                            <label ng-bind="page.pageinfo.fields.TotalSalaryDays.text"></label>
+                            <!-- {{page.pageinfo.fields.TotalSalaryDays.text}} -->
+                        </td>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat-start="aprrovedEmp in selectedEmpData">
+
+                    <td style="text-align: left; color:brown">{{aprrovedEmp.EmpName}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.TotalDays}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.TotalPresentDays}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.TotalWeekoff}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.TotalHolidays}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.AbsentDays}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.TotalLeaves}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.TotalSalaryDays}}</td>
+                </tr>
+                <tr ng-repeat-end>
+                    <td style="text-align: left">{{aprrovedEmp.EmpName}}</td>
+                    <!-- <h3 class="with-line "></h3> -->
+                    <td style="text-align: left">{{aprrovedEmp.Org_TotalDays}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.Org_TotalPresentDays}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.Org_TotalWeekoff}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.Org_TotalHolidays}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.Org_AbsentDays}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.Org_TotalLeaves}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.Org_TotalSalaryDays}}</td>
+                </tr>
+
+
+            </tbody>
+
+
+
+            <tr>
+                <td style="text-align: left"> Remark </td>
+                <td>
+                    <input class="form-control" type="text" ng-model="AMSApprovedRemark"> </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>Status
+                        <span style="color:red">*</label>
+                </td>
+                <td>
+                    <select class="form-control" ng-model="StatusId" ng-options="status.value as status.name for status in monthlySummaryResultData.pageinfo.statuslist"></select>
+
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
 </div>

@@ -1,0 +1,301 @@
+<div ng-hide="roasterPlanPage">
+    <grid-box ng-model="page"></grid-box>
+</div>
+<div ng-show="roasterPlanPage">
+    <form name="editForm" ng-submit="saveRosterPlan(entity)" novalidate>
+        <div id="editForm" class="panel panel-default bootstrap-panel xmedium-panel" ng-show="roasterPlanPage">
+            <edit-panel-head page="page" page-title="page.pageinfo.tagline" show-save="editForm.untouch" reset-form="resetForm(editForm)"
+                clear-form="clearForm(editForm)" condition="true" show-list="false" show-close="true" close-form="closeForm(editForm)"></edit-panel-head>
+            <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RPPlanName.text"></label>
+                                <div>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.RPPlanName" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RPStartDay.text"></label>
+                                <div>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.RPStartDay" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RPDurationForEachShift.text"></label>
+                                <div>
+                                    <!-- <field-box page="page" ng-column="page.pageinfo.fields.RPDurationForEachShift" ng-entity="entity" form="editForm"></field-box> -->
+                                    <select ng-model="entity.RPDurationForEachShift" ng-options="duration.Id as duration.Name for duration in durationForEachShift"
+                                        class="form-control"></select>
+                                    <!-- <select class="form-control" ng-model="entity.RPDurationForEachShift" ng-options="duration in [] | range:7"></select> -->
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RPRecurringWeek.text"></label>
+                                <div>
+                                    <select ng-model="entity.RPRecurringWeek" ng-options="rec.Id as rec.Name for rec in recurring" class="form-control"></select>
+                                    <!-- <field-box page="page" ng-column="page.pageinfo.fields.RPRecurringWeek" ng-entity="entity" form="editForm"></field-box> -->
+                                    <!-- <select class="form-control" ng-model="entity.RPRecurringWeek" ng-options="recurring in [] | range:5"></select> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RPWEF.text"></label>
+                                <div>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.RPWEF" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RPWET.text"></label>
+                                <div>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.RPWET" ng-entity="entity" form="editForm"></field-box>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RPDeptId.text"></label>
+                                <div>
+                                    <field-box page="page" ng-column="page.pageinfo.fields.RPDeptId" ng-entity="entity" form="editForm" fb-change="onChangeDepartment()"></field-box>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label ng-bind="page.pageinfo.fields.RPIsDay.text"></label>
+                                <div>
+                                    <select ng-model="entity.RPIsDay" ng-options="day.Id as day.Name for day in dayAndWeekWise" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div ng-repeat="weekOffSet in weekOffSetList" class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <button id="{{$index}}" type="button" ng-click="addEmployee(weekOffSet)" class="btn btn-primary">Add Employee</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 well scrollbar force-overflow">
+                                    <label>{{weekOffSet.WOSName}}</label>
+                                    <ul class="emp" ng-repeat="emp in weekOffSet.selectedEmp">
+                                       
+                                        <li>{{emp.EmpName}}</li>
+                                    </ul>
+                                </div>
+                                <div ng-repeat="recurring in [] | range:entity.RPRecurringWeek" class="col-md-2">
+                                    <div class="header">
+                                        <ul class="tile first" ng-repeat="week in [] | range:entity.RPDurationForEachShift">
+                                            <li ng-if="week==0">Mo</li>
+                                            <li ng-if="week==1">Tu</li>
+                                            <li ng-if="week==2">We</li>
+                                            <li ng-if="week==3">Th</li>
+                                            <li ng-if="week==4">Fr</li>
+                                            <li ng-if="week==5">Sa</li>
+                                            <li ng-if="week==6">Su</li>
+                                        </ul>
+                                    </div>
+                                    <div class="firstweekstart">
+                                        <span>W</span>
+                                    </div>
+                                    <div class="weekfirstafter">
+                                        <span style="color:white">{{weekOffSet[recurring].Name}}</span>
+                                    </div>
+
+                                    <div>
+                                        <button type="button" ng-click="addShift(recurring,weekOffSet)">Add Shift</a>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-2 well scrollbar force-overflow">
+                                    <ul ng-repeat="viewEmp in viewEmpList  | filter:{JDDeptId:entity.RPDeptId}">
+                                        <li class="">{{viewEmp.EmpName}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="main">
+                            <div style="float:left">
+                                <div ng-repeat="weekOffSet in weekOffSetList" class="row">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <button id="{{$index}}" type="button" ng-click="saveEmployee(weekOffSet)" class="btn btn-primary">Add Employee</button>
+                                        </div>
+                                    </div>
+                                    <div class="leftside">
+                                        <span>Monday Wk</span>
+                                        <ul class="emp" ng-repeat="emp in weekOffSet.selectedEmp">
+                                            <li>{{emp.EmpName}}</li>
+                                           
+                                        </ul>
+                                    </div>
+                                    <div class="content_body" ng-repeat="recurring in [] | range:entity.RPDRecurringWeek">
+                                        <div class="header">
+                                            <ul class="tile first" >
+                                                <li>Mo</li>
+                                                <li>Tu</li>
+                                                <li>We</li>
+                                                <li>Th</li>
+                                                <li>Fr</li>
+                                                <li>St</li>
+                                                <li>Su</li>
+                                            </ul>                                      
+                                        </div>
+                                        <div class="firstweekstart">
+                                            <span>W</span>
+                                        </div>
+                                        <div class="weekfirstafter">
+                                            <span style="color:white">09:30 to 18:00</span>
+                                        </div>
+                                        <div class="secondweekstart">
+                                            <span>W</span>
+                                        </div>
+                                        <div class="weeksecondafter">
+                                            <span style="color:white">08:30 to 15:00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rightside" style="float:left">
+                                <span>Monday Wk</span>
+                            
+                                <ul ng-repeat="viewEmp in viewEmpList  | filter:{JDDeptId:entity.RPDDepartmentId}">
+                                    <li>{{viewEmp.EmpName}}</li>
+                                </ul>
+                            </div>
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<style>
+    .main {
+        width: 100%;
+        min-height: 200px;
+    }
+
+    .header {
+        min-height: 10px;
+    }
+
+    .main .leftside {
+        padding-top: 15px;
+        padding-left: 2px;
+        float: left;
+        width: 30%;
+        min-height: 200px;
+        background-color: #FF80AB;
+        text-align: center;
+
+    }
+
+    .main .content_body {
+        float: left;
+        width: 70%;
+        min-height: 100px;
+        background-color: white;
+
+    }
+
+    .main .rightside {
+        padding-top: 15px;
+        float: left;
+        width: 14%;
+        min-height: 200px;
+        background-color: #C5CAE9;
+        text-align: center;
+        list-style: none;
+    }
+
+    .tile {
+        display: inline;
+        padding: 0px;
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .tile li {
+        display: inline-block;
+        width: 12%;
+        min-height: 12px;
+        padding: 0px 4px 0px 4px;
+        font-weight: bold;
+    }
+
+    .first {
+        background-color: #FFB74D;
+    }
+
+    .main .second {
+        background-color: #29B6F6;
+    }
+
+    .main .emp {
+        list-style: none;
+        text-align: center;
+    }
+
+    .firstweekstart {
+        padding-top: 80px;
+        float: left;
+        width: 15%;
+        min-height: 185px;
+        background-color: yellow;
+        text-align: center;
+        border: solid 1px red;
+        border-radius: 5px
+    }
+
+    .weekfirstafter {
+        padding-top: 80px;
+        float: left;
+        width: 80%;
+        min-height: 185px;
+        background-color: #B71C1C;
+        text-align: center;
+        border-radius: 20px
+    }
+
+    .main .secondweekstart {
+        padding-top: 80px;
+        float: left;
+        width: 4%;
+        min-height: 185px;
+        background-color: yellow;
+        text-align: center;
+        border: solid 1px red;
+        border-radius: 5px
+    }
+
+    .main .weeksecondafter {
+        padding-top: 80px;
+        float: left;
+        width: 19%;
+        min-height: 185px;
+        background-color: #AED581;
+        text-align: center;
+        border-radius: 20px
+    }
+
+    .scrollbar {
+        background-color: #F5F5F5;
+        float: left;
+        height: 100px;
+        overflow-y: scroll;
+    }
+
+    .force-overflow {
+        min-height: 220px;
+    }
+</style>

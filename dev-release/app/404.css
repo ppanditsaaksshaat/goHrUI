@@ -1,3 +1,9 @@
+.payband.ui-grid-row, .payband .ui-grid-cell {
+  border-top: 0;
+  border-bottom: 1px solid #dddddd !important;
+  border-left: 1px solid #dddddd !important;
+  border-right: 0; }
+
 .GRID-CELL-BIG-FONT {
   font-size: 20px; }
 

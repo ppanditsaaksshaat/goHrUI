@@ -167,6 +167,9 @@
                         $scope.page = _getLocalPageObject(vm.pageId)
                         console.log($scope.page);
                     }
+                    if (vm.pageId == 'register') {
+                        vm.templateUrlPath = "app/pages/organization/employees/templates/user/user-view.html";
+                    }
                 }
 
                 else {
@@ -228,6 +231,7 @@
             $scope.page.pageIsLoading = false;
             var linkFieldName;
             if (result.pageinfo.pageid == 114) {
+
                 console.log(result.pageinfo.selects)
                 console.log(result.pageinfo.selects.BRId)
                 if (result.pageinfo.selects.LocationId.length == 1) {
@@ -268,6 +272,7 @@
                 if (result.pageinfo.pageid == 35 || result.pageinfo.pageid == 36) {
                     var emgTableId = 57, contTableId = 45, personalTableId = 43;
                     var searchList = [];
+                    $scope.entity.PDAnniversaryDate = moment().format('DD/MMMM/YYYY');
                     if (result.pageinfo.pageid == 35) {
                         var searchFields = {
                             field: linkFieldName,
@@ -347,6 +352,9 @@
                 case 448://benefit
                     linkFieldName = 'EBDEmpId'
                     break;
+                case 481://roster
+                    linkFieldName = 'RODEmpId'
+                    break;
 
             }
 
@@ -375,9 +383,12 @@
                 viewRecord: null,
                 deleteRecord: null,
                 uploadRecord: null,
-                buttonPermission:true
+                buttonPermission: true
             }
 
+            if (pageId == 438) {
+                pageObject.boxOptions.afterCellEdit = _afteraCellEdit;
+            }
             if (pageId == 448) {
                 pageObject.boxOptions.showFilter = false;
                 pageObject.boxOptions.pageResult = _pageResultForBenefit;
@@ -397,7 +408,9 @@
 
             return pageObject;
         }
-       
+        function _afteraCellEdit() {
+            alert("hello")
+        }
         //Resignation Edit
         function _editRecord(row) {
             console.log(row.entity)
@@ -633,7 +646,7 @@
                     // vm.entity.JDDesgId = 10;
                     vm.entity.JDSUId = vm.entity.JDSubUnitID;
                     if (vm.entity.JDIsHasLeft) {
-                        vm.entity.JDHasLeftDate = moment();
+                        // vm.entity.JDHasLeftDate = moment();
                     }
                     if (vm.entity.JDIsOT == false) {
                         vm.entity.SingleOT = false;
@@ -673,6 +686,7 @@
 
                     if (vm.entity.PdId === undefined) {
                         vm.entity.PdEmpId = vm.empPKId;
+
                         _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
                     }
                     else {
@@ -712,6 +726,8 @@
 
                     if (vm.empContactDetail.CDId === undefined) {
                         vm.empContactDetail.CDEmpId = vm.empPKId;
+
+                        console.log(vm.empContactDetai);
                         _formSave(vm.empContactDetail, vm.pageIds.contactPageId, 'create', vm.oldempContactDetail, editForm, true);
                     }
                     else {
@@ -730,9 +746,16 @@
         function _saveUserSuccessResult(result) {
             console.log(result);
             console.log(result[0].UserId);
-            vm.entity.UserId = result[0].UserId;
-            console.log(vm.entity);
-            _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
+
+            if (result != "NoDataFound") {
+                vm.entity.UserId = result[0].UserId;
+                console.log(vm.entity);
+                _formSave(vm.entity, vm.pageId, 'create', vm.oldEntity, editForm, true);
+            }
+            else {
+                $scope.showMsg('warning', 'Joining date does not exist.');
+            }
+
         }
 
         function _saveUserErrorResult(error) {
@@ -900,7 +923,7 @@
                 vm.empContactDetail.CDPAddLine2 = vm.empContactDetail.CDAddLine2;
                 vm.empContactDetail.PCountryId = vm.empContactDetail.CountryId;
                 vm.empContactDetail.PStateId = vm.empContactDetail.StateId;
-                vm.empContactDetail.PCityId = vm.empContactDetail.CityId;
+                vm.empContactDetail.PCityId = vm.empContactDetail.CDCityId;
                 vm.empContactDetail.CDPPincode = vm.empContactDetail.CDPincode;
                 vm.empContactDetail.CDPAreaId = vm.empContactDetail.CDAreaId;
             }

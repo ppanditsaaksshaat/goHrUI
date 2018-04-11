@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 <grid-box ng-model="page" ng-hide="page.showEditForm"></grid-box>
-<form name="editForm" ng-submit="saveForm(editForm)" novalidate>
+<form name="editForm" ng-submit="saveForm(entity,editForm)" novalidate>
     <div id="editForm" class="panel panel-default bootstrap-panel xmedium-panel" ng-show="page.showEditForm">
         <edit-panel-head page="page" page-title="page.pageinfo.tagline" show-save="editForm.untouch" reset-form="resetForm(editForm)"
             clear-form="clearForm(editForm)" condition="true" show-list="false" show-close="true" close-form="closeForm(editForm)"></edit-panel-head>
@@ -33,15 +33,11 @@
                             </div>
 
                         </div>
-                        <!-- <div class="col-md-2">
-
-                            <label ng-bind="page.pageinfo.fields.PBGrossSalary.text"></label>
-                            <div>
-                                <field-box page="page" ng-column="page.pageinfo.fields.PBGrossSalary" ng-entity="entity" form="editForm" fb-change="onGrossChange()"></field-box>
-                            </div>
+                        <div class="col-md-2" ng-show="!addRecord">
+                            <button type="button" class="btn btn-primary" ng-click="Reload()">ReLoad</button>
 
                         </div>
-                        <div class="col-md-2">
+                        <!--  <div class="col-md-2">
 
                             <label ng-bind="page.pageinfo.fields.PBBasicPerctange.text"></label>
                             <div>
@@ -57,12 +53,12 @@
                                 <field-box page="page" ng-column="page.pageinfo.fields.PBPaybandTemplateId" ng-entity="entity" form="editForm" fb-change="templateOnchange(entity.PBPaybandTemplateId)"></field-box>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <!-- <div class="col-md-3">
                             <label ng-bind="page.pageinfo.fields.PBBasedOn.text"></label>
                             <div>
                                 <field-box page="page" ng-column="page.pageinfo.fields.PBBasedOn" ng-entity="entity" form="editForm" fb-change="basedOnchange(entity.PBBasedOn)"></field-box>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-3">
                             <label ng-bind="page.pageinfo.fields.PBMinimumAmount.text"></label>
                             <div>
@@ -88,7 +84,8 @@
                                         <select ng-model="selectedOtherHead" ng-options="opt.name for opt in rulePage.pageinfo.fields.PBRSHId.options"></select>
                                     </div>
                                     <div class="pull-right">
-                                        <button ng-click="addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button>
+                                        <button ng-click="addTotal()" type="button" class="btn btn-danger btn-xs">
+                                            <i class="fa fa-calculator"></i> Calculate Diffrences</button>
                                     </div>
 
                                 </div>
@@ -101,7 +98,7 @@
 
 
                             <div id="djGridPay" ui-grid="payGridOptions" ui-grid-expandable ui-grid-auto-resize ui-grid-pagination ui-grid-selection
-                                ui-grid-pinning ui-grid-edit class="paybandgrid"></div>
+                                ui-grid-pinning ui-grid-edit class="paybandgrid payband"></div>
                         </div>
                         <div class="col-md-2">
                             <table class="table table-condensed table-striped">
@@ -174,6 +171,7 @@
         -ms-user-select: none;
         user-select: none;
     }
+
     /* Make sure the container doesn't shrink too small */
 
     .ui-select-container {

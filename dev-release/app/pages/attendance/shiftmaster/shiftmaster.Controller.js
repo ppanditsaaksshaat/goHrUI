@@ -31,8 +31,11 @@
     $scope.resetLunchDuration = _resetLunchDuration;
     $scope.isResetShifAndLunch = false;
     $scope.entity.SMCOffAllowed = 'true';
-
     $scope.hideNumberOfLeave = _hideNumberOfLeave;
+    $scope.cOffConverted = _cOffConverted;
+    $scope.validityLeaveAgCOff = _validityLeaveAgCOff;
+    $scope.calOnBasicOrGross = _calOnBasicOrGross;
+    $scope.calAfterLeaveAndOTMargin = _calAfterLeaveAndOTMargin;
 
     function _hideNumberOfLeave() {
       $scope.numberOfLV = false;
@@ -261,6 +264,34 @@
       vm.oldEntity = angular.copy(row.entity)
       $scope.entity = row.entity;
       $scope.isResetShifAndLunch = false;
+
+      if ($scope.entity.SMIsCompOffLeave) {
+        $scope.entity.compOffCash = "2";
+      }
+      else if ($scope.entity.SMIsCompOffCash) {
+        $scope.entity.compOffCash = "1";
+      }
+
+      if ($scope.entity.SMCompOffLeaveValidAsInDays) {
+        $scope.entity.cOffInDaySameMonth = "2";
+      }
+      else if ($scope.entity.SMCompOffLeaveValidAsEndOfSameMonth) {
+        $scope.entity.cOffInDaySameMonth = "1";
+      }
+
+      if ($scope.entity.SMIsOTCalculatedOnGrossSalary) {
+        $scope.entity.basicOrGross = "2";
+      }
+      else if ($scope.entity.SMIsOTCalculatedOnBasicSalary) {
+        $scope.entity.basicOrGross = "1";
+      }
+
+      if ($scope.entity.SMIsAllowOverTimeMargin) {
+        $scope.entity.allowOverTimeMargin = "2";
+      }
+      else if ($scope.entity.SMIsCalulatedAfterLeaveDuration) {
+        $scope.entity.allowOverTimeMargin = "1";
+      }
     }
 
     function _shiftDuration(entity) {
@@ -426,7 +457,7 @@
     // }
 
     function _saveForm() {
-      if (!_validateShiftForm()) {
+      if (_validateShiftForm()) {
         var newEntity = {};
 
 
@@ -478,24 +509,24 @@
           pageService.getCustomQuery(data, queryId).then(function (result) {
             console.log(result)
 
-            if (result != 'NoDataFound') {
-              angular.forEach($scope.groupList, function (group) {
-                angular.forEach(result, function (groupId) {
-                  if (groupId.SHGroupId == group.GMCId) {
-                    groupName += group.GMCName + ',';
-                    isNotDuplicateGroupId = false;
-                  }
-                  console.log($scope.groupList)
-                })
-                console.log('duplicate record exist' + groupName)
-              })
-            }
-            else {
-              console.log($scope.entity)
-              editFormService.saveForm(pageId, newEntity, vm.oldEntity,
-                $scope.entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
-                .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
-            }
+            // if (result != 'NoDataFound') {
+            //   angular.forEach($scope.groupList, function (group) {
+            //     angular.forEach(result, function (groupId) {
+            //       if (groupId.SHGroupId == group.GMCId) {
+            //         groupName += group.GMCName + ',';
+            //         isNotDuplicateGroupId = false;
+            //       }
+            //       console.log($scope.groupList)
+            //     })
+            //     console.log('duplicate record exist' + groupName)
+            //   })
+            // }
+            // else {
+            console.log($scope.entity)
+            editFormService.saveForm(pageId, newEntity, vm.oldEntity,
+              $scope.entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+              .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+            // }
             if (isNotDuplicateGroupId == false) {
               $scope.showMsg("warning", "duplicate record  " + groupName);
               $scope.entity.SMMinimumHourForHalfDay = $scope.halfDurationTime.format("HH:mm");
@@ -590,13 +621,14 @@
     function _validateShiftForm() {
       if ($scope.entity.SMMinimumHourForHalfDay == undefined || $scope.entity.SMMinimumHourForHalfDay == null || $scope.entity.SMMinimumHourForHalfDay == '') {
         $scope.showMsg("error", "Please Enter Minimum Hour For Half Day");
-        return true;
+        return false;
       }
       if ($scope.entity.SMMinimumHourForFullDay == undefined || $scope.entity.SMMinimumHourForFullDay == null || $scope.entity.SMMinimumHourForFullDay == '') {
         $scope.showMsg("error", "Please Enter Maximum Hour For Half Day");
-        return true;
+        return false;
       }
-      return false;
+
+      return true;
     }
 
     function _saveWizardFormSuccessResult(result) {
@@ -634,6 +666,56 @@
 
     function _closeForm(editForm) {
       $scope.showEditForm = false;
+    }
+
+    function _cOffConverted(compOffCash) {
+      if (compOffCash == "1") {
+        $scope.entity.SMIsCompOffCash = true;
+        $scope.entity.SMIsCompOffLeave = false;
+        $scope.entity.cOffInDaySameMonth = false;
+        entity.SMNumberOfLeaveForCompOffLeave = 0
+      }
+      else if (compOffCash == "2") {
+        $scope.entity.SMIsCompOffCash = false;
+        $scope.entity.SMIsCompOffLeave = true;
+        $scope.entity.cOffInDaySameMonth = false;
+        $scope.entity.SMNumberOfLeaveForCompOffLeave = 0;
+      }
+    }
+
+    function _validityLeaveAgCOff(cOffInDaySameMonth) {
+      if (cOffInDaySameMonth == "1") {
+        $scope.entity.SMCompOffLeaveValidAsEndOfSameMonth = true;
+        $scope.entity.SMCompOffLeaveValidAsInDays = false;
+        $scope.entity.SMNumberOfLeaveForCompOffLeave = 0
+      }
+      else if (cOffInDaySameMonth == "2") {
+        $scope.entity.SMCompOffLeaveValidAsEndOfSameMonth = false;
+        $scope.entity.SMCompOffLeaveValidAsInDays = true;
+      }
+    }
+
+    function _calOnBasicOrGross(basicOrGross) {
+      if (basicOrGross == 1) {
+        $scope.entity.SMIsOTCalculatedOnBasicSalary = true;
+        $scope.entity.SMIsOTCalculatedOnGrossSalary = false;
+      }
+      else if (basicOrGross == 2) {
+        $scope.entity.SMIsOTCalculatedOnBasicSalary = false;
+        $scope.entity.SMIsOTCalculatedOnGrossSalary = true;
+      }
+    }
+
+    function _calAfterLeaveAndOTMargin(allowOverTimeMargin) {
+      if ($scope.entity.allowOverTimeMargin == "1") {
+        $scope.entity.SMIsCalulatedAfterLeaveDuration = true;
+        $scope.entity.SMIsAllowOverTimeMargin = false;
+        $scope.entity.SHApplicableOverTimeAfterMinute = 0;
+      }
+      else if ($scope.entity.allowOverTimeMargin == "2") {
+        $scope.entity.SMIsCalulatedAfterLeaveDuration = false;
+        $scope.entity.SMIsAllowOverTimeMargin = true;
+      }
     }
   }
 

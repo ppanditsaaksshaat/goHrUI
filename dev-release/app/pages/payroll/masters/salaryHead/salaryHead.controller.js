@@ -43,7 +43,12 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      showDataOnLoad: true
+      showDataOnLoad: true,
+      pageResult: _pageResult
+    }
+
+    function _pageResult(result) {
+      console.log(result)
     }
     $scope.saveForm = _saveForm;
     $scope.closeForm = _closeForm;
@@ -57,19 +62,22 @@
       $scope.entity = {};
       $scope.oldEntity = {};
     }
+
     function _editRecord(row) {
+
       $scope.page.showCustomEditView = true;
       $scope.entity = row.entity;
       $scope.oldEntity = angular.copy(row.entity)
       console.log($scope.entity)
 
+      if ($scope.entity.SHIsTotal) {
+        $scope.entity.headType = "4";
+      }
       if ($scope.entity.SHIsForEmployer) {
         $scope.entity.headType = "3";
-      }
-      else if ($scope.entity.SHIsDeduction) {
+      } else if ($scope.entity.SHIsDeduction) {
         $scope.entity.headCat = "1";
-      }
-      else if (!$scope.entity.SHIsDeduction) {
+      } else if (!$scope.entity.SHIsDeduction) {
         $scope.entity.headType = "2";
       }
 
@@ -106,25 +114,40 @@
         $scope.entity.headCat = "15";
       else if ($scope.entity.SHIsBenefit)
         $scope.entity.headCat = "16";
+      else if ($scope.entity.SHIsTotalEarning)
+        $scope.entity.headCat = "17";
+      else if ($scope.entity.SHIsTotalDeduction)
+        $scope.entity.headCat = "18";
+      else if ($scope.entity.SHIsNetPay)
+        $scope.entity.headCat = "19";
+      else if ($scope.entity.SHIsRoundOff)
+        $scope.entity.headCat = "20";
+      else if ($scope.entity.SHIsTaxableSalary)
+        $scope.entity.headCat = "21";
     }
+
     function _closeForm(editForm) {
       $scope.page.showCustomEditView = false;
       $scope.entity = {};
     }
+
     function _resetForm(editForm) {
 
     }
+
     function _clearForm(editForm) {
 
     }
+
     function _validateForm(editForm) {
       return true;
     }
+
     function _saveForm(editForm) {
       $scope.currentForm = editForm;
       if (_validateForm(editForm)) {
         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
-          $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+            $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
           .then(_saveFormSuccess, _saveFormError)
       }
     }
@@ -135,6 +158,7 @@
       _closeForm($scope.currentForm);
 
     }
+
     function _saveFormError(err) {
       $scope.showMsg('error', 'Unable to save ' + $scope.page.pageinfo.tagline + ", Something went wrong.")
       console.log(err)
@@ -142,16 +166,22 @@
 
     function _changeHeadType(headType) {
       if (headType == "1") {
+        $scope.entity.SHIsTotal = false;
         $scope.entity.SHIsDeduction = true;
         $scope.entity.SHIsForEmployer = false;
-      }
-      else if (headType == "2") {
+      } else if (headType == "2") {
+        $scope.entity.SHIsTotal = false;
         $scope.entity.SHIsDeduction = false;
         $scope.entity.SHIsForEmployer = false;
-      }
-      else if (headType == "3") {
+      } else if (headType == "3") {
+        $scope.entity.SHIsTotal = false;
         $scope.entity.SHIsDeduction = false;
         $scope.entity.SHIsForEmployer = true;
+
+      } else if (headType == "4") {
+        $scope.entity.SHIsTotal = true;
+        $scope.entity.SHIsDeduction = false;
+        $scope.entity.SHIsForEmployer = false;
       }
     }
 
@@ -177,6 +207,12 @@
       $scope.entity.SHIsLeave = false;
       $scope.entity.SHIsAbsence = false;
       $scope.entity.SHIsSingleOT = false;
+      $scope.entity.SHIsTotalEarning = false;
+      $scope.entity.SHIsTotalDeduction = false;
+      $scope.entity.SHIsNetPay = false;
+      $scope.entity.SHIsRoundOff = false;
+      $scope.entity.SHIsTaxableSalary = false;
+      $scope.entity.SHIsBenefit = false;
 
       var catId = parseInt(headCat);
       switch (catId) {
@@ -224,6 +260,24 @@
           break;
         case 15:
           $scope.entity.SHIsSingleOT = true;
+          break;
+        case 16:
+          $scope.entity.SHIsBenefit = true;
+          break;
+        case 17:
+          $scope.entity.SHIsTotalEarning = true;
+          break;
+        case 18:
+          $scope.entity.SHIsTotalDeduction = true;
+          break;
+        case 19:
+          $scope.entity.SHIsNetPay = true;
+          break;
+        case 20:
+          $scope.entity.SHIsRoundOff = true;
+          break;
+        case 21:
+          $scope.entity.SHIsTaxableSalary = true;
           break;
         case 100:
           break;

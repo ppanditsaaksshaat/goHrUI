@@ -11,6 +11,7 @@
      'BlurAdmin.pages.leave.transaction.leavestatement',
      'BlurAdmin.pages.leave.transaction.leavetransactiondetail',
      'BlurAdmin.pages.leave.transaction.upload',
+     'BlurAdmin.pages.leave.transaction.leavecarryforward'
      
      
   ])

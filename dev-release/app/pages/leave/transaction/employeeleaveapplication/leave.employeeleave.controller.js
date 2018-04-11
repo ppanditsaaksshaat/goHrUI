@@ -32,16 +32,14 @@
             } else if ($scope.fromSlider.minValue == 2 && $scope.fromSlider.maxValue == 3) {
               $scope.entity.LEADFromHalfDayId = 1;
               labelText = 'Second Half'
-            }
-            else if ($scope.fromSlider.minValue == 1 && $scope.fromSlider.maxValue == 3) {
+            } else if ($scope.fromSlider.minValue == 1 && $scope.fromSlider.maxValue == 3) {
               $scope.entity.LEADFromHalfDayId = 2;
               labelText = 'Full day';
             }
             _appliedDays();
             return labelText;
 
-          }
-          else {
+          } else {
             return '';
           }
         }
@@ -67,16 +65,14 @@
             } else if ($scope.toSlider.minValue == 2 && $scope.toSlider.maxValue == 3) {
               $scope.entity.LEADToHalfDayId = 1;
               labelText = 'Second Half'
-            }
-            else if ($scope.toSlider.minValue == 1 && $scope.toSlider.maxValue == 3) {
+            } else if ($scope.toSlider.minValue == 1 && $scope.toSlider.maxValue == 3) {
               $scope.entity.LEADToHalfDayId = 2;
               labelText = 'Full day';
             }
             _appliedDays();
             return labelText;
 
-          }
-          else {
+          } else {
             return '';
           }
         }
@@ -141,7 +137,10 @@
     /** Grid Intialization */
     $scope.page = $scope.createPage();
     $scope.page.pageId = pageId;
-    $scope.page.orderByList = [{ column: 'LEADDateFrom', isDesc: false }]
+    $scope.page.orderByList = [{
+      column: 'LEADDateFrom',
+      isDesc: false
+    }]
     $scope.page.boxOptions = {
       selfLoading: true,
       showRefresh: true,
@@ -160,7 +159,15 @@
       updateRecord: null,
       viewRecord: _viewRecord,
       deleteRecord: _deleteForm,
-      customColumns: ((!$scope.user.profile.isAdmin && !$scope.user.profile.isManager) ? null : [{ text: 'Verify', type: 'a', name: 'Option', click: _leaveVerify, pin: true }]),
+      isVerifyButton: true,
+      verifyResult: _leaveVerify,
+      // customColumns: (((!$scope.user.profile.isAdmin && !$scope.user.profile.isManager) || !$scope.user.profile.isHeadEmployee) ? null : [{
+      //   text: 'Verify',
+      //   type: 'a',
+      //   name: 'Option',
+      //   click: _leaveVerify,
+      //   pin: true
+      // }]),
       pageResult: _pageResult,
       dataResult: _dataResult,
     }
@@ -168,7 +175,9 @@
 
     function _dataResult(result) {
       console.log(result);
+      console.log($scope.page)
     }
+
     function _pageResult(result) {
 
       angular.forEach(result.pageinfo.filters, function (filter) {
@@ -188,6 +197,8 @@
       })
 
     }
+
+ 
 
     /**Fetching  credit,debit and LWP leave for employee */
 
@@ -244,8 +255,7 @@
 
         // pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
 
-      }
-      else {
+      } else {
 
         $scope.isSavingLeave = true;
         $scope.showMsg("error", "Please contact admin to provide your Joining date")
@@ -273,26 +283,27 @@
           orderByList: []
         }
         pageService.getCustomQuery(data, queryId).then(_getLeaveDebitSuccessResult, _getLeaveDebitErrorResult)
-      }
-      else {
+      } else {
         vm.validateEmployee = false;
         _calculateDays();
       }
     }
+
     function _getCustomQueryErrorResult(err) {
       $scope.showMsg("error", err);
     }
-    function _getLeaveDebitSuccessResult(result) {
 
+    function _getLeaveDebitSuccessResult(result) {
+      console.log(result)
       if (result != "NoDataFound") {
         var balLeave = vm.appliedDays;
         $scope.leaveRuleList = result;
         _calculateDays();
-      }
-      else {
+      } else {
         $scope.showMsg('error', 'No Leave Rule Found.')
       }
     }
+
     function _getLeaveDebitErrorResult(err) {
       $scope.showMsg("error", err)
     }
@@ -322,8 +333,7 @@
 
             if (vm.appliedDays < leaveRule.LRCDRMinDays) {
               leave.isDisabled = true;
-            }
-            else if (leaveRule.LRCDRMinDays <= balLeave && leaveRule.LRCDrMaxDays >= balLeave) {
+            } else if (leaveRule.LRCDRMinDays <= balLeave && leaveRule.LRCDrMaxDays >= balLeave) {
               //check available leave 
               if (leave.LeaveBalance <= balLeave) {
                 var halfDay = (leave.LeaveBalance % 1);
@@ -331,15 +341,13 @@
                 leave.halfDay = halfDay;
 
                 balLeave = balLeave - leave.LeaveBalance;
-              }
-              else if (leave.LeaveBalance > balLeave) {
+              } else if (leave.LeaveBalance > balLeave) {
                 var halfDay = (balLeave % 1);
                 leave.leaveDr = balLeave - halfDay;
                 leave.halfDay = halfDay;
                 balLeave = 0;
               }
-            }
-            else if (leaveRule.LRCDRMinDays > balLeave) {
+            } else if (leaveRule.LRCDRMinDays > balLeave) {
               // if (leave.LeaveBalance <= balLeave) {
               //   leave.leaveDr = leave.LeaveBalance;
               //   balLeave = balLeave - leave.LeaveBalance;
@@ -348,15 +356,13 @@
               //   leave.leaveDr = balLeave;
               //   balLeave = 0;
               // }
-            }
-            else if (leaveRule.LRCDrMaxDays < balLeave) {
+            } else if (leaveRule.LRCDrMaxDays < balLeave) {
               if (leave.LeaveBalance <= leaveRule.LRCDrMaxDays) {
                 var halfDay = (leave.LeaveBalance % 1);
                 leave.leaveDr = leave.LeaveBalance - halfDay;
                 leave.halfDay = halfDay;
                 balLeave = balLeave - leave.LeaveBalance;
-              }
-              else if (leave.LeaveBalance > balLeave) {
+              } else if (leave.LeaveBalance > balLeave) {
                 var halfDay = (leave.maxDays % 1);
                 leave.leaveDr = leave.maxDays - halfDay;
                 leave.halfDay = halfDay;
@@ -378,8 +384,7 @@
             var maxCounter = 0;
             if (leave.LeaveBalance < leaveRule.LRCDrMaxDays) {
               maxCounter = leave.LeaveBalance;
-            }
-            else if (leave.LeaveBalance >= leaveRule.LRCDrMaxDays) {
+            } else if (leave.LeaveBalance >= leaveRule.LRCDrMaxDays) {
               maxCounter = leaveRule.LRCDrMaxDays;
             }
 
@@ -390,13 +395,21 @@
 
             for (var i = 0; i <= maxCounter; i++) {
               if (i == 0 || i >= leaveRule.LRCDRMinDays) {
-                optList.push({ id: i, name: i.toString() + ' Days' })
+                optList.push({
+                  id: i,
+                  name: i.toString() + ' Days'
+                })
               }
             }
-          }
-          else {
-            optList.push({ id: 0, name: '0 Day' })
-            optList.push({ id: 1, name: '1 Day' })
+          } else {
+            optList.push({
+              id: 0,
+              name: '0 Day'
+            })
+            optList.push({
+              id: 1,
+              name: '1 Day'
+            })
           }
         }
         leave.days = optList;
@@ -405,7 +418,13 @@
       })
       //compairing and updating unpaid leave
       var unpaidLeave = $filter('findObj')(leaveBalList, true, 'isUnpaid')
-      var unpaid = { leaveDr: balLeave, LeaveBalance: 0, LTName: 'LWP', isUnpaid: true, halfDay: 0 }
+      var unpaid = {
+        leaveDr: balLeave,
+        LeaveBalance: 0,
+        LTName: 'LWP',
+        isUnpaid: true,
+        halfDay: 0
+      }
       if (unpaidLeave != null) {
         leaveBalList.splice(leaveBalList.length - 1, 1)
       }
@@ -492,58 +511,61 @@
         false, data);
       tableData.then(_fetchPendingLeaveSuccess, _fetchPendingLeaveError)
     }
+
     function _fetchPendingLeaveSuccess(result) {
+      /*
+            //ADD CONDITION FOR NODATAFOUND
+            if (result != "NoDataFound") {
 
-      //ADD CONDITION FOR NODATAFOUND
-      if (result != "NoDataFound") {
+              $scope.pendingLeave = false;
+              $scope.prevLeaveList = [];
 
-        $scope.pendingLeave = false;
-        $scope.prevLeaveList = [];
-
-        for (var i = 0; i < $scope.showLeave.length; i++) {
-          $scope.showLeave[i].LeaveBalance = $scope.showLeave[i].ActualBalance;
-          $scope.showLeave[i].unClearBal = 0;
-        }
-
-        angular.forEach(result, function (leave) {
-          var applyLeave = 0;
-          var prev = {
-            status: leave.ApplicationStatus,
-            appDate: moment(leave.CreatedOn).format('DD-MMM-YYYY'),
-            from: moment(leave.LEADDateFrom).format('DD-MMM-YYYY'),
-            to: moment(leave.LEADDateTo).format('DD-MMM-YYYY'),
-            days: leave.TotalLeaveDays123,
-            distribution: leave.transation
-          }
-          $scope.prevLeaveList.push(prev);
-          var transaction = leave.LEADTransation.split(',')
-
-          angular.forEach(transaction, function (applyLeave) {
-            var leaveType = applyLeave.split("|");
-            angular.forEach($scope.showLeave, function (crLeave) {
-              if (parseInt(leaveType[0]) == parseInt(crLeave.LRCLeaveTypeId)) {
-                crLeave.unClearBal = (crLeave.unClearBal == undefined ? 0 : crLeave.unClearBal) + parseInt(leaveType[1])
-                crLeave.LeaveBalance = crLeave.LeaveBalance - parseInt(leaveType[1]);
+              for (var i = 0; i < $scope.showLeave.length; i++) {
+                $scope.showLeave[i].LeaveBalance = $scope.showLeave[i].ActualBalance;
+                $scope.showLeave[i].unClearBal = 0;
               }
-              if (parseInt(leaveType[0]) == 0) {
-                if (crLeave.LTName == "LWP") {
-                  crLeave.unClearBal = parseInt(leaveType[1]);
+
+              angular.forEach(result, function (leave) {
+                var applyLeave = 0;
+                var prev = {
+                  status: leave.ApplicationStatus,
+                  appDate: moment(leave.CreatedOn).format('DD-MMM-YYYY'),
+                  from: moment(leave.LEADDateFrom).format('DD-MMM-YYYY'),
+                  to: moment(leave.LEADDateTo).format('DD-MMM-YYYY'),
+                  days: leave.TotalLeaveDays123,
+                  distribution: leave.transation
                 }
-              }
-            })
-          })
+                $scope.prevLeaveList.push(prev);
+                var transaction = leave.LEADTransation.split(',')
 
-          // if (leave.IsPending) {
-          //   var leaveDest = leave.transation.splice(',')
-          // }
+                angular.forEach(transaction, function (applyLeave) {
+                  var leaveType = applyLeave.split("|");
+                  angular.forEach($scope.showLeave, function (crLeave) {
+                    if (parseInt(leaveType[0]) == parseInt(crLeave.LRCLeaveTypeId)) {
+                      crLeave.unClearBal = (crLeave.unClearBal == undefined ? 0 : crLeave.unClearBal) + parseInt(leaveType[1])
+                      crLeave.LeaveBalance = crLeave.LeaveBalance - parseInt(leaveType[1]);
+                    }
+                    if (parseInt(leaveType[0]) == 0) {
+                      if (crLeave.LTName == "LWP") {
+                        crLeave.unClearBal = parseInt(leaveType[1]);
+                      }
+                    }
+                  })
+                })
 
-        })
+                // if (leave.IsPending) {
+                //   var leaveDest = leave.transation.splice(',')
+                // }
 
-      }
-      else {
-        $scope.pendingLeave = true;
-      }
+              })
+
+            }
+            else {
+              $scope.pendingLeave = true;
+            }
+            */
     }
+
     function _fetchPendingLeaveError(err) {
       $scope.showMsg("error", err);
     }
@@ -557,8 +579,8 @@
       var diff = fromDate.diff(joiningDate, 'days')
       var queryId = 530;
       if (diff > 0) {
-        // debugger;
-        if ($scope.entity.selectedEmp.JDIsProbation != null && $scope.entity.selectedEmp.JDIsProbation != undefined && $scope.entity.selectedEmp.JDIsProbation != '') {
+
+        if ($scope.entity.selectedEmp.JDIsProbation != "False" && $scope.entity.selectedEmp.JDIsProbation != null && $scope.entity.selectedEmp.JDIsProbation != undefined && $scope.entity.selectedEmp.JDIsProbation != '') {
           if ($scope.entity.selectedEmp.JDProbationValidity != null && $scope.entity.selectedEmp.JDProbationValidity != undefined && $scope.entity.selectedEmp.JDProbationValidity != '') {
             if (moment($scope.entity.selectedEmp.JDProbationValidity) >= moment($scope.entity.LEADDateFrom)) {
 
@@ -579,8 +601,7 @@
                 searchList: searchLists,
                 orderByList: []
               }
-            }
-            else {
+            } else {
               var searchLists = [];
               var searchListData = {
                 field: 'ELTEmpId',
@@ -596,8 +617,7 @@
             pageService.getCustomQuery(data, queryId).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
 
           }
-        }
-        else {
+        } else {
           var searchLists = [];
           var searchListData = {
             field: 'ELTEmpId',
@@ -625,8 +645,7 @@
           if ($scope.entity.LEADFromHalfDayId == 0 || $scope.entity.LEADFromHalfDayId == 1) {
             appliedDays = appliedDays - 0.5;
             isFromHalfDay = true;
-          }
-          else {
+          } else {
             if (isFromHalfDay) {
               appliedDays = appliedDays + 0.5;
               isFromHalfDay = false;
@@ -635,8 +654,7 @@
           if ($scope.entity.LEADToHalfDayId == 0 || $scope.entity.LEADToHalfDayId == 1) {
             appliedDays = appliedDays - 0.5;
             isToHalfDay = true;
-          }
-          else {
+          } else {
             if (isToHalfDay) {
               appliedDays = appliedDays + 0.5;
               isToHalfDay = false;
@@ -647,8 +665,7 @@
 
         _calculateDays();
 
-      }
-      else {
+      } else {
         vm.validateLeave = false;
         $scope.isSavingLeave = false;
         $scope.isgreaterJoinDate = true;
@@ -684,24 +701,22 @@
       var leaveFromDate = moment($scope.entity.LEADDateFrom);
       var month = leaveFromDate.format('M');
       var year = leaveFromDate.format('YYYY');
+      console.log(year)
       if (!$scope.entity.selectedEmp.AMSTIsVarified) {
-        if (_validateForm(form)) {
-        }
-      }
-      else if ($scope.entity.selectedEmp.AMSMonth == parseInt(month) && $scope.entity.selectedEmp.AMSYear == parseInt(year)) {
+        if (_validateForm(form)) { }
+      } else if ($scope.entity.selectedEmp.AMSMonth == parseInt(month) && $scope.entity.selectedEmp.AMSYear == parseInt(year)) {
         $scope.showMsg("error", "You are not allowed to apply leave because this month attendance verified");
-      }
-      else {
-        if (_validateForm(form)) {
-        }
+      } else {
+        if (_validateForm(form)) { }
       }
     }
+
     function _validateForm(form) {
       var valid = editFormService.validateForm(form)
       if (valid) {
         $scope.entity.LEADTransation = ''
         angular.forEach($scope.showLeave, function (leave, idx) {
-
+          console.log($scope.showLeave)
           if (leave.leaveDr) {
             if (leave.leaveDr > 0 || leave.isHalfDay) {
               if (leave.LTName == "LWP" && leave.leaveDr != 0) {
@@ -749,23 +764,24 @@
       }
       return valid;
     }
+
     function _getLeaveCountSuccess(result) {
 
       if (result == "NoDataFound") {
         $scope.isSavingLeave = true;
+        console.log($scope.entity)
         _commonSaveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
-      }
-      else {
+      } else {
         if ($scope.entity.LEADId != undefined) {
           $scope.isSavingLeave = true;
           _commonSaveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
-        }
-        else {
+        } else {
           $scope.showMsg('info', 'You have already applied leave for given date.')
         }
 
       }
     }
+
     function _getLeaveCountError(err) {
       //console.log(err)
     }
@@ -803,8 +819,7 @@
                   type: leaveType == null ? "" : leaveType,
                   balance: data[1]
                 }
-              }
-              else {
+              } else {
                 var leaveDetail = {
                   type: "LWP",
                   balance: data[1]
@@ -812,8 +827,7 @@
               }
               $scope.leaveDetails.push(leaveDetail)
             })
-          }
-          else {
+          } else {
             $scope.leaveDetails = undefined;
           }
           if (row.entity.LEADDateFrom != undefined)
@@ -823,28 +837,23 @@
           if (row.entity.LEADFromHalfDayId != null && row.entity.LEADFromHalfDayId != undefined) {
             if (row.entity.LEADFromHalfDayId == 0) {
               row.entity.fromHalf = 'First Half';
-            }
-            else if (row.entity.LEADFromHalfDayId == 1) {
+            } else if (row.entity.LEADFromHalfDayId == 1) {
               row.entity.fromHalf = 'Second Half';
-            }
-            else {
+            } else {
               row.entity.fromHalf = '';
             }
           }
           if (row.entity.LEADToHalfDayId != null && row.entity.LEADToHalfDayId != undefined) {
             if (row.entity.LEADToHalfDayId == 0) {
               row.entity.toHalf = 'First Half'
-            }
-            else if (row.entity.LEADFromHalfDayId == 1) {
+            } else if (row.entity.LEADFromHalfDayId == 1) {
               row.entity.toHalf = 'Second Half';
-            }
-            else {
+            } else {
               row.entity.toHalf = '';
             }
           }
           $scope.entity = row.entity;
-        }
-        else {
+        } else {
 
           $scope.verifyCancelRequestForm = true;
           pageService.getPagData(cancelRequestPageId).then(_getPageDataSuccessResult, _getPageDataErrorResult)
@@ -863,8 +872,7 @@
           searchList.push(searchFields)
           _commonFindEntity(cancelRequestTableId, searchList)
         }
-      }
-      else {
+      } else {
         $scope.showMsg("error", "You can view this leave only")
       }
     }
@@ -888,9 +896,11 @@
         pageService.findEntity(sanctinLeaveTableId, undefined, searchList).then(_findEntitySuccessResult, _findEntityErrorResult)
       }
     }
+
     function _getPageDataErrorResult(err) {
 
     }
+
     function _findEntitySuccessResult(result) {
       $scope.sectionOldEntity = angular.copy(result);
 
@@ -901,16 +911,17 @@
         $scope.sanctionEntity.ELSDSanctionToDate = result.ELSDSanctionToDate;
         $scope.sanctionEntity.ELSDComment = result.ELSDComment;
         $scope.sanctionEntity.StatusId = parseInt(result.StatusId);
-      }
-      else {
+      } else {
         $scope.sanctionEntity.ELSDId = undefined;
         $scope.sanctionEntity.ELSDComment = "";
         $scope.sanctionEntity.StatusId = 0;
       }
     }
+
     function _findEntityErrorResult(err) {
 
     }
+
     function _validateSanctionForm() {
 
       if ($scope.sanctionEntity.ELSDSanctionFromDate == undefined || $scope.sanctionEntity.ELSDSanctionToDate == null) {
@@ -949,12 +960,12 @@
 
         if ($scope.sanctionEntity.ELSDId == undefined) {
           _formSave(santionLeave, sanctionLeavePageId, 'create', $scope.sectionOldEntity == undefined ? {} : $scope.sectionOldEntity, editForm, false, $scope.sanctionPage.title);
-        }
-        else {
+        } else {
           _formSave(santionLeave, sanctionLeavePageId, 'edit', $scope.sectionOldEntity == undefined ? {} : $scope.sectionOldEntity, editForm, false, $scope.sanctionPage.title);
         }
       }
     }
+
     function _formSave(entity, pageId, action, oldEntity, editForm, showConfirmation, title) {
 
       editFormService.saveForm(pageId, entity, oldEntity,
@@ -966,8 +977,7 @@
 
       if (result.success_message == 'Added New Record.') {
         $scope.showMsg("success", "Record Saved Successfully")
-      }
-      else {
+      } else {
         $scope.showMsg("success", "Record Saved Successfully")
       }
       $scope.showSanctionForm = false;
@@ -975,9 +985,11 @@
       $scope.verifyCancelRequestForm = false;
       $scope.page.refreshData();
     }
+
     function _saveErrorResult(err) {
       $scope.showMsg("error", err)
     }
+
     function _closeSanction() {
       $scope.page.refreshData();
       $scope.showSanctionForm = false;
@@ -988,8 +1000,7 @@
         if (!$scope.entity.LEADDateTo) {
           $scope.entity.LEADDateTo = $scope.entity.LEADDateFrom
           _appliedDays();
-        }
-        else {
+        } else {
           var daysDiff = _getDateDiff();
           if (daysDiff < 0) {
             $scope.entity.LEADDateTo = $scope.entity.LEADDateFrom
@@ -1007,11 +1018,9 @@
             $scope.showMsg('warning', 'To date can not be less than from date.')
             $scope.entity.LEADDateTo = $scope.entity.LEADDateFrom
             _appliedDays();
-          }
-          else if (daysDiff == 0) {
+          } else if (daysDiff == 0) {
             $scope.showToSlider = false;
-          }
-          else {
+          } else {
             $scope.showToSlider = true;
           }
         }
@@ -1024,10 +1033,12 @@
       var daysDiff = toDate.diff(fromDate, 'days');
       return daysDiff;
     }
+
     function _loadController() {
       $scope.disabledEmp = false;
       $scope.entity.LEADFromHalfDayId = 2;
       $scope.entity.LEADToHalfDayId = 2;
+     
     }
 
 
@@ -1044,8 +1055,12 @@
       $scope.showEditForm = true;
       $scope.isLeaveTransactionTable = false;
       $scope.isLeaveApprovedDet = false;
-      $scope.entity = { LEADToHalfDayId: 2, LEADFromHalfDayId: 2 }
+      $scope.entity = {
+        LEADToHalfDayId: 2,
+        LEADFromHalfDayId: 2
+      }
     }
+
     function _editRecord(row) {
       if (row.entity.StatusId == 0) {
         $scope.disabledEmp = true;
@@ -1061,22 +1076,22 @@
         _fetchLeaveDetail();
 
         vm.validateLeave = true
-      }
-      else {
+      } else {
         $scope.showMsg("error", "You are not allowed for edit because this leave already sanctioned");
       }
     }
+
     function _closeForm() {
       $scope.showEditForm = false;
       $scope.page.refreshData();
     }
+
     function _viewRecord(row) {
       //console.log(row)
 
       if (row.entity.StatusId == 0) {
         _editRecord(row);
-      }
-      else {
+      } else {
         $scope.status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
         if (!$scope.status.isCancelRequest && !$scope.status.isCancelApproved && !$scope.status.isCancelRejected && !$scope.status.isCancelOnHold) {
           var searchList = [];
@@ -1103,22 +1118,22 @@
           $scope.cancelRequestEntity.StatusId = row.entity.StatusId;
           $scope.cancelRequestEntity.CreatedBy = row.entity.CreatedBy;
           $scope.cancelRequestEntity.CreatedOn = moment(row.entity.CreatedOn).format("DD/MMMM/YYYY");;
-        }
-        else {
+        } else {
           if ($scope.isCancelRequest) {
             $scope.showMsg("error", "You are not allowed to view this leave application beacause this leave application is already in processing for approval")
-          }
-          else {
+          } else {
             $scope.showMsg("error", "Your application already sanctioned/rejected/onhold")
           }
         }
       }
 
     }
+
     function _commonFindEntity(tableId, searchList) {
 
       pageService.findEntity(tableId, undefined, searchList).then(_cancelRequestSuccessResult, _cancelRequestErrorResult)
     }
+
     function _cancelRequestSuccessResult(result) {
 
       $scope.cancelRequestOldEntity = angular.copy(result);
@@ -1128,11 +1143,11 @@
         $scope.cancelRequestEntity.CRComment = result.CRComment;
         $scope.cancelRequestEntity.StatusId = parseInt(result.StatusId);
         $scope.cancelRequestEntity.CRCommentAfterCanReq = result.CRCommentAfterCanReq;
-      }
-      else {
+      } else {
         $scope.cancelRequestEntity.CRComment = '';
       }
     }
+
     function _cancelRequestErrorResult(err) {
 
     }
@@ -1141,6 +1156,7 @@
       $scope.verifySanctionForm = false;
       $scope.page.refreshData();
     }
+
     function _closeVerifyCancelRequestForm() {
       $scope.verifyCancelRequestForm = false;
       $scope.page.refreshData();
@@ -1165,12 +1181,10 @@
         }
         if ($scope.entity.CRId == undefined) {
           _formSave(cancelRequest, cancelRequestPageId, 'create', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, true, 'Cancel Request');
-        }
-        else {
+        } else {
           _formSave(cancelRequest, cancelRequestPageId, 'edit', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, false, 'Cancel Request');
         }
-      }
-      else {
+      } else {
         $scope.showMsg("error", "Please comment before leave cancel");
       }
     }
@@ -1193,8 +1207,7 @@
 
         }
         _formSave(cancelRequest, cancelRequestPageId, 'edit', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, false, 'Cancel Request');
-      }
-      else {
+      } else {
         if (cancelRequestEntity.StatusId == undefined) {
           $scope.showMsg("error", "Please select status");
         } else if (cancelRequestEntity.CRCommentAfterCanReq == undefined) {
@@ -1208,6 +1221,7 @@
     function _onLeaveChange(leave) {
 
     }
+
     function _getOptions(leave) {
       var optList = [];
 
@@ -1218,8 +1232,7 @@
           var maxCounter = 0;
           if (leave.LeaveBalance < leaveRule.LRCDrMaxDays) {
             maxCounter = leave.LeaveBalance;
-          }
-          else if (leave.LeaveBalance >= leaveRule.LRCDrMaxDays) {
+          } else if (leave.LeaveBalance >= leaveRule.LRCDrMaxDays) {
             maxCounter = leaveRule.LRCDrMaxDays;
           }
 
@@ -1230,18 +1243,27 @@
 
           for (var i = 0; i <= maxCounter; i++) {
             if (i == 0 || i >= leaveRule.LRCDRMinDays) {
-              optList.push({ id: i, name: i.toString() + ' Days' })
+              optList.push({
+                id: i,
+                name: i.toString() + ' Days'
+              })
             }
           }
-        }
-        else {
-          optList.push({ id: 0, name: '0 Day' })
-          optList.push({ id: 1, name: '1 Day' })
+        } else {
+          optList.push({
+            id: 0,
+            name: '0 Day'
+          })
+          optList.push({
+            id: 1,
+            name: '1 Day'
+          })
         }
       }
 
       return optList;
     }
+
     function _onLeaveDrChange(leave, oldDays) {
       var unpaidLeave = $filter('findObj')($scope.showLeave, true, 'isUnpaid')
 
@@ -1249,31 +1271,39 @@
       if (leave.LeaveBalance <= leave.leaveDr) {
         $scope.showMsg('error', 'No more balance.')
         leave.leaveDr = parseInt(oldDays)
-      }
-      else if (leaveRule.LRCDrMaxDays < leave.leaveDr) {
+      } else if (leaveRule.LRCDrMaxDays < leave.leaveDr) {
         $scope.showMsg('error', 'No more leave allowed in ' + leaveRule.LTName)
         leave.leaveDr = parseInt(oldDays)
-      }
-      else if (leave.leaveDr < oldDays) {
+      } else if (leave.leaveDr < oldDays) {
 
         if (unpaidLeave != null) {
 
-          var unpaid = { leaveDr: unpaidLeave.leaveDr + (parseInt(oldDays) - leave.leaveDr), LeaveBalance: 0, LTName: 'LWP', isUnpaid: true, halfDay: 0 }
+          var unpaid = {
+            leaveDr: unpaidLeave.leaveDr + (parseInt(oldDays) - leave.leaveDr),
+            LeaveBalance: 0,
+            LTName: 'LWP',
+            isUnpaid: true,
+            halfDay: 0
+          }
 
           $scope.showLeave.splice($scope.showLeave.length - 1, 1)
         }
 
         $scope.showLeave.push(unpaid);
-      }
-      else {
+      } else {
         var difLeave = leave.leaveDr - parseInt(oldDays);
 
         if (unpaidLeave.leaveDr < difLeave) {
           $scope.showMsg('warning', 'First, reduce days in any leave type')
           leave.leaveDr = parseInt(oldDays);
-        }
-        else {
-          var unpaid = { leaveDr: unpaidLeave.leaveDr - difLeave, LeaveBalance: 0, LTName: 'LWP', isUnpaid: true, halfDay: 0 }
+        } else {
+          var unpaid = {
+            leaveDr: unpaidLeave.leaveDr - difLeave,
+            LeaveBalance: 0,
+            LTName: 'LWP',
+            isUnpaid: true,
+            halfDay: 0
+          }
           $scope.showLeave.splice($scope.showLeave.length - 1, 1)
           $scope.showLeave.push(unpaid);
         }
@@ -1290,31 +1320,40 @@
         if (leave.LeaveBalance <= leave.leaveDr) {
           $scope.showMsg('error', 'No more balance.')
           leave.isHalfDay = false;
-        }
-        else if (leaveRule.LRCDrMaxDays <= leave.leaveDr) {
+        } else if (leaveRule.LRCDrMaxDays <= leave.leaveDr) {
           $scope.showMsg('error', 'No more leave allowed in ' + leaveRule.LTName)
           leave.isHalfDay = false;
-        }
-        else if (unpaidLeave.leaveDr >= 0.5) {
+        } else if (unpaidLeave.leaveDr >= 0.5) {
           leave.halfDay = .5;
 
-          var unpaid = { leaveDr: unpaidLeave.leaveDr - .5, LeaveBalance: 0, LTName: 'LWP', isUnpaid: true, halfDay: 0 }
+          var unpaid = {
+            leaveDr: unpaidLeave.leaveDr - .5,
+            LeaveBalance: 0,
+            LTName: 'LWP',
+            isUnpaid: true,
+            halfDay: 0
+          }
           $scope.showLeave.splice($scope.showLeave.length - 1, 1)
           $scope.showLeave.push(unpaid);
 
-        }
-        else {
+        } else {
           $scope.showMsg('warning', 'Half day not allowed')
           leave.isHalfDay = false;
         }
-      }
-      else {
+      } else {
         leave.halfDay = 0;
-        var unpaid = { leaveDr: unpaidLeave.leaveDr + .5, LeaveBalance: 0, LTName: 'LWP', isUnpaid: true, halfDay: 0 }
+        var unpaid = {
+          leaveDr: unpaidLeave.leaveDr + .5,
+          LeaveBalance: 0,
+          LTName: 'LWP',
+          isUnpaid: true,
+          halfDay: 0
+        }
         $scope.showLeave.splice($scope.showLeave.length - 1, 1)
         $scope.showLeave.push(unpaid);
       }
     }
+
     function _onConditionalLeaveTypeChange() {
       console.log($scope.leaveRuleList)
       console.log($scope.entity.conditinalLeaveTypeId)
@@ -1322,12 +1361,18 @@
 
       if (leaveRule == null) {
         $scope.showMsg('error', 'No leave rule defined.')
-      }
-      else {
+      } else {
 
         var leave = {
-          leaveDr: 0, LeaveBalance: leaveRule.LRCDrMaxDays, LTName: leaveRule.LTName, isUnpaid: false, halfDay: 0,
-          minDays: leaveRule.LRCDRMinDays, maxDays: leaveRule.LRCDrMaxDays, isCondLeave: true, LRCLeaveTypeId: $scope.entity.conditinalLeaveTypeId
+          leaveDr: 0,
+          LeaveBalance: leaveRule.LRCDrMaxDays,
+          LTName: leaveRule.LTName,
+          isUnpaid: false,
+          halfDay: 0,
+          minDays: leaveRule.LRCDRMinDays,
+          maxDays: leaveRule.LRCDrMaxDays,
+          isCondLeave: true,
+          LRCLeaveTypeId: $scope.entity.conditinalLeaveTypeId
         }
 
         var optList = [];
@@ -1338,8 +1383,7 @@
             var maxCounter = 0;
             if (leave.LeaveBalance < leaveRule.LRCDrMaxDays) {
               maxCounter = leave.LeaveBalance;
-            }
-            else if (leave.LeaveBalance >= leaveRule.LRCDrMaxDays) {
+            } else if (leave.LeaveBalance >= leaveRule.LRCDrMaxDays) {
               maxCounter = leaveRule.LRCDrMaxDays;
             }
 
@@ -1350,13 +1394,21 @@
 
             for (var i = 0; i <= maxCounter; i++) {
               if (i == 0 || i >= leaveRule.LRCDRMinDays) {
-                optList.push({ id: i, name: i.toString() + ' Days' })
+                optList.push({
+                  id: i,
+                  name: i.toString() + ' Days'
+                })
               }
             }
-          }
-          else {
-            optList.push({ id: 0, name: '0 Day' })
-            optList.push({ id: 1, name: '1 Day' })
+          } else {
+            optList.push({
+              id: 0,
+              name: '0 Day'
+            })
+            optList.push({
+              id: 1,
+              name: '1 Day'
+            })
           }
         }
         leave.days = optList;
@@ -1375,8 +1427,7 @@
     function _onConditionalCheckbox() {
       if ($scope.entity.isConditiaonal) {
 
-      }
-      else {
+      } else {
         var found = $filter('findObj')($scope.showLeave, true, 'isCondLeave')
         if (found != null) {
           $scope.showLeave.splice(0, 1)
@@ -1390,6 +1441,7 @@
     function _deleteForm(row) {
       _commonSaveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, 'delete', $scope.page.pageinfo.tagline)
     }
+
     function _commonSaveForm(pageId, newEntity, oldEntity, action, pageTagLine) {
       editFormService.saveForm(pageId, newEntity,
         oldEntity, action, pageTagLine)
@@ -1405,6 +1457,7 @@
       $scope.showEditForm = false;
       $scope.page.refreshData();
     }
+
     function _saveFormError(err) {
 
       $scope.isSavingLeave = false;

@@ -5,7 +5,7 @@
         .directive('reportViewer', reportViewer);
     /** @ngInject */
     function reportViewer($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
-        editFormService, focus, $sce) {
+        editFormService, focus, $sce, DJWebStore) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/reportViewer/reportViewer.html',
@@ -25,12 +25,14 @@
             },
             link: function ($scope, elm, attrs, ctrl) {
                 // var reportBaseURL = 'http://itsllive.rudra.hrm/';
-                var reportBaseURL = 'http://web400.hrms/';
+                var reportBaseURL = 'http://rudra.hrm/';
+                // var reportBaseURL = 'http://web400.hrms/';
                 var host = $location.host();
                 var absUrl = $location.absUrl();
                 if (absUrl.indexOf('.html') > 0) {
                     absUrl = absUrl.substring(0, absUrl.indexOf('.html'))
                 }
+                console.log(host);
                 console.log(absUrl);
                 var lastIdx = absUrl.lastIndexOf('/');
                 var firstIdx = absUrl.indexOf('/');
@@ -38,8 +40,19 @@
                 reportBaseURL = absUrl.substring(hostIdx + host.length, lastIdx);
 
                 // reportBaseURL = 'http://itsllive.rudra.hrm/';
-                //reportBaseURL = 'http://web400.hrms/';
-                console.log(reportBaseURL)
+                // reportBaseURL = 'http://rudra.hrm/';
+
+
+                if (host.indexOf('/#!') > -1) {
+                    reportBaseURL = host.substring(0, host.indexOf('/#!')).replace()
+                } 
+                else if (host.toLowerCase().indexOf('/index.html#!') > -1) {
+                    reportBaseURL = host.substring(0, host.toLowerCase().indexOf('/index.html#!'))
+                }
+                else {
+                    reportBaseURL = host;
+                }
+                console.log('converted', reportBaseURL)
 
                 var boxSetting = {
                     selfLoading: true,//gridBox will fetch data from api on its own
@@ -65,6 +78,7 @@
                     dataResult: null,
                     saveResult: null
                 }
+
 
                 //var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
@@ -134,6 +148,8 @@
                     //     nosp: 'UserEmpId',
                     //     selectedValue: userEmpId
                     // })
+                    var corpoId = DJWebStore.GetValue('CorpoId');
+                    var lang = DJWebStore.GetValue('UserLang');
 
                     console.log(userFilterData);
                     var data = { reportId: $scope.page.reportId, filterData: userFilterData, userEmpId: $rootScope.user.profile.empId }
@@ -146,9 +162,17 @@
                     pageService.rptHandshake($scope.page.reportId, JSON.stringify(encData)).then(function (result) {
                         //   var result = angular.fromJson(response.data);
                         console.log(result)
-                        var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth;
+                        var rptUrl = '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                            '&crid=' + corpoId + '&lang=' + lang
+                        // console.log(rptUrl)
+                        // $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
+
+                        // reportBaseURL = 'http://rudra.hrm'
+                        // var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                        //     '&crid=' + corpoId + '&lang=' + lang
                         console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
+
 
 
                     }, function (err) {
@@ -159,16 +183,25 @@
 
                 }
 
-                function _loadReport() {
+                  function _loadReport() {
 
                     pageService.getListReport($scope.reportId).then(function (result) {
 
                         $scope.page.pageinfo = result;
+                        console.log(result)
+                        _getPageResult(result)
+
                         //setPageTitle();
                         console.log($scope.page)
                     }, function (err) {
                         //console.log(err);
                     });
+                }
+
+                function _getPageResult(result) {
+                    // $scope.pageResult = result;
+                    console.log(result)
+                    $scope.page.boxOptions.pageResult(result);
                 }
                 $scope.$on('apply-filter', function (successEvent, searchList) {
 

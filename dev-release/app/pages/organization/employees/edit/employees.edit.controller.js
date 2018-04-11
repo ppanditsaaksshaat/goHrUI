@@ -20,13 +20,45 @@
     vm.empBasicDetail = {};
 
     function _loadController() {
-
+      console.log('emp load controller')
       $timeout(function () {
         pageService.findEntity(vm.tableid, vm.pkId, undefined).then(
           _findEntitySuccessResult, _findEntityErrorResult);
       });
 
+      var tabKeys = ''
+      angular.forEach(vm.tabs, function (tab) {
+        tabKeys += tab.name + ',';
+      })
+      tabKeys = tabKeys.substr(0, tabKeys.length - 1)
+      console.log(tabKeys)
+      var postData = JSON.stringify(tabKeys);
+
+      console.log(postData)
+      var compressed = LZString.compressToEncodedURIComponent(postData);
+      var data = { lz: true, data: compressed }
+      pageService.getTranslateData(data).then(_getSuccessTranslateData, _getErrorTranslateData)
+
     }
+
+
+
+    function _getSuccessTranslateData(result) {
+      console.log(result[0]);
+      angular.forEach(vm.tabs, function (tab) {
+        var resKey = $filter('findObj')(result[0], tab.name, 'ResourceKey')
+        console.log(resKey)
+        if (resKey != null) {
+          tab.text = resKey.ResourceText;
+          console.log(tab.text)
+        }
+      })
+    }
+
+    function _getErrorTranslateData(error) {
+      console.log(error);
+    }
+
     function _findEntitySuccessResult(result) {
       console.log(result)
       vm.picture = $filter('appImage')('theme/no-photo.png');
@@ -44,7 +76,7 @@
     }
 
     $scope.templateUrl = function () {
-
+      console.log("app/pages/organization/employees/templates/" + vm.tempFile + "/" + vm.tempFile + "-view.html");
       return "app/pages/organization/employees/templates/" + vm.tempFile + "/" + vm.tempFile + "-view.html";
     }
     // $scope.temalateUrl1 = function () {
@@ -68,10 +100,12 @@
       mastersMenu.push({ name: 'immigration', text: 'Immigration', id: 119 })
       mastersMenu.push({ name: 'document', text: 'Document', id: 188 })
       mastersMenu.push({ name: 'leave', text: 'Leave Detail', id: 36 })
-      //mastersMenu.push({ name: 'benefit', text: 'Benefit', id: 448 })
+      mastersMenu.push({ name: 'benefit', text: 'Benefit', id: 448 })
       mastersMenu.push({ name: 'resignation', text: 'Resignation', id: 360 })
-      mastersMenu.push({ name: 'user', text: 'User', id: 21 })
-     // mastersMenu.push({ name: 'report', text: 'Reporting', id: 21 })
+      mastersMenu.push({ name: 'role', text: 'Role', id: 21 })
+      mastersMenu.push({ name: 'user', text: 'User', id: 'register' })
+      mastersMenu.push({ name: 'roster', text: 'Roster', id: 481 })
+      // mastersMenu.push({ name: 'report', text: 'Reporting', id: 21 })
       return mastersMenu;
 
     }

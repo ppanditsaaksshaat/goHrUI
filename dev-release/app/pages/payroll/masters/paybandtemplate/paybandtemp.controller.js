@@ -28,6 +28,9 @@
         $scope.entity = {};
         $scope.rulePage = {};
         $scope.slabPage = {};
+        $scope.toggleExpandOnAdd = false;
+        $scope.edit = false;
+        $scope.deletedRows = [];
 
         /**end of local variable declaration */
 
@@ -37,16 +40,18 @@
 
         $scope.closeForm = _closeForm;
         $scope.addNewRule = _addNewRule;
+        $scope.addToltalEarningDeductionRule = _addToltalEarningDeductionRule;
         $scope.changeFormula = _changeFormula;
         $scope.changeSlab = _changeSlab;
         $scope.toggleRowExpand = _toggleRowExpand;
         $scope.removeRuleSlab = _removeRuleSlab;
         $scope.saveForm = _saveForm;
+        $scope.restoreData = _restoreData
 
         /**end of private function  */
 
         /**default grid intialization*/
-
+        $scope.rulePage;
         $scope.page = $scope.createPage();
         $scope.page.pageId = $scope.paybandTemp.PageId;
         $scope.page.boxOptions = {
@@ -87,19 +92,21 @@
             enableColumnResizing: false,
             enableFiltering: false,
             enableGridMenu: false,
-            enableRowSelection: false,
-            enableRowHeaderSelection: false,
+            enableRowSelection: true,
+            enableRowHeaderSelection: true,
             enablePaginationControls: false,
             enableVerticalScrollbar: false,
             enableHighlighting: false,
             enablePinning: false,
             editableOnFocus: true,
+            enableSelectAll: false,
+            multiSelect: false,
             data: [],
             columnDefs: [],
             onRegisterApi: _onRegisterApi,
             showGridFooter: true,
             showColumnFooter: false,
-            gridFooterTemplate: '<div class="row"> <div class="col-md-4"><div class="pull-left"><button ng-click="grid.appScope.addNewRule()" type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Add New Head</button></div></div></div>'
+            //gridFooterTemplate: ''
             // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
         }
 
@@ -109,11 +116,15 @@
 
         /** pageload function */
         function _loadController() {
+
             $timeout(function () {
                 pageService.getPagData($scope.paybandTemp.RulePageId).then(function (result) {
                     console.log(result)
                     $scope.rulePage = angular.extend({}, $scope.rulePage, result);
                     // $scope.differenceHeadList = $scope.rulePage.pageinfo.fields.PBTRSHId.options;
+                    if ($scope.isDependListToBeUpdate) {
+                        _addDependentHeadList();
+                    }
                     _addRuleGridColumns();
                 }, function (err) {
                 })
@@ -139,6 +150,8 @@
         /**default grid add function */
 
         function _addRecord(result) {
+            $scope.deletedRows = [];
+            $scope.edit = false;
             $scope.action = 'create';
             $scope.page.showEditForm = true;
             $scope.payTempGridOptions.data = [];
@@ -149,7 +162,8 @@
 
         /**default grid edit function */
         function _editRecord(row) {
-
+            $scope.deletedRows = [];
+            $scope.edit = true;
             $scope.page.showEditForm = true;
             $scope.entity = angular.copy(row.entity);
             $scope.page.isAllowEdit = true;
@@ -207,14 +221,19 @@
                         //find head type
                         var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRSHId.options, row.PBTRSHId, 'value')
                         if (foundPB != null) {
-                            if (foundPB.SHIsForEmployer == "True") {
-                                row.SHeadType = 'Employer';
-                            }
-                            else if (foundPB.SHIsDeduction == "False") {
-                                row.SHeadType = 'Earning';
+                            if (foundPB.SHIsTotal == "True") {
+                                row.SHeadType = 'Total';
                             }
                             else {
-                                row.SHeadType = 'Deduction';
+                                if (foundPB.SHIsForEmployer == "True") {
+                                    row.SHeadType = 'Employer';
+                                }
+                                else if (foundPB.SHIsDeduction == "False") {
+                                    row.SHeadType = 'Earning';
+                                }
+                                else {
+                                    row.SHeadType = 'Deduction';
+                                }
                             }
                         }
                         row.PBTRPercentage = row.PBTRPercentage == 0.00 ? '' : row.PBTRPercentage;
@@ -275,6 +294,7 @@
                 }
             }
             _getNetPayable();
+            _addDependentHeadList();
         }
         function _getMultiEntityError(err) {
             console.log(err)
@@ -292,7 +312,7 @@
 
         function _addRuleGridColumns() {
             var cellTemplateCheck = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
-            cellTemplateCheck += "<a href ng-click=\"grid.appScope.changeFormula(row)\" ng-show=\"row.entity.PBTRCalcOnSHId.length>1 && !row.entity.PBTRIsSlab   \"> <i class=\"fa font-green\" ng-class=\"{'fa-check-square-o': row.entity.PBTRIsFormula, 'fa-square-o': !row.entity.PBTRIsFormula }\" aria-hidden=\"true\" ></i></a>";
+            cellTemplateCheck += "<a href ng-click=\"grid.appScope.changeFormula(row)\" ng-show=\"row.entity.PBTRCalcOnSHId.length>0 && !row.entity.PBTRIsSlab && row.entity.PBTRPercentage=='' \"> <i class=\"fa font-green\" ng-class=\"{'fa-check-square-o': row.entity.PBTRIsFormula, 'fa-square-o': !row.entity.PBTRIsFormula }\" aria-hidden=\"true\" ></i></a>";
             cellTemplateCheck += "</div>"
 
             var cellTemplateSlab = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
@@ -306,6 +326,8 @@
             var cellTemplateRemove = "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >"
             cellTemplateRemove += " <a href ng-click=grid.appScope.removeRuleSlab(row) title=\"Remove Rule\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a>";
             cellTemplateRemove += "</div>"
+
+
 
             $scope.payTempGridOptions.columnDefs.push({
                 name: $scope.rulePage.pageinfo.fields.PBTRSHId.name,
@@ -341,6 +363,7 @@
                 cellClass: _cellClass,
                 cellEditableCondition: _cellEditableCondition,
                 colIndex: 2
+
             })
 
             // editDropdownOptionsArray: $scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options,
@@ -397,23 +420,59 @@
                     cellTemplate: cellTemplateRowExpand,
                     name: 'rowExpand',
                     displayName: '-',
-                    width: 30, visible: true,
+                    width: 50, visible: true,
                     cellClass: _cellClass,
                     cellEditableCondition: false,
                     colIndex: 8
                 })
+            $scope.payTempGridOptions.columnDefs.push({
+                visible: false,
+                name: 'PBTRGridIndex',
+                sort: { direction: 'asc', priority: 0 }
+            })
         }
 
 
         function _cellClass(grid, row, col, rowRenderIndex, colRenderIndex) {
+
             if (row.entity.PBTRSHId == -1) {
-                return 'status-bg YELLOW-300 cell-border-right';
+                return 'YELLOW-300 status-bg cell-border-right';
             }
             else if (row.entity.PBTRSHId > 0) {
                 var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsGross')
+                var shTotalEarning = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTotalEarning')
+                var shTotalDeduction = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTotalDeduction')
+                var shNetPay = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsNetPay')
+                var shRoundOff = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsRoundOff')
+                var shTaxableSalary = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTaxableSalary')
                 if (shGross != null) {
                     if (row.entity.PBTRSHId == shGross.value) {
                         return 'status-bg ORANGE-500'
+                    }
+                }
+                if (shTotalEarning != null) {
+                    if (row.entity.PBTRSHId == shTotalEarning.value) {
+                        return 'status-bg CYAN-100'
+                    }
+                }
+                if (shTotalDeduction != null) {
+                    if (row.entity.PBTRSHId == shTotalDeduction.value) {
+                        return 'status-bg GREEN-500'
+                    }
+                }
+                if (shNetPay != null) {
+                    if (row.entity.PBTRSHId == shNetPay.value) {
+                        return 'status-bg BLUE-300'
+                    }
+                }
+                if (shRoundOff != null) {
+                    if (row.entity.PBTRSHId == shRoundOff.value) {
+                        return 'status-bg YELLOW-300'
+                    }
+                }
+                if (shTaxableSalary != null) {
+                    if (row.entity.PBTRSHId == shTaxableSalary.value) {
+                        return 'status-bg PINK-300'
                     }
                 }
             }
@@ -433,29 +492,49 @@
         function _cellEditableCondition(scope) {
 
             if (scope.col.name == "PBTRSHId") {
-                return true;
+                if (scope.row.entity.SHIsTotalEarning == "True" || scope.row.entity.SHIsTotalDeduction == "True") {
+                    return false;
+                }
+                else {
+                    return true;
+                }
             }
             else if (scope.col.name == "PBTRPercentage") {
+                if (scope.row.entity.SHIsTotalEarning == "True" || scope.row.entity.SHIsTotalDeduction == "True") {
+                    return false;
+                }
+                else {
+                    if (scope.row.entity.PBTRCalcOnSHId) {
+                        if (scope.row.entity.PBTRCalcOnSHId.length > 0) {
+                            if (scope.row.entity.PBTRIsFormula) {
+                                return true;
+                            }
 
-                if (scope.row.entity.PBTRCalcOnSHId) {
-                    if (scope.row.entity.PBTRCalcOnSHId.length > 0) {
-                        if (scope.row.entity.PBTRIsFormula) {
-                            return true;
-                        }
-
-                        else if (!scope.row.entity.PBTRIsFormula && !scope.row.entity.PBTRIsSlab) {
-                            return true;
+                            else if (!scope.row.entity.PBTRIsFormula && !scope.row.entity.PBTRIsSlab) {
+                                return true;
+                            }
                         }
                     }
+                    return false;
                 }
-                return false;
             }
-            // else if (scope.col.name == "PBTRCalcOnSHId") {
-            //     if ($scope.payTempGridOptions.data.length > 0) {
+            else if (scope.col.name == "PBTRCalcOnSHId") {
+                if (scope.row.entity.SHIsTotalEarning == "True" || scope.row.entity.SHIsTotalDeduction == "True") {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
 
-            //     }
-            //     return false;
-            // }
+            else if (scope.col.name == "PBTRIsFormula") {
+                if (scope.row.entity.SHIsTotalEarning == "True" || scope.row.entity.SHIsTotalDeduction == "True") {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
             else if (scope.row.entity.PBTRSHId) {
 
                 return true;
@@ -466,28 +545,213 @@
             return true;
         }
 
+        function _addToltalEarningDeductionRule(headId) {
+
+            var isGross = true;
+            var shTotalEarning = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTotalEarning')
+            var shTotalDeduction = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTotalDeduction')
+            var shRoundOff = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsRoundOff')
+            var shTaxableSalary = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsTaxableSalary')
+            var shNetPay = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsNetPay')
+            var shGross = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, 'True', 'SHIsGross')
+
+
+            // add gross head in first when add from totalhead
+            if ($scope.payTempGridOptions.data.length == 0) {
+                var head = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, headId, 'value')
+                if (head != null) {
+                    if (head.SHIsGross != "True") {
+                        isGross = false;
+                    }
+                }
+            }
+            else {
+                isGross = false;
+                if (shTotalEarning != null) {
+                    var totalEarningheadExist = $filter("findObj")($scope.payTempGridOptions.data, shTotalEarning.value, "PBTRSHId")
+                    if (totalEarningheadExist != null) {
+                        if ($scope.selectedRow != undefined) {
+                            if ($scope.selectedRow.entity.index < totalEarningheadExist.index) {
+                                alert("You are not allowed to add this head here");
+                                return
+                            }
+                        }
+                    }
+                }
+            }
+            if (!isGross) {
+
+                if (shTotalEarning != null) {
+                    if (shTotalEarning.value != headId) {
+                        var totalEarningheadExist = $filter("findObj")($scope.payTempGridOptions.data, shTotalEarning.value, "PBTRSHId")
+                        if (totalEarningheadExist == null) {
+                            alert("Please Add Total Earning  Or Earning Heads First");
+                            return
+                        }
+                    }
+                }
+            }
+            if ($scope.payTempGridOptions.data.length > 0) {
+                var tempGross = $filter("findAll")($scope.payTempGridOptions.data, shGross.value, "PBTRSHId")
+                var tempTaxable = $filter("findAll")($scope.payTempGridOptions.data, shTaxableSalary.value, "PBTRSHId")
+                var tempRoundOff = $filter("findAll")($scope.payTempGridOptions.data, shRoundOff.value, "PBTRSHId")
+                if (tempTaxable == null && tempGross == null) {
+                    if (headId == shNetPay.value || headId == shRoundOff.value) {
+                        alert("Please add gross or taxable total head first");
+                        return
+                    }
+                }
+                if (tempGross == null) {
+                    if (headId == shNetPay.value || headId == shRoundOff.value) {
+                        alert("Please add gross total head first");
+                        return
+                    }
+                }
+                if (tempTaxable == null && tempGross != null) {
+                    if (headId == shNetPay.value || headId == shRoundOff.value) {
+                        alert("Please add taxable total head first");
+                        return
+                    }
+                }
+                if (tempRoundOff == null && tempGross != null) {
+                    if (headId == shNetPay.value) {
+                        alert("Please add roundoff total head first");
+                        return
+                    }
+                    else if (headId == shRoundOff.value && $scope.selectedRow != undefined) {
+                        alert("You are not allowed to add this head here.");
+                        return
+                    }
+                }
+                if (headId == shNetPay.value && $scope.selectedRow != undefined) {
+                    alert("You are not allowed to add this head here.");
+                    return
+                }
+
+            }
+
+
+
+
+
+            var headExist = $filter("findObj")($scope.payTempGridOptions.data, headId, "PBTRSHId")
+            if (headExist == null) {
+                $scope.toggleExpandOnAdd = true;
+                if ($scope.payTempGridOptions.data.length > 0) {
+                    var lastRow = $scope.payTempGridOptions.data[$scope.payTempGridOptions.data.length - 1];
+                    if (lastRow.PBTRSHId) {
+                        var PBTRCalcOnSHId = [];
+                        var SHIsTotalEarning = "";
+                        var SHIsTotalDeduction = "";
+                        var headTotal = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, headId, "value")
+                        if (headTotal != null) {
+                            if (headTotal.SHIsTotalEarning == "True") {
+
+                                var earningHeads = $filter("findAll")($scope.payTempGridOptions.data, "Earning", "SHeadType")
+                                if (earningHeads != null) {
+                                    SHIsTotalEarning = headTotal.SHIsTotalEarning;
+                                    for (var eh = 0; eh < earningHeads.length; eh++) {
+                                        var earningHead = earningHeads[eh];
+                                        var eHeads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, earningHead.PBTRSHId, "value")
+                                        if (eHeads != null) {
+
+                                            PBTRCalcOnSHId.push({ value: eHeads.value, name: eHeads.name, SHeadType: eHeads.SHType })
+                                        }
+                                    }
+                                }
+                                else {
+                                    $scope.toggleExpandOnAdd = false;
+                                    $scope.showMsg("warning", "Please add earning type first")
+                                    return
+                                }
+                            }
+                            else if (headTotal.SHIsTotalDeduction == "True") {
+                                var deductionHeads = $filter("findAll")($scope.payTempGridOptions.data, "Deduction", "SHeadType")
+                                if (deductionHeads != null) {
+                                    SHIsTotalDeduction = headTotal.SHIsTotalDeduction;
+                                    var PBTRCalcOnSHId = [];
+                                    for (var dh = 0; dh < deductionHeads.length; dh++) {
+                                        var deductionHead = deductionHeads[dh];
+                                        var dHeads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, deductionHead.PBTRSHId, "value")
+                                        if (dHeads != null) {
+                                            PBTRCalcOnSHId.push({ value: dHeads.value, name: dHeads.name, SHeadType: dHeads.SHType })
+                                        }
+                                    }
+                                }
+                                else {
+                                    $scope.toggleExpandOnAdd = false;
+                                    $scope.showMsg("warning", "Please add deduction type first")
+                                    return
+                                }
+                            }
+                            else if (headTotal.SHIsGross == "True" || headTotal.SHIsNetPay == "True") {
+                                for (var edh = 0; edh < $scope.payTempGridOptions.data.length; edh++) {
+                                    var earDecheads = $scope.payTempGridOptions.data[edh];
+                                    var earDecShId = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, earDecheads.PBTRSHId, "value")
+                                    if (earDecheads.SHeadType != "Total") {
+
+                                        if (earDecShId != null) {
+                                            PBTRCalcOnSHId.push({ value: earDecShId.value, name: earDecShId.name, SHeadType: earDecShId.SHType })
+                                        }
+                                    }
+                                    else {
+                                        if (earDecShId.SHIsRoundOff == "True") {
+                                            PBTRCalcOnSHId.push({ value: earDecShId.value, name: earDecShId.name, SHeadType: earDecShId.SHType })
+                                        }
+                                    }
+                                }
+                            }
+                            _addRuleGridRow(0, true, false, '', 0, 0, headId, '', 'Total', '', PBTRCalcOnSHId, SHIsTotalEarning, SHIsTotalDeduction);
+                        }
+                    }
+
+                }
+                else {
+                    var heads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, headId, "value")
+                    if (heads != null) {
+                        if (heads.SHIsNetPay == "True" || heads.SHIsGross == "True") {
+                            _addRuleGridRow(0, true, false, '', 0, 0, headId, '', 'Total', '', '', '', '');
+                        }
+                        else {
+                            $scope.toggleExpandOnAdd = false;
+                            $scope.showMsg("warning", "Please add earing heads");
+                        }
+                    }
+                }
+            }
+            else {
+                $scope.showMsg("error", "This Head already exist");
+            }
+
+        }
 
 
         //adding new row to rule grid
         function _addNewRule(row) {
+
             if ($scope.payTempGridOptions.data.length > 0) {
                 var lastRow = $scope.payTempGridOptions.data[$scope.payTempGridOptions.data.length - 1];
                 if (lastRow.PBTRSHId) {
-
-                    _addRuleGridRow(0, false, 0, 0, 0, '', '', '', '', 0);
-
+                    var shIdNotSelectRow = $filter("findObj")($scope.payTempGridOptions.data, 0, 'PBTRSHId')
+                    if (shIdNotSelectRow == null) {
+                        var index = $scope.payTempGridOptions.data.indexOf(lastRow);
+                        $scope.selectedRowIndex = index + 1;
+                        _addRuleGridRow(0, false, false, '', 0, 0, 0, '', '', '', '', 0);
+                    }
                 }
             }
             else {
-                _addRuleGridRow(0, false, 0, 0, 0, '', '', '', '', 0);
+                _addRuleGridRow(0, false, false, '', 0, 0, 0, '', '', '', '', 0);
             }
         }
 
-        function _addRuleGridRow(PBTRId, PBTRIsFormula, PBSId, PBRPBId, PBTRSHId, SHName, SHeadType, PBRRuleName, PBTRCalcOnSHId) {
+        function _addRuleGridRow(PBTRId, PBTRIsFormula, PBTRIsSlab, PBTRPercentage, PBSId, PBRPBId, PBTRSHId, SHName, SHeadType, PBRRuleName, PBTRCalcOnSHId, SHIsTotalEarning, SHIsTotalDeduction) {
 
-            $scope.payTempGridOptions.data.push({
+            var row = {
                 PBTRId: PBTRId,
                 PBTRIsFormula: PBTRIsFormula,
+                PBTRIsSlab: PBTRIsSlab,
+                PBTRPercentage: PBTRPercentage,
                 PBSId: PBSId,
                 PBRPBId: PBRPBId,
                 PBTRSHId: PBTRSHId,
@@ -495,14 +759,56 @@
                 SHeadType: SHeadType,
                 PBRRuleName: PBRRuleName,
                 PBTRCalcOnSHId: PBTRCalcOnSHId,
+                SHIsTotalEarning: SHIsTotalEarning,
+                SHIsTotalDeduction: SHIsTotalDeduction
+            }
 
-            })
-
+            if ($scope.selectedRow == undefined) {
+                $scope.payTempGridOptions.data.push(row);
+            }
+            else {
+                if ($scope.edit) {
+                    row.PBTRGridIndex = $scope.selectedRow.entity.index + 0.1;
+                }
+                $scope.payTempGridOptions.data.splice($scope.selectedRow.entity.index + 1, 0, row)
+                // angular.forEach($scope.payTempGridOptions.data,function(data){
+                //     if(data.PBTRGridIndex==$scope.selectedRow.entity.index + 1)
+                //     {
+                //         data.PBTRGridIndex= data.PBTRGridIndex
+                //     }
+                // })
+                $scope.selectedRow.isSelected = false;
+                $scope.selectedRowIndex = angular.copy($scope.selectedRow.entity.index)
+                $scope.selectedRow = undefined
+            }
+            //  $scope.payTempGridOptions.data.push(row);
+            if ($scope.toggleExpandOnAdd) {
+                _getSubGridOptions(row, true)
+                _addDependentHeadList();
+                $scope.toggleExpandOnAdd = false;
+            }
         }
 
 
         function _onRegisterApi(gridApi) {
             $scope.rulePage.gridApi = gridApi;
+            gridApi.selection.on.rowSelectionChanged($scope, function (row, index) {
+                if (row.isSelected) {
+                    if (!$scope.edit) {
+                        var removeRowIndex = $scope.payTempGridOptions.data.indexOf(row.entity);
+                        row.entity.index = removeRowIndex;
+                    }
+                    else {
+                        row.entity.index = row.entity.PBTRGridIndex;
+                    }
+                    $scope.selectedRow = row;
+                }
+                else {
+                    $scope.selectedRow = undefined;
+                }
+                // $scope.rulePage.gridApi.selection.setMultiSelect(!$scope.rulePage.gridApi.grid.options.multiSelect);
+            });
+
             $scope.rulePage.gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
                 if (row.isExpanded) {
                     if (row.entity.PBTRCalcOnSHId.length == 0) {
@@ -524,7 +830,17 @@
             });
             $scope.rulePage.gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 // console.log(colD ef)
-                // debugger
+
+                var salHead = $filter('findObj')($scope.rulePage.pageinfo.selects.PBTRSHId, rowEntity.PBTRSHId, 'value')
+                if (salHead != null) {
+                    if (salHead.SHIsTotal == "True") {
+                        rowEntity.PBTRSHId = 0;
+                        rowEntity.SHType = "";
+                        alert("You cannot add " + salHead.name + " salary head from here, if you want to add " + salHead.name + " salary head than add from TotalHead DropDown")
+                        return
+                    }
+                }
+
                 if (rowEntity.PBTRCalcOnSHId.length <= 0) {
                     rowEntity.PBTRPercentage = '';
                 }
@@ -537,34 +853,36 @@
                 if (shGross != null) {
                     grossId = shGross.value;
                 }
-                var isBasicOrGrossOnRightRow = false;
-                if (shBasic != null || shGross != null) {
-                    if (shBasic.value == newValue || shGross.value == newValue) {
-                        isBasicOrGrossOnRightRow = true;
-                    }
-                    else {
-                        if ($scope.payTempGridOptions.data.length == 2) {
-                            if (($scope.payTempGridOptions.data[0].PBTRSHId == shBasic.value || $scope.payTempGridOptions.data[1].PBTRSHId == shBasic.value) && ($scope.payTempGridOptions.data[0].PBTRSHId == shGross.value || $scope.payTempGridOptions.data[1].PBTRSHId == shGross.value)) {
-                                isBasicOrGrossOnRightRow = true;
-                            }
-                            else {
-                                isBasicOrGrossOnRightRow = false;
-                                rowEntity.PBTRSHId = '';
-                                rowEntity.SHeadType = '';
-                                $scope.showMsg("warning", "you can place gross or basic head in first or second row")
-                            }
-                        }
-                        else if ($scope.payTempGridOptions.data[0].PBTRSHId == shBasic.value || $scope.payTempGridOptions.data[0].PBTRSHId == shGross.value) {
-                            isBasicOrGrossOnRightRow = true;
-                        }
-                        else {
-                            isBasicOrGrossOnRightRow = false;
-                            rowEntity.PBTRSHId = '';
-                            rowEntity.SHeadType = '';
-                            $scope.showMsg("warning", "you can place gross or basic head in first or second row")
-                        }
-                    }
-                }
+                var isBasicOrGrossOnRightRow = true;
+                //WILL BE USED ONCE REQUIRED
+                // if (shBasic != null || shGross != null) {
+                //     if (shBasic.value == newValue || shGross.value == newValue) {
+                //         isBasicOrGrossOnRightRow = true;
+                //     }
+                //     else {
+                //         if ($scope.payTempGridOptions.data.length == 2) {
+                //             if (($scope.payTempGridOptions.data[0].PBTRSHId == shBasic.value || $scope.payTempGridOptions.data[1].PBTRSHId == shBasic.value) && ($scope.payTempGridOptions.data[0].PBTRSHId == shGross.value || $scope.payTempGridOptions.data[1].PBTRSHId == shGross.value)) {
+                //                 isBasicOrGrossOnRightRow = true;
+                //             }
+                //             else {
+                //                 isBasicOrGrossOnRightRow = false;
+                //                 rowEntity.PBTRSHId = '';
+                //                 rowEntity.SHeadType = '';
+                //                 $scope.showMsg("warning", "you can place gross or basic head in first or second row")
+                //             }
+                //         }
+                //         else if ($scope.payTempGridOptions.data[0].PBTRSHId == shBasic.value || $scope.payTempGridOptions.data[0].PBTRSHId == shGross.value) {
+                //             isBasicOrGrossOnRightRow = true;
+                //         }
+                //         else {
+                //             isBasicOrGrossOnRightRow = false;
+                //             rowEntity.PBTRSHId = '';
+                //             rowEntity.SHeadType = '';
+                //             $scope.showMsg("warning", "you can place gross or basic head in first or second row")
+                //         }
+                //     }
+                // }
+
                 if (isBasicOrGrossOnRightRow) {
 
                     var totalAmount = 0;
@@ -610,39 +928,113 @@
                     }
 
                     if (colDef.colIndex == 0) {
-                        //find existing in list
+                        //find existing in list                      
                         rowEntity.PBTRSHId = oldValue;
+                        var checkDeductionHead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, newValue, 'value')
+                        if (checkDeductionHead != null) {
+                            if (checkDeductionHead.SHType == "Deduction") {
+                                if ($scope.payTempGridOptions.data.length == 1) {
+                                    $scope.showMsg('warning', 'You can add earning head first.')
+                                    rowEntity.PBTRSHId = 0;
+                                    rowEntity.SHeadType = '';
+                                    return
+                                }
+                            }
+                        }
+
+
+                        var getTotalEarHead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, 'True', "SHIsTotalEarning")
+                        var getTotalDecHead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, 'True', "SHIsTotalDeduction")
+                        var existingTotalEarningHead = $filter("findObj")($scope.payTempGridOptions.data, getTotalEarHead.value, "PBTRSHId");
+                        var existingTotalDeductionHead = $filter("findObj")($scope.payTempGridOptions.data, getTotalDecHead.value, "PBTRSHId");
+
+                        if (existingTotalEarningHead != null || existingTotalDeductionHead != null) {
+                            var exitHead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, newValue, 'value')
+                            if (exitHead != null) {
+
+                                if (exitHead.SHType == "Earning" && existingTotalEarningHead != null) {
+                                    if ($scope.selectedRowIndex >= existingTotalEarningHead.index) {
+                                        $scope.showMsg('warning', 'You can not add earning head beacause Total Earning head already exist. If you want to add earning head type then delete the total earning head.')
+                                        rowEntity.PBTRSHId = 0;
+                                        rowEntity.SHeadType = '';
+                                        return
+                                    }
+                                    else {
+                                        var childExist = false;
+                                        // var existChildShid = existingTotalEarningHead.subGridOptions.data.PFTDCalcHeadId[0].value;
+                                        // $filter("findObj")(existingTotalEarningHead.subGridOptions.data, )
+                                        // angular.forEach($scope.payTempGridOptions.data, function (parent) {
+                                        //     for (var i = 0; i < existingTotalEarningHead.subGridOptions.data.length; i++) {
+                                        //         var childShid = existingTotalEarningHead.subGridOptions.data[i];
+                                        //         if (childShid.PFTDCalcHeadId[0].value != parent.PBTRSHId) {
+                                        //             childShid.PFTDCalcHeadId[0].value=[];
+                                        //         }
+                                        //     }
+                                        // })
+                                        for (var i = 0; i < existingTotalEarningHead.subGridOptions.data.length; i++) {
+                                            var childShid = existingTotalEarningHead.subGridOptions.data[i];
+                                            if (childShid.PFTDCalcHeadId[0].value == exitHead.value) {
+                                                childExist = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!childExist) {
+                                            existingTotalEarningHead.PBTRCalcOnSHId.push({ value: exitHead.value, name: exitHead.name, SHeadType: exitHead.SHType })
+                                            _getSubGridOptions(existingTotalEarningHead, true)
+                                        }
+                                    }
+                                }
+                                if (exitHead.SHType == "Deduction" && existingTotalDeductionHead != null) {
+                                    if ($scope.selectedRowIndex >= existingTotalDeductionHead.index) {
+                                        $scope.showMsg('warning', 'You can not add deduction head beacause Total Deduction head already exist. If you want to add deduction head type then delete the total deduction head.')
+                                        rowEntity.PBTRSHId = 0;
+                                        rowEntity.SHeadType = '';
+                                        return
+                                    }
+                                    else {
+                                        existingTotalDeductionHead.PBTRCalcOnSHId.push({ value: exitHead.value, name: exitHead.name, SHeadType: exitHead.SHType })
+                                        _getSubGridOptions(existingTotalDeductionHead, true)
+                                        //   $scope.isUpRow = false;
+                                    }
+                                }
+                            }
+                        }
                         var existingHead = $filter('findObj')($scope.payTempGridOptions.data, newValue, 'PBTRSHId')
                         if (existingHead != null) {
                             $scope.showMsg('warning', 'Heads can not be duplicate.')
                             rowEntity.PBTRSHId = 0;
                             rowEntity.SHeadType = '';
-                          
+
                         }
                         else {
-
-
                             rowEntity.PBTRSHId = newValue;
+                            console.log($scope.rulePage.pageinfo.fields.PBTRSHId.options)
                             var foundPB = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRSHId.options, rowEntity.PBTRSHId, 'value')
                             if (foundPB != null) {
-                                if (foundPB.SHIsForEmployer == "True") {
-                                    rowEntity.SHeadType = 'Employer';
-                                }
-                                else if (foundPB.SHIsDeduction == "False") {
-
-
-                                    // if ((grossAmt > 0 && remainingAmount > 0) || (grossAmt <= 0)) {
-
-                                    rowEntity.SHeadType = 'Earning';
-                                    // }
-                                    // else {
-                                    //     rowEntity.PBTRSHId = 0;
-                                    //     $scope.showMsg('warning', 'Earnings already match with Gross amount')
-                                    // }
-
+                                if (foundPB.SHIsTotal == "True") {
+                                    rowEntity.SHeadType = 'Total';
                                 }
                                 else {
-                                    rowEntity.SHeadType = 'Deduction';
+                                    if (foundPB.SHIsForEmployer == "True") {
+                                        rowEntity.SHeadType = 'Employer';
+                                    }
+
+                                    else if (foundPB.SHIsDeduction == "False") {
+
+
+                                        // if ((grossAmt > 0 && remainingAmount > 0) || (grossAmt <= 0)) {
+
+                                        rowEntity.SHeadType = 'Earning';
+                                        // }
+                                        // else {
+                                        //     rowEntity.PBTRSHId = 0;
+                                        //     $scope.showMsg('warning', 'Earnings already match with Gross amount')
+                                        // }
+
+                                    }
+                                    else {
+                                        rowEntity.SHeadType = 'Deduction';
+                                    }
                                 }
                             }
                             _getDifferenceHeadList();
@@ -765,8 +1157,9 @@
 
                     //     //_getSubGridOptions(rowEntity, rowEntity.PBTRIsFormula)
                     // }
-
-                    $scope.netPayableAmount = _getNetPayable();
+                    if (existingHead == null) {
+                        $scope.netPayableAmount = _getNetPayable();
+                    }
                 }
             });
 
@@ -786,16 +1179,29 @@
         }
         function _addDependentHeadList() {
 
-            //update dependent dropdown
-            var dependList = [];
-            for (var v = 0; v < $scope.payTempGridOptions.data.length; v++) {
-                var shead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRSHId.options, $scope.payTempGridOptions.data[v].PBTRSHId, 'value')
-                if (shead != null) {
-                    dependList.push(shead);
+            var isListUpdate = false;
+            if ($scope.rulePage) {
+                if ($scope.rulePage.pageinfo) {
+                    if ($scope.rulePage.pageinfo.fields) {
+
+
+                        //update dependent dropdown
+                        var dependList = [];
+                        for (var v = 0; v < $scope.payTempGridOptions.data.length; v++) {
+                            var shead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRSHId.options, $scope.payTempGridOptions.data[v].PBTRSHId, 'value')
+                            if (shead != null) {
+                                dependList.push(shead);
+                            }
+                        }
+
+                        $scope.payTempGridOptions.columnDefs[2].editDropdownOptionsArray = dependList;
+                        isListUpdate = true;
+                    }
                 }
             }
-
-            $scope.payTempGridOptions.columnDefs[2].editDropdownOptionsArray = dependList;
+            if (!isListUpdate) {
+                $scope.isDependListToBeUpdate = true;
+            }
         }
 
         function _getNetPayable() {
@@ -879,27 +1285,35 @@
 
             if (row.entity.PBTRIsFormula) {
                 _getSubGridOptions(row.entity, row.entity.PBTRIsFormula)
-                if (row.entity.PBTRCalcOnSHId.length > 0) {
-                    if (row.entity.PBTRCalcOnSHId.length == 1) {
-                        $scope.showMsg('warning', 'Select atleast two heads in calculation part.')
-                        row.entity.PBTRIsFormula = false;
-                    }
-                    else {
-                        // row.entity.PBTRPercentage = '';
-                        if (!row.isExpanded)
-                            $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
-                    }
-                }//
-                else {
-                    row.entity.subGridOptions = { data: [], columnDefs: [] };
-                    row.entity.PBTRIsFormula = false;
-                }
+                var heads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRSHId.options, row.entity.PBTRSHId, "value")
+
+                var param = {
+                    expandedGridOptions: row.entity.subGridOptions,
+                    title: 'Expanded for ' + heads.name
+                };
+                dialogModal.openExpandGrid(param);
+
+                // if (row.entity.PBTRCalcOnSHId.length > 0) {
+                //     if (row.entity.PBTRCalcOnSHId.length == 0) {
+                //         $scope.showMsg('warning', 'Select atleast one heads in calculation part.')
+                //         row.entity.PBTRIsFormula = false;
+                //     }
+                //     else {
+                //         // row.entity.PBTRPercentage = '';
+                //         if (!row.isExpanded)
+                //             $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                //     }
+                // }
+                // else {
+                //     row.entity.subGridOptions = { data: [], columnDefs: [] };
+                //     row.entity.PBTRIsFormula = false;
+                // }
             }
             else {
                 // row.entity.PBTRPercentage = '';
                 if (row.isExpanded) {
                     row.entity.subGridOptions = { data: [], columnDefs: [] };
-                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                    //  $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
                 }
             }
         }
@@ -911,30 +1325,105 @@
             if (row.entity.PBTRIsSlab) {
 
                 _getSubGridOptions(row.entity, row.entity.PBTRIsFormula)
-                if (!row.isExpanded) {//expand row 
-                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
-                }
+                var heads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRSHId.options, row.entity.PBTRSHId, "value")
+
+                var param = {
+                    expandedGridOptions: row.entity.subGridOptions,
+                    title: 'Expanded for ' + heads.name
+                };
+                dialogModal.openExpandGrid(param);
+
+                // if (!row.isExpanded) {//expand row 
+                //     $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                // }
             }
             else {
                 row.entity.subGridOptions = { data: [], columnDefs: [] }
-                if (row.isExpanded) {//collapse row
-                    $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                // if (row.isExpanded) {//collapse row
+                //    // $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+                // }
+            }
+        }
+        function _toggleRowExpand(row) {
+            console.log(row);
+
+            var heads = $filter("findObj")($scope.rulePage.pageinfo.fields.PBTRSHId.options, row.entity.PBTRSHId, "value")
+
+            var param = {
+                expandedGridOptions: row.entity.subGridOptions,
+                title: 'Expanded for ' + heads.name
+            };
+            dialogModal.openExpandGrid(param);
+
+            // if (row.entity.PBTRIsFormula && $scope.toggleExpandOnAdd) {
+            //     _getSubGridOptions(row.entity, row.entity.PBTRIsFormula)
+            //     $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+            //     $scope.toggleExpandOnAdd = false;
+
+
+            // }
+            // else {
+            //     $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
+            // }
+        }
+
+        function _removeRuleSlab(row) {
+
+            var getTotalEarHead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, 'True', "SHIsTotalEarning")
+            var getTotalDecHead = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, 'True', "SHIsTotalDeduction")
+            var existingTotalEarningHead = $filter("findObj")($scope.payTempGridOptions.data, getTotalEarHead.value, 'PBTRSHId');
+            var existingTotalDeductionHead = $filter("findObj")($scope.payTempGridOptions.data, getTotalDecHead.value, 'PBTRSHId');
+            var dependsHead = $filter("findObj")($scope.payTempGridOptions.data, row.entity.PBTRSHId, "PBTRSHId");
+            if (existingTotalEarningHead != null && row.entity.SHeadType == "Earning") {
+                if (row.entity.SHeadType != "Total") {
+                    $scope.showMsg("warning", "Please delete Total " + row.entity.SHeadType + " head first")
+                    return
+                }
+            }
+            if (existingTotalDeductionHead != null && row.entity.SHeadType == "Deduction") {
+                if (row.entity.SHeadType != "Total") {
+                    $scope.showMsg("warning", "Please delete Total " + row.entity.SHeadType + " head first")
+                    return
                 }
             }
 
-        }
-        function _toggleRowExpand(row) {
+            if ($scope.payTempGridOptions.data.length > 0) {
+                //    angular.forEach($scope.payTempGridOptions.data, function (data) {
 
-            $scope.rulePage.gridApi.expandable.toggleRowExpansion(row.entity);
-        }
-        function _removeRuleSlab(row) {
+                for (var i = 0; i < $scope.payTempGridOptions.data.length; i++) {
+                    var data = $scope.payTempGridOptions.data[i];
+                    if (data.PBTRSHId != row.entity.PBTRSHId)
+                        if (data.PBTRCalcOnSHId != undefined) {
+                            var dependentHead = $filter("findObj")(data.PBTRCalcOnSHId, row.entity.PBTRSHId, 'value');
+                            if (dependentHead != null) {
+                                alert('Please remove dependent head first');
+                                return
+                            }
+                        }
+                }
+                // })
+            }
+
+            if (row.entity.PBTRSHId != 0) {
+                $scope.deletedRows.push(row.entity)
+            }
             var index = $scope.payTempGridOptions.data.indexOf(row.entity);
             $scope.payTempGridOptions.data.splice(index, 1);
+
+
             _getNetPayable();
+        }
+        function _restoreData() {
+            if ($scope.deletedRows.length > 0 && $scope.deletedRows != undefined) {
+                for (var i = 0; i < $scope.deletedRows.length; i++) {
+                    var row = $scope.deletedRows[i];
+                    $scope.payTempGridOptions.data.splice(row.index + i, 0, row)
+                }
+                $scope.deletedRows = [];
+            }
         }
 
         function _getSubGridOptions(row, PBTRIsFormula, entitlement) {
-
 
             row.subGridOptions = {
                 enableCellEditOnFocus: true,
@@ -947,13 +1436,40 @@
                 if (row.PBTRCalcOnSHId.length > 0) {
                     for (var i = 0; i < row.PBTRCalcOnSHId.length; i++) {
                         // var headAmt = parseFloat(_getHeadAmount(row.PBTRCalcOnSHId[i].value, entitlement))
+                        var operator = "";
+                        var head = $filter('findObj')($scope.rulePage.pageinfo.fields.PBTRCalcOnSHId.options, row.PBTRSHId, 'value')
+                        if (head != null) {
 
+                            if (head.SHIsGross == "True") {
+                                operator = '+'
+                            }
+                            else if (head.SHIsTotalDeduction == "True") {
+                                operator = '+'
+                            }
+                            else if (head.SHIsTotal == "True") {
+
+                                if (row.PBTRCalcOnSHId[i].SHeadType == "Earning") {
+                                    operator = '+'
+                                }
+                                if (row.PBTRCalcOnSHId[i].SHeadType == "Deduction") {
+                                    operator = '-'
+                                }
+                            }
+                            // else {
+                            //     if (row.PBTRCalcOnSHId[i].SHType == "Earning") {
+                            //         operator = '+'
+                            //     }
+                            //     else if (row.PBTRCalcOnSHId[i].SHType == "Deduction") {
+                            //         operator = '-'
+                            //     }
+                            // }
+                        }
                         row.subGridOptions.data.push({
                             PFTDId: 0,
                             PFTDPBTRId: 0,
                             PFTDCalcHeadId: [row.PBTRCalcOnSHId[i]],
                             PFTDPercentage: 100,
-                            PFTDOperator: '',
+                            PFTDOperator: operator,
                         })
                     }
                 }
@@ -1133,6 +1649,16 @@
                         else {
                             if (calcPercentage > 0 && calcPercentage <= 100) {
                                 rowEntity.PBTSPercentage = calcPercentage.toFixed(2);
+                                //calculating max amount as per percentage input
+                                if (rowEntity.PBTSMaxCalcOnAmount > 0) {
+                                    var inputMaxAmt = parseFloat(rowEntity.PBTSMaxCalcOnAmount);
+                                    var inputMinAmt = parseFloat(rowEntity.PBTSMinCalcOnAmount);
+                                    rowEntity.PBTSMaxCalcOnAmount = inputMaxAmt.toFixed(2);
+                                    var calcMaxAmt = Math.round((calcPercentage / 100) * inputMaxAmt);
+                                    if (calcPercentage > 0) {
+                                        rowEntity.PBTSMaxAmount = calcMaxAmt.toFixed(2);
+                                    }
+                                }
                             }
                             else {
                                 rowEntity.PBTSPercentage = '';
@@ -1360,147 +1886,181 @@
 
 
         function _saveForm(form) {
-
-            $scope.multiEntity = {};
-            $scope.multiEntity.parent = {
-                newEntity: $scope.entity,
-                oldEntity: {},
-                action: $scope.action,
-                tableid: $scope.page.pageinfo.tableid,
-                pageid: $scope.page.pageinfo.pageid
-            }
-            $scope.multiEntity.child = [];
-
-            var child1 = {
-                tableid: $scope.rulePage.pageinfo.tableid,
-                pageid: $scope.rulePage.pageinfo.pageid,
-                parentColumn: $scope.page.pageinfo.idencolname,
-                linkColumn: 'PBTRPBTId',
-                idenColName: $scope.rulePage.pageinfo.idencolname,
-                rows: []
-            }
-
-            for (var r = 0; r < $scope.payTempGridOptions.data.length; r++) {
-                var row = $scope.payTempGridOptions.data[r];
-                var ruleEntity = {};
-
-                ruleEntity.PBTRId = row.PBTRId;
-                ruleEntity.PBTRSHId = row.PBTRSHId;
-                if (ruleEntity.PBTRPBTId == undefined) {
-                    ruleEntity.PBTRPBTId = 0;
-                }
-                else {
-                    ruleEntity.PBTRPBTId = row.PBTRPBTId;
-                }
-                // ruleEntity.PBTRRuleName = row.PBTRRuleName;
-                ruleEntity.PBTRPercentage = row.PBTRPercentage;
-                var calcHeads = ''
-                for (var c = 0; c < row.PBTRCalcOnSHId.length; c++) {
-                    calcHeads += row.PBTRCalcOnSHId[c].value + ','
-                }
-                if (calcHeads != '') {
-                    calcHeads = calcHeads.substr(0, calcHeads.length - 1)
-                }
-                ruleEntity.PBTRCalcOnSHId = '[' + calcHeads + ']'
-                ruleEntity.PBTRIsSlab = row.PBTRIsSlab;
-                ruleEntity.PBTRIsFormula = row.PBTRIsFormula;
-                ruleEntity.IsDeleted = true;
-
-                if (row.subGridOptions) {
-                    if (row.subGridOptions.data) {
-                        if (row.subGridOptions.data.length > 0) {
-                            ruleEntity.child = [];
-                            if (row.PBTRIsFormula) {
-                                var formulaChild = {
-                                    tableid: $scope.paybandTemp.FormulaTableId,
-                                    pageid: $scope.paybandTemp.FormulaPageId,
-                                    parentColumn: $scope.rulePage.pageinfo.idencolname,
-                                    linkColumn: 'PFTDPBTRId',
-                                    idenColName: 'PFTDId',
-                                    rows: []
-                                }
-
-                                for (var c = 0; c < row.subGridOptions.data.length; c++) {
-                                    var ent = row.subGridOptions.data[c];
-
-                                    var formulaEntity = {};
-                                    formulaEntity.PFTDId = ent.PFTDId;
-                                    formulaEntity.PFTDPBRId = ent.PFTDPBTRId;
-
-                                    //converting selected head to comas delimated string
-                                    var calcHeadId = ''
-                                    for (var i = 0; i < ent.PFTDCalcHeadId.length; i++) {
-                                        calcHeadId += ent.PFTDCalcHeadId[i].value + ',';
-                                    }
-                                    if (calcHeadId != '') {
-                                        calcHeadId = calcHeadId.substr(0, calcHeadId.length - 1);
-                                    }
-
-                                    formulaEntity.PFTDCalcHeadId = '[' + calcHeadId + ']';
-
-                                    formulaEntity.PFTDPercentage = ent.PFTDPercentage;
-                                    formulaEntity.PFTDOperator = ent.PFTDOperator;
-                                    formulaChild.rows.push(formulaEntity);
-
-                                }
-
-                                ruleEntity.child.push(formulaChild);
+            if ($scope.deletedRows != undefined) {
+                if ($scope.deletedRows.length > 0) {
+                    angular.forEach($scope.deletedRows, function (data) {
+                        data.IsDeleted = true;
+                        if (data.child.length > 0) {
+                            if (data.child[0].rows.length > 0) {
+                                angular.forEach(data.child[0].rows, function (child1) {
+                                    child1.IsDeleted = true;
+                                })
                             }
-                            else {
-                                var slabChild = {
-                                    tableid: $scope.paybandTemp.SlabTableId,
-                                    pageid: $scope.paybandTemp.SlabPageId,
-                                    parentColumn: $scope.rulePage.pageinfo.idencolname,
-                                    linkColumn: 'PBTSPBTRId',
-                                    idenColName: 'PBTSId',
-                                    rows: []
-                                }
+                            if (data.child[1].rows.length > 0) {
+                                angular.forEach(data.child[1].rows, function (child2) {
+                                    child2.IsDeleted = true;
+                                })
+                            }
+                        }
+                        $scope.payTempGridOptions.data.push(data)
+                    })
+                }
+            }
+            if ($scope.entity.PBTName != undefined && $scope.entity.PBTName != '') {
+                $scope.multiEntity = {};
+                $scope.multiEntity.parent = {
+                    newEntity: $scope.entity,
+                    oldEntity: {},
+                    action: $scope.action,
+                    tableid: $scope.page.pageinfo.tableid,
+                    pageid: $scope.page.pageinfo.pageid
+                }
+                $scope.multiEntity.child = [];
 
-                                for (var c = 0; c < row.subGridOptions.data.length; c++) {
-                                    var ent = row.subGridOptions.data[c];
-                                    if (ent.PBTSPercentage) {
-                                        var slabEntity = {};
-                                        slabEntity.PBTSId = ent.PBTSId;
-                                        slabEntity.PBTSPBRId = ent.PBTSPBRId;
-                                        slabEntity.PBTSIsCalcOnPercentage = ent.PBTSIsCalcOnPercentage;
-                                        slabEntity.PBTSMinCalcOnAmount = ent.PBTSMinCalcOnAmount;
-                                        slabEntity.PBTSMaxCalcOnAmount = ent.PBTSMaxCalcOnAmount;
-                                        slabEntity.PBTSMinAmount = ent.PBTSMinAmount;
-                                        slabEntity.PBTSMaxAmount = ent.PBTSMaxAmount;
-                                        slabEntity.PBTSPercentage = ent.PBTSPercentage;
-                                        // slabEntity.PBTRRuleName = ent.PBTRRuleName;
-                                        slabEntity.PBTSAvoidExcessCalc = ent.PBTSAvoidExcessCalc;
+                var child1 = {
+                    tableid: $scope.rulePage.pageinfo.tableid,
+                    pageid: $scope.rulePage.pageinfo.pageid,
+                    parentColumn: $scope.page.pageinfo.idencolname,
+                    linkColumn: 'PBTRPBTId',
+                    idenColName: $scope.rulePage.pageinfo.idencolname,
+                    rows: []
+                }
 
-                                        slabChild.rows.push(slabEntity);
+                for (var r = 0; r < $scope.payTempGridOptions.data.length; r++) {
+                    var row = $scope.payTempGridOptions.data[r];
+                    var ruleEntity = {};
+
+                    ruleEntity.PBTRId = row.PBTRId;
+                    ruleEntity.PBTRSHId = row.PBTRSHId;
+                    if (ruleEntity.PBTRPBTId == undefined) {
+                        ruleEntity.PBTRPBTId = 0;
+                    }
+                    else {
+                        ruleEntity.PBTRPBTId = row.PBTRPBTId;
+                    }
+                    // ruleEntity.PBTRRuleName = row.PBTRRuleName;
+                    ruleEntity.PBTRPercentage = row.PBTRPercentage;
+                    var calcHeads = ''
+                    for (var c = 0; c < row.PBTRCalcOnSHId.length; c++) {
+                        calcHeads += row.PBTRCalcOnSHId[c].value + ','
+                    }
+                    if (calcHeads != '') {
+                        calcHeads = calcHeads.substr(0, calcHeads.length - 1)
+                    }
+                    ruleEntity.PBTRCalcOnSHId = '[' + calcHeads + ']'
+                    ruleEntity.PBTRIsSlab = row.PBTRIsSlab;
+                    ruleEntity.PBTRIsFormula = row.PBTRIsFormula;
+                    ruleEntity.PBTRGridIndex = r;
+                    ruleEntity.IsDeleted = row.IsDeleted == undefined ? false : row.IsDeleted;
+
+                    if (row.subGridOptions) {
+                        if (row.subGridOptions.data) {
+                            if (row.subGridOptions.data.length > 0) {
+                                ruleEntity.child = [];
+                                if (row.PBTRIsFormula) {
+                                    var formulaChild = {
+                                        tableid: $scope.paybandTemp.FormulaTableId,
+                                        pageid: $scope.paybandTemp.FormulaPageId,
+                                        parentColumn: $scope.rulePage.pageinfo.idencolname,
+                                        linkColumn: 'PFTDPBTRId',
+                                        idenColName: 'PFTDId',
+                                        rows: []
                                     }
 
-                                }
+                                    for (var c = 0; c < row.subGridOptions.data.length; c++) {
+                                        var ent = row.subGridOptions.data[c];
 
-                                ruleEntity.child.push(slabChild);
+                                        var formulaEntity = {};
+                                        formulaEntity.PFTDId = ent.PFTDId;
+                                        formulaEntity.PFTDPBRId = ent.PFTDPBTRId;
+
+                                        //converting selected head to comas delimated string
+                                        var calcHeadId = ''
+                                        for (var i = 0; i < ent.PFTDCalcHeadId.length; i++) {
+                                            calcHeadId += ent.PFTDCalcHeadId[i].value + ',';
+                                        }
+                                        if (calcHeadId != '') {
+                                            calcHeadId = calcHeadId.substr(0, calcHeadId.length - 1);
+                                        }
+
+                                        formulaEntity.PFTDCalcHeadId = '[' + calcHeadId + ']';
+
+                                        formulaEntity.PFTDPercentage = ent.PFTDPercentage;
+                                        formulaEntity.PFTDOperator = ent.PFTDOperator;
+                                        formulaEntity.IsDeleted = ent.IsDeleted == undefined ? false : ent.IsDeleted;
+                                        formulaChild.rows.push(formulaEntity);
+
+                                    }
+
+                                    ruleEntity.child.push(formulaChild);
+                                }
+                                else {
+                                    var slabChild = {
+                                        tableid: $scope.paybandTemp.SlabTableId,
+                                        pageid: $scope.paybandTemp.SlabPageId,
+                                        parentColumn: $scope.rulePage.pageinfo.idencolname,
+                                        linkColumn: 'PBTSPBTRId',
+                                        idenColName: 'PBTSId',
+                                        rows: []
+                                    }
+
+                                    for (var c = 0; c < row.subGridOptions.data.length; c++) {
+                                        var ent = row.subGridOptions.data[c];
+                                        if (ent.PBTSPercentage) {
+                                            var slabEntity = {};
+                                            slabEntity.PBTSId = ent.PBTSId;
+                                            slabEntity.PBTSPBRId = ent.PBTSPBRId;
+                                            slabEntity.PBTSIsCalcOnPercentage = ent.PBTSIsCalcOnPercentage;
+                                            slabEntity.PBTSMinCalcOnAmount = ent.PBTSMinCalcOnAmount;
+                                            slabEntity.PBTSMaxCalcOnAmount = ent.PBTSMaxCalcOnAmount;
+                                            slabEntity.PBTSMinAmount = ent.PBTSMinAmount;
+                                            slabEntity.PBTSMaxAmount = ent.PBTSMaxAmount;
+                                            slabEntity.PBTSPercentage = ent.PBTSPercentage;
+                                            slabEntity.IsDeleted = ent.IsDeleted == undefined ? false : ent.IsDeleted;
+                                            // slabEntity.PBTRRuleName = ent.PBTRRuleName;
+                                            slabEntity.PBTSAvoidExcessCalc = ent.PBTSAvoidExcessCalc;
+
+                                            slabChild.rows.push(slabEntity);
+                                        }
+
+                                    }
+
+                                    ruleEntity.child.push(slabChild);
+                                }
                             }
                         }
                     }
+                    child1.rows.push(ruleEntity)
                 }
-                child1.rows.push(ruleEntity)
+
+                $scope.multiEntity.child.push(child1)
+
+                var postData = JSON.stringify($scope.multiEntity);
+                var compressed = LZString.compressToEncodedURIComponent(postData);
+
+                var data = { lz: true, data: compressed }
+                //   $scope.multiEntity.lz = false
+
+                pageService.multiSave(data).then(function (result) {
+
+                    if (result.success_message = "success") {
+                        $scope.page.showEditForm = false;
+                        $scope.page.refreshData();
+                        $scope.showMsg("success", "Record Saved Successfully");
+                        //  _recalculatingSecondGrid($scope.page.gridOptions)
+                    }
+                    else if (result.error_message.Message == "Record Already Added.") {
+                        $scope.showMsg("error", "Payband Template Name Already Exist");
+                    }
+
+                }, function (err) {
+                    console.log(err)
+                })
+                console.log($scope.multiEntity)
             }
-
-            $scope.multiEntity.child.push(child1)
-
-            var postData = JSON.stringify($scope.multiEntity);
-            var compressed = LZString.compressToEncodedURIComponent(postData);
-
-            var data = { lz: false, data: compressed }
-            $scope.multiEntity.lz = false;
-
-            pageService.multiSave($scope.multiEntity).then(function (result) {
-                if (result == "done") {
-                    $scope.showMsg("success", "Record Saved Successfully");
-                    //  _recalculatingSecondGrid($scope.page.gridOptions)
-                }
-            }, function (err) {
-                console.log(err)
-            })
-            console.log($scope.multiEntity)
+            else {
+                $scope.showMsg("error", "Payband template name is required")
+            }
         }
 
         /**call page load funnction */

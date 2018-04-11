@@ -17,8 +17,8 @@
         url: '/paySlips',
         // abstract: true,
         templateUrl: 'app/pages/payroll/reports/paySlips/payroll.paySlips.html',
-        controller: "paySlipchallanController",
-        controllerAs: "payCtrl",
+        controller: "paySlipchallanControllers",
+        controllerAs: "paySlipCtrl",
         title: 'PaySlip',
         sidebarMeta: {
           order:0,

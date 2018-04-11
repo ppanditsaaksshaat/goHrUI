@@ -5,6 +5,7 @@
 (function () {
   'use strict';
 
+
   angular.module('BlurAdmin.pages', [
     'ui.router',
     'BlurAdmin.pages.dashboard',
@@ -14,6 +15,7 @@
     // 'BlurAdmin.pages.tables',
     // 'BlurAdmin.pages.charts',
     // 'BlurAdmin.pages.maps',
+    'BlurAdmin.pages.help',
     'BlurAdmin.pages.urm',
     'BlurAdmin.pages.organization',
     'BlurAdmin.pages.time',
@@ -23,7 +25,11 @@
     'BlurAdmin.pages.loan',
     'BlurAdmin.pages.advance',
     'BlurAdmin.pages.mis',
-    'BlurAdmin.pages.configuration'
+    'BlurAdmin.pages.configuration',
+    'BlurAdmin.pages.profile',
+    'BlurAdmin.pages.tds',
+    'BlurAdmin.pages.roster',
+    'BlurAdmin.pages.device'
 
   ])
     .config(routeConfig);

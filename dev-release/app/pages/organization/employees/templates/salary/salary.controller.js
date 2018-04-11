@@ -42,9 +42,9 @@
         function _getCustomQuerySuccessResult(result) {
             console.log(result)
             if (result !== "NoDataFoundemp") {
-                var colCreatedOn = { name: 'SHName', field: 'SHName', displayName: 'SHName', width: 100, visible: true };
-                var colCreatedBy = { name: 'PBName', field: 'PBName', displayName: 'Payband Name', width: 100, visible: true };
-                var colAssignedUser = { name: 'SalAmount', field: 'SalAmount', displayName: 'Salary Amount', width: 100, visible: true };
+                var colCreatedOn = { name: 'SHName', field: 'SHName', displayName: 'Head Name', width: 170, visible: true };
+                var colCreatedBy = { name: 'PBName', field: 'PBName', displayName: 'Payband Name', width: 200, visible: true };
+                var colAssignedUser = { name: 'SalAmount', field: 'SalAmount', displayName: 'Salary Amount', width: 150, visible: true };
                 $scope.gridOptions.columnDefs.push(colCreatedOn);
                 $scope.gridOptions.columnDefs.push(colCreatedBy);
                 $scope.gridOptions.columnDefs.push(colAssignedUser);
