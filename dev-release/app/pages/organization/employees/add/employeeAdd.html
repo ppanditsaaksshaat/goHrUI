@@ -16,8 +16,8 @@
           <label>Title*</label>
           <select id="inputTitle" required ng-model="addCtrl.empAdd.EmpTitleId" class="form-control" ng-options="title.value as title.name for title in addCtrl.dropDownList[0]"
             data-placeholder="Select Nav Menu">
-          <option></option>
-       </select>
+            <option></option>
+          </select>
         </div>
       </div>
       <div class="col-sm-3">
@@ -48,8 +48,8 @@
           <label>Gender*</label>
           <select id="inputGender" ng-model="addCtrl.empAdd.PdGenderId" class="form-control" ng-options="gender.value as gender.name for gender in addCtrl.dropDownList[3]"
             data-placeholder="Select Nav Menu" required>
-                  <option></option>
-               </select>
+            <option></option>
+          </select>
 
         </div>
       </div>
@@ -59,13 +59,15 @@
           <div class="input-group" moment-picker="addCtrl.empAdd.JDDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
             min-date="col.minDate">
             <span class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                </span>
+              <i class="fa fa-calendar"></i>
+            </span>
             <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
               ng-model="addCtrl.empAdd.JDDate" ng-model-options="{ updateOn: 'blur' }">
             <span class="input-group-btn">
-                    <button class="btn btn-secondary" ng-click="addCtrl.empAdd.JDDate=''" type="button"><i class="fa fa-close"></i></button>
-                </span>
+              <button class="btn btn-secondary" ng-click="addCtrl.empAdd.JDDate=''" type="button">
+                <i class="fa fa-close"></i>
+              </button>
+            </span>
           </div>
           <!--<datepicker date-format="dd/MMMM/yyyy" selector="form-control">           
             <input ng-model="addCtrl.empAdd.JDDate" name="doj" type="text" class="form-control"   placeholder="dd-mm-yyyy" required >         
@@ -87,7 +89,7 @@
           <label>Department*</label>
           <select id="inputDepartment" ng-model="addCtrl.empAdd.JDDeptId" class="form-control" ng-options="department.value as department.name for department in addCtrl.dropDownList[1]"
             data-placeholder="Select Nav Menu" required>
-                  <option></option>
+            <option></option>
           </select>
         </div>
       </div>
@@ -96,8 +98,8 @@
           <label>Designation*</label>
           <select id="inputDesignation" ng-model="addCtrl.empAdd.JDDesgId" class="form-control" ng-options="designation.value as designation.name for designation in addCtrl.dropDownList[2]"
             data-placeholder="Select Nav Menu" required>
-                  <option></option>
-               </select>
+            <option></option>
+          </select>
         </div>
       </div>
       <div class="col-sm-4">
@@ -105,8 +107,8 @@
           <label>Employment Type*</label>
           <select id="inputEmployeeType" ng-model="addCtrl.empAdd.JDEmploymentId" class="form-control" ng-options="employeeType.value as employeeType.name for employeeType in addCtrl.dropDownList[4]"
             data-placeholder="Select Nav Menu" required>
-                  <option></option>
-               </select>
+            <option></option>
+          </select>
         </div>
       </div>
     </div>
@@ -116,8 +118,8 @@
           <label>Grade*</label>
           <select id="inputGrade" ng-model="addCtrl.empAdd.JDEmpGradeId" class="form-control" ng-options="grade.value as grade.name for grade in addCtrl.dropDownList[5]"
             required>
-                   <option></option>
-               </select>
+            <option></option>
+          </select>
 
         </div>
       </div>
@@ -126,8 +128,8 @@
           <label>Level*</label>
           <select id="inputLevel" ng-model="addCtrl.empAdd.JDEmpLevelId" class="form-control" ng-options="level.value as level.name for level in addCtrl.dropDownList[6]"
             ng-change="vm.typeOnChange(vm.section.SecType,'Add')" required>
-                  <option></option>
-               </select>
+            <option></option>
+          </select>
 
         </div>
       </div>
@@ -144,7 +146,7 @@
           <label>Reporting1*</label>
           <select id="inputLevel" ng-model="addCtrl.empAdd.JDReporting1" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
             required>
-           <option></option>
+            <option></option>
           </select>
         </div>
       </div>
@@ -153,21 +155,28 @@
           <label>Reporting2*</label>
           <select id="inputLevel" ng-model="addCtrl.empAdd.JDReporting2" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
             required>
-             <option></option>
-            </select>
+            <option></option>
+          </select>
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-            <label>Reporting HR*</label>
-            <select id="inputLevel" ng-model="addCtrl.empAdd.JDReportingHR" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
-              required>
-               <option></option>
-              </select>        </div>
+          <label>Reporting HR*</label>
+          <select id="inputLevel" ng-model="addCtrl.empAdd.JDReportingHR" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
+            required>
+            <option></option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="row">
 
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" class="form-control" ng-model="addCtrl.empAdd.PdEmail" placeholder="Email">
+        </div>
+      </div>
       <div class="col-sm-4">
         <div class="form-group">
           <label>Other Identity</label>
@@ -179,12 +188,24 @@
           <label>Group</label>
           <select id="inputEmployeeType" ng-model="addCtrl.empAdd.JDGroupId" class="form-control" ng-options="group.GMCId as group.GMCName for group in addCtrl.groupList"
             data-placeholder="Select Nav Menu" required>
-                  <option></option>
-               </select>
+            <option></option>
+          </select>
         </div>
       </div>
 
     </div>
+    <!-- <div class="row">
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>Roster Plan*</label>
+          <select id="inputEmployeeType" ng-model="addCtrl.empAdd.Plan" class="form-control" ng-change="addCtrl.rosterPlanOnChage(addCtrl.empAdd.Plan)" ng-options="rosterPlan.name for rosterPlan in addCtrl.dropDownList[8]"
+            data-placeholder="Select Nav Menu" required>
+            <option></option>
+          </select>
+        </div>
+      </div>
+    </div> -->
     <div class="text-center">
       <button type="submit" class="btn btn-primary">Save</button>
       <button type="button" ng-click="addCtrl.empAdd=[]" class="btn btn-primary">Clear</button>

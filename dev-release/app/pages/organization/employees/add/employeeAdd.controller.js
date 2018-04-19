@@ -17,7 +17,7 @@
 
         //local variable
         var vm = this;
-        var columnIds = ['132', '667', '3841', '192', '668', '743', '744', '665'];
+        var columnIds = ['132', '667', '3841', '192', '668', '743', '744', '665','4034'];
         vm.pageId = 25;
         vm.empAdd = {};
         var queryId = 528;
@@ -25,6 +25,7 @@
 
         //private function
         vm.saveForm = _saveForm;
+        vm.rosterPlanOnChage=_rosterPlanOnChage;
         //end of private function
 
 
@@ -67,6 +68,9 @@
 
         // end of page load 
 
+        function _rosterPlanOnChage(rosterPlan) {
+            $scope.RosterPlan = rosterPlan;
+        }
 
         // save employee form
         function _saveForm(data) {
@@ -99,8 +103,16 @@
             var personal = {
                 PdGenderId: vm.empAdd.PdGenderId,
                 PdMobileNo: vm.empAdd.PdMobileNo,
-                PDOtherNumber: vm.empAdd.PDOtherNumber
+                PDOtherNumber: vm.empAdd.PDOtherNumber,
+                PdEmail: vm.empAdd.PdEmail
             }
+            // var roster = {
+            //     RODWeekOffSetId: $scope.RosterPlan.RPDWeekOffSetId,
+            //     RODFromDate: moment($scope.RosterPlan.RPDFromDate).format("DD-MMM-YYYY"),
+            //     RODToDate: moment($scope.RosterPlan.RPDToDate).format("DD-MMM-YYYY"),
+            //     RODShiftId: $scope.RosterPlan.RPDWeekOffSetId,
+            //     RODRosterPlanId: $scope.RosterPlan.value,
+            // }
             var employeeData = { basic: basic, job: job, personal: personal };
             pageService.create(JSON.stringify(employeeData)).then(_createSuccessResult, _createErrorResult)
 
@@ -117,9 +129,7 @@
         }
         function _createErrorResult(error) {
         }
-        // save employee form
-
-        //page load function
+      
         _loadController();
     }
 })();

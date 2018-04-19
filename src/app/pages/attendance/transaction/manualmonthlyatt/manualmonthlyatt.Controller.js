@@ -65,6 +65,7 @@
 
 
     function _getEmployeeAttendance() {
+      console.log($scope.user.profile.empId)
       $scope.weekGridOptions.data = [];
       $scope.isLoading = true;
       $scope.gridLine = false;
@@ -81,6 +82,8 @@
             var searchListData = { field: 'Month', operand: '=', value: $scope.entity.Month }
             searchLists.push(searchListData)
             var searchListData = { field: 'Year', operand: '=', value: $scope.entity.Year }
+            searchLists.push(searchListData)
+            var searchListData = { field: 'EmpId', operand: '=', value: $scope.user.profile.empId }
             searchLists.push(searchListData)
             var data = {
               searchList: searchLists,

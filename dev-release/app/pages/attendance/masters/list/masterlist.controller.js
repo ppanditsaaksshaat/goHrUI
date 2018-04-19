@@ -75,6 +75,7 @@
       viewRecord: null,
       deleteRecord: null,
       uploadRecord: null,
+      buttonPermission: true,
       dataResult: _dataResult
     }
     if (pageId == 455) {
@@ -88,8 +89,9 @@
     }
 
     function _addRecord() {
+      // $scope.weekGridOptions.data = [];
       isWeekOffEdit = false;
-      $scope.entity = [];
+      $scope.entity = {};
       angular.forEach($scope.weekGridOptions.data, function (data) {
         data.SGWDFirst = -1;
         data.SGWDSecond = -1;
@@ -102,6 +104,7 @@
       $scope.showWeeklyOffList = true;
     }
     function _editRecord(row) {
+      debugger
       isWeekOffEdit = true;
       $scope.showWeeklyOffList = true;
       var multiSelect = {
@@ -325,7 +328,7 @@
         $scope.showMsg("error", gridErrorMsg);
         return false;
       }
-      if ($scope.oldData!="NoDataFound") {
+      if ($scope.oldData != "NoDataFound") {
         var groupExist = false;
         angular.forEach($scope.oldData, function (data) {
           var groupIds = data.WOSGroupId.split(',');
@@ -414,8 +417,14 @@
         }
         console.log($scope.multiEntity)
         $scope.multiEntity.child.push(child);
-        $scope.multiEntity.lz = false;
-        pageService.multiSave($scope.multiEntity).then(function (result) {
+
+        var postData = JSON.stringify($scope.multiEntity);
+        var compressed = LZString.compressToEncodedURIComponent(postData);
+
+        var data = { lz: true, data: compressed }
+
+        // $scope.multiEntity.lz = false;
+        pageService.multiSave(data).then(function (result) {
           console.log(result)
           if (result == "done") {
             $scope.showMsg("success", "Record Saved Successfully");
@@ -429,7 +438,10 @@
     }
 
     function _closeWeekOffAdd() {
+      _loadController();
       $scope.showWeeklyOffList = false;
+      $scope.entity = {};
+
     }
 
     // function _loadController() {

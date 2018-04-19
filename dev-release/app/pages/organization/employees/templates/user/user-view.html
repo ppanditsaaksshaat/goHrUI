@@ -1,38 +1,83 @@
-<form ng-submit="empTabCtrl.saveFormCommon(editForm)" name="editForm" novalidate>
-    <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
-        <edit-panel-head page="page" page-title="page.pageinfo.title" reset-form="empTabCtrl.resetFormCommon(editForm)" clear-form="empTabCtrl.clearFormCommon()"
-            open-List="empTabCtrl.goToEmployeeList()" condition="user.profile.isAdmin && user.profile.isManager ? true :false"
-            show-close="true"></edit-panel-head>
-        <div class="panel-body" style="padding:5px;" ng-scrollbars ng-scrollbars-config="config">
-            <div style="min-height: 450px;" ng-show="page.pageIsLoaded">
-                <!--<div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label ng-bind="page.pageinfo.fields.EmpName.text"></label>
-                            <span class="form-control" ng-bind="empTabCtrl.entity.EmpName"></span>
-                        </div>
-                    </div>
-                </div>-->
-                <!--<div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label ng-bind="page.pageinfo.fields.RoleId.text"></label>
-                            <field-box page="page" ng-column="page.pageinfo.fields.RoleId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                        </div>
-                    </div>
-                </div>-->
+<div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll" ng-controller="userRegistration">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div class="col-md-12">
+                User Register/Change Password
+                <button class="btn btn-xs btn-default pull-right" ng-click="goToList()">List</button>
+            </div>
 
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label ng-bind="page.pageinfo.fields.RoleId.text"></label>
-                            <field-box page="page" ng-column="page.pageinfo.fields.RoleId" ng-entity="empTabCtrl.entity" form="editForm"></field-box>
-                        </div>
+        </div>
+
+    </div>
+    <div class="panel-body">
+        <form ng-show="newRegister" ng-submit="register(entity)">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>UserName*</label>
+                        <input type="textbox" class="form-control" ng-model="entity.UserName">
                     </div>
                 </div>
-
-
             </div>
-        </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Password*</label>
+                        <input type="password" class="form-control" ng-model="entity.Password">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Confirm Password*</label>
+                        <input type="password" class="form-control" ng-model="entity.ConfirmPassword">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <button class="btn btn-primary">Register</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form ng-hide="newRegister" ng-submit="change(entity)">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>UserName*</label>
+                        <input disabled="disabled" type="textbox" class="form-control" ng-model="entity.UserName">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>New Password*</label>
+                        <input type="password" class="form-control" ng-model="entity.NewPassword">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Confirm Password*</label>
+                        <input type="password" class="form-control" ng-model="entity.ConfirmPassword">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <button class="btn btn-primary">Change</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-    <form>
+
+</div>

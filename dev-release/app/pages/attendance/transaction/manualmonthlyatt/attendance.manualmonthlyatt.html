@@ -17,12 +17,15 @@
                         </div>
 
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <label ng-bind="manualAttendance.pageinfo.fields.Year.text"></label>
                         <div>
                             <select class="form-control" ng-model="entity.Year" ng-options="year.value as year.name for year in manualAttendance.pageinfo.selects.Year"></select>
                         </div>
+                    </div>
 
+                    <div class="col-md-1" ng-show="isLoading">
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
                     </div>
 
                     <div class="col-md-1">
@@ -35,9 +38,9 @@
                         <label></label>
                         <div>
                             <label class="checkbox-inline custom-checkbox nowrap">
-                                    <input type="checkbox" ng-click="getEmployeeAttendance()" id="inlineCheckbox02"ng-model="callCurrentMonth"  >
-                                    <span>Current</span>
-                                </label>
+                                <input type="checkbox" ng-click="getEmployeeAttendance()" id="inlineCheckbox02" ng-model="callCurrentMonth">
+                                <span>Current</span>
+                            </label>
                         </div>
                     </div>
                     <div class="col-md-1" ng-show="showAllButton">
@@ -65,13 +68,17 @@
                         </div>
                     </div>
                 </div>
-                <h3 class="with-line " ng-show="gridLine"></h3>
-                <div class="row" ng-if="weekGridOptions.data.length>0">
-                    <div class="col-md-12">
-                        <div style="height: 400px;" ui-grid="weekGridOptions" ui-grid-cellNav ui-grid-pagination ui-grid-edit ui-grid-expandable
-                            ui-grid-auto-resize ui-grid-selection class="grid"></div>
+                
+                <div>
+                    <h3 class="with-line " ng-show="gridLine"></h3>
+                    <div class="row" ng-if="weekGridOptions.data.length>0">
+                        <div class="col-md-12">
+                            <div style="height: 400px;" ui-grid="weekGridOptions" ui-grid-cellNav ui-grid-pagination ui-grid-edit ui-grid-expandable
+                                ui-grid-auto-resize ui-grid-selection class="grid"></div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

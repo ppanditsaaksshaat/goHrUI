@@ -9,6 +9,36 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
     authInterceptorServiceFactory.isProgressIsOpened = false;
     var _request = function (config) {
 
+        config.headers = config.headers || {};
+
+
+        var corpoId = DJWebStore.GetValue('CorpoId');
+        var userLang = DJWebStore.GetValue('UserLang');
+        var levelQueried = DJWebStore.GetValue('LevelQueried');
+        var getAllLevel = DJWebStore.GetValue('GetAllLevel');
+        
+        if (corpoId == null)
+            config.headers.CorpoId = '';
+        else
+            config.headers.CorpoId = corpoId;
+
+        if (userLang == null)
+            config.headers.UserLang = 'en';
+        else
+            config.headers.UserLang = userLang;
+
+        if (levelQueried == null)
+            config.headers.LevelQueried = '0';
+        else
+            config.headers.LevelQueried = levelQueried;
+            
+        if (getAllLevel == null)
+            config.headers.GetAllLevel = '1';
+        else
+            config.headers.GetAllLevel = getAllLevel;    
+
+        var currentPeriodLastDate = moment($rootScope.currentPeriod);
+        config.headers.CurrentPeriod = currentPeriodLastDate.endOf('month').format('YYYY-MM-DD');
 
         if (config.url.indexOf('/api/') > 0) {
             //console.log(config.url)
@@ -22,7 +52,7 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
         }
 
 
-        config.headers = config.headers || {};
+
 
         var authData = DJWebStore.GetAuthorization();
         if (authData) {
@@ -70,11 +100,17 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
         }
         if (response.config.url.endsWith('token')
             || response.config.url.endsWith('GetFile')
-            || response.config.url.endsWith('GetAttach')) {
+            || response.config.url.endsWith('GetAttach')
+            || response.config.url.endsWith('Register')
+            || response.config.url.endsWith('NewPassword')
+            || response.config.url.endsWith('UpdateUser')) {
         }
         else if (response.config.url.indexOf('/api/') > -1) {
             var result = {};
-            if (response.data !== undefined) {
+            if (response.config.responseType == "arraybuffer") {
+                result = angular.copy(response);
+            }
+            else if (response.data !== undefined) {
                 var result_data = angular.fromJson(response.data);
                 result = result_data;
                 //console.log(result_data.lz,'lz')
@@ -105,7 +141,7 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
 
         //    }
         // }
-        
+
         return response;
     }
 

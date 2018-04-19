@@ -9,7 +9,7 @@
         .directive('gridBox', gridBox);
     /** @ngInject */
     function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
-        editFormService, focus, $filter) {
+        editFormService, focus, $filter, DJWebStore, $stateParams) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/gridBox/gridBox.html',
@@ -59,9 +59,41 @@
                     afterCellEdit: null,//external cell edit event
                     onRegisterApi: null,
                     fieldEvents: [],
-                    buttonPermission: false
+                    buttonPermission: false,
+                    openHelp: null,//external help option
+                    isVerifyButton: false,
+                    verifyResult: null,
                 }
 
+
+                $scope.showDataFor = _showDataFor;
+
+                function _showDataFor(idx, isFromLoad) {
+
+                    if (idx == 0) {
+                        $scope.selectedQueryType = 'ShowDataOnlyMe';
+                    }
+                    else if (idx == 1) {
+                        $scope.selectedQueryType = 'ShowDataLevel1';
+                    }
+                    else if (idx == 2) {
+                        $scope.selectedQueryType = 'ShowDataLevel2';
+                    }
+                    else if (idx == 3) {
+                        $scope.selectedQueryType = 'ShowDataLevel3';
+                    }
+                    else if (idx == 100) {
+                        $scope.selectedQueryType = 'ShowDataAllLevel';
+                    }
+                    DJWebStore.SetValue('LevelQueried', idx)
+                    DJWebStore.SetValue('GetAllLevel', 1)
+
+                    if (!isFromLoad) {
+                        var current = $state.current;
+                        var params = angular.copy($stateParams);
+                        $state.transitionTo(current, params, { reload: true, inherit: true, notify: true });
+                    }
+                }
                 //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
                 //customColumns:text,click,type:a|button|text|dd,pin:true|false,
                 var gridOptions = $rootScope.getGridSetting();
@@ -140,16 +172,22 @@
                 $scope.page.closeForm = _closeForm;
                 $scope.page.goBack = _goBack;
                 $scope.page.gridOptions.onRegisterApi = _onRegisterApi;
+                $scope.page.openHelp = _openHelp;
                 $scope.saveForm = _saveForm;
                 $scope.resetForm = _resetForm;
                 $scope.closeForm = _closeForm;
                 $scope.clearForm = _clearForm;
+                $scope.verifyEntity = _verifyEntity;
 
 
                 function _loadDirective() {
+                    var idxval = DJWebStore.GetValue('LevelQueried')
+                    _showDataFor(idxval, true);
+
                     if ($scope.page.boxOptions.selfLoading) {
                         _getPageData();
                     }
+
                 }
                 function _getPageData() {
                     if ($scope.page.boxOptions.getPageData == null) {
@@ -158,9 +196,9 @@
                     else
                         $scope.page.boxOptions.getPageData();
                 }
-                function _refreshData() {
+                function _refreshData(userSearchList) {
                     if ($scope.page.boxOptions.refreshData == null) {
-                        _getTableData();
+                        _getTableData(userSearchList);
                     }
                     else
                         $scope.page.boxOptions.refreshData();
@@ -365,6 +403,21 @@
 
                 }
 
+                function _openHelp() {
+                    if ($scope.page.boxOptions.openHelp == null) {
+
+                        var corpoId = DJWebStore.GetValue('CorpoId');
+                        var userLang = DJWebStore.GetValue('UserLang');
+
+                        var queryString = 'pid=' + $scope.page.pageId + '&cid=' + corpoId +
+                            '&lang=' + userLang;
+
+                        window.open('/help/?' + queryString, 'helpWindow', '_blank')
+                    }
+                    else
+                        $scope.page.boxOptions.openHelp(row);
+                }
+
                 //END: button function  
                 //====================================================================
                 //setup grid columns from pageinfo
@@ -394,7 +447,6 @@
                             }
                             $scope.isAdmin = $rootScope.user.profile.isAdmin;
                             $scope.isManager = $rootScope.user.profile.isManager;
-
                             if ($scope.page.pageinfo.uibuttons.edit.IsAllowed || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager))
                                 isEdit = true;
                             else
@@ -502,6 +554,7 @@
                                 }
                             }
                             //console.log($scope.page)
+                            _addVerifyButton();
                             if ($scope.page.boxOptions.customColumns) {
                                 if ($scope.page.boxOptions.customColumns != null) {
                                     angular.forEach($scope.page.boxOptions.customColumns, function (col) {
@@ -593,10 +646,11 @@
                         }
                     }
                     else {
-                        
+
                         if ($scope.page.boxOptions.buttonPermission) {
                             result.pageinfo.uibuttons.create.IsAllowed = true;
                             result.pageinfo.uibuttons.edit.IsAllowed = true;
+                            result.pageinfo.uibuttons.refresh.IsAllowed = true
                         }
                         $scope.page = angular.extend({}, $scope.page, result);
                         //console.log(result)
@@ -630,7 +684,7 @@
                 //end get page data
                 //====================================================================
                 //get table data
-                function _getTableData() {
+                function _getTableData(userSearchList) {
 
                     if (!$scope.page.boxOptions.showDataOnLoad && $scope.page.boxOptions.requiredFilter) {
                         if ($scope.page.searchList && $scope.page.searchList.length <= 0) {
@@ -650,6 +704,9 @@
                             if (oldSearch == null)
                                 $scope.page.searchList.push(search)
                         })
+                    }
+                    if (userSearchList !== undefined) {
+                        $scope.page.searchList = userSearchList;
                     }
                     var data = {
                         searchList: $scope.page.searchList,
@@ -786,17 +843,46 @@
                     $scope.form.isLoaded = true;
                     $scope.form.isLoading = false;
                 }
+                function _addVerifyButton() {
+                    // $scope.page[col.name + "_click"] = col.click;
+                    if ($scope.page.boxOptions.isVerifyButton) {
+                        if ($rootScope.user.profile.isHeadEmployee) {
+                            var custColumn = {};
+                            var cellTemplate = "<div class='ui-grid-cell-contents' ng-if='row.entity." + $scope.page.pageinfo.titleempcolname + " != "+$rootScope.user.profile.empId+"' title='Verify'><a ng-click='grid.appScope.verifyEntity(row)' style='cursor: pointer'>Verify</a></div>"
+                            custColumn.name = "Option"
+                            custColumn.field = "Verify"
+                            custColumn.cellTemplate = '';
+                            custColumn['cellTemplate'] = cellTemplate;
+                            custColumn['visible'] = true;
+                            custColumn["cellClass"] = function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                                if (row.entity.StatusBGClass !== undefined) {
+                                    return 'status-bg ' + row.entity.StatusBGClass;
+                                }
+                            }
+                            custColumn.pinnedRight = true;
+                            custColumn.width = 100;
+                            //console.log($scope.page.gridOptions.columnDefs);
+                            $scope.page.gridOptions.columnDefs.push(custColumn);
+                        }
+                    }
+                }
+
+                function _verifyEntity(row) {
+                    if ($scope.page.boxOptions.verifyResult != null) {
+                        $scope.page.boxOptions.verifyResult(row);
+                    }
+                }
                 $scope.$on('form-success', function (successEvent, result) {
 
                 })
                 $scope.$on('apply-filter', function (successEvent, searchList) {
-
+                    debugger
                     // //console.log(searchList)
                     // //console.log('from gridbox', $scope.page)
                     if (searchList) {
                         $scope.page.searchList = searchList;
                         // //console.log(searchList)
-                        _refreshData();
+                        _refreshData(searchList);
                     }
                 })
                 $scope.getGridHeight = function () {

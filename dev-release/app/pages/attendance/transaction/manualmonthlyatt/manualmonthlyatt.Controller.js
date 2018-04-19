@@ -35,7 +35,7 @@
     var pageForm = {};
     pageForm.defer = $q.defer();
     defer = $q.defer();
-
+    $scope.isLoading = false;
     var selectedRowData = [];
 
 
@@ -65,6 +65,9 @@
 
 
     function _getEmployeeAttendance() {
+      $scope.weekGridOptions.data = [];
+      $scope.isLoading = true;
+      $scope.gridLine = false;
       console.log($scope.entity.SubUnit);
       if ($scope.entity.SubUnit !== undefined && $scope.entity.SubUnit != '') {
         if ($scope.entity.Month !== undefined && $scope.entity.Month != '') {
@@ -99,6 +102,9 @@
     }
 
     function _getEmployeeAttendanceResult(result) {
+      if (result.length > 0) {
+        $scope.isLoading = false;
+      }
       console.log(result[0]);
       $scope.resultData = result[0];
       $scope.attendanceDataList = [];

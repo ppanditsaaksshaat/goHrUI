@@ -104,7 +104,7 @@ angular.module('BlurAdmin.common').directive('treeView', function ($compile) {
                 }
 
                 //fa fa-window-minimize
-                text += '<span ng-if=!checkIfChildren(n) class="edit" ng-click=localClick({node:n})><i class="fa fa-pencil"></i></span>'
+                text += '<span ng-if="!checkIfChildren(n) && n.checked"  class="edit" ng-if="{node:n}" ng-click=localClick({node:n})><i class="fa fa-pencil"></i></span>'
                 text += '<span ng-if=checkIfChildren(n) class="edit" ng-click=localClick({node:n})><i class="fa fa-window-minimize"></i></span>'
                 // text += '<span ng-if=checkIfChildren(n)>    </span>' 
 

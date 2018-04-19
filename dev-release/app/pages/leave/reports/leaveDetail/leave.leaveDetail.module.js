@@ -16,7 +16,7 @@
       .state('leave.reports.leaveDetail', {
         url: '/leaveDetail',
         // abstract: true,
-        templateUrl: 'app/pages/leave/reports/leaveDetail/leave.leaveDetail.html?v=1',
+        templateUrl: 'app/pages/leave/reports/leaveDetail/leave.leaveDetail.html',
         controller: "leaveDetailController",
         controllerAs: "payCtrl",
         title: 'Leave Detail',

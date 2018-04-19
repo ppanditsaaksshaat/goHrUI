@@ -490,13 +490,39 @@
           var toDay = result.LSCToDay;
           var fromDate = new Date(ACYear, ACMonth, fromDay);
           var toDate = new Date(ACYear, ACMonth + 1, toDay);
-          var getFromDate = (fromDate.getMonth()) + 1 + "-" + fromDate.getDate() + "-" + fromDate.getFullYear();
-          var getToDate = (toDate.getMonth()) + 1 + "-" + toDate.getDate() + "-" + toDate.getFullYear();
+          // if(ACMonth==11){
+          //   fromDate = new Date(ACYear, ACMonth, fromDay);
+          //   toDate = new Date(ACYear, ACMonth + 1, toDay);
+          // }
+          // else{
+          //   fromDate = new Date(ACYear, ACMonth, fromDay);
+          //   toDate = new Date(ACYear, ACMonth + 1, toDay);
+          // }
+          var getFromDate = (fromDate.getMonth()) + "-" + fromDate.getDate() + "-" + fromDate.getFullYear();
+          var getToDate = (toDate.getMonth()) + "-" + toDate.getDate() + "-" + toDate.getFullYear();
+
+          if (ACMonth == 11) {
+            getFromDate = (fromDate.getMonth()) + "-" + fromDate.getDate() + "-" + fromDate.getFullYear();
+            var fromYear = parseInt(toDate.getFullYear());
+            var fromYears = fromYear - 1;
+            getToDate = (toDate.getMonth()) + 12 + "-" + toDate.getDate() + "-" + fromYears;
+          }
+          if (ACMonth == 0) {
+            var toYear = parseInt(toDate.getFullYear());
+            var toYears = toYear - 1;
+            getFromDate = (fromDate.getMonth()) + 12 + "-" + fromDate.getDate() + "-" + toYears;
+            getToDate = (toDate.getMonth()) + "-" + toDate.getDate() + "-" + toDate.getFullYear();
+          }
+
+
           console.log(getFromDate)
           // $scope.acFromDate = getFromDate;
           // $scope.acToDate = getToDate;
           $scope.showAcFromDate = moment(getFromDate).format("DD-MMM-YYYY");
           $scope.showAcToDate = moment(getToDate).format("DD-MMM-YYYY");;
+
+          $scope.acFromDate = moment(getFromDate).format("DD-MMM-YYYY");
+          $scope.acToDate = moment(getToDate).format("DD-MMM-YYYY");;
 
           console.log($scope.acFromDate, $scope.acToDate);
           if (($scope.page.filterData.SubUnitId.value !== undefined && $scope.page.filterData.SalMonth.value != null && $scope.page.filterData.SalYear.value != null) || ($scope.page.filterData.SalMonth.value != null && $scope.page.filterData.SalYear.value != null && $scope.page.filterData.SubUnitId.value !== undefined)) {

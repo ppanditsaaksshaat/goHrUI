@@ -110,13 +110,13 @@
     function _downloadTemp() {
       var tempColumns = [];
       var row = {
-        EmpCode:'',
-        CLOpening: '',
-        ELOpening: '',
-        CLConsume: '',
-        ELConsume: '',
-        Year: '',
-        Remark: '',
+        EmpCode:'Alpha-numeric (ITSL000001) Size(10)',
+        CLOpening: 'Numeric(1) Or Decimal(2.5) Size(Max-3)',
+        ELOpening: 'Numeric(1) Or Decimal(2.5) Size(Max-3)',
+        CLConsume: 'Numeric(1) Or Decimal(2.5) Size(Max-3)',
+        ELConsume: 'Numeric(1) Or Decimal(2.5) Size(Max-3)',
+        Year: 'Numeric(2017) Size(4)',
+        Remark: 'Alpha-numeric (CL Opening) Size(Max-300)',
       }
       tempColumns.push(row)
       DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'LeaveList', false, true, true);

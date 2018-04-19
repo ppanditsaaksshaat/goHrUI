@@ -16,7 +16,7 @@
       .state('leave.reports.leaveOutStanding', {
         url: '/leaveOutStanding',
         // abstract: true,
-        templateUrl: 'app/pages/leave/reports/leaveOutStanding/leaveOutStanding.html?v=1',
+        templateUrl: 'app/pages/leave/reports/leaveOutStanding/leaveOutStanding.html',
         controller: "leaveOutStandingController",
         controllerAs: "payCtrl",
         title: 'Out Standing Leave',

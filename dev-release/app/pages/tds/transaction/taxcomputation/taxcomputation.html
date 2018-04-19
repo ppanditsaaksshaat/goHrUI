@@ -1,0 +1,232 @@
+<grid-box ng-model="page" ng-show="showGrid">
+</grid-box>
+
+
+<form name="editForm " ng-submit="taxComSave(editForm,entity)" class="form-horizontal" novalidate ng-submit="saveForm() "
+    ng-hide="showGrid ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="false " show-list="false
+     " show-reset="false " condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+            <div class="form-group">
+
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.TCEmpId.text}}</label>
+                    <select class="form-control" ng-model="entity.selectedEmp" ng-disabled="disabledEmp" ng-change="selectedDesignDept()" ng-options="employee.name  for employee in page.pageinfo.selects.TCEmpId">
+                    </select>
+
+                </div>
+
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.TCFinancialYearId.text}}</label>
+                    <select class="form-control" ng-model="entity.yearId" ng-change="getTaxComputation()" ng-options="employee.name  for employee in page.pageinfo.selects.TCFinancialYearId">
+                    </select>
+                </div>
+
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.MonthId.text}}</label>
+                    <select class="form-control" ng-model="entity.monthId" ng-options="employee.name  for employee in page.pageinfo.selects.MonthId">
+                    </select>
+                </div>
+                <div class="col-xs-2" ng-show="isYear">
+                    <label for="inputPassword">{{page.pageinfo.fields.EmpCode.text}}</label>
+                    <span class="form-control" ng-bind="entity.EmpCode"></span>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="isYear">
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.DeptName.text}}</label>
+                    <span class="form-control" ng-bind="entity.DeptName"></span>
+                </div>
+
+                <div class="col-xs-2">
+                    <label for="inputPassword">{{page.pageinfo.fields.DesgName.text}}</label>
+                    <span class="form-control" ng-bind="entity.DesgName"></span>
+                </div>
+
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.JDDate.text}}</label>
+                    <span class="form-control" ng-bind="entity.JDDate"></span>
+                </div>
+
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.DateOfBirth.text}}</label>
+                    <span class="form-control" ng-bind="entity.PdDateOfBirth"></span>
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-show="isYear">
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.Category.text}}</label>
+                    <span class="form-control" ng-bind="entity.JDCategory"></span>
+                </div>
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.GenderName.text}}</label>
+                    <span class="form-control" ng-bind="entity.GenderName"></span>
+                </div>
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.Category.text}}</label>
+                    <span class="form-control" ng-bind="entity.Category"></span>
+                </div>
+                <div class="col-xs-2">
+                    <label for="inputEmail">{{page.pageinfo.fields.GrossName.text}}</label>
+                    <span class="form-control" ng-bind="entity.SalAmount"></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-group" ng-show="gridLine">
+                <div class="col-xs-8">
+                    <h3 class="with-line " ng-show="gridLine"> HRA Exemption Calculation</h3>
+                    <div class="row" ng-if="weekGridOptions.data.length>0">
+                        <div class="col-md-12">
+                            <div id="gridopt" style="height: 200px; " ui-grid="weekGridOptions" ui-grid-cellNav ui-grid-pagination ui-grid-edit ui-grid-expandable
+                                ui-grid-auto-resize ui-grid-selection class="grid weekGridOptionss paybandgrid payband"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="form-group" ng-show="gridLine">
+                <label for="inputEmail" class="control-label col-xs-2">Minimum HRA Exemption</label>
+                <div class="col-xs-2">
+                    <span class="form-control" ng-bind="hraMinAmounts"></span>
+                </div>
+            </div> -->
+
+            <div class="form-group" ng-show="gridLine">
+                <div class="col-xs-8">
+                    <h3 class="with-line " ng-show="gridLine">Deduction Under Chapter VI (Sec-80C) Sec Limit - {{eightyCGridSecLimitAmount}}</h3>
+                    <div class="row" ng-if="eightyCGridOptions.data.length>0">
+                        <div class="col-md-12">
+                            <div style="height: 200px;" ui-grid="eightyCGridOptions" ui-grid-cellNav ui-grid-pagination ui-grid-edit ui-grid-expandable
+                                ui-grid-auto-resize ui-grid-selection class="grid paybandgrid payband"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="form-group" ng-show="gridLine">
+                <label for="inputEmail" class="control-label col-xs-2">Total Sec 80C</label>
+                <div class="col-xs-2">
+                    <span class="form-control" ng-bind="eightyCTotalAmounts"></span>
+                </div>
+            </div> -->
+
+            <div class="form-group" ng-show="gridLine">
+                <div class="col-xs-8">
+                    <h3 class="with-line " ng-show="gridLine"> Deduction Under Chapter VI-A</h3>
+                    <div class="row" ng-if="sixAGridOptions.data.length>0">
+                        <div class="col-md-12">
+                            <div style="height: 250px;" ui-grid="sixAGridOptions" ui-grid-cellNav ui-grid-pagination ui-grid-edit ui-grid-expandable
+                                ui-grid-auto-resize ui-grid-selection class="grid paybandgrid payband"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="form-group" ng-show="gridLine">
+                <label for="inputEmail" class="control-label col-xs-2">Total Chapter VI-A</label>
+                <div class="col-xs-2">
+                    <span class="form-control" ng-bind="sixATotalAmounts"></span>
+                </div>
+            </div> -->
+
+            <div class="form-group" ng-show="isYear">
+
+                <button class="btn btn-primary" type="button" ng-click="calculateAmount();">Calculate</button>
+
+                <div class="col-xs-2">
+                    <label for="inputPassword">{{page.pageinfo.fields.TotalDeductionOrBenefit.text}}</label>
+                    <span class="form-control" ng-bind="entity.totalDeductionBenefits"></span>
+                </div>
+
+                <div class="col-xs-2" ng-show="isCalculated">
+                    <label for="inputPassword">{{page.pageinfo.fields.TaxableAmount.text}}</label>
+                    <span class="form-control" ng-bind="entity.taxableAmount"></span>
+                </div>
+
+                <div class="col-xs-2" ng-show="isCalculated">
+                    <label for="inputPassword">{{page.pageinfo.fields.TaxOnTotalIncome.text}}</label>
+                    <span class="form-control" ng-bind="entity.taxOnTotalIncome"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+
+
+                </div>
+            </div>
+
+
+
+            <div class="form-group" ng-show="isCalculated">
+                <div class="col-xs-8">
+                    <h3 class="with-line " ng-show="gridLine"> Tax Credit (Sec-87A) </h3>
+                    <div class="row" ng-if="sevenAGridOptions.data.length>0">
+                        <div class="col-md-12">
+                            <div style="height: 190px;" ui-grid="sevenAGridOptions" ui-grid-cellNav ui-grid-pagination ui-grid-edit ui-grid-expandable
+                                ui-grid-auto-resize ui-grid-selection class="grid paybandgrid payband"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="isCalculated">
+
+
+                <div class="col-xs-2">
+                    <label for="inputPassword">{{page.pageinfo.fields.TaxWithSurcharge.text}}</label>
+                    <span class="form-control" ng-bind="entity.taxWithSurcharge"></span>
+                </div>
+                <div class="col-xs-2">
+                    <label for="inputPassword">{{page.pageinfo.fields.TaxWithCess.text}}</label>
+                    <span class="form-control" ng-bind="entity.taxWithCess"></span>
+                </div>
+
+                <div class="col-xs-2">
+                    <label for="inputPassword">{{page.pageinfo.fields.TaxLiabilityYearly.text}}</label>
+                    <span class="form-control" ng-bind="entity.taxableAmountYearly"></span>
+                </div>
+                <div class="col-xs-2">
+                    <label for="inputPassword">{{page.pageinfo.fields.TaxLiabilityMonthly.text}}</label>
+                    <span class="form-control" ng-bind="entity.taxLiabilityMonthly"></span>
+                </div>
+
+            </div>
+
+
+            <!-- <div class="row">
+                    <div class="col-md-12 form-group text-center" ng-show=isCalculated ">
+                        <button type="submit " class="btn btn-info btn-lg ">Save</button>
+                        <button type="button " class="btn btn-danger btn-lg " ng-click="closeWeekOffAdd() ">Close</button>
+                    </div>
+                </div> -->
+
+        </div>
+    </div>
+</form>
+
+
+<style>
+    .weekGridOptionss.ui-grid-row {
+        border-top: 0;
+        border-bottom: 1px solid #dddddd !important;
+        border-left: 1px solid #dddddd !important;
+        border-right: 0;
+    }
+</style>
+
+<style>
+    .weekGridOptionss.ui-grid-cell {
+        border-top: 0;
+        border-bottom: 1px solid #dddddd !important;
+        border-left: 1px solid #dddddd !important;
+        border-right: 0;
+    }
+</style>

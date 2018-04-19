@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 <grid-box ng-model="page" ng-hide="page.showEditForm"></grid-box>
 <form name="editForm" ng-submit="saveForm(editForm)" novalidate>
-    <div id="editForm" class="panel panel-default bootstrap-panel xmedium-panel" ng-show="page.showEditForm">
+    <div id="editForm" class="panel panel-default bootstrap-panel" ng-show="page.showEditForm">
         <edit-panel-head page="page" page-title="page.pageinfo.tagline" show-save="editForm.untouch" reset-form="resetForm(editForm)"
             clear-form="clearForm(editForm)" condition="true" show-list="false" show-close="true" close-form="closeForm(editForm)"></edit-panel-head>
 
-        <div class="panel-body" ng-scrollbars ng-scrollbars-config="config">
+        <div class="panel-body">
 
             <div class="row">
                 <div class="col-md-12">
@@ -16,7 +16,26 @@
                                 <field-box page="page" ng-column="page.pageinfo.fields.PBTName" ng-entity="entity" form="editForm"></field-box>
                             </div>
                         </div>
-
+                        <div class="col-md-2">
+                            <label></label>
+                            <button ng-click="addNewRule()" type="button" class="btn btn-info form-control">
+                                <i class="fa fa-plus"></i> Add New Head</button>
+                        </div>
+                        <div class="col-md-3">
+                            <label>TotalHead</label>
+                            <select class="form-control" ng-model="headId" ng-change="existHeadId=true" ng-options="head.value as head.name for  head in rulePage.pageinfo.fields.PBTRSHId.options | filter:{SHIsTotal:true}">
+                            </select>
+                        </div>
+                        <div ng-show="existHeadId" class="col-lg-2">
+                            <label></label>
+                            <button ng-click="addToltalEarningDeductionRule(headId)" type="button" class="btn btn-info form-control">
+                                <i class="fa fa-plus"></i> Add</button>
+                        </div>
+                        <div ng-show="deletedRows.length>0 && edit" class="col-lg-2">
+                            <label></label>
+                            <button ng-click="restoreData()" type="button" class="btn btn-info form-control">
+                                <i class="fa fa-plus"></i>Restore</button>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-10">
@@ -27,7 +46,8 @@
                                         <select ng-model="selectedOtherHead" ng-options="opt.name for opt in rulePage.pageinfo.fields.PBRSHId.options"></select>
                                     </div>
                                     <div class="pull-right">
-                                        <button ng-click="addTotal()" type="button" class="btn btn-danger btn-xs"><i class="fa fa-calculator"></i> Calculate Diffrences</button>
+                                        <button ng-click="addTotal()" type="button" class="btn btn-danger btn-xs">
+                                            <i class="fa fa-calculator"></i> Calculate Diffrences</button>
                                     </div>
 
                                 </div>
@@ -35,10 +55,9 @@
 
 
                             <div id="djGridPay" ui-grid="payTempGridOptions" ui-grid-expandable ui-grid-auto-resize ui-grid-pagination ui-grid-selection
-                                ui-grid-pinning ui-grid-edit class="paybandgrid">
+                                ui-grid-pinning ui-grid-edit class="paybandgrid payband">
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -52,13 +71,11 @@
             <ui-select-match placeholder="Choose..">
                 {{$item.name}}
             </ui-select-match>
-            <ui-select-choices repeat="item in col.colDef.editDropdownOptionsArray | filter: $select.search">
+            <ui-select-choices class="Select-menu-outer" repeat="item in col.colDef.editDropdownOptionsArray | filter: $select.search">
                 <span>{{ item.name }}</span>
             </ui-select-choices>
         </ui-select>
     </ui-select-wrap>
-
-
 </script>
 
 <script type="text/ng-template" id="multiCell">
@@ -82,9 +99,11 @@
         -ms-user-select: none;
         user-select: none;
     }
+
     /* Make sure the container doesn't shrink too small */
 
     .ui-select-container {
         min-width: 100px;
+        z-index: 9999999;
     }
 </style>

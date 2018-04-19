@@ -41,7 +41,8 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      uploadRecord: null
+      uploadRecord: null,
+      buttonPermission:true
     }
 
     if ($scope.page.pageId == 261) {

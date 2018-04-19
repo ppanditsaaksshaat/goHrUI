@@ -595,11 +595,12 @@
             'LateDays': data.DeductableLateDays,
             'AbsentDays': data.AbsentDays,
             'IncentiveDays': data.IncentiveDays,
-            'SingleOTMinute': data.SingleOvertimeMin,
+            // 'SingleOTMinute': data.SingleOvertimeMin,
             'SingleOTHours': data.SingleOvertimeHours,
-            'DoubleOTMinute': data.DoubleOvertimeMin,
+            // 'DoubleOTMinute': data.DoubleOvertimeMin,
             'DoubleOTHours': data.DoubleOvertimeHours
           }
+
           tempColumns.push(row);
         })
         DJWebStoreGlobal.JSONToCSVConvertor(tempColumns, 'Verify', false, true, true);

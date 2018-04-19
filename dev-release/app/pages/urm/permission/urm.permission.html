@@ -52,7 +52,7 @@
                                             <span ng-show="isSavingActivity">Saving..</span>
                                 </button>
 
-                                <button type="button" class="btn btn-danger" ng-click="isShowActivity=false">Cancel</button>
+                                <button type="button" class="btn btn-danger" ng-click="cancelActivity()">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -83,10 +83,10 @@
                     </div>
                 </div>
                 <div>
-                    <ui-select ng-model="selectedEmp" class="btn-group bootstrap-select form-control" ng-disabled="false"
-                        append-to-body="true" search-enabled="true">
+                    <ui-select ng-model="selectedEmp" class="btn-group bootstrap-select form-control" ng-disabled="false" append-to-body="true"
+                        search-enabled="true">
                         <ui-select-match placeholder="Select Employee">
-                            {{$select.selected.EmpName}} ( {{$select.selected.EmpCode}}  )
+                            {{$select.selected.EmpName}} ( {{$select.selected.EmpCode}} )
                         </ui-select-match>
                         <ui-select-choices repeat="withSearchItem in empList | filter: $select.search">
                             <span>{{withSearchItem.EmpName}} ( {{withSearchItem.EmpCode}}  )</span>

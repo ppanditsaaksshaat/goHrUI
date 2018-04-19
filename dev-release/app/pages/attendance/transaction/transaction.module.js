@@ -14,6 +14,7 @@
     'BlurAdmin.pages.attendance.transaction.outdoorapply',
     'BlurAdmin.pages.attendance.transaction.manualmonth',
     'BlurAdmin.pages.attendance.transaction.manualmonthlyatt',
+    'BlurAdmin.pages.attendance.transaction.dailysummary',
   ])
     .config(routeConfig);
 
