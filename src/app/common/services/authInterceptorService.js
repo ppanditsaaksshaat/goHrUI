@@ -117,7 +117,7 @@ angular.module('BlurAdmin.common').factory('authInterceptorService', ['$q', '$lo
                 //console.log(result_data,'result_data')
                 if (result_data.lz !== undefined) {
                     //console.log('converting request')
-                    if (result_data.lz) {
+                    if (result_data.lz) {               
                         var paramData = LZString.decompressFromEncodedURIComponent(result_data.data);
                         result = angular.fromJson(paramData);
                         //console.log('request converted')
