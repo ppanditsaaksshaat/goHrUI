@@ -11,6 +11,14 @@
   </div>
 
   <div class="user-profile clearfix">
+    <div class="current-Period" ng-controller="currentPeriodController">
+
+      <input type="text" class="form-control date-picker" uib-datepicker-popup="{{format}}" ng-model="currentPeriod" is-open="status.opened"
+        min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+        close-text="Close" ng-click="open($event)" ng-readonly="true" />
+
+      <!-- <msg-center></msg-center> -->
+    </div>
     <div class="al-user-profile" uib-dropdown>
       <a uib-dropdown-toggle class="profile-toggle-link">
         <!-- <img ng-src="{{::( 'Nasta' | profilePicture )}}"> -->
@@ -35,23 +43,9 @@
         </li>
       </ul>
     </div>
-
-    
-
-    </div>
-
-    <div ng-controller="currentPeriodController">
-      <div class="row">
-        <div class="col-xs-offset-3 col-xs-6 col-md-2">
-          <p class="input-group">
-            <input type="text" class="form-control date-picker" uib-datepicker-popup="{{format}}" ng-model="currentPeriod" is-open="status.opened"
-              min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
-              close-text="Close" ng-click="open($event)" ng-readonly="true" />
-          </p>
-        </div>
-      </div>
-    <!-- <msg-center></msg-center> -->
   </div>
+
+
 </div>
 
 <script id="template/datepicker/popup.html" type="text/ng-template">
