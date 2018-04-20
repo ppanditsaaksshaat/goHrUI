@@ -40,7 +40,7 @@
         require: 'ngModel',
         scope: isolateScope,
         link: function(scope, elem, attrs, ngModel) {
-
+        debugger;
           var rawFiles = [];
           var fileObjects = [];
 
@@ -290,7 +290,7 @@
           });
 
           elem.on('change', function(e) {
-
+debugger;
             fileObjects = [];
             fileObjects = angular.copy(fileObjects);
 

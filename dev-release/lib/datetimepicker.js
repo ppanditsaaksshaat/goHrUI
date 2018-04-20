@@ -90,8 +90,7 @@ angular.module('ui.bootstrap.datetimepicker', ["ui.bootstrap.dateparser", "ui.bo
           function createAttrConcat(previousAttrs, attr) {
             return previousAttrs + createAttr.apply(null, attr)
           }
-          //datepicker-mode="'month'" 
-          //,minMode: 'date'
+
           var dateTmpl = "<div class=\"datetimepicker-wrapper\">" +
             "<input class=\"form-control\" type=\"text\" " +
             "name=\"datepicker\"" +
@@ -121,7 +120,6 @@ angular.module('ui.bootstrap.datetimepicker', ["ui.bootstrap.dateparser", "ui.bo
             createEvalAttr("datepickerAppendToBody", "datepickerAppendToBody") +
             createEvalAttr("closeText", "closeText") +
             createEvalAttr("placeholder", "placeholder") +
-            createEvalAttr("datepickerMode", "datepickerMode") +
             "/>\n" +
             "</div>\n";
           var timeTmpl = "<div class=\"datetimepicker-wrapper\" name=\"timepicker\" ng-model=\"time\" ng-change=\"time_change()\" style=\"display:inline-block\">\n" +
