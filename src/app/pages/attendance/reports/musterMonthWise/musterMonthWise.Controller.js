@@ -10,11 +10,13 @@
 
   /** @ngInject */
   function musterMonthWiseController($scope, $state, pageService) {
-    $scope.page = { reportId: 16 }
+    $scope.page = {
+      reportId: 16
+    }
 
     var currentState = $state.current;
     $scope.entity = {}
-    debugger;
+    // debugger;
     $scope.page = $scope.createPage();
     $scope.isDate = true;
     console.log($scope.page)
@@ -45,6 +47,7 @@
       afterCellEdit: null,
     }
     var flag = false;
+
     function _filterChange(filter) {
       console.log($scope.page.filterData)
       console.log(filter.name)
@@ -56,15 +59,13 @@
           operand: '=',
           field: 'LSCSUId'
         })
-      }
-      else if (filter.name == 'Year') {
+      } else if (filter.name == 'Year') {
         searchList.push({
           value: $scope.page.filterData.SubUnit.value,
           operand: '=',
           field: 'LSCSUId'
         })
-      }
-      else if (filter.name == 'SubUnit') {
+      } else if (filter.name == 'SubUnit') {
         searchList.push({
           value: $scope.page.filterData.SubUnit.value,
           operand: '=',
@@ -91,6 +92,7 @@
             $scope.showAcFromDate = moment(getFromDate);
             $scope.showAcToDate = moment(getToDate);
             var totalDays = $scope.showAcToDate.diff($scope.showAcFromDate, 'days')
+            totalDays = parseInt(totalDays) + 1;
             console.log($scope.acFromDate, $scope.acToDate);
 
             if (filter.name == 'SubUnit' && !flag) {
@@ -156,8 +158,7 @@
                 })
               }
             }
-          }
-          else if (result.LSCEndOfMonth == true) {
+          } else if (result.LSCEndOfMonth == true) {
             var ACMonth = ($scope.page.filterData.Month.value) - 1;
             var ACYear = $scope.page.filterData.Year.value;
             var fromDate = new Date(ACYear, ACMonth, 1)
@@ -170,7 +171,8 @@
             $scope.showAcFromDate = moment(getFromDate);
             $scope.showAcToDate = moment(getToDate);
             var totalDays = $scope.showAcToDate.diff($scope.showAcFromDate, 'days')
-            if (filter.name == 'SubUnit') {
+            totalDays = parseInt(totalDays) + 1;
+            if (filter.name == 'SubUnit' && !flag) {
               $scope.page.pageinfo.filters.push({
                 controlType: "textbox",
                 displayName: "From Date",
@@ -213,6 +215,23 @@
                 type: 1,
                 value: totalDays
               })
+              flag = true;
+            }
+
+            if (filter.name == "Month" || filter.name == "Year" || filter.name == "SubUnit") {
+              if (flag) {
+                angular.forEach($scope.page.pageinfo.filters, function (col, cdx) {
+                  if (col.name == "TotalDays") {
+                    col.value = totalDays;
+                  }
+                  if (col.name == "FromDate") {
+                    col.value = $scope.acFromDate;
+                  }
+                  if (col.name == "ToDate") {
+                    col.value = $scope.acToDate;
+                  }
+                })
+              }
             }
             console.log($scope.acFromDate, $scope.acToDate)
             if (($scope.page.filterData.SubUnit.value !== undefined && $scope.page.filterData.Month.value != null && $scope.page.filterData.Year.value != null) || ($scope.page.filterData.Month.value != null && $scope.page.filterData.Year.value != null && $scope.page.filterData.SubUnit.value !== undefined)) {
@@ -255,8 +274,7 @@
               // console.log($scope.filterData.SubUnit.value, $scope.filterData.Month.value, $scope.filterData.Year.value)
               $scope.isDate = false;
             }
-          }
-          else if (result.LSCEndOfMonth == true) {
+          } else if (result.LSCEndOfMonth == true) {
             var ACMonth = ($scope.page.filterData.Month.value) - 1;
             var ACYear = $scope.page.filterData.Year.value;
             var fromDate = new Date(ACYear, ACMonth, 1)
