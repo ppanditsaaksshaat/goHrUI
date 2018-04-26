@@ -525,7 +525,7 @@
                                         option2: {},
                                         format: ''
                                     }
-                                    console.log(filter.controlType.length)
+                                    // console.log(filter.controlType.length)
 
                                     if (filter.controlType == 'datepicker') {
                                         count++;
