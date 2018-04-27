@@ -246,14 +246,17 @@
                     $scope.showSearchFilter = true;
                 }
 
+
                 /**
                  * convert filter option for searchList and call parent function for refresh data
                  */
                 function _applyBoxFilter() {
+                    // debugger;
                     $scope.page.filterData = {};
                     $scope.page.searchList = [];
                     if ($scope.page.pageinfo.filters) {
                         var isRequiredFailed = false;
+                        var isSingleDate = true;
                         angular.forEach($scope.page.pageinfo.filters, function (filter) {
 
 
@@ -288,7 +291,7 @@
                                     $scope.page.filterData[filter.name] = search;
                                     if (filter.controlType == "datepicker") {
                                         //if date mod is month and Year then dates should be changed in first and last day of selected month or year
-
+                                        console.log(filter)
                                         var value1, value2;
                                         value1 = moment(filter.value).format('YYYY-MM-DD');
                                         value2 = moment(filter.value2).format('YYYY-MM-DD');
@@ -512,13 +515,21 @@
                             /**
                              * assigning dateOption to filters
                              */
+                            var isDateSingle = true;
+                            var count = 0;
                             angular.forEach($scope.page.pageinfo.filters, function (filter, indx) {
-
+                                console.log(filter)
                                 if (filter.controlType == 'datepicker') {
                                     filter.datePicker = {
                                         option1: {},
                                         option2: {},
                                         format: ''
+                                    }
+                                    // console.log(filter.controlType.length)
+
+                                    if (filter.controlType == 'datepicker') {
+                                        count++;
+                                        // console.log(count)
                                     }
 
                                     filter.datePicker.option1 = angular.copy($scope.dateCal.options)
@@ -527,9 +538,12 @@
 
                                     //--if date filter data is required on load can be manage from sysparam in future (02.04.18)@nm
                                     filter.datePicker.option1.minMode = 'day'
-                                    filter.operator = "/b"
-                                    filter.showFilter = true;
-                                    _dateModeChanged(filter);
+                                    if (count == 1) {
+                                        filter.operator = "/b"
+                                        filter.showFilter = true;
+                                        _dateModeChanged(filter);
+                                    }
+
 
 
                                 } else if (filter.controlType == 'timepicker') {
@@ -538,11 +552,18 @@
                                     filter.timePicker.option1 = angular.copy($scope.timeCal)
                                     filter.timePicker.option2 = angular.copy($scope.timeCal)
 
+                                    if (filter.controlType == 'timepicker') {
+                                        count++;
+                                        // console.log(count)
+                                    }
+
                                     //--if date filter data is required on load can be manage from sysparam in future (02.04.18)@nm
                                     filter.datePicker.option1.minMode = 'day'
-                                    filter.operator = "/b"
-                                    filter.showFilter = true;
-                                    _dateModeChanged(filter);
+                                    if (count == 1) {
+                                        filter.operator = "/b"
+                                        filter.showFilter = true;
+                                        _dateModeChanged(filter);
+                                    }
                                 }
 
                             })
