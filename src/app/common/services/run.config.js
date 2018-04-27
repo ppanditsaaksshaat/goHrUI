@@ -5,7 +5,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     var pgList = DJWebStore.GetValue('pageList');
     if (pgList == null) {
         console.log('calling page list')
-        pageService.getAllPageList().then(_successPageAll, _errorPageAll);
+       // pageService.getAllPageList().then(_successPageAll, _errorPageAll);
 
     }
     else{
