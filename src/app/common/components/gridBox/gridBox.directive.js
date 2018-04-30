@@ -849,6 +849,7 @@
                         if ($rootScope.user.profile.isHeadEmployee) {
                             var custColumn = {};
                             var cellTemplate = "<div class='ui-grid-cell-contents' ng-if='row.entity." + $scope.page.pageinfo.titleempcolname + " != "+$rootScope.user.profile.empId+"' title='Verify'><a ng-click='grid.appScope.verifyEntity(row)' style='cursor: pointer'>Verify</a></div>"
+                            
                             custColumn.name = "Option"
                             custColumn.field = "Verify"
                             custColumn.cellTemplate = '';
