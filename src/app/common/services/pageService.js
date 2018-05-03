@@ -1538,6 +1538,18 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 return results;
             });
         }
+
+        var _uploadRosterDetail = function (data) {
+            var url = serviceBase + 'api/Upload/UploadRosterDetail';
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
+        }
+
         pageServiceFactory.serviceBase = serviceBase;
         pageServiceFactory.getPagData = _getPagData;
         pageServiceFactory.deletePageData = _deletePageData;
@@ -1645,6 +1657,8 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.userRegister = _userRegister;
         pageServiceFactory.setNewPassword = _setNewPassword;
         pageServiceFactory.updateUser = _updateUser;
+        pageServiceFactory.uploadRosterDetail = _uploadRosterDetail;
+        
 
         //Resources
         pageServiceFactory.getResources = _getResources;

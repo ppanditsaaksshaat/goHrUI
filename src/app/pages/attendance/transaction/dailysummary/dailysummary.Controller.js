@@ -9,7 +9,7 @@
     .controller('attDailySummaryController', attDailySummaryController);
 
   /** @ngInject */
-  function attDailySummaryController($scope, $state, $timeout, pageService, editFormService) {
+  function attDailySummaryController($scope, $state, $timeout, pageService, editFormService, DJWebStoreGlobal) {
 
     var vm = this;
     var currentState = $state.current;
@@ -61,6 +61,12 @@
         onClick: _approvedAttendance,
         type: "btn-default",
         defaultButton: false
+      }, {
+        text: "Download",
+        icon: '',
+        onClick: _downloadData,
+        type: "btn-default",
+        defaultButton: true
       }],
       gridHeight: 450,
       getPageData: null,
@@ -95,11 +101,16 @@
         click: _compOffApproved,
         pin: true
       }],
-     
+
       //defaultEntity: { 'AttDate': moment() }
       // readonlyColumns: ['col1', 'col2']
     }
-  
+
+    function _downloadData() {
+      console.log($scope.page)
+      DJWebStoreGlobal.JSONToCSVConvertor($scope.page.gridOptions.data, 'AttendanceSheet', false, true, true);
+    }
+
     function _approvedAttendance() {
       $scope.AttApprovedRemark = '';
       $scope.StatusId = '';
@@ -354,7 +365,7 @@
       }
 
       editFormService.saveForm(vm.pageId, $scope.entity, vm.oldEntity,
-        $scope.entity.AttId === undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+          $scope.entity.AttId === undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
         .then(_saveFormSuccessResult, _saveFormErrorResult);
     }
 
@@ -651,7 +662,7 @@
         })
         console.log(searchLists)
 
-        
+
         var data = {
           searchList: searchLists,
           orderByList: []
@@ -686,7 +697,7 @@
     function _getCustomQueryErrorResult(error) {
       $scope.showMsg("error", error)
     }
-    
+
 
     _loadController()
   }
