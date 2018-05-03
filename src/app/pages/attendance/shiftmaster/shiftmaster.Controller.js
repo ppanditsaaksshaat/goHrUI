@@ -108,11 +108,12 @@
       // debugger;
       if (newVal) {
         if (!$scope.entity.SMToTime) {
-          $scope.entity.SMToTime = $scope.entity.SMFromTime
+          var shiftFrom = moment($scope.entity.SMFromTime, "DD-MM-YYYY HH:mm:ss a")
+          $scope.entity.SMToTime = shiftFrom.add(24, 'h');
         }
         else {
-          var shiftFrom = moment($scope.entity.SMFromTime, "HH:mm:ss a")
-          var shiftTo = moment($scope.entity.SMToTime, "HH:mm:ss a")
+          var shiftFrom = moment($scope.entity.SMFromTime, "DD-MM-YYYY HH:mm:ss a")
+          var shiftTo = moment($scope.entity.SMToTime, "DD-MM-YYYY HH:mm:ss a")
           var timeDiff = shiftTo.diff(shiftFrom);
           if (timeDiff < 0) {
             $scope.entity.SMToTime = $scope.entity.SMFromTime
@@ -126,8 +127,8 @@
       if (newVal) {
 
         if ($scope.entity.SMFromTime) {
-          var shiftFrom = moment($scope.entity.SMFromTime, "HH:mm:ss a")
-          var shiftTo = moment($scope.entity.SMToTime, "HH:mm:ss a")
+          var shiftFrom = moment($scope.entity.SMFromTime, "DD-MM-YYYY HH:mm:ss a")
+          var shiftTo = moment($scope.entity.SMToTime, "DD-MM-YYYY HH:mm:ss a")
 
           var timeDiff = shiftTo.diff(shiftFrom);
           if (timeDiff < 0) {
@@ -141,29 +142,33 @@
     //from lunch time
     $scope.$watch('entity.SMLunchTime', function (newVal, oldVal) {
       if (newVal) {
-        var shiftFrom = moment($scope.entity.SMFromTime, "HH:mm:ss a")
-        var shiftTo = moment($scope.entity.SMToTime, "HH:mm:ss a")
-        var fromLunchTime = moment($scope.entity.SMLunchTime, "HH:mm:ss a")
+
+        // var shFrmTime = moment($scope.entity.SMFromTime,'HH:mm:ss');
+
+
+        var shiftFrom = moment($scope.entity.SMFromTime, "DD-MM-YYYY HH:mm:ss a")
+        var shiftTo = moment($scope.entity.SMToTime, "DD-MM-YYYY HH:mm:ss a")
+        var fromLunchTime = moment($scope.entity.SMLunchTime, "DD-MM-YYYY HH:mm:ss a")
         var fromDiff = fromLunchTime.diff(shiftFrom);
         var toDiff = shiftTo.diff(fromLunchTime);
         //checking whether lunch from time is greather than from shift time and less than shift to time by compairing miliseconds diff
         //
-        if (toDiff > 0 && fromDiff > 0) {
-          if (!$scope.entity.SMLunchToTime) {
-            $scope.entity.SMLunchToTime = $scope.entity.SMLunchTime
-          }
-          else {
-            var toLunchTime = moment($scope.entity.SMLunchToTime, "HH:mm:ss a")
-            var lunchDiff = toLunchTime.diff(fromLunchTime);
-            if (lunchDiff < 0) {
-              $scope.entity.SMLunchToTime = $scope.entity.SMLunchTime
-            }
-          }
+        // if (toDiff > 0 && fromDiff > 0) {
+        if (!$scope.entity.SMLunchToTime) {
+          $scope.entity.SMLunchToTime = $scope.entity.SMLunchTime
         }
         else {
-          $scope.showMsg('warning', 'Lunch from time must be between shift timings.')
-          $scope.entity.SMLunchTime = oldVal;
+          var toLunchTime = moment($scope.entity.SMLunchToTime, "HH:mm:ss a")
+          var lunchDiff = toLunchTime.diff(fromLunchTime);
+          if (lunchDiff < 0) {
+            $scope.entity.SMLunchToTime = $scope.entity.SMLunchTime
+          }
         }
+        // }
+        // else {
+        //   $scope.showMsg('warning', 'Lunch from time must be between shift timings.')
+        //   $scope.entity.SMLunchTime = oldVal;
+        // }
       }
     })
 
@@ -306,6 +311,15 @@
       var minutes = parseInt(duration.asMinutes()) - hours * 60;
       console.log(hours + ' hour and ' + minutes + ' minutes')
       console.log(duration, hours)
+
+      if (hours < 0) {
+        //handling minus time for less than time
+        hours = hours + 24;
+      }
+
+      if (minutes < 0) {
+        minutes = minutes + 60;
+      }
 
       var minute = shiftTo.diff(shiftFrom, 'minutes')
       var timeDuration = minute / 60;
