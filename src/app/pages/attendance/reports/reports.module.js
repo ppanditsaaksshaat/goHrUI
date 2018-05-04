@@ -17,7 +17,8 @@
     'BlurAdmin.pages.attendance.reports.compoffdetail',
     'BlurAdmin.pages.attendance.reports.oddetail',
     'BlurAdmin.pages.attendance.reports.verifyattendance',
-    'BlurAdmin.pages.attendance.reports.dailyverificationattendances'
+    'BlurAdmin.pages.attendance.reports.dailyverificationattendances',
+    'BlurAdmin.pages.attendance.reports.devicewiseattendance'
 
 
   ])
