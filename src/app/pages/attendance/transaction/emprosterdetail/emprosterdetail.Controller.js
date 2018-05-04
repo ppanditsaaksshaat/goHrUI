@@ -314,7 +314,7 @@
           }
         })
         if (flag) {
-          $scope.showMsg("success", "Your file uploaded successfully")
+          $scope.showMsg("success", "Save data successfully")
         }
       }
     }
@@ -345,7 +345,7 @@
         data: compressed
       }
 
-      _showConfirm('Do you want to upload ' + '?', _confirmClick, _rejectClick, undefined, data)
+      _showConfirm('Do you want to save ' + '?', _confirmClick, _rejectClick, undefined, data)
       // return pageForm.defer.promise
 
       // pageService.uploadManualAttendance(data).then(function (result) {
