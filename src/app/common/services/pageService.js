@@ -106,7 +106,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
             if (pgList != null) {
                 page = pgList['pg_' + pageCode];
                 if (page != null) {
-                    isFound = true;
+                    isFound = false;
                 }
             }
 
@@ -124,7 +124,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                             if (results.pageinfo.pageid)
                                 pgList['pg_' + results.pageinfo.pageid] = results;
 
-                        //DJWebStore.SetValue('pageList', pgList);
+                        DJWebStore.SetValue('pageList', pgList);
                         console.log(results)
                         dfd.resolve(results);
                     },
