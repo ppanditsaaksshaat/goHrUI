@@ -124,7 +124,7 @@
 
 
     function _cOffSanction() {
-      debugger;
+    
       if (!_validateSanctionForm()) {
         var santionLeave = {
           ACODId: $scope.sanctionEntity.ACODId == undefined ? undefined : $scope.sanctionEntity.ACODId,
@@ -322,7 +322,7 @@
      * @param {object} column 
      */
     function _attDateChange(event, element, modelCtrl, column) {
-
+       console.log($scope.page.pageinfo)
       var EmpId = $scope.entity.EmpId;
       var COAttnDate = moment($scope.entity.COAttnDate);
       $scope.dayFromDate = COAttnDate.format('dddd');
@@ -378,7 +378,7 @@
     var cancelRequestTableId = 449;
     /** View Compensentory Record */
     function _viewRecord(row) {
-      debugger
+      
       console.log(row)
 
       if (row.entity.StatusId == 0) {
