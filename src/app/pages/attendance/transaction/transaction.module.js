@@ -15,6 +15,7 @@
     'BlurAdmin.pages.attendance.transaction.manualmonth',
     'BlurAdmin.pages.attendance.transaction.manualmonthlyatt',
     'BlurAdmin.pages.attendance.transaction.dailysummary',
+    'BlurAdmin.pages.attendance.transaction.emprosterdetail'
   ])
     .config(routeConfig);
 
