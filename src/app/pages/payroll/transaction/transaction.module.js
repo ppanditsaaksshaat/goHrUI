@@ -16,6 +16,7 @@
     'BlurAdmin.pages.payroll.transaction.EmployeeBonus',
     // // 'BlurAdmin.pages.payroll.transaction.Salarypayrollprocess',
     'BlurAdmin.pages.payroll.transaction.LeaveEncashment',
+    'BlurAdmin.pages.payroll.transaction.SalaryLockDetail',
     //  'BlurAdmin.pages.payroll.transaction.LeaveEncashmentHistory',
     //  'BlurAdmin.pages.payroll.transaction.FullAndFinalSettlement',
     //  'BlurAdmin.pages.payroll.transaction.FullAndFinalDetail',
