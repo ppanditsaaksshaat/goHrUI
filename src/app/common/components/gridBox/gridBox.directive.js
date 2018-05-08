@@ -562,14 +562,16 @@
                                         $scope.page[col.name + "_click"] = col.click;
 
                                         var custColumn = {};
-                                        var cellTemplate = "<div class='ui-grid-cell-contents' title='" + col.text + "'><a ng-click='grid.appScope.page." + col.name + "_click(row)' style='cursor:pointer'>" + col.text + "</a></div>"
+                                        var cellTemplate = "<div class='ui-grid-cell-contents' title='" + col.text + "'><a ng-hide='row.entity.StatusId>0' ng-click='grid.appScope.page." + col.name + "_click(row)' style='cursor:pointer'>" + col.text + "</a><a ng-show='row.entity.StatusId>0' ng-click='grid.appScope.page." + col.name + "_click(row)' style='cursor:pointer'>Verified</a></div>"
                                         custColumn.name = col.name
                                         custColumn.field = col.name
                                         custColumn.cellTemplate = '';
                                         custColumn['cellTemplate'] = cellTemplate;
                                         custColumn['visible'] = true;
                                         custColumn["cellClass"] = function (grid, row, col, rowRenderIndex, colRenderIndex) {
-                                            if (row.entity.StatusBGClass !== undefined) {
+                                        console.log(row)
+                                            if (row.entity.StatusBGClass != undefined) {
+                                               // row.entity.StatusBGClass='RED-300';
                                                 return 'status-bg ' + row.entity.StatusBGClass;
                                             }
                                         }
@@ -848,7 +850,7 @@
                     if ($scope.page.boxOptions.isVerifyButton) {
                         if ($rootScope.user.profile.isHeadEmployee) {
                             var custColumn = {};
-                            var cellTemplate = "<div class='ui-grid-cell-contents' ng-if='row.entity." + $scope.page.pageinfo.titleempcolname + " != "+$rootScope.user.profile.empId+"' title='Verify'><a ng-click='grid.appScope.verifyEntity(row)' style='cursor: pointer'>Verify</a></div>"
+                            var cellTemplate = "<div class='ui-grid-cell-contents' ng-if='row.entity." + $scope.page.pageinfo.titleempcolname + " != "+$rootScope.user.profile.empId+"' title='Verify'><a ng-hide='row.entity.StatusId>0' ng-click='grid.appScope.verifyEntity(row)' style='cursor: pointer'>Verify</a><a ng-show='row.entity.StatusId>0' ng-click='grid.appScope.verifyEntity(row)' style='cursor: pointer'>Verified</a></div>"
                             custColumn.name = "Option"
                             custColumn.field = "Verify"
                             custColumn.cellTemplate = '';

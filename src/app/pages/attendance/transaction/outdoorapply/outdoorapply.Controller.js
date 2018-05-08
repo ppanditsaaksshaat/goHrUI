@@ -66,6 +66,11 @@
     }
 
     function _pageResult(result) {
+      console.log($scope.page.gridOptions.data)
+      angular.forEach($scope.page.gridOptions.data,function(data){
+      
+        console.log(data)
+      })
       console.log(result);
     }
 
@@ -103,9 +108,9 @@
 
 
     function _oDVerify(row) {
-      console.log(row)
+      //console.log(row)
       var status = $filter('findObj')($scope.page.pageinfo.statuslist, row.entity.StatusId, 'value');
-      console.log(status)
+     // console.log(status)
       if (status == null) {
         status = {};
         status.isRejected = false;
@@ -122,6 +127,9 @@
           //Get page of SanctionLeave 
           pageService.getPagData(sanctionLoanPageId).then(_getPageDataSuccessResult, _getPageDataErrorResult)
           $scope.entity = row.entity;
+          console.log(row.entity)
+        //  console.log($scope.sanctionPage.pageinfo.statuslist)
+          $scope.sanctionEntity.StatusId=row.entity.StatusId;
           $scope.sanctionEntity.AFDADFDAFromDate = row.entity.FDAFromDate;
           $scope.sanctionEntity.AFDADFDAToDate = row.entity.FDAToDate;
         }
@@ -167,6 +175,7 @@
       //   $scope.cancelRequestPage = result;
       // }
       if (parseInt(result.pageinfo.pageid) == parseInt(sanctionLoanPageId)) {
+        console.log("saction= "+ JSON.stringify(result))
         $scope.sanctionPage = result;
         //Get entity of sanctionleave  
         var searchList = [];
@@ -226,7 +235,7 @@
 
     /**View OutDoor Record */
     function _viewRecord(row) {
-      debugger;
+      
       if (row.entity.StatusId == 0) {
         _editRecord(row);
       }
