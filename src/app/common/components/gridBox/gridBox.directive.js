@@ -850,12 +850,7 @@
                     if ($scope.page.boxOptions.isVerifyButton) {
                         if ($rootScope.user.profile.isHeadEmployee) {
                             var custColumn = {};
-<<<<<<< HEAD
                             var cellTemplate = "<div class='ui-grid-cell-contents' ng-if='row.entity." + $scope.page.pageinfo.titleempcolname + " != "+$rootScope.user.profile.empId+"' title='Verify'><a ng-hide='row.entity.StatusId>0' ng-click='grid.appScope.verifyEntity(row)' style='cursor: pointer'>Verify</a><a ng-show='row.entity.StatusId>0' ng-click='grid.appScope.verifyEntity(row)' style='cursor: pointer'>Verified</a></div>"
-=======
-                            var cellTemplate = "<div class='ui-grid-cell-contents' ng-if='row.entity." + $scope.page.pageinfo.titleempcolname + " != "+$rootScope.user.profile.empId+"' title='Verify'><a ng-click='grid.appScope.verifyEntity(row)' style='cursor: pointer'>Verify</a></div>"
-                            
->>>>>>> aec51e36a30dd662bb30274b9ce496e437649251
                             custColumn.name = "Option"
                             custColumn.field = "Verify"
                             custColumn.cellTemplate = '';
