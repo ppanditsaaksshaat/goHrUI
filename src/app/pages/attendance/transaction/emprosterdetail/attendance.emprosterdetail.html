@@ -1,3 +1,8 @@
+<!-- <head>
+    <link rel="stylesheet" href="http://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/release/3.0.0-rc.21/ui-grid.min.css"/>
+    <link rel="stylesheet" href="main.css" type="text/css" />
+</head> -->
+
 <div class="panel panel-default bootstrap-panel xmedium-panel">
     <div class="panel-body">
         <div class="row">
@@ -17,16 +22,21 @@
                         </div>
 
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <label ng-bind="manualAttendance.pageinfo.fields.Year.text"></label>
                         <div>
                             <select class="form-control" ng-model="entity.Year" ng-options="year.value as year.name for year in manualAttendance.pageinfo.selects.Year"></select>
                         </div>
                     </div>
 
-                    <div class="col-md-1" ng-show="isLoading">
-                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                    <div class="col-md-2">
+                        <label ng-bind="manualAttendance.pageinfo.fields.DeptId.text"></label>
+                        <div>
+                            <select class="form-control" ng-model="entity.DeptId" ng-options="dept.value as dept.name for dept in manualAttendance.pageinfo.selects.DeptId"></select>
+                        </div>
                     </div>
+
+                  
 
                     <div class="col-md-1">
                         <label></label>
@@ -67,13 +77,17 @@
                             <button class="btn btn-primary" ng-click=uploadBulkAttendance()>Save</button>
                         </div>
                     </div>
+                    <div class="col-md-1" ng-show="isLoading">
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                    </div>
                 </div>
-                
+
                 <div>
                     <h3 class="with-line " ng-show="gridLine"></h3>
                     <div class="row" ng-if="weekGridOptions.data.length>0">
                         <div class="col-md-12">
-                            <div style="height: 400px;" ui-grid="weekGridOptions" ui-grid-cellNav ui-grid-pagination ui-grid-edit ui-grid-expandable
+                            <div style="height: 400px;" ui-grid="weekGridOptions"
+                            ui-grid-pinning  ui-grid-cellNav ui-grid-pagination ui-grid-edit ui-grid-expandable
                                 ui-grid-auto-resize ui-grid-selection class="grid grid paybandgrid payband"></div>
                         </div>
                     </div>

@@ -19,16 +19,22 @@
     $scope.getEmployeeAttendance = _getEmployeeAttendance;
     $scope.downloadAttendanceDataList = _downloadAttendanceDataList;
     var downloadAtt = false;
-    $scope.weekGridOptions = {
-      enableCellEditOnFocus: true,
-      enableRowSelection: false,
-      enableHorizontalScrollbar: 0,
-      enableVerticalScrollbar: 0,
-      enableScrollbars: false,
-      paginationPageSize: 10,
-      onRegisterApi: _onRegisterApi
-    }
-    // $scope.weekGridOptions.onRegisterApi = _onRegisterApi;
+
+    $scope.weekGridOptions = $scope.getGridSetting();
+    $scope.weekGridOptions.onRegisterApi = _onRegisterApi;
+
+    // $scope.weekGridOptions = {
+    //   enableCellEditOnFocus: true,
+    //   enableRowSelection: false,
+    //   enableHorizontalScrollbar: 0,
+    //   enableVerticalScrollbar: 0,
+    //   enableScrollbars: false,
+    //   paginationPageSize: 10,
+    //   onRegisterApi: _onRegisterApi
+    // }
+
+
+
     vm.uploader = [];
     vm.fileResult = undefined;
     $scope.weekGridOptions.columnDefs = [];
@@ -55,7 +61,8 @@
         console.log(result)
         $scope.dropDownForDayStatus = [];
         $scope.manualAttendance = result;
-
+        $scope.shiftId = result.pageinfo.selects.SMId;
+        console.log($scope.shiftId)
 
         angular.forEach($scope.manualAttendance.pageinfo.selects.SMId, function (col) {
           $scope.dropDownForDayStatus.push({
@@ -75,7 +82,7 @@
     // $scope.dropDownForDayStatus = [];
 
     console.log($scope.manualAttendance)
-    
+
 
 
     function _getEmployeeAttendance() {
@@ -114,10 +121,17 @@
               value: 0
             }
             searchLists.push(searchListData)
+            var searchListData = {
+              field: 'DeptId',
+              operand: '=',
+              value: $scope.entity.DeptId
+            }
+            searchLists.push(searchListData)
             var data = {
               searchList: searchLists,
               orderByList: []
             }
+            console.log(data)
             pageService.getCustomQuery(data, vm.queryId).then(_getEmployeeAttendanceResult, _getEmployeeAttendanceErrorResult)
           } else {
             $scope.showMsg("warning", "Please Select Year")
@@ -177,36 +191,61 @@
           name: 'Sno',
           displayName: 'Sno',
           width: 40,
-          enableCellEdit: false
+          enableCellEdit: false,
+          pinnedLeft: true,
         },
         {
           name: 'EmpName',
           displayName: 'Name',
-          width: 130,
-          enableCellEdit: false
+          width: 200,
+          enableCellEdit: false,
+          pinnedLeft: true,
         }
       ]
       // for (var c = 0; c <= totalDayInMonth; c++) {
       for (var c = 1; c <= $scope.totalDay; c++) {
         var date = "";
+        var day = "";
         if (c != 1) {
           fromDate = moment(fromDate).add(1, 'days')
-          date = fromDate.format('D');
-        } else {
-          date = fromDate.format('D');
         }
-       
+        date = fromDate.format('D');
+        day = fromDate.format('dddd');
+
+
+
+
+        var cellTemplate = '<div class="ui-grid-cell-contents" style="font-size:10px" >{{row.entity["s"+col.name.substr(1)]}}<br/>{{ row.entity["a"+col.name.substr(1)]}}</div>'
+
         var col = {
           name: 'd' + date,
-          displayName: date,
-          width: 60,
+          displayName: date + '-(' + day + ')',
+          width: 100,
+          cellTemplate: cellTemplate,
           editableCellTemplate: 'ui-grid/dropdownEditor',
           editDropdownIdLabel: 'value',
           editDropdownValueLabel: 'name',
           //  cellEditableCondition: _cellEditableCondition,
           editDropdownOptionsArray: $scope.dropDownForDayStatus,
-          cellFilter: "mapDropdown:grid.appScope.dropDownForDayStatus:'value':'name'"
-
+          cellFilter: "mapDropdown:grid.appScope.dropDownForDayStatus:'value':'name'",
+          cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+            // console.log(grid, row, col, rowRenderIndex, colRenderIndex)
+            // console.log(row)
+            // console.log(row.entity.d1)
+            // console.log(col)
+            // if (row.entity[col.field] == 1) {
+            //   return 'RED-500'
+            // } else if (row.entity[col.field] == 2) {
+            //   return 'PINK-300'
+            // }
+            // console.log(row.entity[col.field])
+            var shift = $filter("findObj")($scope.shiftId, row.entity[col.field], "value")
+            // console.log(shift)
+            if (shift != null) {
+              // console.log('shift')
+              return shift.StatusBGClass;
+            }
+          }
         }
 
 
@@ -455,33 +494,43 @@
       }
     }
 
-    function _onRegisterApi(gridApi) {
 
-      //for all select event
-      console.log(gridApi)
+    function _onRegisterApi(gridApi) {
+      console.log('on register', gridApi)
       gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
         // var changeValue;
+
+      //  var shName = 'deepak';
+      //  console.log($scope.dropDownForDayStatus)
+        //find shift name from list  using
+
+
+        var shift = $filter("findObj")($scope.dropDownForDayStatus, newValue, "value");
+        if (shift != null) {
+          rowEntity['s' + colDef.name.substr(1)] = shift.name;
+        }
+        console.log(colDef, newValue)
         if ($scope.changeValue) {
           if (oldValue != 'SH') {
             colDef[name] = newValue;
             return;
           }
         }
-        angular.forEach(rowEntity, function (col, name) {
-          console.log(col)
-          console.log(name)
-          if (name != 'Sno' && name !== 'EmpId' && name != 'EmpName' && name != 'ShiftInTime' && name != 'ShifOutTime' && name != 'JdDate' && name != 'FromDate' && name != 'ToDate') {
-            // rowEntity[name] = newValue;
-            $scope.changeValue = true;
-          }
-        })
-        console.log(rowEntity, colDef, newValue, oldValue)
-        console.log(newValue)
-        console.log(rowEntity.length)
-        console.log(oldValue)
-        console.log(rowEntity[newValue])
+        // angular.forEach(rowEntity, function (col, name) {
+        //   // console.log(col)
+        //   // console.log(name)
+        //   if (name != 'Sno' && name !== 'EmpId' && name != 'EmpName' && name != 'ShiftInTime' && name != 'ShifOutTime' && name != 'JdDate' && name != 'FromDate' && name != 'ToDate') {
+        //     // rowEntity[name] = newValue;
+        //     $scope.changeValue = true;
+        //   }
+        // })
+        // console.log(rowEntity, colDef, newValue, oldValue)
+        // console.log(newValue)
+        // console.log(rowEntity.length)
+        // console.log(oldValue)
+        // console.log(rowEntity[newValue])
         oldValue = newValue;
-        console.log(newValue)
+        // console.log(newValue)
 
       })
 
