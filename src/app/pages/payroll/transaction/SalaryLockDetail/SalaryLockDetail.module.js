@@ -18,7 +18,6 @@
           // abstract: true,
           templateUrl: 'app/pages/payroll/transaction/SalaryLockDetail/SalaryLockDetail.html',
           controller: "SalaryLockDetailController",
-          controllerAs: "payCtrl",
           title: 'Salary Lock Detail',
           sidebarMeta: {
             order: 2,

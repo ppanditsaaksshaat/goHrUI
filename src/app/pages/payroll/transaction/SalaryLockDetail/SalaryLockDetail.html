@@ -1,1 +1,57 @@
-test
+<div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div class="col-md-12">
+                Salary Lock
+            </div>
+
+        </div>
+
+    </div>
+    <div class="panel-body">
+        <form ng-submit="register(entity)">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>SubUnit*</label>
+                        <select class="form-control" ng-model="lock.subUnit" ng-change="lockUnlock()" ng-options="subUnit.value as subUnit.name for subUnit in subUnitList"></select>
+                        <!-- <select class="form-control" ng-model="lock.subUnit" ng-options="subUnit.Id AS subUnit.Name  for subUnit in subUnitList"></select> -->
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Process Type*</label>
+                        <select class="form-control" ng-model="lock.processType" ng-change="lockUnlock()" ng-options="subUnit.value as subUnit.name for subUnit in processTypeList"></select>
+                        <!-- <select class="form-control" ng-model="lock.processType" ng-options="processType.Id AS processType.Name  for processType in processTypeList"></select> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Month*</label>
+                        <select class="form-control" ng-model="lock.month" ng-change="lockUnlock()" ng-options="subUnit.value as subUnit.name for subUnit in monthList"></select>
+                        <!-- <select class="form-control" ng-model="lock.month" ng-options="month.Id AS month.Name  for month in monthList"></select> -->
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Year*</label>
+                        <select  class="form-control" ng-model="lock.year" ng-change="lockUnlock()" ng-options="subUnit.value as subUnit.name for subUnit in yearList"></select>
+                        <!-- <select class="form-control" ng-model="lock.year" ng-options="year.Id AS year.Name  for year in yearList"></select> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group text-center">
+                   <button ng-show="isLockData" type="button" class="btn btn-primary" ng-click="locks(loc)">Lock</button>
+                   <button ng-show="isUnLockData" type="button" class="btn btn-primary" ng-click="unLocks()">Unlock</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>
