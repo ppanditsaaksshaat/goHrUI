@@ -4,20 +4,6 @@
  * created on 16.12.2015
  */
 (function () {
-<<<<<<< HEAD
-    'use strict';
-  
-    angular.module('BlurAdmin.pages.payroll.transaction.SalaryLockDetail')
-      .controller('SalaryLockDetailController', SalaryLockDetailController);
-  
-    /** @ngInject */
-    function SalaryLockDetailController($scope, $state, pageService, editFormService, $filter) {
-      
-    }
-  
-  })();
-  
-=======
   'use strict';
 
   angular.module('BlurAdmin.pages.payroll.transaction.SalaryLockDetail')
@@ -222,4 +208,3 @@
     }
   }
 });
->>>>>>> aa4da3d91de300d67323ef95fc5620af8d3e98db
