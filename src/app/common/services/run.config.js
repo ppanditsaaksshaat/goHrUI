@@ -129,12 +129,17 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
 
                 if (k.BGClassFont == "") {
                     fontColorCode = "";
-                }
+                }   
 
                 if (k.BGClassBG == "") {
                     bgColorCode = "";
                 }
                 sheet.addRule("." + className, bgColorCode + fontColorCode, 0);
+
+
+                var aClassName = k.BGCssClass+' a';
+                var afontColorCode = "color: " + k.BGClassFont + "; ";
+                sheet.addRule("." + aClassName, afontColorCode, 0);
             });
         })
     }

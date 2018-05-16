@@ -1,6 +1,4 @@
 'use strict';
-
-
 angular.module('BlurAdmin', [
   'ngAnimate',
   'ui.bootstrap',
@@ -44,6 +42,7 @@ angular.module('BlurAdmin', [
 
 
 var app = {
+  
   // Application Constructor
   initialize: function() {
       this.bindEvents();
