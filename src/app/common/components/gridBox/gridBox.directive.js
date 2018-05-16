@@ -675,8 +675,8 @@
                             }
                         });
 
-                        if ($scope.page.boxOptions.showDataOnLoad)
-                            _refreshData();
+                        // if ($scope.page.boxOptions.showDataOnLoad)
+                        //     _refreshData();
                     }
                 }
                 function _getPageErrorResult(err) {
@@ -878,7 +878,6 @@
 
                 })
                 $scope.$on('apply-filter', function (successEvent, searchList) {
-                    debugger
                     // //console.log(searchList)
                     // //console.log('from gridbox', $scope.page)
                     if (searchList) {

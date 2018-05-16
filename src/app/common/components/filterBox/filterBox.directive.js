@@ -180,7 +180,7 @@
                     type: 'all'
                 });
                 $scope.filterOpt.date.push({
-                    value: '=>',
+                    value: '>=',
                     name: resourse.greaterequal,
                     type: 'all'
                 });
@@ -421,16 +421,17 @@
 
 
                     var dayForFromDate = 0;
-                    var dayList = $filter("findObj")($rootScope.user.sysparam, 'DAYS_FOR_FROMDATE', 'key')
-                    if (dayList != null) {
-                        // dayForFromDate = $rootScope.user.sysparam[13].value
-                        dayForFromDate = dayList.value;
-                        var currentdate = new Date();
-                        var updateDate = currentdate.setDate(currentdate.getDate() - dayForFromDate);
-                        filter.value = new Date(updateDate);
-                        filter.value2 = new Date();
-                        filter.datePicker.option2.minDate = filter.value;
-                    }
+                    //commented by dj@16.05.2018
+                    // // var dayList = $filter("findObj")($rootScope.user.sysparam, 'DAYS_FOR_FROMDATE', 'key')
+                    // // if (dayList != null) {
+                    // //     // dayForFromDate = $rootScope.user.sysparam[13].value
+                    // //     dayForFromDate = dayList.value;
+                    // //     var currentdate = new Date();
+                    // //     var updateDate = currentdate.setDate(currentdate.getDate() - dayForFromDate);
+                    // //     filter.value = new Date(updateDate);
+                    // //     filter.value2 = new Date();
+                    // //     filter.datePicker.option2.minDate = filter.value;
+                    // // }
 
 
                     // angular.forEach($rootScope.user.sysparam.key, function (key) {
@@ -539,7 +540,7 @@
                                     //--if date filter data is required on load can be manage from sysparam in future (02.04.18)@nm
                                     filter.datePicker.option1.minMode = 'day'
                                     if (count == 1) {
-                                        filter.operator = "/b"
+                                        // filter.operator = "/b"
                                         filter.showFilter = true;
                                         _dateModeChanged(filter);
                                     }
