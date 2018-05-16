@@ -6,7 +6,7 @@
     'use strict';
   
     angular.module('BlurAdmin.pages.payroll.transaction.SalaryLockDetail')
-      .controller('SalaryLockDetailController', payFullAndFinalDetailController);
+      .controller('SalaryLockDetailController', SalaryLockDetailController);
   
     /** @ngInject */
     function SalaryLockDetailController($scope, $state, pageService, editFormService, $filter) {
