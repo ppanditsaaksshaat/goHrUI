@@ -99,16 +99,39 @@
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
     $scope.HolidayNextWeekGridOpt.columnDefs.push({ name: 'HDName', displayName: 'Holiday-Name', Width: '5px' })
     $scope.HolidayNextWeekGridOpt.columnDefs.push({
-      name: 'HDFromDate', displayName: 'From-Day',
+      name: 'HDFromDate', displayName: 'Date',
       cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDFromDate | date :'dd-MMM-yyyy'}}</div>"
     })
-    $scope.HolidayNextWeekGridOpt.columnDefs.push({
-      name: 'HDToDate', displayName: 'To-Day',
-      cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDToDate | date :'dd-MMM-yyyy'}}</div>"
+    // $scope.HolidayNextWeekGridOpt.columnDefs.push({
+    //   name: 'HDToDate', displayName: 'To-Day',
+    //   cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDToDate | date :'dd-MMM-yyyy'}}</div>"
 
 
-    })
+    // })
     $scope.HolidayNextWeekGridOpt.data = [];
+
+/////
+
+
+
+  //creating Holiday  Next 7 days  grids
+  $scope.HolidayAllListGridOpt = $scope.getGridSetting();
+  $scope.HolidayAllListGridOpt.columnDefs = []
+  $scope.HolidayAllListGridOpt.columnDefs.push({ name: 'Sno', displayName: 'S.No', Width: '5x' })
+  $scope.HolidayAllListGridOpt.columnDefs.push({ name: 'HDName', displayName: 'Holiday-Name', Width: '5px' })
+  $scope.HolidayAllListGridOpt.columnDefs.push({
+    name: 'HDFromDate', displayName: 'From-Day',
+    cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDFromDate | date :'dd-MMM-yyyy'}}</div>"
+  })
+  // $scope.HolidayAllListGridOpt.columnDefs.push({
+  //   name: 'HDToDate', displayName: 'To-Day',
+  //   cellTemplate: "<div class='ui-grid-cell-contents' ng-mouseover='row.isMouseOver=true' ng-mouseleave='row.isMouseOver=false' >{{row.entity.HDToDate | date :'dd-MMM-yyyy'}}</div>"
+
+
+  // })
+  $scope.HolidayAllListGridOpt.data = [];
+
+
 
 
     //creating Employee  Today Birthday grids
@@ -374,11 +397,21 @@
 
     function _getCustomQuerySuccess(result) {
       console.log(result);
-      var totalemployee = result[0][0].TotalActiveEmployee
+      var totalemployee = result[0][0].TotalActiveEmployee;
+
+      var total_percentage =parseFloat(result[1][0].TotalPresent);
 
       $scope.totalActiveEmpValue = result[0][0].TotalActiveEmployee;
-      $scope.totalPresentValuePercentage = result[1][0].TotalPresent;
+      $scope.totalPresentValuePercentage =parseFloat(result[1][0].TotalPresent);
       $scope.totalPresentValueCount = result[1][0].totPr;
+
+      // $scope.totalPresentValuePercentage = result[1][0].totPr;
+      // $scope.totalPresentValueCount = result[1][0].TotalPresent;
+
+     console.log('sss');
+     console.log(total_percentage);
+    // console.log( result[1][0].totPr);
+    // console.log('sss');
       $scope.totalAbsentValuePercentage = result[2][0].TotalAbsentEmployee;
       $scope.totalAbsentValuePercentageCount = result[2][0].totabs;
       $scope.totalLeaveTodayValuePercentage = result[3][0].TotalLeaveToday;
@@ -391,16 +424,20 @@
       $scope.Next7daysonLeaveEmployee = result[9];
       $scope.Next7Hodidays = result[10];
       $scope.TodayBirthday = result[11];
-      $scope.Next7daysonBirthdayEmployee = result[5];
+      $scope.Next7daysonBirthdayEmployee = result[12];
       $scope.absentlist = result[13];
       $scope.presentlist = result[14];
+      $scope.HoliDayListAll = result[15];
       $scope.joinGridOpt.data = $scope.TotalNewJoinList;
       $scope.LeftGridOpt.data = $scope.TotalNewLeftList;
       $scope.LeaveTodayGridOpt.data = $scope.TodayonLeaveEmployee;
       $scope.LeaveNextWeekGridOpt.data = $scope.Next7daysonLeaveEmployee;
-      $scope.BirthdayTodayGridOpt = $scope.TodayBirthday;
-      $scope.BirthdayNextWeekGridOpt = $scope.Next7daysonBirthdayEmployee;
-      $scope.HolidayNextWeekGridOpt = $scope.Next7Hodidays;
+      $scope.BirthdayTodayGridOpt.data = $scope.TodayBirthday;
+      $scope.BirthdayNextWeekGridOpt.data = $scope.Next7daysonBirthdayEmployee;
+      $scope.HolidayNextWeekGridOpt.data = $scope.Next7Hodidays;
+       $scope.HolidayAllListGridOpt.data=  $scope.HoliDayListAll;
+
+
       $scope.AbsentlistGrid.data = $scope.absentlist;
       $scope.PresentlistGrid.data = $scope.presentlist;
 
