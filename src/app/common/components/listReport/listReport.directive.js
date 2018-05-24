@@ -1,3 +1,7 @@
+/**
+ * @author deepak.jain
+ * created on 16.05.217
+ */
 (function () {
     'use strict';
 
@@ -24,6 +28,7 @@
 
             },
             link: function ($scope, elm, attrs, ctrl) {
+                console.log('listReport')
                 var reportBaseURL = 'reports/';
                 var boxSetting = {
                     selfLoading: true,//gridBox will fetch data from api on its own
@@ -64,14 +69,42 @@
                     $scope.page.showFilter = true;
                 }
 
+                $scope.page.gridOptions = getGridSetting();
+                $scope.page.gridOptions2 = angular.copy($scope.page.gridOptions);
+                $scope.page.gridOptions2.enablePaginationControls = false;
+
                 $scope.reportId = $scope.page.reportId;
                 $scope.reset = _reset;
                 $scope.callReportPrint = _callReportPrint;
                 $scope.showResult = _showResult;
 
 
+                function getGridSetting() {
+                    var gridOptions = {
+                        rowHeight: 35,
+                        showGridFooter: true,
+                        enableColumnResizing: true,
+                        enableFiltering: false,
+                        enableGridMenu: true,
+                        enableRowSelection: true,
+                        enableRowHeaderSelection: true,
+                        enablePaginationControls: true,
+                        paginationPageSizes: [10, 25, 50, 75, 100, 200, 500],
+                        paginationPageSize: 50,
+                        minRowsToShow: 50,
+                        showColumnFooter: false,
+                        enableVerticalScrollbar: false,
+                        enableHighlighting: true,
+                        enablePinning: true,
+                        data: [],
+                        columnDefs: []
+                        // rowTemplate:'app/common/components/listGrid/grid-row-template.html'
+                    }
+                    return gridOptions;
+                }
                 function _callReportPrint() {
-                    window.frames[0].frameElement.contentWindow.outerPrint();
+                    // window.frames[0].frameElement.contentWindow.outerPrint();
+                    printReport('djGrid1');
                 }
                 function _reset() {
 
@@ -113,6 +146,38 @@
                         console.log(result);
                         $scope.page.reportData = result;
 
+                        $scope.page.gridOptions.columnDefs = [];
+                        angular.forEach(result.header, function (head) {
+                            var colDef = {
+                                name: head.name
+                                , field: head.name
+                                , displayName: head.text
+                                , width: 100,
+                                visible: true
+
+                            };
+
+                            if (head.type == 'date') {
+                                colDef.cellFilter = 'date:\'dd-MMM-yyyy\'';
+                            }
+                            $scope.page.gridOptions.columnDefs.push(colDef);
+                        })
+
+                        if (result.tables) {
+                            $scope.page.gridOptions.data = [];
+                            angular.forEach(result.tables[0].rows, function (row) {
+                                var rowData = {};
+                                angular.forEach(row, function (col) {
+                                    rowData[col.name] = col.value;
+                                })
+                                $scope.page.gridOptions.data.push(rowData);
+                            })
+                        }
+
+                        $scope.page.gridOptions2.columnDefs = angular.copy($scope.page.gridOptions.columnDefs);
+                        $scope.page.gridOptions2.data = angular.copy($scope.page.gridOptions.data);
+
+                        console.log($scope.page)
                     }, function (err) {
                         console.log(err);
                     });
@@ -134,6 +199,68 @@
                     _loadReport();
                 })
 
+                function printReport(report_ID) {
+                    var html = $('#' + report_ID).html();
+
+                    var docType = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">';
+                    // var docCnt = styles + table.parent().html();
+                    var docHead = '<head><title>ITSL Report</title><style>body{margin:5;padding:0;}</style></head>';
+                    var winAttr = "location=yes,statusbar=no,directories=no,menubar=no,titlebar=no,toolbar=no,dependent=no,width=720,height=600,resizable=yes,screenX=200,screenY=200,personalbar=no,scrollbars=yes";;
+                    var newWin = window.open("", "_blank", winAttr);
+
+                    $(newWin.document.body).html(html)
+                    return;
+
+                    var rv1 = $('#' + report_ID);
+
+                    var iDoc = rv1.parents('html');
+
+                    // Reading the report styles
+                    var styles = iDoc.find("head style[id$='ReportControl_styles']").html();
+                    if ((styles == undefined) || (styles == '')) {
+                        iDoc.find('head script').each(function () {
+                            var cnt = $(this).html();
+                            var p1 = cnt.indexOf('ReportStyles":"');
+                            if (p1 > 0) {
+                                p1 += 15;
+                                var p2 = cnt.indexOf('"', p1);
+                                styles = cnt.substr(p1, p2 - p1);
+                            }
+                        });
+                    }
+                    if (styles == '') { alert("Cannot generate styles, Displaying without styles.."); }
+                    styles = '<style type="text/css">' + styles + "</style>";
+
+                    console.log($(rv1).find('ui-grid-render-container-body'))
+                    // Reading the report html
+
+                    var table = rv1.getElementsByClassName("ui-grid-render-container-body");
+                    console.log(table)
+                    if (table == undefined) {
+                        alert("Report source not found.");
+                        return;
+                    }
+
+                    // Generating a copy of the report in a new window
+                    var docType = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">';
+                    var docCnt = styles + table.parent().html();
+                    var docHead = '<head><title>ITSL Report</title><style>body{margin:5;padding:0;}</style></head>';
+                    var winAttr = "location=yes,statusbar=no,directories=no,menubar=no,titlebar=no,toolbar=no,dependent=no,width=720,height=600,resizable=yes,screenX=200,screenY=200,personalbar=no,scrollbars=yes";;
+                    var newWin = window.open("", "_blank", winAttr);
+
+                    $(newWin.document.body).html('deepak jain')
+                    // console.log(newWin.document)
+                    // writeDoc = newWin.document;
+                    // console.log(writeDoc)
+                    // writeDoc.open();
+                    // writeDoc.write(docType + '<html>' + docHead + '<body onload="window.print();">' + docCnt + '</body></html>');
+                    // writeDoc.close();
+
+                    // The print event will fire as soon as the window loads
+                    newWin.focus();
+                    // uncomment to autoclose the preview window when printing is confirmed or canceled.
+                    // newWin.close();
+                };
             }
         }
     }

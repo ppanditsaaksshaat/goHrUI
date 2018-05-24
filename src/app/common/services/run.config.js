@@ -5,10 +5,10 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
     var pgList = DJWebStore.GetValue('pageList');
     if (pgList == null) {
         console.log('calling page list')
-       // pageService.getAllPageList().then(_successPageAll, _errorPageAll);
+        // pageService.getAllPageList().then(_successPageAll, _errorPageAll);
 
     }
-    else{
+    else {
         console.log(pgList)
     }
     function _successPageAll(result) {
@@ -129,17 +129,22 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
 
                 if (k.BGClassFont == "") {
                     fontColorCode = "";
-                }   
+                }
 
                 if (k.BGClassBG == "") {
                     bgColorCode = "";
                 }
                 sheet.addRule("." + className, bgColorCode + fontColorCode, 0);
+                sheet.addRule("." + className + " select", "color: black; ", 0);
 
-
-                var aClassName = k.BGCssClass+' a';
+                var aClassName = k.BGCssClass + ' a';
                 var afontColorCode = "color: " + k.BGClassFont + "; ";
                 sheet.addRule("." + aClassName, afontColorCode, 0);
+
+                
+                
+
+
             });
         })
     }
