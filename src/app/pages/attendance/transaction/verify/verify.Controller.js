@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function attTransverifyController($scope, $state, $timeout, editFormService,
-    pageService, dialogModal, toastr, toastrConfig, $filter, DJWebStoreGlobal) {
+    pageService, dialogModal, toastr, toastrConfig, $filter, DJWebStoreGlobal, $rootScope) {
 
     var vm = this;
     var currentState = $state.current;
@@ -41,10 +41,20 @@
 
     this.applyFilter = _applyFilter;
 
+    $scope.attGridOptions = {
+      enableCellEditOnFocus: true,
+      enableRowSelection: false,
+      enableHorizontalScrollbar: 0,
+      enableVerticalScrollbar: 0,
+      enableScrollbars: false
+    }
 
     // this.uploadRecord = _uploadRecord
 
     $scope.closeView = _closeView;
+    $scope.print = _print;
+
+    $scope.close = _close;
     /**For all list of verify attendance grid setting */
     $scope.entity = {}
     $scope.page = $scope.createPage();
@@ -722,11 +732,10 @@
       }
     }
 
-
     /**Close edit list */
     function _close() {
-      // vm.showVerifyAttendance = true;
 
+      // vm.showVerifyAttendance = true;
       vm.showVerifyAttendance = true;
       vm.showVerifyAttendances = false;
       vm.showEmpVerifyDetail = false;
@@ -774,46 +783,130 @@
     }
 
     function _editRecord(row) {
+      $scope.companyName = $rootScope.user.comapny.name;
       vm.showVerifyAttendance = false;
       vm.showVerifyAttendances = true;
       vm.showEmpVerifyDetail = false;
 
-      console.log(row)
-      /**For list of edit verify attendance grid setting */
-      vm.showDayWise = true;
-      vm.showVerifyAttendance = false
-      var startDate = "",
-        endDate = "";
-      if ($scope.page.filterData === undefined) {
-        startDate = moment().startOf('month').format('YYYY-MM-DD');
-        endDate = moment().endOf('month').format('YYYY-MM-DD');
+      $scope.attGridOptions.columnDefs = [
+        { name: 'DATE', displayName: 'Date', width: 95, enableCellEdit: false, cellClass: _cellClass },
+        { name: 'DayName', displayName: 'DayName', width: 85, enableCellEdit: false, cellClass: _cellClass },
+        { name: 'InTime', displayName: 'InTime', width: 85, enableCellEdit: false, cellClass: _cellClass },
+        { name: 'OutTime', displayName: 'OutTime', width: 85, enableCellEdit: false, cellClass: _cellClass },
+        { name: 'Duration', displayName: 'Duration', width: 85, enableCellEdit: false, cellClass: _cellClass },
+        { name: 'MinForFullWorking', displayName: 'MinForFullWorking', width: 130, enableCellEdit: false, cellClass: _cellClass },
+        { name: 'DayCount', displayName: 'DayCount', width: 85, enableCellEdit: false, cellClass: _cellClass, },
+        { name: 'RuleNo', displayName: 'Rule', width: 85, enableCellEdit: false, cellClass: _cellClass },
+        { name: 'DayStatus', displayName: 'Status', width: 360, enableCellEdit: false, cellClass: _cellClass }
+      ]
 
-      } else {
+      function _cellClass(grid, row, col, rowRenderIndex, colRenderIndex) {
+        if (row.entity.DayCount == "0.5") {
+          return 'status-bg YELLOW-300 cell-border-right';
+        }
+        if (row.entity.DayStatus == "Weekoff") {
+          return 'status-bg GREEN-300 cell-border-right';
+        }
+      }
+      var queryId = 638;
+      var searchLists = [];
+      var searchListData = {
+        field: 'Month',
+        operand: "=",
+        value: row.entity.Month
+      }
+      searchLists.push(searchListData)
+      searchListData = {
+        field: 'Year',
+        operand: '=',
+        value: row.entity.Year
 
-        var sDate = $scope.page.filterData.Month.value + "-" + 1 + "-" + $scope.page.filterData.Year.value;
-        startDate = moment(sDate).startOf('month').format('YYYY-MM-DD');
-        endDate = moment(sDate).endOf('month').format('YYYY-MM-DD');
+      }
+      searchLists.push(searchListData)
+      searchListData = {
+        field: 'SubUnitId',
+        operand: '=',
+        value: $scope.page.filterData.SubUnitId.value
+      }
+      searchLists.push(searchListData)
+      searchListData = {
+        field: 'EmpId',
+        operand: '=',
+        value: row.entity.EmpId
+
+      }
+      searchLists.push(searchListData)
+      var data = {
+        searchList: searchLists,
+        orderByList: []
+      }
+      console.log(data)
+      pageService.getCustomQuery(data, queryId).then(_getEmpAttSuccessResult, _getEmpAttErrorResult)
+
+      function _getEmpAttSuccessResult(result) {
+        console.log(result)
+        angular.forEach(result[1], function (data) {
+          data.DATE = moment(data.DATE).format("DD/MM/YYYY");
+
+        })
+        var yearName = [{ id: 1, name: "JAN" }, { id: 2, name: "FED" }, { id: 3, name: "MAR" }, { id: 4, name: "APR" }, { id: 5, name: "MAY" }, { id: 6, name: "JUN" },
+        { id: 7, name: "JUL" }, { id: 8, name: "AUG" }, { id: 9, name: "SEP" }, { id: 10, name: "OCT" }, { id: 11, name: "NOV" }, { id: 12, name: "DEC" }
+        ]
+        var month = $filter("findObj")(yearName, $scope.page.filterData.Month.value, "id")
+
+        $scope.monthYear = month.name + "," + $scope.page.filterData.Year.value
+        $scope.empDetail = result[0][0];
+        $scope.attGridOptions.data = result[1];
+        $scope.countOfAttDetail = result[2];
       }
 
-      $scope.editPage.searchList = [{
-        field: "EmpId",
-        operand: "=",
-        value: row.entity.EmpId
-      }, {
-        field: "AttDate",
-        operand: ">=",
-        value: startDate
-      }, {
-        field: "AttDate",
-        operand: "<=",
-        value: endDate
-      }];
-      $scope.editPage.orderByList = [{
-        column: 'AttDate',
-        isDesc: false
-      }]
-      console.log($scope.editPage.searchList)
-      $scope.editPage.refreshData();
+      function _getEmpAttErrorResult(err) {
+        console.log(err);
+      }
+
+
+
+      // alert("hi")
+      // vm.showVerifyAttendance = false;
+      // vm.showVerifyAttendances = true;
+      // vm.showEmpVerifyDetail = false;
+
+      // console.log(row)
+      // /**For list of edit verify attendance grid setting */
+      // vm.showDayWise = true;
+      // vm.showVerifyAttendance = false
+      // var startDate = "",
+      //   endDate = "";
+      // if ($scope.page.filterData === undefined) {
+      //   startDate = moment().startOf('month').format('YYYY-MM-DD');
+      //   endDate = moment().endOf('month').format('YYYY-MM-DD');
+
+      // } else {
+
+      //   var sDate = $scope.page.filterData.Month.value + "-" + 1 + "-" + $scope.page.filterData.Year.value;
+      //   startDate = moment(sDate).startOf('month').format('YYYY-MM-DD');
+      //   endDate = moment(sDate).endOf('month').format('YYYY-MM-DD');
+      // }
+
+      // $scope.editPage.searchList = [{
+      //   field: "EmpId",
+      //   operand: "=",
+      //   value: row.entity.EmpId
+      // }, {
+      //   field: "AttDate",
+      //   operand: ">=",
+      //   value: startDate
+      // }, {
+      //   field: "AttDate",
+      //   operand: "<=",
+      //   value: endDate
+      // }];
+      // $scope.editPage.orderByList = [{
+      //   column: 'AttDate',
+      //   isDesc: false
+      // }]
+      // console.log($scope.editPage.searchList)
+      // $scope.editPage.refreshData();
     }
 
     function _updateRecord(row) {
@@ -1719,6 +1812,7 @@
 
 
     function _loadController() {
+
       pageService.getPagData(446).then(_getPageDataSuccessResult, _getPageDataErrorResult)
     }
 
@@ -1730,6 +1824,12 @@
     function _getPageDataErrorResult(error) {
       console.log(error)
     }
+
+    function _print() {   
+      window.print();
+    }
+
+
     _loadController();
 
   }

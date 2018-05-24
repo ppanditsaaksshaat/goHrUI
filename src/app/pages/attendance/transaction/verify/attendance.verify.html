@@ -3,11 +3,87 @@
     </grid-box>
 </div>
 <div ng-show="attVerifyCtrl.showVerifyAttendances" width=100%>
-    <grid-box ng-model="editPage">
-    </grid-box>
+
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <div class="row">
+                <div class="col-md-12">
+                    Monthly Attendance Detail
+                    <button type="button" class="btn btn-xs btn-default pull-right" ng-click="close()">Close</button>
+                    <button type="button" class="btn btn-xs btn-default pull-right" ng-click="print()">Print</button>
+                    <label id="monthYear" class="pull-right" style="display: none; visibility: hidden;">{{monthYear}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <table class="table table-bordered  table-responsive">
+                            <tr>
+                                <th class="col-md-3 font-bold">EmpCode</th>
+                                <th class="col-md-3 font-bold">Name</th>
+                                <th class="col-md-3 font-bold">Designation</th>
+                                <th class="col-md-3 font-bold">Department</th>
+                            </tr>
+                            <tr>
+                                <td class="col-md-3 text-left">{{empDetail.EmpCode}}</td>
+                                <td class="col-md-3">{{empDetail.EmpName}}</td>
+                                <td class="col-md-3">{{empDetail.DesgName}}</td>
+                                <td class="col-md-3">{{empDetail.DeptName}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered  table-responsive">
+                            <tr>
+                                <th class="font-bold">Total Day</th>
+                                <th class="font-bold">Present Day</th>
+                                <th class="font-bold">Weekoff</th>
+                                <th class="font-bold">Leave</th>
+                                <th class="font-bold">Holiday</th>
+                                <th class="font-bold">Absent</th>
+                                <th class="font-bold">Half Day</th>
+                                <th class="font-bold">Full Day</th>
+                                <th class="font-bold">Pending OT</th>
+                                <th class="font-bold">Rejected OT</th>
+                                <th class="font-bold">Approved OT</th>
+                                <th class="font-bold">Late</th>
+                                <th class="font-bold">No Day</th>
+                                <th class="font-bold">Salary Day</th>
+                            </tr>
+                            <tr ng-repeat="countAtt in countOfAttDetail">
+                                <td>{{countAtt.TotalDay}}</td>
+                                <td>{{countAtt.PresentDay}}</td>
+                                <td>{{countAtt.WeekoffDay}}</td>
+                                <td>{{countAtt.LeaveDay}}</td>
+                                <td>{{countAtt.Holiday}}</td>
+                                <td>{{countAtt.AbsentDay}}</td>
+                                <td>{{countAtt.HalfDay}}</td>
+                                <td>{{countAtt.FullDay}}</td>
+                                <td>{{countAtt.PendingFD}}</td>
+                                <td>{{countAtt.RejectedFD}}</td>
+                                <td>{{countAtt.ApprovedFD}}</td>
+                                <td>{{countAtt.LateDay}}</td>
+                                <td>{{countAtt.NoDay}}</td>
+                                <td>{{countAtt.FinalDays}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ui-grid="attGridOptions" ui-grid-edit ui-grid-expandable ui-grid-auto-resize class="pnl1800"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 
 
 <div id="empVeriDetail" ng-show="attVerifyCtrl.showEmpVerifyDetail" class="panel panel-default bootstrap-panel xmedium-panel">
@@ -127,7 +203,7 @@
                         {{emp.Org_TotalLWP}}
                     </td>
                     <td>
-                        <input  class="form-control" ng-model="newEmp.TotalLWP" type="number" name="lname">
+                        <input class="form-control" ng-model="newEmp.TotalLWP" type="number" name="lname">
                     </td>
                 </tr>
                 <!-- <tr>
@@ -239,7 +315,7 @@
                     <button type="button" class="btn btn-xs btn-danger" ng-click="approvedData()">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>Approved</button>
 
-                        <!-- <button type="button" class="btn btn-info btn-lg" ng-click="attVerifyCtrl.saveVerify()">Verify</button>
+                    <!-- <button type="button" class="btn btn-info btn-lg" ng-click="attVerifyCtrl.saveVerify()">Verify</button>
                         <button type="button" class="btn btn-danger btn-lg" ng-click="attVerifyCtrl.closeVerify()">Close</button> -->
 
 
