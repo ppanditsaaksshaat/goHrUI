@@ -16,7 +16,7 @@
                             <div class="col-md-9">
                                 <div class="dropdown pull-left">
                                     <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-                                            {{selectedQueryType | translate}}
+                                        {{selectedQueryType | translate}}
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
@@ -39,6 +39,9 @@
                                     </ul>
                                 </div>
                                 <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
+                                    <button ng-show="(page.pageinfo.uibuttons.create.IsAllowed || (isAdmin && isManager))" type=" button " class="btn btn-xs btn-default "
+                                        ng-click="page.print() ">
+                                        <i class="fal fa-print" aria-hidden="true "></i>Print</button>
                                     <button ng-show="page.boxOptions.showBack" type="button" class="btn btn-xs btn-default" ng-click="page.goBack()">
                                         <i class="ion-backspace"></i>List</button>
                                     <button ng-show="page.boxOptions.showUpload && (page.pageinfo.uibuttons.upload.IsAllowed || (isAdmin && isManager))" type="button"
@@ -50,9 +53,7 @@
                                     <button ng-show="page.boxOptions.showAdd && (page.pageinfo.uibuttons.create.IsAllowed || (isAdmin && isManager))" type=" button "
                                         class="btn btn-xs btn-default " ng-click="page.addRecord(editForm) ">
                                         <i class="fa fa-plus-circle " aria-hidden="true "></i>Add</button>
-                                        <button ng-show="(page.pageinfo.uibuttons.create.IsAllowed || (isAdmin && isManager))" type=" button "
-                                        class="btn btn-xs btn-default " ng-click="page.print() ">
-                                        <i class="fa fa-plus-circle " aria-hidden="true "></i>Print</button>
+
                                     <button type="button" class="btn btn-xs btn-default " ng-click="page.openHelp()">
                                         <i class="fa fa-question-circle" aria-hidden="true "></i>
                                     </button>
@@ -99,21 +100,21 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <button ng-show="page.boxOptions.showFilter" id="image" style="width:3px;
-                height:30px;
-                position:absolute;
-                top:200px;
-                left:0px;" ng-click="page.showFilter=!page.showFilter">
+                        <button ng-show="page.boxOptions.showFilter" id="image" style="width:3px;   height:30px; position:absolute; top:200px;left:0px;"
+                            ng-click="page.showFilter=!page.showFilter">
                             <i ng-class="{'ion-arrow-right-b':!page.showFilter, 'ion-arrow-left-b':page.showFilter}"></i>
                         </button>
 
-                        <div id="djGrid1" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning ui-grid-edit
-                            ui-grid-expandable class="djGrid">
+                        <div id="CommonViewGrid" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning
+                            ui-grid-edit ui-grid-expandable class="djGrid">
                             <div class="no-data" ng-if="page.gridOptions.data.length==0 && !page.dataIsLoading">{{page.boxOptions.noResultMessageText}}</div>
                             <div class="no-data font-black" ng-if="page.dataIsLoading">
                                 <i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i> Please wait data is loading....
                             </div>
                         </div>
+                        <div id="CommonPrintGrid" ui-grid="page.gridOptions2" ng-style="{height:getGridHeight()}" style="visibility: hidden;" class="djGrid">
+                        </div>
+                        {{getGridHeight()}}
                     </div>
                 </div>
                 <div class="panel panel-default bootstrap-panel xmedium-panel pnlScroll" ng-show="page.showViewRecord">

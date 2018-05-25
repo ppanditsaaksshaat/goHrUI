@@ -67,7 +67,10 @@
 
 
                 $scope.showDataFor = _showDataFor;
-
+                $scope.page.gridOptions2 = [];
+                // $scope.height = {
+                //     height: (($scope.page.gridOptions2.data.length * 30) + (30))+"px"
+                // }
                 function _showDataFor(idx, isFromLoad) {
 
                     if (idx == 0) {
@@ -96,6 +99,8 @@
                 }
                 //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
                 //customColumns:text,click,type:a|button|text|dd,pin:true|false,
+
+
                 var gridOptions = $rootScope.getGridSetting();
                 if ($scope.page.boxOptions === undefined)
                     $scope.page.boxOptions = angular.copy(boxSetting);
@@ -113,6 +118,8 @@
                 //console.log($scope.page)
                 if ($scope.page.gridOptions === undefined) {
                     $scope.page.gridOptions = angular.copy(gridOptions);
+                    //      $scope.page.gridOptions2 = angular.copy(gridOptions);
+
                 }
 
                 //setting up conditional grid options
@@ -484,6 +491,7 @@
                             $scope.page.gridOptions = $rootScope.gridSetupColumns($scope.page.gridOptions,
                                 $scope.page.pageinfo.columns, $scope.page, isEdit, isDelete, isHelp, isEdit,
                                 $scope.page.boxOptions.showRowMenu);
+                            $scope.page.gridOptions2 = angular.copy($scope.page.gridOptions)
 
 
                             //re-desiging column as per custom requirements
@@ -555,6 +563,8 @@
                                     if (newColumnDefs.length > 0) {
                                         $scope.page.gridOptions.columnDefs = [];
                                         $scope.page.gridOptions.columnDefs = newColumnDefs;
+                                        $scope.page.gridOptions2.columnDefs = angular.copy($scope.page.gridOptions.columnDefs);
+
                                     }
                                 }
                             }
@@ -589,6 +599,7 @@
 
                                         //console.log($scope.page.gridOptions.columnDefs);
                                         $scope.page.gridOptions.columnDefs.push(custColumn);
+                                        $scope.page.gridOptions2.columnDefs = angular.copy($scope.page.gridOptions.columnDefs)
 
                                     })
                                 }
@@ -749,6 +760,8 @@
                     else {
 
                         $scope.page.gridOptions.data = result;
+                        $scope.page.gridOptions2.data = angular.copy($scope.page.gridOptions.data);
+
                     }
 
                     if ($scope.page.boxOptions.dataResult) {
@@ -870,6 +883,7 @@
                             custColumn.width = 100;
                             //console.log($scope.page.gridOptions.columnDefs);
                             $scope.page.gridOptions.columnDefs.push(custColumn);
+                            $scope.page.gridOptions2.columnDefs.push($scope.page.gridOptions.columnDefs)
                         }
                     }
                 }
@@ -894,14 +908,16 @@
                 $scope.getGridHeight = function () {
                     var rowHeight = 30;
                     var headerHeight = 30;
-                    var defaultHeight = 450;
-                    if ($scope.page.gridOptions.data.length < 10) {
-                        defaultHeight = ($scope.page.gridOptions.data.length * rowHeight + headerHeight);
+                    var defaultHeight = 550;
+                    if ($scope.page.gridOptions2.data.length >= 17) {
+                        var pageCount = $scope.page.gridOptions2.data.length / 17;
+                        
+                        defaultHeight = ($scope.page.gridOptions2.data.length * pageCount + headerHeight);
                     }
-                    return {
-                        height: defaultHeight + "px"
-                    };
+                    return 9000 + "px"
+
                 };
+
             }
         };
     }
