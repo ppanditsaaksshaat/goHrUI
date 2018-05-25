@@ -9,17 +9,17 @@
     .controller('ECRESIDetailController', ECRESIDetailController);
 
   /** @ngInject */
- 
-   function ECRESIDetailController($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr) {
+
+  function ECRESIDetailController($scope, $state, $stateParams,
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr, DJWebStoreGlobal) {
 
     var vm = this;
     var pageId = 367;
     var currentState = $state.current;
-    
+
     $scope.entity = {}
     $scope.page = $scope.createPage();
-    
+
 
 
     console.log($scope.page)
@@ -49,15 +49,26 @@
       updateRecord: null,
       viewRecord: null,
       deleteRecord: null,
-      showDataOnLoad: false
+      showDataOnLoad: false,
+      customButtons: [{
+        text: 'Download',
+        icon: 'ion-archive',
+        onClick: _downloadData,
+        type: 'btn-info'
+      }]
     }
 
 
-  
+
 
     $scope.$watch('page.gridOptions.data', function (data) {
       console.log($scope.page.gridOptions)
     })
+
+    function _downloadData() {
+      console.log($scope.page)
+      DJWebStoreGlobal.JSONToCSVConvertor($scope.page.gridOptions.data, 'ECREPFDetail', false, true, true);
+    }
 
 
   }
