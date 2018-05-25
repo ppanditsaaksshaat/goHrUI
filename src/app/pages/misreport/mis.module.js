@@ -6,6 +6,7 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.mis', [
+    'BlurAdmin.pages.mis.masterReport'
   ])
       .config(routeConfig);
       

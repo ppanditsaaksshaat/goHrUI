@@ -50,7 +50,9 @@
                                     <button ng-show="page.boxOptions.showAdd && (page.pageinfo.uibuttons.create.IsAllowed || (isAdmin && isManager))" type=" button "
                                         class="btn btn-xs btn-default " ng-click="page.addRecord(editForm) ">
                                         <i class="fa fa-plus-circle " aria-hidden="true "></i>Add</button>
-
+                                        <button ng-show="(page.pageinfo.uibuttons.create.IsAllowed || (isAdmin && isManager))" type=" button "
+                                        class="btn btn-xs btn-default " ng-click="page.print() ">
+                                        <i class="fa fa-plus-circle " aria-hidden="true "></i>Print</button>
                                     <button type="button" class="btn btn-xs btn-default " ng-click="page.openHelp()">
                                         <i class="fa fa-question-circle" aria-hidden="true "></i>
                                     </button>

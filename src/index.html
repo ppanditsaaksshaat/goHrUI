@@ -25,6 +25,29 @@
   <!-- css files will be automatically insert here -->
   <!-- endinject -->
   <!-- endbuild -->
+
+
+  <style>
+    @media print {
+      /* All your print styles go here */
+      ba-sidebar,
+      page-top,
+      filter-box,
+
+      button {
+        display: none !important;
+        visibility: hidden !important;
+      }
+      #listReportPrintGrid {
+        display: inline !important;
+        visibility: visible !important;
+      }
+      #listReportViewGrid{
+        display: none !important;
+        visibility: hidden !important;
+      }
+    }
+  </style>
 </head>
 
 <body>

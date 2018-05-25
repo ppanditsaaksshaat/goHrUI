@@ -1,5 +1,5 @@
-<ul class="al-msg-center clearfix">
-  <li uib-dropdown>
+<ul  class="al-msg-center clearfix">
+  <li uib-dropdown ng-if="false">
     <a href uib-dropdown-toggle>
       <i class="fa fa-bell-o"></i><span>5</span>
 
@@ -28,17 +28,22 @@
   </li>
   <li uib-dropdown>
     <a href class="msg" uib-dropdown-toggle>
-      <i class="fa fa-envelope-o"></i><span>5</span>
+      <i class="fa fa-link fa"></i>
       <div class="notification-ring"></div>
     </a>
     <div uib-dropdown-menu class="top-dropdown-menu">
       <i class="dropdown-arr"></i>
-      <div class="header clearfix">
+      <!-- <div class="header clearfix">
         <strong>Messages</strong>
         <a href>Mark All as Read</a>
         <a href>Settings</a>
-      </div>
+      </div> -->
       <div class="msg-list">
+
+        <a ui-sref="organization.employees.add({action:'create'})">Add Employee</a>
+        <!-- <a ui-sref="attendance.transaction.dailysummary">Daily Attendance</a> -->
+        <a ui-sref="leave.transaction.leaveapplication">Leave Application</a>
+<!--         
         <a href class="clearfix" ng-repeat="msg in messages">
           <div class="img-area"><img class="photo-msg-item" ng-src="{{::( users[msg.userId].name | profilePicture )}}"></div>
           <div class="msg-area">
@@ -47,7 +52,7 @@
           </div>
         </a>
       </div>
-      <a href>See all messages</a>
+      <a href>See all messages</a> -->
     </div>
   </li>
 </ul>
