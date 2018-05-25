@@ -11,20 +11,18 @@
   /** @ngInject */
 
   function ECREPFDetailController($scope, $state, $stateParams,
-    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr) {
+    pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr,DJWebStoreGlobal) {
 
     var vm = this;
     var pageId = 359;
     var currentState = $state.current;
-    // this.uploadRecord = _uploadRecord;
     $scope.entity = {}
     $scope.page = $scope.createPage();
-    // $scope.closeForm = _closeForm;
 
-
+    
+    
     console.log($scope.page)
     $scope.page.pageId = 359;
-
 
 
 
@@ -35,12 +33,18 @@
       showRefresh: true,
       showFilter: true,
       filterOpened: true,
-      showAdd: false,
+      showAdd: true,
       showRowMenu: true,
       showCustomView: true,
       showUpload: false,
       showDialog: false,
       enableRefreshAfterUpdate: true,
+      customButtons: [{
+        text: 'Download',
+        icon: 'ion-archive',
+        onClick: _downloadData,
+        type: 'btn-info'
+      }],
       gridHeight: 450,
       getPageData: null,
       refreshData: null,
@@ -53,7 +57,12 @@
     }
 
 
-  
+
+
+    function _downloadData() {
+      console.log($scope.page)
+      DJWebStoreGlobal.JSONToCSVConvertor($scope.page.gridOptions.data, 'ECREPFDetail', false, true, true);
+    }
 
     $scope.$watch('page.gridOptions.data', function (data) {
       console.log($scope.page.gridOptions)
