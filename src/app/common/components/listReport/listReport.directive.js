@@ -31,22 +31,24 @@
                 console.log('listReport')
                 var reportBaseURL = 'reports/';
                 var boxSetting = {
-                    selfLoading: true,//gridBox will fetch data from api on its own
-                    showRefresh: true,//show refresh button
-                    showFilter: true,//show filter toggle button
-                    filterOpened: true,//filter box opened on load
-                    requiredFilter: false,//filter is required
-                    showAdd: true,//show add button
-                    showRowMenu: true,//show row click menu
-                    showCustomView: true,//enable show custom html view
-                    showUpload: false,//show upload button
-                    showDialog: false,//show edit box on dialog mode
+                    selfLoading: true, //gridBox will fetch data from api on its own
+                    showRefresh: true, //show refresh button
+                    showFilter: true, //show filter toggle button
+                    filterOpened: true, //filter box opened on load
+                    requiredFilter: false, //filter is required
+                    showAdd: true, //show add button
+                    showRowMenu: true, //show row click menu
+                    showCustomView: true, //enable show custom html view
+                    showUpload: false, //show upload button
+                    showDialog: false, //show edit box on dialog mode
                     enableRefreshAfterUpdate: true,
                     enableAutoRefresh: true,
                     showDataOnLoad: true,
                     showApplyFilter: true,
-                    filterOnChange: null,//an event for filter box
-                    gridStyle: { height: '450px' },
+                    filterOnChange: null, //an event for filter box
+                    gridStyle: {
+                        height: '450px'
+                    },
                     customButtons: [],
                     selectedRowButtons: [],
                     customColumns: [],
@@ -63,9 +65,7 @@
                 }
                 if (!$scope.page.boxOptions.showFilter) {
                     $scope.page.showFilter = false;
-                }
-
-                else if ($scope.page.boxOptions.filterOpened) {
+                } else if ($scope.page.boxOptions.filterOpened) {
                     $scope.page.showFilter = true;
                 }
 
@@ -77,6 +77,7 @@
                 $scope.reset = _reset;
                 $scope.callReportPrint = _callReportPrint;
                 $scope.showResult = _showResult;
+                $scope.setHeight = _setHeight;
 
 
                 function getGridSetting() {
@@ -102,12 +103,27 @@
                     }
                     return gridOptions;
                 }
+
                 function _callReportPrint() {
+                    window.print();
                     // window.frames[0].frameElement.contentWindow.outerPrint();
-                    printReport('djGrid1');
+                    // printReport('djGrid1');
                 }
+
                 function _reset() {
 
+                }
+
+                function _setHeight() {
+                    // var gridLeangth = 0;
+                    // if ($scope.page.gridOptions2.data.length <= 17) {
+                    //     // return parseInt(550 + 'px')
+                    //     return 550 + 'px';
+                    // } else {
+                    //     var pData = $scope.page.gridOptions2.data.length / 17;
+                    //     // return parseInt(550 * pData + 'px')
+                    //     return 550 * pData + 'px';
+                    // }
                 }
 
                 function _showResult() {
@@ -128,12 +144,16 @@
                         //console.log(err);
                     });
                 }
+
                 function refreshReport() {
 
                     var filterCopy = angular.copy($scope.page.pageinfo.filters)
+                    console.log(filterCopy)
                     var filterData = {};
                     angular.forEach(filterCopy, function (row, idx) {
                         filterData[row.name] = row.value;
+                        console.log(filterData[row.name])
+                        console.log(row)
                     })
 
 
@@ -149,10 +169,10 @@
                         $scope.page.gridOptions.columnDefs = [];
                         angular.forEach(result.header, function (head) {
                             var colDef = {
-                                name: head.name
-                                , field: head.name
-                                , displayName: head.text
-                                , width: 100,
+                                name: head.name,
+                                field: head.name,
+                                displayName: head.text,
+                                width: 100,
                                 visible: true
 
                             };
@@ -176,7 +196,7 @@
 
                         $scope.page.gridOptions2.columnDefs = angular.copy($scope.page.gridOptions.columnDefs);
                         $scope.page.gridOptions2.data = angular.copy($scope.page.gridOptions.data);
-
+                        console.log($scope.page.gridOptions2.data)
                         console.log($scope.page)
                     }, function (err) {
                         console.log(err);
@@ -228,7 +248,9 @@
                             }
                         });
                     }
-                    if (styles == '') { alert("Cannot generate styles, Displaying without styles.."); }
+                    if (styles == '') {
+                        alert("Cannot generate styles, Displaying without styles..");
+                    }
                     styles = '<style type="text/css">' + styles + "</style>";
 
                     console.log($(rv1).find('ui-grid-render-container-body'))

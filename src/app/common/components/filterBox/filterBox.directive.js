@@ -255,6 +255,7 @@
                     $scope.page.filterData = {};
                     $scope.page.searchList = [];
                     if ($scope.page.pageinfo.filters) {
+                        console.log($scope.page.pageinfo.filters)
                         var isRequiredFailed = false;
                         var isSingleDate = true;
                         angular.forEach($scope.page.pageinfo.filters, function (filter) {
@@ -276,10 +277,24 @@
                                 }
 
                                 if (filter.showFilter && !isRequiredFailed) {
-
+                                    console.log(filter)
                                     var search = {};
                                     search.field = filter.name;
                                     search.value = filter.value;
+                                    search.displayName = filter.displayName;
+                                    search.type = filter.type;
+                                    console.log(filter.value)
+                                    console.log(filter.options)
+                                    if (search.type == 2) {
+                                        var selectNameList = $filter("findObj")(filter.options, search.value, 'value')
+                                        console.log(selectNameList)
+                                        if (selectNameList != null) {
+                                            search.name = selectNameList.name;
+                                        }
+                                    }
+                                    if (search.type == 15) {
+                                        search.name = moment(filter.value).format("DD-MMM-YYYY")
+                                    }
                                     if (filter.operator)
                                         search.operand = filter.operator;
                                     else
@@ -498,6 +513,7 @@
                         search.operand = "=";
                     search.value = filter.value;
                     $scope.page.filterData[filter.name] = search;
+                    console.log($scope.page.filterData[filter.name])
 
                     if ($scope.page.boxOptions.filterOnChange !== undefined && $scope.page.boxOptions.filterOnChange !== null) {
                         $scope.page.boxOptions.filterOnChange(filter);
