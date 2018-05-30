@@ -68,9 +68,7 @@
 
                 $scope.showDataFor = _showDataFor;
                 $scope.page.gridOptions2 = [];
-                // $scope.height = {
-                //     height: (($scope.page.gridOptions2.data.length * 30) + (30))+"px"
-                // }
+
                 function _showDataFor(idx, isFromLoad) {
 
                     if (idx == 0) {
@@ -760,7 +758,7 @@
                     else {
 
                         $scope.page.gridOptions.data = result;
-                        $scope.page.gridOptions2.data = angular.copy($scope.page.gridOptions.data);
+                        $scope.page.gridOptions2.data = $scope.page.gridOptions.data;
 
                     }
 
@@ -906,17 +904,16 @@
                     }
                 })
                 $scope.getGridHeight = function () {
-                    var rowHeight = 30;
-                    var headerHeight = 30;
-                    var defaultHeight = 550;
-                    if ($scope.page.gridOptions2.data.length >= 17) {
-                        var pageCount = $scope.page.gridOptions2.data.length / 17;
-                        
-                        defaultHeight = ($scope.page.gridOptions2.data.length * pageCount + headerHeight);
+                    if ($scope.page.gridOptions2.data.length <= 20) {
+                        return parseInt(550 + 'px');
                     }
-                    return 9000 + "px"
+                    else {
+                        return parseInt(8450 + 'px');
+                    }
+
 
                 };
+
 
             }
         };
