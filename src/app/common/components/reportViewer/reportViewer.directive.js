@@ -45,32 +45,32 @@
 
                 if (host.indexOf('/#!') > -1) {
                     reportBaseURL = host.substring(0, host.indexOf('/#!')).replace()
-                } 
-                else if (host.toLowerCase().indexOf('/index.html#!') > -1) {
+                } else if (host.toLowerCase().indexOf('/index.html#!') > -1) {
                     reportBaseURL = host.substring(0, host.toLowerCase().indexOf('/index.html#!'))
-                }
-                else {
+                } else {
                     reportBaseURL = host;
                 }
                 console.log('converted', reportBaseURL)
 
                 var boxSetting = {
-                    selfLoading: true,//gridBox will fetch data from api on its own
-                    showRefresh: true,//show refresh button
-                    showFilter: true,//show filter toggle button
-                    filterOpened: true,//filter box opened on load
-                    requiredFilter: false,//filter is required
-                    showAdd: true,//show add button
-                    showRowMenu: true,//show row click menu
-                    showCustomView: true,//enable show custom html view
-                    showUpload: false,//show upload button
-                    showDialog: false,//show edit box on dialog mode
+                    selfLoading: true, //gridBox will fetch data from api on its own
+                    showRefresh: true, //show refresh button
+                    showFilter: true, //show filter toggle button
+                    filterOpened: true, //filter box opened on load
+                    requiredFilter: false, //filter is required
+                    showAdd: true, //show add button
+                    showRowMenu: true, //show row click menu
+                    showCustomView: true, //enable show custom html view
+                    showUpload: false, //show upload button
+                    showDialog: false, //show edit box on dialog mode
                     enableRefreshAfterUpdate: true,
                     enableAutoRefresh: true,
                     showDataOnLoad: true,
                     showApplyFilter: true,
-                    filterOnChange: null,//an event for filter box
-                    gridStyle: { height: '450px' },
+                    filterOnChange: null, //an event for filter box
+                    gridStyle: {
+                        height: '450px'
+                    },
                     customButtons: [],
                     selectedRowButtons: [],
                     customColumns: [],
@@ -88,9 +88,7 @@
                 }
                 if (!$scope.page.boxOptions.showFilter) {
                     $scope.page.showFilter = false;
-                }
-
-                else if ($scope.page.boxOptions.filterOpened) {
+                } else if ($scope.page.boxOptions.filterOpened) {
                     $scope.page.showFilter = true;
                 }
 
@@ -104,15 +102,18 @@
                 function _callReportPrint() {
                     window.frames[0].frameElement.contentWindow.outerPrint();
                 }
+
                 function _reset() {
 
                 }
+
                 function _iframeLoadedCallBack() {
                     $scope.iFrameIsLoading = false;
                     $("#progress-bar").hide();
                     $("#print-button").show();
 
                 }
+
                 function _showResult() {
                     $("#progress-bar").show();
                     $("#print-button").hide();
@@ -131,13 +132,22 @@
                     var userFilterData = [];
                     angular.forEach(filterCopy, function (row, idx) {
                         var userFilter = {};
-                        userFilter.name = row.name
-                        userFilter.nosp = (row.spfield == '')
-                        if (row.value !== undefined) {
-                            userFilter.selectedValue = row.value;
-                        }
-                        else {
-                            userFilter.selectedValue = '';
+                        if (row.controlType == 'datepicker') {
+                            userFilter.name = row.name
+                            userFilter.nosp = (row.spfield == '')
+                            if (row.value !== undefined) {
+                                userFilter.selectedValue = moment(row.value).format('YYYY-MM-DD');
+                            } else {
+                                userFilter.selectedValue = '';
+                            }
+                        } else {
+                            userFilter.name = row.name
+                            userFilter.nosp = (row.spfield == '')
+                            if (row.value !== undefined) {
+                                userFilter.selectedValue = row.value;
+                            } else {
+                                userFilter.selectedValue = '';
+                            }
                         }
                         userFilterData.push(userFilter);
                     })
@@ -152,24 +162,30 @@
                     var lang = DJWebStore.GetValue('UserLang');
 
                     console.log(userFilterData);
-                    var data = { reportId: $scope.page.reportId, filterData: userFilterData, userEmpId: $rootScope.user.profile.empId }
+                    var data = {
+                        reportId: $scope.page.reportId,
+                        filterData: userFilterData,
+                        userEmpId: $rootScope.user.profile.empId
+                    }
                     var uncData = JSON.stringify(data);
                     var compressed = LZString.compressToEncodedURIComponent(uncData);
                     compressed = compressed.toString().replace('+', '!')
                     $scope.iFrameIsLoading = true;
 
-                    var encData = { auth: compressed }
+                    var encData = {
+                        auth: compressed
+                    }
                     pageService.rptHandshake($scope.page.reportId, JSON.stringify(encData)).then(function (result) {
                         //   var result = angular.fromJson(response.data);
                         console.log(result)
-                        var rptUrl = '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
-                            '&crid=' + corpoId + '&lang=' + lang
+                        // var rptUrl = '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                        //     '&crid=' + corpoId + '&lang=' + lang
                         // console.log(rptUrl)
                         // $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 
-                        // reportBaseURL = 'http://rudra.hrm'
-                        // var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
-                        //     '&crid=' + corpoId + '&lang=' + lang
+                        reportBaseURL = 'http://rudra.hrm'
+                        var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                            '&crid=' + corpoId + '&lang=' + lang
                         console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 
@@ -183,7 +199,7 @@
 
                 }
 
-                  function _loadReport() {
+                function _loadReport() {
 
                     pageService.getListReport($scope.reportId).then(function (result) {
 
