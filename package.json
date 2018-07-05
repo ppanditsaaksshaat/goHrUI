@@ -54,7 +54,10 @@
     "eslint-plugin-react": "^6.10.3",
     "gulp": "^3.9.1",
     "natives": "^1.1.4",
+<<<<<<< HEAD
     "node-sass": "^4.9.0",
+=======
+>>>>>>> 275bc40a60714e972d0c774d44dc7dec87b383cf
     "xlsx-workbook": "^1.0.3"
   }
 }
