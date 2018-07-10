@@ -8,7 +8,7 @@
 
   angular.module('BlurAdmin.pages', [
     'ui.router',
-    'BlurAdmin.pages.dashboard',
+    //'BlurAdmin.pages.dashboard',
     // 'BlurAdmin.pages.ui',
     // 'BlurAdmin.pages.components',
     // 'BlurAdmin.pages.form',
@@ -29,7 +29,9 @@
     'BlurAdmin.pages.profile',
     'BlurAdmin.pages.tds',
     'BlurAdmin.pages.roster',
-    'BlurAdmin.pages.device'
+    'BlurAdmin.pages.device',
+    'BlurAdmin.pages.selfdashboard',
+    'BlurAdmin.pages.selfattendance'
 
   ])
     .config(routeConfig);
