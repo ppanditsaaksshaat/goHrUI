@@ -29,7 +29,8 @@
     'BlurAdmin.pages.profile',
     'BlurAdmin.pages.tds',
     'BlurAdmin.pages.roster',
-    'BlurAdmin.pages.device'
+    'BlurAdmin.pages.device',
+    'BlurAdmin.pages.selfsalary'
 
   ])
     .config(routeConfig);
