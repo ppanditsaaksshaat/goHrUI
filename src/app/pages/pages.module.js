@@ -30,12 +30,9 @@
     'BlurAdmin.pages.tds',
     'BlurAdmin.pages.roster',
     'BlurAdmin.pages.device',
-<<<<<<< HEAD
     'BlurAdmin.pages.selfdashboard',
-    'BlurAdmin.pages.selfattendance'
-=======
+    'BlurAdmin.pages.selfattendance',
     'BlurAdmin.pages.selfsalary'
->>>>>>> 0306657976604c245fc1e6a7e208a4fe24df4c34
 
   ])
     .config(routeConfig);
