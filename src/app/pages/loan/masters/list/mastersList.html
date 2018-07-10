@@ -1,2 +1,72 @@
-<grid-box ng-model="page">
+<grid-box ng-model="page" ng-show="showGrid">
 </grid-box>
+
+<form name="editForm" ng-submit="saveForm(editForm) " ng-show="categoryRule ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="false " show-list="false
+    " show-reset="false " condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LTRGradeId.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LTRGradeId" ng-entity="entity" fb-change="clearEntity()" form="editForm"></field-box>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LTRLevelId.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LTRLevelId" ng-entity="entity" form="editForm"></field-box>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LocationId.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LocationId" ng-entity="entity" form="editForm"></field-box>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.BRId.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.BRId" ng-entity="entity" fb-change="clearEntity()" form="editForm"></field-box>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LTRSubUnitId.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LTRSubUnitId" ng-entity="entity" form="editForm"></field-box>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LPId.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LPId" ng-entity="entity" fb-change="clearEntity()" form="editForm"></field-box>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LTRLTId.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LTRLTId" ng-entity="entity" form="editForm"></field-box>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LTRName.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.LTRName" ng-entity="entity" form="editForm"></field-box>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LTRMaxLimit.text}}</label>
+                    <!-- <field-box page="page" ng-column="page.pageinfo.fields.LTRMaxLimit" fb-change="maxLimit()" ng-entity="entity" form="editForm"></field-box> -->
+                    <input class="form-control" type="number" ng-model="entity.LTRMaxLimit" ng-change="maxLimit()">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LTRInstallmentPercentage.text}}</label>
+                    <!-- <field-box page="page" ng-column="page.pageinfo.fields.LTRInstallmentPercentage" ng-entity="entity" fb-change="percentage()" form="editForm"></field-box> -->
+                    <input class="form-control" type="number" ng-model="entity.LTRInstallmentPercentage" ng-change="percentage()">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword3">{{page.pageinfo.fields.LTRMaxDuration.text}}</label>
+                    <!-- <field-box page="page" ng-column="page.pageinfo.fields.LTRMaxDuration" ng-entity="entity" fb-change="maxDuration()" form="editForm"></field-box> -->
+                    <input class="form-control" type="number" ng-model="entity.LTRMaxDuration" ng-change="maxDuration()">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
