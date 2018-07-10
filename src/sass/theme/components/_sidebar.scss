@@ -1,4 +1,4 @@
-$sidebar-width: 180px;
+$sidebar-width: 220px;
 $angle-left: "\f100";
 $angle-right: "\f101";
 
@@ -12,6 +12,9 @@ $angle-right: "\f101";
   background-color: $sidebar;
   height: 100%;
   position: fixed;
+  // background-image: url('../assets/img/theme/side-bg-4.jpg') ;
+  // background-attachment: fixed;
+  // background-position: top left;
 }
 
 .al-sidebar-list {
@@ -65,7 +68,7 @@ a.al-sidebar-list-link {
   height: 42px;
   padding-left: 18px;
   text-shadow: none;
-  font-size: 13px;
+  font-size: 15px;
   text-decoration: none;
   color: $sidebar-text;
   line-height: 42px;
@@ -79,7 +82,8 @@ a.al-sidebar-list-link {
     }
   }
   i {
-    margin-right: 18px;
+    font-size: 20px;
+    margin-right: 8px;
     width: 16px;
     display: inline-block;
   }
@@ -103,8 +107,9 @@ a.al-sidebar-list-link {
 
 .slimScrollBar, .slimScrollRail {
   border-radius: 0px !important;
-  width: 4px !important;
-  left: 176px;
+  width: 10px !important;
+  background-color: white !important;
+  left: 210px;
 }
 
 @mixin layout-collapsed() {
@@ -122,6 +127,7 @@ a.al-sidebar-list-link {
   list-style: none;
   position: relative;
   display: none;
+  background-color: #000000;
   &.expanded {
     display: block;
   }
@@ -160,11 +166,11 @@ a.al-sidebar-list-link {
 }
 
 .sidebar-hover-elem{
-  width: 4px;
+  width: 6px;
   background: $primary;
   position: absolute;
-  top: -150px;
-  left: 176px;
+  top: -100px;
+  left: 5px;
   transition: all 0.5s ease;
   transition-property: top, height;
   height: 42px;
@@ -173,7 +179,7 @@ a.al-sidebar-list-link {
 
 .sidebar-select-elem {
   display: block;
-  top: 94px;
+  top: 104px;
 }
 
 @mixin sidebar-collapsed() {

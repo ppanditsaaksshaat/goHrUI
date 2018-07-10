@@ -1,25 +1,26 @@
-<div class="page-top clearfix" scroll-position="scrolled" max-height="50" ng-class="{'scrolled': scrolled}">
+<div class="page-top clearfix" scroll-position="scrolled" ng-class="{'scrolled': scrolled}">
+  
+  
   <a href="#/dashboard" class="al-logo clearfix">
-    <span>ITSL</span>Rudra</a>
-  <a href class="collapse-menu-link ion-navicon" ba-sidebar-toggle-menu></a>
-
+    <span>go</span>HR</a>
+    <a href class="collapse-menu-link ion-navicon" ba-sidebar-toggle-menu></a>
   <div class="search">
     <!-- <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
     <input id="searchInput" type="text" placeholder="Search for..."> -->
     <h3>{{company.name}}</h3>
 
   </div>
-
+  
   <div class="user-profile clearfix">
-    <div class="current-Period" ng-controller="currentPeriodController">
+    <!-- <div class="current-Period" ng-controller="currentPeriodController">
 
       <input type="text" class="form-control date-picker" uib-datepicker-popup="{{format}}" ng-model="currentPeriod" is-open="status.opened"
         min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
         close-text="Close" ng-click="open($event)" ng-readonly="true" />
 
       
-    </div>
-    <msg-center></msg-center>
+    </div> -->
+    
     <div class="al-user-profile" uib-dropdown>
       <a uib-dropdown-toggle class="profile-toggle-link">
         <!-- <img ng-src="{{::( 'Nasta' | profilePicture )}}"> -->
@@ -44,8 +45,9 @@
         </li>
       </ul>
     </div>
+    
   </div>
-
+  <msg-center></msg-center>
 
 </div>
 
