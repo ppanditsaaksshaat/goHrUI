@@ -27,7 +27,7 @@
       margin-left: 0;
     }
     & > a {
-      color: $topBar-text;
+      color: $msgBar-text;
       text-decoration: none;
       font-size: 20px;
       position: relative;
@@ -35,7 +35,7 @@
         display: inline-block;
         min-width: 10px;
         padding: 2px 4px 2px 4px;
-        color: $topBar-text;
+        color: $msgBar-text;
         vertical-align: baseline;
         white-space: nowrap;
         text-align: center;
