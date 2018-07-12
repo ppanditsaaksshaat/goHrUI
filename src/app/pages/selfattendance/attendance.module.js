@@ -14,7 +14,7 @@
         .state('selfattendance', {
           url: '/attendance',
           templateUrl: 'app/pages/selfattendance/attendance.html',
-          controller: '',
+          controller: 'attendanceCtrl',
           title: 'Attendance',
           sidebarMeta: {
             icon: 'ion-android-home',
