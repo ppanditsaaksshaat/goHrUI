@@ -1,68 +1,135 @@
 <div class="row pie-charts">
     <div class="pie-chart-item-container" ng-repeat="chart in charts">
-      <div ba-panel>
-        <div class="pie-chart-item">
-          <div class="chart" rel="{{ ::chart.color }}" data-percent="60"> <span class="percent"></span> </div>
+        <div ba-panel>
+            <div class="pie-chart-item">
+                <div class="chart" rel="{{ ::chart.color }}" >
+                    <span class="percent"></span>
+                </div>
 
-          <div class="description">
-            <div>{{ ::chart.description }}</div>
-            <div class="description-stats">{{ ::chart.stats }}</div>
-          </div>
-          <i class="chart-icon i-{{ ::chart.icon }}"></i>
+                <div class="description">
+                    <div>{{ ::chart.description }}</div>
+                    <div class="description-stats">{{ ::chart.stats }}</div>
+                </div>
+                <i class="chart-icon i-{{ ::chart.icon }}"></i>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-
-<div class="row">
-  <div class="col-lg-6 col-md-12 col-sm-12"
-       ba-panel
-       ba-panel-title="Acquisition Channels"
-       ba-panel-class="medium-panel traffic-panel">
-    <traffic-chart></traffic-chart>
-  </div>
-  <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Pending Approvals" ba-panel-class="medium-panel traffic-panel">
-
-    <div ui-grid="LeaveTodayGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-    </div>
-
-</div>
-  
 </div>
 
-
-
-
-
+<div class="row">
+    <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Acquisition Channels" ba-panel-class="medium-panel traffic-panel">
+        <traffic-chart></traffic-chart>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Pending Approvals" ba-panel-class="medium-panel traffic-panel">
+        <!-- <div ui-grid="LeaveTodayGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
+        </div> -->
+        <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+            <thead>
+                <tr class="info">
+                    <td>
+                        <label>Sr. No.</label>
+                    </td>
+                    <td>
+                        <label>From Date</label>
+                    </td>
+                    <td>
+                        <label>To Date</label>
+                    </td>
+                    <!-- <td>
+                        <label>Sanction From</label>
+                    </td>
+                    <td>
+                        <label>Sanction To</label>
+                    </td> -->
+                    <td>
+                        <label>Status</label>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="leave in leaveList">
+                    <td> {{leave.SNo}}</td>
+                    <td>{{leave.LEADDateFrom}}</td>
+                    <td>{{leave.LEADDateTo}}</td>
+                    <!-- <td>{{leave.SancFromDate}}</td>
+                    <td>{{leave.SancToDate}}</td> -->
+                    <td>{{leave.Status}}</td>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <div class="row">
-    
-    <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Birthday" ba-panel-class="medium-panel">
+    <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Holidays" ba-panel-class="medium-panel">
+        <!-- <div ui-grid="LeaveNextWeekGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
+        </div> -->
+        <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+            <thead>
+                <tr class="info">
+                    <td>
+                        <label>Sr. No.</label>
+                    </td>
+                    <td>
+                        <label>Holiday Name</label>
+                    </td>
+                    <td>
+                        <label>Holiday Date</label>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="holiday in UpComingHolidayList">
+                    <td> {{holiday.SNo}}</td>
+                    <td>{{holiday.HDName}}</td>
+                    <td>{{holiday.HDFromDate}}</td>
+            </tbody>
 
-        <div ui-grid="LeaveNextWeekGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-        </div>
+        </table>
 
     </div>
-    <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Holidays" ba-panel-class="medium-panel traffic-panel">
+    <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming BirhDay" ba-panel-class="medium-panel traffic-panel">
+        <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+            <thead>
+                <tr class="info">
+                    <td>
+                        <label>Sr. No.</label>
+                    </td>
+                    <td>
+                        <label>Date Of Birth</label>
+                    </td>
+                    <td>
+                        <label>Mobile Number</label>
+                    </td>
+                    <td>
+                        <label>Email</label>
+                    </td>
 
-        <div ui-grid="LeaveTodayGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-        </div>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="birth in upComingBirthDayList">
+                    <td> {{birth.PdId}}</td>
+                    <td>{{birth.PdDateOfBirth}}</td>
+                    <td>{{birth.PdMobileNo}}</td>
+                    <td>{{birth.PdEmail}}</td>
+
+            </tbody>
+
+        </table>
+        <!-- <div ui-grid="LeaveTodayGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
+        </div> -->
 
     </div>
 </div>
 <div class="row">
-    
+
     <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Global Announcement" ba-panel-class="medium-panel">
-
         <div ui-grid="LeaveNextWeekGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
         </div>
-
 
     </div>
     <div class="col-lg-6 col-md-12 col-sm-12" ba-panel ba-panel-title="Pending Task" ba-panel-class="medium-panel traffic-panel">
-
         <div ui-grid="LeaveTodayGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
         </div>
-
     </div>
 </div>
