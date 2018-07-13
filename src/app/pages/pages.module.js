@@ -35,7 +35,8 @@
     'BlurAdmin.pages.selfsalary',
     'BlurAdmin.pages.selfapply',
     'BlurAdmin.pages.selfdocuments',
-    'BlurAdmin.pages.selfapprovals'
+    'BlurAdmin.pages.selfapprovals',
+     'BlurAdmin.pages.employees'
     
 
   ])
