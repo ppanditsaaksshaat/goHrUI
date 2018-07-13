@@ -11,32 +11,32 @@
     /** @ngInject */
     function dashboardCtrl($scope, $state, $timeout, pageService, $filter, $uibModal, dialogModal, baConfig, baUtil) {
 
-
+        console.log('dashboard');
         var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
         var DalaLength = 0;
-        // $scope.charts = [{
-        //     color: pieColor,
-        //     description: 'C Present',
-        //     stats: $scope.totalDays,
-        //     icon: 'person',
-        // }, {
-        //     color: pieColor,
-        //     description: '30 Present',
-        //     stats: $scope.totalDays,
-        //     icon: 'money',
+        $scope.charts = [{
+            color: pieColor,
+            description: 'C Present',
+            stats: $scope.totalDays,
+            icon: 'person',
+        }, {
+            color: pieColor,
+            description: '30 Present',
+            stats: $scope.totalDays,
+            icon: 'money',
 
-        // }, {
-        //     color: pieColor,
-        //     description: '180 Present',
-        //     stats: $scope.totalDays,
-        //     icon: 'face',
-        // }, {
-        //     color: pieColor,
-        //     description: '365 Present',
-        //     stats: $scope.totalDays,
-        //     icon: 'refresh',
-        // }
-        // ];
+        }, {
+            color: pieColor,
+            description: '180 Present',
+            stats: $scope.totalDays,
+            icon: 'face',
+        }, {
+            color: pieColor,
+            description: '365 Present',
+            stats: $scope.totalDays,
+            icon: 'refresh',
+        }
+        ];
 
         function getRandomArbitrary(min, max) {
             // console.log("random " + Math.random() * (max - min) + min)
@@ -70,7 +70,7 @@
 
         function updatePieCharts() {
             $('.pie-charts .chart').each(function (index, chart) {
-                $(chart).data('easyPieChart').update(getRandomArbitrary($scope.presentList[index].Percentage,100));
+                $(chart).data('easyPieChart').update(getRandomArbitrary($scope.presentList[index].Percentage, 100));
             });
         }
 
@@ -89,7 +89,7 @@
             searchLists.push({
                 field: 'EmpId',
                 operand: "=",
-                value: $scope.user.profile.empId
+                value: 5
             })
             var data = {
                 searchList: searchLists,
@@ -126,12 +126,12 @@
                 DalaLength = 10;
             }
 
-            
-            
+
+
 
             $scope.charts = [{
                 color: "#0074D9",
-                description: 'Current Present',
+                description: '30 Present',
                 stats: $scope.cPresent,
                 icon: 'person',
             }, {
