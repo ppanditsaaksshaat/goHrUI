@@ -7,7 +7,7 @@
   width: 100%;
   min-width: $resMin;
   padding: 0 32px 0 20px;
-  // background-image: url('../assets/img/theme/side-bg-4.jpg') ;
+  //  background-image: url('../assets/img/theme/side-5.jpg') ;
 
     background-image: -moz-linear-gradient(top,#2b5dad,#13459a);
     background-image: -ms-linear-gradient(top,#2b5dad,#13459a);
@@ -38,9 +38,18 @@ a.al-logo {
   float: left;
   outline: none !important;
   line-height: 40px;
+  // width: 220px;
+  // height: 60px;
   // margin-left: 10px;
+  
   span {
     color: $primary;
+  }
+  div{
+    width: 200px;
+    height:40px;
+    background-image: url('../assets/img/theme/YourLogo.png') ;
+
   }
 }
 
