@@ -32,7 +32,12 @@
     'BlurAdmin.pages.device',
     'BlurAdmin.pages.selfdashboard',
     'BlurAdmin.pages.selfattendance',
-    'BlurAdmin.pages.selfsalary'
+    'BlurAdmin.pages.selfsalary',
+    'BlurAdmin.pages.selfapply',
+    'BlurAdmin.pages.selfdocuments',
+    'BlurAdmin.pages.selfapprovals',
+     'BlurAdmin.pages.employees'
+    
 
   ])
     .config(routeConfig);
