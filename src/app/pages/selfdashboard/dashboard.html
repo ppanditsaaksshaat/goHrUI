@@ -109,28 +109,7 @@
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Holidays" ba-panel-class="medium-panel">
         <!-- <div ui-grid="LeaveNextWeekGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
         </div> -->
-        <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
-            <thead>
-                <tr class="info">
-                    <td>
-                        <label>Sr. No.</label>
-                    </td>
-                    <td>
-                        <label>Holiday Name</label>
-                    </td>
-                    <td>
-                        <label>Holiday Date</label>
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="holiday in UpComingHolidayList">
-                    <td> {{holiday.SNo}}</td>
-                    <td>{{holiday.HDName}}</td>
-                    <td>{{holiday.HDFromDate}}</td>
-            </tbody>
-
-        </table>
+        
 
     </div>
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming BirhDay" ba-panel-class="medium-panel traffic-panel">
@@ -143,21 +122,21 @@
                     <td>
                         <label>Date Of Birth</label>
                     </td>
-                    <td>
+                    <!-- <td>
                         <label>Mobile Number</label>
                     </td>
                     <td>
                         <label>Email</label>
-                    </td>
+                    </td> -->
 
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="birth in upComingBirthDayList">
-                    <td> {{birth.PdId}}</td>
+                    <td> {{birth.SNo}}</td>
                     <td>{{birth.PdDateOfBirth}}</td>
-                    <td>{{birth.PdMobileNo}}</td>
-                    <td>{{birth.PdEmail}}</td>
+                    <!-- <td>{{birth.PdMobileNo}}</td>
+                    <td>{{birth.PdEmail}}</td> -->
 
             </tbody>
 
