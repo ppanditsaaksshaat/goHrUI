@@ -9,7 +9,7 @@
     ]).config(routeConfig);
         
     /** @ngInject */
-    function routeConfig($stateProvider) {
+    function routeConfig($stateProvider, $urlRouterProvider) {
       $stateProvider
       .state('configuration.company.general', {
         url: '/general',
@@ -21,6 +21,8 @@
           order: 1,
         },
       });
+
+      $urlRouterProvider.when('/configuration/company', '/configuration/company/general');
     }
   
   })();

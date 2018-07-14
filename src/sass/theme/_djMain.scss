@@ -1478,3 +1478,13 @@ abbr[title] {
   font-weight: 500;
   position: relative;
 }
+.sub-page-navigation ul li.active a:after {
+  content: " ";
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #389cec;
+  position: absolute;
+  display: block;
+  top: 25px;
+  left: 42%;
+}
