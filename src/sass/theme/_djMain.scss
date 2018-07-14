@@ -1,6 +1,5 @@
 
 
-
 .payband.ui-grid-row, .payband .ui-grid-cell {
   border-top: 0;
   border-bottom: 1px solid #dddddd !important;
@@ -1052,7 +1051,8 @@ input[type="text"].ui-grid-filter-input:hover {
 /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
 /*
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-  @font-face {
+  @font-face {y
+
     font-family: 'ui-grid';
     src: url('../font/ui-grid.svg?12312827#ui-grid') format('svg');
   }
@@ -1063,7 +1063,7 @@ input[type="text"].ui-grid-filter-input:hover {
   font-family: "ui-grid";
   font-style: normal;
   font-weight: normal;
-  speak: none;
+  //speak: none;
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
@@ -1412,17 +1412,13 @@ abbr[title] {
 .pull-left {
   float: left!important;
 }
-a {
-  text-decoration: none!important;
-  outline: 0!important;
-}
-a {
-  color: #52b8e9;
-  text-decoration: none;
-}
-a {
-  background-color: transparent;
-}
+// a {
+//   text-decoration: none!important;
+//   outline: 0!important;
+//   color: #52b8e9;
+//   text-decoration: none;
+//   background-color: transparent;
+// }
 
 .subnavbar-static-side li a.previous-state span[class^=fa-] {
   margin: 0 5px 0 10px;
