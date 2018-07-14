@@ -12,12 +12,16 @@
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('employees.exist', {
+            .state('directory.exist', {
                 url: '/exist',
                 templateUrl: 'app/pages/employees/empexist/empexist.html',
                 title: 'Exist',
                 controller: "",
-                controllerAs: ""
+                controllerAs: "",
+                sidebarMeta: {
+                    icon: 'ion-pound',
+                    order: 2,
+                  },
             })
         //$urlRouterProvider.when('/employees', '/employees/dashboard');
     }
