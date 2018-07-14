@@ -40,8 +40,39 @@
 
 <div class="row">
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Team Leave List(90 Day)" ba-panel-class="medium-panel">
-        <div ui-grid="LeaveNextWeekGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-        </div>
+        <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+            <thead>
+                <tr class="info">
+                    <td>
+                        <label>Sr. No.</label>
+                    </td>
+                    <td>
+                        <label>From Date</label>
+                    </td>
+                    <td>
+                        <label>To Date</label>
+                    </td>
+                    <!-- <td>
+                        <label>Sanction From</label>
+                    </td>
+                    <td>
+                        <label>Sanction To</label>
+                    </td> -->
+                    <!-- <td>
+                        <label>Status</label>
+                    </td> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="leave in upComingLeaveListOfTeam">
+                    <td> {{leave.SNo}}</td>
+                    <td>{{leave.LEADDateFrom}}</td>
+                    <td>{{leave.LEADDateTo}}</td>
+                    <!-- <td>{{leave.SancFromDate}}</td>
+                    <td>{{leave.SancToDate}}</td> -->
+                    <!-- <td>{{leave.Status}}</td> -->
+            </tbody>
+        </table>
 
     </div>
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Pending Approvel(Self)" ba-panel-class="medium-panel traffic-panel">
@@ -79,7 +110,7 @@
             </tbody>
         </table>
     </div>
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Coming Holiday(90 Day)" ba-panel-class="medium-panel traffic-panel">
+    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="UpComing Holiday(90 Day)" ba-panel-class="medium-panel traffic-panel">
         <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
             <thead>
                 <tr class="info">

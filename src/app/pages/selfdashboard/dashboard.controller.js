@@ -50,7 +50,7 @@
                 chart.easyPieChart({
                     easing: 'easeOutBounce',
                     onStep: function (from, to, percent) {
-                        console.log("percentage " + percent)
+                        // console.log("percentage " + percent)
                         $(this.el).find('.percent').text(Math.round(percent));
                     },
                     barColor: chart.attr('rel'),
@@ -112,6 +112,7 @@
             $scope.thirtyPresent = result[0][1].TotalPresent;
             $scope.oneEightyPresent = result[0][2].TotalPresent;
             $scope.threrSixtyPresent = result[0][3].TotalPresent;
+            
 
             $scope.percentage = result[0][0].Percentage;
             $scope.percentage = 20;
@@ -120,6 +121,8 @@
             $scope.leaveList = result[1];
             $scope.upComingBirthDayList = result[3];
             $scope.UpComingHolidayList = result[2];
+            $scope.upComingLeaveListOfTeam = result[4];
+            console.log($scope.upComingLeaveListOfTeam)
 
             console.log($scope.leaveList)
             if (result != undefined) {
@@ -164,6 +167,8 @@
         function _getDashBoardErrorData(error) {
             console.log(error);
         }
+
+
         _loadController();
     }
 
