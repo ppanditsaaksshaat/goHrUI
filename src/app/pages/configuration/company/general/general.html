@@ -5,7 +5,91 @@
     <div class="panel-body">
         <span dotranslate>You can customize the login page using the setting here</span>
         <br/>
-        <span dotranslate>create</span>
-        <p dotranslate>colsetting</p>
+        <br/>
+        <form name="Companysetting">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" dotranslate>Company Short Name</label>
+                        <input type="text" class="form-control" name="shortname">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+
+                        <div class="logo-container">
+                            <label dotranslate class="label-control">Logo</label>
+                            <span class="text-description" dotranslate>Logo dimensions cannot exceed 60 px height 100 px width.</span>
+                            <br>
+                            <div class="col-lg-6 logo-image col-md-6 col-sm-12 col-xs-12 clear-side-padding">
+                                <img data-ng-show="!model.logoPath" src="assets/img/app/blanklogo.png">
+                                <img data-ng-show="model.logoPath" width="100%" height="100%" data-ng-src="" class="ng-hide">
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 clear-side-padding">
+                                <label class="company-logo">
+                                    <label class="btn-file">
+                                        <t dotranslate> Change Logo</t>
+                                        <input type="file" hidden>
+                                    </label>
+
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <div class="background-container">
+                            <label dotranslate class="label-control">Background Logo</label>
+                            <span class="text-description" dotranslate>Background image cannot exceed a file size of 2MB and dimensions of 786 px height or 200 px width.</span>
+                            <br/>
+                            <div class="col-lg-6 bg-image col-md-6 col-sm-12 col-xs-12 clear-side-padding">
+                                <img src="assets/img/app/thumb-1920-85305.jpg" alt="">
+                            </div>
+                            <br/>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 clear-side-padding">
+                                <label class="company-logo">
+                                    <label class="btn-file">
+                                        <t dotranslate> Pick a diffrent background image</t>
+                                        <input type="file" hidden>
+                                    </label>
+
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label class="label-control" dotranslate>Notification Message</label>
+                        <span class="text-description" dotranslate>You can provide instructions or similar information not exceeding 250 characters</span>
+                        <br/>
+                        <textarea name="Notification" id="Notification" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn btn-lg btn-raised btn-primary pull-right" ng-click="preview()" dotranslate>Preview</button>
+                        </div>
+                        <div class="col-md-6">
+                                <button class="btn btn-lg btn-success pull-left" ng-click="save()" dotranslate>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

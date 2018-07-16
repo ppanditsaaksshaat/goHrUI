@@ -6,6 +6,8 @@
     'use strict';
   
     angular.module('BlurAdmin.pages.configuration.company.locations', [
+      'BlurAdmin.pages.configuration.company.locations.location',
+      'BlurAdmin.pages.configuration.company.locations.branch'
     ]).config(routeConfig);
         
     /** @ngInject */

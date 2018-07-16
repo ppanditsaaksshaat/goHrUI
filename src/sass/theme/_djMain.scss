@@ -373,6 +373,14 @@ input:focus, select:foucs {
   right: 0;
   bottom: 0;
 }
+.modal .modal-dialog.modal-top-center-600
+{
+  width: 700px;
+  position: fixed;
+  top: 100px;
+  left: 450px;
+}
+
 .modal .modal-dialog.modal-top-center-800{
   width: 875px;
   height: 565px;
