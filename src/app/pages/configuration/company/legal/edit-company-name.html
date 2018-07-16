@@ -1,0 +1,61 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <i class="ion-edit modal-icon"></i>
+        <span dotranslate>Edit Entity Name</span>
+    </div>
+    <div class="modal-body">
+        <form name="legalEntity" id="legalEntity" class="form-horizontal ng-pristine ng-valid ng-valid-required ng-valid-date" data-ng-init="ctrl.form = this;"
+            novalidate="">
+            <div class="row add-new-entity">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6">
+                            <label>Entity Name</label>
+                            <input type="text" placeholder="Entity name" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required"
+                                data-ng-model="ctrl.model.name" id="entityName" name="entityName" required="">
+                            <span class="validation-msg ng-isolate-scope" data-validation-messages="" data-model-controller="legalEntity.entityName"
+                                data-required-error="Name is required" data-form-submit="legalEntity.$submitted">
+                                <div>
+                                  
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6">
+                            <label>Financial Year</label>
+                            <label data-ng-click="financialYear= financialYear ? false: true;" class="input-group-icon icon-calendar3 align-icon-3"></label>
+                            <input name="financialYear" id="financialYear" placeholder="Financial year" class="input-group-field form-control datepicking ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty ng-valid-date ng-valid-required"
+                                data-uib-datepicker-popup="mediumDate" data-datepicker-options="ctrl.datepickerOptions" data-ng-model="ctrl.model.financialYear"
+                                data-is-open="financialYear" data-ng-click="financialYear= financialYear ? false: true;" required=""
+                                readonly="readonly">
+                            <div uib-datepicker-popup-wrap="" ng-model-options="ngModelOptions" ng-model="date" ng-change="dateSelection(date)"
+                                template-url="uib/template/datepickerPopup/popup.html" class="ng-not-empty ng-valid">
+
+                            </div>
+                            <span class="validation-msg ng-isolate-scope" data-validation-messages="" data-model-controller="entity.financialYear"
+                                data-required-error="Year is required" data-form-submit="entity.$submitted">
+                                <div>
+                                    
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-11 clear-side-padding button-container btn-bottom text-right">
+
+                    <button type="submit"  class="btn btn-success" ng-click="updateLegalEntity();">Update</button>
+                   
+                    <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+</div>

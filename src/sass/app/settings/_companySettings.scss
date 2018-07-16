@@ -1,0 +1,208 @@
+.logo-container .logo-image
+{
+    height: 60px;
+    width: 100px;
+    overflow: hidden;
+    border: 1px solid grey;
+    padding: 0;
+
+
+}
+
+.text-description
+{
+    color: #8a9099;
+    font-size: 12px;
+}
+
+.logo-container .text-description, .background-container .text-description
+{
+    padding: 0!important;
+    display: block;
+}
+
+.background-container .bg-image{
+    height: 250px;
+    width: 500px;
+    overflow: hidden;
+    padding: 0;
+}
+.background-container img
+{
+    width:100%;
+}
+
+.btn-file , .btn-file  t{
+   cursor: pointer;
+   color:#3697ef;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.icon-list .vertical-margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.icon-list .clear-left-padding {
+    padding-left: 0!important;
+}
+.icon-list:hover{
+    // background-color: #e6e8eb;
+    opacity: .88;
+}
+.icon-list .icon-container {
+    width: 60px;
+    position: static;
+    height: auto;
+}
+.icon-container {
+    position: absolute;
+    width: 110px;
+    height: 214px;
+    float: left;
+    background-color: #fff!important;
+}
+.icon-container:hover .icon {
+    opacity: .88;
+}
+.icon-list .icon-container .initials-icon {
+    padding: 10px;
+    height: 50px;
+    width: 50px;
+    font-size: 20px;
+}
+.initials-icon {
+    background-color: #6f8ab5;
+    text-transform: uppercase;
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px 7px;
+    font-size: 25px;
+    color: #fff;
+    display: table-cell;
+}
+
+
+.icon-circle {
+    border-radius: 50%;
+}
+
+.icon-list .details .title {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    width: 75%;
+}
+.icon-list .details .title-description {
+    opacity: .6;
+    font-weight: 600;
+    font-size: 12px;
+    display: block;
+}
+.icon-list .clear-top {
+    margin-top: 0!important;
+}
+.icon-list .clear-top {
+    margin-top: 0!important;
+}
+
+.icon-list .action-area {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    margin-right: 2%;
+    display: none;
+}
+.icon-list:hover .action-area{
+    display: block;
+}
+.vertical-top-margin {
+    margin-top: 10px!important;
+}
+.inline-block {
+    display: inline-block;
+}
+.clear-vertical-margin {
+    margin-top: 0!important;
+    margin-bottom: 0!important;
+}
+.v-align-middle {
+    vertical-align: middle!important;
+}.vertical-margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.page-description {
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.section-head-text {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.company-name
+{
+    width:250px;
+}
+
+.form-group label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: 700;
+}   
+
+.user-form .row:after
+{
+    margin-bottom: 10px;
+}
+.user-form .form-group .label
+{
+    color:gray;
+    text-transform: uppercase;
+    
+}
+
+
+.child-page-navigation>ul {
+    background-color: #fff;
+    border-bottom: 1px solid #d5d5d5;
+    padding-left: 20px;
+    border-radius: 0;
+    height: 45px;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+}
+.child-page-navigation>ul li.active {
+    border-bottom-color: #3d9eed;
+}
+.child-page-navigation>ul li {
+    background-color: transparent;
+    border-bottom: 4px solid transparent;
+    padding: 19px 0 4px 0;
+    margin-right: 40px;
+    float: left;
+    display: block;
+    position: relative;
+}
