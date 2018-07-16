@@ -12,14 +12,18 @@
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('employees.dashboard', {
+            .state('directory.dashboard', {
                 url: '/dashboard',
                 templateUrl: 'app/pages/employees/empdashboard/empdashboard.html',
                 title: 'Dashboard',
                 controller: "",
-                controllerAs: ""
+                controllerAs: "",
+                sidebarMeta: {
+                    icon: 'ion-pound',
+                    order: 1,
+                  },
             })
-        $urlRouterProvider.when('/employees', '/employees/dashboard');
+        $urlRouterProvider.when('/directory', '/directory/dashboard');
     }
 
 })();

@@ -1,179 +1,252 @@
 <div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="pnl200 panel">
+                <div class="panel-body">
+                    <div class="icon-size col-sm-12 ">
+                        <a class="col-sm-4 text-center anchor-sm" data-ui-sref=".addemployee" href="#/employees/reports/addemployee">
+                            <div>
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-head">New Employee</span>
+                            </div>
+                        </a>
+                        <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory" href="#/employees/employeedirectory">
+                            <div>
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-head">Directory</span>
+                            </div>
+                        </a>
+                        <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory.organizationchart"
+                            href="#/employees/employeedirectory/organizationchart">
+                            <div>
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-head">Org Chart</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="icon-size col-sm-12">
+                        <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory.organizationchart"
+                            href="#/employees/employeedirectory/organizationchart">
+                            <div>
+                                <span>
+                                    <i class="fa fa-sitemap"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-head">PROFILE APPROVALS</span>
+                            </div>
+                        </a>
+                        <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory" href="#/employees/employeedirectory">
+                            <div>
+                                <span>
+                                    <i class="fa fa-sitemap"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-head">ORG TREE</span>
+                            </div>
+                        </a>
 
-    <div class="col-lg-4 pnl200 panel panel-default">
-        <div class="panel-body">
-            <div class="icon-size col-sm-12 ">
-                <a class="col-sm-4 text-center anchor-sm" data-ui-sref=".addemployee" href="#/employees/reports/addemployee">
-                    <div>
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
                     </div>
-                    <div>
-                        <span class="text-head">New Employee</span>
-                    </div>
-                </a>
-                <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory" href="#/employees/employeedirectory">
-                    <div>
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                    </div>
-                    <div>
-                        <span class="text-head">Directory</span>
-                    </div>
-                </a>
-                <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory.organizationchart"
-                    href="#/employees/employeedirectory/organizationchart">
-                    <div>
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                    </div>
-                    <div>
-                        <span class="text-head">Org Chart</span>
-                    </div>
-                </a>
-            </div>
-            <div class="icon-size col-sm-12">
-                <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory.organizationchart"
-                    href="#/employees/employeedirectory/organizationchart">
-                    <div>
-                        <span>
-                            <i class="fa fa-sitemap"></i>
-                        </span>
-                    </div>
-                    <div>
-                        <span class="text-head">PROFILE APPROVALS</span>
-                    </div>
-                </a>
-                <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory" href="#/employees/employeedirectory">
-                    <div>
-                        <span>
-                            <i class="fa fa-sitemap"></i>
-                        </span>
-                    </div>
-                    <div>
-                        <span class="text-head">ORG TREE</span>
-                    </div>
-                </a>
-
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-7 pnl200 panel panel-default">
-        <div class="panel-heading">Quick Links</div>
-        <div class="panel-body">
+        <div class="col-lg-8">
+            <div class="pnl200 panel">
+                <div class="panel-heading">QUIK LINKS</div>
+                <div class="panel-body">
 
-            <div class="col-sm-12 link-item clear-side-padding">
-                <div class="col-sm-6">
-                    <a class="anchor-sm" data-ui-sref=".addemployee" href="#/employees/reports/addemployee">
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                        New Employee
-                    </a>
+                    <div class="col-sm-12 link-item clear-side-padding">
+                        <div class="col-sm-6">
+                            <a class="anchor-sm" data-ui-sref=".addemployee" href="#/employees/reports/addemployee">
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                                New Employee
+                            </a>
+                        </div>
+                        <!-- xhrFeatureAuthorize: -->
+                        <div class="col-sm-6 ng-scope" data-xhr-feature-authorize="" data-feature="ENGAGE">
+                            <a class="anchor-sm" data-ui-sref="^.engage.newpoll" href="#/employees/engage/reachout/dashboard/newpoll">
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                                New Poll
+                            </a>
+                        </div>
+                        <!-- end ngIf: function(){return a()} -->
+                    </div>
+                    <div class="col-sm-12 link-item clear-side-padding">
+                        <div class="col-sm-6">
+                            <a class="anchor-sm" data-ui-sref="importemployees" href="#/employees/import">
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                                Bulk Add Employees
+                            </a>
+                        </div>
+                        <!-- xhrFeatureAuthorize: -->
+                        <div class="col-sm-6 ng-scope" data-xhr-feature-authorize="" data-feature="ENGAGE">
+                            <a class="anchor-sm" data-ui-sref="^.engage.newannouncement" href="#/employees/engage/reachout/dashboard/newannouncement">
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                                New Announcement
+                            </a>
+                        </div>
+                        <!-- end ngIf: function(){return a()} -->
+                    </div>
+                    <div class="col-sm-12 link-item">
+                        <div class="col-sm-6 clear-side-padding">
+                            <a class="anchor-sm" data-ng-click="inviteAll();">
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                                Invite Employee to Register
+                            </a>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <a class="anchor-sm" data-ui-sref=".editemployeefields" href="#/employees/reports/customizeemployeefields">
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                                Customize Employee Fields
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12 link-item">
+                        <div class="col-sm-6 clear-side-padding">
+                            <a class="anchor-sm" data-ui-sref="importjobdetails" href="#/employees/importjobdetails">
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                                Import Employee Job Details
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 link-item">
+                        <div class="col-sm-6 clear-side-padding">
+                            <a class="anchor-sm" data-ui-sref="bulkeditemployees" href="#/bulkedit/employees">
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                                Bulk Edit
+                            </a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a class="anchor-sm" data-ui-sref="importemployeemodules" href="#/employees/importemployeemodules">
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                                Import Employee Modules Status
+                            </a>
+                        </div>
+
+                    </div>
+
+
+
                 </div>
-                <!-- xhrFeatureAuthorize: -->
-                <div class="col-sm-6 ng-scope" data-xhr-feature-authorize="" data-feature="ENGAGE">
-                    <a class="anchor-sm" data-ui-sref="^.engage.newpoll" href="#/employees/engage/reachout/dashboard/newpoll">
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                        New Poll
-                    </a>
-                </div>
-                <!-- end ngIf: function(){return a()} -->
             </div>
-            <div class="col-sm-12 link-item clear-side-padding">
-                <div class="col-sm-6">
-                    <a class="anchor-sm" data-ui-sref="importemployees" href="#/employees/import">
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                        Bulk Add Employees
-                    </a>
-                </div>
-                <!-- xhrFeatureAuthorize: -->
-                <div class="col-sm-6 ng-scope" data-xhr-feature-authorize="" data-feature="ENGAGE">
-                    <a class="anchor-sm" data-ui-sref="^.engage.newannouncement" href="#/employees/engage/reachout/dashboard/newannouncement">
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                        New Announcement
-                    </a>
-                </div>
-                <!-- end ngIf: function(){return a()} -->
-            </div>
-            <div class="col-sm-12 link-item">
-                <div class="col-sm-6 clear-side-padding">
-                    <a class="anchor-sm" data-ng-click="inviteAll();">
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                        Invite Employee to Register
-                    </a>
-                </div>
-
-                <div class="col-sm-6">
-                    <a class="anchor-sm" data-ui-sref=".editemployeefields" href="#/employees/reports/customizeemployeefields">
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                        Customize Employee Fields
-                    </a>
-                </div>
-
-            </div>
-            <div class="col-sm-12 link-item">
-                <div class="col-sm-6 clear-side-padding">
-                    <a class="anchor-sm" data-ui-sref="importjobdetails" href="#/employees/importjobdetails">
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                        Import Employee Job Details
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-12 link-item">
-                <div class="col-sm-6 clear-side-padding">
-                    <a class="anchor-sm" data-ui-sref="bulkeditemployees" href="#/bulkedit/employees">
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                        Bulk Edit
-                    </a>
-                </div>
-                <div class="col-sm-6">
-                    <a class="anchor-sm" data-ui-sref="importemployeemodules" href="#/employees/importemployeemodules">
-                        <span>
-                            <i class="fa fa-user-plus"></i>
-                        </span>
-                        Import Employee Modules Status
-                    </a>
-                </div>
-
-            </div>
-
-
-
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-4" ba-panel ba-panel-title="New Joinees" ba-panel-class="medium-panel traffic-panel">
+        <div class="col-lg-4">
+            <div class="panel">
+                <div class="panel-heading">
+                        NEW JOINEES
+                </div>
+                <div class="panel-body">
+                </div>
+            </div>
         </div>
-        <div class="col-lg-4" ba-panel ba-panel-title="Birthdays / Anniversaries" ba-panel-class="medium-panel traffic-panel">
+        <div class="col-lg-4">
+            <div class="panel">
+                <div class="panel-heading">
+                        BIRTHDAYS / ANNIVERSARIES
+                </div>
+                <div class="panel-body">
+                </div>
+            </div>
         </div>
-        <div class="col-lg-4" ba-panel ba-panel-title="Leaving Employees" ba-panel-class="medium-panel traffic-panel">
+        <div class="col-lg-4">
+            <div class="panel">
+                <div class="panel-heading">
+                        LEAVING EMPLOYEES
+                </div>
+                <div class="panel-body">
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4" ba-panel ba-panel-title=" Reports: Employee Status" ba-panel-class="medium-panel traffic-panel">
+            <div class="col-lg-4">
+                <div class="panel">
+                    <div class="panel-heading">
+                            REPORTS: EMPLOYEE STATUS
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel">
+                    <div class="panel-heading">
+                            Reports: Employee Demography
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel">
+                    <div class="panel-heading">
+                            Reports: Employee Aggregates
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-4" ba-panel ba-panel-title="Reports: Employee Demography" ba-panel-class="medium-panel traffic-panel">
-        </div>
-        <div class="col-lg-4" ba-panel ba-panel-title=" Reports: Employee Aggregates" ba-panel-class="medium-panel traffic-panel">
-        </div>
-    </div>
 </div>
+
+
+
+
+
+
+<!-- <div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    QUIK LINKS
+                </div>
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

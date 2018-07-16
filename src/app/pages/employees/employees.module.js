@@ -14,14 +14,14 @@
   /** @ngInject */
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('employees', {
-        url: '/employees',
+      .state('directory', {
+        url: '/directory',
         templateUrl: 'app/pages/employees/employees.html',
        // abstract: true,
-        title: 'Employees',
+        title: 'Directory',
         sidebarMeta: {
           icon: 'ion-pound',
-          order: 4,
+          order: 0,
         },
       });
   }
