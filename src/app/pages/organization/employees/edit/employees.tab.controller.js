@@ -15,7 +15,7 @@
         console.log('empTabController')
 
 
-        var benefintSavecount = 0;//for counting saving record of benefits
+        var benefintSavecount = 0;//for counting saving record of benefiGETts
         var totalSavingRecord = 0;//for totaling of saving record of benefits
 
         var toastOption = {};

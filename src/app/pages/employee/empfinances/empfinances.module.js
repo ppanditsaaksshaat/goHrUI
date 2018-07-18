@@ -5,25 +5,25 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.employees.empexist', [
+    angular.module('BlurAdmin.pages.employee.empfinances', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('directory.exist', {
-                url: '/exist',
-                templateUrl: 'app/pages/employees/empexist/empexist.html',
-                title: 'Exist',
+            .state('employee.finances', {
+                url: '/finances',
+                templateUrl: 'app/pages/employee/empfinances/empfinances.html',
+                title: 'Finances',
                 controller: "",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
-                    order: 2,
-                  },
+                    order: 1,
+                },
             })
-        //$urlRouterProvider.when('/employees', '/employees/dashboard');
+      //  $urlRouterProvider.when('/employee', '/employee/summary');
     }
 
 })();

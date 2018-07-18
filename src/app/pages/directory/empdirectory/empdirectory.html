@@ -1,0 +1,48 @@
+<div class="col-lg-12">
+    <div class="panel ">
+        <div class="panel-body">
+
+            <div class="col-lg-12 col-md-12 clearfix content-container" id="employee-directory">
+                <div class="col-sm-12 vertical-margin vertical-top-margin-lg clear-side-padding">
+                    <div class="col-lg-3 col-md-5 col-sm-5 col-xs-6 clear-left-padding">
+                        <div class="emp-search-group">
+                            <span class="fa fa-search input-group-icon icon-search3"></span>
+                            <input data-set-focus="true" type="text" class="form-control input-group-field ng-pristine ng-valid ng-empty ng-touched"
+                                data-ng-model="searchText" placeholder="Start typing employee name" name="searchTerm" id="searchTerm"
+                                data-ng-change="searchEmployee(searchText)">
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-7 col-sm-7 col-xs-6 clear-right-padding">
+                        <a data-ui-sref="employees.employeedirectory.organizationtree" class="btn btn-primary pull-right" href="#/employees/employeedirectory/organizationtree">Organization Tree</a>
+                        <a data-ui-sref="employees.employeedirectory.organizationchart" class="btn btn-primary pull-right horizontal-margin-right"
+                            href="#/employees/employeedirectory/organizationchart">Organization Chart</a>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-md-12 col-sm-12 col-xs-12 clear-side-padding vertical-margin">
+                    <div data-ng-repeat="alphabet in alphabets" class="alphabet-container" data-ng-class="{'active' : nameStartsWith == alphabet.text}"
+                        data-ng-bind="alphabet.text" data-ng-click="getEmployeesStartingWith(alphabet.text)"></div>
+                </div>
+
+            </div>
+
+            <div class="vertical-top-margin">
+                <div class="col-sm-12">
+                    <div ng-repeat="emp in employeeList" class="icon-list col-offset-sm-1 col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+                        <div data-ui-sref="employee({action:'employee',empid:emp.EmpId})" ng-click="employeedetail(emp)" class="cursor">
+                            <div class="icon-container ">
+                                <div class="icon">
+                                    <div class="initials-icon icon-circle" random-Color>{{emp.EmpFirstName.substr(0,1)}}{{emp.EmpLastName.substr(0,1)}}</div>
+                                </div>
+                            </div>
+                            <div class="detail">
+                                <h4 class="title clear-bottom">{{emp.EmpName}}</h4>
+                                <span class="title-description clear-top">{{emp.EmpEmail}}</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

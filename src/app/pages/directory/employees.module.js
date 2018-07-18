@@ -5,9 +5,10 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.employees', [
-    'BlurAdmin.pages.employees.empdashboard',
-    'BlurAdmin.pages.employees.empexist', 
+  angular.module('BlurAdmin.pages.directory', [
+    'BlurAdmin.pages.directory.empdashboard',
+    'BlurAdmin.pages.directory.empexist', 
+    'BlurAdmin.pages.directory.empdirectory',
   ])
     .config(routeConfig);
 
@@ -16,7 +17,7 @@
     $stateProvider
       .state('directory', {
         url: '/directory',
-        templateUrl: 'app/pages/employees/employees.html',
+        templateUrl: 'app/pages/directory/employees.html',
        // abstract: true,
         title: 'Directory',
         sidebarMeta: {
