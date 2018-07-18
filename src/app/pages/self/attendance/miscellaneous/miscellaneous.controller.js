@@ -35,7 +35,7 @@
             searchLists.push({
                 field: 'EmpId',
                 operand: "=",
-                value: $scope.user.profile.empId
+                value: 5
             })
             console.log(searchLists)
             var data = {
@@ -48,7 +48,8 @@
         function _getCustomQuerySuccessResult(result) {
             console.log(result)
             console.log(result[0])
-            vm.monthlySummery.monthlyAttDetail = result[1];
+            console.log(result[1])
+            $scope.monthlyAttDetails = result[1];
         }
 
         function _getCustomQueryErrorResult(error) {

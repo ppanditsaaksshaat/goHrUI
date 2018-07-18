@@ -7,41 +7,43 @@
 
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+                    <table class="table table-bordered table-condensed ">
                         <thead>
                             <tr class="info">
                                 <td>
-                                    <label>Heads</label>
+                                    <label>Date</label>
                                 </td>
                                 <td>
-                                    <label>Entitled</label>
+                                    <label>In Time</label>
                                 </td>
                                 <td>
-                                    <label>April</label>
+                                    <label>Out Time</label>
                                 </td>
                                 <td>
-                                    <label>May</label>
+                                    <label>Shift In Time</label>
                                 </td>
                                 <td>
-                                    <label>June</label>
+                                    <label>Shift Out Time</label>
                                 </td>
-                                
+                                <td>
+                                    <label>Day Status</label>
+                                </td>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="salHead in empSalaryHead">
-                                <td style="text-align: left" class="text-align "> {{salHead.SHName}}</td>
-                                <td class="text-right ">{{salHead.SASSHRate}}</td>
-                                <td class="text-right">{{salHead.April}}</td>
-                                <td class="text-right ">{{salHead.May}}</td>
-                                <td class="text-right">{{salHead.June }}</td>
-
+                            <tr ng-repeat="monthSummery in monthlyAttDetails">
+                                <td style="text-align: left" class="text-align "> {{monthSummery.DATE}}</td>
+                                <td class="text-right ">{{monthSummery.InTime}}</td>
+                                <td class="text-right">{{monthSummery.OutTime}}</td>
+                                <td class="text-right ">{{monthSummery.SMInTime}}</td>
+                                <td class="text-right">{{monthSummery.SMOutTime }}</td>
+                                <td class="text-right">{{monthSummery.DayStatus }}</td>
                             </tr>
                         </tbody>
-                        
+
                     </table>
                 </div>
             </div>
         </div>
     </div>
-</div>>
+</div>
