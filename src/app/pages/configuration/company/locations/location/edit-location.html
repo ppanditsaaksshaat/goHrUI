@@ -1,0 +1,66 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" ng-if="!ctrl.edit" dotranslate>Add Location</h3>
+        <h3 class="inline-block clear-vertical-margin" ng-if="ctrl.edit" dotranslate>Edit Location</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <form name="locationDetail" id="locationDetail" novalidate>
+            <div class="row">
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Name of Location</label>
+                            <input type="text" class="form-control" ng-model="entity.LocationName" name="LocationName" id="LocationName" required />
+
+                            <span class="validation-msg" validation-messages="" model-controller="bankDetails.bank" required-error="Name is required"
+                                form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Country</label>
+                            <ui-select ng-model="entity.CountryId" name="CountryId" id="CountryId" theme="bootstrap" ng-disabled="disabled" class="client-select"
+                                ng-change="changeState()" required>
+                                <ui-select-match placeholder="Select a Country">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices class="action-button" repeat="country in selects.CountryId | filter: {name : $select.search}" ng-nicescroll="">
+                                    <span ng-bind-html="country.name | highlight: $select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            <span class="validation-msg" validation-messages="" model-controller="bankDetails.accountNumber" required-error="Account number is required"
+                                form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>State</label>
+                            <ui-select ng-model="entity.StateId" name="StateId" id="StateId" theme="bootstrap" ng-disabled="disabled" class="client-select"
+                                 required>
+                                <ui-select-match placeholder="Select a State">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices class="action-button" repeat="state in selects.StateList | filter: {name : $select.search}" ng-nicescroll="">
+                                    <span ng-bind-html="state.name | highlight: $select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            <span class="validation-msg" validation-messages="" model-controller="bankDetails.accountNumber" required-error="Account number is required"
+                                form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <button type="submit" ng-if="!isEdit" class="btn btn-success" ng-click="addLocationDetail();" dotranslate>Add Location</button>
+                        <button type="submit" ng-if="isEdit" class="btn btn-success" ng-click="updateLocationDetail();" dotranslate>Update Location</button>
+                        <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -38,6 +38,7 @@
     'BlurAdmin.pages.selfapprovals',
     'BlurAdmin.pages.directory',
     'BlurAdmin.pages.employee',
+    'BlurAdmin.pages.self'
     
 
   ])
