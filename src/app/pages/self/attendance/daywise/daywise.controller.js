@@ -33,7 +33,7 @@
         function _getDashBoardSuccessData(result) {
             // var dashboardColors = baConfig.colors.dashboard;
             console.log(result)
-            $scope.events.slice(0, $scope.events.length);
+            // $scope.events.slice(0, $scope.events.length);
             console.log(baConfig.colors)
             angular.forEach(result[0], function (value) {
                 console.log(value)
@@ -41,13 +41,13 @@
                     {
                         title: value.InOutTime,
                         start: moment(value.ATTDate).format('YYYY-MM-DD'),
-                        color: dashboardColors.white,
-                    },
-                    {
-                        // title: 'Present',
-                        start: moment(value.ATTDate).format('YYYY-MM-DD'),
                         color: baConfig.colors.success,
                     },
+                    // {
+                    //     // title: 'Present',
+                    //     start: moment(value.ATTDate).format('YYYY-MM-DD'),
+                    //     color: baConfig.colors.success,
+                    // },
                     {
                         // title: 'Holiday',
                         start: moment(value.HolidayDate).format('YYYY-MM-DD'),
@@ -84,25 +84,34 @@
                 defaultDate: moment(),
                 selectable: false,
                 selectHelper: true,
-                select: function (start, end) {
-                    var title = prompt('Event Title:');
-                    var eventData;
-                    if (title) {
-                        eventData = {
-                            title: title,
-                            start: start,
-                            end: end
-                        };
-                        $element.fullCalendar('renderEvent', eventData, true); // stick? = true
-                    }
-                    $element.fullCalendar('unselect');
-                },
-                dayRender: function (defaultDate, cell) {
-                    console.log(cell)
-                    // if (defaultDate == moment())
-                    // cell.css("background-color", "#ccf3ff");
-                },
-                editable: true,
+                // select: function (start, end) {
+                //     var title = prompt('Event Title:');
+                //     var eventData;
+                //     if (title) {
+                //         eventData = {
+                //             title: title,
+                //             start: start,
+                //             end: end
+                //         };
+                //         $element.fullCalendar('renderEvent', eventData, true); // stick? = true
+                //     }
+                //     $element.fullCalendar('unselect');
+                // },
+
+
+
+
+                // dayRender: function (date, cell) {
+                //     angular.forEach(result[0], function (value) {
+                //         if ('2018-07-01' == '2018-07-01') {
+                //             console.log('red')
+                //             cell.css("background-color", "red");
+                //         }
+                //     });
+                // },
+                // eventRender: $scope.eventRender,
+
+                editable: false,
                 eventLimit: true, // allow "more" link when too many events
                 events: $scope.events,
                 // [{

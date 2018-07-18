@@ -16,8 +16,8 @@
                 url: '/miscellaneous',
                 templateUrl: 'app/pages/self/attendance/miscellaneous/miscellaneous.html',
                 title: 'miscellaneous',
-                controller: "",
-                controllerAs: "",
+                controller: "miscellaneousController",
+                controllerAs: "miscellaneous",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
