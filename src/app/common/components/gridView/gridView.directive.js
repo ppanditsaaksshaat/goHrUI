@@ -6,13 +6,13 @@
     'use strict';
 
     angular.module('BlurAdmin.common.components')
-        .directive('gridBox', gridBox);
+        .directive('gridView', gridView);
     /** @ngInject */
-    function gridBox($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
+    function gridView($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
         editFormService, focus, $filter, DJWebStore, $stateParams) {
         return {
             restrict: 'E',
-            templateUrl: 'app/common/components/gridBox/gridBox.html',
+            templateUrl: 'app/common/components/gridView/gridView.html',
             require: ['^ngController', 'ngModel'],
             replace: true,
             scope: {
@@ -29,38 +29,40 @@
             link: function ($scope, elm, attrs, ctrl) {
 
                 var boxSetting = {
-                    selfLoading: true,//gridBox will fetch data from api on its own
-                    showRefresh: true,//show refresh button
-                    showFilter: true,//show filter toggle button
-                    filterOpened: true,//filter box opened on load
-                    requiredFilter: false,//filter is required
-                    showAdd: true,//show add button
-                    showRowMenu: true,//show row click menu
-                    showCustomView: true,//enable show custom html view
-                    showUpload: false,//show upload button
-                    showDialog: false,//show edit box on dialog mode,
-                    enableSelection: true,//enable selection on grid
+                    selfLoading: true, //gridView will fetch data from api on its own
+                    showRefresh: true, //show refresh button
+                    showFilter: true, //show filter toggle button
+                    filterOpened: true, //filter box opened on load
+                    requiredFilter: false, //filter is required
+                    showAdd: true, //show add button
+                    showRowMenu: true, //show row click menu
+                    showCustomView: true, //enable show custom html view
+                    showUpload: false, //show upload button
+                    showDialog: false, //show edit box on dialog mode,
+                    enableSelection: true, //enable selection on grid
                     enableRefreshAfterUpdate: true,
                     enableAutoRefresh: true,
                     showDataOnLoad: true,
                     showApplyFilter: true,
-                    filterOnChange: null,//an event for filter box
-                    defaultEntity: {},//providing default values to add form
-                    gridStyle: { height: '450px' },
+                    filterOnChange: null, //an event for filter box
+                    defaultEntity: {}, //providing default values to add form
+                    gridStyle: {
+                        height: '450px'
+                    },
                     noResultMessageText: undefined,
                     customButtons: [],
                     customButtonsWithDefault: [],
                     selectedRowButtons: [],
-                    customColumns: [],//for adding additional columns
-                    columnDesign: [],//for reordering columns
+                    customColumns: [], //for adding additional columns
+                    columnDesign: [], //for reordering columns
                     pageResult: null,
                     dataResult: null,
                     saveResult: null,
-                    afterCellEdit: null,//external cell edit event
+                    afterCellEdit: null, //external cell edit event
                     onRegisterApi: null,
                     fieldEvents: [],
                     buttonPermission: false,
-                    openHelp: null,//external help option
+                    openHelp: null, //external help option
                     isVerifyButton: false,
                     verifyResult: null,
                 }
@@ -73,17 +75,13 @@
 
                     if (idx == 0) {
                         $scope.selectedQueryType = 'ShowDataOnlyMe';
-                    }
-                    else if (idx == 1) {
+                    } else if (idx == 1) {
                         $scope.selectedQueryType = 'ShowDataLevel1';
-                    }
-                    else if (idx == 2) {
+                    } else if (idx == 2) {
                         $scope.selectedQueryType = 'ShowDataLevel2';
-                    }
-                    else if (idx == 3) {
+                    } else if (idx == 3) {
                         $scope.selectedQueryType = 'ShowDataLevel3';
-                    }
-                    else if (idx == 100) {
+                    } else if (idx == 100) {
                         $scope.selectedQueryType = 'ShowDataAllLevel';
                     }
                     DJWebStore.SetValue('LevelQueried', idx)
@@ -92,7 +90,11 @@
                     if (!isFromLoad) {
                         var current = $state.current;
                         var params = angular.copy($stateParams);
-                        $state.transitionTo(current, params, { reload: true, inherit: true, notify: true });
+                        $state.transitionTo(current, params, {
+                            reload: true,
+                            inherit: true,
+                            notify: true
+                        });
                     }
                 }
                 //customButtons, selectedRowButtons: text, icon, onClick, type:btn-detault
@@ -109,8 +111,7 @@
                 if (!$scope.page.boxOptions.showFilter) {
 
                     $scope.page.showFilter = false;
-                }
-                else if ($scope.page.boxOptions.filterOpened) {
+                } else if ($scope.page.boxOptions.filterOpened) {
                     $scope.page.showFilter = true;
                 }
                 //console.log($scope.page)
@@ -183,6 +184,8 @@
                 $scope.closeForm = _closeForm;
                 $scope.clearForm = _clearForm;
                 $scope.verifyEntity = _verifyEntity;
+                $scope.editRecord = _editRecord;
+                $scope.deleteRecord = _deleteRecord;
                 $scope.page.print = _print;
 
                 function _print() {
@@ -199,25 +202,25 @@
                     }
 
                 }
+
                 function _getPageData() {
                     if ($scope.page.boxOptions.getPageData == null) {
                         _getPage();
-                    }
-                    else
+                    } else
                         $scope.page.boxOptions.getPageData();
                 }
+
                 function _refreshData(userSearchList) {
                     if ($scope.page.boxOptions.refreshData == null) {
                         _getTableData(userSearchList);
-                    }
-                    else
+                    } else
                         $scope.page.boxOptions.refreshData();
                 }
+
                 function _goBack() {
                     if ($scope.page.boxOptions.goBack == null) {
                         alert('not implemented')
-                    }
-                    else
+                    } else
                         $scope.page.boxOptions.goBack();
                 }
                 //====================================================================
@@ -234,7 +237,12 @@
                     });
 
                     $scope.page.action = 'create';
-                    if ($scope.page.boxOptions.addRecord == null) {
+                    if ($scope.page.boxOptions.currentState) {
+                        $state.go($scope.page.boxOptions.currentState + '.add', {
+                            page: $scope.page.pageinfo.selects
+                        });
+
+                    } else if ($scope.page.boxOptions.addRecord == null) {
 
                         if ($scope.page.boxOptions.showDialog) {
                             var param = {
@@ -246,8 +254,7 @@
                                 param: param
                             }
                             dialogModal.openFormVertical(options);
-                        }
-                        else {
+                        } else {
 
                             // if ($scope.page.selectedRows !== undefined) {
                             //     if ($scope.page.selectedRows.length > 0)
@@ -257,13 +264,25 @@
                             // }
                             $scope.page.showAddRecord = true;
                         }
-                    }
-                    else
+                    } else
                         $scope.page.boxOptions.addRecord();
                 }
+
                 function _editRecord(row) {
+
                     $scope.page.action = 'edit';
-                    if ($scope.page.boxOptions.editRecord == null) {
+                    if ($scope.page.boxOptions.currentState) {
+
+                        var idenValue = parseInt(row.entity[$scope.page.pageinfo.idencolname]);
+                        var rowEntity = row.entity;
+                        var editPage = $scope.page.pageinfo.selects;
+
+                        $state.go($scope.page.boxOptions.currentState + '.edit', {
+                            id: idenValue,
+                            entity: rowEntity,
+                            page: editPage
+                        });
+                    } else if ($scope.page.boxOptions.editRecord == null) {
 
                         if ($scope.page.boxOptions.showDialog) {
                             var param = {
@@ -276,8 +295,7 @@
                                 param: param
                             }
                             dialogModal.openFormVertical(options);
-                        }
-                        else {
+                        } else {
                             $scope.page.showAddRecord = true;
                             $scope.entity = row.entity;
 
@@ -298,13 +316,14 @@
                             $scope.page.pkId = row.entity[$scope.page.pageinfo.idencolname];
                             _findEntity();
                         }
-                    }
-                    else
+                    } else
                         $scope.page.boxOptions.editRecord(row);
                 }
+
                 function _updateRecord(row) {
                     $scope.page.boxOptions.updateRecord(row);
                 }
+
                 function _viewRecord(row) {
                     if ($scope.page.boxOptions.viewRecord == null) {
 
@@ -319,32 +338,36 @@
 
                             var options = {
                                 url: 'app/pages/organization/employees/masters/detail/detail.html',
-                                controller: 'orgMastersDetailController', controllerAs: 'detailCtrl',
+                                controller: 'orgMastersDetailController',
+                                controllerAs: 'detailCtrl',
                                 size: 'top-center-800',
                                 param: param
                             }
                             dialogModal.open(options);
-                        }
-                        else {
+                        } else {
                             $scope.page.showViewRecord = true;
                         }
-                    }
-                    else
+                    } else
                         $scope.page.boxOptions.viewRecord(row);
                 }
+
                 function _deleteRecord(row) {
                     $scope.page.boxOptions.deleteRecord(row);
                 }
+
                 function _openView(row) {
                     $scope.page.boxOptions.openView(row);
                 }
+
                 function _clearSelected() {
                     $scope.page.gridApi.selection.clearSelectedRows();
                     $scope.page.selectedRows = [];
                 }
+
                 function _uploadRecord() {
                     $scope.page.boxOptions.uploadRecord();
                 }
+
                 function _onRegisterApi(gridApi) {
                     //////console.log('register grid api')
                     $scope.page.gridApi = gridApi;
@@ -377,8 +400,7 @@
 
                         if ($scope.page.selectedRows.length > 0) {
 
-                        }
-                        else {
+                        } else {
                             //DJWebStoreGlobal.ClearPageMenu();
                         }
                     });
@@ -393,12 +415,15 @@
 
                     })
                 }
+
                 function _closeViewRecord() {
                     _closeForm();
                 }
+
                 function _closeAddRecord() {
                     _closeForm();
                 }
+
                 function _closeForm(editForm) {
                     editForm.isAllowEdit = false;
                     $scope.page.showAddRecord = false;
@@ -423,8 +448,7 @@
                             '&lang=' + userLang;
 
                         window.open('/help/?' + queryString, 'helpWindow', '_blank')
-                    }
-                    else
+                    } else
                         $scope.page.boxOptions.openHelp(row);
                 }
 
@@ -435,8 +459,14 @@
 
                     if ($scope.page.pageinfo !== undefined) {
                         if ($scope.page.pageinfo != null) {
-                            var isCreate = false, isEdit = false, isDelete = false, isUpdate = false,
-                                isExport = false, isRefresh = false, isHelp = false, isColSetting = false;
+                            var isCreate = false,
+                                isEdit = false,
+                                isDelete = false,
+                                isUpdate = false,
+                                isExport = false,
+                                isRefresh = false,
+                                isHelp = false,
+                                isColSetting = false;
                             if ($scope.page.pageinfo.buttons !== undefined) {
                                 var buttons = $scope.page.pageinfo.buttons;
                                 if (buttons.create !== undefined)
@@ -474,12 +504,10 @@
                                     //  $scope.page.showFilter = true;
                                     if ($scope.page.pageinfo.uibuttons.filter_toggle.IsAllowed || ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager)) {
                                         $scope.page.boxOptions.showFilter = true;
-                                    }
-                                    else {
+                                    } else {
                                         $scope.page.boxOptions.showFilter = false;
                                     }
-                                }
-                                else {
+                                } else {
                                     $scope.page.boxOptions.showFilter = false;
                                     $scope.page.showFilter = false;
                                 }
@@ -513,8 +541,7 @@
 
                                             if (typeof colDesg['cellClass'] == 'function') {
                                                 newCol["cellClass"] = colDesg.cellClass;
-                                            }
-                                            else {
+                                            } else {
                                                 $scope.page.cssClasses.push(cssCl)
                                                 newCol["cellClass"] = function (grid, row, col, rowRenderIndex, colRenderIndex) {
                                                     var findCss = $filter('findObj')($scope.page.cssClasses, col.name, 'key')
@@ -522,9 +549,9 @@
                                                         if (row.entity.StatusBGClass != '')
                                                             return 'status-bg ' + row.entity.StatusBGClass;
                                                         else
-                                                            if (findCss != null) {
-                                                                return findCss.cellClass;
-                                                            }
+                                                        if (findCss != null) {
+                                                            return findCss.cellClass;
+                                                        }
                                                     }
 
                                                     if (findCss != null) {
@@ -568,6 +595,7 @@
                             }
                             //console.log($scope.page)
                             _addVerifyButton();
+                            _addActionButton();
                             if ($scope.page.boxOptions.customColumns) {
                                 if ($scope.page.boxOptions.customColumns != null) {
                                     angular.forEach($scope.page.boxOptions.customColumns, function (col) {
@@ -652,21 +680,21 @@
                         pageService.getPagData($scope.page.pageId).then(_getPageSuccessResult, _getPageErrorResult)
                     });
                 }
+
                 function _getPageSuccessResult(result) {
-                    console.log(result)
+                    console.log(result);
                     var isErrored = false;
                     if (result.error_message) {
                         $scope.isErrorOccured = true;
                         if (result.error_message.Message) {
-                            $scope.errorText = result.error_message.Message
+                            $scope.errorText = result.error_message.Message;
                         }
-                    }
-                    else {
+                    } else {
 
                         if ($scope.page.boxOptions.buttonPermission) {
                             result.pageinfo.uibuttons.create.IsAllowed = true;
                             result.pageinfo.uibuttons.edit.IsAllowed = true;
-                            result.pageinfo.uibuttons.refresh.IsAllowed = true
+                            result.pageinfo.uibuttons.refresh.IsAllowed = true;
                         }
                         $scope.page = angular.extend({}, $scope.page, result);
                         //console.log(result)
@@ -679,7 +707,7 @@
                             }
                         }
                         angular.forEach($scope.page.pageinfo.fields, function (field) {
-                            var customField = $filter('findObj')($scope.page.boxOptions.fieldEvents, field.name, 'name')
+                            var customField = $filter('findObj')($scope.page.boxOptions.fieldEvents, field.name, 'name');
                             //console.log(customField)
                             if (customField) {
                                 if (customField.changeEvent) {
@@ -693,6 +721,7 @@
                             _refreshData();
                     }
                 }
+
                 function _getPageErrorResult(err) {
                     $scope.page.pageIsLoaded = true;
                     $scope.page.pageIsLoading = false;
@@ -738,11 +767,13 @@
                     $scope.page.gridOptions.data = []
                     tableData.then(_getTableSuccessResult, _getTableErrorResult)
                 }
+
                 function _getTableErrorResult(err) {
                     //console.log(err)
                     $scope.page.dataIsLoaded = true;
                     $scope.page.dataIsLoading = false;
                 }
+
                 function _getTableSuccessResult(result) {
                     //console.log(result)
                     $scope.page.dataIsLoaded = true;
@@ -754,8 +785,7 @@
                     } else if (result.Errors !== undefined) {
                         // uivm.showMsg('error', result.Message);
                         // _startMsgTimer();
-                    }
-                    else {
+                    } else {
 
                         $scope.page.gridOptions.data = result;
                         $scope.page.gridOptions2.data = $scope.page.gridOptions.data;
@@ -809,11 +839,12 @@
                     }
                     return valid;
                 }
+
                 function _saveForm(form) {
                     $scope.currentForm = form;
                     if (_validateForm(form)) {
                         editFormService.saveForm($scope.page.pageinfo.pageid, $scope.entity,
-                            $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
+                                $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
                             .then(_saveFormSuccess, _saveFormError)
                     }
                 }
@@ -831,9 +862,11 @@
                         _closeForm($scope.currentForm);
                     }
                 }
+
                 function _saveFormError(err) {
                     //console.log(err)
                 }
+
                 function _resetForm(editForm) {
                     if (editForm) {
                         editForm.$setPristine();
@@ -850,6 +883,7 @@
                     //         _findEntitySuccessResult, _findEntityErrorResult);
                     // });
                 }
+
                 function _findEntitySuccessResult(result) {
                     $scope.form.isLoaded = true;
                     $scope.form.isLoading = false;
@@ -857,10 +891,12 @@
                     //////console.log($scope.entity)
                     $scope.oldEntity = angular.copy(result)
                 }
+
                 function _findEntityErrorResult(err) {
                     $scope.form.isLoaded = true;
                     $scope.form.isLoading = false;
                 }
+
                 function _addVerifyButton() {
                     // $scope.page[col.name + "_click"] = col.click;
                     if ($scope.page.boxOptions.isVerifyButton) {
@@ -886,6 +922,29 @@
                     }
                 }
 
+                function _addActionButton() {
+                    // $scope.page[col.name + "_click"] = col.click;
+
+                    var custColumn = {};
+                    var cellTemplate = "<div class='ui-grid-cell-contents'><a ng-click='grid.appScope.editRecord(row)' uib-tooltip='Edit' tooltip-placement='right' href><i class='fa fa-edit fa-lg'></i></a>&nbsp;&nbsp;&nbsp;<a ng-click='grid.appScope.deleteRecord(row)' uib-tooltip='Delete' tooltip-placement='right' href><i class='fa fa-trash-o fa-lg font-red'></i></a></a></div>"
+                    custColumn.name = "Option"
+                    custColumn.field = "action"
+                    custColumn.cellTemplate = '';
+                    custColumn['cellTemplate'] = cellTemplate;
+                    custColumn['visible'] = true;
+                    custColumn["cellClass"] = function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                        if (row.entity.StatusBGClass !== undefined) {
+                            return 'status-bg ' + row.entity.StatusBGClass;
+                        }
+                    }
+                    // custColumn.pinnedRight = true;
+                    custColumn.width = 100;
+                    //console.log($scope.page.gridOptions.columnDefs);
+                    $scope.page.gridOptions.columnDefs.push(custColumn);
+                    $scope.page.gridOptions2.columnDefs.push($scope.page.gridOptions.columnDefs)
+
+                }
+
                 function _verifyEntity(row) {
                     if ($scope.page.boxOptions.verifyResult != null) {
                         $scope.page.boxOptions.verifyResult(row);
@@ -906,8 +965,7 @@
                 $scope.getGridHeight = function () {
                     if ($scope.page.gridOptions2.data.length <= 20) {
                         return parseInt(550 + 'px');
-                    }
-                    else {
+                    } else {
                         return parseInt(8450 + 'px');
                     }
 

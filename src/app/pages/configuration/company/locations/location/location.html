@@ -1,1 +1,20 @@
-sub location
+<div class="row">
+    <div class="col-md-9">
+        <p class="text-description" dotranslate>Here you can manage the Locations of the Organization. You can assign Locations to employees later.
+
+
+        </p>
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-default pull-right" ng-click="addLocation()">
+            <i class="fa fa-plus"></i>
+            <span dotranslate>Add Location</span>
+        </button>
+    </div>
+</div>
+
+<br/>
+
+<grid-view ng-model="page"></grid-view>
+
+</div>

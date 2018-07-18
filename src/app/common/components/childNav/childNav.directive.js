@@ -6,13 +6,13 @@
     'use strict';
 
     angular.module('BlurAdmin.common.components')
-        .directive('topNav', topNav);
+        .directive('childNav', childNav);
     /** @ngInject */
-    function topNav($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
+    function childNav($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
         editFormService, focus, $filter, DJWebStore, $stateParams) {
         return {
             restrict: 'E',
-            templateUrl: 'app/common/components/topNav/topNav.html',
+            templateUrl: 'app/common/components/childNav/childNav.html',
             require: ['^ngController'],
             replace: true,
             scope: {
@@ -25,7 +25,7 @@
                 // this regex is going to filter only direct childs of this route.
                 var secondRouteOnlyRegex = new RegExp(routeName + "\.[a-z]+$", "i");
 
-                $scope.localState = defineMenuItemStates();
+                $scope.subLocalState = defineMenuItemStates();
 
                 // console.log(defineMenuItemStates());
                 // // this uses lodash to filter the states based on the regex

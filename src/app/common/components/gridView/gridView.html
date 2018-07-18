@@ -1,0 +1,11 @@
+<div style="height: 450px;">
+    <div id="CommonViewGrid" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning
+        ui-grid-edit ui-grid-expandable class="djGrid">
+        <div class="no-data" ng-if="page.gridOptions.data.length==0 && !page.dataIsLoading">{{page.boxOptions.noResultMessageText}}</div>
+        <div class="no-data font-black" ng-if="page.dataIsLoading">
+            <i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i> Please wait data is loading....
+        </div>
+    </div>
+    <!-- <div id="CommonPrintGrid" ui-grid="page.gridOptions2" ng-style="{height:getGridHeight()}" style="visibility: hidden;" class="djGrid">
+    </div> -->
+</div>
