@@ -9,13 +9,55 @@
         .controller('miscellaneousController', miscellaneousController);
     function miscellaneousController($scope, $rootScope, $state, $filter, pageService) {
         var vm = this;
-        vm.monthlySummery = {};
-        vm.monthlySummery.monthlyAttDetail = [];
-        function _loadController() {
+        $scope.miscelAttendanceSummery = {};
+        $scope.monthlySummery = {};
+        $scope.employeeSalary = _employeeSalary;
+        $scope.applyRequest = _applyRequest;
+        $scope.goApplyReguest = _goApplyReguest;
+        $scope.applyAttendance = _applyAttendance;
+        $scope.applyOD = _applyOD;
+        $scope.applyCOff = _applyCOff;
 
+        function _goApplyReguest() {
+            $state.go('selfdir.attendance.miscellaneous.leave')
+            console.log($scope.monthSummery)
+            console.log($scope.atttttt)
+        }
+
+        function _applyAttendance() {
+            $state.go('selfdir.attendance.miscellaneous.attendance')
+        }
+
+        function _applyOD() {
+            $state.go('selfdir.attendance.miscellaneous.od')
+        }
+
+        function _applyCOff() {
+            $state.go('selfdir.attendance.miscellaneous.coff', {
+                id: $scope.applyDate,
+                entity: $scope.holeObject
+            })
+        }
+
+
+        function _applyRequest(monthSummery) {
+            console.log(monthSummery)
+            $scope.applyDate = monthSummery.DATE;
+            $scope.apply = true;
+            $scope.holeObject = monthSummery;
+            console.log('ng click work')
+        }
+        function _loadController() {
         }
 
         function _employeeSalary() {
+            var d = moment();
+            var month = d.month();
+            var year = d.year();
+            $scope.month = month;
+            $scope.years = d.year();
+            console.log(month, year)
+
             var searchLists = [];
             searchLists.push({
                 field: 'Month',
@@ -49,7 +91,12 @@
             console.log(result)
             console.log(result[0])
             console.log(result[1])
-            $scope.monthlyAttDetails = result[1];
+            $scope.miscelAttendanceSummery.monthlyAttDetails = result[1];
+            $scope.monthlySummery.summery = result[2];
+            $scope.empCode = result[0][0].EmpCode;
+            $scope.empName = result[0][0].EmpName;
+            $scope.monthlySummery.yearList = result[3]
+            $scope.monthlySummery.monthList = result[4]
         }
 
         function _getCustomQueryErrorResult(error) {

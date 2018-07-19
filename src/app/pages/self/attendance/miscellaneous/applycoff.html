@@ -1,0 +1,40 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" dotranslate>Apply C-Off</h3>
+    </div>
+    <div class="modal-body content-container">
+        <form name="leaveDetail" id="leaveDetail" novalidate>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="col-sm-12 clear-left-padding">
+                        <div class="form-group">
+                            <label dotranslate>C-Off Date</label>
+                            <input type="text" class="form-control" ng-model="entity.DayName" name="LocationName" id="LocationName" required />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 clear-left-padding">
+                        <div class="form-group">
+                            <label dotranslate>Comment</label>
+                            {{entity}}
+                            <textarea type="text" class="form-control" ng-model="entity.DATE" name="LocationName" id="LocationName" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 vertical-margin">
+                        <div class="col-sm-6 pull-right text-right">
+
+                            <button type="submit" class="btn btn-success" ng-click="addLocationDetail();" dotranslate>Apply C-Off</button>
+                            <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -21,9 +21,94 @@
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
-                  },
-            })
-        //$urlRouterProvider.when('/employees', '/employees/dashboard');
+                },
+            }).state('selfdir.attendance.miscellaneous.modal', {
+                abstract: true,
+                parent: 'selfdir.attendance.miscellaneous',
+                url: '',
+                onEnter: ['$uibModal', '$state', function ($uibModal, $state) {
+                    console.log('Open modal');
+                    $uibModal.open({
+                        template: '<div ui-view="modal"></div>',
+                        size: 'top-center-500'
+                    }).result.finally(function () {
+                        $state.go('selfdir.attendance.miscellaneous');
+                    });
+                }]
+            }).state('selfdir.attendance.miscellaneous.leave', {
+                url: '/leave',
+                parent: 'selfdir.attendance.miscellaneous.modal',
+                onEnter: ['$state', function ($state) {
+                    console.log($state)
+                }],
+                views: {
+                    'modal@': {
+                        templateUrl: 'app/pages/self/attendance/miscellaneous/applyleave.html'
+                    }
+                },
+                title: 'Edit Location',
+                sidebarMeta: {
+                    icon: 'ion-android-home',
+                    order: 1,
+                    show: 0
+                },
+            }).state('selfdir.attendance.miscellaneous.attendance', {
+                url: '/attendance',
+                parent: 'selfdir.attendance.miscellaneous.modal',
+                onEnter: ['$state', function ($state) {
+                    console.log($state)
+                }],
+                views: {
+                    'modal@': {
+                        templateUrl: 'app/pages/self/attendance/miscellaneous/applyattendance.html'
+                    }
+                },
+                title: 'Edit Location',
+                sidebarMeta: {
+                    icon: 'ion-android-home',
+                    order: 1,
+                    show: 0
+                },
+            }).state('selfdir.attendance.miscellaneous.od', {
+                url: '/od',
+                parent: 'selfdir.attendance.miscellaneous.modal',
+                onEnter: ['$state', function ($state) {
+                    console.log($state)
+                }],
+                views: {
+                    'modal@': {
+                        templateUrl: 'app/pages/self/attendance/miscellaneous/applyod.html',
+                        resolve: {
+                            entity: function ($stateParams) {
+                                return $stateParams.entity;
+                            }
+                        }
+                    }
+                },
+                title: 'Edit Location',
+                sidebarMeta: {
+                    icon: 'ion-android-home',
+                    order: 1,
+                    show: 0
+                },
+            }).state('selfdir.attendance.miscellaneous.coff', {
+                url: '/coff/:id/{entity:json}',
+                parent: 'selfdir.attendance.miscellaneous.modal',
+                onEnter: ['$state', function ($state) {
+                    console.log($state)
+                }],
+                views: {
+                    'modal@': {
+                        templateUrl: 'app/pages/self/attendance/miscellaneous/applycoff.html'
+                    }
+                },
+                title: 'Edit Location',
+                sidebarMeta: {
+                    icon: 'ion-android-home',
+                    order: 1,
+                    show: 0
+                },
+            });
     }
 
 })();

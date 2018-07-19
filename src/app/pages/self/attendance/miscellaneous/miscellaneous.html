@@ -2,48 +2,152 @@
     <div class="col-md-12">
         <div class="panel panel-medium">
             <div class="panel-heading">
-                <label dotranslate>Miscellaneous Monthly Attendance</label>
-            </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label dotranslate>Miscellaneous Monthly Attendance</label>
+                    </div>
+                    <div class="col-md-4 ">
+                        <label dotranslate>Search Attendance Month And Year Wise Salary</label>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- <label dotranslate>Month</label> -->
+                                <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in monthlySummery.monthList"></select>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- <label dotranslate>Year</label> -->
+                                <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="yearL.Id as yearL.Name for yearL in monthlySummery.yearList"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="panel-body">
+            </div>
+            <div class="panel-body panel-medium">
                 <div class="table-responsive">
                     <table class="table table-bordered table-condensed ">
                         <thead>
-                            <tr class="info">
+                            <tr>
                                 <td>
-                                    <label>Date</label>
+                                    <label dotranslate>Employee Code</label>
                                 </td>
                                 <td>
-                                    <label>In Time</label>
+                                    <label dotranslate>Name</label>
                                 </td>
                                 <td>
-                                    <label>Out Time</label>
+                                    <label dotranslate>Total Day</label>
                                 </td>
                                 <td>
-                                    <label>Shift In Time</label>
+                                    <label dotranslate>Present</label>
                                 </td>
                                 <td>
-                                    <label>Shift Out Time</label>
+                                    <label dotranslate>Week-Off</label>
                                 </td>
                                 <td>
-                                    <label>Day Status</label>
+                                    <label dotranslate>Holiday</label>
+                                </td>
+                                <td>
+                                    <label dotranslate>Leave</label>
+                                </td>
+                                <td>
+                                    <label dotranslate>Absent</label>
                                 </td>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="monthSummery in monthlyAttDetails">
-                                <td style="text-align: left" class="text-align "> {{monthSummery.DATE}}</td>
-                                <td class="text-right ">{{monthSummery.InTime}}</td>
-                                <td class="text-right">{{monthSummery.OutTime}}</td>
-                                <td class="text-right ">{{monthSummery.SMInTime}}</td>
-                                <td class="text-right">{{monthSummery.SMOutTime }}</td>
-                                <td class="text-right">{{monthSummery.DayStatus }}</td>
+                            <tr ng-repeat="summery in monthlySummery.summery ">
+                                <td style="text-align: left">{{empCode }}</td>
+                                <td>{{empName }}</td>
+                                <td> {{summery.TotalDay}}</td>
+                                <td>{{summery.PresentDay}}</td>
+                                <td>{{summery.WeekoffDay}}</td>
+                                <td>{{summery.Holiday}}</td>
+                                <td>{{summery.LeaveDay }}</td>
+                                <td>{{summery.AbsentDay }}</td>
+
                             </tr>
                         </tbody>
 
                     </table>
                 </div>
             </div>
+
+            <div class="panel-body panel-medium">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed ">
+                                <thead>
+                                    <tr class="info">
+                                        <td>
+                                            <label dotranslate>Serial No.</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>Date</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>In Time</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>Out Time</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>Shift In Time</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>Shift Out Time</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>Day Status</label>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="monthSummery in miscelAttendanceSummery.monthlyAttDetails">
+                                        <td>{{$index + 1}}</td>
+                                        <td style="text-align: left" class="text-align "> {{monthSummery.DATE.replace('/Date(','').replace(')/','') | date:"dd-MMM-yyyy"}}</td>
+                                        <td class="text-right ">{{monthSummery.InTime}}</td>
+                                        <td class="text-right">{{monthSummery.OutTime}}</td>
+                                        <td class="text-right ">{{monthSummery.SMInTime}}</td>
+                                        <td class="text-right">{{monthSummery.SMOutTime }}</td>
+                                        <td class="text-right">
+                                            <a href ng-click="applyRequest(monthSummery)" ng-if="monthSummery.DayStatus=='Absent'">{{monthSummery.DayStatus }}</a>
+                                            <span ng-if="monthSummery.DayStatus!='Absent'">{{monthSummery.DayStatus }}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div ng-show="apply" class="col-md-3">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-info btn-add pull-right" ng-click="applyAttendance()">Attendance Request</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <button class=" btn btn-info btn-add pull-right" ng-click="goApplyReguest()">Leave Request</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-info btn-add pull-right" ng-click="applyOD()">OD Request</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <button class=" btn btn-info btn-add pull-right" ng-click="applyCOff()">C-Off Request</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+
 </div>

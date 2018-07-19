@@ -37,7 +37,7 @@
     'BlurAdmin.pages.selfdocuments',
     'BlurAdmin.pages.selfapprovals',
     'BlurAdmin.pages.directory',
-    'BlurAdmin.pages.employee',
+    // 'BlurAdmin.pages.employee',
     'BlurAdmin.pages.self'
     
 
