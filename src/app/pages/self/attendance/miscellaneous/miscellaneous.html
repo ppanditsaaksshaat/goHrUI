@@ -121,29 +121,29 @@
                             </table>
                         </div>
                     </div>
-                    <div ng-show="apply" class="col-md-3">
-                        <div class="row">
+                    <div class="col-md-3">
+                        <div class="row" ng-show="apply">
                             <div class="form-group col-md-12">
                                 <button class="btn btn-info btn-add pull-right" ng-click="applyAttendance()">Attendance Request</button>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" ng-show="apply">
                             <div class="form-group col-md-12">
                                 <button class=" btn btn-info btn-add pull-right" ng-click="goApplyReguest()">Leave Request</button>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" ng-show="apply">
                             <div class="form-group col-md-12">
                                 <button class="btn btn-info btn-add pull-right" ng-click="applyOD()">OD Request</button>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" ng-show="applyCOf">
                             <div class="form-group col-md-12">
                                 <button class=" btn btn-info btn-add pull-right" ng-click="applyCOff()">C-Off Request</button>
                             </div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
         </div>

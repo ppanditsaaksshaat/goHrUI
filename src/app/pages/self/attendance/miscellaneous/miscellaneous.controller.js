@@ -19,17 +19,27 @@
         $scope.applyCOff = _applyCOff;
 
         function _goApplyReguest() {
-            $state.go('selfdir.attendance.miscellaneous.leave')
+            $state.go('selfdir.attendance.miscellaneous.leave', {
+                id: $scope.applyDate,
+                entity: $scope.holeObject
+            })
             console.log($scope.monthSummery)
             console.log($scope.atttttt)
         }
 
         function _applyAttendance() {
-            $state.go('selfdir.attendance.miscellaneous.attendance')
+            $state.go('selfdir.attendance.miscellaneous.attendance', {
+                id: $scope.applyDate,
+                entity: $scope.holeObject
+            })
+            console.log(moment(monthSummery.DATE).format('dd-MMM-yyyy'))
         }
 
         function _applyOD() {
-            $state.go('selfdir.attendance.miscellaneous.od')
+            $state.go('selfdir.attendance.miscellaneous.od', {
+                id: $scope.applyDate,
+                entity: $scope.holeObject
+            })
         }
 
         function _applyCOff() {
@@ -42,8 +52,16 @@
 
         function _applyRequest(monthSummery) {
             console.log(monthSummery)
-            $scope.applyDate = monthSummery.DATE;
-            $scope.apply = true;
+            if (monthSummery.DayStatus == 'Absent') {
+                $scope.apply = true;
+                $scope.applyCOf = false;
+            }
+            else {
+                $scope.apply = false;
+                $scope.applyCOf = true;
+            }
+            $scope.applyDate = moment(monthSummery.DATE).format('dd-MMM-yyyy');
+
             $scope.holeObject = monthSummery;
             console.log('ng click work')
         }

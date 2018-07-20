@@ -1,23 +1,23 @@
 /**
  * @author NKM
- * created on 19.07.2018
+ * created on 20.07.2018
  */
 (function () {
     'use strict';
 
     angular.module('BlurAdmin.pages.self.attendance.miscellaneous')
-        .controller('applyCOffController', applyCOffController);
+        .controller('applyAttendanceController', applyAttendanceController);
 
     /** @ngInject */
-    function applyCOffController($scope, $rootScope, $state, pageService, entity, editFormService) {
+    function applyAttendanceController($scope, $rootScope, $state, pageService, entity, editFormService) {
         console.log('apply coff')
         var vm = this;
         vm.oldEntity = {};
-        var pageId = 127;
+        var pageId = 320;
         $scope.page = $scope.createPage();
         // $scope.selects = selects;
         $scope.entity = entity;
-        $scope.entity.COAttnDate = moment(entity.DATE).format('DD-MMM-YYYY');
+        $scope.entity.attendanceDate = moment(entity.DATE).format('DD-MMM-YYYY');
         console.log($scope.entity)
         $scope.newEntity = {};
 
@@ -26,18 +26,17 @@
         function _addAttendance() {
             var newEntity = {};
             $scope.newEntity.EmpId = 5;
-            $scope.newEntity.COAttnDate = $scope.entity.COAttnDate;
-            $scope.newEntity.COTimeIn = $scope.entity.COTimeIn;
-            $scope.newEntity.COTimeOut = $scope.entity.COTimeOut;
-            $scope.newEntity.COReson = $scope.entity.COReson;
-            $scope.newEntity.COAppDate = moment()
+            $scope.newEntity.AttDate = $scope.entity.DATE;
+            $scope.newEntity.InTime = $scope.entity.InTime;
+            $scope.newEntity.OutTime = $scope.entity.OutTime;
+            $scope.newEntity.ODReason = $scope.entity.ODReason;
 
             newEntity = $scope.newEntity;
             console.log($scope.newEntity)
             console.log(newEntity)
             // console.log(newEntity.EmpId)
             editFormService.saveForm(pageId, newEntity, vm.oldEntity,
-                $scope.entity.FDAId == undefined ? "create" : "edit", 'Apply Attendance', $scope.editForm, true)
+                $scope.entity.AttId == undefined ? "create" : "edit", 'Apply Attendance', $scope.editForm, true)
                 .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
         }
 
@@ -49,5 +48,6 @@
         function _saveWizardFormErrorResult() {
 
         }
+
     }
 })();

@@ -1,23 +1,23 @@
 /**
  * @author NKM
- * created on 19.07.2018
+ * created on 20.07.2018
  */
 (function () {
     'use strict';
 
     angular.module('BlurAdmin.pages.self.attendance.miscellaneous')
-        .controller('applyCOffController', applyCOffController);
+        .controller('applyODController', applyODController);
 
     /** @ngInject */
-    function applyCOffController($scope, $rootScope, $state, pageService, entity, editFormService) {
+    function applyODController($scope, $rootScope, $state, pageService, entity, editFormService) {
         console.log('apply coff')
         var vm = this;
         vm.oldEntity = {};
-        var pageId = 127;
+        var pageId = 294;
         $scope.page = $scope.createPage();
         // $scope.selects = selects;
         $scope.entity = entity;
-        $scope.entity.COAttnDate = moment(entity.DATE).format('DD-MMM-YYYY');
+        $scope.entity.FDAFromDate = moment(entity.DATE).format('DD-MMM-YYYY');
         console.log($scope.entity)
         $scope.newEntity = {};
 
@@ -25,12 +25,13 @@
 
         function _addAttendance() {
             var newEntity = {};
-            $scope.newEntity.EmpId = 5;
-            $scope.newEntity.COAttnDate = $scope.entity.COAttnDate;
-            $scope.newEntity.COTimeIn = $scope.entity.COTimeIn;
-            $scope.newEntity.COTimeOut = $scope.entity.COTimeOut;
-            $scope.newEntity.COReson = $scope.entity.COReson;
-            $scope.newEntity.COAppDate = moment()
+            $scope.newEntity.FADEmpId = 5;
+            $scope.newEntity.FDAFromDate = $scope.entity.FDAFromDate;
+            $scope.newEntity.FDAToDate = $scope.entity.FDAFromDate;
+            $scope.newEntity.FADInTime = $scope.entity.FADInTime;
+            $scope.newEntity.FDAOutTime = $scope.entity.FDAOutTime;
+            $scope.newEntity.FDARemark = $scope.entity.FDARemark;
+            $scope.newEntity.FADAppDate = moment();
 
             newEntity = $scope.newEntity;
             console.log($scope.newEntity)
@@ -49,5 +50,6 @@
         function _saveWizardFormErrorResult() {
 
         }
+
     }
 })();

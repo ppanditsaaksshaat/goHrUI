@@ -9,29 +9,41 @@
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>Attendace Date</label>
-                            <input type="text" class="form-control" ng-model="entity.LocationName" name="LocationName" id="LocationName" required />
+                            <input type="datetime" class="form-control" ng-model="entity.attendanceDate" name="AttendanceDate" id="AttendanceDate" required />
                         </div>
                     </div>
 
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>In Time</label>
-                            <input type="text" class="form-control" ng-model="entity.LocationName" name="LocationName" id="LocationName" required />
+                            <div class="input-group" moment-picker="timepicker" format="hh:mm A" max-date="col.maxDate" min-date="col.minDate">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="false" class="form-control" placeholder="Pick any time"
+                                    ng-model="entity.InTime" ng-model-options="{ updateOn: 'blur' }">
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>Out Time</label>
-                            <input type="text" class="form-control" ng-model="entity.LocationName" name="LocationName" id="LocationName" required />
+                            <div class="input-group" moment-picker="timepicker" format="hh:mm A" max-date="col.maxDate" min-date="col.minDate">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="false" class="form-control" placeholder="Pick any time"
+                                    ng-model="entity.OutTime" ng-model-options="{ updateOn: 'blur' }">
+                            </div>
                         </div>
                     </div>
+
 
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>Comment</label>
-                            <textarea type="text" class="form-control" ng-model="entity.LocationName" name="LocationName" id="LocationName" required
-                            />
+                            <textarea type="textarea" class="form-control" ng-model="entity.ODReason" name="ODReason" id="ODReason" required />
                         </div>
                     </div>
                 </div>
@@ -42,7 +54,7 @@
                 <div class="row">
                     <div class="col-sm-12 vertical-margin">
                         <div class="col-sm-6 pull-right text-right">
-                            <button type="submit" class="btn btn-success" ng-click="addLocationDetail();" dotranslate>Apply Attendance</button>
+                            <button type="submit" class="btn btn-success" ng-click="addAttendance();" dotranslate>Apply Attendance</button>
                             <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
                         </div>
                     </div>

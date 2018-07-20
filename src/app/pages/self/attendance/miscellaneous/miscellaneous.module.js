@@ -36,14 +36,20 @@
                     });
                 }]
             }).state('selfdir.attendance.miscellaneous.leave', {
-                url: '/leave',
+                url: '/leave/:id/{entity:json}',
                 parent: 'selfdir.attendance.miscellaneous.modal',
                 onEnter: ['$state', function ($state) {
                     console.log($state)
                 }],
                 views: {
                     'modal@': {
-                        templateUrl: 'app/pages/self/attendance/miscellaneous/applyleave.html'
+                        templateUrl: 'app/pages/self/attendance/miscellaneous/applyleave.html',
+                        controller: 'applyLeaveController',
+                        resolve: {
+                            entity: function ($stateParams) {
+                                return $stateParams.entity;
+                            }
+                        }
                     }
                 },
                 title: 'Edit Location',
@@ -53,14 +59,20 @@
                     show: 0
                 },
             }).state('selfdir.attendance.miscellaneous.attendance', {
-                url: '/attendance',
+                url: '/attendance/:id/{entity:json}',
                 parent: 'selfdir.attendance.miscellaneous.modal',
                 onEnter: ['$state', function ($state) {
                     console.log($state)
                 }],
                 views: {
                     'modal@': {
-                        templateUrl: 'app/pages/self/attendance/miscellaneous/applyattendance.html'
+                        templateUrl: 'app/pages/self/attendance/miscellaneous/applyattendance.html',
+                        controller: 'applyAttendanceController',
+                        resolve: {
+                            entity: function ($stateParams) {
+                                return $stateParams.entity;
+                            }
+                        }
                     }
                 },
                 title: 'Edit Location',
@@ -70,7 +82,7 @@
                     show: 0
                 },
             }).state('selfdir.attendance.miscellaneous.od', {
-                url: '/od',
+                url: '/od/:id/{entity:json}',
                 parent: 'selfdir.attendance.miscellaneous.modal',
                 onEnter: ['$state', function ($state) {
                     console.log($state)
@@ -78,6 +90,7 @@
                 views: {
                     'modal@': {
                         templateUrl: 'app/pages/self/attendance/miscellaneous/applyod.html',
+                        controller: 'applyODController',
                         resolve: {
                             entity: function ($stateParams) {
                                 return $stateParams.entity;

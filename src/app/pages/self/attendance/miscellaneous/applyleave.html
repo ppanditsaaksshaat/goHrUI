@@ -15,7 +15,7 @@
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>Leave Type</label>
-                            <input type="text" class="form-control" ng-model="entity.LocationName" name="LocationName" id="LocationName" required />
+                            <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in LeaveType"></select>
                         </div>
                     </div>
                     <div class="col-sm-12 clear-left-padding">
@@ -41,13 +41,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td style="text-align: left">CL</td>
-                                    <td>5</td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left">EL</td>
-                                    <td>8</td>
+                                <tr ng-repeat="leaves in showBalanceLeave">
+                                    <td style="text-align: left">{{leaves.LTName}}</td>
+                                    <td>{{leaves.LeaveBalance}}</td>
+
                                 </tr>
                             </tbody>
                         </table>
