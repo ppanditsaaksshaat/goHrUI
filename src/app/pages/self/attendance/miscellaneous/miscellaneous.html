@@ -112,8 +112,8 @@
                                         <td class="text-right ">{{monthSummery.SMInTime}}</td>
                                         <td class="text-right">{{monthSummery.SMOutTime }}</td>
                                         <td class="text-right">
-                                            <a href ng-click="applyRequest(monthSummery)" ng-if="monthSummery.DayStatus=='Absent'">{{monthSummery.DayStatus }}</a>
-                                            <span ng-if="monthSummery.DayStatus!='Absent'">{{monthSummery.DayStatus }}</span>
+                                            <a href ng-click="applyRequest(monthSummery)" ng-if="monthSummery.DayStatus=='Absent' || monthSummery.DayStatus=='Weekoff'|| monthSummery.DayStatus=='Weekoff'">{{monthSummery.DayStatus }}</a>
+                                            <span ng-if="monthSummery.DayStatus!='Absent' && monthSummery.DayStatus!='Weekoff'&& monthSummery.DayStatus!='Weekoff'">{{monthSummery.DayStatus }}</span>
                                         </td>
                                     </tr>
                                 </tbody>

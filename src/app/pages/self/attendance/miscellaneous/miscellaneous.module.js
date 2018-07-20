@@ -99,7 +99,13 @@
                 }],
                 views: {
                     'modal@': {
-                        templateUrl: 'app/pages/self/attendance/miscellaneous/applycoff.html'
+                        templateUrl: 'app/pages/self/attendance/miscellaneous/applycoff.html',
+                        controller: 'applyCOffController',
+                        resolve: {
+                            entity: function ($stateParams) {
+                                return $stateParams.entity;
+                            }
+                        }
                     }
                 },
                 title: 'Edit Location',
