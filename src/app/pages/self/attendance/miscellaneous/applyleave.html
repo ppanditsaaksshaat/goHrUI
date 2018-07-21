@@ -9,20 +9,19 @@
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>Leave Date</label>
-                            <input type="text" class="form-control" ng-model="entity.LocationName" name="LocationName" id="LocationName" required />
+                            <input type="text" class="form-control" ng-model="entity.leaveFromDate" name="LocationName" id="LocationName" required />
                         </div>
                     </div>
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>Leave Type</label>
-                            <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in LeaveType"></select>
+                            <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="entity.leaveTypes" ng-options="monthL.Id as monthL.Name for monthL in LeaveType"></select>
                         </div>
                     </div>
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>Comment</label>
-                            <textarea type="text" class="form-control" ng-model="entity.LocationName" name="LocationName" id="LocationName" required
-                            />
+                            <textarea type="text" class="form-control" ng-model="entity.LeadComment" name="LocationName" id="LocationName" required />
                         </div>
                     </div>
                 </div>
@@ -42,7 +41,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="leaves in showBalanceLeave">
-                                    <td style="text-align: left">{{leaves.LTName}}</td>
+                                    <td style="text-align: left">{{leaves.Name}}</td>
                                     <td>{{leaves.LeaveBalance}}</td>
 
                                 </tr>
@@ -54,7 +53,7 @@
                 <div class="row">
                     <div class="col-sm-12 vertical-margin">
                         <div class="col-sm-6 pull-right text-right">
-                            <button type="submit" class="btn btn-success" ng-click="addLocationDetail();" dotranslate>Apply Leave</button>
+                            <button type="submit" class="btn btn-success" ng-click="addLeave();" dotranslate>Apply Leave</button>
                             <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
                         </div>
                     </div>

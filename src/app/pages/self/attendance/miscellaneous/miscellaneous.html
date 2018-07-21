@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="bottom">
     <div class="col-md-12">
         <div class="panel panel-medium">
             <div class="panel-heading">
@@ -7,7 +7,7 @@
                         <label dotranslate>Miscellaneous Monthly Attendance</label>
                     </div>
                     <div class="col-md-4 ">
-                        <label dotranslate>Search Attendance Month And Year Wise Salary</label>
+                        <label dotranslate>Search Attendance Month And Year Wise </label>
                     </div>
                     <div class="col-md-4">
                         <div class="row">
@@ -112,13 +112,15 @@
                                         <td class="text-right ">{{monthSummery.SMInTime}}</td>
                                         <td class="text-right">{{monthSummery.SMOutTime }}</td>
                                         <td class="text-right">
-                                            <a href ng-click="applyRequest(monthSummery)" ng-if="monthSummery.DayStatus=='Absent' || monthSummery.DayStatus=='Weekoff'|| monthSummery.DayStatus=='Weekoff'">{{monthSummery.DayStatus }}</a>
+                                            <a href ng-click="applyRequest(monthSummery)" ng-if="monthSummery.DayStatus=='Absent' || monthSummery.DayStatus=='Weekoff'|| monthSummery.DayStatus=='Weekoff'">{{monthSummery.DayStatus }}
+                                            </a>
                                             <span ng-if="monthSummery.DayStatus!='Absent' && monthSummery.DayStatus!='Weekoff'&& monthSummery.DayStatus!='Weekoff'">{{monthSummery.DayStatus }}</span>
                                         </td>
                                     </tr>
                                 </tbody>
 
                             </table>
+
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -143,6 +145,8 @@
                             </div>
                         </div>
                     </div>
+
+
 
                 </div>
             </div>

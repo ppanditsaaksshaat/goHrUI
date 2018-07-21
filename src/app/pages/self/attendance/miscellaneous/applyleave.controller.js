@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 /**
  * @author NKM
  * created on 20.07.2018
@@ -24,36 +17,68 @@
         $scope.page = $scope.createPage();
         // $scope.selects = selects;
         $scope.entity = entity;
-        $scope.entity.attendanceDate = moment(entity.DATE).format('DD-MMM-YYYY');
+        $scope.entity.leaveFromDate = moment(entity.DATE).format('DD-MMM-YYYY');
         console.log($scope.entity)
         $scope.newEntity = {};
 
-        $scope.addAttendance = _addAttendance;
+        $scope.addLeave = _addLeave;
 
-        function _addAttendance() {
-            var newEntity = {};
-            $scope.newEntity.EmpId = 5;
-            $scope.newEntity.AttDate = $scope.entity.DATE;
-            $scope.newEntity.InTime = $scope.entity.InTime;
-            $scope.newEntity.OutTime = $scope.entity.OutTime;
-            $scope.newEntity.ODReason = $scope.entity.ODReason;
+        function _childmethod() {
+            $rootScope.$emit("CallParentMethod", {});
+        }
 
-            newEntity = $scope.newEntity;
-            console.log($scope.newEntity)
-            console.log(newEntity)
-            // console.log(newEntity.EmpId)
-            editFormService.saveForm(pageId, newEntity, vm.oldEntity,
-                $scope.entity.AttId == undefined ? "create" : "edit", 'Apply Attendance', $scope.editForm, true)
-                .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+        function _validateApprovedData() {
+            if ($scope.entity.leaveFromDate == undefined || $scope.entity.leaveFromDate == null || $scope.entity.leaveFromDate == '') {
+                $scope.showMsg("error", "Please Enter Date");
+                return true;
+            }
+            if ($scope.entity.leaveTypes == undefined || $scope.entity.leaveTypes == null || $scope.entity.leaveTypes == '') {
+                $scope.showMsg("error", "Please Select Leave Type");
+                return true;
+            }
+            if ($scope.entity.LeadComment == undefined || $scope.entity.LeadComment == null || $scope.entity.LeadComment == '') {
+                $scope.showMsg("error", "Please Enter Comment");
+                return true;
+            }
+            return false;
+        }
+
+        function _addLeave() {
+            if (!_validateApprovedData()) {
+                var newEntity = {};
+                var leaveType = parseInt($scope.entity.leaveTypes)
+                var leaveTransaction = leaveType + '|1';
+                console.log(leaveTransaction)
+                $scope.newEntity.LEADEmpId = 5;
+                $scope.newEntity.LEADDateFrom = $scope.entity.leaveFromDate;
+                $scope.newEntity.LEADDateTo = $scope.entity.leaveFromDate;
+                $scope.newEntity.LeadHalfDay = 0;
+                $scope.newEntity.LeadComment = $scope.entity.LeadComment;
+                $scope.newEntity.LEADFromHalfDayId = 2;
+                $scope.newEntity.LEADToHalfDayId = 2;
+                $scope.newEntity.LEADTransation = leaveTransaction;
+
+                newEntity = $scope.newEntity;
+                console.log($scope.newEntity)
+                console.log(newEntity)
+                // console.log(newEntity.EmpId)
+                editFormService.saveForm(pageId, newEntity, vm.oldEntity,
+                    $scope.entity.AttId == undefined ? "create" : "edit", 'Apply Attendance', $scope.editForm, true)
+                    .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
+            }
         }
 
         function _saveWizardFormSuccessResult(result) {
+            $scope.$close();
             console.log(result)
-            // $dismiss();
+            if (result.success_message == "Added New Record.") {
+                $scope.showMsg("success", "Record Save Successfully.")
+                _childmethod();
+            }
         }
 
-        function _saveWizardFormErrorResult() {
-
+        function _saveWizardFormErrorResult(error) {
+            $scope.$close();
         }
 
         function _showEmpLeave() {
@@ -73,7 +98,7 @@
 
         function _getCustomQuerySuccessResult(result) {
             $scope.showBalanceLeave = result[0];
-            $scope.LeaveType = result[1];
+            $scope.LeaveType = result[0];
             console.log(result)
             console.log($scope.showBalanceLeave)
         }

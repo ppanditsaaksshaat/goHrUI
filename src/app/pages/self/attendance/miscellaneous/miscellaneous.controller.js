@@ -7,7 +7,7 @@
 
     angular.module('BlurAdmin.pages.self.attendance.miscellaneous')
         .controller('miscellaneousController', miscellaneousController);
-    function miscellaneousController($scope, $rootScope, $state, $filter, pageService) {
+    function miscellaneousController($scope, $rootScope, $state, $filter, pageService, $location, $anchorScroll) {
         var vm = this;
         $scope.miscelAttendanceSummery = {};
         $scope.monthlySummery = {};
@@ -17,6 +17,12 @@
         $scope.applyAttendance = _applyAttendance;
         $scope.applyOD = _applyOD;
         $scope.applyCOff = _applyCOff;
+
+        $rootScope.$on("CallParentMethod", function () {
+            $scope.employeeSalary = _employeeSalary();
+        });
+
+
 
         function _goApplyReguest() {
             $state.go('selfdir.attendance.miscellaneous.leave', {
@@ -51,6 +57,9 @@
 
 
         function _applyRequest(monthSummery) {
+            $location.hash('bottom');
+            // call $anchorScroll()
+            $anchorScroll();
             console.log(monthSummery)
             if (monthSummery.DayStatus == 'Absent') {
                 $scope.apply = true;
@@ -72,7 +81,7 @@
             var d = moment();
             var month = d.month();
             var year = d.year();
-            $scope.month = month;
+            $scope.month = month + 1;
             $scope.years = d.year();
             console.log(month, year)
 
@@ -80,12 +89,12 @@
             searchLists.push({
                 field: 'Month',
                 operand: "=",
-                value: '3'
+                value: $scope.month
             })
             searchLists.push({
                 field: 'Year',
                 operand: "=",
-                value: '2018'
+                value: $scope.years
             })
             searchLists.push({
                 field: 'SubUnitId',

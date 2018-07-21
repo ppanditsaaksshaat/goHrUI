@@ -1,1 +1,31 @@
-<h1>Roster</h1>
+<div class="row" id="bottom">
+    <div class="col-md-12">
+        <div class="panel panel-medium">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label dotranslate>Monthly Roster Detail</label>
+                    </div>
+                    <div class="col-md-4 ">
+                        <label dotranslate>Search Roster Month And Year Wise</label>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in monthlySummery.monthList"></select>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="yearL.Id as yearL.Name for yearL in monthlySummery.yearList"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="panel-body panel-medium">
+                <grid-view ng-model="page"></grid-view>
+            </div>
+        </div>
+    </div>
+</div>

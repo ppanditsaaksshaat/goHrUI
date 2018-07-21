@@ -9,19 +9,19 @@
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>Attendace Date</label>
-                            <input type="datetime" class="form-control" ng-model="entity.attendanceDate" name="AttendanceDate" id="AttendanceDate" required />
+                            <input type="datetime" class="form-control" ng-model="entity.attendanceDate" name="AttendanceDate" id="AttendanceDate" required
+                            />
                         </div>
                     </div>
 
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>In Time</label>
-                            <div class="input-group" moment-picker="timepicker" format="hh:mm A" max-date="col.maxDate" min-date="col.minDate">
+                            <div class="input-group" moment-picker="entity.InTime" format="hh:mm A">
                                 <span class="input-group-addon">
                                     <i class="fa fa-clock-o"></i>
                                 </span>
-                                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="false" class="form-control" placeholder="Pick any time"
-                                    ng-model="entity.InTime" ng-model-options="{ updateOn: 'blur' }">
+                                <input class="form-control" placeholder="Pick any time" ng-model="entity.InTime" ng-model-options="{ updateOn: 'blur' }">
                             </div>
                         </div>
                     </div>
@@ -29,16 +29,14 @@
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
                             <label dotranslate>Out Time</label>
-                            <div class="input-group" moment-picker="timepicker" format="hh:mm A" max-date="col.maxDate" min-date="col.minDate">
+                            <div class="input-group" moment-picker="entity.OutTime" format="hh:mm A">
                                 <span class="input-group-addon">
                                     <i class="fa fa-clock-o"></i>
                                 </span>
-                                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="false" class="form-control" placeholder="Pick any time"
-                                    ng-model="entity.OutTime" ng-model-options="{ updateOn: 'blur' }">
+                                <input class="form-control" placeholder="Pick any time" ng-model="entity.OutTime" ng-model-options="{ updateOn: 'blur' }">
                             </div>
                         </div>
                     </div>
-
 
                     <div class="col-sm-12 clear-left-padding">
                         <div class="form-group">
