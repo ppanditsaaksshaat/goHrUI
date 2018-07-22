@@ -15,7 +15,9 @@
                                 <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in monthlySummery.monthList"></select>
                             </div>
                             <div class="col-md-6">
-                                <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="yearL.Id as yearL.Name for yearL in monthlySummery.yearList"></select>
+                                    <button type="submit" class="btn btn-success" ng-click="getPageData();" dotranslate>Apply Out-Duty</button>
+                           
+                                <!-- <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="yearL.Id as yearL.Name for yearL in monthlySummery.yearList"></select> -->
                             </div>
                         </div>
                     </div>

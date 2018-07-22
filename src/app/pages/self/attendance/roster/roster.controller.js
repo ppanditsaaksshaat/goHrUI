@@ -14,12 +14,12 @@
         $scope.addLocation = addRecord;
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
-        $scope.page.pageId = 34;
+        $scope.page.pageId = 481;
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
-            showFilter: false,
-            filterOpened: false,
+            showFilter: true,
+            filterOpened: true,
             showAdd: true,
             showRowMenu: false,
             showCustomView: true,
@@ -34,10 +34,27 @@
             updateRecord: null,
             viewRecord: null,
             deleteRecord: null,
-            showApplyFilter: false,
+            showApplyFilter: true,
             filterOnChange: null,
             showDataOnLoad: true,
             // currentState: 'configuration.company.locations.location'
+        }
+
+        console.log($scope.page)
+        $scope.getPageData = _getPageData;
+
+        function _getPageData() {
+            $scope.page.searchList.push({
+                field: 'RODFromDate',
+                operand: '>=',
+                value: '2018-03-01'
+            })
+            $scope.page.searchList.push({
+                field: 'RODFromDate',
+                operand: '<=',
+                value: '2018-03-05'
+            })
+            $scope.page.refreshData()
         }
 
         function editRecord(row) {
