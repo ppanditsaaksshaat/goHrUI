@@ -12,11 +12,22 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col-md-6">
-                                <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in monthlySummery.monthList"></select>
+                                <!-- <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in monthlySummery.monthList"></select> -->
+                                <div class="input-group" moment-picker="fromDate" format="DD-MMM-YYYY" > 
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input class="form-control input-sm"  placeholder="Pick any date" ng-model="fromDate" ng-change="getPageData()" ng-model-options="{ updateOn: 'blur' }">
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                    <button type="submit" class="btn btn-success" ng-click="getPageData();" dotranslate>Apply Out-Duty</button>
-                           
+                                <div class="input-group" moment-picker="toDate" format="DD-MMM-YYYY">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input class="form-control input-sm" placeholder="Pick any date" ng-model="toDate" ng-change="getPageData()" ng-model-options="{ updateOn: 'blur' }">
+                                </div>
+                                <!-- <button type="submit" class="btn btn-success" ng-click="getPageData();" dotranslate>Apply Out-Duty</button> -->
                                 <!-- <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="yearL.Id as yearL.Name for yearL in monthlySummery.yearList"></select> -->
                             </div>
                         </div>

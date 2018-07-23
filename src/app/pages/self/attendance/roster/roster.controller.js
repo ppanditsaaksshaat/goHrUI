@@ -42,17 +42,19 @@
 
         console.log($scope.page)
         $scope.getPageData = _getPageData;
-
+        $scope.fromDate = moment().format('DD-MMM-YYYY')
+        $scope.toDate = moment().format('DD-MMM-YYYY')
         function _getPageData() {
+            console.log('get page data')
             $scope.page.searchList.push({
                 field: 'RODFromDate',
                 operand: '>=',
-                value: '2018-03-01'
+                value: $scope.fromDate
             })
             $scope.page.searchList.push({
                 field: 'RODFromDate',
                 operand: '<=',
-                value: '2018-03-05'
+                value: $scope.toDate
             })
             $scope.page.refreshData()
         }
