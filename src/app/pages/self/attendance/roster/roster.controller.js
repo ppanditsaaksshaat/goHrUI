@@ -10,11 +10,27 @@
     function rosterDetailController($scope, $rootScope, $state, $filter, pageService) {
         var vm = this;
         console.log('location ctrl loaded')
-        $scope.location = 'this is location controller'
-        $scope.addLocation = addRecord;
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
         $scope.page.pageId = 481;
+        // $scope.page = $rootScope.createPage(); 0
+        console.log($scope.page)
+
+        $scope.getPageData = _getPageData;
+        $scope.fromDate = moment().format('DD-MMM-YYYY')
+        $scope.toDate = moment().format('DD-MMM-YYYY')
+
+        var d = moment();
+        var month = d.month();
+        var year = d.year();
+        $scope.month = month + 1;
+        var startDate = moment([year, $scope.month - 1]);
+        var endDate = moment(startDate).endOf('month');
+        $scope.fromDate = moment(startDate).format('DD-MMM-YYYY')
+        $scope.toDate = moment(endDate).format('DD-MMM-YYYY')
+
+        console.log(startDate.toDate());
+        console.log(endDate.toDate());
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
@@ -29,8 +45,8 @@
             gridHeight: 450,
             getPageData: null,
             refreshData: null,
-            addRecord: addRecord,
-            editRecord: editRecord,
+            addRecord: null,
+            editRecord: null,
             updateRecord: null,
             viewRecord: null,
             deleteRecord: null,
@@ -39,56 +55,54 @@
             showDataOnLoad: true,
             // currentState: 'configuration.company.locations.location'
         }
+        // $scope.page.searchList.push({ field: 'AMSTIsVarified', operand: '=', value: true })
+        $scope.page.searchList.push({
+            field: 'RODFromDate',
+            operand: '>=',
+            value: moment($scope.fromDate).format('YYYY-MM-DD')
+        })
+        $scope.page.searchList.push({
+            field: 'RODFromDate',
+            operand: '<=',
+            value: moment($scope.toDate).format('YYYY-MM-DD')
+        })
+        $scope.page.searchList.push({
+            field: 'RODEmpId',
+            operand: '<=',
+            value: 5
+            // value: $scope.user.profile.empId
+        })
 
-        console.log($scope.page)
-        $scope.getPageData = _getPageData;
-        $scope.fromDate = moment().format('DD-MMM-YYYY')
-        $scope.toDate = moment().format('DD-MMM-YYYY')
+        // function _loadController() {
+        //     pageService.getPagData($scope.page.pageId).then(function success(result) {
+        //         console.log(result)
+        //     }, function error() {
+
+        //     })
+        // }
+
+        // _loadController();
+
         function _getPageData() {
             console.log('get page data')
+            $scope.page.searchList = [];
             $scope.page.searchList.push({
                 field: 'RODFromDate',
                 operand: '>=',
-                value: $scope.fromDate
+                value: moment($scope.fromDate).format('YYYY-MM-DD')
             })
             $scope.page.searchList.push({
                 field: 'RODFromDate',
                 operand: '<=',
-                value: $scope.toDate
+                value: moment($scope.toDate).format('YYYY-MM-DD')
+            })
+            $scope.page.searchList.push({
+                field: 'RODEmpId',
+                operand: '<=',
+                value: $rootScope.user.profile.empId
+                // value: $scope.user.profile.empId
             })
             $scope.page.refreshData()
-        }
-
-        function editRecord(row) {
-
-            $state.go('configuration.company.locations.location.edit', {
-                id: row.entity.LocationId,
-                entity: row.entity,
-                selects: $scope.page.pageinfo.selects
-            });
-        }
-
-        function deleteRecord(row) {
-            console.log(row)
-        }
-
-        function addRecord() {
-            $state.go('configuration.company.locations.location.add', {
-                id: 0,
-                entity: {},
-                selects: $scope.page.pageinfo.selects
-            });
-        }
-
-
-        $scope.changeState = function () {
-            $scope.selects.StateList = $scope.selects.StateId;
-
-            if ($scope.entity.CountryId) {
-                if ($scope.entity.CountryId > 0) {
-                    $scope.selects.StateList = $filter('findObj')($scope.selects.StateId, $scope.entity.CountryId, 'CountryId')
-                }
-            }
         }
     }
 })();

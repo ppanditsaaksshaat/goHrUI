@@ -15,7 +15,7 @@
             .state('selfdir.attendance.miscellaneous', {
                 url: '/miscellaneous',
                 templateUrl: 'app/pages/self/attendance/miscellaneous/miscellaneous.html',
-                title: 'miscellaneous',
+                title: 'monthly',
                 controller: "miscellaneousController",
                 controllerAs: "miscellaneous",
                 sidebarMeta: {

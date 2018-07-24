@@ -7,7 +7,7 @@
 
     angular.module('BlurAdmin.pages.self.attendance.daywise')
         .controller('daywiseController', daywiseController);
-    function daywiseController(baConfig, $scope, pageService, colorHelper) {
+    function daywiseController(baConfig, $scope,$rootScope, pageService, colorHelper) {
 
         $scope.SelectedEvent = null;
         var isFirstTime = true;
@@ -16,12 +16,15 @@
         $scope.eventSources = [$scope.events];
         var dashboardColors = baConfig.colors.dashboard;
 
+        console.log($scope)
+
         function _loadController() {
             var searchLists = [];
             searchLists.push({
                 field: 'EmpId',
                 operand: "=",
-                value: 5
+                value: $rootScope.user.profile.empId
+                // value: $scope.user.profile.empId
             })
             var data = {
                 searchList: searchLists,

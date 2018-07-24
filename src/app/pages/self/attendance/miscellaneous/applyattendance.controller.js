@@ -35,6 +35,7 @@
                 $scope.newEntity.InTime = $scope.entity.InTime;
                 $scope.newEntity.OutTime = $scope.entity.OutTime;
                 $scope.newEntity.ODReason = $scope.entity.ODReason;
+                $scope.newEntity.StatusId = -1;
 
                 newEntity = $scope.newEntity;
                 console.log($scope.newEntity)

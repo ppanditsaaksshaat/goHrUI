@@ -18,6 +18,13 @@
         $scope.applyOD = _applyOD;
         $scope.applyCOff = _applyCOff;
 
+        var d = moment();
+        var month = d.month();
+        var year = d.year();
+        $scope.month = month + 1;
+        $scope.years = d.year();
+        console.log(month, year)
+
         $rootScope.$on("CallParentMethod", function () {
             $scope.employeeSalary = _employeeSalary();
         });
@@ -76,14 +83,15 @@
         }
         function _loadController() {
         }
+        
 
         function _employeeSalary() {
-            var d = moment();
-            var month = d.month();
-            var year = d.year();
-            $scope.month = month + 1;
-            $scope.years = d.year();
-            console.log(month, year)
+            // var d = moment();
+            // var month = d.month();
+            // var year = d.year();
+            // $scope.month = month + 1;
+            // $scope.years = d.year();
+            // console.log(month, year)
 
             var searchLists = [];
             searchLists.push({
@@ -96,15 +104,16 @@
                 operand: "=",
                 value: $scope.years
             })
-            searchLists.push({
-                field: 'SubUnitId',
-                operand: "=",
-                value: '2'
-            })
+            // searchLists.push({
+            //     field: 'SubUnitId',
+            //     operand: "=",
+            //     value: '2'
+            // })
             searchLists.push({
                 field: 'EmpId',
                 operand: "=",
-                value: 5
+                value: $rootScope.user.profile.empId
+                // value: $scope.user.profile.empId
             })
             console.log(searchLists)
             var data = {
@@ -115,6 +124,8 @@
         }
 
         function _getCustomQuerySuccessResult(result) {
+            $scope.monthlySummery.summery = [];
+
             console.log(result)
             console.log(result[0])
             console.log(result[1])
