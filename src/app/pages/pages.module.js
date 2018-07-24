@@ -39,6 +39,8 @@
     'BlurAdmin.pages.directory',
     'BlurAdmin.pages.employee',
     //'BlurAdmin.pages.self'
+    // 'BlurAdmin.pages.employee',
+    'BlurAdmin.pages.self'
     
 
   ])

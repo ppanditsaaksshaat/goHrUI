@@ -1,0 +1,63 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" dotranslate>Apply Out-Duty</h3>
+    </div>
+    <div class="modal-body content-container">
+        <form name="leaveDetail" id="leaveDetail" novalidate>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="col-sm-12 clear-left-padding">
+                        <div class="form-group">
+                            <label dotranslate>Date</label>
+                            <input type="datetime" class="form-control" ng-model="entity.FDAFromDate" name="AttendanceDate" id="AttendanceDate" required
+                            />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 clear-left-padding">
+                        <div class="form-group">
+                            <label dotranslate>In Time</label>
+                            <div class="input-group" moment-picker="entity.FADInTime" format="hh:mm A">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                                <input class="form-control" placeholder="Pick any time" ng-model="entity.FADInTime" ng-model-options="{ updateOn: 'blur' }">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 clear-left-padding">
+                        <div class="form-group">
+                            <label dotranslate>Out Time</label>
+                            <div class="input-group" moment-picker="entity.FDAOutTime" format="hh:mm A">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                                <input class="form-control" placeholder="Pick any time" ng-model="entity.FDAOutTime" ng-model-options="{ updateOn: 'blur' }">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 clear-left-padding">
+                        <div class="form-group">
+                            <label dotranslate>Comment</label>
+                            <textarea type="textarea" class="form-control" ng-model="entity.FDARemark" name="ODReason" id="ODReason" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 vertical-margin">
+                        <div class="col-sm-6 pull-right text-right">
+                            <button type="submit" class="btn btn-success" ng-click="addOD();" dotranslate>Apply Out-Duty</button>
+                            <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
