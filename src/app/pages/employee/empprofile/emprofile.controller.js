@@ -44,6 +44,7 @@
                 $scope.empBasicDetail = result[0][0];
                 $scope.empCurrentAddress = result[1][0];
                 if (!$scope.empCurrentAddress.IsSameAsPermanent) {
+                    console.log('not same')
                     $scope.empPermanentAddress = {};
                     $scope.empPermanentAddress = result[2][0];
                 }
@@ -107,11 +108,11 @@
                 param: address
             });
             modal.result.then(function (data) {
-                if (data != "success") {
+                if (data == "success") {
                     _loadController();
                 }
             })
-            console.log(modal)
+        //    console.log(modal)
         }
         function _addRelationDetail() {
             $scope.modalInstance = dialogModal.open({
@@ -140,7 +141,7 @@
                 param: $scope.empProfessional
             })
             modal.result.finally(function (data) {
-                if (data != "success") {
+                if (data == "success") {
                     _loadController();
                 }
             })

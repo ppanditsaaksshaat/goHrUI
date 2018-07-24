@@ -20,7 +20,7 @@
   function routeConfig($stateProvider) {
     $stateProvider
       .state('employee', {
-        url: '/:action/:empid',
+        url: '/employee/:empid',
         templateUrl: 'app/pages/employee/employee.html',
         //abstract: true,
         title: 'Employee',

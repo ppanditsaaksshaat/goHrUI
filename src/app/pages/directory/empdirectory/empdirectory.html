@@ -28,7 +28,7 @@
             <div class="vertical-top-margin">
                 <div class="col-sm-12">
                     <div ng-repeat="emp in employeeList" class="icon-list col-offset-sm-1 col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
-                        <div data-ui-sref="employee({action:'employee',empid:emp.EmpId})" ng-click="employeedetail(emp)" class="cursor">
+                        <div data-ui-sref="employee({empid:emp.EmpId})" ng-click="employeedetail(emp)" class="cursor">
                             <div class="icon-container ">
                                 <div class="icon">
                                     <div class="initials-icon icon-circle" random-Color>{{emp.EmpName.split(' ')[0].substr(0,1)}}{{emp.EmpName.split(' ')[1].substr(0,1)}}</div>

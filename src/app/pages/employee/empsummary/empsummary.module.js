@@ -23,7 +23,7 @@
                     order: 1,
                 },
             })
-        $urlRouterProvider.when('/{ation}/{empid}', '/{ation}/{empid}/summary');
+        $urlRouterProvider.when('/employee/{empid}', '/employee/{empid}/summary');
     }
 
 })();

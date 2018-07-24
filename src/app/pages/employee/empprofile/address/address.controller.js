@@ -27,7 +27,7 @@
 
 
         //public function 
-       // $scope.sameaspermanent = _sameaspermanent;
+        // $scope.sameaspermanent = _sameaspermanent;
         $scope.updateForm = _updateForm;
         $scope.entity.Current.IsSameAsPermanent = param.Current.IsSameAsPermanent;
 
@@ -37,14 +37,14 @@
             //     _getPageDataSuccessResult, _getPageDataErrorResult);
             pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
             function _getAllSelectSuccessResult(result) {
-                console.log(result)
+
                 $scope.dropDownLists = result;
-                console.log(param)
+
                 $scope.entity.Current = param.Current;
                 if (!param.Current.IsSameAsPermanent) {
                     $scope.entity.Permanent = param.Permanent;
                 }
-                else{
+                else {
 
                 }
             }
@@ -53,25 +53,6 @@
             }
         }
 
-        // function _getPageDataSuccessResult(result) {
-
-        //     $scope.pageInfo = result.pageinfo;
-        //     $scope.entity.Current = angular.copy(param.Current);
-        //     $scope.entity.Permanent = angular.copy(param.Permanent);
-        // }
-        // function _getPageDataErrorResult(err) {
-
-        // }
-
-
-        // function _sameaspermanent() {
-        //     if ($scope.entity.Current.IsSameAsPermanent) {
-        //         $scope.permanentPanel = true;
-        //     }
-        //     else {
-        //         $scope.permanentPanel = false;
-        //     }
-        // }
 
         function _updateForm() {
 
@@ -80,21 +61,20 @@
                 CDAddLine2: $scope.entity.Current.CDAddLine2,
                 CDCityId: $scope.entity.Current.CityId,
                 CDPincode: $scope.entity.Current.CDPincode,
-                CDPAddLine1: $scope.entity.Current.IsSameAsPermanent ? undefined : $scope.entity.Permanent.CDPAddLine1,
-                CDPAddLine2: $scope.entity.Current.IsSameAsPermanent ? undefined : $scope.entity.Permanent.CDPAddLine2,
-                PCityId: $scope.entity.Current.IsSameAsPermanent ? undefined : $scope.entity.Permanent.PCityId,
-                CDPPincode: $scope.entity.Current.IsSameAsPermanent ? undefined : $scope.entity.Permanent.CDPPincode,
+                CDPAddLine1: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine1,
+                CDPAddLine2: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine2,
+                PCityId: $scope.entity.Current.IsSameAsPermanent ? 0 : $scope.entity.Permanent.PCityId,
+                CDPPincode: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPPincode,
                 IsSameAsPermanent: $scope.entity.Current.IsSameAsPermanent
             }
-         
+
             pageService.updateTableMultiField(contactTableId, 'CDId', $scope.entity.Current.CDId, fieldList).
                 then(_successResult, _errorResult);
 
             function _successResult(result) {
-                console.log(result)
+
                 if (result.success_message = "Updated") {
                     $scope.showMsg('success', 'Address Detail Updated');
-                    console.log($scope.modalInstance)
 
                     $scope.modalInstance.close("success");
                 }
