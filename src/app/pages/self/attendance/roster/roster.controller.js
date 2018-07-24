@@ -86,8 +86,20 @@
         // _loadController();
 
         function _getPageData() {
-            console.log('get page data')
             $scope.page.searchList = [];
+            var rosterMonth = (moment($scope.fromDate).month());
+            var rosterYear = moment($scope.fromDate).year();
+
+            var d = moment($scope.fromDate);
+            var month = d.month();
+            var year = d.year();
+            $scope.month = month + 1;
+            var startDate = moment([year, $scope.month - 1]);
+            var endDate = moment(startDate).endOf('month');
+            $scope.fromDate = moment(startDate).format('DD-MMM-YYYY')
+            $scope.toDate = moment(endDate).format('DD-MMM-YYYY')
+
+            console.log($scope.fromDate)
             $scope.page.searchList.push({
                 field: 'RODFromDate',
                 operand: '>=',

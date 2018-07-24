@@ -20,16 +20,7 @@
                                     <input class="form-control input-sm"  placeholder="Pick any date" ng-model="fromDate" ng-change="getPageData()" ng-model-options="{ updateOn: 'blur' }">
                                 </div>
                             </div>
-                            <!-- <div class="col-md-5">
-                                <div class="input-group" moment-picker="toDate" format="DD-MMM-YYYY">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                    <input class="form-control input-sm" placeholder="Pick any date" ng-model="toDate" ng-change="getPageData()" ng-model-options="{ updateOn: 'blur' }">
-                                </div>
-                                <!-- <button type="submit" class="btn btn-success" ng-click="getPageData();" dotranslate>Apply Out-Duty</button> -->
-                                <!-- <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="yearL.Id as yearL.Name for yearL in monthlySummery.yearList"></select> -->
-                            </div> -->
+                           
                             <div class="col-md-2">
                                 <button type="submit" class="btn input-sm btn-success" ng-click="getPageData();" dotranslate>Search</button>
                                 <!-- <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="yearL.Id as yearL.Name for yearL in monthlySummery.yearList"></select> -->
@@ -41,7 +32,8 @@
 
 
             <div class="panel-body panel-medium">
-                <grid-view ng-model="page"></grid-view>
+                <!-- <grid-view ng-model="page"></grid-view> -->
+                <grid-view ng-model="page" show-grid="true" allow-gallary="false" title-column="LocationName" tag-column="CityName" desc-column="StateName"></grid-view>
             </div>
         </div>
     </div>

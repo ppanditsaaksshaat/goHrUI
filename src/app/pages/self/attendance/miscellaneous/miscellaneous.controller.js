@@ -18,6 +18,11 @@
         $scope.applyOD = _applyOD;
         $scope.applyCOff = _applyCOff;
 
+        $scope.entity = {}
+        $scope.page = $rootScope.createPage();
+        $scope.page.pageId = 490;
+        console.log($scope.page)
+
         var d = moment();
         var month = d.month();
         var year = d.year();
@@ -29,6 +34,55 @@
             $scope.employeeSalary = _employeeSalary();
         });
 
+
+        $scope.page.boxOptions = {
+            selfLoading: true,
+            showRefresh: true,
+            showFilter: true,
+            filterOpened: true,
+            showAdd: true,
+            showRowMenu: false,
+            showCustomView: true,
+            showUpload: false,
+            showDialog: false,
+            enableRefreshAfterUpdate: true,
+            gridHeight: 450,
+            getPageData: null,
+            refreshData: null,
+            addRecord: null,
+            editRecord: null,
+            updateRecord: null,
+            viewRecord: null,
+            deleteRecord: null,
+            showApplyFilter: true,
+            filterOnChange: null,
+            showDataOnLoad: true,
+            isVerifyButton: true,
+            columnDesign: [],
+            pageResult: _pageResult
+            // currentState: 'configuration.company.locations.location'
+        }
+
+        function _pageResult(result) {
+            console.log(result)
+        }
+
+        $scope.page.searchList.push({
+            field: 'Month',
+            operand: '>=',
+            value: 3
+        })
+        $scope.page.searchList.push({
+            field: 'Year',
+            operand: '<=',
+            value: '2018'
+        })
+        $scope.page.searchList.push({
+            field: 'EmpId',
+            operand: '=',
+            value: 5
+            // value: $scope.user.profile.empId
+        })
 
 
         function _goApplyReguest() {
@@ -83,7 +137,7 @@
         }
         function _loadController() {
         }
-        
+
 
         function _employeeSalary() {
             // var d = moment();

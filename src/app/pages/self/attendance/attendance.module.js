@@ -8,7 +8,7 @@
     angular.module('BlurAdmin.pages.self.attendance', [
         'BlurAdmin.pages.self.attendance.roster',
         'BlurAdmin.pages.self.attendance.miscellaneous',
-        'BlurAdmin.pages.self.attendance.daywise',
+        // 'BlurAdmin.pages.self.attendance.daywise',
     ])
         .config(routeConfig);
 
