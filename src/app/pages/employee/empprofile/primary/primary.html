@@ -1,0 +1,111 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin">Primary Details</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <div class="row add-signatory-container">
+            <form name="addPrimaryDetailForm" id="addPrimaryDetailForm" novalidate>
+                <div class="col-sm-12 vertical-margin">
+                    <fieldset>
+                        <div class="col-sm-12 new-person-details">
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>First Name
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="entity.EmpFirstName" name="FirstName" id="FirstName" required/>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-side-padding">
+                                <div class="form-group">
+                                    <label>Middle Name</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.EmpMiddleName" name="MiddleName" id="MiddleName" required />
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Last Name
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="entity.EmpLastName" name="LastName" id="LastName" required />
+
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Display Name</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.EmpName" name="LastName" id="LastName" required />
+                                </div>
+                            </div> -->
+
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>DOB
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <div class="input-group" moment-picker="entity.PdDateOfBirth | date:'dd-MMM-y'" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                        min-date="col.minDate">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input ng-readonly="true" class="form-control" placeholder="Select a date" ng-model="entity.PdDateOfBirth | date:'dd-MMM-y'">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" ng-click="entity.PdDateOfBirth=''" type="button">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- <input type="text" class="form-control" data-ng-model="entity.PdDateOfBirth | date:'dd-MMM-y'" name="LastName" id="LastName" required /> -->
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Gender
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
+                                    <!-- <input type="text" class="form-control" data-ng-model="entity.GenderName" name="LastName" id="LastName" required /> -->
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Martial Status </label>
+                                    <select class="form-control" data-ng-model="entity.PdMaritalId" ng-options="marital.value as marital.name for marital in dropDownLists[1]"></select>
+                                    <!-- <input type="text" class="form-control" data-ng-model="entity.MaritalName" name="LastName" id="LastName" required /> -->
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Nationality</label>
+                                    <select class="form-control" data-ng-model="entity.PdNationalityId" ng-options="nationality.value as nationality.name for nationality in dropDownLists[2]"></select>
+                                    <!-- <input type="text" class="form-control" data-ng-model="entity.RMName" name="LastName" id="LastName" required /> -->
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Blood Group</label>
+                                    <select class="form-control" data-ng-model="entity.PdBloodGroupId" ng-options="blood.value as blood.name for blood in dropDownLists[3]"></select>
+                                    <!-- <input type="text" class="form-control" data-ng-model="entity.BGMName" name="LastName" id="LastName" required /> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 vertical-margin">
+                        <div class="col-sm-6 pull-right text-right">
+                            <button type="submit" class="btn btn-submit btn-primary" data-ng-click="update()">Update</button>
+                            <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

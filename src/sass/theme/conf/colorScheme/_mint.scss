@@ -11,8 +11,11 @@ $border-light: tint($border, 15%);
 $input-border: shade($border, 5%);
 $input-background: #ffffff;
 
-$sidebar: #1C2B36;
-$sidebar-text: #ffffff;
+$topBar:#2153a5;
+$topBar-text:#000000;
+$sidebar: #1b1b1b;
+$sidebar-text: #ffffff; 
+$msgBar-text:#000000;
 $dropdown-text: #7d7d7d;
 $bootstrap-panel-text: #7d7d7d;
 $bootstrap-panel-bg: #ffffff;
@@ -21,7 +24,7 @@ $auth-panel-background: #ffffff;
 $progress-background: rgba(#000000, 0.07);
 $progress-default: rgba(#000000, 0.15);
 
-$primary: #209e91 !default;
+$primary: #2153a5 !default;
 $info: #2dacd1 !default;
 $success: #90b900 !default;
 $warning: #dfb81c !default;

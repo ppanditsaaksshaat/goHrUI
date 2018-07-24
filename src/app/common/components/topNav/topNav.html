@@ -1,0 +1,16 @@
+<div>
+    <div class="sub-page-navigation">
+        <ul>
+            <li ng-repeat="state in localState" data-ui-sref-active="active" class="active">
+                <a class="anchor-sm" data-ui-sref="{{state.stateRef}}" href>{{state.title}}</a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="clear-fix"></div>
+    <br/>
+    <div ui-view autoscroll="true" autoscroll-body-top>
+
+    </div>
+
+</div>

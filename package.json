@@ -49,6 +49,11 @@
   },
   "dependencies": {
     "angular-bootstrap-datetimepicker": "^1.1.4",
+<<<<<<< HEAD
+=======
+    "angular-material": "^1.1.10",
+    "angular-moment-picker": "^0.10.2",
+>>>>>>> 416900045f64a0c1cc428c14e6e26b3f01897201
     "angularjs-slider": "^6.5.1",
     "eslint-config-defaults": "^9.0.0",
     "eslint-plugin-react": "^6.10.3",

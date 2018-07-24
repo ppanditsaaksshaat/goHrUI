@@ -1,0 +1,20 @@
+<div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin" ng-repeat="row in page.gridOptions.data">
+    <div class="icon-container ">
+        <div class="icon">
+            <div class="initials-icon icon-circle" ng-style="background-color: {{iconBGColor}}">PP</div>
+        </div>
+    </div>
+    <div class="detail">
+        <h4 class="title clear-bottom">{{listItem[titleColumn]}}</h4>
+        <span class="title-description clear-top">{{listItem[tagColumn]}}</span>
+
+    </div>
+    <div class="action-area">
+        <a href ng-if="isEditAllow">
+            <i class="fa fa-edit"></i>
+        </a>
+        <a href ng-if="isDelete">
+            <i class="fa fa-trash-o"></i>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+.grid-view {
+    padding: 0px;
+}
+
+.grid-view .view-type-menu {
+    list-style-type: none;
+    padding: 0px;
+    height: 45px;
+    margin: 0;
+}
+
+.grid-view .view-type-menu li {
+    width: 32px;
+    height:32px;
+    font-size: 20px;
+    float: left;
+    display: block;
+    position: relative;
+}
+
+.grid-view .font-gray
+{
+    color: gray !important;
+}
+.grid-view .font-blue
+{
+    color: #3697ef !important;
+}

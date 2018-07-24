@@ -7,7 +7,7 @@
             <div ng-class="{'col-md-12':!page.showFilter, 'col-md-9':page.showFilter}" style="padding-left:0px; margin-left:0px;">
 
                 <div class="panel panel-default bootstrap-panel xmedium-panel" ng-hide="page.showViewRecord || page.showAddRecord">
-                    <div class="panel-heading clearfix" ng-show="(page.selectedRows.length<=0)">
+                    <div class="panel-heading clearfix" ng-if="(page.selectedRows.length<=0)">
                         <div class="row">
                             <div class="col-md-3">
                                 {{page.pageinfo.title}}

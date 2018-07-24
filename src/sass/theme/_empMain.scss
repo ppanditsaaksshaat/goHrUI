@@ -1,0 +1,239 @@
+// Created By PP
+
+.icon-size i{
+    font-size:50px;
+    padding-top: 10px;
+  }
+  .clear-side-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .link-item {
+    margin-top: 15px;
+  }
+  .link-item  i{
+    font-size:15px;
+  }
+
+  //employee summary page css
+
+  .employee-profile-container {
+    background-color: #fff;
+    padding: 0;
+    height: 214px;
+    position: initial;
+    border-radius: 4px;
+}
+.profile-picture-container {
+  position: absolute;
+  width: 110px;
+  height: 214px;
+  float: left;
+  background-color: #fff!important;
+}
+.employee-profile-container .profile-picture-container {
+  background-color: #efefef!important;
+  z-index: 2;
+  cursor: pointer;
+}
+.employee-profile-container .profile-picture-container .img-initials {
+  height: 214px;
+  width: 260px;
+  font-size: 125px;
+  padding: 55px 30px;
+  border-radius: 4px;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+  color:white;
+}
+
+//   #page-wrapper .page-container .sub-page-container {
+//     margin-top: 20px;
+// }
+
+
+.employee-profile-container .employee-header {
+  height: 106px;
+  padding-left: 234px;
+}
+.clear-right-padding {
+  padding-right: 0!important;
+}
+.employee-details {
+  height: 78px;
+}
+.right-padding-10 {
+  padding-right: 10px;
+}
+.clear-left-padding {
+  padding-left: 0!important;
+}
+.employee-profile-container .employee-subnav {
+  height: 56px;
+  background-color: #fff;
+  padding: 4px 0 0 234px;
+  margin-top: 2px;
+}
+.sub-nav {
+  padding-left: 0;
+  list-style: none;
+  position: relative;
+  min-height: 40px;
+  border: 1px solid transparent;
+}
+.employee-profile-container .employee-subnav .public-profile-subnav li {
+  border-right: none;
+  padding-right: 50px;
+  font-size: 11px;
+}
+.employee-profile-container .employee-subnav .public-profile-subnav .detail-label {
+  text-transform: uppercase;
+  display: block;
+  font-weight: 700;
+}
+.employee-profile-container .employee-subnav .public-profile-subnav .detail-value-emp-no {
+    text-transform: none!important;
+}
+
+.employee-profile-container .employee-navbar {
+  margin-left: 214px;
+}
+.employee-profile-container .employee-navbar .sub-navbar-default {
+  background-color: #dee7f4;
+  height: 50px;
+  border-radius: 0;
+  border-top: 1px solid #cfd9e8;
+  border-bottom: 1px solid #cfd9e8;
+  border-right: 1px solid #cfd9e8;
+}
+.employee-profile-container .employee-navbar .navbar-nav li {
+  border-right: none;
+  text-transform: uppercase;
+  padding: 0 20px;
+}
+.sub-nav>li {
+  position: relative;
+  display: block;
+  border-right: 1px solid #999;
+}
+
+.sub-navbar-default {
+  background-color: #f5f5f5;
+  border: 1px solid transparent;
+}
+
+.employee-profile-container .employee-navbar .navbar-nav li.active a {
+  color: #3595e2;
+  background-color: transparent!important;
+  border-bottom: 5px solid #3595e2;
+}
+// .employee-profile-container .employee-navbar .navbar-nav li a {
+//   color: #3595e2;
+//   background-color: transparent!important;
+//   border-bottom: 5px solid #3595e2;
+// }
+.employee-profile-container .employee-navbar .navbar-nav li a {
+  font-weight: 700;
+  color: #7d7d7e;
+  padding: 13px 0 10px 0;
+  font-size: 12px;
+  background-color: transparent!important;
+}
+
+.sub-nav>li>a {
+  position: relative;
+  display: block;
+  padding: 7px 15px;
+}
+.employee-profile-container .employee-navbar .sub-nav>li>a:hover{
+  color: #3595e2;
+}
+
+.employee-details .current-city, .employee-details .email, .employee-details .mobile, .employee-details .role {
+  font-size: 12px;
+  color: #888;
+  margin: 0 40px 5px 0;
+  display: inline-block;
+}
+
+
+  // end  of ESP css
+
+  //employee directory css
+
+  .alphabet-container {
+    width: 30px;
+    height: 30px;
+    background: #e6e8e8;
+    display: inline-block;
+    padding: 7px 9px;
+    margin: 4px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+  }
+    .vertical-margin {
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }
+  
+  .clear-side-padding {
+      padding-left: 0;
+      padding-right: 0;
+  }
+  .alphabet-container:hover {
+    background: #646464;
+    color: #fff;
+   
+}
+#employee-directory .active {
+  background: #646464;
+  color: #fff;
+}
+
+#employee-directory .icon-search3 {
+  top: 8px;
+  left: 18px;
+}
+
+.content-container .input-group-icon {
+  position: absolute;
+  font-size: 20px;
+  top: 31px;
+  left: 8px;
+  padding-right: 6px;
+  border-right: 1px solid gray;
+  color: #8b8b8b;
+  font-weight: 400;
+}
+.content-container .input-group-field {
+  padding-left: 45px;
+}
+.horizontal-margin-right {
+  margin-right: 10px;
+}
+.cursor{
+  cursor: pointer;
+}
+.top-margin{
+margin-top: 30px;
+}
+
+ .header a {
+    font-weight: 600;
+    font-size: 12px;
+    color: #40a8f1;
+    margin-top: 2px;
+}
+.text-moderate-bold {
+  font-weight: bold;
+}
+.modal .modal-dialog.modal-top-center-650
+{
+  width: 700px;
+  overflow: auto;
+}
+  //end of ED css

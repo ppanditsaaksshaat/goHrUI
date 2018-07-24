@@ -1,0 +1,147 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin">Contact Details</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <div class="row add-signatory-container">
+            <form name="addContactForm" id="addContactForm" novalidate>
+                <div class="col-sm-12 vertical-margin">
+                    <fieldset>
+                        <div class="col-sm-12 new-person-details">
+                            <div class="col-sm-12 clear-left-padding">
+                                <div class="form-group">
+                                    <h2>Current Address</h2>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Address Line1
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="entity.Current.CDAddLine1" name="FirstName" id="FirstName" required
+                                    />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Address Line2
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="entity.Current.CDAddLine2" required />
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <select class="form-control" data-ng-model="entity.Current.CountryId" ng-options="country.value as country.name for country in dropDownLists[0]"></select>
+                                    <!-- <input tabindex="3"  type="text" class="form-control" data-ng-model="entity.Current.CountryName" name="LastName" id="LastName" required /> -->
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>State </label>
+                                    <select class="form-control" data-ng-model="entity.Current.StateId" ng-options="state.value as state.name for state in  dropDownLists[1] | filter:{CountryId:entity.Current.CountryId}"></select>
+                                    <!-- <input tabindex="4" type="text" class="form-control" data-ng-model="entity.Current.StateName" name="LastName" id="LastName" required /> -->
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <select class="form-control" data-ng-model="entity.Current.CityId" ng-options="city.value as city.name for city in dropDownLists[2] | filter:{StateId:entity.Current.StateId}"></select>
+                                    <!-- <input tabindex="5" type="text" class="form-control" data-ng-model="entity.Current.CityName" name="LastName" id="LastName" required /> -->
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>PinCode
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="entity.Current.CDPincode" name="LastName" id="LastName" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 clear-left-padding">
+                                <div class="form-group">
+                                    <input data-ng-model="entity.Current.IsSameAsPermanent" type="checkbox">Same As Current Address
+                                </div>
+                            </div>
+                            <div ng-hide="entity.Current.IsSameAsPermanent">
+                                <div class="col-sm-12 clear-left-padding">
+                                    <div class="form-group">
+                                        <h2>Permanent Address </h2>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>Address Line1</label>
+                                        <input type="text" class="form-control" data-ng-disabled="entity.Current.IsSameAsPermanent" data-ng-model="entity.Permanent.CDPAddLine1"
+                                            name="MiddleName" id="MiddleName" required />
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>Address Line2</label>
+                                        <input type="text" class="form-control" data-ng-disabled="entity.Current.IsSameAsPermanent" data-ng-model="entity.Permanent.CDPAddLine2"
+                                            required />
+
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        <select class="form-control" data-ng-disabled="entity.Current.IsSameAsPermanent" data-ng-model="entity.Permanent.PCountryId"
+                                            ng-options="pcountry.value as pcountry.name for pcountry in dropDownLists[3]"></select>
+                                        <!-- <input tabindex="9" type="text" class="form-control" data-ng-model="entity.Permanent.CountryName" name="LastName" id="LastName" required /> -->
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>State</label>
+                                        <select class="form-control" data-ng-disabled="entity.Current.IsSameAsPermanent" data-ng-model="entity.Permanent.PStateId"
+                                            ng-options="pstate.value as pstate.name for  pstate in dropDownLists[4] | filter:{PCountryId:entity.Permanent.PCountryId}"></select>
+                                        <!-- <input tabindex="10" type="text" class="form-control" data-ng-model="entity.Permanent.StateName" name="LastName" id="LastName" required />          -->
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <select class="form-control" data-ng-disabled="entity.Current.IsSameAsPermanent" data-ng-model="entity.Permanent.PCityId"
+                                            ng-options="pcity.value as pcity.name for pcity in dropDownLists[5] | filter:{PStateId:entity.Permanent.PStateId}"></select>
+                                        <!-- <input tabindex="11"  type="text" class="form-control" data-ng-model="entity.Permanent.CityName" name="LastName" id="LastName" required /> -->
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>Pincode</label>
+                                        <input type="text" class="form-control" data-ng-disabled="entity.Current.IsSameAsPermanent" data-ng-model="entity.Permanent.CDPPincode"
+                                            name="LastName" id="LastName" required />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 vertical-margin">
+                        <div class="col-sm-6 pull-right text-right">
+                            <button type="submit" class="btn btn-submit btn-primary" data-ng-click="updateForm(addContactForm)">Update</button>
+                            <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
