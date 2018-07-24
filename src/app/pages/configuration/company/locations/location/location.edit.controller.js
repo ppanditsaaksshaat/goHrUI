@@ -13,5 +13,17 @@
         
         $scope.selects = selects;
         $scope.entity = entity;
+
+        $scope.changeState = function () {
+            console.log('changeState')
+            $scope.selects.StateList = $scope.selects.StateId;
+
+            if ($scope.entity.CountryId) {
+                if ($scope.entity.CountryId > 0) {
+                    $scope.selects.StateList = $filter('findObj')($scope.selects.StateId, $scope.entity.CountryId, 'CountryId')
+                }
+            }
+            console.log($scope.selects.StateList)
+        }   
     }
 })();

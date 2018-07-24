@@ -16,9 +16,15 @@
             require: ['^ngController', 'ngModel'],
             replace: true,
             scope: {
-                page: '=ngModel'
+                page: '=ngModel',
+                showGrid: '=showGrid',
+                allowGallary: '=allowGallary',
+                titleColumn: '=titleColumn',
+                tagColumn: '=tagColumn',
+                descColumn: '=descColumn'
             },
             controller: function ($scope, $timeout) {
+                console.log($scope)
                 // $scope.$watch("page.pageinfo", function (newValue, OldValue, scope) {
                 //     //////console.log('ctrl', newValue, OldValue, scope)
                 //     //////console.log(scope.page.boxOptions)
@@ -28,6 +34,13 @@
             },
             link: function ($scope, elm, attrs, ctrl) {
 
+
+                $scope.tagColumn = attrs.tagColumn;
+                $scope.titleColumn = attrs.titleColumn;
+                $scope.descColumn = attrs.descColumn;
+                $scope.iconBGColor = '#' + (Math.random() * 0xFFFFFF << 0).toString()
+
+                // $scope.showGrid 
                 var boxSetting = {
                     selfLoading: true, //gridView will fetch data from api on its own
                     showRefresh: true, //show refresh button
@@ -187,6 +200,10 @@
                 $scope.editRecord = _editRecord;
                 $scope.deleteRecord = _deleteRecord;
                 $scope.page.print = _print;
+                $scope.getInitial = _getInitial;
+                $scope.getRandomColor = _getRandomColor;
+                $scope.gallaryEditRecord = _gallaryEditRecord;
+                $scope.gallaryDeleteRecord = _gallaryDeleteRecord;
 
                 function _print() {
                     window.print();
@@ -229,6 +246,7 @@
                     $scope.page.isAllowEdit = true;
                     editForm.isAllowEdit = true;
                     $scope.entity = {};
+
                     //attaching default values form local controller if any
                     $scope.entity = angular.extend({}, $scope.page.boxOptions.defaultEntity, $scope.entity)
 
@@ -266,6 +284,21 @@
                         }
                     } else
                         $scope.page.boxOptions.addRecord();
+                }
+
+                function _gallaryEditRecord(entity) {
+                    _editRecord({
+                        entity: entity
+                    })
+                }
+
+                function _gallaryDeleteRecord(entity) {
+                
+                    _deleteRecord({
+                        row: {
+                            entity: entity
+                        }
+                    })
                 }
 
                 function _editRecord(row) {
@@ -670,6 +703,26 @@
                         })
                     }
                 }
+
+                function _getInitial(titleColumnValue) {
+
+                    var initial = '';
+                    var titleList = titleColumnValue.split(' ');
+                    initial = titleList[0].substr(0, 1)
+                    if (titleList.length == 2) {
+                        if (titleList[1] != '')
+                            initial = titleList[0].substr(0, 1) + titleList[1].substr(0, 1);
+                    } else if (titleList.length > 2)
+                        if (titleList[2] != '')
+                            initial = titleList[0].substr(0, 1) + titleList[2].substr(0, 1);
+                    return initial;
+                }
+
+                function _getRandomColor() {
+                    return {
+                        backgroundColor: '#' + (Math.random() * 0xFFFFFF << 0).toString()
+                    }
+                }
                 //====================================================================
                 //get page data
                 function _getPage() {
@@ -928,6 +981,7 @@
                     var custColumn = {};
                     var cellTemplate = "<div class='ui-grid-cell-contents'><a ng-click='grid.appScope.editRecord(row)' uib-tooltip='Edit' tooltip-placement='right' href><i class='fa fa-edit fa-lg'></i></a>&nbsp;&nbsp;&nbsp;<a ng-click='grid.appScope.deleteRecord(row)' uib-tooltip='Delete' tooltip-placement='right' href><i class='fa fa-trash-o fa-lg font-red'></i></a></a></div>"
                     custColumn.name = "Option"
+                    custColumn.displayName = '';
                     custColumn.field = "action"
                     custColumn.cellTemplate = '';
                     custColumn['cellTemplate'] = cellTemplate;

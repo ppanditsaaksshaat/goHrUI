@@ -5,16 +5,10 @@
 
         </p>
     </div>
-    <div class="col-md-3">
-        <button class="btn btn-default pull-right" ng-click="addLocation()">
-            <i class="fa fa-plus"></i>
-            <span dotranslate>Add Location</span>
-        </button>
-    </div>
 </div>
 
 <br/>
 
-<grid-view ng-model="page"></grid-view>
+<grid-view ng-model="page" show-grid="true" allow-gallary="true" title-column="LocationName" tag-column="CityName" desc-column="StateName"></grid-view>
 
 </div>
