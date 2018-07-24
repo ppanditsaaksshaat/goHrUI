@@ -6,6 +6,11 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.self.apply', [
+        // 'BlurAdmin.pages.self.apply.applyattendance',
+        // 'BlurAdmin.pages.self.apply.applyleave',
+        // 'BlurAdmin.pages.self.apply.applyloan',
+        // 'BlurAdmin.pages.self.apply.coff',
+        // 'BlurAdmin.pages.self.apply.overview'
     ])
         .config(routeConfig);
 
