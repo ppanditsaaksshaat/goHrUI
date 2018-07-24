@@ -30,7 +30,8 @@
           $uibModal.open({
             template: '<div ui-view="modal"></div>',
             size: 'top-center-500'
-          }).result.finally(function () {
+          }
+        ).result.finally(function () {
             $state.go('configuration.company.locations.location');
           });
         }]
