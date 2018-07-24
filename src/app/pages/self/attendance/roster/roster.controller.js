@@ -53,6 +53,8 @@
             showApplyFilter: true,
             filterOnChange: null,
             showDataOnLoad: true,
+            isVerifyButton: true,
+            columnDesign: []
             // currentState: 'configuration.company.locations.location'
         }
         // $scope.page.searchList.push({ field: 'AMSTIsVarified', operand: '=', value: true })
@@ -64,11 +66,11 @@
         $scope.page.searchList.push({
             field: 'RODFromDate',
             operand: '<=',
-            value: moment($scope.toDate).format('YYYY-MM-DD')
+            value: '2018-04-30'
         })
         $scope.page.searchList.push({
             field: 'RODEmpId',
-            operand: '<=',
+            operand: '=',
             value: 5
             // value: $scope.user.profile.empId
         })
@@ -98,9 +100,9 @@
             })
             $scope.page.searchList.push({
                 field: 'RODEmpId',
-                operand: '<=',
-                value: $rootScope.user.profile.empId
-                // value: $scope.user.profile.empId
+                operand: '=',
+                value: 5
+                // value: $rootScope.user.profile.empId
             })
             $scope.page.refreshData()
         }
