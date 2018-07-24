@@ -16,7 +16,7 @@
                 url: '/roster',
                 templateUrl: 'app/pages/self/attendance/roster/roster.html',
                 title: 'roster',
-                controller: "",
+                controller: "rosterDetailController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

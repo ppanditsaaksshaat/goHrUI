@@ -10,7 +10,8 @@
 
     /** @ngInject */
     function selfController($scope, $state) {
-    
+        console.log($scope)
+        console.log($scope.user)
 
     }
 })();

@@ -36,8 +36,10 @@
     'BlurAdmin.pages.selfapply',
     'BlurAdmin.pages.selfdocuments',
     'BlurAdmin.pages.selfapprovals',
-    'BlurAdmin.pages.employees',
-    // 'BlurAdmin.pages.self'
+    // 'BlurAdmin.pages.employees',
+    'BlurAdmin.pages.directory',
+    'BlurAdmin.pages.employee',
+    'BlurAdmin.pages.self'
     
 
   ])

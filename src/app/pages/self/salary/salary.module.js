@@ -1,26 +1,26 @@
 /**
- * @author deepak.jain
- * created on 04/05/2017
+ * @author NKM
+ * created on 
  */
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.employees.empexist', [
+    angular.module('BlurAdmin.pages.self.salary', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('directory.exist', {
-                url: '/exist',
-                templateUrl: 'app/pages/employees/empexist/empexist.html',
-                title: 'Exist',
-                controller: "",
+            .state('selfdir.salary', {
+                url: '/salary',
+                templateUrl: 'app/pages/self/salary/salary.html',
+                title: 'salary',
+                controller: "salaryPageCtrl",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
-                    order: 2,
+                    order: 3,
                   },
             })
         //$urlRouterProvider.when('/employees', '/employees/dashboard');

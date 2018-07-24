@@ -1,0 +1,173 @@
+
+    <div class="panel panel-default bootstrap-panel ">
+        <div class="panel-heading clearfix">
+            <div class="row">
+                <div class="col-md-9">
+                    Employee financial year salary detail
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-1 class=" btn-group pull-right "">
+                    <button ng-click="prints()" class="btn btn-default btn-sm">
+                        <i class="fa fa-print" aria-hidden="true"></i> Print</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="row info">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label> EmpCode -</label>
+                            {{empCode}}
+                        </div>
+                        <div class="col-md-5">
+                            <label>EmpName -</label>
+                            {{empName}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label>DeptName -</label>
+                            {{deptName}}
+                        </div>
+                        <div class="col-md-5">
+                            <label>DesgName -</label>
+                            {{desgName}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <label>Financial Year</label>
+                    <select class="form-control" ng-model="financialYear" ng-change="changeFinancialYear()" ng-options="subUnit.Id as subUnit.Name for subUnit in financialYearList"></select>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+                    <thead>
+                        <tr class="info">
+                            <td>
+                                <label>Heads</label>
+                            </td>
+                            <td>
+                                <label>Entitled</label>
+                            </td>
+                            <td>
+                                <label>April</label>
+                            </td>
+                            <td>
+                                <label>May</label>
+                            </td>
+                            <td>
+                                <label>June</label>
+                            </td>
+                            <td>
+                                <label>July</label>
+                            </td>
+                            <td>
+                                <label>August</label>
+                            </td>
+                            <td>
+                                <label>September</label>
+                            </td>
+                            <td>
+                                <label>October</label>
+                            </td>
+                            <td>
+                                <label>November</label>
+                            </td>
+                            <td>
+                                <label>December</label>
+                            </td>
+                            <td>
+                                <label>January</label>
+                            </td>
+                            <td>
+                                <label>February</label>
+                            </td>
+                            <td>
+                                <label>March</label>
+                            </td>
+                            <td>
+                                <label>Total</label>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="salHead in empSalaryHead">
+                            <td style="text-align: left" class="text-align "> {{salHead.SHName}}</td>
+                            <td ng-init="empSalaryHead.totals.SASSHRate = empSalaryHead.totals.SASSHRate + salHead.SASSHRate" class="text-right ">{{salHead.SASSHRate | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.April = empSalaryHead.totals.April + salHead.April" class="text-right">{{salHead.April | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.May = empSalaryHead.totals.May + salHead.May" class="text-right ">{{salHead.May | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.June = empSalaryHead.totals.June + salHead.June" class="text-right">{{salHead.June | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.July = empSalaryHead.totals.July + salHead.July" class="text-right">{{salHead.July | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.August = empSalaryHead.totals.August + salHead.August" class="text-right">{{salHead.August | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.September = empSalaryHead.totals.September + salHead.September" class="text-right">{{salHead.September | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.October = empSalaryHead.totals.October + salHead.October" class="text-right">{{salHead.October | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.November = empSalaryHead.totals.November + salHead.November" class="text-right">{{salHead.November | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.December = empSalaryHead.totals.December + salHead.December" class="text-right">{{salHead.December | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.January = empSalaryHead.totals.January + salHead.January" class="text-right">{{salHead.January | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.February = empSalaryHead.totals.February + salHead.February" class="text-right">{{salHead.February | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.March = empSalaryHead.totals.March + salHead.March" class="text-right">{{salHead.March | number:2}}</td>
+                            <td ng-init="empSalaryHead.totals.Total = empSalaryHead.totals.Total + salHead.Total" class="text-right">{{salHead.Total | number:2}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="info">
+                            <th>
+                                <label>Total</label>
+                            </th>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.SASSHRate | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.April | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.May | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.June | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.July | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.August | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.September | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.October | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.November | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.December | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.January | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.February | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.March | number:2}}</label>
+                            </td>
+                            <td class="text-right">
+                                <label>{{empSalaryHead.totals.Total | number:2}}</label>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>

@@ -40,7 +40,7 @@
             searchLists.push({
                 field: 'EmpId',
                 operand: "=",
-                value: 5
+                value: $scope.user.profile.empId
             })
             searchLists.push({
                 field: 'DateTypeId',

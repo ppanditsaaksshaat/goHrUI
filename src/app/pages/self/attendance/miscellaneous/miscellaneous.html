@@ -1,1 +1,157 @@
-<h1>Mislenious</h1>
+<div class="row" id="bottom">
+    <div class="col-md-12">
+        <div class="panel panel-medium">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label dotranslate> Monthly Attendance Detail</label>
+                    </div>
+                    <div class="col-md-4 ">
+                        <label dotranslate>Search Attendance Month And Year Wise </label>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- <label dotranslate>Month</label> -->
+                                <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in monthlySummery.monthList"></select>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- <label dotranslate>Year</label> -->
+                                <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="yearL.Id as yearL.Name for yearL in monthlySummery.yearList"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-body panel-medium">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-condensed ">
+                        <thead>
+                            <tr>
+                                <td>
+                                    <label dotranslate>Employee Code</label>
+                                </td>
+                                <td>
+                                    <label dotranslate>Name</label>
+                                </td>
+                                <td>
+                                    <label dotranslate>Total Day</label>
+                                </td>
+                                <td>
+                                    <label dotranslate>Present</label>
+                                </td>
+                                <td>
+                                    <label dotranslate>Week-Off</label>
+                                </td>
+                                <td>
+                                    <label dotranslate>Holiday</label>
+                                </td>
+                                <td>
+                                    <label dotranslate>Leave</label>
+                                </td>
+                                <td>
+                                    <label dotranslate>Absent</label>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="summery in monthlySummery.summery ">
+                                <td style="text-align: left">{{empCode }}</td>
+                                <td>{{empName }}</td>
+                                <td> {{summery.TotalDay}}</td>
+                                <td>{{summery.PresentDay}}</td>
+                                <td>{{summery.WeekoffDay}}</td>
+                                <td>{{summery.Holiday}}</td>
+                                <td>{{summery.LeaveDay }}</td>
+                                <td>{{summery.AbsentDay }}</td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel-body panel-medium">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed ">
+                                <thead>
+                                    <tr class="info">
+                                        <td>
+                                            <label dotranslate>Serial No.</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>Date</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>In Time</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>Out Time</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>Shift In Time</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>Shift Out Time</label>
+                                        </td>
+                                        <td>
+                                            <label dotranslate>Day Status</label>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="monthSummery in miscelAttendanceSummery.monthlyAttDetails">
+                                        <td>{{$index + 1}}</td>
+                                        <td style="text-align: left" class="text-align "> {{monthSummery.DATE.replace('/Date(','').replace(')/','') | date:"dd-MMM-yyyy"}}</td>
+                                        <td class="text-right ">{{monthSummery.InTime}}</td>
+                                        <td class="text-right">{{monthSummery.OutTime}}</td>
+                                        <td class="text-right ">{{monthSummery.SMInTime}}</td>
+                                        <td class="text-right">{{monthSummery.SMOutTime }}</td>
+                                        <td class="text-right">
+                                            <a href ng-click="applyRequest(monthSummery)" ng-if="monthSummery.DayStatus=='Absent' || monthSummery.DayStatus=='Weekoff'|| monthSummery.DayStatus=='Weekoff'">{{monthSummery.DayStatus }}
+                                            </a>
+                                            <span ng-if="monthSummery.DayStatus!='Absent' && monthSummery.DayStatus!='Weekoff'&& monthSummery.DayStatus!='Weekoff'">{{monthSummery.DayStatus }}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row" ng-show="apply">
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-info btn-add pull-right" ng-click="applyAttendance()">Attendance Request</button>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="apply">
+                            <div class="form-group col-md-12">
+                                <button class=" btn btn-info btn-add pull-right" ng-click="goApplyReguest()">Leave Request</button>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="apply">
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-info btn-add pull-right" ng-click="applyOD()">OD Request</button>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="applyCOf">
+                            <div class="form-group col-md-12">
+                                <button class=" btn btn-info btn-add pull-right" ng-click="applyCOff()">C-Off Request</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
