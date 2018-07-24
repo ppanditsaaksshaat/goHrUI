@@ -9,7 +9,7 @@
         .controller('empDirectoryController', empDirectoryController);
 
     /** @ngInject */
-    function empDirectoryController($scope, $state, pageService,localStorageService) {
+    function empDirectoryController($scope, $state, pageService, localStorageService) {
 
 
         $scope.getEmployeesStartingWith = _getEmployeesStartingWith;
@@ -53,7 +53,8 @@
                     searchList: searchLists,
                     orderByList: []
                 }
-                pageService.getCustomQuery(data, 643).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+                pageService.getCustomQuery(data, 650).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+
                 function _getCustomQuerySuccessResult(result) {
 
                     $scope.employeeList = result[0];

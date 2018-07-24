@@ -16,7 +16,7 @@
                 url: '/profile',
                 templateUrl: 'app/pages/employee/empprofile/empprofile.html',
                 title: 'Profile',
-                controller: "",
+                controller: "employeeProfileController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

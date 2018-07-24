@@ -10,9 +10,10 @@
 
     /** @ngInject */
     function employeeController($scope, $state, pageService, localStorageService) {
-      
+
         function _loadController() {
-            $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");         
+         //   console.log($stateParam.entity)
+             $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");         
         }
         _loadController();
     }

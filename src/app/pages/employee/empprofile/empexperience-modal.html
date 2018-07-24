@@ -1,0 +1,81 @@
+<div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h3 class="inline-block clear-vertical-margin">Contact Details</h3>
+        </div>
+    
+        <div class="modal-body content-container">
+            <div class="row add-signatory-container">
+                <form name="addContactForm" id="addContactForm" data-ng-init="ctrl.form = this;" novalidate>
+                    <div class="col-sm-12 vertical-margin">
+                        <fieldset>
+                            <div class="col-sm-12 new-person-details">
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>Work Email <span style="font-size: 14px!important;cursor: pointer;" ng-click="new"> <i class="fa fa-edit"></i> </span><span class="font-red">*</span></label>
+                                        <input type="text" class="form-control" data-ng-model="" name="FirstName" id="FirstName" required
+                                        />
+                                        <span class="validation-msg" data-validation-messages="" data-model-controller="addContactForm.FirstName" data-required-error="First Name is required"
+                                            data-form-submit="addContactForm.$submitted"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 clear-side-padding">
+                                    <div class="form-group">
+                                        <label>Personal Email</label>
+                                        <input type="text" class="form-control" data-ng-model="" name="MiddleName" id="MiddleName"
+                                            required />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>Mobile<span class="font-red">*</span></label>
+                                        <input type="text" class="form-control" data-ng-model="" name="LastName" id="LastName"
+                                            required />
+                                        <span class="validation-msg" data-validation-messages="" data-model-controller="addContactForm.LastName" data-required-error="Last Name is required"
+                                            data-form-submit="addContactForm.$submitted"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>Work Phone</label>
+                                        <input type="text" class="form-control" data-ng-model="" name="LastName" id="LastName"
+                                            required />
+                                        <span class="validation-msg" data-validation-messages="" data-model-controller="addContactForm.LastName" data-required-error="Last Name is required"
+                                            data-form-submit="addContactForm.$submitted"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>Residance Phone</span></label>
+                                        <input type="text" class="form-control" data-ng-model="" name="LastName" id="LastName"
+                                            required />
+                                        <span class="validation-msg" data-validation-messages="" data-model-controller="addContactForm.LastName" data-required-error="Last Name is required"
+                                            data-form-submit="addContactForm.$submitted"></span>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-sm-6 clear-left-padding">
+                                    <div class="form-group">
+                                        <label>Skype</label>
+                                        <input type="text" class="form-control" data-ng-model="" name="LastName" id="LastName"
+                                            required />
+                                        <span class="validation-msg" data-validation-messages="" data-model-controller="addContactForm.LastName" data-required-error="Last Name is required"
+                                            data-form-submit="addContactForm.$submitted"></span>
+                                    </div>
+                                </div>
+    
+                             
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 vertical-margin">
+                            <div class="col-sm-6 pull-right text-right">
+                                <button type="submit"  class="btn btn-submit btn-primary" data-ng-click="">Update</button>                        
+                                <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

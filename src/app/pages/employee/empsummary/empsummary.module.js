@@ -16,7 +16,7 @@
                 url: '/summary',
                 templateUrl: 'app/pages/employee/empsummary/empsummary.html',
                 title: 'Summary',
-                controller: "",
+                controller: "empSummaryController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

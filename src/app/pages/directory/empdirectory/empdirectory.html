@@ -31,12 +31,12 @@
                         <div data-ui-sref="employee({action:'employee',empid:emp.EmpId})" ng-click="employeedetail(emp)" class="cursor">
                             <div class="icon-container ">
                                 <div class="icon">
-                                    <div class="initials-icon icon-circle" random-Color>{{emp.EmpFirstName.substr(0,1)}}{{emp.EmpLastName.substr(0,1)}}</div>
+                                    <div class="initials-icon icon-circle" random-Color>{{emp.EmpName.split(' ')[0].substr(0,1)}}{{emp.EmpName.split(' ')[1].substr(0,1)}}</div>
                                 </div>
                             </div>
                             <div class="detail">
                                 <h4 class="title clear-bottom">{{emp.EmpName}}</h4>
-                                <span class="title-description clear-top">{{emp.EmpEmail}}</span>
+                                <span class="title-description clear-top">{{emp.PdEmail}}</span>
 
                             </div>
                         </div>

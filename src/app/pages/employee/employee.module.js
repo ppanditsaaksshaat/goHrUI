@@ -11,7 +11,8 @@
     'BlurAdmin.pages.employee.empjob',
     'BlurAdmin.pages.employee.empdocuments',
     'BlurAdmin.pages.employee.empassets',
-     'BlurAdmin.pages.employee.empfinances',
+    'BlurAdmin.pages.employee.empfinances',
+    
   ])
     .config(routeConfig);
 

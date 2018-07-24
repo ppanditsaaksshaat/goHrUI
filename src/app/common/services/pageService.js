@@ -116,18 +116,18 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 var rndVal = Math.round((Math.random() * 10) * 10);
                 var url = serviceBase + 'api/values/' + pageCode + "?" + rndVal;
                 $http.get(url).then(function (results) {
-                        var pgList = DJWebStore.GetValue('pageList');
-                        if (pgList == null) {
-                            pgList = {};
-                        }
-                        if (results.pageinfo)
-                            if (results.pageinfo.pageid)
-                                pgList['pg_' + results.pageinfo.pageid] = results;
+                    var pgList = DJWebStore.GetValue('pageList');
+                    if (pgList == null) {
+                        pgList = {};
+                    }
+                    if (results.pageinfo)
+                        if (results.pageinfo.pageid)
+                            pgList['pg_' + results.pageinfo.pageid] = results;
 
-                        DJWebStore.SetValue('pageList', pgList);
-                        console.log(results)
-                        dfd.resolve(results);
-                    },
+                    DJWebStore.SetValue('pageList', pgList);
+                    console.log(results)
+                    dfd.resolve(results);
+                },
                     function (error) {
                         dfd.reject(error);
                     }
@@ -1307,6 +1307,24 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 return results;
             });
         }
+
+        var _updateTableMultiField = function (tableId, pkName, pkId, fieldList) {
+
+            var data = {
+                tableId: tableId,
+                pkColName: pkName,
+                pkId: pkId,
+                fieldList: fieldList
+            }
+            var url = serviceBase + 'api/Data/UpdateTableMultiField/';
+            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                return results;
+            });
+        }
         var _generateSalary = function (filterData) {
             var url = serviceBase + 'api/Payroll/GenerateSalary/';
             console.log(url)
@@ -1632,6 +1650,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.getTestFileAttach = _getTestFileAttach;
         pageServiceFactory.getCustomReport = _getCustomReport;
         pageServiceFactory.updateMultiField = _updateMultiField;
+        pageServiceFactory.updateTableMultiField = _updateTableMultiField
         pageServiceFactory.generateSalary = _generateSalary;
         pageServiceFactory.getFieldSetting = _getFieldSetting;
         pageServiceFactory.getDashboard = _getDashboard;
@@ -1658,7 +1677,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.setNewPassword = _setNewPassword;
         pageServiceFactory.updateUser = _updateUser;
         pageServiceFactory.uploadRosterDetail = _uploadRosterDetail;
-        
+
 
         //Resources
         pageServiceFactory.getResources = _getResources;

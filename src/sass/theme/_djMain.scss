@@ -217,7 +217,7 @@ input:focus, select:foucs {
 //   margin-left: 120px;
 // }
 .font-red {
-  color: red;
+  color: red !important;
 }
 .font-green
 {
@@ -379,6 +379,7 @@ input:focus, select:foucs {
   position: fixed;
   top: 100px;
   left: 450px;
+  overflow: auto;
 }
 
 .modal .modal-dialog.modal-top-center-800{
