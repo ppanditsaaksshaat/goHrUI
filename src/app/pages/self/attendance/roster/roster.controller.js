@@ -29,6 +29,12 @@
         $scope.fromDate = moment(startDate).format('DD-MMM-YYYY')
         $scope.toDate = moment(endDate).format('DD-MMM-YYYY')
 
+        // $scope.$watch('fromDate', function (newVal, oldVal) {
+        //     if (newVal) {
+        //         _getPageData();
+        //     }
+        // })
+
         console.log(startDate.toDate());
         console.log(endDate.toDate());
         $scope.page.boxOptions = {
