@@ -17,36 +17,43 @@
                                         </span>
                                         <span class="font-red">*</span>
                                     </label>
-                                    <input type="text" class="form-control" data-ng-model="entity.JDOfficeEmail" name="FirstName" id="FirstName" required/>
+                                    <input type="text" disabled="disabled" class="form-control" data-ng-model="entity.JDOfficeEmail" required/>
 
-                                </div>
-                            </div>
-                            <div class="col-sm-6 clear-side-padding">
-                                <div class="form-group">
-                                    <label>Personal Email</label>
-                                    <input type="text" class="form-control" data-ng-model="entity.PdEmail" name="MiddleName" id="MiddleName" required />
                                 </div>
                             </div>
                             <div class="col-sm-6 clear-left-padding">
                                 <div class="form-group">
-                                    <label>Mobile
-                                        <span class="font-red">*</span>
+                                    <label>Work Mobile
                                     </label>
-                                    <input type="text" class="form-control" data-ng-model="entity.JDOfficeMobile" name="LastName" id="LastName" required />
+                                    <input type="text" class="form-control" data-ng-model="entity.JDOfficeMobile" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Personal Email</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.PdEmail" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Personal Mobile</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.PdMobileNo" />
 
                                 </div>
                             </div>
                             <div class="col-sm-6 clear-left-padding">
                                 <div class="form-group">
                                     <label>Work Phone</label>
-                                    <input type="text" class="form-control" data-ng-model="entity.JDOfficePhone" name="LastName" id="LastName" required />
+                                    <input type="text" class="form-control" data-ng-model="entity.JDOfficePhone" required />
 
                                 </div>
                             </div>
                             <div class="col-sm-6 clear-left-padding">
                                 <div class="form-group">
                                     <label>Residance Phone</label>
-                                    <input type="text" class="form-control" data-ng-model="entity.JDResidenceMobile" name="LastName" id="LastName" required />
+                                    <input type="text" class="form-control" data-ng-model="entity.PdResidenceMobile" />
 
                                 </div>
                             </div>
@@ -56,7 +63,7 @@
                 <div class="row">
                     <div class="col-sm-12 vertical-margin">
                         <div class="col-sm-6 pull-right text-right">
-                            <button type="submit" class="btn btn-submit btn-primary" data-ng-click="">Update</button>
+                            <button type="submit" class="btn btn-submit btn-primary" data-ng-click="udpate()">Update</button>
                             <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
                         </div>
                     </div>

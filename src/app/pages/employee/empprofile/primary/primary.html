@@ -45,7 +45,20 @@
                                     <label>DOB
                                         <span class="font-red">*</span>
                                     </label>
-                                    <div class="input-group" moment-picker="entity.PdDateOfBirth | date:'dd-MMM-y'" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                    <div class="input-group" moment-picker="entity.PdDateOfBirth" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                        min-date="col.minDate">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                            ng-model="entity.PdDateOfBirth" ng-model-options="{ updateOn: 'blur' }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" ng-click="entity.PdDateOfBirth=''" type="button">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- <div class="input-group" moment-picker="entity.PdDateOfBirth | date:'dd-MMM-y'" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
                                         min-date="col.minDate">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -56,7 +69,7 @@
                                                 <i class="fa fa-close"></i>
                                             </button>
                                         </span>
-                                    </div>
+                                    </div> -->
                                     <!-- <input type="text" class="form-control" data-ng-model="entity.PdDateOfBirth | date:'dd-MMM-y'" name="LastName" id="LastName" required /> -->
 
                                 </div>
