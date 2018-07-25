@@ -55,8 +55,11 @@
 
 
         function _updateForm() {
-
+            var entity = [];
             var fieldList = {
+                tableId: contactTableId,
+                pkId: $scope.entity.Current.CDId,
+                pkColName: 'CDId',
                 CDAddLine1: $scope.entity.Current.CDAddLine1,
                 CDAddLine2: $scope.entity.Current.CDAddLine2,
                 CDCityId: $scope.entity.Current.CityId,
@@ -67,15 +70,13 @@
                 CDPPincode: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPPincode,
                 IsSameAsPermanent: $scope.entity.Current.IsSameAsPermanent
             }
-
-            pageService.updateTableMultiField(contactTableId, 'CDId', $scope.entity.Current.CDId, fieldList).
+            entity.push(fieldList)
+            pageService.udateMultiTableFields(entity).
                 then(_successResult, _errorResult);
 
             function _successResult(result) {
 
                 if (result.success_message = "Updated") {
-                    $scope.showMsg('success', 'Address Detail Updated');
-
                     $scope.modalInstance.close("success");
                 }
             }

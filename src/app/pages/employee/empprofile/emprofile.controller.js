@@ -38,18 +38,18 @@
                 orderByList: []
             }
             pageService.getCustomQuery(data, 651).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
-         
+
             function _getCustomQuerySuccessResult(result) {
-                console.log(result)
+
                 $scope.empBasicDetail = result[0][0];
                 $scope.empCurrentAddress = result[1][0];
                 if (!$scope.empCurrentAddress.IsSameAsPermanent) {
-                    console.log('not same')
+
                     $scope.empPermanentAddress = {};
                     $scope.empPermanentAddress = result[2][0];
                 }
                 else {
-                    console.log('SAME')
+
                     $scope.empPermanentAddress = {};
                     $scope.empPermanentAddress.CDPAddLine1 = $scope.empCurrentAddress.CDAddLine1;
                     $scope.empPermanentAddress.CDPAddLine2 = $scope.empCurrentAddress.CDAddLine2;
@@ -62,6 +62,7 @@
                 $scope.empEducation = result[4];
                 $scope.empRelation = result[5];
                 $scope.empProfessional = result[6][0];
+                $scope.empContact = result[7][0];
             }
             function _getCustomQueryErrorResult(err) {
                 console.log(err);
@@ -74,25 +75,26 @@
                 controller: 'empPrimaryController',
                 param: $scope.empBasicDetail
             });
-
             modal.result.then(function (data) {
-
-                console.log(modal)
-                console.log(data)
-            }, function (err) {
-                console.log(err)
-
+                if (data == "success") {
+                    _loadController();
+                    $scope.showMsg('success', 'Primary Detail Updated');
+                }
             })
+
         }
         function _addContactDetail() {
             var modal = dialogModal.open({
                 url: 'app/pages/employee/empprofile/contact/contact.html',
                 size: 'top-center-600',
                 controller: 'empContactController',
-                param: $scope.empBasicDetail
+                param: $scope.empContact
             })
-            modal.result.finally(function (data) {
-                alert(data)
+            modal.result.then(function (data) {
+                if (data == "success") {
+                    _loadController();
+                    $scope.showMsg('success', 'Contact Detail Updated');
+                }
             })
 
         }
@@ -110,9 +112,10 @@
             modal.result.then(function (data) {
                 if (data == "success") {
                     _loadController();
+                    $scope.showMsg('success', 'Address Detail Updated');
                 }
             })
-        //    console.log(modal)
+          
         }
         function _addRelationDetail() {
             $scope.modalInstance = dialogModal.open({
@@ -123,8 +126,9 @@
         }
         function _addExperienceDetail() {
             $scope.modalInstance = dialogModal.open({
-                url: 'app/pages/employee/empprofile/empexperience-modal.html',
-                size: 'top-center-600'
+                url: 'app/pages/employee/empprofile/experience/experience.html',
+                size: 'top-center-600',
+                controller: 'empExperienceController',
             })
         }
         function _addEducationDetail() {
@@ -140,9 +144,10 @@
                 controller: 'empProfessionController',
                 param: $scope.empProfessional
             })
-            modal.result.finally(function (data) {
+            modal.result.then(function (data) {
                 if (data == "success") {
                     _loadController();
+                    $scope.showMsg('success', 'Professional Detail Updated');
                 }
             })
         }

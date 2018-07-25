@@ -13,6 +13,8 @@
     /** @ngInject */
     function empProfessionController($scope, $state, $stateParams, pageService, dialogModal, param) {
 
+        var proTableId = 486;
+
         $scope.update = _update;
 
         function _loadController() {
@@ -20,21 +22,25 @@
         }
 
         function _update() {
+            var entity = [];
             var fieldList = {
+                tableId: proTableId,
+                pkId: $scope.entity.PSId,
+                pkColName: 'PSId',
                 PSDescription: $scope.entity.PSDescription
             }
-
-            pageService.updateTableMultiField(486, 'PSId', $scope.entity.PSId, fieldList).
+            entity.push(fieldList)
+            pageService.udateMultiTableFields(entity).
                 then(_successResult, _errorResult);
 
             function _successResult(result) {
                 console.log(result)
                 if (result.success_message = "Updated") {
-                   $scope.modalInstance.close("success");
-                   $scope.showMsg('success', 'Professional Detail Updated');
+                    $scope.modalInstance.close("success");
+
                 }
             }
-            function _errorResult(err){
+            function _errorResult(err) {
                 console.log(err)
             }
         }

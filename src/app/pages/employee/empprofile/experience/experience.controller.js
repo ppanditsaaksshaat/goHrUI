@@ -8,10 +8,10 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.employee.empprofile')
-        .controller('empContactController', empContactController);
+        .controller('empExperienceController', empExperienceController);
 
     /** @ngInject */
-    function empContactController($scope, $state, $stateParams, pageService, dialogModal, param) {
+    function empExperienceController($scope, $state, $rootScope, $stateParams, pageService,  dialogModal, param) {
 
 
         var perTableId = 43;
@@ -22,6 +22,33 @@
         var basicPageId = 25;
 
         $scope.udpate = _update;
+
+        $scope.page = $rootScope.createPage();
+        $scope.page.pageId = 56;
+        $scope.page.boxOptions = {
+            selfLoading: true,
+            showRefresh: true,
+            showFilter: false,
+            filterOpened: false,
+            showAdd: true,
+            showRowMenu: false,
+            showCustomView: true,
+            showUpload: false,
+            showDialog: false,
+            enableRefreshAfterUpdate: true,
+            gridHeight: 450,
+            getPageData: null,
+            refreshData: null,
+            addRecord: null,
+            editRecord: null,
+            updateRecord: null,
+            viewRecord: null,
+            deleteRecord: null,
+            showApplyFilter: false,
+            filterOnChange: null,
+            showDataOnLoad: true,
+            // currentState: 'configuration.company.locations.location'
+        }
 
 
         function _loadController() {
