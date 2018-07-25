@@ -115,7 +115,7 @@
                     $scope.showMsg('success', 'Address Detail Updated');
                 }
             })
-          
+
         }
         function _addRelationDetail() {
             $scope.modalInstance = dialogModal.open({
@@ -129,6 +129,7 @@
                 url: 'app/pages/employee/empprofile/experience/experience.html',
                 size: 'top-center-600',
                 controller: 'empExperienceController',
+                param: $scope.empExperience
             })
         }
         function _addEducationDetail() {
