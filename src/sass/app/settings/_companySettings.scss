@@ -1,41 +1,39 @@
-.logo-container .logo-image
-{
+.logo-container .logo-image {
     height: 60px;
     width: 100px;
     overflow: hidden;
     border: 1px solid grey;
     padding: 0;
-
-
 }
 
-.text-description
-{
+.text-description {
     color: #8a9099;
     font-size: 12px;
 }
 
-.logo-container .text-description, .background-container .text-description
-{
-    padding: 0!important;
+.logo-container .text-description,
+.background-container .text-description {
+    padding: 0 !important;
     display: block;
 }
 
-.background-container .bg-image{
+.background-container .bg-image {
     height: 250px;
     width: 500px;
     overflow: hidden;
     padding: 0;
 }
-.background-container img
-{
-    width:100%;
+
+.background-container img {
+    width: 100%;
 }
 
-.btn-file , .btn-file  t{
-   cursor: pointer;
-   color:#3697ef;
+.btn-file,
+.btn-file t {
+    cursor: pointer;
+    color: #3697ef;
 }
+
 .btn-file input[type=file] {
     position: absolute;
     top: 0;
@@ -56,34 +54,41 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
 .icon-list .clear-left-padding {
-    padding-left: 0!important;
+    padding-left: 0 !important;
 }
-.icon-list:hover{
+
+.icon-list:hover {
     // background-color: #e6e8eb;
     opacity: .88;
 }
+
 .icon-list .icon-container {
     width: 60px;
     position: static;
     height: auto;
 }
+
 .icon-container {
     position: absolute;
     width: 110px;
     height: 214px;
     float: left;
-    background-color: #fff!important;
+    background-color: #fff !important;
 }
+
 .icon-container:hover .icon {
     opacity: .88;
 }
+
 .icon-list .icon-container .initials-icon {
     padding: 10px;
     height: 50px;
     width: 50px;
     font-size: 20px;
 }
+
 .initials-icon {
     background-color: #6f8ab5;
     text-transform: uppercase;
@@ -97,7 +102,6 @@
     display: table-cell;
 }
 
-
 .icon-circle {
     border-radius: 50%;
 }
@@ -108,45 +112,68 @@
     white-space: nowrap;
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+    text-overflow: hiddne;
     width: 75%;
 }
+
 .icon-list .details .title-description {
     opacity: .6;
     font-weight: 600;
     font-size: 12px;
     display: block;
 }
+
 .icon-list .clear-top {
-    margin-top: 0!important;
+    margin-top: 0 !important;
 }
+
 .icon-list .clear-top {
-    margin-top: 0!important;
+    margin-top: 0 !important;
 }
 
 .icon-list .action-area {
     position: absolute;
-    top: 0;
-    right: 20px;
+    top: 0px;
+    right: 30px;
     margin-right: 2%;
     display: none;
+    background-color: white;
 }
-.icon-list:hover .action-area{
+
+.icon-list:hover .action-area {
     display: block;
 }
-.vertical-top-margin {
-    margin-top: 10px!important;
+
+.icon-list .action-area a {
+    font-size: large;
 }
+
+.icon-list .action-area a:hover {
+    color: red;
+}
+
+.action-area i {
+    font-size: large;
+}
+
+.vertical-top-margin {
+    margin-top: 10px !important;
+}
+
 .inline-block {
     display: inline-block;
 }
+
 .clear-vertical-margin {
-    margin-top: 0!important;
-    margin-bottom: 0!important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
+
 .v-align-middle {
-    vertical-align: middle!important;
-}.vertical-margin {
+    vertical-align: middle !important;
+}
+
+.vertical-margin {
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -160,9 +187,9 @@
     text-transform: uppercase;
     font-weight: 700;
 }
-.company-name
-{
-    width:250px;
+
+.company-name {
+    width: 250px;
 }
 
 .form-group label {
@@ -170,19 +197,16 @@
     color: #888;
     text-transform: uppercase;
     font-weight: 700;
-}   
+}
 
-.user-form .row:after
-{
+.user-form .row:after {
     margin-bottom: 10px;
 }
-.user-form .form-group .label
-{
-    color:gray;
-    text-transform: uppercase;
-    
-}
 
+.user-form .form-group .label {
+    color: gray;
+    text-transform: uppercase;
+}
 
 .child-page-navigation>ul {
     background-color: #fff;
@@ -194,9 +218,11 @@
     font-size: 12px;
     font-weight: 500;
 }
+
 .child-page-navigation>ul li.active {
     border-bottom-color: #3d9eed;
 }
+
 .child-page-navigation>ul li {
     background-color: transparent;
     border-bottom: 4px solid transparent;
