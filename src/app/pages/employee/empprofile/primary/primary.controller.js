@@ -16,16 +16,17 @@
 
         var basicTableId = 30;
         var perTableId = 43;
+        $scope.opened=true;
 
         $scope.update = _update;
-        
+
 
         function _loadController() {
             pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
             function _getAllSelectSuccessResult(result) {
-                //    console.log(result)
                 $scope.dropDownLists = result;
-                $scope.entity = param;
+                param.PdDateOfBirth=moment(param.PdDateOfBirth).format("DD-MMM-YYYY");
+                $scope.entity = angular.copy(param);
             }
             function _getAllSelectErrorResult(err) {
 
@@ -46,13 +47,14 @@
                 tableId: perTableId,
                 pkId: $scope.entity.PdId,
                 pkColName: 'PdId',
-                //PdDateOfBirth:$scope.entity.PdDateOfBirth,
+                PdDateOfBirth:$scope.entity.PdDateOfBirth,
                 PdGenderId: $scope.entity.PdGenderId,
                 PdMaritalId: $scope.entity.PdMaritalId,
                 PdNationalityId: $scope.entity.PdNationalityId,
                 PdBloodGroupId: $scope.entity.PdBloodGroupId
             }
             entities.push(per);
+            console.log(entities)
 
 
             pageService.udateMultiTableFields(entities).then(function (result) {

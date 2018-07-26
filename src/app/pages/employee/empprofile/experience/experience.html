@@ -1,80 +1,274 @@
 <div class="modal-content">
     <div class="modal-header bg-primary">
-        <h3 class="inline-block clear-vertical-margin">Contact Details</h3>
+        <h3 class="inline-block clear-vertical-margin">Work Experience</h3>
     </div>
 
     <div class="modal-body content-container">
+
+        <div ng-show="grid" class="col-sm-12">
+            <div class="col-md-6">
+                <div class="row">
+                    <button class="btn btn-default" ng-click="grid=false;addForm=true;editForm=false ">
+                        <i class="fa fa-plus"></i>
+                        <span dotranslate>create</span>
+                    </button>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <div class="row">
+                    <div ui-grid="gridOptions" class="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <button type="button" class="btn btn-submit btn-primary" data-ng-click="close()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row add-signatory-container">
-            <form name="addContactForm" id="addContactForm" data-ng-init="ctrl.form = this;" novalidate>
+            <form name="addform" ng-show="addForm">
+
                 <div class="col-sm-12 vertical-margin">
                     <fieldset>
-                        <div class="col-sm-12 new-person-details">
-                            <div class="col-sm-6 clear-left-padding">
-                                <div class="form-group">
-                                    <label>Work Email
-                                        <span style="font-size: 14px!important;cursor: pointer;" ng-click="new">
-                                            <i class="fa fa-edit"></i>
-                                        </span>
-                                        <span class="font-red">*</span>
-                                    </label>
-                                    <input type="text" class="form-control" data-ng-model="" name="FirstName" id="FirstName" required />
-                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addContactForm.FirstName" data-required-error="First Name is required"
-                                        data-form-submit="addContactForm.$submitted"></span>
+                            <div class="col-sm-12 new-person-details">
+                                    <div class="col-sm-12 clear-left-padding">
+                                        <div class="form-group">
+                                            <h3>Add Work Experience</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-left-padding">
+                                        <div class="form-group">
+                                            <label>Organisation
+                                                <span class="font-red">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" data-ng-model="entity.WEOrganizName" required />
+        
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-left-padding">
+                                        <div class="form-group">
+                                            <label> Designation
+                                                <span class="font-red">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" data-ng-model="entity.WEDesignation" required />
+        
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-left-padding">
+                                        <div class="form-group">
+                                            <label>From
+                                                <span class="font-red">*</span>
+                                            </label>
+                                            <div class="input-group" moment-picker="entity.WEFrom" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                                min-date="col.minDate">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                                    ng-model="entity.WEFrom" ng-model-options="{ updateOn: 'blur' }">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-secondary" ng-click="entity.WEFrom=''" type="button">
+                                                        <i class="fa fa-close"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                            <!-- <input type="text" class="form-control" data-ng-model="editentity.WEFrom" required /> -->
+        
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-left-padding">
+                                        <div class="form-group">
+                                            <label>To
+                                                <span class="font-red">*</span>
+                                            </label>
+                                            <div class="input-group" moment-picker="entity.WETo" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate" min-date="col.minDate">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                                    ng-model="entity.WETo" ng-model-options="{ updateOn: 'blur' }">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-secondary" ng-click="entity.WETo=''" type="button">
+                                                        <i class="fa fa-close"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                            <!-- <input type="text" class="form-control" data-ng-model="editentity.WETo" required /> -->
+        
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-left-padding">
+                                        <div class="form-group">
+                                            <label> Duration
+                                                <span class="font-red">*</span>
+                                            </label>
+                                            <input disabled="disabled" type="text" class="form-control" data-ng-model="entity.WEDuration" required />
+        
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-left-padding">
+                                        <div class="form-group">
+                                            <label> Domain
+                                                <span class="font-red">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" data-ng-model="entity.WEDomain" required />
+        
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-left-padding">
+                                        <div class="form-group">
+                                            <label> Location
+                                                <span class="font-red">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" data-ng-model="entity.WECompanyAddress" required />
+        
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-left-padding">
+                                        <div class="form-group">
+                                            <label> Description
+                                                <span class="font-red">*</span>
+                                            </label>
+                                            <textarea class="form-control" data-ng-model="entity.WERemark"></textarea>
+        
+                                        </div>
+                                    </div>
+        
+                                </div>
+                        <div class="row">
+                            <div class="col-sm-12 vertical-margin">
+                                <div class="col-sm-6 pull-right text-right">
+                                    <button type="submit" class="btn btn-submit btn-primary" data-ng-click="add(entity,addform)">Save</button>
+                                    <a class="btn btn-cancel" data-ng-click="grid=true;addForm=false;editForm=false; ">Cancel</a>
                                 </div>
                             </div>
-                            <div class="col-sm-6 clear-side-padding">
-                                <div class="form-group">
-                                    <label>Personal Email</label>
-                                    <input type="text" class="form-control" data-ng-model="" name="MiddleName" id="MiddleName" required />
-                                </div>
-                            </div>
-                            <div class="col-sm-6 clear-left-padding">
-                                <div class="form-group">
-                                    <label>Mobile
-                                        <span class="font-red">*</span>
-                                    </label>
-                                    <input type="text" class="form-control" data-ng-model="" name="LastName" id="LastName" required />
-                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addContactForm.LastName" data-required-error="Last Name is required"
-                                        data-form-submit="addContactForm.$submitted"></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 clear-left-padding">
-                                <div class="form-group">
-                                    <label>Work Phone</label>
-                                    <input type="text" class="form-control" data-ng-model="" name="LastName" id="LastName" required />
-                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addContactForm.LastName" data-required-error="Last Name is required"
-                                        data-form-submit="addContactForm.$submitted"></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 clear-left-padding">
-                                <div class="form-group">
-                                    <label>Residance Phone</label>
-                                    <input type="text" class="form-control" data-ng-model="" name="LastName" id="LastName" required />
-                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addContactForm.LastName" data-required-error="Last Name is required"
-                                        data-form-submit="addContactForm.$submitted"></span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 clear-left-padding">
-                                <div class="form-group">
-                                    <label>Skype</label>
-                                    <input type="text" class="form-control" data-ng-model="" name="LastName" id="LastName" required />
-                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addContactForm.LastName" data-required-error="Last Name is required"
-                                        data-form-submit="addContactForm.$submitted"></span>
-                                </div>
-                            </div>
-
-
                         </div>
                     </fieldset>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12 vertical-margin">
-                        <div class="col-sm-6 pull-right text-right">
-                            <button type="submit" class="btn btn-submit btn-primary" data-ng-click="">Update</button>
-                            <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
+
+            </form>
+            <form ng-show="editForm" name="editform">
+                <div class="col-sm-12 vertical-margin">
+                    <fieldset>
+                        <div class="col-sm-12 new-person-details">
+                            <div class="col-sm-12 clear-left-padding">
+                                <div class="form-group">
+                                    <h3>Edit Work Experience</h3>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Organisation
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="editentity.WEOrganizName" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label> Designation
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="editentity.WEDesignation" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>From
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <div class="input-group" moment-picker="editentity.WEFrom" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                        min-date="col.minDate">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                            ng-model="editentity.WEFrom" ng-model-options="{ updateOn: 'blur' }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" ng-click="editentity.WEFrom=''" type="button">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- <input type="text" class="form-control" data-ng-model="editentity.WEFrom" required /> -->
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>To
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <div class="input-group" moment-picker="editentity.WETo" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate" min-date="col.minDate">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                            ng-model="editentity.WETo" ng-model-options="{ updateOn: 'blur' }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" ng-click="editentity.WETo=''" type="button">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- <input type="text" class="form-control" data-ng-model="editentity.WETo" required /> -->
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label> Duration
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input disabled="disabled" type="text" class="form-control" data-ng-model="editentity.WEDuration" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label> Domain
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="editentity.WEDomain" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label> Location
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="editentity.WECompanyAddress" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label> Description
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <textarea class="form-control" data-ng-model="editentity.WERemark"></textarea>
+
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-sm-12 vertical-margin">
+                                <div class="col-sm-6 pull-right text-right">
+                                    <button type="submit" class="btn btn-submit btn-primary" data-ng-click="update(editentity,editform)">Update</button>
+                                    <a class="btn btn-cancel" data-ng-click="grid=true;addForm=false;editForm=false; ">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
             </form>
         </div>

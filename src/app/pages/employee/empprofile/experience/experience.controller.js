@@ -11,84 +11,149 @@
         .controller('empExperienceController', empExperienceController);
 
     /** @ngInject */
-    function empExperienceController($scope, $state, $rootScope, $stateParams, pageService,  dialogModal, param) {
+    function empExperienceController($scope, $state, $rootScope, $stateParams, pageService, editFormService) {
 
+        var empId = $stateParams.empid
+        var expTableId = 62;
+        var expPageId = 56;
+        $scope.grid = true;
+        $scope.entity = {};
+        $scope.editentity = {};
 
-        var perTableId = 43;
-        var perPageId = 35;
-        var jobTableId = 121;
-        var jobPageId = 114;
-        var basicTableId = 30;
-        var basicPageId = 25;
+        $scope.add = _add;
+        $scope.editRecord = _editRecord;
+        $scope.update = _update;
+        $scope.close = _close;
 
-        $scope.udpate = _update;
+        $scope.gridOptions = {
+            enableCellEditOnFocus: false,
+            enableRowSelection: false,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            enableScrollbars: false,
+            columnDefs: [
+                { name: 'WEOrganizName', displayName: 'Organisation', width: 100, enableCellEdit: false },
+                { name: 'WEDesignation', displayName: 'Designation', width: 100, enableCellEdit: false },
+                { name: 'WEDomain', displayName: 'Domain', width: 90, enableCellEdit: false },
+                { name: 'WEFrom', displayName: 'From', width: 95, enableCellEdit: false },
+                { name: 'WETo', displayName: 'To', width: 95, enableCellEdit: false },
+                { name: 'WECompanyAddress', displayName: 'Location', width: 90, enableCellEdit: false },
+                {
+                    name: 'Edit',
+                    width: 70,
+                    cellEditableCondition: false,
+                    cellTemplate: "<div class='ui-grid-cell-contents'><a ng-click='grid.appScope.editRecord(row)' uib-tooltip='Edit' tooltip-placement='right' href><i class='fa fa-edit fa-lg'></i></a></div>"
+                },
 
-        $scope.page = $rootScope.createPage();
-        $scope.page.pageId = 56;
-        $scope.page.boxOptions = {
-            selfLoading: true,
-            showRefresh: true,
-            showFilter: false,
-            filterOpened: false,
-            showAdd: true,
-            showRowMenu: false,
-            showCustomView: true,
-            showUpload: false,
-            showDialog: false,
-            enableRefreshAfterUpdate: true,
-            gridHeight: 450,
-            getPageData: null,
-            refreshData: null,
-            addRecord: null,
-            editRecord: null,
-            updateRecord: null,
-            viewRecord: null,
-            deleteRecord: null,
-            showApplyFilter: false,
-            filterOnChange: null,
-            showDataOnLoad: true,
-            // currentState: 'configuration.company.locations.location'
+            ],
+            data: []
         }
-
 
         function _loadController() {
-            $scope.entity = param;
-        }
-
-        function _update() {
-
-            var entities = [];
-            var job = {
-                tableId: jobTableId,
-                pkId: $scope.entity.JDId,
-                pkColName: 'JDId',
-                JDOfficeEmail: $scope.entity.JDOfficeEmail,
-                JDOfficeMobile: $scope.entity.JDOfficeMobile,
-                JDOfficePhone: $scope.entity.JDOfficePhone,
-                JDEmpId: $scope.entity.JDEmpId
+            var searchLists = [];
+            var searchListData = {
+                field: 'WEEmpId',
+                operand: "=",
+                value: empId
             }
-            entities.push(job);
-            var per = {
-                tableId: perTableId,
-                pkId: $scope.entity.PdId,
-                pkColName: 'PdId',
-                PdEmail: $scope.entity.PdEmail,
-                PdMobileNo: $scope.entity.PdMobileNo,
-                PdResidenceMobile: $scope.entity.PdResidenceMobile,
-                PdEmpId: $scope.entity.JDEmpId
+            searchLists.push(searchListData)
+            var data = {
+                searchList: searchLists,
+                orderByList: []
             }
-            entities.push(per);
+            pageService.getTableData(expTableId, expPageId, '', '', false, data)
+                .then(_getTableDataSuccessResult, _getTableDataErrorResult)
 
+            function _getTableDataSuccessResult(result) {
 
-            pageService.udateMultiTableFields(entities).then(function (result) {
-                if (result.success_message = "Updated") {
-                    $scope.modalInstance.close("success");
-                }
-            }, function (err) {
+                $scope.gridOptions.data = angular.copy(result);
+            }
+            function _getTableDataErrorResult(err) {
                 console.log(err)
-            })
+            }
+        }
+
+        function _editRecord(row) {
+            $scope.grid = false;
+            $scope.addForm = false;
+            $scope.editForm = true;
+            $scope.editentity = angular.copy(row.entity);
+            $scope.oldEntity = angular.copy(row.entity);
 
         }
+        function _add(entity, form) {
+            entity.WEEmpId = empId
+            _formSaveUpdate(entity, expPageId, 'create', {}, form, false)
+        }
+        function _update(entity, form) {
+            _formSaveUpdate(entity, expPageId, 'edit', $scope.oldEntity, form, false)
+        }
+
+        function _formSaveUpdate(entity, pageId, action, oldEntity, editForm, showConfirmation) {
+            editFormService.saveForm(pageId, entity, oldEntity,
+                action, "", editForm, showConfirmation)
+                .then(_successResult, _errorResult)
+        }
+        function _successResult(result) {
+            console.log(result)
+            if (result.success_message == "Record Updated." || result.success_message == "Added New Record.") {
+                $scope.grid = true;
+                $scope.addForm = false;
+                $scope.editForm = false;
+                if (result.success_message == "Record Updated.") {
+                    _loadController();
+                    $scope.showMsg("success", "Work Experience Detail Updated")
+                }
+                else {
+                    _loadController();
+                    $scope.showMsg("success", "Work Experience Detail Added")
+                }
+            }
+        }
+        function _errorResult(err) {
+            console.log(err)
+        }
+
+        function _close() {
+            $scope.modalInstance.close("success");
+        }
+
+        $scope.$watch('entity.WEFrom', function (value) {
+
+            if ($scope.entity.WEFrom != undefined && $scope.entity.WETo != undefined) {
+                var sdt = new Date($scope.entity.WEFrom);
+                var difdt = new Date(new Date($scope.entity.WETo) - sdt);
+                //  console.log()
+                $scope.entity.WEDuration = (difdt.toISOString().slice(0, 4) - 1970) + " Year " + (difdt.getMonth()) + " Month " + difdt.getDate() + " Day";
+
+            }
+        });
+        $scope.$watch('entity.WETo', function (value) {
+            if ($scope.entity.WEFrom != undefined && $scope.entity.WETo != undefined) {
+                var sdt = new Date($scope.entity.WEFrom);
+                var difdt = new Date(new Date($scope.entity.WETo) - sdt);
+                $scope.entity.WEDuration = (difdt.toISOString().slice(0, 4) - 1970) + " Year " + (difdt.getMonth()) + " Month " + difdt.getDate() + " Day";
+            }
+        });
+
+        $scope.$watch('editentity.WEFrom', function (value) {
+
+            if ($scope.editentity.WEFrom != undefined && $scope.editentity.WETo != undefined) {
+                var sdt = new Date($scope.editentity.WEFrom);
+                var difdt = new Date(new Date($scope.editentity.WETo) - sdt);
+                //  console.log()
+                $scope.editentity.WEDuration = (difdt.toISOString().slice(0, 4) - 1970) + " Year " + (difdt.getMonth()) + " Month " + difdt.getDate() + " Day";
+
+            }
+        });
+        $scope.$watch('editentity.WETo', function (value) {
+            if ($scope.editentity.WEFrom != undefined && $scope.editentity.WETo != undefined) {
+                var sdt = new Date($scope.editentity.WEFrom);
+                var difdt = new Date(new Date($scope.editentity.WETo) - sdt);
+                $scope.editentity.WEDuration = (difdt.toISOString().slice(0, 4) - 1970) + " Year " + (difdt.getMonth()) + " Month " + difdt.getDate() + " Day";
+            }
+        });
+
         _loadController();
     }
 })()

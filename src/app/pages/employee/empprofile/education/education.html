@@ -1,0 +1,223 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin">Education Detail</h3>
+    </div>
+
+    <div class="modal-body content-container">
+
+        <div ng-show="grid" class="col-sm-12">
+            <div class="col-md-6">
+                <div class="row">
+                    <button class="btn btn-default" ng-click="grid=false;addForm=true;editForm=false ">
+                        <i class="fa fa-plus"></i>
+                        <span dotranslate>create</span>
+                    </button>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <div class="row">
+                    <div ui-grid="gridOptions" class="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <button type="button" class="btn btn-submit btn-primary" data-ng-click="close()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row add-signatory-container">
+            <form name="addform" ng-show="addForm">
+
+                <div class="col-sm-12 vertical-margin">
+                    <fieldset>
+                        <div class="col-sm-12 new-person-details">
+                            <div class="col-sm-12 clear-left-padding">
+                                <div class="form-group">
+                                    <h3>Add Education Detail</h3>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Qualification
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <select class="form-control" data-ng-model="entity.QualQualificationId" ng-options="qualification.value as qualification.name for qualification in dropDownLists[0]"></select>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Board
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="entity.QualInstititeName" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label> Specialization
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="entity.QualMajorSpecialization" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>FromDate
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <div class="input-group" moment-picker="entity.QualStartDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate" min-date="col.minDate">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                            ng-model="entity.QualStartDate" ng-model-options="{ updateOn: 'blur' }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" ng-click="entity.QualStartDate=''" type="button">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- <input type="text" class="form-control" data-ng-model="editentity.WEFrom" required /> -->
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>EndDate
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <div class="input-group" moment-picker="entity.QualEndDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate" min-date="col.minDate">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                            ng-model="entity.QualEndDate" ng-model-options="{ updateOn: 'blur' }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" ng-click="entity.QualEndDate=''" type="button">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- <input type="text" class="form-control" data-ng-model="editentity.WETo" required /> -->
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 vertical-margin">
+                                <div class="col-sm-6 pull-right text-right">
+                                    <button type="submit" class="btn btn-submit btn-primary" data-ng-click="add(entity,addform)">Save</button>
+                                    <a class="btn btn-cancel" data-ng-click="grid=true;addForm=false;editForm=false; ">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+            </form>
+            <form ng-show="editForm" name="editform">
+                <div class="col-sm-12 vertical-margin">
+                    <fieldset>
+                        <div class="col-sm-12 new-person-details">
+                            <div class="col-sm-12 clear-left-padding">
+                                <div class="form-group">
+                                    <h3>Edit Education Detail</h3>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Qualification
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <select class="form-control" data-ng-model="editentity.QualQualificationId" ng-options="qualification.value as qualification.name for qualification in dropDownLists[0]"></select>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label> Board
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="editentity.QualInstititeName" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label> Specialization
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" data-ng-model="editentity.QualMajorSpecialization" required />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>FromDate
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <div class="input-group" moment-picker="editentity.QualStartDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                        min-date="col.minDate">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                            ng-model="editentity.QualStartDate" ng-model-options="{ updateOn: 'blur' }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" ng-click="editentity.QualStartDate=''" type="button">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- <input type="text" class="form-control" data-ng-model="editentity.WEFrom" required /> -->
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 clear-left-padding">
+                                <div class="form-group">
+                                    <label>ToDate
+                                        <span class="font-red">*</span>
+                                    </label>
+                                    <div class="input-group" moment-picker="editentity.QualEndDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+                                        min-date="col.minDate">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                            ng-model="editentity.QualEndDate" ng-model-options="{ updateOn: 'blur' }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" ng-click="editentity.QualEndDate=''" type="button">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- <input type="text" class="form-control" data-ng-model="editentity.WETo" required /> -->
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 vertical-margin">
+                                <div class="col-sm-6 pull-right text-right">
+                                    <button type="submit" class="btn btn-submit btn-primary" data-ng-click="update(editentity,editform)">Update</button>
+                                    <a class="btn btn-cancel" data-ng-click="grid=true;addForm=false;editForm=false; ">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

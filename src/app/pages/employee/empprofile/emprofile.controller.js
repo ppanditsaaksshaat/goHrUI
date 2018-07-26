@@ -115,27 +115,45 @@
                     $scope.showMsg('success', 'Address Detail Updated');
                 }
             })
-          
+
         }
         function _addRelationDetail() {
-            $scope.modalInstance = dialogModal.open({
-                url: 'app/pages/employee/empprofile/emprelation-modal.html',
-                size: 'top-center-600'
-
+            var modal = dialogModal.open({
+                url: 'app/pages/employee/empprofile/relation/relation.html',
+                size: 'top-center-600',
+                controller: 'empRelationController'
+            })
+            modal.result.then(function (data) {
+                if (data == "success") {
+                    _loadController();
+                }
             })
         }
         function _addExperienceDetail() {
-            $scope.modalInstance = dialogModal.open({
+            var modal = dialogModal.open({
                 url: 'app/pages/employee/empprofile/experience/experience.html',
                 size: 'top-center-600',
                 controller: 'empExperienceController',
             })
+            modal.result.then(function (data) {
+                if (data == "success") {
+                    _loadController();
+                }
+            })
+
         }
         function _addEducationDetail() {
-            $scope.modalInstance = dialogModal.open({
-                url: 'app/pages/employee/empprofile/empeducation-modal.html',
-                size: 'top-center-600'
+            var modal = dialogModal.open({
+                url: 'app/pages/employee/empprofile/education/education.html',
+                size: 'top-center-600',
+                controller: 'empEducationController'
             })
+            modal.result.then(function (data) {
+                if (data == "success") {
+                    _loadController();
+                }
+            })
+
         }
         function _addProfessionalDetail() {
             var modal = dialogModal.open({
