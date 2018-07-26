@@ -1,1 +1,656 @@
-<h3>apply attendance</h3>
+<grid-box ng-model="page" ng-show="showGrid">
+</grid-box>
+
+<form name="editForm " novalidate ng-submit="saveForm() " ng-show="showEditForm ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="false " show-list="false
+ " show-reset="false " condition="true "></edit-panel-head>
+
+        <div class="panel-body" style="padding:5px" ng-scrollbars ng-scrollbars-config="config">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.EmpId.text}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <field-box page="page" ng-column="page.pageinfo.fields.EmpId" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <label for="inputPassword4" class="control-label">{{page.pageinfo.fields.AttDate.text}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <field-box page="page" ng-column="page.pageinfo.fields.AttDate" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.InTime.text}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <field-box page="page" ng-column="page.pageinfo.fields.InTime" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.OutTime.text}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <field-box page="page" ng-column="page.pageinfo.fields.OutTime" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.ShiftCode.text}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <field-box page="page" ng-column="page.pageinfo.fields.ShiftCode" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                </div>
+            </div>
+
+            <div class="row">
+
+
+
+
+
+                <div class="form-group col-md-6">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.ODReason.text}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <field-box page="page" ng-column="page.pageinfo.fields.ODReason" ng-entity="entity" form="editForm"></field-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                </div>
+            </div>
+
+
+
+            <div ng-show="showAdmin_Panel">
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="inputPassword3">{{page.pageinfo.fields.AttTypeId.text}}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <field-box page="page" ng-column="page.pageinfo.fields.AttTypeId" ng-entity="entity" form="editForm"></field-box>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="inputPassword3">{{page.pageinfo.fields.TotalTime.text}}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input readonly class="form-control" type="text" ng-model="shiftDurations">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="inputPassword3">{{page.pageinfo.fields.org_InTime.text}}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <field-box page="page" ng-column="page.pageinfo.fields.org_InTime" ng-entity="entity" form="editForm"></field-box>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="inputPassword3">{{page.pageinfo.fields.org_OutTime.text}}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <field-box page="page" ng-column="page.pageinfo.fields.org_OutTime" ng-entity="entity" form="editForm"></field-box>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.ReportMgrRemark.text}}</label>
+
+                            </div>
+                            <div class="col-md-8">
+                                <field-box page="page" ng-column="page.pageinfo.fields.ReportMgrRemark" ng-entity="entity" form="editForm"></field-box>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="form-group col-md-6" ng-hide="true">
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.EmpRemark.text}}</label>
+
+                            </div>
+                            <div class="col-md-8">
+                                <field-box page="page" ng-column="page.pageinfo.fields.EmpRemark" ng-entity="entity" form="editForm"></field-box>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</form>
+
+
+
+
+<div ng-show="isLateOrEarlyExempted">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Late Or Early Exempted">
+            <form name="editForm">
+                <div class="panel-body">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.EmpId.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.AttDate.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.SMFromTime.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.SMToTime.text"></label>
+                                </td>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left; color:brown">{{entity.EmpName}}</td>
+                                <td style="text-align: left">{{entity.AttDate}}</td>
+                                <td style="text-align: left">{{entity.SMFromTime}}</td>
+                                <td style="text-align: left">{{entity.SMToTime}}</td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.InTime.text}}</label>
+                                                <field-box page="page" ng-column="page.pageinfo.fields.InTime" ng-entity="entity" form="editForm"></field-box>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.OutTime.text}}</label>
+                                                <field-box page="page" ng-column="page.pageinfo.fields.OutTime" ng-entity="entity" form="editForm"></field-box>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">Late/Early Exempted</label>
+                                                <input type="checkbox" class="checkbox" ng-model="entity.IsLateOrEarlyExempted">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.ODReason.text}}</label>
+                                                <field-box page="page" ng-column="page.pageinfo.fields.ODReason" ng-entity="entity" form="editForm"></field-box>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-info btn-lg" ng-click="saveLateEarlyExempted()">Save</button>
+                    <button type="button" class="btn btn-danger btn-lg" ng-click="closeForm()">Close</button>
+                </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+<div ng-show="isOvertimeApproved">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Overtime Approvel">
+            <form name="editForm">
+                <div class="panel-body">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.EmpId.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.AttDate.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.SMFromTime.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.SMToTime.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.InTime.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.OutTime.text"></label>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left; color:brown">{{entity.EmpName}}</td>
+                                <td style="text-align: left">{{entity.AttDate}}</td>
+                                <td style="text-align: left">{{entity.SMFromTime}}</td>
+                                <td style="text-align: left">{{entity.SMToTime}}</td>
+                                <td style="text-align: left">{{entity.InTime}}</td>
+                                <td style="text-align: left">{{entity.OutTime}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.EmpId.text}}</label>
+                                                <span class="form-control" ng-bind="entity.EmpName"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AttDate.text}}</label>
+                                                <span class="form-control" ng-bind="entity.AttDate"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.SMFromTime.text}}</label>
+                                                <span class="form-control" ng-bind="entity.SMFromTime"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.SMToTime.text}}</label>
+                                                <span class="form-control" ng-bind="entity.SMToTime"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.InTime.text}}</label>
+                                                <span class="form-control" ng-bind="entity.InTime"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.OutTime.text}}</label>
+                                                <span class="form-control" ng-bind="entity.OutTime"></span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">Overtime Allowed</label>
+                                                <input type="checkbox" class="checkbox" ng-model="entity.IsOverTimeApproved">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">Overtime Minute</label>
+                                                <input type="number" class="form-control" ng-model="entity.OverTimeMinute">
+
+                                                <!-- ADSOTMinute -->
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.ODReason.text}}</label>
+                                                <textarea type="text" class="form-control" ng-model="entity.ODReason" form="editForm"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- <div class="checkbox">
+                                        <label class="custom-checkbox">
+                                            <input type="checkbox" ng-model="entity.IsOverTimeApproved">
+                                            <span style="font:bold">{{Overtime}}</span>
+                                        </label>
+                                    </div> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-info btn-lg" ng-click="saveOTApproved()">Save</button>
+                    <button type="button" class="btn btn-danger btn-lg" ng-click="closeForm()">Close</button>
+                </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div ng-show="isCompOffApproved">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Comp-Off Approvel">
+            <form ng-submit="replyOnCancelLoan(cancelRequestEntity)" name="editForm">
+                <div class="panel-body">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.EmpId.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.AttDate.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.SMFromTime.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.SMToTime.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.InTime.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.OutTime.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.HDName.text"></label>
+                                </td>
+                                <td>
+                                    <label ng-bind="page.pageinfo.fields.WeekDayName.text"></label>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left; color:brown">{{entity.EmpName}}</td>
+                                <td style="text-align: left">{{entity.AttDate}}</td>
+                                <td style="text-align: left">{{entity.SMFromTime}}</td>
+                                <td style="text-align: left">{{entity.SMToTime}}</td>
+                                <td style="text-align: left">{{entity.InTime}}</td>
+                                <td style="text-align: left">{{entity.OutTime}}</td>
+                                <td style="text-align: left">{{entity.HDName}}</td>
+                                <td style="text-align: left">{{entity.WeekDayName}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.EmpId.text}}</label>
+                                                <span class="form-control" ng-bind="entity.EmpName"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.AttDate.text}}</label>
+                                                <span class="form-control" ng-bind="entity.AttDate"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.SMFromTime.text}}</label>
+                                                <span class="form-control" ng-bind="entity.SMFromTime"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.SMToTime.text}}</label>
+                                                <span class="form-control" ng-bind="entity.SMToTime"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.InTime.text}}</label>
+                                                <span class="form-control" ng-bind="entity.InTime"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.OutTime.text}}</label>
+                                                <span class="form-control" ng-bind="entity.OutTime"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.HDName.text}}</label>
+                                                <span class="form-control" ng-bind="entity.HDName"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.WeekDayName.text}}</label>
+                                                <span class="form-control" ng-bind="entity.WeekDayName"></span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">Comp-Off</label>
+                                                <input type="checkbox" class="checkbox" ng-model="entity.IsCompOffApproved">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="control-label">{{page.pageinfo.fields.ODReason.text}}</label>
+                                                <textarea type="text" class="form-control" ng-model="entity.ODReason" form="editForm"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-info btn-lg" ng-click="saveCOffApproved()">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeForm()">Close</button>
+                    </div>
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div ng-show="isApprovedAttendence" class="panel panel-default bootstrap-panel large-panel">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div class="col-md-9">
+                Attendance Approved Detail
+            </div>
+            <div class="col-md-3">
+                <div class="pull-right" ng-show="page.boxOptions.customButtons.length==0">
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="closeForm()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Close</button>
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="approvedData()">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>Approved</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>
+                        <label ng-bind="page.pageinfo.fields.EmpName.text"></label>
+                    </td>
+                    <td>
+                        <label ng-bind="page.pageinfo.fields.AttDate.text"></label>
+                        <td>
+                            <label ng-bind="page.pageinfo.fields.InTime.text"></label>
+                        </td>
+                        <td>
+                            <label ng-bind="page.pageinfo.fields.OutTime.text"></label>
+                        </td>
+                        <td>
+                            <label ng-bind="page.pageinfo.fields.ODReason.text"></label>
+                        </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="aprrovedEmp in selectedEmpData">
+                    <td style="text-align: left; color:brown">{{aprrovedEmp.EmpName}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.AttDate}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.InTime}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.OutTime}}</td>
+                    <td style="text-align: left">{{aprrovedEmp.ODReason}}</td>
+                </tr>
+            </tbody>
+            <tr>
+                <td style="text-align: left"> Remark </td>
+                <td>
+                    <input class="form-control" type="text" ng-model="AttApprovedRemark"> </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>Status
+                        <span style="color:red">*</label>
+                </td>
+                <td>
+                    <select class="form-control" ng-model="StatusId" ng-options="status.value as status.name for status in attendanceSheetData.pageinfo.statuslist"></select>
+
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>

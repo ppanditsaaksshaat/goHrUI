@@ -16,7 +16,7 @@
                 url: '/applyattendance',
                 templateUrl: 'app/pages/self/apply/applyattendance/applyattendance.html',
                 title: 'attendance',
-                controller: "",
+                controller: "applyAttendanceController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

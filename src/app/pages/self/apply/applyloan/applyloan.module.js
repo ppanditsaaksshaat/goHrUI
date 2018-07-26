@@ -16,7 +16,7 @@
                 url: '/applyloan',
                 templateUrl: 'app/pages/self/apply/applyloan/applyloan.html',
                 title: 'loan',
-                controller: "",
+                controller: "applyLoanController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

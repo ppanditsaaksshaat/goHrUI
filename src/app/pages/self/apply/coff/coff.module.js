@@ -16,7 +16,7 @@
                 url: '/coff',
                 templateUrl: 'app/pages/self/apply/coff/coff.html',
                 title: 'c-off',
-                controller: "",
+                controller: "cOffApplyController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
