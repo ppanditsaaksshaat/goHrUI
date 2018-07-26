@@ -11,12 +11,12 @@
         .controller('empRelationController', empRelationController);
 
     /** @ngInject */
-    function empEducationController($scope, $stateParams, pageService, editFormService) {
+    function empRelationController($scope, $stateParams, pageService, editFormService) {
 
         var empId = $stateParams.empid
         var relTableId = 56;
-        var relPageId =52;
-        var columnIds = ['653'];
+        var relPageId = 52;
+        var columnIds = ['267', '4255'];
         $scope.grid = true;
         $scope.entity = {};
         $scope.editentity = {};
@@ -33,9 +33,10 @@
             enableVerticalScrollbar: 0,
             enableScrollbars: false,
             columnDefs: [
-                { name: 'FdName', displayName: 'Qualification', width: 100, enableCellEdit: false },
-                { name: 'FdEmail', displayName: 'Board', width: 100, enableCellEdit: false },
-                { name: 'FdMobile', displayName: 'Mobile', width: 100, enableCellEdit: false },
+                { name: 'RelationshipName', displayName: 'Relation', width: 100, enableCellEdit: false },
+                { name: 'FdName', displayName: 'Name', width: 100, enableCellEdit: false },
+                { name: 'FdEmail', displayName: 'Email', width: 100, enableCellEdit: false },
+                { name: 'FdMobile', displayName: 'Mobile', width: 110, enableCellEdit: false },
                 { name: 'GenderName', displayName: 'Gender', width: 100, enableCellEdit: false },
                 {
                     name: 'Edit',
@@ -54,7 +55,7 @@
             function _getAllSelectSuccessResult(result) {
                 console.log(result)
                 $scope.dropDownLists = result;
-              
+
             }
             function _getAllSelectErrorResult(err) {
 
@@ -62,7 +63,7 @@
 
             var searchLists = [];
             var searchListData = {
-                field: 'QualiEmpId',
+                field: 'FdEmpId',
                 operand: "=",
                 value: empId
             }
@@ -71,7 +72,7 @@
                 searchList: searchLists,
                 orderByList: []
             }
-            pageService.getTableData(eduTableId, eduPageId, '', '', false, data)
+            pageService.getTableData(relTableId, relPageId, '', '', false, data)
                 .then(_getTableDataSuccessResult, _getTableDataErrorResult)
 
             function _getTableDataSuccessResult(result) {
@@ -92,11 +93,11 @@
 
         }
         function _add(entity, form) {
-            entity.WEEmpId = empId
-            _formSaveUpdate(entity, eduPageId, 'create', {}, form, false)
+            entity.FdEmpId = empId
+            _formSaveUpdate(entity, relPageId, 'create', {}, form, false)
         }
         function _update(entity, form) {
-            _formSaveUpdate(entity, eduPageId, 'edit', $scope.oldEntity, form, false)
+            _formSaveUpdate(entity, relPageId, 'edit', $scope.oldEntity, form, false)
         }
 
         function _formSaveUpdate(entity, pageId, action, oldEntity, editForm, showConfirmation) {
@@ -127,42 +128,6 @@
         function _close() {
             $scope.modalInstance.close("success");
         }
-
-        $scope.$watch('entity.WEFrom', function (value) {
-
-            if ($scope.entity.WEFrom != undefined && $scope.entity.WETo != undefined) {
-                var sdt = new Date($scope.entity.WEFrom);
-                var difdt = new Date(new Date($scope.entity.WETo) - sdt);
-                //  console.log()
-                $scope.entity.WEDuration = (difdt.toISOString().slice(0, 4) - 1970) + " Year " + (difdt.getMonth()) + " Month " + difdt.getDate() + " Day";
-
-            }
-        });
-        $scope.$watch('entity.WETo', function (value) {
-            if ($scope.entity.WEFrom != undefined && $scope.entity.WETo != undefined) {
-                var sdt = new Date($scope.entity.WEFrom);
-                var difdt = new Date(new Date($scope.entity.WETo) - sdt);
-                $scope.entity.WEDuration = (difdt.toISOString().slice(0, 4) - 1970) + " Year " + (difdt.getMonth()) + " Month " + difdt.getDate() + " Day";
-            }
-        });
-
-        $scope.$watch('editentity.WEFrom', function (value) {
-
-            if ($scope.editentity.WEFrom != undefined && $scope.editentity.WETo != undefined) {
-                var sdt = new Date($scope.editentity.WEFrom);
-                var difdt = new Date(new Date($scope.editentity.WETo) - sdt);
-                //  console.log()
-                $scope.editentity.WEDuration = (difdt.toISOString().slice(0, 4) - 1970) + " Year " + (difdt.getMonth()) + " Month " + difdt.getDate() + " Day";
-
-            }
-        });
-        $scope.$watch('editentity.WETo', function (value) {
-            if ($scope.editentity.WEFrom != undefined && $scope.editentity.WETo != undefined) {
-                var sdt = new Date($scope.editentity.WEFrom);
-                var difdt = new Date(new Date($scope.editentity.WETo) - sdt);
-                $scope.editentity.WEDuration = (difdt.toISOString().slice(0, 4) - 1970) + " Year " + (difdt.getMonth()) + " Month " + difdt.getDate() + " Day";
-            }
-        });
 
         _loadController();
     }

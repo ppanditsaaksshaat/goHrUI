@@ -121,7 +121,7 @@
             var modal = dialogModal.open({
                 url: 'app/pages/employee/empprofile/relation/relation.html',
                 size: 'top-center-600',
-                controller: 'empEducationController'
+                controller: 'empRelationController'
             })
             modal.result.then(function (data) {
                 if (data == "success") {
