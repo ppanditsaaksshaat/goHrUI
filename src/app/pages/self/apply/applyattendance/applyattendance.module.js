@@ -15,7 +15,7 @@
             .state('selfdir.apply.applyattendance', {
                 url: '/applyattendance',
                 templateUrl: 'app/pages/self/apply/applyattendance/applyattendance.html',
-                title: 'apply attendance',
+                title: 'attendance',
                 controller: "",
                 controllerAs: "",
                 sidebarMeta: {

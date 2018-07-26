@@ -5,25 +5,25 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.self.apply.applyattendance', [
+    angular.module('BlurAdmin.pages.self.apply.overview', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('selfdir.apply.applyattendance', {
-                url: '/applyattendance',
-                templateUrl: 'app/pages/self/apply/applyattendance/applyattendance.html',
-                title: 'apply attendance',
-                controller: "",
+            .state('selfdir.apply.overview', {
+                url: '/overview',
+                templateUrl: 'app/pages/self/apply/overview/overview.html',
+                title: 'overview',
+                controller: "overViewController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
-                    order: 1,
+                    order: 0,
                 },
             })
-        // $urlRouterProvider.when('/selfdir/attendance', '/selfdir/attendance/roster');
+            $urlRouterProvider.when('/selfdir/apply', '/selfdir/apply/overview');
     }
 
 })();

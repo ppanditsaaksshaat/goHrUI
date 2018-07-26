@@ -128,6 +128,7 @@
                     show: 0
                 },
             });
+        $urlRouterProvider.when('/selfdir/attendance', '/selfdir/attendance/miscellaneous');
     }
 
 })();
