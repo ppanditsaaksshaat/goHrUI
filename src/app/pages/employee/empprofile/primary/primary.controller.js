@@ -24,7 +24,6 @@
         function _loadController() {
             pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
             function _getAllSelectSuccessResult(result) {
-                console.log(param)
                 $scope.dropDownLists = result;
                 param.PdDateOfBirth=moment(param.PdDateOfBirth).format("DD-MMM-YYYY");
                 $scope.entity = angular.copy(param);

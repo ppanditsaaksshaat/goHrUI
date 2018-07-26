@@ -8,14 +8,15 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.employee.empprofile')
-        .controller('empExperienceController', empExperienceController);
+        .controller('empRelationController', empRelationController);
 
     /** @ngInject */
-    function empExperienceController($scope, $state, $rootScope, $stateParams, pageService, editFormService) {
+    function empEducationController($scope, $stateParams, pageService, editFormService) {
 
         var empId = $stateParams.empid
-        var expTableId = 62;
-        var expPageId = 56;
+        var relTableId = 56;
+        var relPageId =52;
+        var columnIds = ['653'];
         $scope.grid = true;
         $scope.entity = {};
         $scope.editentity = {};
@@ -32,12 +33,10 @@
             enableVerticalScrollbar: 0,
             enableScrollbars: false,
             columnDefs: [
-                { name: 'WEOrganizName', displayName: 'Organisation', width: 100, enableCellEdit: false },
-                { name: 'WEDesignation', displayName: 'Designation', width: 100, enableCellEdit: false },
-                { name: 'WEDomain', displayName: 'Domain', width: 90, enableCellEdit: false },
-                { name: 'WEFrom', displayName: 'From', width: 95, enableCellEdit: false },
-                { name: 'WETo', displayName: 'To', width: 95, enableCellEdit: false },
-                { name: 'WECompanyAddress', displayName: 'Location', width: 90, enableCellEdit: false },
+                { name: 'FdName', displayName: 'Qualification', width: 100, enableCellEdit: false },
+                { name: 'FdEmail', displayName: 'Board', width: 100, enableCellEdit: false },
+                { name: 'FdMobile', displayName: 'Mobile', width: 100, enableCellEdit: false },
+                { name: 'GenderName', displayName: 'Gender', width: 100, enableCellEdit: false },
                 {
                     name: 'Edit',
                     width: 70,
@@ -50,9 +49,20 @@
         }
 
         function _loadController() {
+
+            pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
+            function _getAllSelectSuccessResult(result) {
+                console.log(result)
+                $scope.dropDownLists = result;
+              
+            }
+            function _getAllSelectErrorResult(err) {
+
+            }
+
             var searchLists = [];
             var searchListData = {
-                field: 'WEEmpId',
+                field: 'QualiEmpId',
                 operand: "=",
                 value: empId
             }
@@ -61,7 +71,7 @@
                 searchList: searchLists,
                 orderByList: []
             }
-            pageService.getTableData(expTableId, expPageId, '', '', false, data)
+            pageService.getTableData(eduTableId, eduPageId, '', '', false, data)
                 .then(_getTableDataSuccessResult, _getTableDataErrorResult)
 
             function _getTableDataSuccessResult(result) {
@@ -83,10 +93,10 @@
         }
         function _add(entity, form) {
             entity.WEEmpId = empId
-            _formSaveUpdate(entity, expPageId, 'create', {}, form, false)
+            _formSaveUpdate(entity, eduPageId, 'create', {}, form, false)
         }
         function _update(entity, form) {
-            _formSaveUpdate(entity, expPageId, 'edit', $scope.oldEntity, form, false)
+            _formSaveUpdate(entity, eduPageId, 'edit', $scope.oldEntity, form, false)
         }
 
         function _formSaveUpdate(entity, pageId, action, oldEntity, editForm, showConfirmation) {
@@ -102,11 +112,11 @@
                 $scope.editForm = false;
                 if (result.success_message == "Record Updated.") {
                     _loadController();
-                    $scope.showMsg("success", "Work Experience Detail Updated")
+                    $scope.showMsg("success", "Education Detail Updated")
                 }
                 else {
                     _loadController();
-                    $scope.showMsg("success", "Work Experience Detail Added")
+                    $scope.showMsg("success", "Education Detail Added")
                 }
             }
         }
