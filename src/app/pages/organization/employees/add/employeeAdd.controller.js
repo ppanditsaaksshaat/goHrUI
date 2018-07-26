@@ -121,7 +121,8 @@
             console.log(result)
             if (result.success_message == 'success') {
                 $scope.showMsg('success', 'Employee Saved Successfully');
-                $state.go('organization.employees.list');
+              //  $state.go('organization.employees.list');
+                $state.go("employee",{empid:result.entity.empId})
             }
             else {
                 $scope.showMsg('error', result);
