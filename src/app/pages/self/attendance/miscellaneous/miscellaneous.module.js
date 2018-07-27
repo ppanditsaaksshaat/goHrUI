@@ -44,7 +44,7 @@
                 views: {
                     'modal@': {
                         templateUrl: 'app/pages/self/attendance/miscellaneous/applyleave.html',
-                        controller: 'applyLeaveController',
+                        controller: 'appLeaveController',
                         resolve: {
                             entity: function ($stateParams) {
                                 return $stateParams.entity;
@@ -67,7 +67,7 @@
                 views: {
                     'modal@': {
                         templateUrl: 'app/pages/self/attendance/miscellaneous/applyattendance.html',
-                        controller: 'applyAttendanceController',
+                        controller: 'appAttendanceController',
                         resolve: {
                             entity: function ($stateParams) {
                                 return $stateParams.entity;

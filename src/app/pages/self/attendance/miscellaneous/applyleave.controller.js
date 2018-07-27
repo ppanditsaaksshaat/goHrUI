@@ -6,10 +6,10 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.self.attendance.miscellaneous')
-        .controller('applyLeaveController', applyLeaveController);
+        .controller('appLeaveController', appLeaveController);
 
     /** @ngInject */
-    function applyLeaveController($scope, $rootScope, $state, pageService, entity, editFormService) {
+    function appLeaveController($scope, $rootScope, $state, pageService, entity, editFormService) {
         console.log('apply coff')
         var vm = this;
         vm.oldEntity = {};

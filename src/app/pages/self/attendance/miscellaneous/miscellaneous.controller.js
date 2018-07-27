@@ -102,7 +102,7 @@
                 $scope.applyCOf = true;
             }
             else {
-                $rootScope.showMsg("info", "You can take any kind of request when day status is /holiday/weekoff/od/leave");
+                $rootScope.showMsg("info", "You can take any kind of request when day status is absent/holiday/weekoff");
                 $scope.apply = false;
                 $scope.applyCOf = false;
             }
@@ -232,8 +232,8 @@
                 id: $scope.applyDate,
                 entity: $scope.holeObject
             })
-            console.log($scope.monthSummery)
-            console.log($scope.atttttt)
+            // console.log($scope.monthSummery)
+            // console.log($scope.atttttt)
         }
 
         function _applyAttendance() {
@@ -241,7 +241,7 @@
                 id: $scope.applyDate,
                 entity: $scope.holeObject
             })
-            console.log(moment(monthSummery.DATE).format('dd-MMM-yyyy'))
+            // console.log(moment(monthSummery.DATE).format('dd-MMM-yyyy'))
         }
 
         function _applyOD() {

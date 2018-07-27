@@ -6,10 +6,10 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.self.attendance.miscellaneous')
-        .controller('applyAttendanceController', applyAttendanceController);
+        .controller('appAttendanceController', appAttendanceController);
 
     /** @ngInject */
-    function applyAttendanceController($scope, $rootScope, $state, pageService, entity, editFormService) {
+    function appAttendanceController($scope, $rootScope, $state, pageService, entity, editFormService) {
         console.log('apply coff')
         var vm = this;
         vm.oldEntity = {};
@@ -19,6 +19,7 @@
         $scope.entity = entity;
         $scope.entity.attendanceDate = moment(entity.DATE).format('DD-MMM-YYYY');
         console.log($scope.entity)
+        console.log($scope.entity.attendanceDate)
         $scope.newEntity = {};
 
         $scope.addAttendance = _addAttendance;
