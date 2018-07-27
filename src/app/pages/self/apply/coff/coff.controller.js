@@ -108,15 +108,15 @@
   
       function _validateSanctionForm() {
         if ($scope.sanctionEntity.StatusId == "0") {
-          $scope.showMsg("error", "Please Select Status");
+          $rootScope.showMsg("error", "Please Select Status");
           return true;
         }
         if ($scope.sanctionEntity.ACODReson == undefined || $scope.sanctionEntity.ACODReson == null || $scope.sanctionEntity.ACODReson == '') {
-          $scope.showMsg("error", "Please Enter Comment");
+          $rootScope.showMsg("error", "Please Enter Comment");
           return true;
         }
         // if ($scope.sanctionEntity.ACODIsApplyHalfDay == undefined || $scope.sanctionEntity.ACODIsApplyHalfDay == null || $scope.sanctionEntity.ACODIsApplyHalfDay == '' || $scope.sanctionEntity.ACODIsApplyFullDay == undefined || $scope.sanctionEntity.ACODIsApplyFullDay == null || $scope.sanctionEntity.ACODIsApplyFullDay == '') {
-        //   $scope.showMsg("error", "Please select full day Or half day");
+        //   $rootScope.showMsg("error", "Please select full day Or half day");
         //   return true;
         // }
         return false;
@@ -155,10 +155,10 @@
       function _saveSuccessResult(result) {
   
         if (result.success_message == 'Added New Record.') {
-          $scope.showMsg("success", "Record Saved Successfully")
+          $rootScope.showMsg("success", "Record Saved Successfully")
         }
         else {
-          $scope.showMsg("success", "Record Saved Successfully")
+          $rootScope.showMsg("success", "Record Saved Successfully")
         }
         $scope.showEditForm = true;
         $scope.showGridData = false;
@@ -169,7 +169,7 @@
         $scope.page.refreshData();
       }
       function _saveErrorResult(err) {
-        $scope.showMsg("error", err)
+        $rootScope.showMsg("error", err)
       }
   
   
@@ -230,7 +230,7 @@
         }
         else {
   
-          $scope.showMsg("error", "You can view this App only")
+          $rootScope.showMsg("error", "You can view this App only")
   
         }
   
@@ -353,7 +353,7 @@
           console.log(result);
           console.log(result[0][0].ERROR)
           if (result[0][0].ERROR == 'You can not apply C-Off') {
-            $scope.showMsg("warning", result[0][0].ERROR)
+            $rootScope.showMsg("warning", result[0][0].ERROR)
             $scope.showInOutTime = false;
             $scope.entity = {};
             $scope.entity.COAttnDate = moment();
@@ -410,10 +410,10 @@
           }
           else {
             if ($scope.isCancelRequest) {
-              $scope.showMsg("error", "You are not allowed to view this leave application beacause this leave application is already in processing for approval")
+              $rootScope.showMsg("error", "You are not allowed to view this leave application beacause this leave application is already in processing for approval")
             }
             else {
-              $scope.showMsg("error", "Your application already sanctioned/rejected/onhold")
+              $rootScope.showMsg("error", "Your application already sanctioned/rejected/onhold")
             }
           }
         }
@@ -499,7 +499,7 @@
       // function _updateSuccessResult(result) {
   
       //   if (result.success_message == "Updated")
-      //     $scope.showMsg("success", "Record Updated")
+      //     $rootScope.showMsg("success", "Record Updated")
   
       // }
       // function _updateErrorResult(err) {
@@ -527,7 +527,7 @@
           }
         }
         else {
-          $scope.showMsg("error", "Please comment before loan cancel");
+          $rootScope.showMsg("error", "Please comment before loan cancel");
         }
       }
   
@@ -551,9 +551,9 @@
         }
         else {
           if (cancelRequestEntity.StatusId == undefined) {
-            $scope.showMsg("error", "Please select status");
+            $rootScope.showMsg("error", "Please select status");
           } else if (cancelRequestEntity.CRCommentAfterCanReq == undefined) {
-            $scope.showMsg("error", "Please enter comment");
+            $rootScope.showMsg("error", "Please enter comment");
           }
         }
   

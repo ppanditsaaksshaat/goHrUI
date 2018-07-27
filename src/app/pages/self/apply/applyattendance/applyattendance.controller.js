@@ -146,7 +146,7 @@
           $scope.entity = row.entity;
           $scope.entity.IsLateOrEarlyExempted = row.entity.ADSIsLateEarlyExampted;
         } else {
-          $scope.showMsg("error", "you have already applied for Overtime/C-Off")
+          $rootScope.showMsg("error", "you have already applied for Overtime/C-Off")
         }
   
   
@@ -179,7 +179,7 @@
           // ADSIsLateEarlyExampted,ADSIsOvertimeApproved,ADSIsCompOffApproved
   
         } else {
-          $scope.showMsg("error", "you have already applied for Late Or Early/C-Off")
+          $rootScope.showMsg("error", "you have already applied for Late Or Early/C-Off")
         }
   
         // $scope.entity = rowEntity;
@@ -200,10 +200,10 @@
             $scope.isCompOffApproved = true;
             $scope.isApprovedAttendence = false;
           } else {
-            $scope.showMsg("info", "You can not apply c-off.")
+            $rootScope.showMsg("info", "You can not apply c-off.")
           }
         } else {
-          $scope.showMsg("error", "you have already applied for Overtime/Late Or Early.")
+          $rootScope.showMsg("error", "you have already applied for Overtime/Late Or Early.")
         }
       }
   
@@ -497,7 +497,7 @@
   
         if (result[0][0].Result == "Save Early Or Late Exempted") {
           console.log(result);
-          $scope.showMsg("success", "Save Early Or Late Exempted.");
+          $rootScope.showMsg("success", "Save Early Or Late Exempted.");
   
           console.log(result);
           $scope.showGrid = true;
@@ -555,7 +555,7 @@
       function _oTApprovedSuccessResult(result) {
         if (result[0][0].Result == "Save Overtime") {
           console.log(result);
-          $scope.showMsg("success", "Save Overtime.");
+          $rootScope.showMsg("success", "Save Overtime.");
           $scope.showGrid = true;
           $scope.showEditForm = false;
           $scope.isLateOrEarlyExempted = false;
@@ -604,7 +604,7 @@
       function _cOffApprovedSuccessResult(result) {
         if (result[0][0].Result == "Save C-Off") {
           console.log(result);
-          $scope.showMsg("success", "Save C-Off.");
+          $rootScope.showMsg("success", "Save C-Off.");
           $scope.showGrid = true;
           $scope.showEditForm = false;
           $scope.isLateOrEarlyExempted = false;
@@ -622,11 +622,11 @@
   
       function _validateApprovedData() {
         if ($scope.StatusId == undefined || $scope.StatusId == null) {
-          $scope.showMsg("error", "Please Select Status");
+          $rootScope.showMsg("error", "Please Select Status");
           return true;
         }
         if ($scope.AttApprovedRemark == undefined || $scope.AttApprovedRemark == null || $scope.AttApprovedRemark == '') {
-          $scope.showMsg("error", "Please Enter Comment");
+          $rootScope.showMsg("error", "Please Enter Comment");
           return true;
         }
         return false;
@@ -681,7 +681,7 @@
           $scope.isCompOffApproved = false;
           $scope.isApprovedAttendence = false;
           $scope.page.refreshData();
-          $scope.showMsg("success", "Approved Attendance")
+          $rootScope.showMsg("success", "Approved Attendance")
         } else {
           $scope.showGrid = true;
           $scope.showEditForm = false;
@@ -690,12 +690,12 @@
           $scope.isCompOffApproved = false;
           $scope.isApprovedAttendence = false;
           // $scope.page.refreshData();
-          $scope.showMsg("info", "Please update Exempted/OT/COff.")
+          $rootScope.showMsg("info", "Please update Exempted/OT/COff.")
         }
       }
   
       function _getCustomQueryErrorResult(error) {
-        $scope.showMsg("error", error)
+        $rootScope.showMsg("error", error)
       }
   
   

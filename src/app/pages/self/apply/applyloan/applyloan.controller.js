@@ -185,7 +185,7 @@
                 }
             }
             else {
-                $scope.showMsg("error", "You can view this loan only")
+                $rootScope.showMsg("error", "You can view this loan only")
             }
 
         }
@@ -262,11 +262,11 @@
 
         function _validateSanctionForm() {
             if ($scope.sanctionEntity.StatusId == "0") {
-                $scope.showMsg("error", "Please Select Status");
+                $rootScope.showMsg("error", "Please Select Status");
                 return true;
             }
             if ($scope.sanctionEntity.LADRemark == undefined || $scope.sanctionEntity.LADRemark == null || $scope.sanctionEntity.LADRemark == '') {
-                $scope.showMsg("error", "Please Enter Comment");
+                $rootScope.showMsg("error", "Please Enter Comment");
                 return true;
             }
             return false;
@@ -309,10 +309,10 @@
         function _saveSuccessResult(result) {
 
             if (result.success_message == 'Added New Record.') {
-                $scope.showMsg("success", "Record Saved Successfully")
+                $rootScope.showMsg("success", "Record Saved Successfully")
             }
             else {
-                $scope.showMsg("success", "Record Saved Successfully")
+                $rootScope.showMsg("success", "Record Saved Successfully")
             }
             $scope.showEditLv = false;
             $scope.showEditGrid = true;
@@ -323,7 +323,7 @@
             $scope.page.refreshData();
         }
         function _saveErrorResult(err) {
-            $scope.showMsg("error", err)
+            $rootScope.showMsg("error", err)
         }
 
 
@@ -753,7 +753,7 @@
         function _updateSuccessResult(result) {
 
             if (result.success_message == "Updated")
-                $scope.showMsg("success", "Record Updated")
+                $rootScope.showMsg("success", "Record Updated")
 
         }
         function _updateErrorResult(err) {
@@ -830,10 +830,10 @@
                 }
                 else {
                     if ($scope.isCancelRequest) {
-                        $scope.showMsg("error", "You are not allowed to view this leave application beacause this leave application is already in processing for approval")
+                        $rootScope.showMsg("error", "You are not allowed to view this leave application beacause this leave application is already in processing for approval")
                     }
                     else {
-                        $scope.showMsg("error", "Your application already sanctioned/rejected/onhold")
+                        $rootScope.showMsg("error", "Your application already sanctioned/rejected/onhold")
                     }
                 }
             }
@@ -858,7 +858,7 @@
                 }
             }
             else {
-                $scope.showMsg("error", "Please comment before loan cancel");
+                $rootScope.showMsg("error", "Please comment before loan cancel");
             }
         }
 
@@ -880,9 +880,9 @@
             }
             else {
                 if (cancelRequestEntity.StatusId == undefined) {
-                    $scope.showMsg("error", "Please select status");
+                    $rootScope.showMsg("error", "Please select status");
                 } else if (cancelRequestEntity.CRCommentAfterCanReq == undefined) {
-                    $scope.showMsg("error", "Please enter comment");
+                    $rootScope.showMsg("error", "Please enter comment");
                 }
             }
 
