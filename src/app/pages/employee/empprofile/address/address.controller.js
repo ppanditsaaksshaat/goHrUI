@@ -13,20 +13,25 @@
     /** @ngInject */
     function empAddressController($scope, $state, $stateParams, pageService, editFormService, param) {
 
-      
+
         // global variable declaration
 
         var empId = $stateParams.empid;
         var contactPageId = 36;
         var contactTableId = 45;
         $scope.permanentPanel = true;
+        $scope.param = param.Current;
+
         $scope.entity = {
             Current: {}
         };
         var columnIds = ['201', '202', '203', '3202', '3203', '3204'];
 
 
+        $scope.save = _save;
         $scope.updateForm = _updateForm;
+
+
         if (param.Current != undefined) {
             $scope.entity.Current.IsSameAsPermanent = param.Current.IsSameAsPermanent;
         }
@@ -85,23 +90,22 @@
                     console.log(err);
                 }
             }
-            else {
-                var entity = {
-                    CDEmpId: empId,
-                    CDAddLine1: $scope.entity.Current.CDAddLine1,
-                    CDAddLine2: $scope.entity.Current.CDAddLine2,
-                    CDCityId: $scope.entity.Current.CityId,
-                    CDPincode: $scope.entity.Current.CDPincode,
-                    CDPAddLine1: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine1,
-                    CDPAddLine2: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine2,
-                    PCityId: $scope.entity.Current.IsSameAsPermanent ? 0 : $scope.entity.Permanent.PCityId,
-                    CDPPincode: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPPincode,
-                    IsSameAsPermanent: $scope.entity.Current.IsSameAsPermanent
-                }
-                _formSave(entity, contactPageId, 'create', {}, form, false)
-            }
         }
-
+        function _save(form) {
+            var entity = {
+                CDEmpId: empId,
+                CDAddLine1: $scope.entity.Current.CDAddLine1,
+                CDAddLine2: $scope.entity.Current.CDAddLine2,
+                CDCityId: $scope.entity.Current.CityId,
+                CDPincode: $scope.entity.Current.CDPincode,
+                CDPAddLine1: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine1,
+                CDPAddLine2: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine2,
+                PCityId: $scope.entity.Current.IsSameAsPermanent ? 0 : $scope.entity.Permanent.PCityId,
+                CDPPincode: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPPincode,
+                IsSameAsPermanent: $scope.entity.Current.IsSameAsPermanent
+            }
+            _formSave(entity, contactPageId, 'create', {}, form, false)
+        }
 
         function _formSave(entity, pageId, action, oldEntity, editForm, showConfirmation) {
             editFormService.saveForm(pageId, entity, oldEntity,
@@ -109,7 +113,7 @@
                 .then(_successResult, _errorResult)
         }
         function _successResult(result) {
-           // console.log(result)
+            // console.log(result)
             if (result.success_message == "Added New Record.") {
                 $scope.modalInstance.close("success");
             }

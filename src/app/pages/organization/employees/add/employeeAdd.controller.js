@@ -12,12 +12,12 @@
 
     /** @ngInject */
     /** @ngInject */
-    function AddEmployeeController($scope, $stateParams, pageService, $timeout, $state) {
+    function AddEmployeeController($scope,$filter, pageService, $timeout, $state) {
 
 
         //local variable
         var vm = this;
-        var columnIds = ['132', '667', '3841', '192', '668', '743', '744', '665','4034'];
+        var columnIds = ['132', '667', '3841', '192', '668', '743', '744', '665', '4034', '1743', '1744', '1745','112'];
         vm.pageId = 25;
         vm.empAdd = {};
         var queryId = 528;
@@ -25,7 +25,9 @@
 
         //private function
         vm.saveForm = _saveForm;
-        vm.rosterPlanOnChage=_rosterPlanOnChage;
+        vm.rosterPlanOnChage = _rosterPlanOnChage;
+        vm.locationOnChange = _locationOnChange;
+        vm.branchOnChange = _branchOnChange;
         //end of private function
 
 
@@ -53,7 +55,6 @@
 
         }
         function _getAllSelectSuccessResult(result) {
-            console.log(result)
             vm.dropDownList = result;
         }
         function _getAllSelectErrorResult(err) {
@@ -95,25 +96,22 @@
                 JDReporting1: vm.empAdd.JDReporting1,
                 JDReporting2: vm.empAdd.JDReporting2,
                 JDReportingHR: vm.empAdd.JDReportingHR,
+                JDSubUnitID: vm.empAdd.JDSubUnitID,
                 DoubleOTRate: 0,
                 JDSingleOTRate: 0,
                 SingleOT: 0,
                 JDDoubleOT: 0
-            }
+            }       
             var personal = {
                 PdGenderId: vm.empAdd.PdGenderId,
                 PdMobileNo: vm.empAdd.PdMobileNo,
                 PDOtherNumber: vm.empAdd.PDOtherNumber,
                 PdEmail: vm.empAdd.PdEmail
             }
-            // var roster = {
-            //     RODWeekOffSetId: $scope.RosterPlan.RPDWeekOffSetId,
-            //     RODFromDate: moment($scope.RosterPlan.RPDFromDate).format("DD-MMM-YYYY"),
-            //     RODToDate: moment($scope.RosterPlan.RPDToDate).format("DD-MMM-YYYY"),
-            //     RODShiftId: $scope.RosterPlan.RPDWeekOffSetId,
-            //     RODRosterPlanId: $scope.RosterPlan.value,
-            // }
-            var employeeData = { basic: basic, job: job, personal: personal };
+            var userRoleInfo = {
+                RoleId: vm.empAdd.RoleId,               
+            }
+            var employeeData = { basic: basic, job: job, personal: personal,userRoleInfo:userRoleInfo };
             pageService.create(JSON.stringify(employeeData)).then(_createSuccessResult, _createErrorResult)
 
         }
@@ -121,8 +119,8 @@
             console.log(result)
             if (result.success_message == 'success') {
                 $scope.showMsg('success', 'Employee Saved Successfully');
-              //  $state.go('organization.employees.list');
-                $state.go("employee",{empid:result.entity.empId})
+                //  $state.go('organization.employees.list');
+                $state.go("employee", { empid: result.entity.empId })
             }
             else {
                 $scope.showMsg('error', result);
@@ -130,7 +128,21 @@
         }
         function _createErrorResult(error) {
         }
-      
+        function _locationOnChange(locationId) {
+            alert(locationId)
+            console.log(vm.dropDownList[10])
+            var branches = $filter("findAll")(vm.dropDownList[10], locationId, "LocationId");
+            if (branches != null) {
+                vm.Branches = branches;
+            }
+        }
+        function _branchOnChange(branchId) {
+            var subUnits = $filter("findAll")(vm.dropDownList[11], branchId, 'BRId');
+            if (subUnits != null) {
+                vm.SubUnits = subUnits;
+            }
+        }
+
         _loadController();
     }
 })();
