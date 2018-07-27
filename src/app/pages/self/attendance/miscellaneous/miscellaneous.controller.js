@@ -103,7 +103,7 @@
                 $scope.applyCOf = true;
             }
             else {
-                // $scope.showMsg("error", "Please Enter Date");
+                $rootScope.showMsg("info", "You can take any kind of request when day status is /holiday/weekoff/od/leave");
                 $scope.apply = false;
                 $scope.applyCOf = false;
             }
@@ -168,11 +168,11 @@
                     pageService.getCustomQuery(data, 646).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
                 }
                 else {
-                    // $scope.showMsg("info", "Month and year should be less than or equal to current month and year");
+                    $rootScope.showMsg("info", "Month and year should be less than or equal to current month and year");
                 }
             }
             else {
-                // $scope.showMsg("info", "Year should be less than or equal to current year");
+                $rootScope.showMsg("info", "Year should be less than or equal to current year");
             }
         }
 

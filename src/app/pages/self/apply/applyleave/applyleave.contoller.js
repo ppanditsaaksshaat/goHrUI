@@ -258,7 +258,7 @@
             } else {
 
                 $scope.isSavingLeave = true;
-                $scope.showMsg("error", "Please contact admin to provide your Joining date")
+                $rootScope.showMsg("error", "Please contact admin to provide your Joining date")
             }
         }
 
@@ -290,7 +290,7 @@
         }
 
         function _getCustomQueryErrorResult(err) {
-            $scope.showMsg("error", err);
+            $rootScope.showMsg("error", err);
         }
 
         function _getLeaveDebitSuccessResult(result) {
@@ -300,12 +300,12 @@
                 $scope.leaveRuleList = result;
                 _calculateDays();
             } else {
-                $scope.showMsg('error', 'No Leave Rule Found.')
+                $rootScope.showMsg('error', 'No Leave Rule Found.')
             }
         }
 
         function _getLeaveDebitErrorResult(err) {
-            $scope.showMsg("error", err)
+            $rootScope.showMsg("error", err)
         }
 
         /**Calulate Days */
@@ -567,7 +567,7 @@
         }
 
         function _fetchPendingLeaveError(err) {
-            $scope.showMsg("error", err);
+            $rootScope.showMsg("error", err);
         }
         /**End Of Fetching Previous leave application */
 
@@ -669,7 +669,7 @@
                 vm.validateLeave = false;
                 $scope.isSavingLeave = false;
                 $scope.isgreaterJoinDate = true;
-                $scope.showMsg("error", "From date is greater than to Joining Date");
+                $rootScope.showMsg("error", "From date is greater than to Joining Date");
             }
 
             _fetchPendingLeave();
@@ -705,7 +705,7 @@
             if (!$scope.entity.selectedEmp.AMSTIsVarified) {
                 if (_validateForm(form)) { }
             } else if ($scope.entity.selectedEmp.AMSMonth == parseInt(month) && $scope.entity.selectedEmp.AMSYear == parseInt(year)) {
-                $scope.showMsg("error", "You are not allowed to apply leave because this month attendance verified");
+                $rootScope.showMsg("error", "You are not allowed to apply leave because this month attendance verified");
             } else {
                 if (_validateForm(form)) { }
             }
@@ -776,7 +776,7 @@
                     $scope.isSavingLeave = true;
                     _commonSaveForm($scope.page.pageinfo.pageid, $scope.entity, $scope.oldEntity, $scope.page.action, $scope.page.pageinfo.tagline)
                 } else {
-                    $scope.showMsg('info', 'You have already applied leave for given date.')
+                    $rootScope.showMsg('info', 'You have already applied leave for given date.')
                 }
 
             }
@@ -873,7 +873,7 @@
                     _commonFindEntity(cancelRequestTableId, searchList)
                 }
             } else {
-                $scope.showMsg("error", "You can view this leave only")
+                $rootScope.showMsg("error", "You can view this leave only")
             }
         }
 
@@ -925,19 +925,19 @@
         function _validateSanctionForm() {
 
             if ($scope.sanctionEntity.ELSDSanctionFromDate == undefined || $scope.sanctionEntity.ELSDSanctionToDate == null) {
-                $scope.showMsg("error", "Please Enter Sanction FromDate");
+                $rootScope.showMsg("error", "Please Enter Sanction FromDate");
                 return true;
             }
             if ($scope.sanctionEntity.ELSDSanctionToDate == undefined || $scope.sanctionEntity.ELSDSanctionToDate == null) {
-                $scope.showMsg("error", "Please Enter Sanction ToDate");
+                $rootScope.showMsg("error", "Please Enter Sanction ToDate");
                 return true;
             }
             if ($scope.sanctionEntity.StatusId == "0") {
-                $scope.showMsg("error", "Please Select Status");
+                $rootScope.showMsg("error", "Please Select Status");
                 return true;
             }
             if ($scope.sanctionEntity.ELSDComment == undefined || $scope.sanctionEntity.ELSDComment == null || $scope.sanctionEntity.ELSDComment == '') {
-                $scope.showMsg("error", "Please Enter Comment");
+                $rootScope.showMsg("error", "Please Enter Comment");
                 return true;
             }
 
@@ -976,9 +976,9 @@
         function _saveSuccessResult(result) {
 
             if (result.success_message == 'Added New Record.') {
-                $scope.showMsg("success", "Record Saved Successfully")
+                $rootScope.showMsg("success", "Record Saved Successfully")
             } else {
-                $scope.showMsg("success", "Record Saved Successfully")
+                $rootScope.showMsg("success", "Record Saved Successfully")
             }
             $scope.showSanctionForm = false;
             $scope.verifySanctionForm = false;
@@ -987,7 +987,7 @@
         }
 
         function _saveErrorResult(err) {
-            $scope.showMsg("error", err)
+            $rootScope.showMsg("error", err)
         }
 
         function _closeSanction() {
@@ -1015,7 +1015,7 @@
                 if ($scope.entity.LEADDateFrom) {
                     var daysDiff = _getDateDiff();
                     if (daysDiff < 0) {
-                        $scope.showMsg('warning', 'To date can not be less than from date.')
+                        $rootScope.showMsg('warning', 'To date can not be less than from date.')
                         $scope.entity.LEADDateTo = $scope.entity.LEADDateFrom
                         _appliedDays();
                     } else if (daysDiff == 0) {
@@ -1077,7 +1077,7 @@
 
                 vm.validateLeave = true
             } else {
-                $scope.showMsg("error", "You are not allowed for edit because this leave already sanctioned");
+                $rootScope.showMsg("error", "You are not allowed for edit because this leave already sanctioned");
             }
         }
 
@@ -1120,9 +1120,9 @@
                     $scope.cancelRequestEntity.CreatedOn = moment(row.entity.CreatedOn).format("DD/MMMM/YYYY");;
                 } else {
                     if ($scope.isCancelRequest) {
-                        $scope.showMsg("error", "You are not allowed to view this leave application beacause this leave application is already in processing for approval")
+                        $rootScope.showMsg("error", "You are not allowed to view this leave application beacause this leave application is already in processing for approval")
                     } else {
-                        $scope.showMsg("error", "Your application already sanctioned/rejected/onhold")
+                        $rootScope.showMsg("error", "Your application already sanctioned/rejected/onhold")
                     }
                 }
             }
@@ -1185,7 +1185,7 @@
                     _formSave(cancelRequest, cancelRequestPageId, 'edit', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, false, 'Cancel Request');
                 }
             } else {
-                $scope.showMsg("error", "Please comment before leave cancel");
+                $rootScope.showMsg("error", "Please comment before leave cancel");
             }
         }
 
@@ -1209,9 +1209,9 @@
                 _formSave(cancelRequest, cancelRequestPageId, 'edit', $scope.cancelRequestOldEntity == undefined ? {} : $scope.cancelRequestOldEntity, editForm, false, 'Cancel Request');
             } else {
                 if (cancelRequestEntity.StatusId == undefined) {
-                    $scope.showMsg("error", "Please select status");
+                    $rootScope.showMsg("error", "Please select status");
                 } else if (cancelRequestEntity.CRCommentAfterCanReq == undefined) {
-                    $scope.showMsg("error", "Please enter comment");
+                    $rootScope.showMsg("error", "Please enter comment");
                 }
             }
 
@@ -1269,10 +1269,10 @@
 
             var leaveRule = $filter('findObj')($scope.leaveRuleList, leave.LRCLeaveTypeId, 'LRCLeaveTypeId')
             if (leave.LeaveBalance <= leave.leaveDr) {
-                $scope.showMsg('error', 'No more balance.')
+                $rootScope.showMsg('error', 'No more balance.')
                 leave.leaveDr = parseInt(oldDays)
             } else if (leaveRule.LRCDrMaxDays < leave.leaveDr) {
-                $scope.showMsg('error', 'No more leave allowed in ' + leaveRule.LTName)
+                $rootScope.showMsg('error', 'No more leave allowed in ' + leaveRule.LTName)
                 leave.leaveDr = parseInt(oldDays)
             } else if (leave.leaveDr < oldDays) {
 
@@ -1294,7 +1294,7 @@
                 var difLeave = leave.leaveDr - parseInt(oldDays);
 
                 if (unpaidLeave.leaveDr < difLeave) {
-                    $scope.showMsg('warning', 'First, reduce days in any leave type')
+                    $rootScope.showMsg('warning', 'First, reduce days in any leave type')
                     leave.leaveDr = parseInt(oldDays);
                 } else {
                     var unpaid = {
@@ -1318,10 +1318,10 @@
 
                 var leaveRule = $filter('findObj')($scope.leaveRuleList, leave.LRCLeaveTypeId, 'LRCLeaveTypeId')
                 if (leave.LeaveBalance <= leave.leaveDr) {
-                    $scope.showMsg('error', 'No more balance.')
+                    $rootScope.showMsg('error', 'No more balance.')
                     leave.isHalfDay = false;
                 } else if (leaveRule.LRCDrMaxDays <= leave.leaveDr) {
-                    $scope.showMsg('error', 'No more leave allowed in ' + leaveRule.LTName)
+                    $rootScope.showMsg('error', 'No more leave allowed in ' + leaveRule.LTName)
                     leave.isHalfDay = false;
                 } else if (unpaidLeave.leaveDr >= 0.5) {
                     leave.halfDay = .5;
@@ -1337,7 +1337,7 @@
                     $scope.showLeave.push(unpaid);
 
                 } else {
-                    $scope.showMsg('warning', 'Half day not allowed')
+                    $rootScope.showMsg('warning', 'Half day not allowed')
                     leave.isHalfDay = false;
                 }
             } else {
@@ -1360,7 +1360,7 @@
             var leaveRule = $filter('findObj')($scope.leaveRuleList, $scope.entity.conditinalLeaveTypeId, 'LRCLeaveTypeId')
 
             if (leaveRule == null) {
-                $scope.showMsg('error', 'No leave rule defined.')
+                $rootScope.showMsg('error', 'No leave rule defined.')
             } else {
 
                 var leave = {
@@ -1453,7 +1453,7 @@
         function _saveFormSuccess(result) {
             $scope.isSavingLeave = false;
             $scope.isLeaveSaved = true;
-            $scope.showMsg('success', $scope.page.pageinfo.tagline + " saved successfully.")
+            $rootScope.showMsg('success', $scope.page.pageinfo.tagline + " saved successfully.")
             $scope.showEditForm = false;
             $scope.page.refreshData();
         }
