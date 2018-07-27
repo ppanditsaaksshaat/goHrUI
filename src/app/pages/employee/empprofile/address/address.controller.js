@@ -13,7 +13,7 @@
     /** @ngInject */
     function empAddressController($scope, $state, $stateParams, pageService, editFormService, param) {
 
-        console.log(param)
+      
         // global variable declaration
 
         var empId = $stateParams.empid;
