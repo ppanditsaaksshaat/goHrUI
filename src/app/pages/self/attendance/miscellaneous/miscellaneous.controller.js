@@ -212,6 +212,8 @@
                 // value: $scope.user.profile.empId
             })
             $scope.page.refreshData()
+            $scope.apply = false;
+            $scope.applyCOf = false;
         }
 
 
