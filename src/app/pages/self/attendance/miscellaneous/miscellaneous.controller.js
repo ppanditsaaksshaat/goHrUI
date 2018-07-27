@@ -8,6 +8,8 @@
     angular.module('BlurAdmin.pages.self.attendance.miscellaneous')
         .controller('miscellaneousController', miscellaneousController);
     function miscellaneousController($scope, $rootScope, $state, $filter, pageService, $location, $anchorScroll) {
+
+        console.log("parent")
         var vm = this;
         $scope.miscelAttendanceSummery = {};
         $scope.monthlySummery = {};
@@ -33,7 +35,9 @@
         $scope.page.pageId = 490;
 
         $rootScope.$on("CallParentMethod", function () {
-            $scope.employeeSalary = _employeeSalary();
+            // $scope.employeeSalary = _employeeSalary();
+            _searchAttendance()
+            // $state.reload();
         });
 
 

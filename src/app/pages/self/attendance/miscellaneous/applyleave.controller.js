@@ -24,7 +24,7 @@
         $scope.addLeave = _addLeave;
 
         function _childmethod() {
-            $rootScope.$emit("CallParentMethod", {});
+            $rootScope.$broadcast("CallParentMethod", {});
         }
 
         function _validateApprovedData() {

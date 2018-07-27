@@ -32,6 +32,7 @@
                         template: '<div ui-view="modal"></div>',
                         size: 'top-center-500'
                     }).result.finally(function () {
+                        // $state.reload();
                         $state.go('selfdir.attendance.miscellaneous');
                     });
                 }]
