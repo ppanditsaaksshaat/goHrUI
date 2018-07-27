@@ -26,10 +26,10 @@
         var columnIds = ['201', '202', '203', '3202', '3203', '3204'];
 
 
-        //public function 
-        // $scope.sameaspermanent = _sameaspermanent;
         $scope.updateForm = _updateForm;
-        $scope.entity.Current.IsSameAsPermanent = param.Current.IsSameAsPermanent;
+        if (param.Current != undefined) {
+            $scope.entity.Current.IsSameAsPermanent = param.Current.IsSameAsPermanent;
+        }
 
         // call on page load
         function _loadController() {
@@ -41,12 +41,12 @@
                 $scope.dropDownLists = result;
 
                 $scope.entity.Current = param.Current;
-                if (!param.Current.IsSameAsPermanent) {
-                    $scope.entity.Permanent = param.Permanent;
+                if (param.Current != undefined) {
+                    if (!param.Current.IsSameAsPermanent) {
+                        $scope.entity.Permanent = param.Permanent;
+                    }
                 }
-                else {
 
-                }
             }
             function _getAllSelectErrorResult(err) {
 

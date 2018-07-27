@@ -22,6 +22,7 @@
         $scope.editentity = {};
 
         $scope.add = _add;
+        $scope.save = _save;
         $scope.editRecord = _editRecord;
         $scope.update = _update;
         $scope.close = _close;
@@ -83,6 +84,9 @@
                 console.log(err)
             }
         }
+        function _add() {
+            $scope.entity = {};
+        }
 
         function _editRecord(row) {
             $scope.grid = false;
@@ -92,7 +96,7 @@
             $scope.oldEntity = angular.copy(row.entity);
 
         }
-        function _add(entity, form) {
+        function _save(entity, form) {
             entity.QualiEmpId = empId
             _formSaveUpdate(entity, eduPageId, 'create', {}, form, false)
         }
@@ -106,7 +110,7 @@
                 .then(_successResult, _errorResult)
         }
         function _successResult(result) {
-          
+
             if (result.success_message == "Record Updated." || result.success_message == "Added New Record.") {
                 $scope.grid = true;
                 $scope.addForm = false;

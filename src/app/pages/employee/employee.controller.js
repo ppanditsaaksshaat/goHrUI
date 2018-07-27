@@ -9,11 +9,30 @@
         .controller('employeeController', employeeController);
 
     /** @ngInject */
-    function employeeController($scope, $state, pageService, localStorageService) {
+    function employeeController($scope, $state,$stateParams, pageService, localStorageService) {
 
+        var empId = $stateParams.empid;
         function _loadController() {
-         //   console.log($stateParam.entity)
-             $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");         
+
+            //  $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");    
+            var searchLists = [];
+         
+            searchLists.push({ field: 'EmpId', operand: '=', value: empId })
+
+            var data = {
+                searchList: searchLists,
+                orderByList: []
+            }
+            pageService.getCustomQuery(data, 650).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+
+            function _getCustomQuerySuccessResult(result) {
+                console.log(result);
+                $scope.empBaicDetail = result[0][0];
+
+            }
+            function _getCustomQueryErrorResult(err) {
+                console.log(err);
+            }
         }
         _loadController();
     }

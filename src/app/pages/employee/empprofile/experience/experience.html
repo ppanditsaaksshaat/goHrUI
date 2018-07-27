@@ -8,7 +8,7 @@
         <div ng-show="grid" class="col-sm-12">
             <div class="col-md-6">
                 <div class="row">
-                    <button class="btn btn-default" ng-click="grid=false;addForm=true;editForm=false ">
+                    <button class="btn btn-default" ng-click="add();grid=false;addForm=true;editForm=false ">
                         <i class="fa fa-plus"></i>
                         <span dotranslate>create</span>
                     </button>
@@ -143,7 +143,7 @@
                         <div class="row">
                             <div class="col-sm-12 vertical-margin">
                                 <div class="col-sm-6 pull-right text-right">
-                                    <button type="submit" class="btn btn-submit btn-primary" data-ng-click="add(entity,addform)">Save</button>
+                                    <button type="submit" class="btn btn-submit btn-primary" data-ng-click="save(entity,addform)">Save</button>
                                     <a class="btn btn-cancel" data-ng-click="grid=true;addForm=false;editForm=false; ">Cancel</a>
                                 </div>
                             </div>

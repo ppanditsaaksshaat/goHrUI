@@ -25,7 +25,7 @@
 
 
         function _loadController() {
-            $scope.entity = param;
+            $scope.entity = angular.copy(param);
         }
 
         function _update() {

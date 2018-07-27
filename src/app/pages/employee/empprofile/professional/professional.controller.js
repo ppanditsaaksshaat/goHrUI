@@ -22,26 +22,31 @@
         }
 
         function _update() {
-            var entity = [];
-            var fieldList = {
-                tableId: proTableId,
-                pkId: $scope.entity.PSId,
-                pkColName: 'PSId',
-                PSDescription: $scope.entity.PSDescription
-            }
-            entity.push(fieldList)
-            pageService.udateMultiTableFields(entity).
-                then(_successResult, _errorResult);
+            if (param != undefined) {
+                var entity = [];
+                var fieldList = {
+                    tableId: proTableId,
+                    pkId: $scope.entity.PSId,
+                    pkColName: 'PSId',
+                    PSDescription: $scope.entity.PSDescription
+                }
+                entity.push(fieldList)
+                pageService.udateMultiTableFields(entity).
+                    then(_successResult, _errorResult);
 
-            function _successResult(result) {
-                console.log(result)
-                if (result.success_message = "Updated") {
-                    $scope.modalInstance.close("success");
+                function _successResult(result) {
+                    console.log(result)
+                    if (result.success_message = "Updated") {
+                        $scope.modalInstance.close("success");
 
+                    }
+                }
+                function _errorResult(err) {
+                    console.log(err)
                 }
             }
-            function _errorResult(err) {
-                console.log(err)
+            else{
+                
             }
         }
         _loadController();

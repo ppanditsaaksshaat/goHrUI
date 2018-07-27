@@ -40,23 +40,25 @@
             pageService.getCustomQuery(data, 651).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
 
             function _getCustomQuerySuccessResult(result) {
-
+                console.log(result)
                 $scope.empBasicDetail = result[0][0];
                 $scope.empCurrentAddress = result[1][0];
-                if (!$scope.empCurrentAddress.IsSameAsPermanent) {
+                if ($scope.empCurrentAddress != undefined) {
+                    if (!$scope.empCurrentAddress.IsSameAsPermanent) {
 
-                    $scope.empPermanentAddress = {};
-                    $scope.empPermanentAddress = result[2][0];
-                }
-                else {
+                        $scope.empPermanentAddress = {};
+                        $scope.empPermanentAddress = result[2][0];
+                    }
+                    else {
 
-                    $scope.empPermanentAddress = {};
-                    $scope.empPermanentAddress.CDPAddLine1 = $scope.empCurrentAddress.CDAddLine1;
-                    $scope.empPermanentAddress.CDPAddLine2 = $scope.empCurrentAddress.CDAddLine2;
-                    $scope.empPermanentAddress.CountryName = $scope.empCurrentAddress.CountryName;
-                    $scope.empPermanentAddress.StateName = $scope.empCurrentAddress.StateName;
-                    $scope.empPermanentAddress.CityName = $scope.empCurrentAddress.CityName;
-                    $scope.empPermanentAddress.CDPPincode = $scope.empCurrentAddress.CDPincode;
+                        $scope.empPermanentAddress = {};
+                        $scope.empPermanentAddress.CDPAddLine1 = $scope.empCurrentAddress.CDAddLine1;
+                        $scope.empPermanentAddress.CDPAddLine2 = $scope.empCurrentAddress.CDAddLine2;
+                        $scope.empPermanentAddress.CountryName = $scope.empCurrentAddress.CountryName;
+                        $scope.empPermanentAddress.StateName = $scope.empCurrentAddress.StateName;
+                        $scope.empPermanentAddress.CityName = $scope.empCurrentAddress.CityName;
+                        $scope.empPermanentAddress.CDPPincode = $scope.empCurrentAddress.CDPincode;
+                    }
                 }
                 $scope.empExperience = result[3];
                 $scope.empEducation = result[4];

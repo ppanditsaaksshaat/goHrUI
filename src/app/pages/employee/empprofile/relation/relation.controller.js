@@ -24,6 +24,7 @@
         $scope.add = _add;
         $scope.editRecord = _editRecord;
         $scope.update = _update;
+        $scope.save = _save;
         $scope.close = _close;
 
         $scope.gridOptions = {
@@ -84,6 +85,10 @@
             }
         }
 
+        function _add() {
+            $scope.entity = {};
+        }
+
         function _editRecord(row) {
             $scope.grid = false;
             $scope.addForm = false;
@@ -92,7 +97,8 @@
             $scope.oldEntity = angular.copy(row.entity);
 
         }
-        function _add(entity, form) {
+
+        function _save(entity, form) {
             entity.FdEmpId = empId
             _formSaveUpdate(entity, relPageId, 'create', {}, form, false)
         }

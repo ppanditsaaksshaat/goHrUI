@@ -22,6 +22,7 @@
 
         $scope.add = _add;
         $scope.editRecord = _editRecord;
+        $scope.save = _save;
         $scope.update = _update;
         $scope.close = _close;
 
@@ -81,7 +82,10 @@
             $scope.oldEntity = angular.copy(row.entity);
 
         }
-        function _add(entity, form) {
+        function _add() {
+            $scope.entity = {};
+        }
+        function _save(entity, form) {
             entity.WEEmpId = empId
             _formSaveUpdate(entity, expPageId, 'create', {}, form, false)
         }
