@@ -13,7 +13,7 @@
     /** @ngInject */
     function empAddressController($scope, $state, $stateParams, pageService, editFormService, param) {
 
-
+        console.log(param)
         // global variable declaration
 
         var empId = $stateParams.empid;
@@ -54,37 +54,70 @@
         }
 
 
-        function _updateForm() {
-            var entity = [];
-            var fieldList = {
-                tableId: contactTableId,
-                pkId: $scope.entity.Current.CDId,
-                pkColName: 'CDId',
-                CDAddLine1: $scope.entity.Current.CDAddLine1,
-                CDAddLine2: $scope.entity.Current.CDAddLine2,
-                CDCityId: $scope.entity.Current.CityId,
-                CDPincode: $scope.entity.Current.CDPincode,
-                CDPAddLine1: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine1,
-                CDPAddLine2: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine2,
-                PCityId: $scope.entity.Current.IsSameAsPermanent ? 0 : $scope.entity.Permanent.PCityId,
-                CDPPincode: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPPincode,
-                IsSameAsPermanent: $scope.entity.Current.IsSameAsPermanent
-            }
-            entity.push(fieldList)
-            pageService.udateMultiTableFields(entity).
-                then(_successResult, _errorResult);
+        function _updateForm(form) {
+            if (param.Current != undefined) {
+                var entity = [];
+                var fieldList = {
+                    tableId: contactTableId,
+                    pkId: $scope.entity.Current.CDId,
+                    pkColName: 'CDId',
+                    CDAddLine1: $scope.entity.Current.CDAddLine1,
+                    CDAddLine2: $scope.entity.Current.CDAddLine2,
+                    CDCityId: $scope.entity.Current.CityId,
+                    CDPincode: $scope.entity.Current.CDPincode,
+                    CDPAddLine1: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine1,
+                    CDPAddLine2: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine2,
+                    PCityId: $scope.entity.Current.IsSameAsPermanent ? 0 : $scope.entity.Permanent.PCityId,
+                    CDPPincode: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPPincode,
+                    IsSameAsPermanent: $scope.entity.Current.IsSameAsPermanent
+                }
+                entity.push(fieldList)
+                pageService.udateMultiTableFields(entity).
+                    then(_successResult, _errorResult);
 
-            function _successResult(result) {
+                function _successResult(result) {
 
-                if (result.success_message = "Updated") {
-                    $scope.modalInstance.close("success");
+                    if (result.success_message = "Updated") {
+                        $scope.modalInstance.close("success");
+                    }
+                }
+                function _errorResult(err) {
+                    console.log(err);
                 }
             }
-            function _errorResult(err) {
-                console.log(err);
+            else {
+                var entity = {
+                    CDEmpId: empId,
+                    CDAddLine1: $scope.entity.Current.CDAddLine1,
+                    CDAddLine2: $scope.entity.Current.CDAddLine2,
+                    CDCityId: $scope.entity.Current.CityId,
+                    CDPincode: $scope.entity.Current.CDPincode,
+                    CDPAddLine1: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine1,
+                    CDPAddLine2: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPAddLine2,
+                    PCityId: $scope.entity.Current.IsSameAsPermanent ? 0 : $scope.entity.Permanent.PCityId,
+                    CDPPincode: $scope.entity.Current.IsSameAsPermanent ? "" : $scope.entity.Permanent.CDPPincode,
+                    IsSameAsPermanent: $scope.entity.Current.IsSameAsPermanent
+                }
+                _formSave(entity, contactPageId, 'create', {}, form, false)
             }
-
         }
+
+
+        function _formSave(entity, pageId, action, oldEntity, editForm, showConfirmation) {
+            editFormService.saveForm(pageId, entity, oldEntity,
+                action, "", editForm, showConfirmation)
+                .then(_successResult, _errorResult)
+        }
+        function _successResult(result) {
+           // console.log(result)
+            if (result.success_message == "Added New Record.") {
+                $scope.modalInstance.close("success");
+            }
+        }
+        function _errorResult(err) {
+            console.log(err)
+        }
+
 
 
         _loadController();
