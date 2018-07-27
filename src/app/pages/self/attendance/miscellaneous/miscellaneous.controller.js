@@ -20,8 +20,7 @@
         var isSearchingData = false;
 
         $scope.entity = {}
-        $scope.page = $rootScope.createPage();
-        $scope.page.pageId = 490;
+
         console.log($scope.page)
 
         var d = moment();
@@ -30,6 +29,8 @@
         $scope.month = month + 1;
         $scope.years = d.year();
         console.log(month, year)
+        $scope.page = $rootScope.createPage();
+        $scope.page.pageId = 490;
 
         $rootScope.$on("CallParentMethod", function () {
             $scope.employeeSalary = _employeeSalary();
@@ -40,8 +41,8 @@
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
-            showFilter: true,
-            filterOpened: true,
+            showFilter: false,
+            filterOpened: false,
             showAdd: true,
             showRowMenu: false,
             showCustomView: true,
@@ -56,11 +57,9 @@
             updateRecord: null,
             viewRecord: null,
             deleteRecord: null,
-            showApplyFilter: true,
+            showApplyFilter: false,
             filterOnChange: null,
             showDataOnLoad: true,
-            isVerifyButton: true,
-            columnDesign: [],
             viewRecord: _viewRecord
             // currentState: 'configuration.company.locations.location'
         }

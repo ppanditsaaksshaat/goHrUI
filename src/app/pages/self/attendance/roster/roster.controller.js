@@ -40,8 +40,8 @@
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
-            showFilter: true,
-            filterOpened: true,
+            showFilter: false,
+            filterOpened: false,
             showAdd: true,
             showRowMenu: false,
             showCustomView: true,
@@ -56,13 +56,12 @@
             updateRecord: null,
             viewRecord: null,
             deleteRecord: null,
-            showApplyFilter: true,
+            showApplyFilter: false,
             filterOnChange: null,
             showDataOnLoad: true,
-            isVerifyButton: true,
-            columnDesign: []
             // currentState: 'configuration.company.locations.location'
         }
+
         // $scope.page.searchList.push({ field: 'AMSTIsVarified', operand: '=', value: true })
         $scope.page.searchList.push({
             field: 'RODFromDate',
