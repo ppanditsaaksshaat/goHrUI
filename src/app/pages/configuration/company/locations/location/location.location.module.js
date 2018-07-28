@@ -30,13 +30,15 @@
           $uibModal.open({
             template: '<div ui-view="modal"></div>',
             size: 'top-center-500'
-          }
-        ).result.finally(function () {
+          }).result.finally(function () {
             $state.go('configuration.company.locations.location');
           });
         }]
       }).state('configuration.company.locations.location.edit', {
-        url: '/edit/:id/{entity:json}/{selects:json}',
+        url: '/edit',
+        params: {
+          param: null
+        },
         parent: 'configuration.company.locations.location.modal',
         onEnter: ['$state', function ($state) {
           console.log($state)
@@ -44,15 +46,7 @@
         views: {
           'modal@': {
             templateUrl: 'app/pages/configuration/company/locations/location/edit-location.html',
-            controller: 'locationEditController',
-            resolve: {
-              entity: function ($stateParams) {
-                return $stateParams.entity;
-              },
-              selects: function ($stateParams) {
-                return $stateParams.selects;
-              },
-            }
+            controller: 'locationEditController'
           }
         },
         title: 'Edit Location',
@@ -64,13 +58,17 @@
       })
       .state('configuration.company.locations.location.add', {
         url: '/add',
+        params: {
+          param: null
+        },
         parent: 'configuration.company.locations.location.modal',
         onEnter: ['$state', function ($state) {
           console.log($state)
         }],
         views: {
           'modal@': {
-            templateUrl: 'app/pages/configuration/company/locations/location/edit-location.html'
+            templateUrl: 'app/pages/configuration/company/locations/location/edit-location.html',
+            controller: 'locationEditController'
           }
         },
         title: 'Edit Location',
