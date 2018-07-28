@@ -85,6 +85,8 @@
             // value: $scope.user.profile.empId
         })
 
+        console.log($scope.page.searchList)
+
         function _viewRecord(row) {
             console.log('view')
             console.log(row)

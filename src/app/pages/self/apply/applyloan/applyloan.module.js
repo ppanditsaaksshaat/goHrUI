@@ -15,7 +15,7 @@
             .state('selfdir.apply.applyloan', {
                 url: '/applyloan',
                 templateUrl: 'app/pages/self/apply/applyloan/applyloan.html',
-                title: 'loan',
+                title: 'Loan',
                 controller: "applyLoanController",
                 controllerAs: "",
                 sidebarMeta: {

@@ -15,7 +15,7 @@
             .state('selfdir.apply.coff', {
                 url: '/coff',
                 templateUrl: 'app/pages/self/apply/coff/coff.html',
-                title: 'c-off',
+                title: 'C-Off',
                 controller: "cOffApplyController",
                 controllerAs: "",
                 sidebarMeta: {

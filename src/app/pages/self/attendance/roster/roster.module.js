@@ -15,7 +15,7 @@
             .state('selfdir.attendance.roster', {
                 url: '/roster',
                 templateUrl: 'app/pages/self/attendance/roster/roster.html',
-                title: 'roster',
+                title: 'Roster',
                 controller: "rosterDetailController",
                 controllerAs: "",
                 sidebarMeta: {

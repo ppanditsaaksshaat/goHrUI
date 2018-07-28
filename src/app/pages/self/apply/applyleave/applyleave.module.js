@@ -15,7 +15,7 @@
             .state('selfdir.apply.applyleave', {
                 url: '/apply leave',
                 templateUrl: 'app/pages/self/apply/applyleave/applyleave.html',
-                title: 'leave',
+                title: 'Leave',
                 controller: "applyLeaveController",
                 controllerAs: "",
                 sidebarMeta: {

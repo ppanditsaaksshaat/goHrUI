@@ -1,22 +1,22 @@
 /**
  * @author NKM
- * created on 25/07/2018
+ * created on 28.07.2018
  */
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.self.apply.applyattendance', [
+    angular.module('BlurAdmin.pages.self.apply.applyod', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('selfdir.apply.applyattendance', {
-                url: '/applyattendance',
-                templateUrl: 'app/pages/self/apply/applyattendance/applyattendance.html',
-                title: 'Attendance',
-                controller: "applyAttendanceController",
+            .state('selfdir.apply.applyod', {
+                url: '/applyod',
+                templateUrl: 'app/pages/self/apply/applyod/applyod.html',
+                title: 'Out-Duty',
+                controller: "odDetailController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

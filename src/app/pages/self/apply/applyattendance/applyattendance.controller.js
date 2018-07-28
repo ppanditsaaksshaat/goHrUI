@@ -49,7 +49,7 @@
         showAdd: true,
         showRowMenu: true,
         showCustomView: true,
-        showUpload: true,
+        showUpload: false,
         showDialog: false,
         enableRefreshAfterUpdate: true,
         enableAutoRefresh: true,
