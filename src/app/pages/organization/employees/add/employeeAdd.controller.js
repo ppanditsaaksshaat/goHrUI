@@ -129,8 +129,7 @@
         function _createErrorResult(error) {
         }
         function _locationOnChange(locationId) {
-            alert(locationId)
-            console.log(vm.dropDownList[10])
+   
             var branches = $filter("findAll")(vm.dropDownList[10], locationId, "LocationId");
             if (branches != null) {
                 vm.Branches = branches;

@@ -9,14 +9,18 @@
         .controller('employeeController', employeeController);
 
     /** @ngInject */
-    function employeeController($scope, $state,$stateParams, pageService, localStorageService) {
+    function employeeController($scope, $state, $stateParams, pageService, dialogModal) {
 
         var empId = $stateParams.empid;
+
+        $scope.userPassword = _userPassword;
+        $scope.userRole = _userRole;
+
         function _loadController() {
 
             //  $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");    
             var searchLists = [];
-         
+
             searchLists.push({ field: 'EmpId', operand: '=', value: empId })
 
             var data = {
@@ -33,6 +37,22 @@
             function _getCustomQueryErrorResult(err) {
                 console.log(err);
             }
+        }
+
+        function _userPassword() {
+            var modal = dialogModal.open({
+                url: 'app/pages/employee/emppassword/password.html',
+                size: 'top-center-600',
+                controller: 'empPasswordController',
+            })
+
+        }
+        function _userRole() {
+            var modal = dialogModal.open({
+                url: 'app/pages/employee/emprole/role.html',
+                size: 'top-center-600',
+                controller: 'empRoleController',
+            })
         }
         _loadController();
     }
