@@ -1,15 +1,15 @@
 /**
  * @author deepak.jain
- * created on 13.07.2018
+ * created on 28.07.2018
  */
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.configuration.company.locations.location')
-        .controller('locationEditController', locationEditController);
+    angular.module('BlurAdmin.pages.configuration.company.designation')
+        .controller('designationEditController', designationEditController);
 
     /** @ngInject */
-    function locationEditController($scope, $rootScope, $state, $stateParams, pageService, editFormService) {
+    function designationEditController($scope, $rootScope, $state, $stateParams, pageService, editFormService) {
         $scope.selects = $stateParams.param.selects;
         $scope.entity = $stateParams.param.entity;
         $scope.pageid = $stateParams.param.pageid;

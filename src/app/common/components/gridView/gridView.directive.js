@@ -198,6 +198,7 @@
                 $scope.clearForm = _clearForm;
                 $scope.verifyEntity = _verifyEntity;
                 $scope.editRecord = _editRecord;
+                $scope.addRecord = _addRecord;
                 $scope.deleteRecord = _deleteRecord;
                 $scope.page.print = _print;
                 $scope.getInitial = _getInitial;

@@ -1,22 +1,22 @@
 /**
  * @author deepak.jain
- * created on 13.07.2018
+ * created on 28.07.2018
  */
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.configuration.company.locations.location')
-        .controller('locationController', locationsController);
+    angular.module('BlurAdmin.pages.configuration.company.designation')
+        .controller('designationController', designationController);
 
     /** @ngInject */
-    function locationsController($scope, $rootScope, $state, $filter, pageService) {
+    function designationController($scope, $rootScope, $state, $filter, pageService) {
         //    console.log($state)
         console.log('location ctrl loaded')
-        $scope.location = 'this is location controller'
+        $scope.location = 'this is desig controller'
         $scope.addLocation = addRecord;
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
-        $scope.page.pageId = 34;
+        $scope.page.pageId = 30;
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
@@ -44,7 +44,7 @@
 
         function editRecord(row) {
 
-            $state.go('configuration.company.locations.location.edit', {
+            $state.go('configuration.company.locations.designation.edit', {
                 param: {
                     id: row.entity.LocationId,
                     pageid: $scope.page.pageId,
@@ -60,7 +60,7 @@
 
         function addRecord() {
             console.log('addre')
-            $state.go('configuration.company.locations.location.add', {
+            $state.go('configuration.company.locations.designation.add', {
                 param: {
                     id: 0,
                     pageid: $scope.page.pageId,
