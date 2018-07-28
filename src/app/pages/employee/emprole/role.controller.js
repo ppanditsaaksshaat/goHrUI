@@ -17,7 +17,11 @@
         // global variable declaration
 
         var empId = $stateParams.empid;
+        var tableId = 26;
+        var pageId = 21;
         var columnIds = ['112'];
+
+        $scope.change = _change;
         function _loadController() {
             $timeout(function () {
                 pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
@@ -37,17 +41,39 @@
                 searchList: searchLists,
                 orderByList: []
             }
-            pageService.getTableData(26, 21, '', '', false, data).then(_findEntitySuccessResult, _findEntityErrorResult)
+            pageService.getTableData(tableId, pageId, '', '', false, data).then(_getTableSuccessResult, _getTableErrorResult)
         }
         function _getAllSelectErrorResult(err) {
             console.log(err)
         }
-        function _findEntitySuccessResult(result) {
-            console.log(result)
+        function _getTableSuccessResult(result) {
+            $scope.oldEntity = angular.copy(result[0]);
+            $scope.entity = result[0];
+
         }
-        function _findEntityErrorResult(err) {
+        function _getTableErrorResult(err) {
             console.log(err)
         }
+
+        function _change(entity, editForm) {
+
+            editFormService.saveForm(pageId, entity, $scope.oldEntity,
+                "edit", "", editForm, false)
+                .then(_successResult, _errorResult)
+        }
+
+
+        function _successResult(result) {
+            console.log(result)
+            if (result.success_message == "Record Updated.") {
+                $scope.showMsg("success", "Role Updated")
+                $scope.modalInstance.close();
+            }
+        }
+        function _errorResult(err) {
+            console.log(err)
+        }
+
         _loadController();
     }
 })()

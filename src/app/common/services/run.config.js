@@ -141,8 +141,8 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
                 var afontColorCode = "color: " + k.BGClassFont + "; ";
                 sheet.addRule("." + aClassName, afontColorCode, 0);
 
-                
-                
+
+
 
 
             });
@@ -524,7 +524,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
 
     //page top functions
     $rootScope.openUserProfile = function () {
-        $state.go('profile');
+        $state.go('employee', { urlName: 'me', empid: 825 });
     }
 
     // $rootScope.$on('cfpLoadingBar:completed', function (evt) {
