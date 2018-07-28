@@ -1,22 +1,22 @@
 /**
  * @author deepak.jain
- * created on 13.07.2018
+ * created on 28.07.2018
  */
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.configuration.company.locations.branch')
-        .controller('branchController', branchController);
+    angular.module('BlurAdmin.pages.configuration.company.departments')
+        .controller('departmentsController', departmentsController);
 
     /** @ngInject */
-    function branchController($scope, $rootScope, $state, $filter, pageService) {
+    function departmentsController($scope, $rootScope, $state, $filter, pageService) {
         //    console.log($state)
-        console.log('branch ctrl loaded')
-        $scope.location = 'this is branch controller'
+        console.log('location ctrl loaded')
+        $scope.location = 'this is location controller'
         $scope.addLocation = addRecord;
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
-        $scope.page.pageId = 109;
+        $scope.page.pageId = 29;
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
@@ -44,7 +44,7 @@
 
         function editRecord(row) {
 
-            $state.go('configuration.company.locations.branch.edit', {
+            $state.go('configuration.company.locations.unit.edit', {
                 param: {
                     id: row.entity.LocationId,
                     pageid: $scope.page.pageId,
@@ -60,7 +60,7 @@
 
         function addRecord() {
             console.log('addre')
-            $state.go('configuration.company.locations.branch.add', {
+            $state.go('configuration.company.locations.unit.add', {
                 param: {
                     id: 0,
                     pageid: $scope.page.pageId,
