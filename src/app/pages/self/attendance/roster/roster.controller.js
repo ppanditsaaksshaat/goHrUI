@@ -71,12 +71,12 @@
         $scope.page.searchList.push({
             field: 'RODFromDate',
             operand: '<=',
-            value: '2018-04-30'
+            value: moment($scope.toDate).format('YYYY-MM-DD')
         })
         $scope.page.searchList.push({
             field: 'RODEmpId',
             operand: '=',
-            value: 5
+            value: $rootScope.user.profile.empId
             // value: $scope.user.profile.empId
         })
 
@@ -118,7 +118,7 @@
             $scope.page.searchList.push({
                 field: 'RODEmpId',
                 operand: '=',
-                value: 5
+                value: $rootScope.user.profile.empId
                 // value: $rootScope.user.profile.empId
             })
             $scope.page.refreshData()
