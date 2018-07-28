@@ -9,11 +9,50 @@
         .controller('employeeController', employeeController);
 
     /** @ngInject */
-    function employeeController($scope, $state, pageService, localStorageService) {
+    function employeeController($scope, $state, $stateParams, pageService, dialogModal) {
+
+        var empId = $stateParams.empid;
+
+        $scope.userPassword = _userPassword;
+        $scope.userRole = _userRole;
 
         function _loadController() {
-         //   console.log($stateParam.entity)
-             $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");         
+
+            //  $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");    
+            var searchLists = [];
+
+            searchLists.push({ field: 'EmpId', operand: '=', value: empId })
+
+            var data = {
+                searchList: searchLists,
+                orderByList: []
+            }
+            pageService.getCustomQuery(data, 650).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+
+            function _getCustomQuerySuccessResult(result) {
+                console.log(result);
+                $scope.empBaicDetail = result[0][0];
+
+            }
+            function _getCustomQueryErrorResult(err) {
+                console.log(err);
+            }
+        }
+
+        function _userPassword() {
+            var modal = dialogModal.open({
+                url: 'app/pages/employee/emppassword/password.html',
+                size: 'top-center-600',
+                controller: 'empPasswordController',
+            })
+
+        }
+        function _userRole() {
+            var modal = dialogModal.open({
+                url: 'app/pages/employee/emprole/role.html',
+                size: 'top-center-600',
+                controller: 'empRoleController',
+            })
         }
         _loadController();
     }

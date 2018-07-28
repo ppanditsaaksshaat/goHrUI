@@ -7,7 +7,10 @@
                         Professional Summary
                     </div>
                     <div class="panel-body">
-                        <p>{{empProfessional[0].PSDescription}}</p>
+                        <span ng-if="empProfessional.length==0">Please ask
+                            <span style="font-weight: bold">{{empTeam[0].EmpName}} </span> to complete his Professional Detail</span>
+                        <p ng-if="empProfessional.length>0">{{empProfessional[0].PSDescription}}</p>
+
                     </div>
                 </div>
             </div>
@@ -17,12 +20,13 @@
                         Experience
                     </div>
                     <div class="panel-body">
-                        <div ng-repeat-start="exp in empExperience">
+                        <span ng-if="empExperience.length==0">Please ask
+                            <span style="font-weight: bold">{{empTeam[0].EmpName}} </span> to complete his Experience Detail</span>
+                        <div ng-if="empExperience.length>0" ng-repeat-start="exp in empExperience">
                             <p class="text-moderate-bold">{{exp.WEOrganizName}}</p>
-                            <span class=""></span>
-                            <br>
                             <span class="">{{exp.WEFrom | date:'MMM y'}} - {{exp.WETo | date:'MMM y'}} | {{exp.WECompanyAddress}}</span>
-
+                            <br>
+                            <span>{{exp.WERemark}}</span>
                         </div>
                         <hr ng-repeat-end/>
                     </div>
@@ -34,8 +38,10 @@
                         Education
                     </div>
                     <div class="panel-body">
-                        <div ng-repeat-start="edu in empEducation">
-                            <p class="text-moderate-bold">{{edu.QualDegree}}, {{edu.QualMajorSpecialization}}</p>
+                        <span ng-if="empEducation.length==0">Please ask
+                            <span style="font-weight: bold">{{empTeam[0].EmpName}} </span> to complete his Education Detail</span>
+                        <div ng-if="empEducation.length>0" ng-repeat-start="edu in empEducation">
+                            <p class="text-moderate-bold">{{edu.QualificationName}}, {{edu.QualMajorSpecialization}}</p>
                             <span class="">{{edu.QualInstititeName}}</span>
                             <br>
                             <span class="">{{edu.QualStartDate | date:'MMM y'}} - {{edu.QualEndDate | date:'MMM y'}}</span>

@@ -37,7 +37,6 @@
                                 <div class="form-group">
                                     <label>Country</label>
                                     <select class="form-control" data-ng-model="entity.Current.CountryId" ng-options="country.value as country.name for country in dropDownLists[0]"></select>
-                                    <!-- <input tabindex="3"  type="text" class="form-control" data-ng-model="entity.Current.CountryName" name="LastName" id="LastName" required /> -->
 
                                 </div>
                             </div>
@@ -45,8 +44,6 @@
                                 <div class="form-group">
                                     <label>State </label>
                                     <select class="form-control" data-ng-model="entity.Current.StateId" ng-options="state.value as state.name for state in  dropDownLists[1] | filter:{CountryId:entity.Current.CountryId}"></select>
-                                    <!-- <input tabindex="4" type="text" class="form-control" data-ng-model="entity.Current.StateName" name="LastName" id="LastName" required /> -->
-
                                 </div>
                             </div>
                             <div class="col-sm-6 clear-left-padding">
@@ -136,7 +133,8 @@
                 <div class="row">
                     <div class="col-sm-12 vertical-margin">
                         <div class="col-sm-6 pull-right text-right">
-                            <button type="submit" class="btn btn-submit btn-primary" data-ng-click="updateForm(addContactForm)">Update</button>
+                            <button ng-if="param!=undefined" type="submit" class="btn btn-submit btn-primary" data-ng-click="updateForm(addContactForm)">Update</button>
+                            <button ng-if="param==undefined" type="submit" class="btn btn-submit btn-primary" data-ng-click="save(addContactForm)">Save</button>
                             <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
                         </div>
                     </div>

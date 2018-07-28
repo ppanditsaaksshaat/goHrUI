@@ -1,0 +1,43 @@
+<div class="row" id="bottom">
+    <div class="col-md-12">
+        <div class="panel panel-medium">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label dotranslate>Over-View Detail</label>
+                    </div>
+                    <!-- <div class="col-md-6 ">
+                        <label dotranslate>Search Roster by month</label>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row pull-right">
+                            <div class="col-md-7">
+                                <div class="input-group" moment-picker="fromDate" format="MMM-YYYY">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input class="form-control input-sm" placeholder="Pick any date" ng-model="fromDate" ng-model-options="{ updateOn: 'blur' }">
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <button type="submit" class="btn input-sm btn-success" ng-click="getPageData();" dotranslate>Search</button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+
+
+            <div class="panel-body panel-medium">
+                <!-- <grid-view ng-model="page"></grid-view> -->
+                <div class="row">
+                    <div class="col-md-7">
+                        <grid-view ng-model="page" show-grid="true" allow-gallary="false" title-column="LocationName" tag-column="CityName" desc-column="StateName"></grid-view>
+                    </div>
+                    <div class="col-md-5"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -29,13 +29,19 @@
         $scope.fromDate = moment(startDate).format('DD-MMM-YYYY')
         $scope.toDate = moment(endDate).format('DD-MMM-YYYY')
 
+        // $scope.$watch('fromDate', function (newVal, oldVal) {
+        //     if (newVal) {
+        //         _getPageData();
+        //     }
+        // })
+
         console.log(startDate.toDate());
         console.log(endDate.toDate());
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
-            showFilter: true,
-            filterOpened: true,
+            showFilter: false,
+            filterOpened: false,
             showAdd: true,
             showRowMenu: false,
             showCustomView: true,
@@ -50,11 +56,12 @@
             updateRecord: null,
             viewRecord: null,
             deleteRecord: null,
-            showApplyFilter: true,
+            showApplyFilter: false,
             filterOnChange: null,
             showDataOnLoad: true,
             // currentState: 'configuration.company.locations.location'
         }
+
         // $scope.page.searchList.push({ field: 'AMSTIsVarified', operand: '=', value: true })
         $scope.page.searchList.push({
             field: 'RODFromDate',
@@ -64,11 +71,11 @@
         $scope.page.searchList.push({
             field: 'RODFromDate',
             operand: '<=',
-            value: moment($scope.toDate).format('YYYY-MM-DD')
+            value: '2018-04-30'
         })
         $scope.page.searchList.push({
             field: 'RODEmpId',
-            operand: '<=',
+            operand: '=',
             value: 5
             // value: $scope.user.profile.empId
         })
@@ -84,8 +91,20 @@
         // _loadController();
 
         function _getPageData() {
-            console.log('get page data')
             $scope.page.searchList = [];
+            var rosterMonth = (moment($scope.fromDate).month());
+            var rosterYear = moment($scope.fromDate).year();
+
+            var d = moment($scope.fromDate);
+            var month = d.month();
+            var year = d.year();
+            $scope.month = month + 1;
+            var startDate = moment([year, $scope.month - 1]);
+            var endDate = moment(startDate).endOf('month');
+            $scope.fromDate = moment(startDate).format('DD-MMM-YYYY')
+            $scope.toDate = moment(endDate).format('DD-MMM-YYYY')
+
+            console.log($scope.fromDate)
             $scope.page.searchList.push({
                 field: 'RODFromDate',
                 operand: '>=',
@@ -98,9 +117,9 @@
             })
             $scope.page.searchList.push({
                 field: 'RODEmpId',
-                operand: '<=',
-                value: $rootScope.user.profile.empId
-                // value: $scope.user.profile.empId
+                operand: '=',
+                value: 5
+                // value: $rootScope.user.profile.empId
             })
             $scope.page.refreshData()
         }

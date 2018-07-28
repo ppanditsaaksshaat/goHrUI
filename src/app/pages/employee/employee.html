@@ -21,6 +21,24 @@
                     <p class="mobile">
                         <i class="fa fa-phone"></i> {{empBaicDetail.PdMobileNo}}</p>
                     </p>
+                    <div class="dropdown pull-right" style=" margin-top: -65px;">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Preference
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a ng-click="userPassword()" href>Password</a>
+                            </li>
+                            <li>
+                                <a ng-click="userRole()" href>Role</a>
+                            </li>
+                            <li>
+                                <a href>Login Disabled</a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
                 <div class="col-sm-12 clear-left-padding">
                     <div class="col-sm-12 clear-left-padding">

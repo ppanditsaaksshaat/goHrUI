@@ -1308,16 +1308,11 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
             });
         }
 
-        var _updateTableMultiField = function (tableId, pkName, pkId, fieldList) {
+        var _udateMultiTableFields = function (fieldList) {
 
-            var data = {
-                tableId: tableId,
-                pkColName: pkName,
-                pkId: pkId,
-                fieldList: fieldList
-            }
-            var url = serviceBase + 'api/Data/UpdateTableMultiField/';
-            return $http.post(url, JSON.stringify(JSON.stringify(data)), {
+          
+            var url = serviceBase + 'api/Data/UpdateMultiTableFields/';
+            return $http.post(url, JSON.stringify(JSON.stringify(fieldList)), {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -1650,7 +1645,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.getTestFileAttach = _getTestFileAttach;
         pageServiceFactory.getCustomReport = _getCustomReport;
         pageServiceFactory.updateMultiField = _updateMultiField;
-        pageServiceFactory.updateTableMultiField = _updateTableMultiField
+        pageServiceFactory.udateMultiTableFields = _udateMultiTableFields
         pageServiceFactory.generateSalary = _generateSalary;
         pageServiceFactory.getFieldSetting = _getFieldSetting;
         pageServiceFactory.getDashboard = _getDashboard;

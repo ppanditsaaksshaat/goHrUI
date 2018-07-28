@@ -15,7 +15,7 @@
             .state('selfdir.attendance.miscellaneous', {
                 url: '/miscellaneous',
                 templateUrl: 'app/pages/self/attendance/miscellaneous/miscellaneous.html',
-                title: 'monthly',
+                title: 'Monthly',
                 controller: "miscellaneousController",
                 controllerAs: "miscellaneous",
                 sidebarMeta: {
@@ -32,6 +32,7 @@
                         template: '<div ui-view="modal"></div>',
                         size: 'top-center-500'
                     }).result.finally(function () {
+                        // $state.reload();
                         $state.go('selfdir.attendance.miscellaneous');
                     });
                 }]
@@ -44,7 +45,7 @@
                 views: {
                     'modal@': {
                         templateUrl: 'app/pages/self/attendance/miscellaneous/applyleave.html',
-                        controller: 'applyLeaveController',
+                        controller: 'appLeaveController',
                         resolve: {
                             entity: function ($stateParams) {
                                 return $stateParams.entity;
@@ -67,7 +68,7 @@
                 views: {
                     'modal@': {
                         templateUrl: 'app/pages/self/attendance/miscellaneous/applyattendance.html',
-                        controller: 'applyAttendanceController',
+                        controller: 'appAttendanceController',
                         resolve: {
                             entity: function ($stateParams) {
                                 return $stateParams.entity;
@@ -128,6 +129,7 @@
                     show: 0
                 },
             });
+        $urlRouterProvider.when('/selfdir/attendance', '/selfdir/attendance/miscellaneous');
     }
 
 })();

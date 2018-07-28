@@ -64,30 +64,36 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label>Work Email</label>
-                            <p>{{empBaicDetail.JDOfficeEmail}}</p>
+                            <p>{{empContact.JDOfficeEmail}}</p>
                         </div>
                         <div class="col-md-6">
-                            <label>Personal Email </label>
-                            <p>{{empBaicDetail.PdEmail}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Mobile Phone</label>
-                            <p>{{empBaicDetail.JDOfficeMobile}}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <label>Work Phone</label>
-                            <p>{{empBaicDetail.JDOfficePhone}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Residence Phone</label>
-                            <p>{{empBaicDetail.JDResidenceMobile}}</p>
+                            <label>Work Mobile</label>
+                            <p>{{empContact.JDOfficeMobile}}</p>
                         </div>
 
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Personal Email </label>
+                            <p>{{empContact.PdEmail}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Personal Mobile </label>
+                            <p>{{empContact.PdMobileNo}}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Work Phone</label>
+                            <p>{{empContact.JDOfficePhone}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Residence Phone</label>
+                            <p>{{empContact.PdResidenceMobile}}</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -100,7 +106,11 @@
                     <a class="pull-right" data-ng-click="addAddressDetail()" href="">EDIT</a>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
+                    <span ng-if="empCurrentAddress==undefined">Please ask
+                        <span style="font-weight: bold">{{empBasicDetail.EmpFirstName}} {{empBasicDetail.EmpMiddleName}} {{empBasicDetail.EmpLastName}} </span>
+                        to complete his Address Detail</span>
+
+                    <div ng-if="empCurrentAddress!=undefined" class="row">
                         <div class="col-md-6">
                             <p class="text-moderate-bold">Current Address</p>
                             <span>{{empCurrentAddress.CDAddLine1}}</span>
@@ -134,7 +144,10 @@
                     <a class="pull-right" data-ng-click="addRelationDetail()" href="">EDIT</a>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
+                    <span ng-if="empRelation.length==0">Please ask
+                        <span style="font-weight: bold">{{empBasicDetail.EmpFirstName}} {{empBasicDetail.EmpMiddleName}} {{empBasicDetail.EmpLastName}} </span>
+                        to complete his Relation Detail</span>
+                    <div ng-if="empRelation.length>0" class="row">
                         <div ng-repeat="rel in empRelation" class="col-md-6">
                             <p class="text-moderate-bold">{{rel.RelationshipName}}</p>
                             <span>{{rel.FdName}}</span>
@@ -160,11 +173,14 @@
                     <a class="pull-right" data-ng-click="addExperienceDetail()" href="">EDIT</a>
                 </div>
                 <div class="panel-body">
-                    <div ng-repeat-start="exp in empExperience">
+                    <span ng-if="empExperience.length==0">Please ask
+                        <span style="font-weight: bold">{{empBasicDetail.EmpFirstName}} {{empBasicDetail.EmpMiddleName}} {{empBasicDetail.EmpLastName}} </span>
+                        to complete his Experience Detail</span>
+                    <div ng-if="empExperience.length>0" ng-repeat-start="exp in empExperience">
                         <p class="text-moderate-bold">{{exp.WEOrganizName}}</p>
                         <span class="">{{exp.WEFrom | date:'MMM y'}} - {{exp.WETo | date:'MMM y'}} | {{exp.WECompanyAddress}}</span>
                         <br>
-                        <span>Description</span>
+                        <span>{{exp.WERemark}}</span>
 
                     </div>
                     <hr ng-repeat-end/>
@@ -173,13 +189,17 @@
         </div>
         <div class="col-lg-6">
             <div class="panel">
+
                 <div class="panel-heading header">
                     Education
                     <a class="pull-right" data-ng-click="addEducationDetail()" href="">EDIT</a>
                 </div>
                 <div class="panel-body">
-                    <div ng-repeat-start="edu in empEducation">
-                        <p class="text-moderate-bold">{{edu.QualDegree}}, {{edu.QualMajorSpecialization}}</p>
+                    <span ng-if="empEducation.length==0">Please ask
+                        <span style="font-weight: bold">{{empBasicDetail.EmpFirstName}} {{empBasicDetail.EmpMiddleName}} {{empBasicDetail.EmpLastName}} </span>
+                        to complete his Education Detail</span>
+                    <div ng-if="empEducation.length>0" ng-repeat-start="edu in empEducation">
+                        <p class="text-moderate-bold">{{edu.QualificationName}}, {{edu.QualMajorSpecialization}}</p>
                         <span class="">{{edu.QualInstititeName}}</span>
                         <br>
                         <span class="">{{edu.QualStartDate | date:'MMM y'}} - {{edu.QualEndDate | date:'MMM y'}}</span>
@@ -198,7 +218,10 @@
                     <a class="pull-right" data-ng-click="addProfessionalDetail()" href="">EDIT</a>
                 </div>
                 <div class="panel-body">
-                    <p>{{empProfessional.PSDescription}}</p>
+                    <span ng-if="empProfessional==undefined">Please ask
+                        <span style="font-weight: bold">{{empBasicDetail.EmpFirstName}} {{empBasicDetail.EmpMiddleName}} {{empBasicDetail.EmpLastName}} </span>
+                        to complete his Professional Detail</span>
+                    <p ng-if="empProfessional!=undefined">{{empProfessional.PSDescription}}</p>
                 </div>
             </div>
         </div>

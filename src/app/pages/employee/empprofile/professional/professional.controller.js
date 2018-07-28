@@ -11,30 +11,62 @@
         .controller('empProfessionController', empProfessionController);
 
     /** @ngInject */
-    function empProfessionController($scope, $state, $stateParams, pageService, dialogModal, param) {
+    function empProfessionController($scope, $stateParams, pageService, editFormService, param) {
+
+        var empId = $stateParams.empid;
+        var proTableId = 486;
+        var proPageId = 492;
 
         $scope.update = _update;
+        $scope.save = _save;
+        $scope.param=param;
 
         function _loadController() {
             $scope.entity = angular.copy(param);
         }
 
-        function _update() {
-            var fieldList = {
+        function _update(form) {
+            if (param != undefined) {
+                var entity = [];
+                var fieldList = {
+                    tableId: proTableId,
+                    pkId: $scope.entity.PSId,
+                    pkColName: 'PSId',
+                    PSDescription: $scope.entity.PSDescription
+                }
+                entity.push(fieldList)
+                pageService.udateMultiTableFields(entity).
+                    then(_successResult, _errorResult);
+
+                function _successResult(result) {
+                    console.log(result)
+                    if (result.success_message = "Updated") {
+                        $scope.modalInstance.close("success");
+
+                    }
+                }
+                function _errorResult(err) {
+                    console.log(err)
+                }
+            }
+        }
+
+        function _save(form) {
+            var entity = {               
+                PSEmpId: empId,
                 PSDescription: $scope.entity.PSDescription
             }
 
-            pageService.updateTableMultiField(486, 'PSId', $scope.entity.PSId, fieldList).
-                then(_successResult, _errorResult);
+            editFormService.saveForm(proPageId, entity, {},
+                "create", "", form, false)
+                .then(_successResult, _errorResult)
 
             function _successResult(result) {
-                console.log(result)
-                if (result.success_message = "Updated") {
-                   $scope.modalInstance.close("success");
-                   $scope.showMsg('success', 'Professional Detail Updated');
+                if (result.success_message == "Added New Record.") {
+                    $scope.modalInstance.close("success");
                 }
             }
-            function _errorResult(err){
+            function _errorResult(err) {
                 console.log(err)
             }
         }
