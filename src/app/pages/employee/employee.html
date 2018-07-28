@@ -21,20 +21,20 @@
                     <p class="mobile">
                         <i class="fa fa-phone"></i> {{empBaicDetail.PdMobileNo}}</p>
                     </p>
-                    <div class="dropdown">
+                    <div class="dropdown pull-right" style=" margin-top: -65px;">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                            Prefrences
+                            Preference
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
                             <li>
-                                <a>Role</a>
+                                <a ng-click="userPassword()" href>Password</a>
                             </li>
                             <li>
-                                <a>Password</a>
+                                <a ng-click="userRole()" href>Role</a>
                             </li>
                             <li>
-                                <a>Login Disabled</a>
+                                <a href>Login Disabled</a>
                             </li>
                         </ul>
                     </div>
