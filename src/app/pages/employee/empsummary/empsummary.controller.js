@@ -9,9 +9,13 @@
         .controller('empSummaryController', empSummaryController);
 
     /** @ngInject */
-    function empSummaryController($scope, $state, $stateParams, pageService, localStorageService) {
+    function empSummaryController($scope, $rootScope, $stateParams, pageService, localStorageService) {
 
         var empId = $stateParams.empid;
+
+        if (empId == undefined) {
+            empId = $rootScope.user.profile.empId;
+        }
 
         function _loadController() {
             //   $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");   

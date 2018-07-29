@@ -5,18 +5,26 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.profile', [])
-      .config(routeConfig);
+  angular.module('BlurAdmin.pages.profile', [
+    'BlurAdmin.pages.profile.summary'
+  ])
+    .config(routeConfig);
+
 
   /** @ngInject */
-  function routeConfig($stateProvider) {
+  function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-        .state('profile', {
-          url: '/profile',
-          title: 'Profile',
-          templateUrl: 'app/pages/profile/profile.html',
-          controller: 'ProfilePageCtrl',
-        });
+      .state('profile', {
+        url: '/me',
+        templateUrl: 'app/pages/employee/employee.html',
+        //abstract: true,
+        title: 'Employee',
+        controller: "employeeController",
+        sidebarMeta: {
+          icon: 'ion-pound',
+          order: 0,
+        },
+      });
+    //$urlRouterProvider.when('/me', '/me/summary');
   }
-
 })();
