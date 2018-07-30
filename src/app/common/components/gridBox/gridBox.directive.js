@@ -689,8 +689,8 @@
                             }
                         });
 
-                        // if ($scope.page.boxOptions.showDataOnLoad)
-                        //     _refreshData();
+                        if ($scope.page.boxOptions.showDataOnLoad)
+                            _refreshData();
                     }
                 }
                 function _getPageErrorResult(err) {

@@ -1,0 +1,123 @@
+<div class="col-lg-12 col-md-12 col-sm-12 sub-page-container">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 employee-profile-container">
+        <div class="profile-picture-container">
+            <div class="profile-picture" width="200px" height="200px">
+            </div>
+            <div class="img-circle img-initials" random-Color>{{empBaicDetail.EmpName.split(' ')[0].substr(0,1)}}{{empBaicDetail.EmpName.split(' ')[1].substr(0,1)}}</div>
+        </div>
+        <div class="row employee-header">
+            <div class="col-sm-12 clear-right-padding">
+                <div class="employee-details right-padding-10">
+                    <div class="employee-options-container col-lg-12 clear-left-padding">
+                        <h1 class="display-name ">{{empBaicDetail.EmpName}}</h1>
+                    </div>
+                    <!-- ngIf: ctrl.model.locationName -->
+                    <p class="current-city">
+                        <i class="fa fa-map-marker"></i> {{empBaicDetail.LocationName}}</p>
+                    <p class="email ng-scope">
+                        <i class="fa fa-envelope"></i>
+                        <a href="mailto:pardeep0592@gmail.com" class="ng-binding">{{empBaicDetail.PdEmail}}</a>
+                    </p>
+                    <p class="mobile">
+                        <i class="fa fa-phone"></i> {{empBaicDetail.PdMobileNo}}</p>
+                    </p>
+                    <div class="dropdown pull-right" style=" margin-top: -65px;">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Preference
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a ng-click="userPassword()" href>Password</a>
+                            </li>
+                            <li>
+                                <a ng-click="userRole()" href>Role</a>
+                            </li>
+                            <li>
+                                <a href>Login Disabled</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-12 clear-left-padding">
+                        <hr class="col-sm-12 clear-side-padding">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="employee-subnav">
+            <ul class="sub-nav navbar-nav public-profile-subnav">
+                <!-- ngIf: ctrl.model.employeeNumber -->
+                <li>
+                    <span class="detail-label">Employee Number</span>
+                    <span class="detail-value detail-value-emp-no ng-binding">{{empBaicDetail.EmpCode}}</span>
+                </li>
+                <!-- end ngIf: ctrl.model.employeeNumber -->
+                <!-- ngIf: ctrl.model.jobTitle -->
+                <li>
+                    <span class="detail-label">Job Title</span>
+                    <span class="detail-value">
+                        <!-- ngIf: ctrl.model.jobTitle -->
+                        <span>{{empBaicDetail.DesgName}}</span>
+                        <!-- end ngIf: ctrl.model.jobTitle -->
+                        <!-- ngIf: ctrl.model.jobTitle && ctrl.model.secondaryJobTitle -->
+                        <!-- ngIf: ctrl.model.secondaryJobTitle -->
+                    </span>
+                </li>
+                <!-- end ngIf: ctrl.model.jobTitle -->
+                <!-- ngIf: ctrl.model.departmentName -->
+                <li>
+                    <span class="detail-label">Department</span>
+                    <span class="detail-value ">{{empBaicDetail.DeptName}}</span>
+                </li>
+                <!-- end ngIf: ctrl.model.departmentName -->
+                <!-- ngIf: ctrl.model.reportingManagerName -->
+                <li>
+                    <span class="detail-label">Reporting to</span>
+                    <span class="detail-value">
+                        <!-- ngIf: !ctrl.model.reportingTo -->
+                        <!-- ngIf: ctrl.model.reportingTo > 0 -->
+                        <a data-ui-sref="employee.summary({id: ctrl.model.reportingTo})" href="#/employee/4678/summary">{{empBaicDetail.ReportingPersonName}}</a>
+                        <!-- end ngIf: ctrl.model.reportingTo > 0 -->
+                    </span>
+                </li>
+                <!-- end ngIf: ctrl.model.reportingManagerName -->
+                <!-- ngIf: ctrl.model.skypeId && ctrl.model.skypeId!='null' && ctrl.fieldVisibilityPermissions['skypeid'] -->
+            </ul>
+        </div>
+        <div class="employee-navbar">
+            <div id="toolbar" class="sub-nav sub-navbar-default">
+                <ul class="sub-nav navbar-nav">
+                    <li ui-sref-active="active">
+                        <a ui-sref="employee.summary" href>summary</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="employee.profile" href>profile</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="employee.job" href>job</a>
+                    </li>
+                    <!-- ngIf: ctrl.canViewAllTabs || ctrl.isMyReportee -->
+                    <li ui-sref-active="active">
+                        <a ui-sref="employee.assets" href>assets</a>
+                    </li>
+                    <!-- end ngIf: ctrl.canViewAllTabs || ctrl.isMyReportee -->
+                    <!-- ngIf: ctrl.canViewAllTabs || ctrl.isMyReportee -->
+                    <li ui-sref-active="active">
+                        <a ui-sref="employee.documents" href>documents</a>
+                    </li>
+                    <!-- end ngIf: ctrl.canViewAllTabs || ctrl.isMyReportee -->
+                    <li ui-sref-active="active">
+                        <a ui-sref="employee.finances" href>FINANCES</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div ui-view></div>

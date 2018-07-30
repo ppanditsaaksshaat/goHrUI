@@ -1,0 +1,64 @@
+<div class="grid-view">
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-default" ng-click="addRecord({})">
+                <i class="fa fa-plus"></i>
+                <span dotranslate>create</span>
+            </button>
+        </div>
+        <div class="col-md-6">
+            <ul class="view-type-menu pull-right">
+                <li uib-tooltip="Grid" tooltip-placement="top">
+                    <a href ng-click="showGrid=true">
+                        <i class="fa fa-th font-gray" ng-class="{'font-blue':showGrid}"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href ng-click="showGrid=false" uib-tooltip="Circle" tooltip-placement="top">
+                        <i class="fa fa-th-large font-gray" ng-class="{'font-blue':!showGrid}"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+
+    <div style="height: 450px;" ng-if="showGrid">
+        <div id="CommonViewGrid" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning
+            ui-grid-edit ui-grid-expandable class="djGrid">
+            <div class="no-data" ng-if="page.gridOptions.data.length==0 && !page.dataIsLoading">{{page.boxOptions.noResultMessageText}}</div>
+            <div class="no-data font-black" ng-if="page.dataIsLoading">
+                <i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i> Please wait data is loading....
+            </div>
+        </div>
+    </div>
+    <div ng-if="!showGrid">
+
+        <icon-list option="page.iconList">
+
+        </icon-list>
+
+        <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin" ng-repeat="row in page.gridOptions.data">
+            <div class="icon-container ">
+                <div class="icon">
+                    <div class="initials-icon icon-circle" random-backgroundcolor>
+                        {{getInitial(row[titleColumn]);}}
+                    </div>
+                </div>
+            </div>
+            <div class="detail">
+                <h5 class="title clear-bottom">{{row[titleColumn]}}</h5>
+                <span class="title-description clear-top">{{row[tagColumn]}}</span>
+
+            </div>
+            <div class="action-area">
+                <a href ng-click="gallaryEditRecord(row)">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a href ng-click="gallaryDeleteRecord(row)">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

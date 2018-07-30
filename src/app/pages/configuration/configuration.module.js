@@ -6,10 +6,11 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.configuration', [
+    'BlurAdmin.pages.configuration.company'
   ]).config(routeConfig);
       
   /** @ngInject */
-  function routeConfig($stateProvider) {
+  function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
     .state('configuration', {
       url: '/configuration',
@@ -21,6 +22,8 @@
         order: 1,
       },
     });
+
+   
   }
 
 })();

@@ -1,0 +1,455 @@
+<grid-box ng-model="page" ng-hide="showGridData">
+</grid-box>
+
+
+<form name="editForm " novalidate ng-submit="saveForm() " ng-hide="showEditForm ">
+    <div class="panel panel-default xmedium-panel ">
+        <edit-panel-head page="page" page-title="page.pageinfo.title " reset-form="resetFormCommon(editForm) " clear-form="clearFormCommon(editForm) "
+            close-form="closeForm(editForm) " show-close="true " show-save="true " show-clear="true " show-list="false
+ " show-reset="true " condition="true "></edit-panel-head>
+
+        <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+            <div class="row">
+                <div class="form-group col-md-4 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.EmpId.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.EmpId " ng-entity="entity " fb-change="attDateChange()" form="editForm "></field-box>
+                </div>
+                <div class="form-group col-md-4 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.COAppDate.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.COAppDate " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.COAttnDate.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.COAttnDate " fb-change="attDateChange()" ng-entity="entity " form="editForm "></field-box>
+                </div>
+                <div class="col-md-4" ng-show="showInOutTime">
+                    <div class="form-group">
+                        <label>Day</label>
+                        <span class="form-control" ng-bind="dayFromDate"></span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row" ng-show="showInOutTime">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label ng-bind="page.pageinfo.fields.COTimeIn.text"></label>
+                        <span class="form-control" ng-bind="entity.COTimeIn"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label ng-bind="page.pageinfo.fields.COTimeOut.text"></label>
+                        <span class="form-control" ng-bind="entity.COTimeOut"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label ng-bind="page.pageinfo.fields.COTotalWrTmInHour.text"></label>
+                        <span class="form-control" ng-bind="entity.COTotalWrTmInHour"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-show="showInOutTime">
+                <div class="form-group col-md-8">
+                    <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="compoffconversion" value="true"  ng-model="entity.COIsApplyHalfDay">
+                        <span>{{page.pageinfo.fields.COIsApplyHalfDay.place}}</span>
+                    </label>
+                    <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="compoffconversion" value="true"  ng-model="entity.COIsApplyFullDay">
+                        <span>{{page.pageinfo.fields.COIsApplyFullDay.place}}</span>
+                    </label>
+                </div>
+            </div>
+            <div class="row" ng-show="showInOutTime">
+                <div class="form-group col-md-4 ">
+                    <label for="inputPassword3 ">{{page.pageinfo.fields.COReson.text}}</label>
+                    <field-box page="page" ng-column="page.pageinfo.fields.COReson " ng-entity="entity " form="editForm "></field-box>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</form>
+
+<div ng-hide="showSanctionForm">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Sanction COff Application">
+            <form ng-submit="cOffSanction()" name="editForm">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.LAEmpId.text"></label>
+                                                <span class="form-control" ng-bind="entity.EmpName"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.COAppDate.text"></label>
+                                                <span class="form-control" ng-bind="entity.COAppDate"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.COAttnDate.text"></label>
+                                                <span class="form-control" ng-bind="entity.COAttnDate"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.COTimeIn.text"></label>
+                                                <span class="form-control" ng-bind="entity.COTimeIn"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.COTimeOut.text"></label>
+                                                <span class="form-control" ng-bind="entity.COTimeOut"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.COTotalWrTmInHour.text"></label>
+                                                <span class="form-control" ng-bind="entity.COTotalWrTmInHour"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label ng-bind="page.pageinfo.fields.COReson.text"></label>
+                                                <span class="form-control" ng-bind="entity.COReson"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="row" ng-if="leaveDetails!=undefined">
+                                        <div class "col-md-6">
+                                            <div class="form-group">
+                                                <table class="table table-responsive table-bordered table-hover table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Type</th>
+                                                            <th class="col-md-1">Balance</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="leaveDetail in leaveDetails">
+                                                            <td ng-bind="leaveDetail.type"></td>
+                                                            <td ng-bind="leaveDetail.balance"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+
+                                    </div>
+                                    <!--<div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="compoffconversion" value="true"  ng-model="entity.ACODIsApplyHalfDay">
+                        <span>{{page.pageinfo.fields.COIsApplyHalfDay.place}}</span>
+                    </label>
+                                                <label class="radio-inline custom-radio nowrap font-bold">
+                        <input type="radio" name="compoffconversion" value="true"  ng-model="entity.ACODIsApplyFullDay">
+                        <span>{{page.pageinfo.fields.COIsApplyFullDay.place}}</span>
+                    </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                            </div>
+                                        </div>
+                                    </div>-->
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="radio-inline custom-radio nowrap font-bold">
+                                                     <input type="radio" name="compoffconversion" value="true"  ng-model="entity.ACODIsApplyHalfDay">
+                                                     <span>{{page.pageinfo.fields.COIsApplyHalfDay.place}}</span>
+                                                </label>
+                                                <label class="radio-inline custom-radio nowrap font-bold">
+                                                       <input type="radio" name="compoffconversion" value="true"  ng-model="entity.ACODIsApplyFullDay">
+                                                       <span>{{page.pageinfo.fields.COIsApplyFullDay.place}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Status<span style="color:red">*</span></label>
+                                                <!--<select class="form-control" ng-model="entity.StatusId" ng-options="status.value as status.name for status in sanctionPage.pageinfo.statuslist"></select>-->
+                                                <select class="form-control" ng-model="sanctionEntity.StatusId" ng-options="status.value as status.name for status in sanctionPage.pageinfo.statuslist"></select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Comment<span style="color:red">* </label>
+                                                <textarea class="form-control" ng-model="sanctionEntity.ACODReson"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info btn-lg">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeSanction()">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div ng-hide="verifyCancelRequestForm">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Cancel Request Approval Application">
+            <form ng-submit="replyOnCancelLoan(cancelRequestEntity)" name="editForm">
+                <div class="panel-body">
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.EmpId.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.EmpName"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COAppDate.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.COAppDate"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COAttnDate.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.COAttnDate"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COTimeIn.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.COTimeIn"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COTimeOut.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.COTimeOut"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COIsApplyHalfDay.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.COIsApplyHalfDay"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COIsApplyFullDay.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.COIsApplyFullDay"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COTotalWrTmInHour.text"></label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.COTotalWrTmInHour"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employee Comment</label>
+                                <span class="form-control" ng-bind="cancelRequestEntity.COReson"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status<span style="color:red">*</label>
+                                <select class="form-control" ng-model="cancelRequestEntity.StatusId" ng-options="status.value as status.name for status in cancelRequestPage.pageinfo.statuslist"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Comment <span style="color:red">* </label>
+                                <textarea class="form-control" ng-model="cancelRequestEntity.COCDReson"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info btn-lg">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeVerifyCancelRequestForm()">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div ng-hide="verifySanctionForm">
+    <div class="row">
+        <div ba-panel ba-panel-class="x-medium" ba-panel-title="Cancel C-Off Application">
+            <form ng-submit="cancelLeave()" name="editForm">
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.EmpId.text"></label>
+                                <span class="form-control" ng-bind="entity.EmpName"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COAppDate.text"></label>
+                                <span class="form-control" ng-bind="entity.COAppDate"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COAttnDate.text"></label>
+                                <span class="form-control" ng-bind="entity.COAttnDate"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COTimeIn.text"></label>
+                                <span class="form-control" ng-bind="entity.COTimeIn"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COTimeOut.text"></label>
+                                <span class="form-control" ng-bind="entity.COTimeOut"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label ng-bind="page.pageinfo.fields.COIsApplyHalfDay.text"></label>
+                                <span class="form-control" ng-bind="entity.COIsApplyHalfDay"></span>
+                            </div>
+                        </div>
+                    </div>
+                    {{entity.LAMaxLimit}}
+
+
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Created By</label>
+                                <span class="form-control" ng-bind="entity.CreatedBy"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Created On</label>
+                                <span class="form-control" ng-bind="entity.CreatedOn"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employee Comment</label>
+                                <span class="form-control" ng-bind="entity.ACODReson"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Admin Comment</label>
+                                <span class="form-control" ng-bind="sanctionEntity.COReson"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div ng-if="!status.isRejected" class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select ng-disabled="true" class="form-control" ng-model="cancelRequestEntity.StatusId" ng-options="status.value as status.name for status in page.pageinfo.statuslist"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Comment<span style="color:red">* </label>
+                                <textarea class="form-control" ng-model="cancelRequestEntity.COCDReson"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="text-center">
+                        <button ng-if="!status.isRejected" type="submit" class="btn btn-info btn-lg">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeViewSanctionForm()">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

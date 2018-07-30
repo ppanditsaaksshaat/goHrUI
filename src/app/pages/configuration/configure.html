@@ -1,62 +1,115 @@
 <div class="row">
-    <div class="col-md-12">
-        <div ba-panel ba-panel-title="Organization Configuration" ba-panel-class="with-scroll">
-            <div ng-repeat="configure in configureList">
-                <div class="row text-centre">
-                    <div class="well col-lg-12">
-                        <h5 class="col-lg-9"><i class="col-lg-1 {{configure.logo}}" aria-hidden="true"></i> {{configure.heading}}
-                            <p>{{configure.paragraph}}</p>
-                        </h5>
-                        <i ng-show="configure.show" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
-                        <a href="#" class="col-lg-1" ui-sref="{{configure.href}}" ng-click="openConfigure(configure.name)">Configure</a>
-                    </div>
-                </div>
+    <div class="col-xs-2">
+        <div class="navbar-default subnavbar-static-side" role="navigation">
+            <div class="navbar-inner">
+                <ul class="nav">
+
+                    <li id="previous-state">
+                        <a class="previous-state pull-left" href ng-click="goToPreviousState()">
+                            <i class="fa fa-arrow-circle-left"></i>Back
+                        </a>
+                    </li> 
+
+                    <li id="generalSettings" ui-sref-active="active" class="active">
+                        <a ui-sref="configuration.company" href="#/configuration/company">
+                            <span class="subnav-item-title">Company Settings</span>
+                            <br>
+                            <span class="subnav-item-description">General info, Legal entities, Locations, Business units and Department settings
+                                <i class="fa fa-caret-right"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li id="payrollSettings" data-xhr-feature-authorize="" data-feature="PAYROLL" ui-sref-active="active" class="ng-scope">
+                        <a ui-sref="configuration.payroll" href="#/configuration/payroll">
+                            <span class="subnav-item-title">Payroll</span>
+                            <br>
+                            <span class="subnav-item-description">Setup, Leave encashment, Payment and Payslip settings
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+                    <li id="leaves" ui-sref-active="active">
+                        <a ui-sref="configuration.leaves" href="#/configuration/leaves">
+                            <span class="subnav-item-title">Leave &amp; Holidays</span>
+                            <br>
+                            <span class="subnav-item-description">Leave plans, Initial adjustments, Notify and Holidays
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+                    <li id="employee" ui-sref-active="active">
+                        <a ui-sref="configuration.employee" href="#/configuration/employee">
+                            <span class="subnav-item-title">Employee</span>
+                            <br>
+                            <span class="subnav-item-description">Job titles, Probation/Notice period and Employee number settings
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li id="timesheet" ui-sref-active="active" data-xhr-feature-authorize="" data-feature="TIMESHEET" class="ng-scope">
+                        <a ui-sref="configuration.timesheet" href="#/configuration/timesheet">
+                            <span class="subnav-item-title">Timesheet</span>
+                            <br>
+                            <span class="subnav-item-description">Approval chain, Billing classification and Invoice settings
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+                    <li id="expenses" ui-sref-active="active" data-xhr-feature-authorize="" data-feature="PAYROLL" class="ng-scope">
+                        <a ui-sref="configuration.expenses" href="#/configuration/expenses">
+                            <span class="subnav-item-title">Expenses</span>
+                            <br>
+                            <span class="subnav-item-description">Expense policies and Expense type settings
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li id="timeAndAttendance" ui-sref-active="active">
+                        <a ui-sref="configuration.timeattendance" href="#/configuration/timeattendance">
+                            <span class="subnav-item-title">Time &amp; Attendance</span>
+                            <br>
+                            <span class="subnav-item-description">Weekly offs, Shifts, Tracking policies, Capture scheme and other settings
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+                    <li id="onboardingExit" ui-sref-active="active">
+                        <a ui-sref="configuration.onboardingexit" href="#/configuration/onboardingexit">
+                            <span class="subnav-item-title">Onboarding &amp; Exit</span>
+                            <br>
+                            <span class="subnav-item-description">Employee onboarding and exit settings
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li id="rolesPermissions" ui-sref-active="active">
+                        <a ui-sref="configuration.roles" href="#/configuration/roles">
+                            <span class="subnav-item-title">Roles &amp; Permissions</span>
+                            <br>
+                            <span class="subnav-item-description">Manage roles and permissions
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+                    <li id="integrations" ui-sref-active="active">
+                        <a ui-sref="configuration.integrations" href="#/configuration/integrations">
+                            <span class="subnav-item-title">Integrations</span>
+                            <br>
+                            <span class="subnav-item-description">Login Integrations
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+
             </div>
-            <!-- <div class="row">
-                <div class="well col-lg-12">
-                    <h5 class="col-lg-9"><i class="col-lg-1 fa fa-anchor fa-2x" aria-hidden="true"></i>Location
-                        <p>Location Master</p>
-                    </h5>
-                    <i ng-show="locationExist" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
-                    <a href="#" class="col-lg-1" ng-click="openConfigure('location')" ui-sref="organization.employees.masters()">Configure</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="well col-lg-12">
-                    <h5 class="col-lg-9"><i class="col-lg-1 fa fa-anchor fa-2x" aria-hidden="true"></i>Branch
-                        <p>Branch Master</p>
-                    </h5>
-                    <i ng-show="branchExist" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
-                    <a href="#" class="col-lg-1" ng-click="openConfigure('branch')" ui-sref="organization.employees.masters.list({name:'branch',pageId:109})">Configure</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="well col-lg-12">
-                    <h5 class="col-lg-9"><i class="col-lg-1 fa fa-anchor fa-2x" aria-hidden="true"></i>SubUnit
-                        <p>SubUnit Master</p>
-                    </h5>
-                    <i ng-show="subUnitExist" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
-                    <a href="#" class="col-lg-1" ng-click="openConfigure('subunit')" ui-sref="organization.employees.masters.list({name: 'sub-unit', pageId:111})">Configure</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="well col-lg-12">
-                    <h5 class="col-lg-9"><i class="col-lg-1 fa fa-anchor fa-2x" aria-hidden="true"></i>Department
-                        <p>Department Master</p>
-                    </h5>
-                    <i ng-show="departmentExist" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
-                    <a href="#" class="col-lg-1" ng-click="openConfigure('department')" ui-sref="organization.employees.masters.list({name: 'department', pageId:29})">Configure</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="well col-lg-12">
-                    <h5 class="col-lg-9"><i class="col-lg-1 fa fa-anchor fa-2x" aria-hidden="true"></i>Designation
-                        <p>Designation Master</p>
-                    </h5>
-                    <i ng-show="designationExist" class="col-lg-1 fa fa-check fa-2x" aria-hidden="true"></i>
-                    <a href="#" class="col-lg-1" ng-click="openConfigure('designation')" ui-sref="organization.employees.masters.list({name: 'designation', pageId:29})">Configure</a>
-                </div>
-            </div> -->
         </div>
     </div>
+    <div class="col-xs-10">
+        <div ui-view autoscroll="true" autoscroll-body-top></div>
+    </div>
+    <div class="clearfix"></div>
 </div>

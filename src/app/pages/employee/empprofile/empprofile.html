@@ -1,0 +1,229 @@
+<div class="col-lg-12 top-margin">
+    <h2>Personal Information</h2>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="panel-heading  header">
+                    Primary Details
+                    <a class="pull-right" data-ng-click="addPrimaryDetail()" href="">EDIT</a>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>First Name </label>
+                            <p>{{empBasicDetail.EmpFirstName}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Middle Name </label>
+                            <p>{{empBasicDetail.EmpMiddleName}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Last Name </label>
+                            <p>{{empBasicDetail.EmpLastName}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>DOB</label>
+                            <p>{{empBasicDetail.PdDateOfBirth | date:'dd-MMM-y'}}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Gender</label>
+                            <p>{{empBasicDetail.GenderName}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Marital Status</label>
+                            <p>{{empBasicDetail.MaritalName}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Nationality</label>
+                            <p>{{empBasicDetail.RMName}}</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Blood Group</label>
+                            <p>{{empBasicDetail.BGMName}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="panel-heading header">
+                    Contact Details
+                    <a class="pull-right" data-ng-click="addContactDetail()" href="">EDIT</a>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Work Email</label>
+                            <p>{{empContact.JDOfficeEmail}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Work Mobile</label>
+                            <p>{{empContact.JDOfficeMobile}}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Personal Email </label>
+                            <p>{{empContact.PdEmail}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Personal Mobile </label>
+                            <p>{{empContact.PdMobileNo}}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Work Phone</label>
+                            <p>{{empContact.JDOfficePhone}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Residence Phone</label>
+                            <p>{{empContact.PdResidenceMobile}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="panel-heading header">
+                    Addresses
+                    <a class="pull-right" data-ng-click="addAddressDetail()" href="">EDIT</a>
+                </div>
+                <div class="panel-body">
+                    <span ng-if="empCurrentAddress==undefined">Please ask
+                        <span style="font-weight: bold">{{empBasicDetail.EmpFirstName}} {{empBasicDetail.EmpMiddleName}} {{empBasicDetail.EmpLastName}} </span>
+                        to complete his Address Detail</span>
+
+                    <div ng-if="empCurrentAddress!=undefined" class="row">
+                        <div class="col-md-6">
+                            <p class="text-moderate-bold">Current Address</p>
+                            <span>{{empCurrentAddress.CDAddLine1}}</span>
+                            <br>
+                            <span>{{empCurrentAddress.CDAddLine2}}</span>
+                            <br ng-if="empCurrentAddress.CDAddLine2!=''">
+                            <span>{{empCurrentAddress.CountryName}} {{empCurrentAddress.StateName}} {{empCurrentAddress.CityName}}</span>
+                            <br>
+                            <span>{{empCurrentAddress.CDPincode}}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-moderate-bold">Permanent Address</p>
+                            <span>{{empPermanentAddress.CDPAddLine1}}</span>
+                            <br>
+                            <span>{{empPermanentAddress.CDPAddLine2}}</span>
+                            <br ng-if="empPermanentAddress.CDPAddLine2!=''">
+                            <span>{{empPermanentAddress.CountryName}} {{empPermanentAddress.StateName}} {{empPermanentAddress.CityName}}</span>
+                            <br>
+                            <span>{{empPermanentAddress.CDPPincode}}</span>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="panel-heading header">
+                    Relations
+                    <a class="pull-right" data-ng-click="addRelationDetail()" href="">EDIT</a>
+                </div>
+                <div class="panel-body">
+                    <span ng-if="empRelation.length==0">Please ask
+                        <span style="font-weight: bold">{{empBasicDetail.EmpFirstName}} {{empBasicDetail.EmpMiddleName}} {{empBasicDetail.EmpLastName}} </span>
+                        to complete his Relation Detail</span>
+                    <div ng-if="empRelation.length>0" class="row">
+                        <div ng-repeat="rel in empRelation" class="col-md-6">
+                            <p class="text-moderate-bold">{{rel.RelationshipName}}</p>
+                            <span>{{rel.FdName}}</span>
+                            <br ng-if="rel.FdName!=''">
+                            <span>{{rel.FdEmail}}</span>
+                            <br ng-if="rel.FdEmail!=''">
+                            <span>Mobile : {{rel.FdMobile}}</span>
+                            <br ng-if="rel.FdMobile!=''">
+                            <span>Gender : {{rel.GenderName}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2>Professional Information</h2>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="panel-heading header">
+                    Experience
+                    <a class="pull-right" data-ng-click="addExperienceDetail()" href="">EDIT</a>
+                </div>
+                <div class="panel-body">
+                    <span ng-if="empExperience.length==0">Please ask
+                        <span style="font-weight: bold">{{empBasicDetail.EmpFirstName}} {{empBasicDetail.EmpMiddleName}} {{empBasicDetail.EmpLastName}} </span>
+                        to complete his Experience Detail</span>
+                    <div ng-if="empExperience.length>0" ng-repeat-start="exp in empExperience">
+                        <p class="text-moderate-bold">{{exp.WEOrganizName}}</p>
+                        <span class="">{{exp.WEFrom | date:'MMM y'}} - {{exp.WETo | date:'MMM y'}} | {{exp.WECompanyAddress}}</span>
+                        <br>
+                        <span>{{exp.WERemark}}</span>
+
+                    </div>
+                    <hr ng-repeat-end/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel">
+
+                <div class="panel-heading header">
+                    Education
+                    <a class="pull-right" data-ng-click="addEducationDetail()" href="">EDIT</a>
+                </div>
+                <div class="panel-body">
+                    <span ng-if="empEducation.length==0">Please ask
+                        <span style="font-weight: bold">{{empBasicDetail.EmpFirstName}} {{empBasicDetail.EmpMiddleName}} {{empBasicDetail.EmpLastName}} </span>
+                        to complete his Education Detail</span>
+                    <div ng-if="empEducation.length>0" ng-repeat-start="edu in empEducation">
+                        <p class="text-moderate-bold">{{edu.QualificationName}}, {{edu.QualMajorSpecialization}}</p>
+                        <span class="">{{edu.QualInstititeName}}</span>
+                        <br>
+                        <span class="">{{edu.QualStartDate | date:'MMM y'}} - {{edu.QualEndDate | date:'MMM y'}}</span>
+                    </div>
+                    <hr ng-repeat-end/>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="panel-heading header">
+                    Professional Summary
+                    <a class="pull-right" data-ng-click="addProfessionalDetail()" href="">EDIT</a>
+                </div>
+                <div class="panel-body">
+                    <span ng-if="empProfessional==undefined">Please ask
+                        <span style="font-weight: bold">{{empBasicDetail.EmpFirstName}} {{empBasicDetail.EmpMiddleName}} {{empBasicDetail.EmpLastName}} </span>
+                        to complete his Professional Detail</span>
+                    <p ng-if="empProfessional!=undefined">{{empProfessional.PSDescription}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

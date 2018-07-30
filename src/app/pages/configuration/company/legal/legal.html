@@ -1,0 +1,414 @@
+<div class="panel">
+    <div class="panel-body">
+
+        <div>
+
+            <br/>
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+
+                    <p class="vertical-margin page-description" dotranslate>A Legal Entity is the registered (or incorporated) name of your business. This name is used in all documents
+                        such as pay slip, offer letter etc.</p>
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <h3 class="inline-block clear-vertical-margin v-align-middle company-name">{{comp.name}}</h3>
+                            <a href ng-click="edtiCompanyName();">
+                                <span class="fa fa-edit information-tooltip tooltip-grey horizontal-margin " uib-tooltip="Edit" tooltip-placement="right"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row vertical-top-margin">
+
+                        <div class="col-sm-12">
+                            <h6 dotranslate class="section-head-text">Authorised Signatory</h6>
+                            <a href ng-click="addNewSignatory()">
+                                <i class="fa fa-plus"></i> Add New Signatory</a>
+                            <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+                                <div class="icon-container ">
+                                    <div class="icon">
+                                        <div class="initials-icon icon-circle" style="background-color: rgb(244, 180, 0);">DJ</div>
+                                    </div>
+                                </div>
+                                <div class="detail">
+                                    <h4 class="title clear-bottom">Deepak Jain</h4>
+                                    <span class="title-description clear-top">CEO</span>
+
+                                </div>
+                                <div class="action-area">
+                                    <a href ng-click="editSignatory(1)">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href>
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+                                <div class="icon-container ">
+                                    <div class="icon">
+                                        <div class="initials-icon icon-circle" style="background-color: rgb(30, 15, 119);">PP</div>
+                                    </div>
+                                </div>
+                                <div class="detail">
+                                    <h4 class="title clear-bottom">Pradeep Pandit</h4>
+                                    <span class="title-description clear-top">MD</span>
+
+                                </div>
+                                <div class="action-area">
+                                    <a href>
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href>
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row vertical-top-margin">
+
+                        <div class="col-sm-12">
+                            <h6 dotranslate class="section-head-text">Bank Accounts</h6>
+                            <a href ng-click="addBankAccount()">
+                                <i class="fa fa-plus"></i> Add New Bank Account</a>
+                            <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin">
+                                <div class="icon-container ">
+                                    <div class="icon">
+                                        <div class="initials-icon icon-circle" style="background-color: rgb(40, 8, 180);">₹</div>
+                                    </div>
+                                </div>
+                                <div class="detail">
+                                    <h4 class="title clear-bottom">State Bank of India</h4>
+                                    <span class="title-description clear-top">Delhi</span>
+
+                                </div>
+                                <div class="action-area">
+                                    <a href>
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href>
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+                                <div class="icon-container ">
+                                    <div class="icon">
+                                        <div class="initials-icon icon-circle" style="background-color: rgb(134, 12, 165);">₹</div>
+                                    </div>
+                                </div>
+                                <div class="detail">
+                                    <h4 class="title clear-bottom">Bank of India</h4>
+                                    <span class="title-description clear-top">Faridabad</span>
+
+                                </div>
+                                <div class="action-area">
+                                    <a href>
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href>
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row vertical-top-margin user-form">
+                        <div class="col-sm-12">
+                            <h6 dotranslate class="section-head-text">Registration & Text Information</h6>
+                            <uib-tabset active="$tabSetStatus.activeTab">
+                                <uib-tab heading="Company Detail">
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+
+                                            <form name="companyDetail">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Company Name</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Type Of Business</label>
+                                                            <select class="form-control"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Date of Registration</label>
+                                                            <input type="date" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Registered Address</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Company Identification Number</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>&nbsp;</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-sm-4">
+                                                                    <label>CIty</label>
+                                                                    <input type="text" class="form-control" />
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <label>State</label>
+                                                                    <input type="text" class="form-control" />
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <label>Pincode</label>
+                                                                    <input type="text" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+
+                                                        <button class="btn btn-success">SAVE</button>
+                                                        <button class="btn">Clear</button>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                                <uib-tab heading="Incom Tax Detail">
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <form name="itDetail">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>PAN</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>GST</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>TIN</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>TAN</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Form 16 Signatory</label>
+                                                            <select class="form-control"></select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+
+                                                        <button class="btn btn-success">SAVE</button>
+                                                        <button class="btn">Clear</button>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </uib-tab>
+                                <uib-tab heading="Providund Fund Detail">
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <form name="pfDetail">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>PF Number</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Registration Date</label>
+                                                            <input type="date" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Authorised Signatory</label>
+                                                            <select class="form-control"></select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+
+                                                        <button class="btn btn-success">SAVE</button>
+                                                        <button class="btn">Clear</button>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                                <uib-tab heading="ESI  Detail">
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <form name="esiDetail">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>ESI Number</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Registration Date</label>
+                                                            <input type="date" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Authorised Signatory</label>
+                                                            <select class="form-control"></select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+
+                                                        <button class="btn btn-success">SAVE</button>
+                                                        <button class="btn">Clear</button>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                                <uib-tab heading="Other Registration">
+                                    <br/>
+                                    <form name="otherDetail">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Registration Number</label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Registration Date</label>
+                                                            <input type="date" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label dotranslate>Registration Name</label>
+                                                            <input type="date" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a href><i class="fa fa-edit"></i></a>
+                                                        <a href><i class="fa fa-trash-o"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </uib-tab>
+                            </uib-tabset>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin">Role</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <div class="row add-signatory-container">
+            <form  ng-submit="register(entity)">
+                <div class="col-sm-12 vertical-margin">
+                    <fieldset>
+                        <div class="col-sm-12 new-person-details">
+
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label>Role </label>
+                                        <select class="form-control" data-ng-model="entity.RoleId" ng-options="role.value as role.name for role in roles"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </fieldset>
+                    <div class="row">
+                        <div class="col-sm-12 vertical-margin">
+                            <div class="col-sm-6 pull-right text-right">
+                                <button class="btn btn-submit btn-primary">Change</button>
+                                <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </form>
+            </div>
+        </div>
+    </div>
