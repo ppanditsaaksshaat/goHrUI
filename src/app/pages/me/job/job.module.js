@@ -1,18 +1,18 @@
 /**
- * @author deepak.jain
- * created on 04/05/2017
+ * @author pardeep.pandit
+ * created on 29/07/2018
  */
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.employee.empjob', [
+    angular.module('BlurAdmin.pages.me.job', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('employee.job', {
+            .state('me.job', {
                 url: '/job',
                 templateUrl: 'app/pages/employee/empjob/empjob.html',
                 title: 'Job',
@@ -23,7 +23,7 @@
                     order: 1,
                 },
             })
-      //  $urlRouterProvider.when('/employee', '/employee/summary');
+        //  $urlRouterProvider.when('/employee', '/employee/summary');
     }
 
 })();

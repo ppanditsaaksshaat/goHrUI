@@ -11,12 +11,15 @@
         .controller('empAddressController', empAddressController);
 
     /** @ngInject */
-    function empAddressController($scope, $state, $stateParams, pageService, editFormService, param) {
+    function empAddressController($scope,  $rootScope, $stateParams, pageService, editFormService, param) {
 
 
         // global variable declaration
 
         var empId = $stateParams.empid;
+        if (empId == undefined) {
+            empId = $rootScope.user.profile.empId;
+        }
         var contactPageId = 36;
         var contactTableId = 45;
         $scope.permanentPanel = true;

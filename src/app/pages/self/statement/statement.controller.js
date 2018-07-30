@@ -15,7 +15,6 @@
 //         $scope.page.pageId = 270;
 //         // $scope.page = $rootScope.createPage(); 0
 //         console.log($scope.page)
-
 //         $scope.fromDate = moment().format('DD-MMM-YYYY')
 //         $scope.toDate = moment().format('DD-MMM-YYYY')
 

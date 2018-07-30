@@ -26,7 +26,7 @@
     'BlurAdmin.pages.advance',
     'BlurAdmin.pages.mis',
     'BlurAdmin.pages.configuration',
-    'BlurAdmin.pages.profile',
+    'BlurAdmin.pages.me',
     'BlurAdmin.pages.tds',
     'BlurAdmin.pages.roster',
 <<<<<<< HEAD

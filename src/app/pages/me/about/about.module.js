@@ -5,15 +5,15 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.profile.summary', [
+    angular.module('BlurAdmin.pages.me.about', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('profile.summary', {
-                url: '/summary',
+            .state('me.about', {
+                url: '/about',
                 templateUrl: 'app/pages/employee/empsummary/empsummary.html',
                 title: 'Summary',
                 controller: "empSummaryController",
@@ -24,7 +24,7 @@
                 },
             })
           
-        $urlRouterProvider.when('/me', '/me/summary');
+        $urlRouterProvider.when('/me', '/me/about');
     }
 
 })();
