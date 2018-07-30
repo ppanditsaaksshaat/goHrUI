@@ -11,9 +11,14 @@
         .controller('empEducationController', empEducationController);
 
     /** @ngInject */
-    function empEducationController($scope, $stateParams, pageService, editFormService) {
+        var eduTableId = 119;
+        var eduTableId = 119;
+        function empEducationController($scope,$rootScope, $stateParams, pageService, editFormService) {
 
         var empId = $stateParams.empid
+        if (empId == undefined) {
+            empId = $rootScope.user.profile.empId;
+        }
         var eduTableId = 119;
         var eduPageId = 112;
         var columnIds = ['653'];

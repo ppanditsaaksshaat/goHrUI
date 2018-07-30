@@ -11,9 +11,12 @@
         .controller('empExperienceController', empExperienceController);
 
     /** @ngInject */
-    function empExperienceController($scope, $state, $rootScope, $stateParams, pageService, editFormService) {
+    function empExperienceController($scope, $rootScope, $stateParams, pageService, editFormService) {
 
         var empId = $stateParams.empid
+        if (empId == undefined) {
+            empId = $rootScope.user.profile.empId;
+        }
         var expTableId = 62;
         var expPageId = 56;
         $scope.grid = true;

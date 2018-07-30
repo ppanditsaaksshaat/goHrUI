@@ -11,12 +11,15 @@
         .controller('empPasswordController', empPasswordController);
 
     /** @ngInject */
-    function empPasswordController($scope, $state, $stateParams, pageService, editFormService, param) {
+    function empPasswordController($scope, $state, $rootScope, $stateParams, pageService) {
 
 
         // global variable declaration
 
         var empId = $stateParams.empid;
+        if (empId == undefined) {
+            empId = $rootScope.user.profile.empId;
+        }
 
         $scope.entity = {};
         $scope.newRegister = true;

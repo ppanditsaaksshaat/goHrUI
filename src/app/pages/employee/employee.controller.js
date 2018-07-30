@@ -13,7 +13,11 @@
 
         var empId = $stateParams.empid;
         if (empId == undefined) {
+            $scope.myProfile = true;
             empId = $rootScope.user.profile.empId;
+        }
+        else{
+            $scope.myProfile = false;
         }
         $scope.userPassword = _userPassword;
         $scope.userRole = _userRole;

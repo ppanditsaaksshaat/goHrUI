@@ -17,6 +17,7 @@
             empId = $rootScope.user.profile.empId;
         }
 
+
         function _loadController() {
             //   $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");   
 
