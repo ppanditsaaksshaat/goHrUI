@@ -11,9 +11,13 @@
         .controller('employeeProfileController', employeeProfileController);
 
     /** @ngInject */
-    function employeeProfileController($scope, $state, $stateParams, pageService, dialogModal, localStorageService) {
+    function employeeProfileController($scope, $rootScope, $stateParams, pageService, dialogModal, localStorageService) {
 
         var empId = $stateParams.empid;
+        if (empId == undefined) {
+            empId = $rootScope.user.profile.empId;
+        }
+
         $scope.empCurrentAddres = {};
         $scope.empPermanentAddress = {};
         $scope.addPrimaryDetail = _addPrimaryDetail;

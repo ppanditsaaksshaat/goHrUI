@@ -8,7 +8,9 @@
     angular.module('BlurAdmin.pages.configuration.company', [
         'BlurAdmin.pages.configuration.company.general',
         'BlurAdmin.pages.configuration.company.legal',
-        'BlurAdmin.pages.configuration.company.locations'
+        'BlurAdmin.pages.configuration.company.locations',
+        'BlurAdmin.pages.configuration.company.departments',
+        'BlurAdmin.pages.configuration.company.designation'
     ]).config(routeConfig);
         
     /** @ngInject */

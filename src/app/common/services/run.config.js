@@ -524,7 +524,7 @@ angular.module('BlurAdmin.common').run(function ($rootScope, $state, $stateParam
 
     //page top functions
     $rootScope.openUserProfile = function () {
-        $state.go('employee', { urlName: 'me', empid: 825 });
+        $state.go('me');
     }
 
     // $rootScope.$on('cfpLoadingBar:completed', function (evt) {

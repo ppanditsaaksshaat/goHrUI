@@ -7,7 +7,8 @@
   
     angular.module('BlurAdmin.pages.configuration.company.locations', [
       'BlurAdmin.pages.configuration.company.locations.location',
-      'BlurAdmin.pages.configuration.company.locations.branch'
+      'BlurAdmin.pages.configuration.company.locations.branch',
+      'BlurAdmin.pages.configuration.company.locations.unit'
     ]).config(routeConfig);
         
     /** @ngInject */

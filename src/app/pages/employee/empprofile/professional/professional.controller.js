@@ -11,9 +11,15 @@
         .controller('empProfessionController', empProfessionController);
 
     /** @ngInject */
-    function empProfessionController($scope, $stateParams, pageService, editFormService, param) {
+    function empProfessionController($scope,$rootScope, $stateParams, pageService, editFormService, param) {
 
         var empId = $stateParams.empid;
+        if (empId == undefined) {
+            empId = $rootScope.user.profile.empId;
+        }
+        if (empId == undefined) {
+            empId = $rootScope.user.profile.empId;
+        }
         var proTableId = 486;
         var proPageId = 492;
 

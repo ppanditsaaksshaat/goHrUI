@@ -24,6 +24,8 @@
 
         $scope.editPage.pageId = 145;
 
+
+
         $scope.closeForm = _closeForm;
         $scope.showEditLv = false;
         $scope.showEditGrid = true;
@@ -79,6 +81,9 @@
             // customColumns: [{ text: 'Verify', type: 'a', name: 'Option', click: _loanVerify, pin: true }],
             deleteRecord: null,
         }
+
+        // console.log($scope.page.pageinfo.fields.LAEmpId)
+        console.log($scope.page.pageinfo)
 
         //loan verify detail
         function _loanVerify(row) {

@@ -11,9 +11,12 @@
         .controller('empRelationController', empRelationController);
 
     /** @ngInject */
-    function empRelationController($scope, $stateParams, pageService, editFormService) {
+    function empRelationController($scope, $rootScope, $stateParams, pageService, editFormService) {
 
-        var empId = $stateParams.empid
+        var empId = $stateParams.empid;
+        if (empId == undefined) {
+            empId = $rootScope.user.profile.empId;
+        }
         var relTableId = 56;
         var relPageId = 52;
         var columnIds = ['267', '4255'];
@@ -54,14 +57,12 @@
 
             pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
             function _getAllSelectSuccessResult(result) {
-                console.log(result)
                 $scope.dropDownLists = result;
-
             }
             function _getAllSelectErrorResult(err) {
-
+                console.log(err)
             }
-
+        
             var searchLists = [];
             var searchListData = {
                 field: 'FdEmpId',
@@ -77,7 +78,7 @@
                 .then(_getTableDataSuccessResult, _getTableDataErrorResult)
 
             function _getTableDataSuccessResult(result) {
-
+                console.log(result)
                 $scope.gridOptions.data = angular.copy(result);
             }
             function _getTableDataErrorResult(err) {

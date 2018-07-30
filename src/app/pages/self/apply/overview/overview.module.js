@@ -15,7 +15,7 @@
             .state('selfdir.apply.overview', {
                 url: '/overview',
                 templateUrl: 'app/pages/self/apply/overview/overview.html',
-                title: 'overview',
+                title: 'OverView',
                 controller: "overViewController",
                 controllerAs: "",
                 sidebarMeta: {

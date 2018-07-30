@@ -45,9 +45,12 @@
         function editRecord(row) {
 
             $state.go('configuration.company.locations.location.edit', {
-                id: row.entity.LocationId,
-                entity: row.entity,
-                selects: $scope.page.pageinfo.selects
+                param: {
+                    id: row.entity.LocationId,
+                    pageid: $scope.page.pageId,
+                    entity: row.entity,
+                    selects: $scope.page.pageinfo.selects
+                }
             });
         }
 
@@ -56,14 +59,18 @@
         }
 
         function addRecord() {
+            console.log('addre')
             $state.go('configuration.company.locations.location.add', {
-                id: 0,
-                entity: {},
-                selects: $scope.page.pageinfo.selects
+                param: {
+                    id: 0,
+                    pageid: $scope.page.pageId,
+                    entity: {},
+                    selects: $scope.page.pageinfo.selects
+                }
             });
         }
 
 
-       
+
     }
 })();
