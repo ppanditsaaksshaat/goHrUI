@@ -11,7 +11,9 @@
         'BlurAdmin.pages.self.apply.applyloan',
         'BlurAdmin.pages.self.apply.coff',
         'BlurAdmin.pages.self.apply.overview',
-        'BlurAdmin.pages.self.apply.applyod'
+        'BlurAdmin.pages.self.apply.applyod',
+        'BlurAdmin.pages.self.apply.monthlybyattendance',
+        
         
     ])
         .config(routeConfig);
