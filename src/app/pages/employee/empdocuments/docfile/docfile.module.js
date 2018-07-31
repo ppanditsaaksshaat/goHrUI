@@ -5,25 +5,26 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.employee.empsummary', [
+    angular.module('BlurAdmin.pages.employee.empdocuments.docfile', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('employee.summary', {
-                url: '/summary',
-                templateUrl: 'app/pages/employee/empsummary/empsummary.html',
-                title: 'Summary',
-                controller: "empSummaryController",
+            .state('employee.documents.myfile', {
+                url: '/myfile',
+                templateUrl: 'app/pages/employee/empdocuments/docfile/docfile.html',
+                title: 'File',
+                controller: "",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
                 },
             })
-        $urlRouterProvider.when('/employee/{empid}', '/employee/{empid}/summary');
+          
+        $urlRouterProvider.when('/employee/{empid}/documents', '/employee/{empid}/documents/myfile');
     }
 
 })();
