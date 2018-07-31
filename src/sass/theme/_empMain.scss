@@ -48,9 +48,10 @@
   vertical-align: middle;
   display: table-cell;
   color:white;
+  cursor: pointer;
 }
 
-.profile-picture > input{
+.profile-picture-container > input{
   display :none;
 }
 //   #page-wrapper .page-container .sub-page-container {
