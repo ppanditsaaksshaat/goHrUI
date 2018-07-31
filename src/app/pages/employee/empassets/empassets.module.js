@@ -16,7 +16,7 @@
                 url: '/assets',
                 templateUrl: 'app/pages/employee/empassets/empassets.html',
                 title: 'Assets',
-                controller: "",
+                controller: "empAssetController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

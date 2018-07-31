@@ -6,6 +6,8 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.employee.empdocuments', [
+        'BlurAdmin.pages.employee.empdocuments.docfile',
+        'BlurAdmin.pages.employee.empdocuments.docshared'
     ])
         .config(routeConfig);
 
@@ -23,7 +25,7 @@
                     order: 1,
                 },
             })
-      //  $urlRouterProvider.when('/employee', '/employee/summary');
+        //  $urlRouterProvider.when('/employee', '/employee/summary');
     }
 
 })();
