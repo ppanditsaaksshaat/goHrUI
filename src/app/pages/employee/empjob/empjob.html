@@ -7,187 +7,168 @@
                 </div>
                 <div class="panel-body">
                     <div class="row add-signatory-container">
-                        <form name="addContactForm" id="addContactForm" data-ng-init="ctrl.form = this;" novalidate>
+                        <form name="editForm" id="editForm" data-ng-init="ctrl.form = this;" novalidate>
                             <div class="col-sm-12 vertical-margin">
                                 <fieldset>
                                     <div class="col-sm-12 new-person-details">
-                                        <div class="col-sm-4 clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Location
-                                                    <span clas="font-red">*</span>
-                                                </label>
-                                                <a href class="pull-right ">CHANGE</a>
-                                                <input type="text" class="form-control" data-ng-model="entity.LocationName" required/>
+                                        <div class="row">
+                                            <div class="col-sm-4 clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.LocationId.text}}
+                                                        <span clas="font-red">*</span>
+                                                    </label>
+                                                    <!--<a href class="pull-right ">CHANGE</a> -->
+                                                    <select class="form-control" data- ng-model="entity.LocationId" ng-options="location.value as location.name for location in pageInfo.selects.LocationId"></select>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-4 col-lg-offset-2  clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Department </label>
-                                                <a href class="pull-right ">CHANGE</a>
-                                                <select class="form-control" data- ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4 clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Job Title
-                                                    <span clas="font-red">*</span>
-                                                </label>
-                                                <a href class="pull-right ">CHANGE</a>
-                                                <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
+                                            <div class="col-sm-4 clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.BRId.text}} </label>
+                                                    <!--<a href class="pull-right ">CHANGE</a> -->
+                                                    <select class="form-control" data- ng-model="entity.BRId" ng-options="branch.value as branch.name for branch in pageInfo.selects.BRId"></select>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-4 col-lg-offset-2  clear-left-padding">
-                                            <div class="form-group">
-                                                <label>Secondary Job Title </label>
-                                                <input type="text" class="form-control" data-ng-model="entity.JDOfficeEmail" required/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4 clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Reporting To
-                                                    <span clas="font-red">*</span>
-                                                </label>
-                                                <a href class="pull-right ">CHANGE</a>
-                                                <input type="text" class="form-control" data-ng-model="entity.JDOfficeEmail" required/>
+                                            <div class="col-sm-4 clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDSUId.text}}
+                                                        <span clas="font-red">*</span>
+                                                    </label>
+                                                    <!--<a href class="pull-right ">CHANGE</a> -->
+                                                    <select class="form-control" data-ng-model="entity.JDSubUnitID" ng-options="subUnit.value as subUnit.name for subUnit in pageInfo.selects.JDSubUnitID"></select>
 
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4 col-lg-offset-2  clear-left-padding">
-                                            <div class="form-group">
-                                                <label>Date Of Joining </label>
-                                                <input type="text" class="form-control" data-ng-model="entity.JDDate" required />
+                                        <div class="row">
+                                            <div class="col-sm-4   clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDDeptId.text}}
+                                                        <span clas="font-red">*</span>
+                                                    </label>
+                                                    <!--<a href class="pull-right ">CHANGE</a> -->
+                                                    <select class="form-control" data-ng-model="entity.JDDeptId" ng-options="dept.value as dept.name for dept in pageInfo.selects.JDDeptId"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDDesgId.text}}
+                                                        <span clas="font-red">*</span>
+                                                    </label>
+                                                    <!--<a href class="pull-right ">CHANGE</a> -->
+                                                    <select class="form-control" data-ng-model="entity.JDDesgId" ng-options="dept.value as dept.name for dept in pageInfo.fields.JDDesgId.options"></select>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-4 clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Leave Plan
-                                                    <span clas="font-red">*</span>
-                                                </label>
-                                                <a href class="pull-right ">CHANGE</a>
-                                                <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
+                                            <div class="col-sm-4 clear-left-padding">
+                                                <div class="form-group">
+                                                    <label>{{pageInfo.fields.JDEmploymentId.text}}</label>
+                                                    <select class="form-control" data-ng-model="entity.JDEmploymentId" ng-options="employment.value as employment.name for employment in pageInfo.selects.JDEmploymentId"></select>
 
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4 col-lg-offset-2  clear-left-padding">
-                                            <div class="form-group">
-                                                <label>Probation Period End Date</label>
-                                                <input type="text" class="form-control" data-ng-model="entity.JDOfficeMobile" required />
+                                        <div class="row">
+                                            <div class="col-sm-4 clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDEmpGradeId.text}}
+                                                        <span clas="font-red">*</span>
+                                                    </label>
+                                                    <!--<a href class="pull-right ">CHANGE</a> -->
+                                                    <select class="form-control" data-ng-model="entity.JDEmpGradeId" ng-options="grade.value as grade.name for grade in pageInfo.selects.JDEmpGradeId"></select>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-4 clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Attendance Number
-                                                    <span clas="font-red">*</span>
-                                                </label>
-                                                <a href class="pull-right ">CHANGE</a>
-                                                <input type="text" class="form-control" data-ng-model="entity.JDOfficeEmail" required/>
+                                            <div class="col-sm-4  clear-left-padding">
+                                                <div class="form-group">
+                                                    <label>{{pageInfo.fields.JDEmpLevelId.text}}</label>
+                                                    <select class="form-control" data-ng-model="entity.JDEmpLevelId" ng-options="level.value as level.name for level in pageInfo.selects.JDEmpLevelId"></select>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-4 col-lg-offset-2  clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Employee Number </label>
-                                                <a href class="pull-right ">CHANGE</a>
-                                                <input type="text" class="form-control" data-ng-model="entity.JDOfficeMobile" required />
+                                            <div class="col-sm-4 clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDCategory.text}}
+                                                        <span clas="font-red">*</span>
+                                                    </label>
+                                                    <!--<a href class="pull-right ">CHANGE</a> -->
+                                                    <select class="form-control" data-ng-model="entity.JDCategory" ng-options="category.value as category.name for category in pageInfo.selects.JDCategory"></select>
 
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4  clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Band </label>
-                                                <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4 col-lg-offset-2  clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Pay Grade</label>
-                                                <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4  clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Cost Center </label>
-                                                <a href class="pull-right ">ASSIGN</a>
-                                                <input disabled="disabled" type="text" class="form-control" data-ng-model="entity.JDOfficeMobile" required />
+                                        <div class="row">
+                                            <div class="col-sm-4  clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDReporting1.text}}</label>
+                                                    <!--<a href class="pull-right ">CHANGE</a> -->
+                                                    <select class="form-control" data-ng-model="entity.JDReporting1" ng-options="reporting1.value as reporting1.name for reporting1 in pageInfo.selects.JDReporting1"></select>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-4 col-lg-offset-2  clear-left-padding">
-                                            <div class="form-group header">
-                                                <label>Expense Policy</label>
-                                                <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
-                                            </div>
-                                        </div>
+                                            <div class="col-sm-4  clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDReporting2.text}}</label>
+                                                    <!--<a href class="pull-right ">CHANGE</a> -->
+                                                    <select class="form-control" data-ng-model="entity.JDReporting2" ng-options="reporting2.value as reporting2.name for reporting2 in pageInfo.selects.JDReporting1"></select>
 
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4  clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDReportingHR.text}}</label>
+                                                    <!--<a href class="pull-right ">CHANGE</a> -->
+                                                    <select class="form-control" data-ng-model="entity.JDReportingHR" ng-options="reportingHR.value as reportingHR.name for reportingHR in pageInfo.selects.JDReporting1"></select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4  clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDDate.text}}</label>
+                                                    <div class="input-group" moment-picker="entity.JDDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate" min-date="col.minDate">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                        <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
+                                                            ng-model="entity.JDDate" ng-model-options="{ updateOn: 'blur' }">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-secondary" ng-click="entity.JDDate=''" type="button">
+                                                                <i class="fa fa-close"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4  clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDOfficeEmail.text}}</label>
+                                                    <input type="email" class="form-control" data-ng-model="entity.JDOfficeEmail">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4  clear-left-padding">
+                                                <div class="form-group header">
+                                                    <label>{{pageInfo.fields.JDOfficeMobile.text}}</label>
+                                                    <input type="text" class="form-control" data-ng-model="entity.JDOfficeMobile">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </fieldset>
-                                <div class="col-sm-12 new-person-details">
-                                    <div class="col-sm-12 clear-left-padding">
-                                        <h3>Time & Attendance</h3>
-                                    </div>
-                                    <div class="col-sm-12 clear-left-padding">
-                                        <hr/>
-                                    </div>
-                                    <div class="col-sm-4  clear-left-padding">
-                                        <div class="form-group header">
-                                            <label>Time Type </label>
-                                            <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-lg-offset-2  clear-left-padding">
-                                        <div class="form-group header">
-                                            <label>Work Type</label>
-                                            <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4  clear-left-padding">
-                                        <div class="form-group header">
-                                            <label>Shift Type </label>
-                                            <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
 
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-lg-offset-2  clear-left-padding">
-                                        <div class="form-group header">
-                                            <label>Weekly Off Policy</label>
-                                            <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4  clear-left-padding">
-                                        <div class="form-group header">
-                                            <label>Holiday List </label>
-                                            <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-lg-offset-2  clear-left-padding">
-                                        <div class="form-group header">
-                                            <label>Attendance Capture Schema</label>
-                                            <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4  clear-left-padding">
-                                        <div class="form-group header">
-                                            <label>Attendance Tracking Policy </label>
-                                            <select class="form-control" data-ng-model="entity.PdGenderId" ng-options="gender.value as gender.name for gender in dropDownLists[0]"></select>
-                                        </div>
-                                    </div>
-
-                                </div>
                             </div>
 
-                            <!-- <div class="row">
+                            <div class="row">
                                 <div class="col-sm-12 vertical-margin">
                                     <div class="col-sm-4 pull-right text-right">
-                                        <button type="submit" class="btn btn-submit btn-primary" data-ng-click="udpate()">Update</button>
-                                        <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
+                                        <button type="submit" class="btn btn-submit btn-primary" data-ng-click="udpate(entity,editForm)">Update</button>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </form>
                     </div>
                 </div>

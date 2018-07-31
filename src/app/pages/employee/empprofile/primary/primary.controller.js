@@ -12,7 +12,7 @@
 
     /** @ngInject */
     function empPrimaryController($scope, $state, $stateParams, pageService, dialogModal, param) {
-        var columnIds = ['192', '193', '194', '4233'];
+        var columnIds = ['192', '193', '3257', '4233'];
 
         var basicTableId = 30;
         var perTableId = 43;
@@ -50,7 +50,7 @@
                 PdDateOfBirth:$scope.entity.PdDateOfBirth,
                 PdGenderId: $scope.entity.PdGenderId,
                 PdMaritalId: $scope.entity.PdMaritalId,
-                PdNationalityId: $scope.entity.PdNationalityId,
+                PDReligionId: $scope.entity.PDReligionId,
                 PdBloodGroupId: $scope.entity.PdBloodGroupId
             }
             entities.push(per);

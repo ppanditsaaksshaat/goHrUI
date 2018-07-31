@@ -11,7 +11,7 @@
         .controller('empJobController', empJobController);
 
     /** @ngInject */
-    function empJobController($scope, $state, $rootScope, $stateParams, pageService) {
+    function empJobController($scope, $rootScope, $stateParams, pageService, editFormService) {
 
 
         // global variable declaration
@@ -21,12 +21,15 @@
         if (empId == undefined) {
             empId = $rootScope.user.profile.empId;
         }
-        alert(empId)
+
+        $scope.udpate = _udpate;
+
         function _loadController() {
             pageService.getPagData(jobPageId).then(_getPageSuccessResult, _getPageErrorResult)
         }
         function _getPageSuccessResult(result) {
             console.log(result)
+            $scope.pageInfo = result.pageinfo;
             var searchLists = [];
             var searchListData = {
                 field: 'JDEmpId',
@@ -45,10 +48,26 @@
             console.log(err)
         }
         function _getTableDataSuccessResult(result) {
+            console.log(result)
             $scope.entity = result[0];
+            $scope.oldEntity = angular.copy(result[0])
         }
         function _getTableDataErrorResult(err) {
 
+        }
+        function _udpate(entity, editForm) {
+            editFormService.saveForm(jobPageId, entity, $scope.oldEntity,
+                "edit", "", editForm, false)
+                .then(_successResult, _errorResult)
+        }
+        function _successResult(result) {
+       
+            if (result.success_message == "Record Updated.") {
+                $scope.showMsg("success", "Job Detail Updated")
+            }
+        }
+        function _errorResult(err) {
+            console.log(err)
         }
         _loadController();
     }
