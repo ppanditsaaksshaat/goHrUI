@@ -7,7 +7,7 @@
 
   angular.module('BlurAdmin.pages.configuration', [
     'BlurAdmin.pages.configuration.company',
-    'BlurAdmin.pages.configuration.payroll'
+    // 'BlurAdmin.pages.configuration.payroll'
   ]).config(routeConfig);
       
   /** @ngInject */
