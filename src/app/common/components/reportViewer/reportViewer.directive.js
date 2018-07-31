@@ -178,14 +178,14 @@
                     pageService.rptHandshake($scope.page.reportId, JSON.stringify(encData)).then(function (result) {
                         //   var result = angular.fromJson(response.data);
                         console.log(result)
-                        var rptUrl = '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
-                            '&crid=' + corpoId + '&lang=' + lang
+                        // var rptUrl = '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                        //     '&crid=' + corpoId + '&lang=' + lang
                         // console.log(rptUrl)
                         // $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 
-                        // reportBaseURL = 'http://rudra.hrm'
-                        // var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
-                        //     '&crid=' + corpoId + '&lang=' + lang
+                        reportBaseURL = 'http://rudra.hrm'
+                        var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                            '&crid=' + corpoId + '&lang=' + lang
                         console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 
