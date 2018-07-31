@@ -9,10 +9,6 @@
     
     'BlurAdmin.pages.organization.reports.empDetail',
     'BlurAdmin.pages.organization.reports.empJoiningDt',
-    'BlurAdmin.pages.organization.reports.empBasicDt',
-    'BlurAdmin.pages.organization.reports.salaryDetail',
-    'BlurAdmin.pages.organization.reports.manPower',
-    'BlurAdmin.pages.organization.reports.monthWiseManPower'
     
   ])
     .config(routeConfig);

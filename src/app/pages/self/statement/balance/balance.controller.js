@@ -11,7 +11,7 @@
             var vm = this;
             console.log('location ctrl loaded')
             $scope.entity = {}
-            $scope.page = $rootScope.createPage();
+            $scope.page = $scope.createPage();
             $scope.page.pageId = 493;
             // $scope.page = $rootScope.createPage(); 0
             console.log($scope.page)

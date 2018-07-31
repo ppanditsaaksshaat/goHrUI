@@ -9,7 +9,6 @@
         .controller('miscellaneousController', miscellaneousController);
     function miscellaneousController($scope, $rootScope, $state, $filter, pageService, $location, $anchorScroll) {
 
-        
         console.log("parent")
         var vm = this;
         $scope.miscelAttendanceSummery = {};

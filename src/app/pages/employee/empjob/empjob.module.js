@@ -16,7 +16,7 @@
                 url: '/job',
                 templateUrl: 'app/pages/employee/empjob/empjob.html',
                 title: 'Job',
-                controller: "empJobController",
+                controller: "",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
