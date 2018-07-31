@@ -54,9 +54,7 @@
                 PdBloodGroupId: $scope.entity.PdBloodGroupId
             }
             entities.push(per);
-            console.log(entities)
-
-
+          
             pageService.udateMultiTableFields(entities).then(function (result) {
                 if (result.success_message = "Updated") {
                     $scope.modalInstance.close("success");
