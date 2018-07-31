@@ -1,11 +1,13 @@
 /**
  * @author NKM
- * created on 
+ * created on 28.07.2018
  */
 (function () {
     'use strict';
 
     angular.module('BlurAdmin.pages.self.statement', [
+        'BlurAdmin.pages.self.statement.transactionhistory',
+        'BlurAdmin.pages.self.statement.balance'
     ])
         .config(routeConfig);
 
@@ -16,12 +18,12 @@
                 url: '/statement',
                 templateUrl: 'app/pages/self/statement/statement.html',
                 title: 'leave statement',
-                controller: "leaveStatementController",
+                controller: "",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 3,
-                  },
+                },
             })
         //$urlRouterProvider.when('/employees', '/employees/dashboard');
     }

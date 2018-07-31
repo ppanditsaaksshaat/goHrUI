@@ -9,10 +9,16 @@
         .controller('employeeController', employeeController);
 
     /** @ngInject */
-    function employeeController($scope, $state, $stateParams, pageService, dialogModal) {
+    function employeeController($scope, $rootScope, $stateParams, pageService, dialogModal) {
 
         var empId = $stateParams.empid;
-
+        if (empId == undefined) {
+            $scope.myProfile = true;
+            empId = $rootScope.user.profile.empId;
+        }
+        else {
+            $scope.myProfile = false;
+        }
         $scope.userPassword = _userPassword;
         $scope.userRole = _userRole;
 
@@ -32,10 +38,27 @@
             function _getCustomQuerySuccessResult(result) {
                 console.log(result);
                 $scope.empBaicDetail = result[0][0];
+                //   $state.go("employee.summary")
 
             }
             function _getCustomQueryErrorResult(err) {
                 console.log(err);
+            }
+        }
+
+
+        $scope.uploadPicture = function () {
+            var fileInput = document.getElementById('uploadFile');
+            fileInput.addEventListener('change', handleImage, false);
+            fileInput.click();
+
+        };
+        function handleImage(e) {
+            var reader = new FileReader();
+            console.log(e)
+            reader.readAsDataURL(e.target.files[0], $scope);
+            reader.onload = function (event) {
+                $scope.picture = reader.result;
             }
         }
 

@@ -9,14 +9,26 @@
       .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider) {
+  function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('profile', {
-          url: '/profile',
-          title: 'Profile',
-          templateUrl: 'app/pages/profile/profile.html',
-          controller: 'ProfilePageCtrl',
-        });
+          url: '/',
+          template: '<ui-view  autoscroll="true" autoscroll-body-top></ui-view>',        
+        //  abstract: true,
+          title: 'Me',
+          sidebarMeta: {
+            icon: 'ion-gear-a',
+            order: 2,
+          },
+        }).state('profile.me', {
+          url: '/me',
+          templateUrl: 'app/pages/organization/employees/add/employeeAdd.html',
+          title: 'Add Employee',
+          controller: "AddEmployeeController",
+          controllerAs: "addCtrl"
+        })
+
+        $urlRouterProvider.when('/profile','/employee');
   }
 
 })();

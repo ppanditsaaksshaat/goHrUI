@@ -1,15 +1,21 @@
 <div class="col-lg-12 col-md-12 col-sm-12 sub-page-container">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 employee-profile-container">
         <div class="profile-picture-container">
-            <div class="profile-picture" width="200px" height="200px">
-            </div>
-            <div class="img-circle img-initials" random-Color>{{empBaicDetail.EmpName.split(' ')[0].substr(0,1)}}{{empBaicDetail.EmpName.split(' ')[1].substr(0,1)}}</div>
+            <!-- <div class="profile-picture" width="200px" height="200px">
+                    <input id="file-input" type="file"/>
+            </div> -->
+            <label for="file-input" class="img-circle img-initials" random-Color>{{empBaicDetail.EmpName.split(' ')[0].substr(0,1)}}{{empBaicDetail.EmpName.split(' ')[1].substr(0,1)}}</label>
+           
+            <!-- <label for="file-input">
+                <img src="placeholder.jpg"/>
+            </label>       -->
+            <input id="file-input" type="file"/>
         </div>
         <div class="row employee-header">
             <div class="col-sm-12 clear-right-padding">
                 <div class="employee-details right-padding-10">
                     <div class="employee-options-container col-lg-12 clear-left-padding">
-                        <h1 class="display-name ">{{empBaicDetail.EmpName}}</h1>
+                        <h1 style="padding-top:15px" class="display-name">{{empBaicDetail.EmpName}}</h1>
                     </div>
                     <!-- ngIf: ctrl.model.locationName -->
                     <p class="current-city">
@@ -21,7 +27,7 @@
                     <p class="mobile">
                         <i class="fa fa-phone"></i> {{empBaicDetail.PdMobileNo}}</p>
                     </p>
-                    <div class="dropdown pull-right" style=" margin-top: -65px;">
+                    <div class="dropdown pull-right" style=" margin-top: -77px;">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                             Preference
                             <span class="caret"></span>
@@ -89,7 +95,7 @@
         </div>
         <div class="employee-navbar">
             <div id="toolbar" class="sub-nav sub-navbar-default">
-                <ul class="sub-nav navbar-nav">
+                <ul ng-if="!myProfile" class="sub-nav navbar-nav">
                     <li ui-sref-active="active">
                         <a ui-sref="employee.summary" href>summary</a>
                     </li>
@@ -111,6 +117,30 @@
                     <!-- end ngIf: ctrl.canViewAllTabs || ctrl.isMyReportee -->
                     <li ui-sref-active="active">
                         <a ui-sref="employee.finances" href>FINANCES</a>
+                    </li>
+                </ul>
+                <ul ng-if="myProfile" class="sub-nav navbar-nav">
+                    <li ui-sref-active="active">
+                        <a ui-sref="me.about" href>about</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="me.profile" href>profile</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="me.job" href>job</a>
+                    </li>
+                    <!-- ngIf: ctrl.canViewAllTabs || ctrl.isMyReportee -->
+                    <li ui-sref-active="active">
+                        <a ui-sref="me.assets" href>assets</a>
+                    </li>
+                    <!-- end ngIf: ctrl.canViewAllTabs || ctrl.isMyReportee -->
+                    <!-- ngIf: ctrl.canViewAllTabs || ctrl.isMyReportee -->
+                    <li ui-sref-active="active">
+                        <a ui-sref="me.documents" href>documents</a>
+                    </li>
+                    <!-- end ngIf: ctrl.canViewAllTabs || ctrl.isMyReportee -->
+                    <li ui-sref-active="active">
+                        <a ui-sref="me.finances" href>FINANCES</a>
                     </li>
                 </ul>
             </div>
