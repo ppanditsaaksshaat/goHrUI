@@ -7,7 +7,8 @@
 
     angular.module('BlurAdmin.pages.self.statement', [
         'BlurAdmin.pages.self.statement.transactionhistory',
-        'BlurAdmin.pages.self.statement.balance'
+        'BlurAdmin.pages.self.statement.balance',
+        'BlurAdmin.pages.self.statement.leavestatement'
     ])
         .config(routeConfig);
 

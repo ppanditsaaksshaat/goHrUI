@@ -5,7 +5,7 @@
         .directive('reportViewer', reportViewer);
     /** @ngInject */
     function reportViewer($location, $state, $compile, $rootScope, $timeout, dialogModal, pageService,
-        editFormService, focus, $sce, DJWebStore) {
+        editFormService, focus, $sce, DJWebStore, $window) {
         return {
             restrict: 'E',
             templateUrl: 'app/common/components/reportViewer/reportViewer.html',
@@ -95,11 +95,18 @@
                 $scope.reportId = $scope.page.reportId;
                 $scope.iframeLoadedCallBack = _iframeLoadedCallBack;
                 $scope.reset = _reset;
+                $scope.backList = _backList;
                 $scope.callReportPrint = _callReportPrint;
                 $scope.showResult = _showResult;
 
+                function _backList() {
+                    $window.history.back();
+                    // console.log('call bakc')
+                    // $state.go('selfdir.selfreport')
+                }
 
                 function _callReportPrint() {
+                    console.log('call report')
                     window.frames[0].frameElement.contentWindow.outerPrint();
                 }
 
