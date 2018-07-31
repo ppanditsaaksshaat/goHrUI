@@ -16,7 +16,7 @@
                 url: '/balance',
                 templateUrl: 'app/pages/self/statement/balance/balance.html',
                 title: 'Balance',
-                controller: "",
+                controller: "leaveBalanceController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
