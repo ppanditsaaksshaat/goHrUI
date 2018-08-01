@@ -1,6 +1,28 @@
-<div id="exportthis" style="background-color: #82c6f8; height: 200px;">
+<div id="exportthis" style=" height: 500px;">
     <h3>Leave Statement</h3>
-    {{data}}
+    <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+        <thead>
+            <tr class="info">
+                <td>
+                    <label>Name</label>
+                </td>
+                <td>
+                    <label>Age</label>
+                </td>
+                <td>
+                    <label>Department</label>
+                </td>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="emp in data">
+                <td> {{emp.Name}}</td>
+                <td>{{emp.Age}}</td>
+                <td>{{emp.Department}}</td>
+
+        </tbody>
+    </table>
 
 </div>
-<button ng-click="exportData()">export</button>
+<button ng-click="downLoadPdf()">export</button>

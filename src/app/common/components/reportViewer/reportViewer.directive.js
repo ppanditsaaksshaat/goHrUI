@@ -122,6 +122,7 @@
                 }
 
                 function _showResult() {
+                    $scope.progressBar = true;
                     $("#progress-bar").show();
                     $("#print-button").hide();
                     //$scope.reportUrl = 'app/common/components/reportViewer/blank.html'
