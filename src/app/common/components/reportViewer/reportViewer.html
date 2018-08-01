@@ -18,6 +18,12 @@
                             <button id="reset-button" class="btn btn-xs btn-default  pull-right" data-toggle="modal" ng-click="reset();">
                                 Reset
                             </button>
+
+                            <!-- <button type="submit" class="btn btn-xs btn-default  pull-right" ng-click="getPageData();">Search</button> -->
+
+                            <button class="btn btn-xs btn-default  pull-right" type="submit" ng-click="backList()">
+                                Back
+                            </button>
                         </div>
                     </div>
 
@@ -28,12 +34,12 @@
                         position:absolute;
                         top:200px;
                         left:0px;" ng-click="page.showFilter=!page.showFilter">
-                            <i ng-class="{'ion-arrow-right-b':!page.showFilter, 'ion-arrow-left-b':page.showFilter}"></i>
+                        <i ng-class="{'ion-arrow-right-b':!page.showFilter, 'ion-arrow-left-b':page.showFilter}"></i>
                     </button>
 
 
 
-                    <i id="progress-bar" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                    <i ng-show="progressBar" id="progress-bar" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
                     <iframe ng-src="{{reportUrl}}" class="iframe" scrolling="yes" frameborder="0" height="400px" width="100%" iframe-onload="iframeLoadedCallBack()"></iframe>
                 </div>
             </div>

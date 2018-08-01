@@ -16,14 +16,14 @@
                 url: '/transactionhistory',
                 templateUrl: 'app/pages/self/statement/transactionhistory/transactionhistory.html',
                 title: 'Transaction History',
-                controller: "",
+                controller: "transanctionHistoryController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 2,
                 },
             })
-        // $urlRouterProvider.when('/selfdir/attendance', '/selfdir/attendance/roster');
+        $urlRouterProvider.when('/selfdir/statement', '/selfdir/statement/transactionhistory');
     }
 
 })();

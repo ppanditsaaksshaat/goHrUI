@@ -10,6 +10,7 @@
     'BlurAdmin.pages.self.apply',
     'BlurAdmin.pages.self.salary',
     'BlurAdmin.pages.self.statement',
+    'BlurAdmin.pages.self.selfreport',
   ])
     .config(routeConfig);
 
