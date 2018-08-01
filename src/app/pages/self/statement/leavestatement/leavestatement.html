@@ -1,28 +1,27 @@
 <div id="exportthis" style=" height: 500px;">
-    <h3>Leave Statement</h3>
-    <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
-        <thead>
-            <tr class="info">
-                <td>
-                    <label>Name</label>
-                </td>
-                <td>
-                    <label>Age</label>
-                </td>
-                <td>
-                    <label>Department</label>
-                </td>
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="emp in data">
-                <td> {{emp.Name}}</td>
-                <td>{{emp.Age}}</td>
-                <td>{{emp.Department}}</td>
-
-        </tbody>
-    </table>
-
+    <div class="panel panel-medium">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-4">
+                    <label dotranslate> Employee Leave Statement</label>
+                </div>
+                <div class="col-md-4 ">
+                    <label dotranslate>Statement by from date and to date </label>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in monthlySummery.monthList"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="yearL.Id as yearL.Name for yearL in monthlySummery.yearList"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn input-sm btn-success" ng-click="downLoadPdf();" dotranslate>Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<button ng-click="downLoadPdf()">export</button>

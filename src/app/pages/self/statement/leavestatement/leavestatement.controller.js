@@ -62,7 +62,7 @@
             searchLists.push({
                 field: 'ELTEmpId',
                 operand: "=",
-                value: 5
+                value: $rootScope.user.profile.empId
             })
             console.log(searchLists)
             var data = {
@@ -109,7 +109,7 @@
             var pdfRows = [];
             var pdfHeader = [];
             pdfRows.push([{
-                text: 'Mr.' + ' ' + 'Nitesh' + ' ' + 'Kumar Mishra',
+                text: result[0][0].EmpName,
                 style: 'tableHeader', colSpan: 6
             }, {}, {}, {}, {}, {}])
             angular.forEach(columnList, function (col) {
@@ -182,7 +182,7 @@
                         layout: {
                             paddingLeft: function (i, node) {
                                 return 8;
-                                console. log(body)
+                                console.log(body)
                             },
                             paddingRight: function (i, node) { return 8; },
                             paddingTop: function (i, node) { return 6; },
