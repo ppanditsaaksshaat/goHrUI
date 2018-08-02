@@ -8,13 +8,26 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.employee.empdocuments')
-        .controller('empDocumentController', empDocumentController);
+        .controller('empFolderController', empFolderController);
 
     /** @ngInject */
-    function empDocumentController($scope, $state, $rootScope, $stateParams, pageService, editFormService) {
-        console.log($stateParams)
+    function empFolderController($scope, $rootScope, $state, $stateParams, pageService, editFormService) {
+
+        $rootScope.folderName = "";
+        if ($stateParams.folderId != undefined) {
+            $rootScope.folders = false;
+        }
+        else {
+            $rootScope.folders = true;
+        }
+
+        $scope.folderOpen = _folderOpen;
         function _loadController() {
             if ($stateParams.category == "myfile") {
+              
+                $rootScope.categoryName = "My File";
+                $rootScope.stateName = $state.current.name;
+                $rootScope.params = { category: $stateParams.category };
                 $scope.parentFolders = [
                     { id: 1, name: "Identity Proof" },
                     { id: 2, name: "Technical Certificate" },
@@ -23,6 +36,10 @@
                 ];
             }
             else if ($stateParams.category == "sharedwithme") {
+               
+                $rootScope.categoryName = "Shared With Me";
+                $rootScope.stateName = $state.current.name;
+                $rootScope.params = { category: $stateParams.category };
                 $scope.parentFolders = [
                     { id: 1, name: "Deepak Jain" },
                     { id: 2, name: "Neeraj Tondan" },
@@ -31,6 +48,9 @@
                 ];
             }
             else if ($stateParams.category == "public") {
+                $rootScope.categoryName = "Public";
+                $rootScope.stateName = $state.current.name;
+                $rootScope.params = { category: $stateParams.category };
                 $scope.parentFolders = [
                     { id: 1, name: "Announcement" },
                     { id: 2, name: "HR Policy" },
@@ -39,6 +59,9 @@
                 ];
             }
             else if ($stateParams.category == "sharedwithother") {
+                $rootScope.categoryName = "Shared With Other";
+                $rootScope.stateName = $state.current.name;
+                $rootScope.params = { category: $stateParams.category };
                 $scope.parentFolders = [
                     { id: 1, name: "Deepak Jain" },
                     { id: 2, name: "Neeraj Tondan" },
@@ -47,6 +70,11 @@
                 ];
             }
 
+        }
+
+        function _folderOpen(folderId, folderName) {
+            $rootScope.folders = false;
+            $state.go("employee.documents.folders.files", { folderId: folderId,folderName:folderName })
         }
         _loadController();
     }

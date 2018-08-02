@@ -1,0 +1,12 @@
+<div id="folder" ng-show="folders" class="col-lg-12">
+    <div ng-repeat="folder in parentFolders" class="col-lg-4">
+        <div class="col-md-4 folder-icon">
+            <span>
+                <i ng-click="folderOpen(folder.id,folder.name)" class="fa fa-folder"></i>
+            </span>
+            <br>
+            <a href ng-click="folderOpen(folder.id,folder.name)">{{folder.name}}</a>
+        </div>
+    </div>
+</div>
+<div ui-view></div>

@@ -29,14 +29,15 @@
             })
             .state('employee.documents.folders', {
                 url: '/:category',
-                parent:'employee.documents',
+                parent: 'employee.documents',
                 onEnter: ['$state', function ($state) {
                     console.log('folder child state entered')
+                 //   $state.reload();
                 }],
                 // views: {
                 //     'view1@docChild': {
-                templateUrl: 'app/pages/employee/empdocuments/childdoc/childdoc.html',
-                controller: 'empDocumentController',
+                templateUrl: 'app/pages/employee/empdocuments/folder/folder.html',
+                controller: 'empFolderController',
                 //     }
                 // },
                 title: 'Folders',
@@ -46,15 +47,16 @@
                     show: 0
                 },
             }).state('employee.documents.folders.files', {
-                url: '/:folderId',
-                parent:'employee.documents.folders',
+                url: '/:folderId/:folderName',
+                parent: 'employee.documents.folders',
                 onEnter: ['$state', function ($state) {
                     console.log('file child state entered')
+
                 }],
                 // views: {
                 //     'view1@docChild': {
-                templateUrl: 'app/pages/employee/empdocuments/subchilddoc/subchilddoc.html',
-                controller: "empDocSubChildController",
+                templateUrl: 'app/pages/employee/empdocuments/file/file.html',
+                controller: "empFileController",
                 //     }
                 // },
                 title: 'Files',

@@ -16,7 +16,7 @@
                 url: '/finances',
                 templateUrl: 'app/pages/employee/empfinances/empfinances.html',
                 title: 'Finances',
-                controller: "",
+                controller: "empFinancesController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

@@ -4,9 +4,7 @@
             <div class="col-lg-2  bhoechie-tab-menu clear-left-padding">
                 <div class="list-group">
                     <a href ui-sref-active="active" ui-sref="employee.documents.folders({category:'myfile'})" class="list-group-item  text-center">
-                        <h4>
-                            <i class="fa fa-file"></i>
-                        </h4>
+                        <h4 class="fa fa-file"></h4>
                         <br/>My File
                     </a>
                     <a href ui-sref-active="active" ui-sref="employee.documents.folders({category:'sharedwithme'})" class="list-group-item text-center">
@@ -24,7 +22,9 @@
                 </div>
             </div>
             <div class="col-lg-10">
-                <h5>My File</h5>
+
+                <a href ng-href="{{$state.href(stateName, params)}}">{{categoryName}}</a>/
+                <a href ng-href="{{$state.href(fileStateName, fileParams)}}">{{folderName}}</a>
                 <div class="panel">
                     <div class="panel-body">
                         <div ui-view></div>
