@@ -5,6 +5,7 @@
                     <input id="file-input" type="file"/>
             </div>
             <div class="img-circle img-initials" random-Color>{{empBaicDetail.EmpName.split(' ')[0].substr(0,1)}}{{empBaicDetail.EmpName.split(' ')[1].substr(0,1)}}</div>
+            <span class="upload-image-icon icon-plus-sign ng-scope" data-ng-click="ctrl.updateProfilePicture()"></span>
         </div>
         <div class="row employee-header">
             <div class="col-sm-12 clear-right-padding">

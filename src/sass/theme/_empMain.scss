@@ -24,6 +24,13 @@
     position: initial;
     border-radius: 4px;
 }
+.profile-picture-container .upload-image-icon {
+  display: none;
+  position: absolute;
+  top: 45%;
+  left: 89%;
+  zoom: 2;
+}
 .profile-picture-container {
   position: absolute;
   width: 214px;
@@ -323,4 +330,10 @@ margin-top: 30px;
 
 .bhoechie-tab .bhoechie-tab-content:not(.active) {
   display: none;
+}
+
+.folder-icon i{
+  font-size:50px;
+  color:#ECD17B;
+  cursor: pointer
 }

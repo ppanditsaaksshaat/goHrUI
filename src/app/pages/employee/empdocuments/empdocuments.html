@@ -3,27 +3,28 @@
         <div class="col-sm-12 new-person-details">
             <div class="col-lg-2  bhoechie-tab-menu clear-left-padding">
                 <div class="list-group">
-                    <a href ui-sref-active="active" ui-sref="employee.documents.myfile" class="list-group-item  text-center">
-                        <h4>
-                            <i class="fa fa-file"></i>
-                        </h4>
+                    <a href ui-sref-active="active" ui-sref="employee.documents.folders({category:'myfile'})" class="list-group-item  text-center">
+                        <h4 class="fa fa-file"></h4>
                         <br/>My File
                     </a>
-                    <a href ui-sref-active="active" ui-sref="employee.documents.shared" class="list-group-item text-center">
+                    <a href ui-sref-active="active" ui-sref="employee.documents.folders({category:'sharedwithme'})" class="list-group-item text-center">
                         <h4 class="fa fa-share-square"></h4>
-                        <br/>Shared
+                        <br/>Shared With Me
                     </a>
-                    <a href ui-sref-active="active" ui-sref="employee.summary" class="list-group-item text-center">
+                    <a href ui-sref-active="active" ui-sref="employee.documents.folders({category:'public'})" class="list-group-item text-center">
                         <h4 class="glyphicon glyphicon-home"></h4>
                         <br/>Public
                     </a>
-                    <a href ui-sref-active="active" ui-sref="employee.summary" class="list-group-item text-center">
+                    <a href ui-sref-active="active" ui-sref="employee.documents.folders({category:'sharedwithother'})" class="list-group-item text-center">
                         <h4 class="glyphicon glyphicon-cutlery"></h4>
-                        <br/>Other
+                        <br/>Shared With Other
                     </a>
                 </div>
             </div>
             <div class="col-lg-10">
+
+                <a href ng-href="{{$state.href(stateName, params)}}">{{categoryName}}</a>/
+                <a href ng-href="{{$state.href(fileStateName, fileParams)}}">{{folderName}}</a>
                 <div class="panel">
                     <div class="panel-body">
                         <div ui-view></div>
@@ -34,9 +35,3 @@
         </div>
     </div>
 </div>
-
-
-<style>
-   
-</style>
-
