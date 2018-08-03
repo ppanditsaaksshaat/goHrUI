@@ -14,6 +14,11 @@
     function empFolderController($scope, $rootScope, $state, $stateParams, pageService, editFormService) {
 
         $rootScope.folderName = "";
+
+        var empId = $stateParams.empid;
+       
+
+
         if ($stateParams.folderId != undefined) {
             $rootScope.folders = false;
         }
@@ -24,7 +29,7 @@
         $scope.folderOpen = _folderOpen;
         function _loadController() {
             if ($stateParams.category == "myfile") {
-              
+
                 $rootScope.categoryName = "My File";
                 $rootScope.stateName = $state.current.name;
                 $rootScope.params = { category: $stateParams.category };
@@ -36,7 +41,7 @@
                 ];
             }
             else if ($stateParams.category == "sharedwithme") {
-               
+
                 $rootScope.categoryName = "Shared With Me";
                 $rootScope.stateName = $state.current.name;
                 $rootScope.params = { category: $stateParams.category };
@@ -74,7 +79,12 @@
 
         function _folderOpen(folderId, folderName) {
             $rootScope.folders = false;
-            $state.go("employee.documents.folders.files", { folderId: folderId,folderName:folderName })
+            if (empId != undefined) {
+                $state.go("employee.documents.folders.files", { folderId: folderId, folderName: folderName })
+            } else {
+                $state.go("me.documents.folders.files", { folderId: folderId, folderName: folderName })
+            }
+
         }
         _loadController();
     }

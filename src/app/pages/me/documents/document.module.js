@@ -20,7 +20,7 @@
                 templateUrl: 'app/pages/employee/empdocuments/empdocuments.html',
                 //     }
                 // },
-
+                controller: "empDocumentController",
                 title: 'Documents',
                 sidebarMeta: {
                     icon: 'ion-pound',

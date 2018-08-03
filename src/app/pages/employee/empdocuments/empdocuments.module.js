@@ -20,7 +20,7 @@
                 templateUrl: 'app/pages/employee/empdocuments/empdocuments.html',
                 //     }
                 // },
-
+                controller: "empDocumentController",
                 title: 'Documents',
                 sidebarMeta: {
                     icon: 'ion-pound',
@@ -32,7 +32,7 @@
                 parent: 'employee.documents',
                 onEnter: ['$state', function ($state) {
                     console.log('folder child state entered')
-                 //   $state.reload();
+                    //   $state.reload();
                 }],
                 // views: {
                 //     'view1@docChild': {

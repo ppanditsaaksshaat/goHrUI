@@ -68,6 +68,6 @@
           order: 1,
         },
       })
-     // $urlRouterProvider.when('/me', '/me/about');
+     $urlRouterProvider.when('/me', '/me/about');
   }
 })();

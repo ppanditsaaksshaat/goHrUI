@@ -5,26 +5,24 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.directory.empdashboard', [
+    angular.module('BlurAdmin.pages.directory.employees', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('directory.dashboard', {
-                url: '/dashboard',
-                templateUrl: 'app/pages/directory/empdashboard/empdashboard.html',
-                title: 'Dashboard',
-                controller: "dirDashboardController",
+            .state('directory.employees', {
+                url: '/employees/:param',
+                templateUrl: 'app/pages/directory/employees/employees.html',
+                title: 'Employees',
+                controller: "dirEmployeesController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
                 },
             })
-
-        $urlRouterProvider.when('/directory', '/directory/dashboard');
     }
 
 })();

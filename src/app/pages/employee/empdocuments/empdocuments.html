@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-sm-12 new-person-details">
             <div class="col-lg-2  bhoechie-tab-menu clear-left-padding">
-                <div class="list-group">
+          
+                <div ng-if="!me" class="list-group">
                     <a href ui-sref-active="active" ui-sref="employee.documents.folders({category:'myfile'})" class="list-group-item  text-center">
                         <h4 class="fa fa-file"></h4>
                         <br/>My File
@@ -16,6 +17,24 @@
                         <br/>Public
                     </a>
                     <a href ui-sref-active="active" ui-sref="employee.documents.folders({category:'sharedwithother'})" class="list-group-item text-center">
+                        <h4 class="glyphicon glyphicon-cutlery"></h4>
+                        <br/>Shared With Other
+                    </a>
+                </div>
+                <div ng-if="me" class="list-group">
+                    <a href ui-sref-active="active" ui-sref="me.documents.folders({category:'myfile'})" class="list-group-item  text-center">
+                        <h4 class="fa fa-file"></h4>
+                        <br/>My File
+                    </a>
+                    <a href ui-sref-active="active" ui-sref="me.documents.folders({category:'sharedwithme'})" class="list-group-item text-center">
+                        <h4 class="fa fa-share-square"></h4>
+                        <br/>Shared With Me
+                    </a>
+                    <a href ui-sref-active="active" ui-sref="me.documents.folders({category:'public'})" class="list-group-item text-center">
+                        <h4 class="glyphicon glyphicon-home"></h4>
+                        <br/>Public
+                    </a>
+                    <a href ui-sref-active="active" ui-sref="me.documents.folders({category:'sharedwithother'})" class="list-group-item text-center">
                         <h4 class="glyphicon glyphicon-cutlery"></h4>
                         <br/>Shared With Other
                     </a>

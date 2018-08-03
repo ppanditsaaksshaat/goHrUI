@@ -337,3 +337,24 @@ margin-top: 30px;
   color:#ECD17B;
   cursor: pointer
 }
+ table {
+  border-spacing: 0;
+  border-collapse: unset;
+}
+
+.custom-table {
+  margin-top: 0px;
+}
+.custom-table  th,
+td {
+  padding: 15px;
+  text-align: left;
+}
+
+.custom-table tr:nth-child(even) {
+  background-color: #eee;
+}
+
+.custom-table tr:nth-child(odd) {
+  background-color: #fff;
+}

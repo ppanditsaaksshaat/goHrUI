@@ -20,7 +20,7 @@
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
-                    order: 2,
+                    order: 3,
                   },
             })
         //$urlRouterProvider.when('/employees', '/employees/dashboard');
