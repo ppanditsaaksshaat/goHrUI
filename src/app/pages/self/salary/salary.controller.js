@@ -54,8 +54,8 @@
                 searchLists.push({
                     field: 'EmpId',
                     operand: "=",
-                    value: 5
-                    // value: $rootScope.user.profile.empId
+                    // value: 5
+                    value: $rootScope.user.profile.empId
                 })
                 searchLists.push({
                     field: 'FinancialYear',
@@ -74,7 +74,9 @@
 
         function _getCustomQuerySuccessResult(result) {
             // $scope.financialYearList = []
+            console.log(result)
             $scope.empSalaryHead = []
+            $scope.financialYearList = result[1];
             if (result[0].length > 0) {
                 console.log(result)
                 console.log(result[0])
@@ -82,7 +84,7 @@
                 $scope.empName = result[0][0].EmpName;
                 $scope.deptName = result[0][0].DeptName;
                 $scope.desgName = result[0][0].DesgName;
-                $scope.financialYearList = result[1];
+                // $scope.financialYearList = result[1];
                 $scope.empSalaryHead = result[0];
             }
         }
