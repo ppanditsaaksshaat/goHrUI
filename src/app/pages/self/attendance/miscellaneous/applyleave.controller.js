@@ -49,7 +49,7 @@
                 var leaveType = parseInt($scope.entity.leaveTypes)
                 var leaveTransaction = leaveType + '|1';
                 console.log(leaveTransaction)
-                $scope.newEntity.LEADEmpId = 5;
+                $scope.newEntity.LEADEmpId = $rootScope.user.profile.empId;
                 $scope.newEntity.LEADDateFrom = $scope.entity.leaveFromDate;
                 $scope.newEntity.LEADDateTo = $scope.entity.leaveFromDate;
                 $scope.newEntity.LeadHalfDay = 0;
@@ -86,7 +86,7 @@
             var searchListData = {
                 field: 'EmpId',
                 operand: '=',
-                value: 5
+                value: $rootScope.user.profile.empId
             }
             searchLists.push(searchListData)
             var data = {

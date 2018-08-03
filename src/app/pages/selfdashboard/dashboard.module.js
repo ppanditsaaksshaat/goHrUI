@@ -14,7 +14,7 @@
     function routeConfig($stateProvider) {
       $stateProvider
         .state('selfdashboard', {
-          url: '/dashboard',
+          url: '/selfdashboard',
           templateUrl: 'app/pages/selfdashboard/dashboard.html',
           controller: 'dashboardCtrl',
           title: 'Dashboard',

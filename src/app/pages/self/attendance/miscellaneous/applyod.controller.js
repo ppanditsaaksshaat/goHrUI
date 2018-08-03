@@ -51,7 +51,7 @@
         function _addOD() {
             if (!_validateApprovedData()) {
                 var newEntity = {};
-                $scope.newEntity.FADEmpId = 5;
+                $scope.newEntity.FADEmpId = $rootScope.user.profile.empId;
                 $scope.newEntity.FDAFromDate = $scope.entity.FDAFromDate;
                 $scope.newEntity.FDAToDate = $scope.entity.FDAFromDate;
                 $scope.newEntity.FADInTime = $scope.entity.FADInTime;
