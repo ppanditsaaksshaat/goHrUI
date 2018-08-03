@@ -61,11 +61,11 @@
             showDataOnLoad: true,
             // currentState: 'configuration.company.locations.location'
         }
-        // $scope.page.searchList.push({
-        //     field: 'RODFromDate',
-        //     operand: '>=',
-        //     value: moment($scope.fromDate).format('YYYY-MM-DD')
-        // })
+        $scope.page.searchList.push({
+            field: 'EmpId',
+            operand: '=',
+            value: $rootScope.user.profile.empId
+        })
         // $scope.page.searchList.push({
         //     field: 'RODFromDate',
         //     operand: '<=',
@@ -78,7 +78,7 @@
         //     // value: $scope.user.profile.empId
         // })
 
-       
+
         function _getPageData() {
             $scope.page.searchList = [];
             var rosterMonth = (moment($scope.fromDate).month());

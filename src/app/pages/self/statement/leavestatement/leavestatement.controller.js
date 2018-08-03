@@ -123,7 +123,7 @@
         }
 
         function _getCustomQueryErrorResult(error) {
-            console.log(error);
+            console.log(error); 
         }
 
         function _downLoadPdf() {

@@ -50,7 +50,7 @@
         function addCoff() {
             if (!_validateApprovedData()) {
                 var newEntity = {};
-                $scope.newEntity.EmpId = 5;
+                $scope.newEntity.EmpId = $rootScope.user.profile.empId;
                 $scope.newEntity.COAttnDate = $scope.entity.COAttnDate;
                 $scope.newEntity.COTimeIn = $scope.entity.COTimeIn;
                 $scope.newEntity.COTimeOut = $scope.entity.COTimeOut;
