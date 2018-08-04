@@ -26,9 +26,12 @@
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Attendance" ba-panel-class="medium-panel traffic-panel">
         <div class="col-sm-12 link-item clear-side-padding">
             <div class="col-sm-12">
-                <a class="anchor-sm" data-ui-sref="attendance.reports.attendancedetail">
-                    Attendance Detail
+                <a class="anchor-sm" data-ui-sref="selfdir.selfreport.reportattendancesummary">
+                    Attendance Summery
                 </a>
+                <!-- <div class="form-group col-md-12">
+                    <button class=" btn btn-info btn-add pull-left" ng-click="applyCOff()">Comp-Off</button>
+                </div> -->
             </div>
         </div>
 
@@ -60,7 +63,7 @@
 
         <div class="col-sm-12 link-item clear-side-padding">
             <div class="col-sm-12">
-                <a class="anchor-sm" data-ui-sref="leave.reports.monthlyLeaveDetail">
+                <a class="anchor-sm" data-ui-sref="self.selfreport.reportsalarystructure">
                     Monthly Leave Detail
                 </a>
             </div>
@@ -68,7 +71,7 @@
 
         <div class="col-sm-12 link-item clear-side-padding">
             <div class="col-sm-12">
-                <a class="anchor-sm">
+                <a class="anchor-sm" data-ui-sref="selfdir.selfreport.reportleavestatement">
                     Leave Statement Detail
                 </a>
             </div>
@@ -90,7 +93,7 @@
 
         <div class="col-sm-12 link-item clear-side-padding">
             <div class="col-sm-12">
-                <a class="anchor-sm" data-ui-sref="loan.reports.loanOutStanding ">
+                <a class="anchor-sm" data-ui-sref="selfdir.selfreport.reportattendancesummary ">
                     Loan Out-Standing
                 </a>
             </div>
@@ -99,8 +102,15 @@
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Payroll" ba-panel-class="medium-panel traffic-panel">
         <div class="col-sm-12 link-item clear-side-padding">
             <div class="col-sm-12">
-                <a class="anchor-sm" data-ui-sref="payroll.reports.paySlips">
+                <a class="anchor-sm" data-ui-sref="selfdir.selfreport.salaryslip">
                     Pay Slip
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-12 link-item clear-side-padding">
+            <div class="col-sm-12">
+                <a class="anchor-sm" data-ui-sref="selfdir.selfreport.salarystructure ">
+                    Salary Structure
                 </a>
             </div>
         </div>

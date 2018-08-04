@@ -49,11 +49,15 @@
                         <label>Sr. No.</label>
                     </td>
                     <td>
+                        <label>Name</label>
+                    </td>
+                    <td>
                         <label>From Date</label>
                     </td>
                     <td>
                         <label>To Date</label>
                     </td>
+
                     <!-- <td>
                         <label>Sanction From</label>
                     </td>
@@ -68,6 +72,7 @@
             <tbody>
                 <tr ng-repeat="leave in upComingLeaveListOfTeam">
                     <td> {{leave.SNo}}</td>
+                    <td>{{leave.EmpName}}</td>
                     <td>{{leave.LEADDateFrom}}</td>
                     <td>{{leave.LEADDateTo}}</td>
                     <!-- <td>{{leave.SancFromDate}}</td>

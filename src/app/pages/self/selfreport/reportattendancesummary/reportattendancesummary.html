@@ -1,0 +1,41 @@
+<div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h3 class="inline-block clear-vertical-margin" dotranslate>Attendance Summary</h3>
+        </div>
+        <div class="modal-body content-container">
+            <form name="leaveDetail" id="leaveDetail" novalidate>
+                <div class="row">
+                    <div class="col-sm-8">
+    
+    
+                        <div class="col-sm-12">
+    
+                            <div class="col-sm-4">
+                                <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in monthlySummery.monthList"></select>
+                            </div>
+                            <div class="col-sm-4">
+                                <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="yearL.Id as yearL.Name for yearL in monthlySummery.yearList"></select>
+                            </div>
+                            <!-- <div class="col-sm-4">
+                                <button type="submit" class="btn input-sm btn-success" ng-click="downLoadPdf();" dotranslate>Search</button>
+                            </div> -->
+                        </div>
+    
+    
+                    </div>
+    
+                    <div class="col-sm-4">
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-12 vertical-margin">
+                            <div class="col-sm-6 pull-right text-right">
+                                <button type="submit" class="btn btn-success" ng-click="downLoadPdfs();" dotranslate>Attendance Summary</button>
+                                <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
