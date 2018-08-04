@@ -39,7 +39,8 @@
     // 'BlurAdmin.pages.employees',
     'BlurAdmin.pages.directory',
     'BlurAdmin.pages.employee',
-    'BlurAdmin.pages.self'
+    'BlurAdmin.pages.self',
+    'BlurAdmin.pages.team'
     
 
   ])

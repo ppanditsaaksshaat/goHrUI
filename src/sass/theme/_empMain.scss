@@ -1,5 +1,7 @@
 // Created By PP
-
+.clear-right-padding{
+  padding-right: 0 !important
+}
 .icon-size i{
     font-size:50px;
     padding-top: 10px;
@@ -357,4 +359,173 @@ td {
 
 .custom-table tr:nth-child(odd) {
   background-color: #fff;
+}
+ .menu-tile {
+  height: 90px;
+  padding: 0 10px;
+}
+.vertical-margin {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.clear-bottom {
+  margin-bottom: 0!important;
+}
+.clear-side-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+//MyTeam Summary CSS
+
+ .menu-tile .menu {
+  height: 90px;
+  background-color: #967adc;
+  padding: 10px;
+  color: #fff;
+}
+ .link-count {
+  display: block;
+  margin-top: 55px;
+ }
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+.pull-left {
+  float: left!important;
+}
+
+#myteam-leaves {
+  font-size: 13px;
+  position: relative;
+  padding-top: 20px;
+  max-width: 1280px;
+}
+#myteam-leaves .leaves-summary {
+  color: #666;
+  font-size: 11px;
+}
+#myteam-leaves .leaves-summary .leaves-summary-calender .month {
+  color: #000;
+}
+
+#myteam-leaves .leaves-summary .leaves-summary-calender {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+#myteam-leaves .arrow-icon {
+  background-color: #50a6f0;
+  color: #fff;
+  padding: 0;
+  font-size: 20px!important;
+}
+#myteam-leaves .arrow-icon i{
+  font-size: 15px;
+}
+#myteam-leaves .leaves-summary .leaves-summary-days {
+  margin-top: 1.2%;
+}
+#myteam-leaves .leaves-summary .leaves-summary-days ul {
+  padding: 0;
+  margin-bottom: 0;
+}
+#myteam-leaves .leaves-summary .leaves-summary-days .day {
+  border: 1px solid #b0e0f6;
+  height: 30px;
+  padding-top: 5px;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #e1f1fe;
+  margin-bottom: 4px;
+}
+#myteam-leaves .leaves-summary .leaves-summary-days .month-days:first-child {
+  border-left: 1px solid #b0e0f6!important;
+}
+#myteam-leaves .leaves-summary .leaves-summary-days .month-days:last-child {
+  border-right: 1px solid #b0e0f6!important;
+}
+#myteam-leaves .leaves-summary .leaves-summary-days li {
+  text-align: center;
+  display: block;
+  float: left;
+  width: 2.8%;
+  margin-right: .44%;
+}
+#myteam-leaves .leaves-summary .leaves-summary-days .month-days {
+  border-left: none;
+  border-right: none;
+  width: 3.225%!important;
+  padding-right: 4px;
+  padding-left: 2px;
+}
+.clear-right-margin {
+  margin-right: 0!important;
+}
+.clear-left-margin {
+  margin-left: 0!important;
+}
+
+#myteam-leaves .leaves-summary .leaves-summary-days li {
+  text-align: center;
+  display: block;
+  float: left;
+  width: 2.7%;
+  margin-right: .52%;
+}
+#myteam-leaves .leaves-summary .leaves-summary-days .date div {
+  height: 40px;
+  font-size: 15px;
+  padding-top: 5px;
+}
+#myteam-leaves .low-priority {
+  background-color: #a4d849;
+}
+#myteam-leaves .no-priority {
+  background-color: #eee;
+}
+#myteam-leaves .off {
+  background-color: #c68cff;
+}
+#myteam-leaves .leave-summary-details {
+  margin-top: 10px;
+  height: auto;
+  max-height: 316px;
+  overflow-y: scroll;
+}
+
+#myteam-leaves .leave-summary-details .repeat-details {
+  margin-top: 10px;
+}
+#myteam-leaves .leave-summary-details .details {
+  margin-bottom: 3px;
+}
+#myteam-leaves .leave-summary-details .heat-map {
+  padding-left: 5px;
+  padding-right: 8px;
+  margin-right: 12px;
+}
+#myteam-leaves .leave-summary-details .heat-map-date {
+  margin-right: 10px;
+  display: inline-block;
+  width: 75px;
+  font-weight: 700;
+  color: #515151;
+}
+
+
+.alert {
+  color: #3787ac;
+  font-size: 14px;
+  margin-top: 30px;
+}
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+ 
 }
