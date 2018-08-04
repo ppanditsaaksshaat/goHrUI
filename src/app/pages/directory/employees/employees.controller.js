@@ -11,71 +11,48 @@
     /** @ngInject */
     function dirEmployeesController($scope, $rootScope, $stateParams, pageService, dialogModal) {
 
-        alert("employees")
-        // $scope.newJoinGridOptions = {
-        //     enableCellEditOnFocus: false,
-        //     enableRowSelection: false,
-        //     enableHorizontalScrollbar: 0,
-        //     enableVerticalScrollbar: 0,
-        //     enableScrollbars: false,
-        //     enableRowHeaderSelection: false,
-        //     columnDefs: [
-        //         { name: 'EmpName', displayName: 'Name', enableCellEdit: false },
-        //         { name: 'JDDate', displayName: 'Joining Date', enableCellEdit: false, visible: false },
+        $scope.gridOptions = {
+            enableCellEditOnFocus: false,
+            enableRowSelection: false,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            enableScrollbars: false,
+            enableRowHeaderSelection: false,
+            columnDefs: [
+                { name: 'EmpCode', displayName: 'EmpCode', width: 80, enableCellEdit: false },
+                { name: 'EmpName', displayName: 'Name', width: 150, enableCellEdit: false },
+                { name: 'JDOfficeEmail', displayName: 'Email', width: 150, enableCellEdit: false },
+                { name: 'JDDate', displayName: 'Joining Date', width: 150, enableCellEdit: false },
+                { name: 'DesgName', displayName: 'Designation', width: 150, enableCellEdit: false },
+                { name: 'DeptName', displayName: 'Department', width: 150, enableCellEdit: false },
+                { name: 'LocationName', displayName: 'Location', width: 150, enableCellEdit: false },
+                { name: 'BRName', displayName: 'Branch', width: 100, enableCellEdit: false},
+                { name: 'SUName', displayName: 'SubUnit', width: 100, enableCellEdit: false}
+            ],
+        }
 
-        //     ],
-        // }
-        // $scope.birthGridOptions = {
-        //     enableCellEditOnFocus: false,
-        //     enableRowSelection: false,
-        //     enableHorizontalScrollbar: 0,
-        //     enableVerticalScrollbar: 0,
-        //     enableScrollbars: false,
-        //     columnDefs: [
-        //         { name: 'EmpName', displayName: 'EmpName', enableCellEdit: false },
-        //         { name: 'PdDateOfBirth', displayName: 'DOB', enableCellEdit: false },
+        function _loadController() {
+            var searchLists = [];
+            searchLists.push({ field: 'Type', operand: '=', value: 'allemployee' })
+            var data = {
+                searchList: searchLists,
+                orderByList: []
+            }
+            pageService.getCustomQuery(data, 656).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
 
-        //     ],
-        // }
-        // $scope.leaveingGridOptions = {
-        //     enableCellEditOnFocus: false,
-        //     enableRowSelection: false,
-        //     enableHorizontalScrollbar: 0,
-        //     enableVerticalScrollbar: 0,
-        //     enableScrollbars: false,
-        //     columnDefs: [
-        //         { name: 'EmpName', displayName: 'Name', enableCellEdit: false },
-        //         { name: 'RDRelievingDate', displayName: 'RelievingDate', enableCellEdit: false },
-
-        //     ],
-        // }
-        // function _loadController() {
-
-        //     //  $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");    
-        //     var searchLists = [];
-
-        //     searchLists.push({ field: 'Type', operand: '=', value: 'dirdashboard' })
-
-        //     var data = {
-        //         searchList: searchLists,
-        //         orderByList: []
-        //     }
-        //     pageService.getCustomQuery(data, 656).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
-
-        //     function _getCustomQuerySuccessResult(result) {
-        //         console.log(result);
-        //         $scope.newJoins = result[0];
-        //         $scope.birthAnnList = result[1];
-        //         $scope.leavingEmps = result[2];
-
-        //     }
-        //     function _getCustomQueryErrorResult(err) {
-        //         console.log(err);
-        //     }
-        // }
+            function _getCustomQuerySuccessResult(result) {
+                console.log(result);
+                $scope.gridOptions.data = result[0];
 
 
-        // _loadController();
+            }
+            function _getCustomQueryErrorResult(err) {
+                console.log(err);
+            }
+        }
+
+
+        _loadController();
     }
 })()
 
