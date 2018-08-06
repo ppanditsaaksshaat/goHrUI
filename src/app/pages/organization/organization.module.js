@@ -7,7 +7,7 @@
 
   angular.module('BlurAdmin.pages.organization', [
     'BlurAdmin.pages.organization.employees.masters',
-    'BlurAdmin.pages.organization.employees',
+    // 'BlurAdmin.pages.organization.employees',
     // 'BlurAdmin.pages.organization.payRoll',
     'BlurAdmin.pages.organization.company',
     // 'BlurAdmin.pages.organization.employee',
