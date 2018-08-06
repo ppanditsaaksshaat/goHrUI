@@ -1,20 +1,20 @@
 /**
  * @author pardeep pandit
- * created on 04/08/2018
+ * created on 05/08/2018
  */
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.team.attendance.approvals', [
+    angular.module('BlurAdmin.pages.team.timesheet.approvals', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('team.attendance.approvals', {
+            .state('team.timesheet.approvals', {
                 url: '/approvals',
-                templateUrl: 'app/pages/team/attendance/approvals/approvals.html',
+                templateUrl: 'app/pages/team/timesheet/approvals/approvals.html',
                 title: 'APPROVALS',
                 controller: "",
                 sidebarMeta: {
@@ -22,7 +22,7 @@
                     order: 1,
                 },
             })
-        $urlRouterProvider.when('/team/attendance', '/team/attendance/approvals');
+        $urlRouterProvider.when('/team/timesheet', '/team/timesheet/approvals');
     }
 
 })();

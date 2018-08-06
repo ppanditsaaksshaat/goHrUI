@@ -1,25 +1,25 @@
 /**
  * @author pardeep pandit
- * created on 04/08/2018
+ * created on 05/08/2018
  */
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.team.expenses.approved', [
+    angular.module('BlurAdmin.pages.team.timesheet.weeksummary', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('team.expenses.approved', {
-                url: '/approved',
-                templateUrl: 'app/pages/team/expenses/approved/approved.html',
-                title: 'APPROVED CLAIMS',
+            .state('team.timesheet.weeksummary', {
+                url: '/weeksummary',
+                templateUrl: 'app/pages/team/timesheet/weeksummary/weeksummary.html',
+                title: 'WEEK SUMMARY',
                 controller: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
-                    order: 2,
+                    order: 3,
                 },
             })
     }

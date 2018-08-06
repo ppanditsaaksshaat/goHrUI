@@ -15,8 +15,7 @@
             .state('team.attendance.timeassignments', {
                 url: '/timeassignments',
                 templateUrl: 'app/pages/team/attendance/timeassignments/timeassignments.html',
-                title: 'Time Assignments',
-                controller: "",
+                title: 'TIME ASSIGNMENTS',
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,

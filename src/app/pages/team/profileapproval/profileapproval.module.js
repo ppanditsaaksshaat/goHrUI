@@ -6,6 +6,8 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.team.profileapproval', [
+        'BlurAdmin.pages.team.profileapproval.pending',
+        'BlurAdmin.pages.team.profileapproval.approved'
     ])
      .config(routeConfig);
 
@@ -16,7 +18,7 @@
             .state('team.profileapproval', {
                 url: '/profileapproval',
                 templateUrl: 'app/pages/team/profileapproval/profileapproval.html',
-                title: 'Profile Approval',
+                title: 'PROFILE APPROVAL',
                 controller: "",
                 controllerAs: "",
                 sidebarMeta: {

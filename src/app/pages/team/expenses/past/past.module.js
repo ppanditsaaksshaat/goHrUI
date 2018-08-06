@@ -15,7 +15,7 @@
             .state('team.expenses.past', {
                 url: '/past',
                 templateUrl: 'app/pages/team/expenses/past/past.html',
-                title: 'Past Claims',
+                title: 'PAST CALIMS',
                 controller: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
