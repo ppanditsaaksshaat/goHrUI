@@ -6,6 +6,9 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.team.timesheet', [
+        'BlurAdmin.pages.team.timesheet.approvals',
+        'BlurAdmin.pages.team.timesheet.projecttime',
+        'BlurAdmin.pages.team.timesheet.weeksummary'
     ])
      .config(routeConfig);
 
@@ -21,8 +24,9 @@
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
-                    order: 5,
+                  
                 },
+                order: 5
             })
     }
 })();

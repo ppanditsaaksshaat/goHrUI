@@ -1,7 +1,189 @@
-<div class="col-lg-12">
-    <div class="panel">
-        <div class="panel-body">
-            <h1>Reports</h1>
+<div class="col-lg-12 clear-left-padding">
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Team Leave Reports
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-12 clear-side-padding vertical-margin">
+                            <ul class="report-info-list">
+                                <li>
+                                    <a data-ui-sref="team.reports.leaverequest" href="#/team/reports/leaverequests">Team Leave Requests</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.leavebalance" href="#/team/reports/leavebalances">Team Leave Balances</a>
+                                </li>
+
+                                <li>
+                                    <a data-ui-sref="team.reports.leavesconsumed" href="#/team/reports/leavesconsumed">Leave Consumed By Team Employees</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.negativebalances" href="#/team/reports/negativeleavebalances">Team Employees with Negative Leave Balance</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.commpoffrequests" href="#/team/reports/compoffrequests">Team Employees Compensatory Off Requests</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.leavecarryover" href="#/team/reports/leavecarryover">Leave Carryover By Team Employees (Imported) - Initial Adjustments</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.employeeleaveadjustments" href="#/team/reports/leaveadjustments">Leave Consumed By Team Empoloyees (Imported) - Initial Adjustments</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.employeeleavebalanceytd" href="#/team/reports/leavebalanceytd">Team Employees Leave Balance YTD</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.openingclosingbalances" href="#/team/reports/openingclosingbalances">
+                                        Opening and Closing Leave Balances of Team Employees</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.leavesaccrued" href="#/team/reports/leavesaccrued">Leave Accrued By Team Employees</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.exceptionlogs" href="#/team/reports/exceptionlogs">Leave - Exception Logs Of Team Employees</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.leavebalanceexpiry" href="#/team/reports/leavebalanceexpiry">Team Employees Leave/Compensatory-Off Expiry Report</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Team Negligence (Attendance) Reports
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-12 clear-side-padding vertical-margin">
+                            <ul class="report-info-list">
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancenoshows" href="#/team/reports/attendancenoshows">No Shows - Team Employee not present</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancelatecomers" href="#/team/reports/attendancelatecomers">Late Comers - Team Employee is Late</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendanceearlyleavers" href="#/team/reports/attendanceearlyleavers">Early Leavers - Team Employee Left Early</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancemissingswipes" href="#/team/reports/attendancemissingswipes">Missing Swipes - Team In/Out Swipes Missing</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancefrequentbreaks" href="#/team/reports/attendancefrequentbreaks">Frequent Breaks - Team Employee Moving Out of Office Frequently</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendanceleasthoursworked" href="#/team/reports/attendanceleasthoursworked">Least Hours Worked - Team Worked less than effective hours</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancepenalizedleaves" href="#/team/reports/attendancepenalizedleaves">Penalized Leave - Team Leave Deduction due to no shows / late coming / shortage of effective
+                                        hours / missing swipes</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Team Punctuality (Attendance) Reports
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-12 clear-side-padding vertical-margin">
+                            <ul class="report-info-list">
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancearrival" href="#/team/reports/attendancearrival">Arrival Details - Team Employee Clock-in &amp; Clock-out Details</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendanceaveragehours" href="#/team/reports/attendanceaveragehours">Average Work Hours - Team Average Total &amp; Effective Working Hours</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancedailyperformance" href="#/team/reports/attendancedailyperformance">Daily Performance - Team Employee Day-wise Attendance Details</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancemonthlyperformance" href="#/team/reports/attendancemonthlyperformance">Monthly Performance - Team Employee Month-wise Attendance Details</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendanceovertimedetails" href="#/team/reports/attendanceovertimedetails">Over Time Details - Team Employee Day-wise Over Time Details</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancemonthlyovertime" href="#/team/reports/attendancemonthlyovertime">Monthly Over Time - Team Employee Month-wise Over Time Details</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Team Attendance Summary Reports
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="col-sm-12 clear-side-padding vertical-margin">
+                            <ul class="report-info-list">
+                                <li>
+                                    <a data-ui-sref="team.reports.monthlyworkingdaysandeffectivehours" href="#/team/reports/monthlyworkingdaysandeffectivehours">Working Days &amp; Effective Hours Summary</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendanceworkedonholidays" href="#/team/reports/attendanceworkedonholidays">Worked on Holidays Summary - Employees Working on Holidays / Week-offs</a>
+                                </li>
+
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancestatus" href="#/team/reports/attendancestatus">Attendance Status Report</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.workingdayssummary" href="#/team/reports/workingdayssummary">Working Days Summary</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendanceexceptionlogs" href="#/team/reports/attendanceexceptionlogs">Attendance Exception Logs</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Team Attendance Request Reports
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="col-sm-12 clear-side-padding vertical-margin">
+                            <ul class="report-info-list">
+                                <li>
+                                    <a data-ui-sref="team.reports.attendanceadjustmentrequests" href="#/team/reports/attendanceadjustmentrequests">Team Attendance Adjustment Summary</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendanceremoterequests" href="#/team/reports/attendanceremoteclockinrequests">Team Remote Clock-in Requests Summary</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendanceworkingremotelyrequests" href="#/team/reports/attendanceworkingremotelyrequests">Team Working Remotely (WFH/OD) Requests</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.attendancewebrequests" href="#/team/reports/attendancewebrequests">Team Web Clock-ins (includes Forgot ID requests)</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.remoteclockins" href="#/team/reports/remoteclockins">Team Remote Clock-ins</a>
+                                </li>
+                                <li>
+                                    <a data-ui-sref="team.reports.locationpunches" href="#/team/reports/locationpunches">Team Mobile Location Punches</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

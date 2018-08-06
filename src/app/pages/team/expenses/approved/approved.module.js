@@ -15,7 +15,7 @@
             .state('team.expenses.approved', {
                 url: '/approved',
                 templateUrl: 'app/pages/team/expenses/approved/approved.html',
-                title: 'Approved Claims',
+                title: 'APPROVED CLAIMS',
                 controller: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

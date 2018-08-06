@@ -15,7 +15,7 @@
             .state('team.attendance.approvals', {
                 url: '/approvals',
                 templateUrl: 'app/pages/team/attendance/approvals/approvals.html',
-                title: 'Approvals',
+                title: 'APPROVALS',
                 controller: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

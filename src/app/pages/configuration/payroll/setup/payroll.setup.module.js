@@ -15,7 +15,7 @@
       .state('configuration.payroll.setup', {
         url: '/setup',
         templateUrl: "app/pages/configuration/payroll/setup/setup.html",
-        //controller: 'companyController',
+        controller: 'payrollSetupController',
         title: 'Setup',
         sidebarMeta: {
           icon: 'ion-android-home',

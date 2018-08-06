@@ -232,3 +232,154 @@
     display: block;
     position: relative;
 }
+
+.payroll-setup {
+    .setup-list {
+        width: 480px;
+    }
+    .setup-list .setup {
+        margin-top: 30px;
+        cursor: pointer;
+    }
+    .setup-list .setup .setup-status {
+        text-align: center;
+    }
+    .setup-list .setup.complete .setup-status span.number {
+        background-color: #3d9eed;
+    }
+    .setup-list .setup .setup-status span.number {
+        border: 1px solid #3d9eed;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        border-radius: 50%;
+        padding: 5px 10px;
+        color: #fff;
+        font-weight: 500;
+        font-size: 14px;
+        margin-bottom: 3px;
+    }
+    .setup-list .setup .setup-status span {
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: 600;
+        color: #3d9eed;
+    }
+    .setup-list .setup .setup-status span {
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: 600;
+        color: #3d9eed;
+    }
+    .setup-list .setup .information h5 {
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-top: 0;
+        font-size: 13px;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .setup-list .setup .information p {
+        font-size: 13px;
+        font-weight: 400;
+        color: #888;
+    }
+}
+
+.panel .blue-body {
+    cursor: pointer;
+    min-height: 85px;
+    background-color: #42b9fe;
+    border-radius: 5px;
+    padding: 20px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.document-type {
+    .box-panel {
+        width: 260px;
+        
+        .box-heading {
+            font-size: 10px;
+            padding: 7px 10px 7px 15px;
+            border: 1px solid #d5d5d5;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            background-color: #f4f5f8;
+        }
+        .box-list {
+            border-left: 1px solid #d5d5d5;
+            border-right: 1px solid #d5d5d5;
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+        }
+        .box-list li {
+            padding: 18px 0 8px 15px;
+            border-bottom: 1px solid #d5d5d5;
+        }
+        .box-list li:hover {
+            background-color: #e2f2ff;
+            cursor: pointer;
+        }
+        .box-list .list-icon {
+            margin: 3px 10px 0 0;
+            font-size: 25px;
+            vertical-align: top;
+            display: inline-block;
+        }
+        .box-list .list-icon:before {
+            content: "\e976";
+            color: #3d9eed;
+        }
+    }
+}
+
+.documents-container .documents-content .documents-folders .header {
+    font-size: 10px;
+    padding: 7px 10px 7px 15px;
+    border: 1px solid #d5d5d5;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    background-color: #f4f5f8;
+}
+
+
+
+.approver-hierarchy .level {
+    background-image: linear-gradient(to bottom,#333 20%,rgba(255,255,255,0) 5%);
+    background-position: left;
+    background-size: 2px 8px;
+    background-repeat: repeat-y;
+    padding: 12px 20px 0 25px;
+    position: relative;
+}
+
+.approver-hierarchy .spot {
+    color: #3697ef;
+    text-shadow: 0 0 10px #52b8e9;
+    position: absolute;
+    left: -6px;
+    top: 30px;
+}
+
+.icon-circle2:before {
+    content: "\e43b";
+}
+
+.approver-hierarchy .level h5 {
+    display: inline-block;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.approver-hierarchy .level h5 sup {
+    font-size: 9px;
+    margin-right: 10px;
+}
+
+.approver-hierarchy .ui-select-container {
+    width: inherit!important;
+    padding: 0 3px 0 3px;
+}

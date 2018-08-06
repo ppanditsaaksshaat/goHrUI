@@ -16,7 +16,7 @@
             .state('team.leave', {
                 url: '/leave',
                 templateUrl: 'app/pages/team/leave/leave.html',
-                title: 'Leave',
+                title: 'LEAVE',
                 controller: "",
                 controllerAs: "",
                 sidebarMeta: {

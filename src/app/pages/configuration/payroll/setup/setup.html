@@ -2,12 +2,137 @@
     <div class="panel-heading">
         <span dotranslate>Configure Payroll</span>
     </div>
-    <div class="panel-body">
-        <span></span>
-        <ul class="setup-list">
-            <li>
+    <div class="panel-body payroll-setup">
+        <div class="col-sm-12 setup-list clear-side-padding">
+            <a class="setup col-sm-12 complete" data-ng-class="{'complete':ctrl.steps.companyInfo.isCompleted, 'not-started no-pointer':!ctrl.steps.companyInfo.isEnabled,  'pending':ctrl.steps.companyInfo.isCurrentstep }"
+                data-ui-sref=".companyinfo" href="#/settings/payroll/setup/companyinfo">
+                <div class="setup-status col-sm-3 clear-left-padding">
+                    <span class="number ng-binding">1</span>
+                    <br>
+                    <span class="ng-binding">Completed</span>
+                </div>
 
-            </li>
-        </ul>
+                <div class="information col-sm-9 clear-side-padding">
+                    <h5>Company Information</h5>x
+                    <p>
+                        Company legal entity, authorized signatories and bank account information.
+                    </p>
+                </div>
+            </a>
+
+            <a class="setup col-sm-12 complete" data-ng-class="{'complete':ctrl.steps.generalsettings.isCompleted,'not-started no-pointer':!ctrl.steps.generalsettings.isEnabled, 'pending':ctrl.steps.generalsettings.isCurrentstep }"
+                data-ui-sref=".generalpayroll" href="#/settings/payroll/setup/generalpayroll">
+                <div class="setup-status col-sm-3 clear-left-padding">
+                    <span class="number ng-binding">2</span>
+                    <br>
+                    <span class="ng-binding">Completed</span>
+                </div>
+
+                <div class="information col-sm-9 clear-side-padding">
+                    <h5>General Payroll Settings</h5>
+                    <p>
+                        Payroll cycle and payroll period settings.
+                    </p>
+                </div>
+            </a>
+
+            <a class="setup col-sm-12 complete" data-ng-class="{'complete':ctrl.steps.pfAndESIsetting.isCompleted,'not-started no-pointer':!ctrl.steps.pfAndESIsetting.isEnabled, 'pending':ctrl.steps.pfAndESIsetting.isCurrentstep }"
+                data-ui-sref=".pfandesi" href="#/settings/payroll/setup/pfandesi">
+                <div class="setup-status col-sm-3 clear-left-padding">
+                    <span class="number ng-binding">3</span>
+                    <br>
+                    <span class="ng-binding">Completed</span>
+                </div>
+
+                <div class="information col-sm-9 clear-side-padding">
+                    <h5>PF &amp; ESI Settings</h5>
+                    <p>
+                        Employee Provident Fund and ESI settings.
+                    </p>
+                </div>
+            </a>
+
+            <a class="setup col-sm-12 complete" data-ng-class="{'complete':ctrl.steps.salaryComponentsAndStructures.isCompleted, 'not-started no-pointer':!ctrl.steps.salaryComponentsAndStructures.isEnabled, 'pending':ctrl.steps.salaryComponentsAndStructures.isCurrentstep }"
+                data-ui-sref=".salarycomponentsandstructures" href="#/settings/payroll/setup/salarycomponentsandstructures">
+                <div class="setup-status col-sm-3 clear-left-padding">
+                    <span class="number ng-binding">4</span>
+                    <br>
+                    <span class="ng-binding">Completed</span>
+                </div>
+
+                <div class="information col-sm-9 clear-side-padding">
+                    <h5>Salary Components &amp; Structures</h5>
+                    <p>
+                        Setup salary components &amp; salary structures for employees.
+                    </p>
+                </div>
+            </a>
+
+            <a class="setup col-sm-12 complete" data-ng-class="{'complete':ctrl.steps.customSalarySetting.isCompleted, 'not-started no-pointer':!ctrl.steps.customSalarySetting.isEnabled, 'pending':ctrl.steps.customSalarySetting.isCurrentstep }"
+                data-ui-sref=".customsalarysetting" href="#/settings/payroll/setup/customsalarystructures">
+                <div class="setup-status col-sm-3 clear-left-padding">
+                    <span class="number ng-binding">5</span>
+                    <br>
+                    <span class="ng-binding">Completed</span>
+                </div>
+
+                <div class="information col-sm-9 clear-side-padding">
+                    <h5>Custom Salary Structures</h5>
+                    <p>
+                        Setup Custom salary structures for individual employee or group employees.
+                    </p>
+                </div>
+            </a>
+
+            <a class="setup col-sm-12 complete" data-ng-class="{'complete':ctrl.steps.financeSettings.isCompleted, 'not-started no-pointer':!ctrl.steps.financeSettings.isEnabled, 'pending':ctrl.steps.financeSettings.isCurrentstep }"
+                data-ui-sref=".myfinancesetting" href="#/settings/payroll/setup/myfinancesetting">
+                <div class="setup-status col-sm-3 clear-left-padding">
+                    <span class="number ng-binding">6</span>
+                    <br>
+                    <span class="ng-binding">Completed</span>
+                </div>
+
+                <div class="information col-sm-9 clear-side-padding">
+                    <h5>My Finance Settings</h5>
+                    <p>
+                        Actions Regarding enabling IT Declarations and Proof Submissions.
+                    </p>
+                </div>
+            </a>
+
+            <a class="setup col-sm-12 complete" data-ng-class="{'complete':ctrl.steps.statutoryFilingInfo.isCompleted, 'not-started no-pointer':!ctrl.steps.statutoryFilingInfo.isEnabled, 'pending':ctrl.steps.statutoryFilingInfo.isCurrentstep }"
+                data-ui-sref=".statutoryfilinginfo" href="#/settings/payroll/setup/statutoryfilinginfo">
+                <div class="setup-status col-sm-3 clear-left-padding">
+                    <span class="number ng-binding">7</span>
+                    <br>
+                    <span class="ng-binding">Completed</span>
+                </div>
+
+                <div class="information col-sm-9 clear-side-padding">
+                    <h5>Statutory Filing Information</h5>
+                    <p>
+                        Information required for TDS return, PF and ESI and other statutory body filings.
+                    </p>
+                </div>
+            </a>
+
+            <a class="setup col-sm-12 complete" data-ng-class="{'complete':ctrl.steps.loanSettings.isCompleted, 'not-started no-pointer':!ctrl.steps.loanSettings.isEnabled, 'pending':ctrl.steps.loanSettings.isCurrentstep }"
+                data-ui-sref=".loansettings" href="#/settings/payroll/setup/loansettings">
+                <div class="setup-status col-sm-3 clear-left-padding">
+                    <span class="number ng-binding">8</span>
+                    <br>
+                    <span class="ng-binding">Completed</span>
+                </div>
+
+                <div class="information col-sm-9 clear-side-padding">
+                    <h5>Loan Settings</h5>
+                    <p>
+                        Employee loan settings.
+                    </p>
+                </div>
+            </a>
+
+
+        </div>
     </div>
 </div>
