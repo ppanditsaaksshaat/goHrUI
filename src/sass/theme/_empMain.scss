@@ -542,85 +542,217 @@ td {
 
 //my team leave page css
 
-//  .pending-leave {
-//   padding-top: 5px;
-// }
-// .internal-padding {
-//   padding-left: 10px;
-// }
-// .profile-picture-container {
-//   width: 30px;
-//   height: 30px;
-//   margin-bottom: 0;
-//   margin-right: 0;
-//   background-color: transparent!important;
-// }
-// .profile-picture {
-//   width: 30px;
-//   height: 30px;
-// }
-// .img-initials {
-//   font-size: 14px;
-//   padding: 6px 4px;
-//   padding-top: 5px;
-// }
-// .leave-details {
-//   margin-bottom: 3px;
-//   padding-left: 10px;
-// }
-// .leave-requestor {
-//   margin-bottom: 2px;
-// }
-// .leave-details .aDisplayName {
-//   color: #000;
-// }
-// .request-calender {
-//   height: 70px;
-//   width: 82px;
-//   float: right;
-// }
+.request-form {
+  background-color: #e1f1fe;
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 13px;
+  border: 1px solid #b0e0f6;
+  max-width: 1280px;
+}
+.request-form .collpase {
+  padding: 3px;
+  cursor: pointer;
+}
+ .collpase-icon {
+  color: #fff;
+  font-weight: lighter;
+  padding: 5px 8px;
+  background-color: #89a3ce;
+  border-radius: 50%;
+  font-size: 20px;
+  margin-top: -4px;
+}
+.pending-leave {
+  padding-top: 5px;
+}
 
-// .clear-side-padding {
-//   padding-left: 0;
-//   padding-right: 0;
-// }
-// .request-calender .month-view {
-//   height: 25px;
-//   background-color: #e64040;
-//   display: inline-block;
-//   width: 100%;
-//   border-top-left-radius: 8px;
-//   border-top-right-radius: 8px;
-//   border: 1px solid #e64040;
-//   color: #fff;
-// }
+.internal-padding {
+  padding-left: 10px;
+}
+ 
+.member-profile-picture-container.profile-picture-container {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  background-color: transparent!important;
+}
 
-// .month-view span {
-//   display: block;
-//   text-align: center;
-//   font-size: 11px;
-//   text-transform: uppercase;
-//   position: relative;
-//   top: 1px;
-// }
-// .request-calender .month-view .dot {
-//   display: inline;
-//   top: -3px;
-//   font-size: 13px;
-// }
-// .request-calender .date-view {
-//   background-color: #fff;
-//   display: inline-block;
-//   height: 50px;
-//   width: 100%;
-//   margin-top: -5px;
-//   border: 1px solid #e7e6e6;
-//   border-top: none;
-//   border-bottom-left-radius: 8px;
-//   border-bottom-right-radius: 8px;
-//   padding: 0 1px 0 2px;
-// }
-// .request-calender .date-view .date-text .day {
-//   font-size: 20px;
-//   color: #4f4f4f;
-// }
+.member-profile-picture-container.profile-picture-container .img-initials {
+  font-size: 14px;
+  padding: 6px 4px;
+  padding-top: 8px;
+  background-color: #6f8ab5;
+  text-transform: uppercase;
+  height: 30x;
+  width: 30px;
+  text-align: center;
+  vertical-align: middle;
+  color: #fff;
+}
+.leave-details {
+  margin-bottom: 2px;
+}
+
+ .leave-details .aDisplayName {
+  color: #000;
+}
+.request-calender {
+  height: 70px;
+  width: 82px;
+  float: right;
+}
+.request-calender .month-view {
+  height: 25px;
+  background-color: #e64040;
+  display: inline-block;
+  width: 100%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border: 1px solid #e64040;
+  color: #fff;
+}
+.request-calender .month-view span {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  text-transform: uppercase;
+  position: relative;
+  top: 1px;
+}
+.request-calender .month-view .dot {
+  display: inline;
+  top: -3px;
+  font-size: 13px;
+}
+.request-calender .date-view {
+  background-color: #fff;
+  display: inline-block;
+  height: 50px;
+  width: 100%;
+  margin-top: -5px;
+  border: 1px solid #e7e6e6;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 0 1px 0 2px;
+}
+.request-calender .date-view ul {
+  padding: 13px 5px;
+}
+.request-calender .date-view ul {
+ list-style: none;
+}
+
+.request-calender .date-view .date-text .day {
+  font-size: 20px;
+  color: #4f4f4f;
+}
+.request-calender .date-view .date-saperator {
+  position: relative;
+  top: 10px;
+  left: 2px;
+  font-size: 25px;
+}
+.request-calender .date-view .date-text .week {
+  text-transform: uppercase;
+  color: #979797;
+  font-size: 10px;
+  position: relative;
+  top: -8px;
+  padding-left: 2px;
+}
+
+.simple-comments .comment-box-container {
+ top:15px;
+}
+.simple-comments .comment-box-container textarea {
+  font-style: italic;
+ 
+}
+textarea.form-control {
+  height: auto;
+}
+.no-resize {
+  resize: none;
+}
+.team-stats{
+  top:15px;
+}
+.request-form .internal-padding {
+  padding-left: 10px;
+}
+.request-form .leave-request-options {
+  font-weight: 500;
+  padding-right: 10px;
+}
+.request-form a {
+  text-decoration: none!important;
+  outline: 0!important;
+}
+.request-form a {
+  color: #52b8e9;
+  text-decoration: none;
+}
+
+
+.employee-summary-container .content-container {
+  margin-bottom: 0px;
+}
+
+.clear-right-padding {
+  padding-right: 0!important;
+}
+.content-container {
+  background-color: #fff;
+  border-radius: 4px;
+  padding-bottom: 20px;
+}
+.employee-summary-container .banner-row .banner-title {
+  margin-top: 25px;
+}
+.employee-summary-container .banner-row h5 {
+  margin-bottom: 0;
+  padding-left: 5px;
+}
+.employee-summary-container .banner-title {
+  color: #333;
+  text-transform: uppercase;
+  padding-top: 7px;
+}
+.h5, h5 {
+  font-size: 12px;
+}
+.employee-summary-container a {
+  text-decoration: none!important;
+  outline: 0!important;
+}
+
+.employee-summary-container a {
+  color: #52b8e9;
+  text-decoration: none;
+}
+.employee-summary-container a {
+  background-color: transparent;
+}
+.employee-summary-container .banner-row h1 {
+  color: #24aaf5;
+  font-size: 40px;
+  margin: 0;
+}
+
+ .block-heading {
+  color: #333;
+  text-transform: uppercase;
+  padding-top: 7px;
+}
+.mytraffic-chart{
+  width: 130px;
+  position: relative;
+  /* min-height: 300px; */
+  float: left;
+}

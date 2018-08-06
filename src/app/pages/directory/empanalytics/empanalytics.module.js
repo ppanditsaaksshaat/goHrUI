@@ -5,22 +5,22 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.directory.empexist', [
+    angular.module('BlurAdmin.pages.directory.empanalytics', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('directory.exist', {
-                url: '/exist',
-                templateUrl: 'app/pages/directory/empexist/empexist.html',
-                title: 'Exist',
+            .state('directory.empanalytics', {
+                url: '/analytics',
+                templateUrl: 'app/pages/directory/empanalytics/empanalytics.html',
+                title: 'Analytics',
                 controller: "",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
-                    order: 4,
+                    order: 3,
                   },
             })
         //$urlRouterProvider.when('/employees', '/employees/dashboard');
