@@ -1,0 +1,260 @@
+<h3>General Setting</h3>
+<p class="description" dotranslate>The information about general company working hours.</p>
+<button class="btn btn-default">
+    <i class="fa fa-plus"></i>
+    Add Approver Level</button>
+
+<form id="timesheetApprover" name="timeApprover" class="form-horizontal ng-pristine ng-valid" data-ng-init="vm.form=this">
+    <!-- ngIf: approverLevels.length > 0 -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ng-scope">
+        <!-- ngRepeat: level in approverLevels -->
+        <div name="approverLevels" class="level col-lg-12 col-md-12 col-sm-12 col-xs-12 ng-scope">
+            <span class="icon-circle2 spot"></span>
+            <h5>
+                <span class="ng-binding">1</span>
+                <sup class="ng-binding">st</sup>Level of Approvers</h5>
+            <div class="approver-level">
+                <div class="form-control ui-select-container ui-select-multiple ui-select-bootstrap dropdown form-control ng-pristine ng-untouched ng-valid ng-scope ng-not-empty"
+                     name="approvers"  theme="approvalChain" on-select="updateApproverList($item, $model, false)"
+                    on-remove="updateApproverList($item, $model, true)" sortable="true" close-on-select="true"
+                    style="width: 800px;">
+                    <span class="ui-select-match ng-scope" placeholder="No Approvers yet!">
+                        <!-- ngRepeat: $item in $select.selected -->
+                        <span class="ng-scope">
+                            <span class="ui-select-match-item btn btn-default btn-xs" tabindex="-1" type="button" 
+                                ng-class="{'btn-primary':$selectMultiple.activeMatchIndex === $index, 'select-locked':$select.isLocked(this, $index)}"
+                                ui-select-sort="$select.selected" draggable="true">
+                                <!-- ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                <span data-ng-if="vm.isProjectEditable || 'True' == 'True'" class="close ui-select-match-close ng-scope"
+                                    ng-hide="$select.disabled" ng-click="$selectMultiple.removeChoice($index)">&nbsp;×</span>
+                                <!-- end ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                <span uis-transclude-append="">
+                                    <div data-ng-class="$item.approverId ==0 ? 'group' : 'approver'" class="approvers ng-scope group">
+                                        <div class="img-container sub-cnt">
+                                            <!-- ngIf: $item.approverId!=0 -->
+                                            <!-- ngIf: $item.approverId==0 -->
+                                            <div data-ng-if="$item.approverId==0" class="member-profile-picture-container profile-picture-container ng-scope">
+                                                <div class="profile-picture teamPictures">
+                                                    <span class="icon-users4 group"></span>
+                                                </div>
+                                            </div>
+                                            <!-- end ngIf: $item.approverId==0 -->
+                                        </div>
+                                        <div class="details sub-cnt ng-binding" title="Reporting Manager" ng-bind-html="($item.approverName || $item.displayName)">Reporting Manager</div>
+                                        <!-- ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                        <div class="remove sub-cnt ng-scope" ng-hide="$select.disabled" ng-click="$selectMultiple.removeChoice($index)"
+                                            data-ng-if="vm.isProjectEditable || 'True' == 'True'">
+                                            <span class="">x</span>
+                                        </div>
+                                        <!-- end ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                        <!-- ngIf: 'True' == 'False' && !vm.isProjectEditable -->
+                                    </div>
+                                </span>
+                            </span>
+                        </span>
+                        <!-- end ngRepeat: $item in $select.selected -->
+                    </span>
+                    <span class="ui-search">
+                        <span class="search-result" data-ng-class="{open: $select.open}">
+                            <span data-ng-show="$select.open" class="icon-search2 search-icon ng-hide"></span>
+                            <input set-focus="addNew" data-ng-class="{ 'border':addNew ,'removeborder':!$select.open, 'shrink':$select.selected &amp;&amp; $select.selected.length > 0 &amp;&amp; !$select.open}"
+                                type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="ui-select-search input-xs ng-pristine ng-untouched ng-valid ng-empty removeborder shrink"
+                                placeholder="Search for Approvers" data-ng-disabled="$select.disabled" data-ng-focus="$select.activate()"
+                                data-ng-click="$select.activate()" data-ng-blur="addNew = false;" data-ng-model="$select.search"
+                                role="combobox" aria-label="Select box" ondrop="return false;" style="width: 68px;">
+                            <ul class="form-group search-result-item ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu ng-scope"
+                                role="listbox" ng-show="$select.items.length > 0" group-by="'category'" repeat="emp in filteredApprovers"
+                                refresh=" getFilteredEmployees($select.search)" refresh-delay="900">
+                                <!-- ngRepeat: $group in $select.groups -->
+                                <li class="ui-select-choices-group ng-scope" id="ui-select-choices-3" ng-repeat="$group in $select.groups">
+                                    <div class="divider ng-hide" ng-show="$select.isGrouped &amp;&amp; $index > 0"></div>
+                                    <div ng-show="$select.isGrouped" class="ui-select-choices-group-label dropdown-header ng-binding" ng-bind="$group.name">
+                                    Roles</div>
+                                    <!-- ngRepeat: emp in $group.items -->
+                                    <!-- ngIf: $select.open -->
+                                    <!-- end ngRepeat: emp in $group.items -->
+                                    <!-- ngIf: $select.open -->
+                                    <!-- end ngRepeat: emp in $group.items -->
+                                    <!-- ngIf: $select.open -->
+                                    <!-- end ngRepeat: emp in $group.items -->
+                                </li>
+                                <!-- end ngRepeat: $group in $select.groups -->
+                            </ul>
+                        </span>
+                        <button data-ng-show="!$select.open &amp;&amp; (vm.isProjectEditable || 'True' == 'True')" class="btn btn-info btn-add "
+                            data-ng-click="addNewApprover();addNew=!addNew;">+ Add New</button>
+
+                    </span>
+                    <ui-select-multiple></ui-select-multiple>
+                </div>
+            </div>
+        </div>
+        <!-- end ngRepeat: level in approverLevels -->
+        <div name="approverLevels" class="level col-lg-12 col-md-12 col-sm-12 col-xs-12 ng-scope">
+            <span class="icon-circle2 spot"></span>
+            <h5>
+                <span data-ng-bind="level.level=($index+1)" class="ng-binding">2</span>
+                <sup class="ng-binding">nd</sup>Level of Approvers</h5>
+            <div class="approver-level">
+                <div class="form-control ui-select-container ui-select-multiple ui-select-bootstrap dropdown form-control ng-pristine ng-untouched ng-valid ng-scope ng-not-empty"
+                    data-ng-init="addNew=false;" name="approvers" ng-model="level.approvers" theme="approvalChain" on-select="updateApproverList($item, $model, false)"
+                    on-remove="updateApproverList($item, $model, true)" ng-disabled="disabled" sortable="true" close-on-select="true"
+                    style="width: 800px;">
+                    <span class="ui-select-match ng-scope" placeholder="No Approvers yet!">
+                        <!-- ngRepeat: $item in $select.selected -->
+                        <span ng-repeat="$item in $select.selected" class="ng-scope">
+                            <span class="ui-select-match-item btn btn-default btn-xs" tabindex="-1" type="button" ng-disabled="$select.disabled" ng-click="$selectMultiple.activeMatchIndex = $index;"
+                                ng-class="{'btn-primary':$selectMultiple.activeMatchIndex === $index, 'select-locked':$select.isLocked(this, $index)}"
+                                ui-select-sort="$select.selected" draggable="true">
+                                <!-- ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                <span data-ng-if="vm.isProjectEditable || 'True' == 'True'" class="close ui-select-match-close ng-scope"
+                                    ng-hide="$select.disabled" ng-click="$selectMultiple.removeChoice($index)">&nbsp;×</span>
+                                <!-- end ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                <span uis-transclude-append="">
+                                    <div data-ng-class="$item.approverId ==0 ? 'group' : 'approver'" class="approvers ng-scope group">
+                                        <div class="img-container sub-cnt">
+                                            <!-- ngIf: $item.approverId!=0 -->
+                                            <!-- ngIf: $item.approverId==0 -->
+                                            <div data-ng-if="$item.approverId==0" class="member-profile-picture-container profile-picture-container ng-scope">
+                                                <div class="profile-picture teamPictures">
+                                                    <span class="icon-users4 group"></span>
+                                                </div>
+                                            </div>
+                                            <!-- end ngIf: $item.approverId==0 -->
+                                        </div>
+                                        <div class="details sub-cnt ng-binding" title="Project Manager" ng-bind-html="($item.approverName || $item.displayName)">Project Manager</div>
+                                        <!-- ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                        <div class="remove sub-cnt ng-scope" ng-hide="$select.disabled" ng-click="$selectMultiple.removeChoice($index)"
+                                            data-ng-if="vm.isProjectEditable || 'True' == 'True'">
+                                            <span class="">x</span>
+                                        </div>
+                                        <!-- end ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                        <!-- ngIf: 'True' == 'False' && !vm.isProjectEditable -->
+                                    </div>
+                                </span>
+                            </span>
+                        </span>
+                        <!-- end ngRepeat: $item in $select.selected -->
+                    </span>
+                    <span class="ui-search">
+                        <span class="search-result" data-ng-class="{open: $select.open}">
+                            <span data-ng-show="$select.open" class="icon-search2 search-icon ng-hide"></span>
+                            <input set-focus="addNew" data-ng-class="{ 'border':addNew ,'removeborder':!$select.open, 'shrink':$select.selected &amp;&amp; $select.selected.length > 0 &amp;&amp; !$select.open}"
+                                type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="ui-select-search input-xs ng-pristine ng-untouched ng-valid ng-empty removeborder shrink"
+                                placeholder="Search for Approvers" data-ng-disabled="$select.disabled" data-ng-focus="$select.activate()"
+                                data-ng-click="$select.activate()" data-ng-blur="addNew = false;" data-ng-model="$select.search"
+                                role="combobox" aria-label="Select box" ondrop="return false;" style="width: 68px;">
+                            <ul class="form-group search-result-item ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu ng-scope"
+                                role="listbox" ng-show="$select.items.length > 0" group-by="'category'" repeat="emp in filteredApprovers"
+                                refresh=" getFilteredEmployees($select.search)" refresh-delay="900">
+                                <!-- ngRepeat: $group in $select.groups -->
+                                <li class="ui-select-choices-group ng-scope" id="ui-select-choices-4" ng-repeat="$group in $select.groups">
+                                    <div class="divider ng-hide" ng-show="$select.isGrouped &amp;&amp; $index > 0"></div>
+                                    <div ng-show="$select.isGrouped" class="ui-select-choices-group-label dropdown-header ng-binding" ng-bind="$group.name">
+                                    Roles</div>
+                                    <!-- ngRepeat: emp in $group.items -->
+                                    <!-- ngIf: $select.open -->
+                                    <!-- end ngRepeat: emp in $group.items -->
+                                    <!-- ngIf: $select.open -->
+                                    <!-- end ngRepeat: emp in $group.items -->
+                                    <!-- ngIf: $select.open -->
+                                    <!-- end ngRepeat: emp in $group.items -->
+                                </li>
+                                <!-- end ngRepeat: $group in $select.groups -->
+                            </ul>
+                        </span>
+                        <button data-ng-show="!$select.open &amp;&amp; (vm.isProjectEditable || 'True' == 'True')" class="btn btn-info btn-add "
+                            data-ng-click="addNewApprover();addNew=!addNew;">+ Add New</button>
+
+                    </span>
+                    <ui-select-multiple></ui-select-multiple>
+                </div>
+            </div>
+        </div>
+        <!-- end ngRepeat: level in approverLevels -->
+        <div name="approverLevels" class="level col-lg-12 col-md-12 col-sm-12 col-xs-12 ng-scope">
+            <span class="icon-circle2 spot"></span>
+            <h5>
+                <span data-ng-bind="level.level=($index+1)" class="ng-binding">3</span>
+                <sup class="ng-binding">rd</sup>Level of Approvers</h5>
+            <div class="approver-level">
+                <div class="form-control ui-select-container ui-select-multiple ui-select-bootstrap dropdown form-control ng-pristine ng-untouched ng-valid ng-scope ng-not-empty"
+                    data-ng-init="addNew=false;" name="approvers" ng-model="level.approvers" theme="approvalChain" on-select="updateApproverList($item, $model, false)"
+                    on-remove="updateApproverList($item, $model, true)" ng-disabled="disabled" sortable="true" close-on-select="true"
+                    style="width: 800px;">
+                    <span class="ui-select-match ng-scope" placeholder="No Approvers yet!">
+                        <!-- ngRepeat: $item in $select.selected -->
+                        <span ng-repeat="$item in $select.selected" class="ng-scope">
+                            <span class="ui-select-match-item btn btn-default btn-xs" tabindex="-1" type="button" ng-disabled="$select.disabled" ng-click="$selectMultiple.activeMatchIndex = $index;"
+                                ng-class="{'btn-primary':$selectMultiple.activeMatchIndex === $index, 'select-locked':$select.isLocked(this, $index)}"
+                                ui-select-sort="$select.selected" draggable="true">
+                                <!-- ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                <span data-ng-if="vm.isProjectEditable || 'True' == 'True'" class="close ui-select-match-close ng-scope"
+                                    ng-hide="$select.disabled" ng-click="$selectMultiple.removeChoice($index)">&nbsp;×</span>
+                                <!-- end ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                <span uis-transclude-append="">
+                                    <div data-ng-class="$item.approverId ==0 ? 'group' : 'approver'" class="approvers ng-scope group">
+                                        <div class="img-container sub-cnt">
+                                            <!-- ngIf: $item.approverId!=0 -->
+                                            <!-- ngIf: $item.approverId==0 -->
+                                            <div data-ng-if="$item.approverId==0" class="member-profile-picture-container profile-picture-container ng-scope">
+                                                <div class="profile-picture teamPictures">
+                                                    <span class="icon-users4 group"></span>
+                                                </div>
+                                            </div>
+                                            <!-- end ngIf: $item.approverId==0 -->
+                                        </div>
+                                        <div class="details sub-cnt ng-binding" title="Client Manager" ng-bind-html="($item.approverName || $item.displayName)">Client Manager</div>
+                                        <!-- ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                        <div class="remove sub-cnt ng-scope" ng-hide="$select.disabled" ng-click="$selectMultiple.removeChoice($index)"
+                                            data-ng-if="vm.isProjectEditable || 'True' == 'True'">
+                                            <span class="">x</span>
+                                        </div>
+                                        <!-- end ngIf: vm.isProjectEditable || 'True' == 'True' -->
+                                        <!-- ngIf: 'True' == 'False' && !vm.isProjectEditable -->
+                                    </div>
+                                </span>
+                            </span>
+                        </span>
+                        <!-- end ngRepeat: $item in $select.selected -->
+                    </span>
+                    <span class="ui-search">
+                        <span class="search-result" data-ng-class="{open: $select.open}">
+                            <span data-ng-show="$select.open" class="icon-search2 search-icon ng-hide"></span>
+                            <input set-focus="addNew" data-ng-class="{ 'border':addNew ,'removeborder':!$select.open, 'shrink':$select.selected &amp;&amp; $select.selected.length > 0 &amp;&amp; !$select.open}"
+                                type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="ui-select-search input-xs ng-pristine ng-untouched ng-valid ng-empty removeborder shrink"
+                                placeholder="Search for Approvers" data-ng-disabled="$select.disabled" data-ng-focus="$select.activate()"
+                                data-ng-click="$select.activate()" data-ng-blur="addNew = false;" data-ng-model="$select.search"
+                                role="combobox" aria-label="Select box" ondrop="return false;" style="width: 68px;">
+                            <ul class="form-group search-result-item ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu ng-scope"
+                                role="listbox" ng-show="$select.items.length > 0" group-by="'category'" repeat="emp in filteredApprovers"
+                                refresh=" getFilteredEmployees($select.search)" refresh-delay="900">
+                                <!-- ngRepeat: $group in $select.groups -->
+                                <li class="ui-select-choices-group ng-scope" id="ui-select-choices-5" ng-repeat="$group in $select.groups">
+                                    <div class="divider ng-hide" ng-show="$select.isGrouped &amp;&amp; $index > 0"></div>
+                                    <div ng-show="$select.isGrouped" class="ui-select-choices-group-label dropdown-header ng-binding" ng-bind="$group.name">
+                                    Roles</div>
+                                    <!-- ngRepeat: emp in $group.items -->
+                                    <!-- ngIf: $select.open -->
+                                    <!-- end ngRepeat: emp in $group.items -->
+                                    <!-- ngIf: $select.open -->
+                                    <!-- end ngRepeat: emp in $group.items -->
+                                    <!-- ngIf: $select.open -->
+                                    <!-- end ngRepeat: emp in $group.items -->
+                                </li>
+                                <!-- end ngRepeat: $group in $select.groups -->
+                            </ul>
+                        </span>
+                        <button data-ng-show="!$select.open &amp;&amp; (vm.isProjectEditable || 'True' == 'True')" class="btn btn-info btn-add "
+                            data-ng-click="addNewApprover();addNew=!addNew;">+ Add New</button>
+
+                    </span>
+                    <ui-select-multiple></ui-select-multiple>
+                </div>
+            </div>
+        </div>
+        <!-- end ngRepeat: level in approverLevels -->
+    </div>
+    <!-- end ngIf: approverLevels.length > 0 -->
+    <!-- ngIf: ismodelChanged -->
+</form>

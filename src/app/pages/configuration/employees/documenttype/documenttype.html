@@ -1,0 +1,41 @@
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Document Type Setting for Employees</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-9">
+                <p class="text-description" dotranslate>Document folders help organize various documents of an employee. In each document folder you can designate
+                    the type of documents uploaded and associated document fields. A Document type helps capture document
+                    information along with the uploaded document such as Passport Number, Expiration Date of a Passport document
+                    upload.
+                </p>
+            </div>
+        </div>
+        <div class="row document-type">
+            <div class="col-md-4">
+
+                <div class="box-panel col-sm-2">
+                    <div class="box-heading">
+                        <span class="text-uppercase" dotranslate>Document Type</span>
+                        <a href class="text-uppercase pull-right" data-ng-click="addDocumentType()">+Add Type</a>
+                    </div>
+                    <ul class="box-list">
+                        <li>
+                            <i class="fa fa-folder pull-left"></i>
+                            <div class="inline-block pull-right">
+                                <h5 class="display-block clear-top clear-bottom text-ellipsis ng-binding">Educational Documents</h5>
+                                <span class="text-muted font-smaller ng-binding">3 document types
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div ui-view></div>
+            </div>
+        </div>
+    </div>
+</div>
