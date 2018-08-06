@@ -11,7 +11,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label" dotranslate>Company Short Name</label>
-                        <input type="text" class="form-control" name="shortname">
+                        <input type="text" class="form-control" data-ng-model="entity.GSMCompanyShortName" name="shortname">
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                         <label class="label-control" dotranslate>Notification Message</label>
                         <span class="text-description" dotranslate>You can provide instructions or similar information not exceeding 250 characters</span>
                         <br/>
-                        <textarea name="Notification" id="Notification" cols="30" rows="10" class="form-control"></textarea>
+                        <textarea name="Notification" id="Notification"data-ng-model="entity.GSMNotificationMessage" cols="30" rows="10" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                             <button class="btn btn-lg btn-raised btn-primary pull-right" ng-click="preview()" dotranslate>Preview</button>
                         </div>
                         <div class="col-md-6">
-                                <button class="btn btn-lg btn-success pull-left" ng-click="save()" dotranslate>Save</button>
+                            <button class="btn btn-lg btn-success pull-left" ng-click="save()" dotranslate>Save</button>
                         </div>
                     </div>
                 </div>

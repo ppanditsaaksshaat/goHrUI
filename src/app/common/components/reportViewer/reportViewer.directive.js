@@ -25,7 +25,8 @@
             },
             link: function ($scope, elm, attrs, ctrl) {
                 // var reportBaseURL = 'http://itsllive.rudra.hrm/';
-                var reportBaseURL = 'http://rudra.hrm/';
+                // var reportBaseURL = 'http://rudra.hrm/';
+                var reportBaseURL = 'http://localhost:50531/';
                 // var reportBaseURL = 'http://web400.hrms/';
                 var host = $location.host();
                 var absUrl = $location.absUrl();
@@ -184,16 +185,16 @@
                         auth: compressed
                     }
                     pageService.rptHandshake($scope.page.reportId, JSON.stringify(encData)).then(function (result) {
-                        //   var result = angular.fromJson(response.data);
-                        console.log(result)
-                        var rptUrl = '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
-                            '&crid=' + corpoId + '&lang=' + lang
-                        // console.log(rptUrl)
-                        // $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
-
-                        // reportBaseURL = 'http://rudra.hrm'
-                        // var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                        // //   var result = angular.fromJson(response.data);
+                        // console.log(result)
+                        // var rptUrl = '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
                         //     '&crid=' + corpoId + '&lang=' + lang
+                        // // console.log(rptUrl)
+                        // // $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
+
+                        reportBaseURL = 'http://localhost/'
+                        var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
+                            '&crid=' + corpoId + '&lang=' + lang
                         console.log(rptUrl)
                         $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 
