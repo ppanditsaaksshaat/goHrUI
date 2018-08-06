@@ -22,9 +22,9 @@
                 controller: "",
                 controllerAs: "",
                 sidebarMeta: {
-                    icon: 'ion-pound',
-                    order: 1,
-                },
+                    icon: 'ion-pound',             
+                },      
+                order: 1,
             })
         $urlRouterProvider.when('/selfdir', '/selfdir/attendance');
     }

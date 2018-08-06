@@ -16,13 +16,14 @@
                 url: '/dashboard',
                 templateUrl: 'app/pages/directory/empdashboard/empdashboard.html',
                 title: 'Dashboard',
-                controller: "",
+                controller: "dirDashboardController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
-                  },
+                },
             })
+
         $urlRouterProvider.when('/directory', '/directory/dashboard');
     }
 

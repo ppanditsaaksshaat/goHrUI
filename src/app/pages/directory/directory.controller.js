@@ -6,10 +6,10 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.directory')
-        .controller('employeesController', employeesController);
+        .controller('directoryController', directoryController);
 
     /** @ngInject */
-    function employeesController($scope, $state) {
+    function directoryController($scope, $state) {
     
 
     }

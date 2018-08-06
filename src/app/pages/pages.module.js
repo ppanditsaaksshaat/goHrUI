@@ -39,7 +39,8 @@
     // 'BlurAdmin.pages.employees',
     'BlurAdmin.pages.directory',
     'BlurAdmin.pages.employee',
-    'BlurAdmin.pages.self'
+    'BlurAdmin.pages.self',
+    'BlurAdmin.pages.team'
     
 
   ])
@@ -47,7 +48,7 @@
 
   /** @ngInject */
   function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/selfdashboard');
 
     // baSidebarServiceProvider.addStaticItem({
     //   title: 'Pages',

@@ -48,15 +48,19 @@
     "postinstall": "bower install"
   },
   "dependencies": {
+    "angular-base64": "^2.0.5",
     "angular-bootstrap-datetimepicker": "^1.1.4",
     "angular-material": "^1.1.10",
     "angular-moment-picker": "^0.10.2",
     "angularjs-slider": "^6.5.1",
+    "bower": "^1.8.4",
+    "es6-promise": "^4.2.4",
     "eslint-config-defaults": "^9.0.0",
     "eslint-plugin-react": "^6.10.3",
     "gulp": "^3.9.1",
     "natives": "^1.1.4",
     "node-sass": "^4.9.0",
+    "pdfmake": "^0.1.37",
     "xlsx-workbook": "^1.0.3"
   }
 }

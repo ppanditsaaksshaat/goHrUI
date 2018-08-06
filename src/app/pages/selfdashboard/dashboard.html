@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-md-12">
         <div class="row pie-charts">
@@ -29,7 +28,7 @@
     <div class="col-md-6">
         <div class="panel panel-medium">
             <div class="panel-heading">
-                Attendace Summary
+                Attendance Summary
             </div>
 
             <div class="panel-body">
@@ -50,11 +49,15 @@
                         <label>Sr. No.</label>
                     </td>
                     <td>
+                        <label>Name</label>
+                    </td>
+                    <td>
                         <label>From Date</label>
                     </td>
                     <td>
                         <label>To Date</label>
                     </td>
+
                     <!-- <td>
                         <label>Sanction From</label>
                     </td>
@@ -69,6 +72,7 @@
             <tbody>
                 <tr ng-repeat="leave in upComingLeaveListOfTeam">
                     <td> {{leave.SNo}}</td>
+                    <td>{{leave.EmpName}}</td>
                     <td>{{leave.LEADDateFrom}}</td>
                     <td>{{leave.LEADDateTo}}</td>
                     <!-- <td>{{leave.SancFromDate}}</td>
@@ -78,7 +82,7 @@
         </table>
 
     </div>
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Pending Approvel(Self)" ba-panel-class="medium-panel traffic-panel">
+    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Pending Approval(Self)" ba-panel-class="medium-panel traffic-panel">
         <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
             <thead>
                 <tr class="info">
@@ -146,7 +150,7 @@
 
 
     </div>
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming BirhDay" ba-panel-class="medium-panel traffic-panel">
+    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming BirthDay" ba-panel-class="medium-panel traffic-panel">
         <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
             <thead>
                 <tr class="info">
@@ -182,4 +186,3 @@
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Acquisition Channels" ba-panel-class="medium-panel traffic-panel">
     </div>
 </div>
-

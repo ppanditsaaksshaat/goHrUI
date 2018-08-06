@@ -13,7 +13,7 @@
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('directory.employeedirectory', {
-                url: '/employees',
+                url: '/directory',
                 templateUrl: 'app/pages/directory/empdirectory/empdirectory.html',
                 title: 'Directory',
                 controller: "empDirectoryController",

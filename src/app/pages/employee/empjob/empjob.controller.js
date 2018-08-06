@@ -7,7 +7,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.employee.empprofile')
+    angular.module('BlurAdmin.pages.employee.empjob')
         .controller('empJobController', empJobController);
 
     /** @ngInject */
@@ -17,6 +17,8 @@
         // global variable declaration
         var jobTableId = 121;
         var jobPageId = 114;
+
+        
         var empId = $stateParams.empid;
         if (empId == undefined) {
             empId = $rootScope.user.profile.empId;

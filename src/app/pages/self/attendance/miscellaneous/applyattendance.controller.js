@@ -31,7 +31,7 @@
         function _addAttendance() {
             if (!_validateApprovedData()) {
                 var newEntity = {};
-                $scope.newEntity.EmpId = 5;
+                $scope.newEntity.EmpId = $rootScope.user.profile.empId;
                 $scope.newEntity.AttDate = $scope.entity.DATE;
                 $scope.newEntity.InTime = $scope.entity.InTime;
                 $scope.newEntity.OutTime = $scope.entity.OutTime;
