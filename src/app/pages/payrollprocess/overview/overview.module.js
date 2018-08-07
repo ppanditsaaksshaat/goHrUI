@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.newpayroll.overview', [
+    angular.module('BlurAdmin.pages.payrollprocess.overview', [
         //    'BlurAdmin.pages.me.about',
         // 'BlurAdmin.pages.me.documents',
         // 'BlurAdmin.pages.me.job'
@@ -17,11 +17,11 @@
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('newpayroll.overview', {
+            .state('payrollprocess.overview', {
                 url: '/overview',
-                templateUrl: 'app/pages/newpayroll/overview/overview.html',
+                templateUrl: 'app/pages/payrollprocess/overview/overview.html',
                 title: 'Run Payroll',
-                controller: "",
+                controller: "payOverViewController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

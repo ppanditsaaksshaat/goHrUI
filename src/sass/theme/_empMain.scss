@@ -802,6 +802,9 @@ textarea.form-control {
 .payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.upcoming .month-status {
   background-color: #a8adb7;
 }
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.current .month-status {
+  background-color: #329cda;
+}
 .payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .month-status:before {
   content: '';
   position: absolute;
@@ -811,19 +814,37 @@ textarea.form-control {
   width: 100%;
   left: 0;
 }
+
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .month-status {
+  height: 23px;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.completed {
+  background-color:#90EE90;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .completed .month-status:before {
+  background-color:#90EE90;
+}
 .payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.pending {
   background-color: #f9af2e;
 }
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .pending .month-status:before {
+  background-color: #f9af2e;
+}
+
 .payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.current {
   background-color: #3cb4fa;
 }
+
 .payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .current .month-status:before {
   background-color: #329cda;
+  
 }
 .payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.upcoming {
   background-color: #c7ccd5;
 }
-
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .upcoming .month-status:before {
+  background-color: #c7ccd5;
+}
 .payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab {
   text-align: center;
   color: #fff;
@@ -941,3 +962,51 @@ textarea.form-control {
   font-size: 18px;
   font-weight: 300;
 }
+
+.payroll-summary .pre-payroll-actions  .alert {
+  background-color: #e6f2fd;
+  border: 1px solid #b5e1f7;
+  padding: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  min-height: 75px;
+}
+.payroll-summary .run .btn-payroll-run {
+  background-color: #4db3ed;
+  color: #fff;
+  box-shadow: 0 4px 0 #3d8ebb;
+  border-radius: 5px;
+  width: 100%;
+  padding: 13px;
+}
+.content-container .btn {
+  border: none;
+  outline: 0;
+  border-radius: 2px;
+  text-transform: capitalize;
+}
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 5px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 3px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.payroll-summary  .run .btn-payroll-run .details {
+  padding: 5px 3px;
+  font-size: .8vw;
+}
+
