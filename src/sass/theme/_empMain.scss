@@ -756,3 +756,24 @@ textarea.form-control {
   /* min-height: 300px; */
   float: left;
 }
+
+.chart-legend {
+  height: 125px;
+  overflow-y: auto;
+}
+.legend-item {
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+.legend-item span {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  border-radius: 3px;
+  margin-right: 5px;
+  vertical-align: text-top;
+}
+p {
+  margin: 0 0 9.5px;
+}

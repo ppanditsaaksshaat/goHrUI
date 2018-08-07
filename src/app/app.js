@@ -35,7 +35,8 @@ angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages',
   'BlurAdmin.common',
-  'ui.knob'
+  'ui.knob',
+  'chart.js'
   // ,
   // 'angularUtils.directives.dirPagination'
 ]);

@@ -16,7 +16,7 @@
                 url: '/analytics',
                 templateUrl: 'app/pages/directory/empanalytics/empanalytics.html',
                 title: 'Analytics',
-                controller: "",
+                controller: "dirAnalyticsController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

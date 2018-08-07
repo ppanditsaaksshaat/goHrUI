@@ -12,7 +12,7 @@
     function donutPiechart() {
       return {
         restrict: 'E',
-        controller: 'TrafficChartCtrl',
+        controller: '',
         templateUrl: 'app/common/components/donutPiechart/donutPiechart.html'
       };
     }
