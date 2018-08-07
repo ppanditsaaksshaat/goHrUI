@@ -73,4 +73,4 @@
         }
         _loadController();
     }
-})()
+})();

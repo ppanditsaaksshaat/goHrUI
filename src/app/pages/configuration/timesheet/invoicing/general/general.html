@@ -1,2 +1,162 @@
-<h3>General Setting</h3>
-<p class="description" dotranslate>nvoice settings are done per legal entity. Select a legal entity below to change settings.</p>
+<!-- <h3>General Setting</h3>
+<p class="description" dotranslate>nvoice settings are done per legal entity. Select a legal entity below to change settings.</p> -->
+
+<div class="row" id="bottom">
+    <div class="col-md-12">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- <label dotranslate>Over-View Detail</label> -->
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="panel-body panel-medium">
+            <div class="col-lg-12 col-md-12 col-sm-12 sub-page-container content-container">
+                <!-- uiView: -->
+                <div data-ui-view="" class="ng-scope">
+
+
+
+                    <div class="invoice-setting-item general-invoice-settings ng-scope">
+                        <p class="page-description">Invoice settings are done per legal entity. Select a legal entity below to change settings.</p>
+                        <div class="invoice-settings-container invoice-general-settings-container col-lg-12 clear-side-padding">
+                            <div class="legal-entities-container col-sm-2 clear-side-padding">
+
+                                <ul class="list-group legal-entities">
+                                    <li class="list-group-item legal-entity legal-entity-header">Legal Entities</li>
+                                    <!-- ngRepeat: entity in ctrl.legalEntities -->
+                                    <li class="list-group-item legal-entity legal-entity-item ng-binding ng-scope selected-entity" data-ui-sref-active="selected-entity"
+                                        data-ng-class="{'selected-entity': (ctrl.selectedEntity.id == entity.id)}" data-ng-repeat="entity in ctrl.legalEntities"
+                                        data-ng-click="ctrl.selectEntity(entity)">Keka Demo Legal Entity</li>
+                                    <!-- end ngRepeat: entity in ctrl.legalEntities -->
+                                </ul>
+                            </div>
+                            <div class="legal-entity-details-container col-sm-10 clear-right-padding ng-isolate-scope" data-attach-on-scroll="" data-extra-offset="75"
+                                style="top: 0px;">
+                                <h2 class="legal-entity-name ng-binding">Keka Demo Legal Entity</h2>
+                                <form name="invoiceHeader" data-ng-init="ctrl.invoiceHeaderForm = this;" class="ng-pristine ng-valid ng-valid-required">
+                                    <div class="form-group">
+                                        <label>Invoice Header</label>
+                                        <p class="page-description">Following items will appear in the header section of the invoice.</p>
+                                    </div>
+                                    <div class="form-group col-sm-12 clear-side-padding logo-container">
+                                        <label>Logo</label>
+                                        <span class="text-description">Logo dimensions should not exceed 60 px in height and 100 px in width.</span>
+                                        <br>
+                                        <div class="legal-entity-logo pull-left">
+                                            <img data-ng-show="!ctrl.logo.location" src="/Content/images/dummy_logo.jpg" class="ng-hide">
+                                            <img data-ng-show="ctrl.logo.location" data-ng-src="https://kekademo.blob.core.windows.net/8e372239-41e9-4683-8d10-7d02186a1365/orglogo/715881afa8154f25a9e1230f8b0702ce.jpg"
+                                                height="60" width="100" class="" src="https://kekademo.blob.core.windows.net/8e372239-41e9-4683-8d10-7d02186a1365/orglogo/715881afa8154f25a9e1230f8b0702ce.jpg">
+                                        </div>
+                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 clear-side-padding">
+                                            <label class="company-logo">
+                                                <span class="text-info">Upload Logo</span>
+                                                <span options="ctrl.fileUploadSettings" data-virtual-container="OrgLogo" upload-file="ctrl.logo" data-on-file-uploaded="ctrl.logoUploaded()"
+                                                    class="ng-isolate-scope">
+                                                    <input hidden="hidden" appcrest-picture="" id="fileupload" type="file" name="files[]">
+                                                </span>
+                                            </label>
+                                            <label>
+                                                <span class="icon-info2 information-tooltip tooltip-grey" uib-tooltip="This will be shown in Timesheet Invoice" tooltip-placement="right">
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12 clear-side-padding">
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <label>Address to use in invoice</label>
+                                            <input class="form-control vertical-margin ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" type="text"
+                                                placeholder="Address Line 1" name="addressLineOne" id="addressLineOne" data-ng-model="ctrl.selectedEntity.timesheetInvoiceInfo.billingAddress.addressLine1"
+                                                required="">
+                                            <span class="validation-msg ng-isolate-scope" data-validation-messages="" data-model-controller="invoiceHeader.addressLineOne"
+                                                data-required-error="Address is required" data-form-submit="ctrl.submitted">
+                                                <div>
+                                                    <!-- ngRepeat: message in errorMessages -->
+                                                </div>
+                                            </span>
+                                            <input class="form-control address-line-2 ng-pristine ng-untouched ng-valid ng-not-empty" placeholder="Address Line 2" type="text"
+                                                name="addressLineTwo" id="addressLineTwo" data-ng-model="ctrl.selectedEntity.timesheetInvoiceInfo.billingAddress.addressLine2">
+                                            <div class="col-sm-4 clear-left-padding vertical-margin">
+                                                <input class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" placeholder="City" name="city"
+                                                    id="city" data-ng-model="ctrl.selectedEntity.timesheetInvoiceInfo.billingAddress.city"
+                                                    required="">
+                                                <span class="validation-msg ng-isolate-scope" data-validation-messages="" data-model-controller="invoiceHeader.city" data-required-error="City is required"
+                                                    data-form-submit="ctrl.submitted">
+                                                    <div>
+                                                        <!-- ngRepeat: message in errorMessages -->
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <div class="col-sm-4 clear-side-padding vertical-margin">
+                                                <input class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" placeholder="State" name="state"
+                                                    id="state" data-ng-model="ctrl.selectedEntity.timesheetInvoiceInfo.billingAddress.state"
+                                                    required="">
+                                                <span class="validation-msg ng-isolate-scope" data-validation-messages="" data-model-controller="invoiceHeader.state" data-required-error="State is required"
+                                                    data-form-submit="ctrl.submitted">
+                                                    <div>
+                                                        <!-- ngRepeat: message in errorMessages -->
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <div class="col-sm-4 clear-right-padding vertical-margin">
+                                                <input class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" placeholder="Pincode" name="pincode"
+                                                    id="pincode" data-ng-model="ctrl.selectedEntity.timesheetInvoiceInfo.billingAddress.zip"
+                                                    required="">
+                                                <span class="validation-msg ng-isolate-scope" data-validation-messages="" data-model-controller="invoiceHeader.pincode" data-required-error="Pincode is required"
+                                                    data-form-submit="ctrl.submitted">
+                                                    <div>
+                                                        <!-- ngRepeat: message in errorMessages -->
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 col-sm-12 clear-side-padding">
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <label class="pull-left">Header Note</label>
+                                            <p class="page-description section-description pull-left">Appears on all invoices created under this legal entity.</p>
+                                            <input data-set-focus="true" class="form-control ng-pristine ng-not-empty ng-valid ng-valid-required ng-touched" type="text"
+                                                placeholder="" data-ng-model="ctrl.selectedEntity.timesheetInvoiceInfo.headerNote"
+                                                name="headerNote" required="">
+                                            <div data-validation-messages="" data-model-controller="invoiceHeader.headerNote" data-required-error="Enter the header note"
+                                                data-form-submit="ctrl.submitted" class="ng-isolate-scope">
+                                                <div>
+                                                    <!-- ngRepeat: message in errorMessages -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 col-sm-12 clear-side-padding">
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <label>Payment Instructions</label>
+                                            <p class="page-description">You can provide bank transfer instructions or such payment information.</p>
+                                            <textarea class="form-control col-sm-12 ng-pristine ng-valid ng-not-empty ng-touched" data-ng-model="ctrl.selectedEntity.timesheetInvoiceInfo.paymentInstructions"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 clear-left-padding">
+                                        <div class="form-group">
+                                            <div class="col-md-6 clear-left-padding">
+                                                <input type="button" class="btn btn-submit btn-sm pull-left" data-ng-click="ctrl.udpateLegalEntityInfo();ctrl.submitted=true;"
+                                                    value="Save">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script type="text/ng-template" class="template ng-scope" id="picture-template">
+                <span><input hidden="hidden" appcrest-picture="" id="fileupload" type="file" name="files[]" /></span>
+                </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

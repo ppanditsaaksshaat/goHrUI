@@ -83,5 +83,5 @@
 
         _loadController();
     }
-})()
+})();
 
