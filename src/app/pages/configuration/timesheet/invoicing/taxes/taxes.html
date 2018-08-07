@@ -1,0 +1,157 @@
+<div class="row" id="bottom">
+    <div class="col-md-12">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- <label dotranslate>Over-View Detail</label> -->
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="panel-body panel-medium">
+            <div class="col-lg-12 col-md-12 col-sm-12 sub-page-container content-container">
+                <!-- uiView: -->
+                <div data-ui-view="" class="ng-scope">
+
+
+
+                    <div class="invoice-setting-item general-invoice-settings ng-scope">
+                        <p class="page-description">Taxes to be added in the invoices can be defined here. Taxes are to be defined for each legal entity
+                            that is being used in the invoices.</p>
+                        <div class="invoice-settings-container invoice-general-settings-container col-lg-12 clear-side-padding">
+                            <div class="legal-entities-container col-sm-2 clear-side-padding">
+
+                                <ul class="list-group legal-entities">
+                                    <li class="list-group-item legal-entity legal-entity-header">Legal Entities</li>
+                                    <!-- ngRepeat: entity in ctrl.legalEntities -->
+                                    <li class="list-group-item legal-entity legal-entity-item ng-binding ng-scope selected-entity"
+                                        data-ui-sref-active="selected-entity" data-ng-class="{'selected-entity': (ctrl.selectedEntity.id == entity.id)}"
+                                        data-ng-repeat="entity in ctrl.legalEntities" data-ng-click="ctrl.selectEntity(entity)">Keka Demo Legal Entity</li>
+                                    <!-- end ngRepeat: entity in ctrl.legalEntities -->
+                                </ul>
+                            </div>
+                            <div class="legal-entity-details-container col-sm-10 clear-right-padding ng-isolate-scope" data-attach-on-scroll="" data-extra-offset="75">
+                                <div class="col-sm-12 clear-side-padding">
+                                    <h2 class="legal-entity-name col-sm-9 clear-side-padding ng-binding">Keka Demo Legal Entity</h2>
+                                    <div class="add-new row">
+                                        <div class="col-lg-12 clear-side-padding">
+                                            <a class="" data-ng-click="ctrl.addTaxGroup()">
+                                                <span class="icon-plus-circle"></span>Add New</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ngRepeat: taxGroup in ctrl.taxGroups -->
+                                <!-- ngIf: ctrl.taxGroups && ctrl.taxGroups.length -->
+                                <div class="col-lg-10 col-md-10 col-sm-10 clear-side-padding ng-scope" data-ng-repeat="taxGroup in ctrl.taxGroups"
+                                    data-ng-if="ctrl.taxGroups &amp;&amp; ctrl.taxGroups.length">
+                                    <h3 class="col-sm-6 clear-left-padding tax-group-code ng-binding">GST</h3>
+                                    <div class="col-sm-6 clear-right-padding">
+                                        <a class="action-icon inline-block pull-right" data-ng-click="ctrl.deleteTaxGroup(taxGroup)" data-uib-tooltip="Delete" data-tooltip-append-to-body="true">
+                                            <span class="icon-remove2"></span>
+                                        </a>
+                                        <a class="action-icon inline-block pull-right" data-ng-click="ctrl.editTaxGroup(taxGroup)" data-uib-tooltip="Edit" data-tooltip-append-to-body="true">
+                                            <span class="icon-pencil"></span>
+                                        </a>
+                                    </div>
+
+                                    <table class="table table-bordered project-time-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-lg-2 col-md-2">
+                                                    <span class="cell-header-text">Tax</span>
+                                                </th>
+                                                <th class="col-lg-1 col-md-2">
+                                                    <span class="cell-header-text">Rate</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- ngRepeat: component in taxGroup.taxComponents -->
+                                            <tr data-ng-repeat="component in taxGroup.taxComponents" class="ng-scope">
+                                                <td class="v-align-middle ng-binding">GST</td>
+                                                <td class="v-align-middle ng-binding">18%</td>
+                                            </tr>
+                                            <!-- end ngRepeat: component in taxGroup.taxComponents -->
+                                            <tr>
+                                                <td class="v-align-middle">Total Rate:</td>
+                                                <td class="v-align-middle ng-binding">18%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- end ngIf: ctrl.taxGroups && ctrl.taxGroups.length -->
+                                <!-- end ngRepeat: taxGroup in ctrl.taxGroups -->
+                                <!-- ngIf: !ctrl.taxGroups || !ctrl.taxGroups.length -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <script type="text/ng-template" id="addTaxGroup" class="ng-scope">
+            <div class="modal-header">
+                <div data-ng-if="!ctrl.taxGroup.id">Add Tax Group</div>
+                <div data-ng-if="ctrl.taxGroup.id">Edit Tax Group</div>
+            </div>
+            <div class="modal-body content-container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <form class="form-horizontal" name="taxGroup" data-ng-init="ctrl.taxGroupCreationForm = this">
+                            <div class="form-group clear-bottom">
+                                <div class="col-md-3">
+                                    <label class="control-label">Code :</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" name="code" data-ng-model="ctrl.taxGroup.code" required />
+                                    <div class="inline-block" data-validation-messages="" data-model-controller="taxGroup.code" data-required-error="Tax group code is required" data-form-submit="ctrl.submit"></div>
+                                    <small class="error" ng-show="ctrl.submit && ctrl.isDuplicateTaxGroup">A tax group already exists with this code.</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <label class="control-label">Description :</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <textarea class="form-control no-resize" data-ng-model="ctrl.taxGroup.description" ></textarea>
+                                </div>
+                            </div>
+        
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label class="control-label">Tax Components :</label>
+                                </div>
+                                <div class="col-md-12 clear-left-padding" data-ng-repeat="component in ctrl.taxGroup.taxComponents">
+                                    <div class="col-md-5 clear-right-padding">
+                                        <input class="form-control" type="text" name="componentName" data-ng-model="component.name" required placeholder="Component Name" />
+                                        <div class="inline-block" data-validation-messages="" data-model-controller="taxGroup.componentName" data-required-error="" data-form-submit="ctrl.submit"></div>
+                                        <small class="error" ng-show="ctrl.submit && (!component.name || component.name == '')">Tax name is required</small>
+                                    </div>
+                                    <div class="col-md-5 clear-right-padding">
+                                        <input class="form-control" type="number" min="0" name="componentRate" data-ng-model="component.taxRate" required placeholder="Tax Rate (%)" />
+                                        <div class="inline-block" data-validation-messages="" data-model-controller="taxGroup.componentRate" data-required-error="" data-form-submit="ctrl.submit"></div>
+                                        <small class="error" ng-show="ctrl.submit && (component.taxRate == null || component.taxRate == '')">Tax rate is required</small>
+                                    </div>
+                                    <div class="col-sm-2 clear-right-padding">
+                                        <a data-ng-click="ctrl.deleteTax(component)"><span class="icon-remove2 vertical-margin inline-block" data-ng-if="$index > 0"></span></a>
+                                    </div>
+                                </div>
+                                <a class="col-sm-12 inline-block vertical-margin" data-ng-click="ctrl.addTax()">+ Add Tax</a>
+                            </div>
+        
+                            <div class="form-group clear-bottom">
+                                <div class="col-sm-10">
+                                    <input type="button" class="btn btn-cancel pull-right clear-margin-right" data-ng-click="$dismiss()" value="Cancel" />
+                                    <input type="button" class="btn btn-submit form-button pull-right" data-ng-if="!ctrl.taxGroup.id" data-ng-click="ctrl.saveTaxGroup();ctrl.submit=true;" value="Add" />
+                                    <input type="button" class="btn btn-submit form-button pull-right" data-ng-if="ctrl.taxGroup.id" data-ng-click="ctrl.saveTaxGroup();ctrl.submit=true;" value="Update" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

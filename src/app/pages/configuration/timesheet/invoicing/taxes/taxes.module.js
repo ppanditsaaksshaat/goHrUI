@@ -5,20 +5,20 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.configuration.timesheet.invoicing.general', [
+    angular.module('BlurAdmin.pages.configuration.timesheet.invoicing.taxes', [
 
     ]).config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('configuration.timesheet.invoicing.general', {
-                url: '/general',
-                templateUrl: 'app/pages/configuration/timesheet/invoicing/general/general.html',
-                title: 'General',
+            .state('configuration.timesheet.invoicing.taxes', {
+                url: '/taxesssss',
+                templateUrl: 'app/pages/configuration/timesheet/invoicing/taxes/taxes.html',
+                title: 'taxes',
                 sidebarMeta: {
                     icon: 'ion-android-home',
-                    order: 1,
+                    order: 3,
                 },
             });
     }

@@ -10,7 +10,7 @@
     'BlurAdmin.pages.configuration.payroll',
     'BlurAdmin.pages.configuration.leaves',
     'BlurAdmin.pages.configuration.employee',
-    // 'BlurAdmin.pages.configuration.timesheet'
+    'BlurAdmin.pages.configuration.timesheet'
   ]).config(routeConfig);
 
   /** @ngInject */
