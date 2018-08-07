@@ -66,4 +66,4 @@
         }
         _loadController();
     }
-})()
+})();

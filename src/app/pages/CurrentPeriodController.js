@@ -9,6 +9,7 @@
 
     angular.module('BlurAdmin.pages')
         .controller('currentPeriodController', currentPeriodController);
+
     function currentPeriodController($scope, $rootScope, pageService, DJWebStore, authService, $state, $stateParams) {
 
         $scope.today = function () {
@@ -61,13 +62,16 @@
             if (moment(selected).diff(moment(), 'days') > 0) {
                 $scope.setDate(moment().year(), moment().month(), moment().date())
                 alert('Period Can Not Greater than current date.')
-            }
-            else{
+            } else {
                 $rootScope.currentPeriod = selected;
 
                 var current = $state.current;
                 var params = angular.copy($stateParams);
-                $state.transitionTo(current, params, { reload: true, inherit: true, notify: true });
+                $state.transitionTo(current, params, {
+                    reload: true,
+                    inherit: true,
+                    notify: true
+                });
             }
         })
 
@@ -75,17 +79,15 @@
         tomorrow.setDate(tomorrow.getDate() + 1);
         var afterTomorrow = new Date();
         afterTomorrow.setDate(tomorrow.getDate() + 2);
-        $scope.events =
-            [
-                {
-                    date: tomorrow,
-                    status: 'full'
-                },
-                {
-                    date: afterTomorrow,
-                    status: 'partially'
-                }
-            ];
+        $scope.events = [{
+                date: tomorrow,
+                status: 'full'
+            },
+            {
+                date: afterTomorrow,
+                status: 'partially'
+            }
+        ];
 
         $scope.getDayClass = function (date, mode) {
             if (mode === 'day') {
@@ -105,13 +107,13 @@
 
     }
 
+
+    angular.module("template/alert/alert.html", []).run(["$templateCache", function ($templateCache) {
+        $templateCache.put("template/alert/alert.html",
+            "      <div class='alert' ng-class='type && \"alert-\" + type'>\n" +
+            "          <button ng-show='closeable' type='button' class='close' ng-click='close()'>Close</button>\n" +
+            "          <div ng-transclude></div>\n" +
+            "      </div>");
+    }]);
+
 })();
-
-
-angular.module("template/alert/alert.html", []).run(["$templateCache", function ($templateCache) {
-    $templateCache.put("template/alert/alert.html",
-        "      <div class='alert' ng-class='type && \"alert-\" + type'>\n" +
-        "          <button ng-show='closeable' type='button' class='close' ng-click='close()'>Close</button>\n" +
-        "          <div ng-transclude></div>\n" +
-        "      </div>");
-}]);
