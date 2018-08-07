@@ -9,6 +9,7 @@
     'BlurAdmin.pages.directory.empdashboard',
     'BlurAdmin.pages.directory.employees',
     'BlurAdmin.pages.directory.empdirectory',
+    'BlurAdmin.pages.directory.empanalytics',
     'BlurAdmin.pages.directory.empexist',
   ])
     .config(routeConfig);

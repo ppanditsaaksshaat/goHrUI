@@ -40,7 +40,8 @@
     'BlurAdmin.pages.directory',
     'BlurAdmin.pages.employee',
     'BlurAdmin.pages.self',
-    'BlurAdmin.pages.team'
+    'BlurAdmin.pages.team',
+    'BlurAdmin.pages.newpayroll'
     
 
   ])
