@@ -9,7 +9,7 @@
         .controller('TrafficChartCtrl', TrafficChartCtrl);
 
     /** @ngInject */
-    function TrafficChartCtrl($scope, baConfig, colorHelper, pageService) {
+    function TrafficChartCtrl($scope, $rootScope,baConfig, colorHelper, pageService) {
         var vm = this;
         vm.piChart = {};
         $scope.getAttData = _getAttData;
@@ -40,7 +40,7 @@
             searchLists.push({
                 field: 'EmpId',
                 operand: "=",
-                value: $scope.user.profile.empId
+                value: $rootScope.user.profile.empId
             })
             searchLists.push({
                 field: 'DateTypeId',

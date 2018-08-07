@@ -12,22 +12,22 @@
     'BlurAdmin.pages.configuration.employee',
     // 'BlurAdmin.pages.configuration.timesheet'
   ]).config(routeConfig);
-      
+
   /** @ngInject */
   function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-    .state('configuration', {
-      url: '/configuration',
-      templateUrl: 'app/pages/configuration/configure.html',
-      controller: 'configureController',
-      title: 'Configuration',
-      sidebarMeta: {
-        icon: 'ion-android-home',
-        order: 1,
-      },
-    });
+      .state('configuration', {
+        url: '/configuration',
+        templateUrl: 'app/pages/configuration/configure.html',
+        controller: 'configureController',
+        title: 'Configuration',
+        sidebarMeta: {
+          icon: 'ion-android-home',
+          order: 1,
+        },
+      });
 
-   
+
   }
 
 })();

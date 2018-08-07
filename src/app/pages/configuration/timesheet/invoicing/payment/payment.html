@@ -1,0 +1,131 @@
+<div class="row" id="bottom">
+    <div class="col-md-12">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- <label dotranslate>Over-View Detail</label> -->
+                </div>
+
+            </div>
+        </div>
+        <div class="panel-body panel-medium">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 sub-page-container content-container">
+                <!-- uiView: -->
+                <div data-ui-view="" class="ng-scope">
+
+
+
+                    <div class="legal-entity-details-container col-sm-12 clear-side-padding ng-scope">
+                        <div class="col-sm-12 clear-side-padding">
+                            <h2 class="col-sm-12 clear-side-padding">Payment Terms</h2>
+                            <p class="page-description">Payment terms are used to determine the due dates on invoices.</p>
+                            <div class="add-new row">
+                                <div class="col-lg-12 clear-side-padding">
+                                    <a class="" data-ng-click="ctrl.addPaymentTerm()">
+                                        <span class="icon-plus-circle"></span>Add New</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered project-time-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-lg-2 col-md-2">
+                                        <span class="cell-header-text">Name</span>
+                                    </th>
+                                    <th class="col-lg-1 col-md-2">
+                                        <span class="cell-header-text">Actions</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>15 Days</td>
+                                    <td>Edit/Delete</td>
+                                </tr>
+                                <tr>
+                                    <td>Due by month end</td>
+                                    <td>Edit/Delete</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <script type="text/ng-template" id="addPaymentTerm" class="ng-scope">
+            <div class="modal-header">
+                <div data-ng-if="!ctrl.taxGroup.id">Add Payment Term</div>
+                <div data-ng-if="ctrl.taxGroup.id">Edit Payment Term</div>
+            </div>
+            <div class="modal-body content-container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <form class="form-horizontal" name="paymentTerm" data-ng-init="ctrl.paymentTermCreationForm = this">
+                            <div class="form-group clear-bottom">
+                                <div class="col-md-12">
+                                    <label class="control-label">Name :</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" name="name" data-ng-model="ctrl.paymentTerm.name" required />
+                                    <div class="inline-block" data-validation-messages="" data-model-controller="paymentTerm.name" data-required-error="Payment term name is required" data-form-submit="ctrl.submit"></div>
+                                </div>
+                            </div>
+                            <div class="form-group config-field">
+                                <div class="col-sm-12">
+                                    <label>
+                                        <input type="radio" name="fixedPeriod" data-ng-value="0" data-ng-model="ctrl.paymentTerm.termType" /><span class="radio-overlay"></span>
+                                        Payment due in fixed number of days
+                                    </label>
+                                </div>
+                                <div class="col-sm-12" data-ng-if="ctrl.paymentTerm.termType == 0">
+                                    <div class="col-sm-10 clear-side-padding hybrid-label-container">
+                                        <label class="clear-side-padding hybrid-label col-sm-12 clear-side-padding">Due in <input type="number" name="fixedPeriodDays" min="0" data-ng-model="ctrl.paymentTerm.numberOfDays" class="number-text-box form-control" data-ng-class="{'invalid-input-field' : !paymentTerm.fixedPeriodDays.$valid && ctrl.submit}" data-ng-pattern="/^\d+$/" required /> days.</label>
+                                        <div class="inline-block" data-validation-messages="" data-model-controller="paymentTerm.fixedPeriodDays" data-required-error="Please specify the number of days." data-form-submit="ctrl.submit"></div>
+                                        <small class="error" ng-show="paymentTerm.fixedPeriodDays.$$rawModelValue < 0 && ctrl.submit">Please enter a non negative value.</small>
+                                    </div>
+                                </div>
+        
+                            </div>
+        
+                            <div class="form-group config-field">
+                                <div class="col-sm-12">
+                                    <label>
+                                        <input type="radio" name="fixedDayInMonth" data-ng-value="1" data-ng-model="ctrl.paymentTerm.termType" /><span class="radio-overlay"></span>
+                                        Payment due by certain day of the month
+                                    </label>
+                                </div>
+                                <div class="col-sm-12" data-ng-if="ctrl.paymentTerm.termType == 1">
+                                    <div class="col-sm-10 clear-side-padding hybrid-label-container">
+                                        <label class="clear-side-padding hybrid-label col-sm-12 clear-side-padding">
+                                            Due on <input type="number" name="dayOfMonth" data-ng-model="ctrl.paymentTerm.dayOfMonth" class="number-text-box form-control" data-ng-class="{'invalid-input-field' : !paymentTerm.dayOfMonth.$valid && ctrl.submit}" data-ng-pattern="/^\d+$/" min="1" max="31" required /> day of the month.
+                                        </label>
+                                        <div class="inline-block" data-validation-messages="" data-model-controller="paymentTerm.dayOfMonth" data-required-error="Please specify the day of the month." data-form-submit="ctrl.submit"></div>
+                                        <small class="error" ng-show="(paymentTerm.dayOfMonth.$$rawModelValue < 1 || paymentTerm.dayOfMonth.$$rawModelValue >31) && ctrl.submit">Please enter a value between 1 and 31.</small>
+                                    </div>
+                                    <div class="col-sm-10 clear-side-padding hybrid-label-container">
+                                        <label class="clear-side-padding hybrid-label col-sm-12 clear-side-padding">
+                                            Due the next month if issued within <input type="number" min="0" name="daysToDueDate" data-ng-model="ctrl.paymentTerm.daysToDueDate" class="number-text-box form-control" data-ng-class="{'invalid-input-field' : !paymentTerm.daysToDueDate.$valid && ctrl.submit}" data-ng-pattern="/^\d+$/" required /> days of the due date.
+                                        </label>
+                                        <div class="inline-block" data-validation-messages="" data-model-controller="paymentTerm.daysToDueDate" data-required-error="Please specify the number of days." data-form-submit="ctrl.submit"></div>
+                                        <small class="error" ng-show="paymentTerm.daysToDueDate.$$rawModelValue < 0 && ctrl.submit">Please enter a non negative value.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group clear-bottom">
+                                <div class="col-sm-10">
+                                    <input type="button" class="btn btn-cancel pull-right clear-margin-right" data-ng-click="$dismiss()" value="Cancel" />
+                                    <input type="button" class="btn btn-submit form-button pull-right" data-ng-if="!ctrl.paymentTerm.id" data-ng-click="ctrl.savePaymentTerm();ctrl.submit=true;" value="Add" />
+                                    <input type="button" class="btn btn-submit form-button pull-right" data-ng-if="ctrl.paymentTerm.id" data-ng-click="ctrl.savePaymentTerm();ctrl.submit=true;" value="Update" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </script>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

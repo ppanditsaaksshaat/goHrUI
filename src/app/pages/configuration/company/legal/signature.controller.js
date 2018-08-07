@@ -5,14 +5,14 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.configuration.company.general')
-        .controller('generalController', generalController);
+    angular.module('BlurAdmin.pages.configuration.company.legal')
+        .controller('signatureController', signatureController);
 
     /** @ngInject */
-    function generalController($scope, editFormService) {
+    function signatureController($scope, dialogModal, editFormService) {
         //    console.log($state)
 
-        $scope.save = _saveForm;
+        $scope.saveSignatory = _saveForm;
         $scope.companyList = [];
         $scope.oldEntity = {};
 
@@ -20,7 +20,7 @@
             console.log('save record')
             // $scope.currentForm = form;
             // if (_validateForm(form)) {
-            editFormService.saveForm(495, $scope.entity,
+            editFormService.saveForm(494, $scope.entity,
                 $scope.oldEntity, 'create', 'Save')
                 .then(_saveFormSuccess, _saveFormError)
             // }
@@ -39,4 +39,5 @@
             alert('error')
         }
     }
+
 })();
