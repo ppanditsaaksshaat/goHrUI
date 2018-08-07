@@ -13,7 +13,7 @@
     return {
       restrict: 'E',
       controller: 'TrafficChartCtrl',
-      template: 'app/pages/selfdashboard/trafficChart/trafficChart.html'
+      templateUrl: 'app/pages/selfdashboard/trafficChart/trafficChart.html'
     };
   }
 })();
