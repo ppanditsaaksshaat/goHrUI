@@ -72,6 +72,3 @@ angular.module('BlurAdmin', [
     };
 
     app.initialize();
-
-
-})();
