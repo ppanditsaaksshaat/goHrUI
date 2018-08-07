@@ -774,6 +774,50 @@ textarea.form-control {
   margin-right: 5px;
   vertical-align: text-top;
 }
-p {
-  margin: 0 0 9.5px;
+
+.piechart-top{
+  top:30px;
+}
+
+
+
+//payroll css
+
+.payroll-summary .payroll-nav-bar .payroll-month-nav {
+  margin-top: 15px;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.cell-spacing {
+  padding-right: .5%;
+}
+
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell {
+  min-width: 76px;
+  position: static;
+  float: left;
+  width: 8.333%;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.pending {
+  background-color: #f9af2e;
+}
+
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab {
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab .month-info {
+  height: 55px;
+  padding-top: 15px;
+}
+
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab .month-info .name {
+  font-weight: 600;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab .month-info .year {
+  font-size: 13px;
+  margin-top: -2px;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .month-status span {
+  position: relative;
+  top: 0px;
 }
