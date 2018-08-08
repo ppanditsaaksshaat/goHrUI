@@ -9,18 +9,12 @@
                     <!-- ngIf: ctrl.financialYearList.length > 1 -->
                     <div class="pull-right">
                         <div class="add-new">
-                            <a data-ng-click="ctrl.assignBenefit()">
-                                <span class="icon-plus-circle"></span>Assign Perk
+                            <a data-ng-click="assignPerks()">
+                                <span class="fa fa-times"></span>Assign Perk
                             </a>
                         </div>
                     </div>
-                    <div class="pull-right right-padding-10">
-                        <div class="add-new">
-                            <a data-ng-click="ctrl.bulkAssignBenefit()">
-                                <span class="icon-plus-circle"></span>Bulk Assign Perk
-                            </a>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
             <!-- ngIf: ctrl.employeeBenefits.length > 0 --><div class="col-sm-12 clear-side-padding " >
@@ -133,6 +127,7 @@
                     <div class="col-sm-12 clear-side-padding">
                         <hr class="clear-top clear-bottom">
                     </div>
+                    
                 </div><!-- end ngRepeat: employeeBenefit in ctrl.employeeBenefits -->
             </div><!-- end ngIf: ctrl.employeeBenefits.length > 0 -->
             <!-- ngIf: ctrl.employeeBenefits.length == 0 -->

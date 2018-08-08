@@ -16,7 +16,7 @@
         $scope.addPerks = _addPerks;
 
         function _addPerks() {
-            var modal = dialogModal.openFullScreeen({
+            var modal = dialogModal.openFullScreen({
                 url: 'app/pages/payrollprocess/perks/types/add/perks.html',
                 controller: 'addPerksController',
                 param: $scope.empBasicDetail

@@ -9,13 +9,13 @@
     </div>
 
     <div class="modal-body content-container">
-        <div class="wizard-step-container content-container">
+        <div class="wizard-step-container ">
             <form name="benefit" id="benefit" class="benefit-setting ng-invalid ng-invalid-required ng-dirty ng-valid-parse" data-ng-init="ctrl.form = this"
                 novalidate="">
                 <div class="col-sm-5">
                     <div class="config-field">
                         <label>NAME OF THE PERK
-                            <span class="icon icon-info2 information-tooltip tooltip-grey" uib-tooltip="This name is also displayed to the employee"
+                            <span class="icon fa fa-exclamation-circle information-tooltip tooltip-grey" uib-tooltip="This name is also displayed to the employee"
                                 tooltip-placement="right"></span>
                         </label>
                         <input class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" type="text" name="name" data-ng-model="ctrl.model.title"
@@ -33,7 +33,7 @@
                 <div class="col-sm-10">
                     <div class="config-field">
                         <label>DESCRIPTION
-                            <span class="icon icon-info2 information-tooltip tooltip-grey" uib-tooltip="Description is also displayed to the employee"
+                            <span class="icon fa fa-exclamation-circle information-tooltip tooltip-grey" uib-tooltip="Description is also displayed to the employee"
                                 tooltip-placement="right"></span>
                         </label>
                         <textarea rows="3" class="form-control ng-pristine ng-untouched ng-valid ng-empty" name="description" data-ng-model="ctrl.model.description"></textarea>
@@ -78,17 +78,64 @@
                 </div>
                 <!-- ngIf: ctrl.model.taxable -->
                 <!-- ngIf: ctrl.model.taxable -->
-
+                <div class="col-sm-12 clear-side-padding ng-scope" data-ng-if="ctrl.model.taxable">
+                    <div class="col-sm-5 config-field">
+                        <label>PERQUISITE CATEGORY</label>
+                        <select class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" type="text" name="benefitType"
+                            data-ng-model="ctrl.model.benefitType" ng-options="type.name as type.title for type in ctrl.benefitTypes"
+                            required="">
+                            <option value="" class="" selected="selected">Select</option>
+                            <option label="Leased Accomodation" value="string:leasedaccomodation">Leased Accomodation</option>
+                            <option label="Hotel Accomodation" value="string:hotelaccomodation">Hotel Accomodation</option>
+                            <option label="Car Lease" value="string:carlease">Car Lease</option>
+                            <option label="Supply Gas Electric Water" value="string:supplygaselectricwater">Supply Gas Electric Water</option>
+                            <option label="Concessional Education" value="string:concessionaleducation">Concessional Education</option>
+                            <option label="Concessional Journeys" value="string:concessionaljourneys">Concessional Journeys</option>
+                            <option label="Salary Helpers" value="string:salaryhelpers">Salary Helpers</option>
+                            <option label="Concessional Loans" value="string:concessionalloans">Concessional Loans</option>
+                            <option label="Gift Voucher" value="string:giftvoucher">Gift Voucher</option>
+                            <option label="CC Expenses" value="string:ccexpenses">CC Expenses</option>
+                            <option label="Club Membership" value="string:clubmembership">Club Membership</option>
+                            <option label="Others" value="string:Others">Others</option>
+                        </select>
+                        <span data-validation-messages="" data-model-controller="benefit.benefitType" data-required-error="Category is required. "
+                            data-form-submit="benefit.$submitted" class="ng-isolate-scope">
+                            <div>
+                                <!-- ngRepeat: message in errorMessages -->
+                                <small class="error ng-binding ng-scope ng-hide" ng-repeat="message in errorMessages" ng-show="(!modelController.$pristine &amp;&amp; $first) || formSubmit">Category is required. </small>
+                                <!-- end ngRepeat: message in errorMessages -->
+                            </div>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-12 config-field ng-scope" data-ng-if="ctrl.model.taxable">
+                    <label>WHO PAYS THE TAX FOR THIS PERK</label>
+                    <div class="radio">
+                        <label for="employerPayTax">
+                            <input type="radio" id="employerPayTax" name="employeePaysTax" data-ng-model="ctrl.model.employeePaysTax" data-ng-value="false"
+                                required="" class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" value="false">
+                            <span class="radio-overlay"></span> Employer bears the income tax of the employee
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label for="employeePayTax">
+                            <input type="radio" id="employeePayTax" name="employeePaysTax" data-ng-change="ctrl.model.showMonetaryBenefitToEmployee = true"
+                                data-ng-model="ctrl.model.employeePaysTax" data-ng-value="true" required="" class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required"
+                                value="true">
+                            <span class="radio-overlay"></span> Employee incurs the tax
+                        </label>
+                    </div>
+                </div>
                 <div class="col-sm-12">
                     <div class="config-field">
                         <label>PERK ATTACHMENTS
-                            <span class="icon icon-info2 information-tooltip tooltip-grey" uib-tooltip="These can be any terms or policies related to the perk"
+                            <span class="icon fa fa-exclamation-circle information-tooltip tooltip-grey" uib-tooltip="These can be any terms or policies related to the perk"
                                 tooltip-placement="right"></span>
                         </label>
                         <!-- ngRepeat: attachment in ctrl.model.attachments -->
                         <div>
                             <label class="add-link">
-                                <span class="icon-attachment"></span> Add Attachment
+                                <span class="fa fa-paperclip"></span> Add Attachment
                                 <span data-virtual-container="Benefits" options="ctrl.fileUploadSettings" upload-file="ctrl.model.attachments" class="ng-isolate-scope">
                                     <input hidden="hidden" id="fileupload" type="file" name="files[]" multiple="">
                                 </span>

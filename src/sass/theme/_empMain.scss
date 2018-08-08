@@ -1107,11 +1107,7 @@ textarea.form-control {
   margin: 30px auto 0 auto;
 }
 
-.content-container {
-  background-color: #fff;
-  border-radius: 4px;
-  padding-bottom: 20px;
-}
+
 .config-field {
   margin-bottom: 15px;
 }
@@ -1127,7 +1123,7 @@ textarea.form-control {
   display: inline-block;
   transition: box-shadow .5s;
   vertical-align: middle;
-  list-style: none;
+
 }
 input[type=checkbox]:checked+.radio-overlay:before, input[type=radio]:checked+.radio-overlay:before {
   content: " ";
@@ -1141,6 +1137,38 @@ input[type=checkbox]:checked+.radio-overlay:before, input[type=radio]:checked+.r
   position: absolute;
 }
 
-input[type=checkbox], input[type=radio] {
+input[type=checkbox], input[type=radio],input[type=file] {
     display: none;
 }
+.radio label{
+  padding-left: 0px; 
+}
+
+.config-field .icon {
+  color: #b3bdcd;
+  margin-left: 4px;
+}
+.config-field label {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.add-link span {
+  color: #52b8e9 !important;
+  margin-left: 5px;
+  font-size: 20px;
+}
+.add-link{
+  color: #52b8e9 !important;
+}
+.modal-content {
+  min-height: 100%;
+  height: auto;
+  border-radius: 0;
+  border: none;
+  overflow: auto;
+  width: 100%;
+  left: 0px;;
+}
+

@@ -16,7 +16,7 @@
                 url: '/assign',
                 templateUrl: 'app/pages/payrollprocess/perks/assign/assign.html',
                 title: 'Employee Assignment',
-                controller: "",
+                controller: "perksAssignController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,

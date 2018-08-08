@@ -31,7 +31,7 @@
       });
       return $rootScope.modalInstance;
     }
-    this.openFullScreeen = function (options) {
+    this.openFullScreen = function (options) {
       var size = 'fullscreen';
   
       $rootScope.modalInstance = $uibModal.open({
