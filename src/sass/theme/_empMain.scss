@@ -796,10 +796,55 @@ textarea.form-control {
   float: left;
   width: 8.333%;
 }
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.pending .month-status {
+  background-color: #de9c29;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.upcoming .month-status {
+  background-color: #a8adb7;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.current .month-status {
+  background-color: #329cda;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .month-status:before {
+  content: '';
+  position: absolute;
+  background:#ddd;
+  height: 5px;
+  top: 78px;
+  width: 100%;
+  left: 0;
+}
+
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .month-status {
+  height: 23px;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.completed {
+  background-color:#90EE90;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .completed .month-status:before {
+  background-color:#90EE90;
+}
 .payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.pending {
   background-color: #f9af2e;
 }
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .pending .month-status:before {
+  background-color: #f9af2e;
+}
 
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.current {
+  background-color: #3cb4fa;
+}
+
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .current .month-status:before {
+  background-color: #329cda;
+  
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab.upcoming {
+  background-color: #c7ccd5;
+}
+.payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab-cell.active .upcoming .month-status:before {
+  background-color: #c7ccd5;
+}
 .payroll-summary .payroll-nav-bar .payroll-month-nav .month-tab {
   text-align: center;
   color: #fff;
@@ -821,3 +866,147 @@ textarea.form-control {
   position: relative;
   top: 0px;
 }
+.payroll-summary .month-details {
+  margin-top: 30px;
+}
+.payroll-summary .month-details .dater {
+  text-transform: capitalize;
+}
+.payroll-summary .month-details .dater .name {
+  font-weight: 700;
+}
+.payroll-summary .month-details .dater .date-range {
+  font-size: 13px;
+  color: #7d7d7e;
+  margin-top: 7px;
+}
+.payroll-summary .right-vr {
+  position: relative;
+}
+.payroll-summary .item-count {
+  margin-top: 5px;
+  font-weight: 300;
+  font-size: 36px;
+}
+
+.payroll-summary .month-details .employees .item-count .badge.success {
+  color: #4b9d4b;
+  background-color: white;
+}
+.payroll-summary .month-details .employees .item-count .badge.failure {
+  color: #ea4c4c;
+
+}
+.v-align-middle {
+  vertical-align: middle!important;
+}
+.payroll-summary .month-details .employees .item-count .badge {
+  position: static;
+  border-radius: 5px;
+  background-color: #fff;
+  height: 20px;
+  width: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 0;
+}
+.payroll-summary .right-vr:after {
+  position: absolute;
+  content: '';
+  border-right: 1px solid #d9d9d9;
+  top: 6px;
+  right: 20%;
+  border-top: 50px solid #d9d9d9;
+}
+.payroll-summary .month-details .employees .item-count .badge.success:after {
+  content: '';
+  border-left: 1px solid #dbdee2;
+  left: 40%;
+  position: relative;
+}
+.payroll-summary .monthly-summary {
+  margin-top: 15px;
+  padding-bottom: 10px;
+}
+.payroll-summary .payroll-actions {
+  margin-top: 15px;
+  padding-top: 20px;
+}
+.clear-top {
+  margin-top: 0!important;
+}
+
+.clear-bottom {
+  margin-bottom: 0!important;
+}
+.payroll-summary .monthly-summary .month-financials .metrics-container {
+  width: auto;
+  margin: 4px 7% 0 0;
+  position: relative;
+}
+.payroll-summary .monthly-summary .month-financials .metrics-container .amount {
+  margin-top: 5px;
+  font-weight: 300;
+}
+.payroll-summary .monthly-summary .month-financials .metrics-container.total:after {
+  content: '=';
+}
+.payroll-summary .monthly-summary .month-financials .metrics-container.sum:after {
+  content: '+';
+}
+.payroll-summary .monthly-summary .month-financials .metrics-container:after {
+  position: absolute;
+  right: -35px;
+  top: 20px;
+  color: #aeaeae;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.payroll-summary .pre-payroll-actions  .alert {
+  background-color: #e6f2fd;
+  border: 1px solid #b5e1f7;
+  padding: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  min-height: 75px;
+}
+.payroll-summary .run .btn-payroll-run {
+  background-color: #4db3ed;
+  color: #fff;
+  box-shadow: 0 4px 0 #3d8ebb;
+  border-radius: 5px;
+  width: 100%;
+  padding: 13px;
+}
+.content-container .btn {
+  border: none;
+  outline: 0;
+  border-radius: 2px;
+  text-transform: capitalize;
+}
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 5px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 3px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.payroll-summary  .run .btn-payroll-run .details {
+  padding: 5px 3px;
+  font-size: .8vw;
+}
+
