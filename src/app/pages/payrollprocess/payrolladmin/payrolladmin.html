@@ -1,0 +1,129 @@
+<div class="col-lg-12 clear-left-padding payrolladmin">
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Payroll & Income Tax
+                    </div>
+                    <div class="panel-body">
+                        <div class="tile-content">
+                            <div class="col-sm-12">
+                                <p class="inner-heading upper-case text-moderate-bold">Salary &amp; Income Tax</p>
+                                <ul class="content-options clear-side-padding">
+
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.employeecomponentoverride" href="#/payroll/overview/adminops/employeecomponentoverride">Employee Component Overrides</a>
+                                    </li>
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.tdsOverride" href="#/payroll/overview/adminops/tdsOverride">TDS deduction overrides</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.itdeclarationapprovals" href="#/payroll/overview/adminops/itdeclarationapprovals">IT Declarations Approvals</a>
+                                    </li>
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.tdsmanagement" href="#/payroll/overview/adminops/tdsmanagement">Income Tax &amp; TDS Management (Form 24Q)</a>
+                                    </li>
+                                    <!-- ngRepeat: reimbursable in ctrl.reimbursableComponents -->
+                                    <li data-ng-repeat="reimbursable in ctrl.reimbursableComponents" class="ng-scope">
+                                        <a class="content-bullet ng-binding" data-ui-sref="payrolloverview.adminops.reimbursementclaim({ componentName: reimbursable.componentName, reimbursable: reimbursable })"
+                                            href="#/payroll/overview/adminops/reimbursementclaim/3ca860d8-1e07-4d53-8651-9be41bd68f80">
+                                            Mobile/Telephone bills Claim
+                                        </a>
+                                    </li>
+                                    <!-- end ngRepeat: reimbursable in ctrl.reimbursableComponents -->
+                                </ul>
+                            </div>
+                            <div class="col-sm-12 content-spacing">
+                                <p class="inner-heading upper-case text-moderate-bold">Financial Info &amp; Options</p>
+                                <ul class="content-options clear-side-padding">
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.employeebankinfo" href="#/payroll/overview/adminops/employeebankinfo">Employee Bank Info</a>
+                                    </li>
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.employeepaninfo" href="#/payroll/overview/adminops/employeepaninfo">Employee PAN Info</a>
+                                    </li>
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.employeepayrollsummary" href="#/payroll/overview/adminops/employeepayrollsummary">Payroll Status</a>
+                                    </li>
+                                    <li>
+                                        <!-- xhrFeatureAuthorize: -->
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="col-sm-12 content-spacing">
+                                <p class="inner-heading upper-case text-moderate-bold">Payroll Imports</p>
+                                <ul class="content-options clear-side-padding">
+                                    <li>
+                                        <!-- xhrFeatureAuthorize: -->
+                                    </li>
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.importfinancialdetails" href="#/payroll/overview/adminops/importfinancialdetails">Import Financial Information</a>
+                                    </li>
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.importinvestmentdeclaration" href="#/payroll/overview/adminops/importinvestmentdeclaration">Import Investment Declaration</a>
+                                    </li>
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.importeffectivebonuses" href="#/payroll/overview/adminops/importeffectivebonuses">Import Bonuses with Effective Date</a>
+                                    </li>
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.importeffectivesalary" href="#/payroll/overview/adminops/importeffectivesalary">Import Salaries with Effective Date</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Provident Fund & ESI
+                    </div>
+                    <div class="panel-body">
+                        <div class="tile-content">
+                            <div class="col-sm-12">
+                                <ul class="content-options clear-side-padding">
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.employeepfandesioptions" href="#/payroll/overview/adminops/employeepfandesioptions">Employee PF and ESI Info</a>
+                                    </li>
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.employeepfoptions" href="#/payroll/overview/adminops/employeepfoptions">PF Overrides(Define employer and employee share, including VPF)</a>
+                                    </li>
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.esiOverride" href="#/payroll/overview/adminops/esiOverride">ESI deductions Overrides</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Professional Tax
+                    </div>
+                    <div class="panel-body">
+                        <div class="tile-content">
+                            <div class="col-sm-12">
+                                <ul class="content-options clear-side-padding">
+                                    <li>
+                                        <a class="content-bullet" data-ui-sref="payrolloverview.adminops.ptOverride" href="#/payroll/overview/adminops/ptOverride">PT deduction overrides</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

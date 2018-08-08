@@ -31,6 +31,24 @@
       });
       return $rootScope.modalInstance;
     }
+    this.openFullScreeen = function (options) {
+      var size = 'fullscreen';
+  
+      $rootScope.modalInstance = $uibModal.open({
+
+        animation: false,
+        templateUrl: options.url,
+        controller: options.controller,
+        controllerAs: options.controllerAs,
+        size: size,
+        resolve: {
+          param: function () {
+            return options.param;
+          }
+        }
+      });
+      return $rootScope.modalInstance;
+    }
     this.openCorner = function (options) {
       $rootScope.modalInstance = $uibModal.open({
         animation: false,
