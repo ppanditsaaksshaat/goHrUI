@@ -192,7 +192,7 @@
                         // // console.log(rptUrl)
                         // // $scope.reportUrl = $sce.trustAsResourceUrl(rptUrl);
 
-                        reportBaseURL = 'http://localhost/'
+                        // reportBaseURL = 'http://localhost/'
                         var rptUrl = reportBaseURL + '/Report/ReportViewer?udr=' + result.Key + '&auth=' + result.OAuth +
                             '&crid=' + corpoId + '&lang=' + lang
                         console.log(rptUrl)

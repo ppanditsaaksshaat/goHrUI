@@ -31,7 +31,8 @@
                                 <label class="company-logo">
                                     <label class="btn-file">
                                         <t dotranslate> Change Logo</t>
-                                        <input type="file" hidden>
+
+                                        <input type="file" file-model="myFile">
                                     </label>
 
                                 </label>
@@ -73,7 +74,7 @@
                         <label class="label-control" dotranslate>Notification Message</label>
                         <span class="text-description" dotranslate>You can provide instructions or similar information not exceeding 250 characters</span>
                         <br/>
-                        <textarea name="Notification" id="Notification"data-ng-model="entity.GSMNotificationMessage" cols="30" rows="10" class="form-control"></textarea>
+                        <textarea name="Notification" id="Notification" data-ng-model="entity.GSMNotificationMessage" cols="30" rows="10" class="form-control"></textarea>
                     </div>
                 </div>
             </div>

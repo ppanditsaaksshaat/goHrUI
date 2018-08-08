@@ -9,7 +9,7 @@
         .controller('generalController', generalController);
 
     /** @ngInject */
-    function generalController($scope, editFormService) {
+    function generalController($scope, editFormService, fileUpload) {
         //    console.log($state)
 
         $scope.save = _saveForm;
@@ -17,7 +17,21 @@
         $scope.oldEntity = {};
 
         function _saveForm() {
-            console.log('save record')
+            var file = $scope.myFile;
+
+            console.log('file is ');
+            console.dir(file);
+
+            // var uploadUrl = "/fileUpload";
+            var uploadUrl = "/assets/companydirectory/saaksshaat";
+            console.log(uploadUrl, file.name)
+            fileUpload.uploadFileToUrl(file, 'uploadUrl');
+            // $scope.entity.GSMPath = "abc";
+            $scope.entity.GSMPath = uploadUrl;
+            // $scope.entity.GSMPath = "asdas";
+            console.log($scope.entity.GSMPath)
+            // console.log(fileUpload.uploadFileToUrl(file, uploadUrl))
+            // console.log('save record')
             // $scope.currentForm = form;
             // if (_validateForm(form)) {
             editFormService.saveForm(495, $scope.entity,
@@ -31,7 +45,7 @@
         }
 
         function _saveFormSuccess(result) {
-
+            console.log(result)
             $state.go('configuration.company.locations.location')
         }
 
