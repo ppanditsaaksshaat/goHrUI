@@ -6,10 +6,12 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.payrollprocess', [
-        'BlurAdmin.pages.payrollprocess.overview'
-        // 'BlurAdmin.pages.team.leave',
-        // 'BlurAdmin.pages.team.attendance',
-        // 'BlurAdmin.pages.team.expenses',
+        'BlurAdmin.pages.payrollprocess.overview',
+        'BlurAdmin.pages.payrollprocess.payrolladmin',
+        'BlurAdmin.pages.payrollprocess.loans',
+        'BlurAdmin.pages.payrollprocess.perks',
+        'BlurAdmin.pages.payrollprocess.reports',
+        
         // 'BlurAdmin.pages.team.timesheet',
         // 'BlurAdmin.pages.team.profileapproval',
         // 'BlurAdmin.pages.team.reports',

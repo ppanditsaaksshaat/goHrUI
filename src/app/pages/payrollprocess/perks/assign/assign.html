@@ -1,0 +1,135 @@
+<div class="col-sm-12 clear-side-padding ">
+        <div class="col-sm-12 clear-side-padding content-container">
+            <div class="col-sm-12">
+                <div class="col-sm-7 clear-left-padding" style="top:15px">
+                    <p><span class="icon-keka-incometax header-icon"></span>Perks Assignment to Employees</p>
+                    <!-- xhrFeatureAuthorize: -->
+                </div>
+                <div class="col-sm-5 clear-right-padding">
+                    <!-- ngIf: ctrl.financialYearList.length > 1 -->
+                    <div class="pull-right">
+                        <div class="add-new">
+                            <a data-ng-click="assignPerks()">
+                                <span class="fa fa-times"></span>Assign Perk
+                            </a>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <!-- ngIf: ctrl.employeeBenefits.length > 0 --><div class="col-sm-12 clear-side-padding " >
+                <div class="col-sm-12">
+                    <div class="col-sm-12">
+                        <div class="col-sm-2 clear-left-padding  grayout text-moderate-bold">
+                            EMPLOYEE NUMBER
+                        </div>
+                        <div class="col-sm-2 clear-left-padding  grayout text-moderate-bold">
+                            EMPLOYEE NAME
+                        </div>
+                        <div class="col-sm-2 clear-left-padding  grayout text-moderate-bold">
+                            PERK
+                        </div>
+                        <div class="col-sm-2 clear-left-padding  grayout text-moderate-bold">
+                            VALUE
+                        </div>
+                        <div class="col-sm-2 clear-left-padding  grayout text-moderate-bold">
+                            TAXABLE INCOME
+                        </div>
+                    </div>
+                    <div class="col-sm-12 clear-side-padding">
+                        <hr class="clear-top clear-bottom">
+                    </div>
+                </div>
+                <!-- ngRepeat: employeeBenefit in ctrl.employeeBenefits --><div class="col-sm-12 " >
+                    <div class="col-sm-12 vertical-margin">
+                        <div class="col-sm-2 clear-left-padding">
+                            <a data-ui-sref="payrolloverview.perquisites.assign.employee({ employeeId: employeeBenefit.employeeId, financialYear: ctrl.selectedFinancialYear.from.getFullYear() })" class="ng-binding" href="#/payroll/overview/perquisites/assign//FY2018/employee/7167">
+                                1030
+                            </a>
+                        </div>
+                        <div class="col-sm-2 clear-left-padding">
+                            <a data-ui-sref="payrolloverview.perquisites.assign.employee({ employeeId: employeeBenefit.employeeId, financialYear: ctrl.selectedFinancialYear.from.getFullYear() })" class="ng-binding" href="#/payroll/overview/perquisites/assign//FY2018/employee/7167">
+                                Rajesh singh
+                            </a>
+                        </div>
+                        <div class="col-sm-2 clear-left-padding ng-binding">
+                            Transportation or Parking Reimbursement
+                        </div>
+                        <div class="col-sm-2 clear-left-padding ng-binding">
+                            Rs. 5,000
+                        </div>
+                        <div class="col-sm-2 clear-left-padding ng-binding">
+                            Rs. 0
+                        </div>
+                        <div class="col-sm-2 clear-left-padding text-icon-container">
+                            <a class="pull-right text-icon" data-ng-click="ctrl.deleteBenefit(employeeBenefit)"><span class="icon-remove3 link-edit-icon icon"></span> Delete</a>
+                            <a class="pull-right text-icon right-margin" data-ng-click="ctrl.editEmployeeBenefit(employeeBenefit)"><span class="icon-pencil link-edit-icon icon"></span> Edit</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 clear-side-padding">
+                        <hr class="clear-top clear-bottom">
+                    </div>
+                </div><!-- end ngRepeat: employeeBenefit in ctrl.employeeBenefits --><div class="col-sm-12 " >
+                    <div class="col-sm-12 vertical-margin">
+                        <div class="col-sm-2 clear-left-padding">
+                            <a data-ui-sref="payrolloverview.perquisites.assign.employee({ employeeId: employeeBenefit.employeeId, financialYear: ctrl.selectedFinancialYear.from.getFullYear() })" class="ng-binding" href="#/payroll/overview/perquisites/assign//FY2018/employee/6654">
+                                1
+                            </a>
+                        </div>
+                        <div class="col-sm-2 clear-left-padding">
+                            <a data-ui-sref="payrolloverview.perquisites.assign.employee({ employeeId: employeeBenefit.employeeId, financialYear: ctrl.selectedFinancialYear.from.getFullYear() })" class="ng-binding" href="#/payroll/overview/perquisites/assign//FY2018/employee/6654">
+                                Deepak Jain
+                            </a>
+                        </div>
+                        <div class="col-sm-2 clear-left-padding ng-binding">
+                            Health Insurance
+                        </div>
+                        <div class="col-sm-2 clear-left-padding ng-binding">
+                            Rs. 2,000
+                        </div>
+                        <div class="col-sm-2 clear-left-padding ng-binding">
+                            Rs. 0
+                        </div>
+                        <div class="col-sm-2 clear-left-padding text-icon-container">
+                            <a class="pull-right text-icon" data-ng-click="ctrl.deleteBenefit(employeeBenefit)"><span class="icon-remove3 link-edit-icon icon"></span> Delete</a>
+                            <a class="pull-right text-icon right-margin" data-ng-click="ctrl.editEmployeeBenefit(employeeBenefit)"><span class="icon-pencil link-edit-icon icon"></span> Edit</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 clear-side-padding">
+                        <hr class="clear-top clear-bottom">
+                    </div>
+                </div><!-- end ngRepeat: employeeBenefit in ctrl.employeeBenefits --><div class="col-sm-12 " >
+                    <div class="col-sm-12 vertical-margin">
+                        <div class="col-sm-2 clear-left-padding">
+                            <a data-ui-sref="payrolloverview.perquisites.assign.employee({ employeeId: employeeBenefit.employeeId, financialYear: ctrl.selectedFinancialYear.from.getFullYear() })" class="ng-binding" href="#/payroll/overview/perquisites/assign//FY2018/employee/6654">
+                                1
+                            </a>
+                        </div>
+                        <div class="col-sm-2 clear-left-padding">
+                            <a data-ui-sref="payrolloverview.perquisites.assign.employee({ employeeId: employeeBenefit.employeeId, financialYear: ctrl.selectedFinancialYear.from.getFullYear() })" class="ng-binding" href="#/payroll/overview/perquisites/assign//FY2018/employee/6654">
+                                Deepak Jain
+                            </a>
+                        </div>
+                        <div class="col-sm-2 clear-left-padding ng-binding">
+                            Bike petrol
+                        </div>
+                        <div class="col-sm-2 clear-left-padding ng-binding">
+                            Rs. 5,000
+                        </div>
+                        <div class="col-sm-2 clear-left-padding ng-binding">
+                            Rs. 0
+                        </div>
+                        <div class="col-sm-2 clear-left-padding text-icon-container">
+                            <a class="pull-right text-icon" data-ng-click="ctrl.deleteBenefit(employeeBenefit)"><span class="icon-remove3 link-edit-icon icon"></span> Delete</a>
+                            <a class="pull-right text-icon right-margin" data-ng-click="ctrl.editEmployeeBenefit(employeeBenefit)"><span class="icon-pencil link-edit-icon icon"></span> Edit</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 clear-side-padding">
+                        <hr class="clear-top clear-bottom">
+                    </div>
+                    
+                </div><!-- end ngRepeat: employeeBenefit in ctrl.employeeBenefits -->
+            </div><!-- end ngIf: ctrl.employeeBenefits.length > 0 -->
+            <!-- ngIf: ctrl.employeeBenefits.length == 0 -->
+        </div>
+    </div>

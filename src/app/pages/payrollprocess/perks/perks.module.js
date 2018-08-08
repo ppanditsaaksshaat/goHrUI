@@ -5,21 +5,21 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.team.expenses', [
-        'BlurAdmin.pages.team.expenses.pending',
-        'BlurAdmin.pages.team.expenses.approved',
-        'BlurAdmin.pages.team.expenses.past'
+    angular.module('BlurAdmin.pages.payrollprocess.perks', [
+        'BlurAdmin.pages.payrollprocess.perks.types',
+        'BlurAdmin.pages.payrollprocess.perks.assign',     
     ])
+
         .config(routeConfig);
 
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('team.expenses', {
-                url: '/expenses',
-                templateUrl: 'app/pages/team/expenses/expenses.html',
-                title: 'Expenses',
+            .state('payrollprocess.perks', {
+                url: '/perks',
+                templateUrl: 'app/pages/payrollprocess/perks/perks.html',
+                title: 'PERKS',
                 controller: "",
                 controllerAs: "",
                 sidebarMeta: {
@@ -27,5 +27,6 @@
                 },
                 order: 4
             })
+
     }
 })();
