@@ -1164,3 +1164,237 @@ input[type=checkbox], input[type=radio],input[type=file] {
 }
 
 
+.payroll-loan-request .loan-request-header {
+  background: #f1f3f7;
+  border-bottom: 1px solid #ccc;
+  top: -15px;
+}
+.payroll-loan-request .loan-request-header .employee-search {
+  padding: 20px;
+  border-right: 1px solid #ccc;
+}
+.payroll-loan-request .select2-container {
+  width: 100%!important;
+  height: 80px;
+}
+.payroll-loan-request .select2-container .select2-choice {
+  height: 80px!important;
+  background: #f1f3f8;
+  border: none;
+  line-height: 35px;
+}
+.select2-container .select2-choice>.select2-chosen {
+  margin-right: 26px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.search-result-item {
+  height: 72px;
+  border-bottom-width: 1px;
+  border-bottom-color: #d3d3d3;
+  border-bottom-style: solid;
+  padding: 10px!important;
+}
+
+.payroll-loan-request .loan-request-header .employee-salary-details {
+  padding: 25px;
+}
+.form-group label {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.payroll-loan-request .loan-request-header .employee-salary-details .value {
+  font-size: 18px;
+}
+
+.payroll-loan-request .loan-request-header .icon-custom.success {
+  color: #78cd51;
+}
+.payroll-loan-request .loan-request-header label {
+  font-weight: 400;
+}
+.benefits-items-list .bordered-item {
+  border: 1px solid #cbcdd2;
+  border-radius: 4px;
+  padding: 15px 10px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+
+//payroll loans
+
+.payroll-loan-container .loan-stats .good-loan, .payroll-loan-container .loan-stats .loan-action {
+  width: 37%;
+}
+.payroll-loan-container .loan-stats .good-loan .content-container {
+  background-color: #309aef;
+}
+.payroll-loan-container .loan-stats .good-loan .content-container .amount,.payroll-loan-container .loan-stats .bad-loan .content-container .amount {
+  font-size: 35px;
+  font-weight: 300;
+}
+.payroll-loan-container .loan-stats .bad-loan .content-container, .payroll-loan-container .loan-stats .good-loan .content-container {
+  color: #fff;
+  padding: 0px 10px 15px 5px;
+}
+.payroll-loan-container .loan-stats .bad-loan {
+  width: 20%;
+}
+
+.payroll-loan-container .loan-stats .bad-loan .content-container {
+  background-color: #ff933f;
+}
+.good-loan  p {
+  margin: 15px 0 10px;
+}
+.bad-loan p {
+  margin: 15px 0 10px;
+}
+.payroll-loan-container .loan-stats .loan-action {
+  min-height: 94px;
+}
+.payroll-loan-container .loan-stats .loan-action .content-container {
+  padding: 15px 20px 25px 20px;
+}
+.payroll-loan-container .loan-stats .loan-action .content-container .action-link {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 11px;
+  margin-top: 10px;
+}
+.payroll-loan-container .loan-stats  a {
+  color: #52b8e9;
+}
+.payroll-loan-request .page-heading {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.payroll-loan-request .action-panel {
+  background: #f8f8f8;
+  padding: 25px;
+  min-height: 350px;
+}
+.form-horizontal .control-label {
+  text-align: left;
+}
+.emi-tile {
+  width: 100%;
+  float: right;
+  height: 100px!important;
+  box-shadow: 4px 4px 2px #fe9b37!important;
+  background: #fe9b37!important;
+  padding: 25px 20px!important;
+}
+.emi-tile h1 {
+  font-size: 26px;
+}
+.emi-tile small {
+  color: #fff;
+}
+.tile {
+   
+   height: 320px; 
+    color: #fff !important;
+    padding: 0;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 4px 4px 2px #e3e3e3;
+}
+.payroll-loan-request .input-textbox-md {
+  width: 100px;
+  display: inline-block;
+}
+.payroll-loan-request .form-control {
+ background-color:  #fff !important;
+}
+
+
+.ui-grid-top-panel {
+  position: relative;
+  overflow: hidden;
+  font-weight: 700;
+  background: #C4C2BE;
+  -webkit-border-top-right-radius: -1px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: -1px;
+  -moz-border-radius-topright: -1px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: -1px;
+  border-top-right-radius: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: -1px;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+.ui-grid-cell {
+  overflow: hidden;
+  float: left;
+  background-color: inherit;
+  border-right: 1px solid;
+  border-color: #d4d4d4;
+  box-sizing: border-box;
+}
+
+//my finances
+
+.tile {
+  background: #fff;
+  height: 320px;
+  color: #fff;
+  padding: 0;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 4px 4px 2px #e3e3e3;
+}
+.tile .tile-header {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  background-color: #fff;
+  color: #000;
+  height: 70px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+ .my-finance-summary .tile .tile-content .detail-container .detail {
+  color: grey;
+}
+ .my-finance-summary .tile {
+  color: #313940;
+}
+.my-finance-summary .tile .tile-header {
+  height: 65px;
+}
+.tile .tile-content {
+  font-size: 14px;
+  padding-top: 20px;
+  padding-bottom: 25px;
+  max-height: 385px;
+  overflow: auto;
+  border-radius: 5px;
+}
+.my-finance-summary .tile .tile-content .summary {
+  min-height: 140px;
+}
+.my-finance-summary .tile .tile-content .detail-container {
+  margin-bottom: 25px;
+}
+
+.my-finance-summary .salary-summary.tile .tile-content .detail-container .title {
+  color: #b1b3b8;
+  font-size: 13px;
+  font-weight: 400;
+}
+.my-finance-summary .tile .tile-content .detail-container {
+  margin-bottom: 25px;
+  color: grey;
+}

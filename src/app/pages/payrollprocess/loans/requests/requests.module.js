@@ -16,7 +16,7 @@
                 url: '/requests',
                 templateUrl: 'app/pages/payrollprocess/loans/requests/requests.html',
                 title: 'REQUESTS',
-                controller: "",
+                controller: "loanRequestController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 3,
