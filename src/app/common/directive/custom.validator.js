@@ -9,7 +9,7 @@
                     ////console.log(scope, element, attrs, modelCtrl)
                     if (inputValue == null)
                         return ''
-                    cleanInputValue = inputValue.replace(/[^\w\s]/gi, '');
+                    var cleanInputValue = inputValue.replace(/[^\w\s]/gi, '');
                     if (cleanInputValue != inputValue) {
                         modelCtrl.$setViewValue(cleanInputValue);
                         modelCtrl.$render();
@@ -27,7 +27,7 @@
                     if (inputValue == null)
                         return ''
 
-                    cleanInputValue = inputValue.replace(/[^0-9]+/g, '');
+                    var cleanInputValue = inputValue.replace(/[^0-9]+/g, '');
                     if (cleanInputValue != inputValue) {
                         modelCtrl.$setViewValue(cleanInputValue);
                         modelCtrl.$render();
@@ -45,7 +45,7 @@
                     if (inputValue == null)
                         return ''
 
-                    cleanInputValue = inputValue.replace(/[^a-zA-Z]+/g, '');
+                    var cleanInputValue = inputValue.replace(/[^a-zA-Z]+/g, '');
                     if (cleanInputValue != inputValue) {
                         modelCtrl.$setViewValue(cleanInputValue);
                         modelCtrl.$render();
@@ -63,7 +63,7 @@
                     if (inputValue == null)
                         return ''
 
-                    cleanInputValue = inputValue.replace(/[^a-z A-Z]+/g, '');
+                    var cleanInputValue = inputValue.replace(/[^a-z A-Z]+/g, '');
                     if (cleanInputValue != inputValue) {
                         modelCtrl.$setViewValue(cleanInputValue);
                         modelCtrl.$render();
@@ -314,7 +314,7 @@
                                     modelCtrl.$render();
                                 }
 
-                                // var cleanInputValue = inputValue.replace(regexPattern, '');
+                                // var var cleanInputValue = inputValue.replace(regexPattern, '');
                                 // var re = regexPattern
                                 var result = regexPattern.test(cleanInputValue);
                                 // if (!result) {

@@ -9,18 +9,13 @@
         .controller('legalController', legalController);
 
     /** @ngInject */
-    function legalController($scope, dialogModal, editFormService, pageService) {
+    function legalController($scope, dialogModal, editFormService, pageService, $state, $rootScope) {
         //    console.log($state)
         var vm = this;
 
         $scope.companyList = [];
-        $scope.entity = {};
-        $scope.oldEntity = {};
-
-        $scope.entity.company = {};
-        $scope.entity.incomeTax = {};
-        $scope.entity.pFDetail = {};
-        $scope.entity.esiDetail = {};
+        var entity = { company: {}, incomeTax: {}, pFDetail: {}, esiDetail: {} };
+        var oldEntity = angular.copy(entity);
 
         $scope.addCompany = _addCompany;
         $scope.addIncomeTax = _addIncomeTax;
@@ -56,53 +51,46 @@
             pageService.getTableData(incomeTaxTableId, incomeTaxPageId, '', '', false, data)
                 .then(_getTableDataSuccessResult, _getTableDataErrorResult)
 
-            pageService.getTableData(pfPageId, pfTableId, '', '', false, data)
+            pageService.getTableData(pfTableId, pfPageId, '', '', false, data)
                 .then(_getTableDataSuccessResult, _getTableDataErrorResult)
 
-            pageService.getTableData(esiPageId, esiTableId, '', '', false, data)
+            pageService.getTableData(esiTableId, esiPageId, '', '', false, data)
                 .then(_getTableDataSuccessResult, _getTableDataErrorResult)
         }
 
         function _getTableDataSuccessResult(result) {
             console.log(result)
             $scope.pageInfo = result.pageinfo;
-            if (result.pageinfo != undefined) {
-                if (result[0].CCOId != 347) {
-                    // ITDId
-                    // CCOId
-                    // PFDId
-                    // ESIId
+            if (result.length > 0) {
+                if (result[0].CCOId != undefined) {
+                    entity.company = result[0]
+                    // $scope.oldEntity.company = result[0];
+                }
+                if (result[0].ITDId != undefined) {
+                    entity.incomeTax = result[0]
+                    // $scope.oldEntity.editIncomeTax = result[0];
+                    console.log($scope.oldEntity.editIncomeTax)
+                }
+                if (result[0].PFDId != undefined) {
+                    entity.pFDetail = result[0]
+                    // $scope.oldEntity.pFDetail = result[0];
 
-                    $scope.entity.company = result[0]
-                    console.log($scope.entity.company)
                 }
-                if (result[0].ITDId == 497) {
-                    $scope.entity.incomeTax = result[0]
-                    console.log($scope.entity.company)
-                }
-                if (result[0].PFDId == 498) {
-                    $scope.entity.pFDetail = result[0]
-                    console.log($scope.entity.company)
-                }
-                if (result[0].ESIId == 499) {
-                    $scope.entity.esiDetail = result[0];
-                    console.log($scope.entity.company)
-                }
+                if (result[0].ESIId != undefined) {
+                    entity.esiDetail = result[0];
+                    // $scope.oldEntity.esiDetail = result[0];
 
+                }
+                oldEntity = angular.copy(entity);
+
+                $scope.entity = entity;
+                $scope.oldEntity = oldEntity;
             }
-
-            // $scope.entity.company = {};
-            // $scope.entity.incomeTax = {};
-            // $scope.entity.pFDetail = {};
-            // $scope.entity.esiDetail = {};
         }
 
         function _getTableDataErrorResult(err) {
             console.log(err)
         }
-
-
-
 
         $scope.comp = { name: 'Saaksshaat Infotech' };
         $scope.edtiCompanyName = function () {
@@ -134,53 +122,54 @@
             return true;
         }
 
-        function _saveFormSuccess(result) {
-            $state.go('configuration.company.locations.location')
-        }
-
-        function _saveFormError(err) {
-            alert('error')
-        }
-
         function _addCompany() {
             console.log('save record')
-            console.log($scope.entity)
+            console.log(entity)
             // $scope.currentForm = form;
             // if (_validateForm(form)) {
-            editFormService.saveForm(347, $scope.entity.company,
-                $scope.oldEntity, 'create', 'Save')
+            editFormService.saveForm(companyPageId, entity.company, $scope.oldEntity.company,
+                entity.company.CCOId == undefined ? "create" : "edit", 'Save', undefined, true)
                 .then(_saveFormSuccess, _saveFormError)
             // }
+
+            // editFormService.saveForm(pageId, newEntity, vm.oldEntity,
+            //     entity.SMId == undefined ? "create" : "edit", $scope.page.pageinfo.title, $scope.editForm, true)
+            //     .then(_saveWizardFormSuccessResult, _saveWizardFormErrorResult)
         }
 
         function _addIncomeTax() {
             console.log('save record')
-            console.log($scope.entity)
-            editFormService.saveForm(497, $scope.entity.incomeTax,
-                $scope.oldEntity, 'create', 'Save')
+            console.log(entity)
+            editFormService.saveForm(incomeTaxPageId, entity.incomeTax, $scope.oldEntity.incomeTax,
+                entity.incomeTax.ITDId == undefined ? "create" : "edit", 'Save', undefined, true)
                 .then(_saveFormSuccess, _saveFormError)
         }
 
         function _addPFDetail() {
             console.log('save record')
-            console.log($scope.entity)
-            editFormService.saveForm(498, $scope.entity.pFDetail,
-                $scope.oldEntity, 'create', 'Save')
+            console.log(entity)
+            editFormService.saveForm(pfPageId, entity.pFDetail, $scope.oldEntity.pFDetail,
+                entity.pFDetail.PFDId == undefined ? "create" : "edit", 'Save', undefined, true)
                 .then(_saveFormSuccess, _saveFormError)
         }
         function _addESIDetail() {
-            editFormService.saveForm(499, $scope.entity.esiDetail,
-                $scope.oldEntity, 'create', 'Save')
+            editFormService.saveForm(esiPageId, entity.esiDetail, $scope.oldEntity.esiDetail,
+                entity.esiDetail.ESIId == undefined ? "create" : "edit", 'Save', undefined, true)
                 .then(_saveFormSuccess, _saveFormError)
         }
 
-        function _validateForm(form) {
-            return true;
-        }
-
         function _saveFormSuccess(result) {
-
-            $state.go('configuration.company.locations.location')
+            console.log(result)
+            if (result.success_message == "Added New Record.") {
+                $rootScope.showMsg("success", "Record Save SuccessFully");
+            }
+            else {
+                if (result.success_message == "Record Updated.") {
+                    $rootScope.showMsg("success", "Record Updated");
+                }
+            }
+            _loadController();
+            // $state.go('configuration.company.locations.location')
         }
 
         function _saveFormError(err) {
