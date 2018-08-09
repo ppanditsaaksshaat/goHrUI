@@ -21,7 +21,7 @@
                 url: '/loans',
                 templateUrl: 'app/pages/payrollprocess/loans/loans.html',
                 title: 'Loans',
-                controller: "",
+                controller: "loansController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

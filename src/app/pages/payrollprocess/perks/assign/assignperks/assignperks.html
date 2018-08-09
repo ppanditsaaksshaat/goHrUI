@@ -1,7 +1,7 @@
-<div class="modal-content ">
+<div class="modal-content">
     <div class="modal-header bg-primary title-bar">
         <div class="col-lg-12">
-            <p class="text-center">Add Perks</p>
+            <p class="text-center">Assign / Update Perks For An Employee</p>
             <span data-ng-click="$dismiss();" class="pull-right">
                 <i class="fa fa-times"></i>
             </span>
@@ -10,181 +10,166 @@
 
     <div class="modal-body content-container">
         <div class="topnav-wizard payroll-loan-request col-sm-12  content-container ">
-            <div class="col-sm-12 clear-side-padding">
-                <div class="col-sm-12 modal-header clear-right-padding">
-                    <div class="title-bar">
-                        <h5 class="ng-binding">Assign / Update Perks for
-                            <!-- ngIf: !ctrl.model.employee -->
-                            <!-- ngIf: ctrl.model.employee -->
-                            <span class="ng-binding ">Deepak Jain</span>
-                            <!-- end ngIf: ctrl.model.employee -->
-                        </h5>
-                        <span class="icon-close2 pull-right cancel" data-ng-click="$dismiss('true')"></span>
+            <div class="col-sm-12 clear-left-padding loan-request-header">
+                <!-- ngIf: !ctrl.employeeId -->
+                <div class="col-sm-3 employee-search ">
+                    <div class="ui-select-container select2 select2-container ng-valid  ng-touched ng-not-empty ng-dirty ng-valid-parse" ng-class="{'select2-container-active select2-dropdown-open open': $select.open, 'select2-container-disabled': $select.disabled, 'select2-container-active': $select.focus, 'select2-allowclear': $select.allowClear &amp;&amp; !$select.isEmpty()}"
+                        ng-model="ctrl.model.employee" theme="select2" ng-disabled="disabled" data-ng-change="ctrl.getEmployeeDetails()">
+                        <a class="select2-choice ui-select-match " ng-class="{'select2-default': $select.isEmpty()}" ng-click="$select.toggle($event)"
+                            aria-label="Select box select" placeholder="Select or search for an employee...">
+                            <span ng-show="$select.isEmpty()" class="select2-chosen ng-binding ng-hide">Select or search for an employee...</span>
+                            <span ng-hide="$select.isEmpty()" class="select2-chosen" ng-transclude="">
+                                <div class="search-result-item ">
+                                    <div class="member-profile-picture-container profile-picture-container">
+                                        <!-- ngIf: $select.selected.profileImageUrl -->
+                                        <img class="profile-picture " data-ng-src="https://kekademo.blob.core.windows.net/8e372239-41e9-4683-8d10-7d02186a1365/50x50/profileimage/9942a4c4a5d3400281c074dac0ff50b3.jpg"
+                                            src="https://kekademo.blob.core.windows.net/8e372239-41e9-4683-8d10-7d02186a1365/50x50/profileimage/9942a4c4a5d3400281c074dac0ff50b3.jpg">
+                                        <!-- end ngIf: $select.selected.profileImageUrl -->
+                                        <!-- ngIf: !$select.selected.profileImageUrl -->
+                                    </div>
+                                    <div class="vertical-margin">
+                                        <div data-ng-bind-html="$select.selected.displayName" class="ng-binding">Deepak Jain</div>
+                                        <!-- ngIf: $select.selected.jobTitle -->
+                                        <div class="job-title ng-binding " data-ng-bind-html="$select.selected.jobTitle">Editor</div>
+                                        <!-- end ngIf: $select.selected.jobTitle -->
+                                    </div>
+                                </div>
+                            </span>
+                            <!-- ngIf: $select.allowClear && !$select.isEmpty() -->
+                            <span class="select2-arrow ui-select-toggle">
+                                <b></b>
+                            </span>
+                        </a>
+                        <div class="ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active select2-display-none" ng-class="{'select2-display-none': !$select.open}"
+                            style="opacity: 1;">
+                            <div class="select2-search" ng-show="$select.searchEnabled">
+                                <input type="text" autocomplete="false" autocorrect="false" autocapitalize="off" spellcheck="false" role="combobox" aria-expanded="true"
+                                    aria-owns="ui-select-choices-1" aria-label="Select box" aria-activedescendant="ui-select-choices-row-1-0"
+                                    class="ui-select-search select2-input ng-valid ng-dirty ng-touched ng-empty" ng-model="$select.search"
+                                    placeholder="">
+                            </div>
+                            <ul class="form-group search-result-item ui-select-choices ui-select-choices-content select2-results " repeat="emp in ctrl.filteredEmployees"
+                                refresh="ctrl.getFilteredEmployees($select.search)">
+                                <li class="ui-select-choices-group" ng-class="{'select2-result-with-children': $select.choiceGrouped($group) }">
+                                    <div ng-show="$select.choiceGrouped($group)" class="ui-select-choices-group-label select2-result-label ng-binding ng-hide"
+                                        ng-bind="$group.name"></div>
+                                    <ul role="listbox" id="ui-select-choices-1" ng-class="{'select2-result-sub': $select.choiceGrouped($group), 'select2-result-single': !$select.choiceGrouped($group) }"
+                                        class="select2-result-single">
+                                        <!-- ngRepeat: emp in $select.items -->
+                                        <!-- ngIf: $select.open -->
+                                        <!-- end ngRepeat: emp in $select.items -->
+                                        <!-- ngIf: $select.open -->
+                                        <!-- end ngRepeat: emp in $select.items -->
+                                        <!-- ngIf: $select.open -->
+                                        <!-- end ngRepeat: emp in $select.items -->
+                                        <!-- ngIf: $select.open -->
+                                        <!-- end ngRepeat: emp in $select.items -->
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <ui-select-single></ui-select-single>
+                        <input ng-disabled="$select.disabled" class="ui-select-focusser ui-select-offscreen " type="text" id="focusser-1" aria-label="Select box focus"
+                            aria-haspopup="true" role="button">
+                    </div>
+                </div>
+                <!-- end ngIf: !ctrl.employeeId -->
+                <!-- ngIf: ctrl.employeeId -->
+
+                <div class="col-sm-9 employee-salary-details">
+                    <div class="col-sm-12 clear-side-padding">
+                        <div class="col-sm-3 form-group">
+                            <label> Salary</label>
+                            <br>
+                            <!-- ngIf: ctrl.employee.ctc -->
+                            <span class="value ng-binding ">Rs. 2,00,000/Annum</span>
+                            <!-- end ngIf: ctrl.employee.ctc -->
+                            <!-- ngIf: !ctrl.employee -->
+                        </div>
+
+                        <div class="col-sm-3 form-group">
+                            <label>Basic</label>
+                            <br>
+                            <!-- ngIf: ctrl.employee.basic -->
+                            <span class="value ng-binding ">Rs. 80,000</span>
+                            <!-- end ngIf: ctrl.employee.basic -->
+                            <!-- ngIf: !ctrl.employee.basic -->
+                        </div>
+
+                        <div class="col-sm-3 form-group">
+                            <label>PROVIDENT FUND</label>
+                            <br>
+                            <span class="value">
+                                <!-- ngIf: ctrl.employee.pf > 0 -->
+                                <!-- ngIf: ctrl.employee.pf == 0 -->
+                            </span>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="vertical-margin clear-top-margin">
+                                <!-- ngIf: !ctrl.employee.inProbation -->
+                                <span class="icon icon-custom success fa fa-check "></span>
+                                <!-- end ngIf: !ctrl.employee.inProbation -->
+                                <!-- ngIf: ctrl.employee.inProbation -->
+                                Not in probation
+                            </label>
+                            <br>
+                            <label>
+                                <!-- ngIf: !ctrl.employee.inNoticePeriod -->
+                                <span class="icon icon-custom success fa fa-check "></span>
+                                <!-- end ngIf: !ctrl.employee.inNoticePeriod -->
+                                <!-- ngIf: ctrl.employee.inNoticePeriod -->
+                                Not in notice period
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="modal-body">
-                <div class="col-sm-12 clear-side-padding loan-request-header">
-                    <!-- ngIf: !ctrl.employeeId -->
-                    <div class="col-sm-3 employee-search ">
-                        <div class="ui-select-container select2 select2-container ng-valid  ng-touched ng-not-empty ng-dirty ng-valid-parse" ng-class="{'select2-container-active select2-dropdown-open open': $select.open, 'select2-container-disabled': $select.disabled, 'select2-container-active': $select.focus, 'select2-allowclear': $select.allowClear &amp;&amp; !$select.isEmpty()}"
-                            ng-model="ctrl.model.employee" theme="select2" ng-disabled="disabled" data-ng-change="ctrl.getEmployeeDetails()">
-                            <a class="select2-choice ui-select-match " ng-class="{'select2-default': $select.isEmpty()}" ng-click="$select.toggle($event)"
-                                aria-label="Select box select" placeholder="Select or search for an employee...">
-                                <span ng-show="$select.isEmpty()" class="select2-chosen ng-binding ng-hide">Select or search for an employee...</span>
-                                <span ng-hide="$select.isEmpty()" class="select2-chosen" ng-transclude="">
-                                    <div class="search-result-item ">
-                                        <div class="member-profile-picture-container profile-picture-container">
-                                            <!-- ngIf: $select.selected.profileImageUrl -->
-                                            <img class="profile-picture " data-ng-src="https://kekademo.blob.core.windows.net/8e372239-41e9-4683-8d10-7d02186a1365/50x50/profileimage/9942a4c4a5d3400281c074dac0ff50b3.jpg"
-                                                src="https://kekademo.blob.core.windows.net/8e372239-41e9-4683-8d10-7d02186a1365/50x50/profileimage/9942a4c4a5d3400281c074dac0ff50b3.jpg">
-                                            <!-- end ngIf: $select.selected.profileImageUrl -->
-                                            <!-- ngIf: !$select.selected.profileImageUrl -->
-                                        </div>
-                                        <div class="vertical-margin">
-                                            <div data-ng-bind-html="$select.selected.displayName" class="ng-binding">Deepak Jain</div>
-                                            <!-- ngIf: $select.selected.jobTitle -->
-                                            <div class="job-title ng-binding " data-ng-bind-html="$select.selected.jobTitle">Editor</div>
-                                            <!-- end ngIf: $select.selected.jobTitle -->
-                                        </div>
-                                    </div>
-                                </span>
-                                <!-- ngIf: $select.allowClear && !$select.isEmpty() -->
-                                <span class="select2-arrow ui-select-toggle">
-                                    <b></b>
-                                </span>
-                            </a>
-                            <div class="ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active select2-display-none" ng-class="{'select2-display-none': !$select.open}"
-                                style="opacity: 1;">
-                                <div class="select2-search" ng-show="$select.searchEnabled">
-                                    <input type="text" autocomplete="false" autocorrect="false" autocapitalize="off" spellcheck="false" role="combobox" aria-expanded="true"
-                                        aria-owns="ui-select-choices-1" aria-label="Select box" aria-activedescendant="ui-select-choices-row-1-0"
-                                        class="ui-select-search select2-input ng-valid ng-dirty ng-touched ng-empty" ng-model="$select.search"
-                                        placeholder="">
-                                </div>
-                                <ul class="form-group search-result-item ui-select-choices ui-select-choices-content select2-results " repeat="emp in ctrl.filteredEmployees"
-                                    refresh="ctrl.getFilteredEmployees($select.search)">
-                                    <li class="ui-select-choices-group" ng-class="{'select2-result-with-children': $select.choiceGrouped($group) }">
-                                        <div ng-show="$select.choiceGrouped($group)" class="ui-select-choices-group-label select2-result-label ng-binding ng-hide"
-                                            ng-bind="$group.name"></div>
-                                        <ul role="listbox" id="ui-select-choices-1" ng-class="{'select2-result-sub': $select.choiceGrouped($group), 'select2-result-single': !$select.choiceGrouped($group) }"
-                                            class="select2-result-single">
-                                            <!-- ngRepeat: emp in $select.items -->
-                                            <!-- ngIf: $select.open -->
-                                            <!-- end ngRepeat: emp in $select.items -->
-                                            <!-- ngIf: $select.open -->
-                                            <!-- end ngRepeat: emp in $select.items -->
-                                            <!-- ngIf: $select.open -->
-                                            <!-- end ngRepeat: emp in $select.items -->
-                                            <!-- ngIf: $select.open -->
-                                            <!-- end ngRepeat: emp in $select.items -->
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <ui-select-single></ui-select-single>
-                            <input ng-disabled="$select.disabled" class="ui-select-focusser ui-select-offscreen " type="text" id="focusser-1" aria-label="Select box focus"
-                                aria-haspopup="true" role="button">
+            <div class="col-sm-12 clear-side-padding vertical-margin">
+                <div class="col-sm-8 col-md-8 col-lg-7">
+                    <!-- ngIf: ctrl.employee.id -->
+                    <div class="col-sm-12 ">
+                        <div class="col-sm-12 clear-left-padding vertical-margin grayout text-moderate-bold">
+                            PERKS ASSIGNED
                         </div>
-                    </div>
-                    <!-- end ngIf: !ctrl.employeeId -->
-                    <!-- ngIf: ctrl.employeeId -->
-
-                    <div class="col-sm-9 employee-salary-details">
+                        <!-- ngIf: ctrl.employee.id && ctrl.employee.benefits.length > 0 -->
+                        <div class="col-sm-12 clear-left-padding benefits-items-list ">
+                            <!-- ngRepeat: benefit in ctrl.employee.benefits -->
+                            <div class="col-sm-12 clear-side-padding bordered-item ">
+                                <div class="col-sm-6 clear-left-padding text-moderate-bold ng-binding">Health Insurance</div>
+                                <div class="col-sm-4 clear-left-padding ng-binding">Rs. 2,000</div>
+                                <div class="col-sm-2 clear-side-padding text-icon-container">
+                                    <a class="pull-right text-icon" data-ng-click="ctrl.deleteBenefit(benefit)">
+                                        <span class="icon-remove3 link-edit-icon icon"></span> Delete</a>
+                                    <a class="pull-right right-margin" data-ng-click="ctrl.addEmployeeBenefit(benefit)">
+                                        <span class="icon-pencil link-edit-icon"></span> Edit</a>
+                                </div>
+                            </div>
+                            <!-- end ngRepeat: benefit in ctrl.employee.benefits -->
+                            <div class="col-sm-12 clear-side-padding bordered-item ">
+                                <div class="col-sm-6 clear-left-padding text-moderate-bold ng-binding">Bike petrol</div>
+                                <div class="col-sm-4 clear-left-padding ng-binding">Rs. 5,000</div>
+                                <div class="col-sm-2 clear-side-padding text-icon-container">
+                                    <a class="pull-right text-icon" data-ng-click="ctrl.deleteBenefit(benefit)">
+                                        <span class="icon-remove3 link-edit-icon icon"></span> Delete</a>
+                                    <a class="pull-right right-margin" data-ng-click="ctrl.addEmployeeBenefit(benefit)">
+                                        <span class="icon-pencil link-edit-icon"></span> Edit</a>
+                                </div>
+                            </div>
+                            <!-- end ngRepeat: benefit in ctrl.employee.benefits -->
+                        </div>
+                        <!-- end ngIf: ctrl.employee.id && ctrl.employee.benefits.length > 0 -->
+                        <!-- ngIf: ctrl.employee.id && ctrl.employee.benefits.length == 0 -->
                         <div class="col-sm-12 clear-side-padding">
-                            <div class="col-sm-3 form-group">
-                                <label> Salary</label>
-                                <br>
-                                <!-- ngIf: ctrl.employee.ctc -->
-                                <span class="value ng-binding ">Rs. 2,00,000/Annum</span>
-                                <!-- end ngIf: ctrl.employee.ctc -->
-                                <!-- ngIf: !ctrl.employee -->
-                            </div>
-
-                            <div class="col-sm-3 form-group">
-                                <label>Basic</label>
-                                <br>
-                                <!-- ngIf: ctrl.employee.basic -->
-                                <span class="value ng-binding ">Rs. 80,000</span>
-                                <!-- end ngIf: ctrl.employee.basic -->
-                                <!-- ngIf: !ctrl.employee.basic -->
-                            </div>
-
-                            <div class="col-sm-3 form-group">
-                                <label>PROVIDENT FUND</label>
-                                <br>
-                                <span class="value">
-                                    <!-- ngIf: ctrl.employee.pf > 0 -->
-                                    <!-- ngIf: ctrl.employee.pf == 0 -->
-                                </span>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label class="vertical-margin clear-top-margin">
-                                    <!-- ngIf: !ctrl.employee.inProbation -->
-                                    <span class="icon icon-custom success icon-checkmark3 "></span>
-                                    <!-- end ngIf: !ctrl.employee.inProbation -->
-                                    <!-- ngIf: ctrl.employee.inProbation -->
-                                    Not in probation
-                                </label>
-                                <br>
-                                <label>
-                                    <!-- ngIf: !ctrl.employee.inNoticePeriod -->
-                                    <span class="icon icon-custom success icon-checkmark3 "></span>
-                                    <!-- end ngIf: !ctrl.employee.inNoticePeriod -->
-                                    <!-- ngIf: ctrl.employee.inNoticePeriod -->
-                                    Not in notice period
-                                </label>
-                            </div>
+                            <a data-ng-click="ctrl.addEmployeeBenefit()">+ Add Perk</a>
                         </div>
-                    </div>
-                </div>
 
-                <div class="col-sm-12 clear-side-padding vertical-margin">
-                    <div class="col-sm-8 col-md-8 col-lg-7">
-                        <!-- ngIf: ctrl.employee.id -->
-                        <div class="col-sm-12 ">
-                            <div class="col-sm-12 clear-left-padding vertical-margin grayout text-moderate-bold">
-                                PERKS ASSIGNED
-                            </div>
-                            <!-- ngIf: ctrl.employee.id && ctrl.employee.benefits.length > 0 -->
-                            <div class="col-sm-12 clear-left-padding benefits-items-list ">
-                                <!-- ngRepeat: benefit in ctrl.employee.benefits -->
-                                <div class="col-sm-12 clear-side-padding bordered-item ">
-                                    <div class="col-sm-6 clear-left-padding text-moderate-bold ng-binding">Health Insurance</div>
-                                    <div class="col-sm-4 clear-left-padding ng-binding">Rs. 2,000</div>
-                                    <div class="col-sm-2 clear-side-padding text-icon-container">
-                                        <a class="pull-right text-icon" data-ng-click="ctrl.deleteBenefit(benefit)">
-                                            <span class="icon-remove3 link-edit-icon icon"></span> Delete</a>
-                                        <a class="pull-right right-margin" data-ng-click="ctrl.addEmployeeBenefit(benefit)">
-                                            <span class="icon-pencil link-edit-icon"></span> Edit</a>
-                                    </div>
-                                </div>
-                                <!-- end ngRepeat: benefit in ctrl.employee.benefits -->
-                                <div class="col-sm-12 clear-side-padding bordered-item ">
-                                    <div class="col-sm-6 clear-left-padding text-moderate-bold ng-binding">Bike petrol</div>
-                                    <div class="col-sm-4 clear-left-padding ng-binding">Rs. 5,000</div>
-                                    <div class="col-sm-2 clear-side-padding text-icon-container">
-                                        <a class="pull-right text-icon" data-ng-click="ctrl.deleteBenefit(benefit)">
-                                            <span class="icon-remove3 link-edit-icon icon"></span> Delete</a>
-                                        <a class="pull-right right-margin" data-ng-click="ctrl.addEmployeeBenefit(benefit)">
-                                            <span class="icon-pencil link-edit-icon"></span> Edit</a>
-                                    </div>
-                                </div>
-                                <!-- end ngRepeat: benefit in ctrl.employee.benefits -->
-                            </div>
-                            <!-- end ngIf: ctrl.employee.id && ctrl.employee.benefits.length > 0 -->
-                            <!-- ngIf: ctrl.employee.id && ctrl.employee.benefits.length == 0 -->
-                            <div class="col-sm-12 clear-side-padding">
-                                <a data-ng-click="ctrl.addEmployeeBenefit()">+ Add Perk</a>
-                            </div>
-                          
-                        </div>
-                        <!-- end ngIf: ctrl.employee.id -->
                     </div>
+                    <!-- end ngIf: ctrl.employee.id -->
                 </div>
             </div>
+
         </div>
 
     </div>

@@ -1,0 +1,337 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary title-bar">
+        <div class="col-lg-12">
+            <p class="text-center">New Loan- Name Of Employee</p>
+            <span data-ng-click="$dismiss();" class="pull-right">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="topnav-wizard payroll-loan-request col-sm-12 clear-side-padding content-container ">
+
+
+            <div class="col-sm-12 clear-side-padding loan-request-header">
+                <!-- ngIf: !ctrl.$stateParams.loanRequestId && !ctrl.$stateParams.id -->
+                <div class="col-sm-3 employee-search ">
+                    <div class="ui-select-container select2 select2-container ng-valid  ng-touched ng-not-empty ng-dirty ng-valid-parse" ng-class="{'select2-container-active select2-dropdown-open open': $select.open, 'select2-container-disabled': $select.disabled, 'select2-container-active': $select.focus, 'select2-allowclear': $select.allowClear &amp;&amp; !$select.isEmpty()}"
+                        ng-model="ctrl.employee" theme="select2" ng-disabled="disabled" data-ng-change="ctrl.getSalaryDetailsAndOutstandingLoans()">
+                        <a class="select2-choice ui-select-match " ng-class="{'select2-default': $select.isEmpty()}" ng-click="$select.toggle($event)"
+                            aria-label="Select box select" placeholder="search for an employee...">
+                            <span ng-show="$select.isEmpty()" class="select2-chosen ng-binding ng-hide">search for an employee...</span>
+                            <span ng-hide="$select.isEmpty()" class="select2-chosen" ng-transclude="">
+                                <div class="search-result-item ">
+                                    <div class="member-profile-picture-container profile-picture-container">
+                                        <!-- ngIf: $select.selected.profileImageUrl -->
+                                        <img class="profile-picture " data-ng-src="https://kekademo.blob.core.windows.net/8e372239-41e9-4683-8d10-7d02186a1365/50x50/profileimage/9942a4c4a5d3400281c074dac0ff50b3.jpg"
+                                            src="https://kekademo.blob.core.windows.net/8e372239-41e9-4683-8d10-7d02186a1365/50x50/profileimage/9942a4c4a5d3400281c074dac0ff50b3.jpg">
+                                        <!-- end ngIf: $select.selected.profileImageUrl -->
+                                        <!-- ngIf: !$select.selected.profileImageUrl -->
+                                    </div>
+                                    <div class="vertical-margin">
+                                        <div data-ng-bind-html="$select.selected.displayName" class="ng-binding">Deepak Jain</div>
+                                        <!-- ngIf: $select.selected.jobTitle -->
+                                        <div class="job-title ng-binding " data-ng-bind-html="$select.selected.jobTitle">Editor</div>
+                                        <!-- end ngIf: $select.selected.jobTitle -->
+                                    </div>
+                                </div>
+                            </span>
+                            <!-- ngIf: $select.allowClear && !$select.isEmpty() -->
+                            <span class="select2-arrow ui-select-toggle">
+                                <b></b>
+                            </span>
+                        </a>
+                        <div class="ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active select2-display-none" ng-class="{'select2-display-none': !$select.open}"
+                            style="opacity: 1;">
+                            <div class="select2-search" ng-show="$select.searchEnabled">
+                                <input type="text" autocomplete="false" autocorrect="false" autocapitalize="off" spellcheck="false" role="combobox" aria-expanded="true"
+                                    aria-owns="ui-select-choices-2" aria-label="Select box" aria-activedescendant="ui-select-choices-row-2-0"
+                                    class="ui-select-search select2-input ng-valid ng-dirty ng-touched ng-empty" ng-model="$select.search"
+                                    placeholder="">
+                            </div>
+                            <ul class="form-group search-result-item search-result-items ui-select-choices ui-select-choices-content select2-results "
+                                repeat="emp in ctrl.filteredApprovers" refresh="ctrl.searchEmployees($select.search)">
+                                <li class="ui-select-choices-group" ng-class="{'select2-result-with-children': $select.choiceGrouped($group) }">
+                                    <div ng-show="$select.choiceGrouped($group)" class="ui-select-choices-group-label select2-result-label ng-binding ng-hide"
+                                        ng-bind="$group.name"></div>
+                                    <ul role="listbox" id="ui-select-choices-2" ng-class="{'select2-result-sub': $select.choiceGrouped($group), 'select2-result-single': !$select.choiceGrouped($group) }"
+                                        class="select2-result-single">
+                                        <!-- ngRepeat: emp in $select.items -->
+                                        <!-- ngIf: $select.open -->
+                                        <!-- end ngRepeat: emp in $select.items -->
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <ui-select-single></ui-select-single>
+                        <input ng-disabled="$select.disabled" class="ui-select-focusser ui-select-offscreen " type="text" id="focusser-2" aria-label="Select box focus"
+                            aria-haspopup="true" role="button">
+                    </div>
+                </div>
+                <!-- end ngIf: !ctrl.$stateParams.loanRequestId && !ctrl.$stateParams.id -->
+                <!-- ngIf: ctrl.$stateParams.loanRequestId || ctrl.$stateParams.id -->
+                <div class="col-sm-9 employee-salary-details">
+                    <div class="col-sm-12 clear-side-padding">
+                        <div class="col-sm-3 form-group">
+                            <label> Salary</label>
+                            <br>
+                            <!-- ngIf: ctrl.model.ctc -->
+                            <span class="value ng-binding ">Rs 2,00,000/Annum</span>
+                            <!-- end ngIf: ctrl.model.ctc -->
+                            <!-- ngIf: !ctrl.model.ctc -->
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label>Employee Since</label>
+                            <br>
+                            <!-- ngIf: ctrl.model.dateJoined -->
+                            <span class="value ng-binding ">26-Feb-2012</span>
+                            <!-- end ngIf: ctrl.model.dateJoined -->
+                            <!-- ngIf: !ctrl.model.dateJoined -->
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label>Outstanding Loans</label>
+                            <br>
+                            <span class="value">
+                                <!-- ngIf: ctrl.totalOutstandingLoans > 0 -->
+                                <span class="ng-binding ">1</span>
+                                <!-- end ngIf: ctrl.totalOutstandingLoans > 0 -->
+                                <!-- ngIf: ctrl.totalOutstandingLoans == 0 -->
+                            </span>
+                        </div>
+                        <div class="col-sm-3" style="margin-top: -10px;">
+                            <label class="vertical-margin clear-top-margin">
+                                <!-- ngIf: !ctrl.model.inProbation -->
+                                <span class="icon icon-custom success fa fa-check "></span>
+                                <!-- end ngIf: !ctrl.model.inProbation -->
+                                <!-- ngIf: ctrl.model.inProbation -->
+                                Not in probation
+                            </label>
+                            <br>
+                            <label>
+                                <!-- ngIf: !ctrl.model.inNoticePeriod -->
+                                <span class="icon icon-custom success fa fa-check "></span>
+                                <!-- end ngIf: !ctrl.model.inNoticePeriod -->
+                                <!-- ngIf: ctrl.model.inNoticePeriod -->
+                                Not in notice period
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 clear-side-padding vertical-marin">
+                <form name="loanRequestForm" id="loanRequestForm" class="form-horizontal vertical-margin ng-pristine ng-valid-min ng-invalid ng-invalid-required ng-valid-pattern ng-valid-max"
+                    novalidate="" ng-init="ctrl.form = this">
+                    <div class="col-sm-6 vertical-margin">
+                        <h4 class="page-heading">Loan Calculation</h4>
+                        <div class="col-sm-12 action-panel">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12 clear-side-padding">
+                                    <div class="col-sm-8 clear-side-padding">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-5 clear-left-padding">Loan Amount</label>
+                                            <div class="col-sm-7">
+                                                <input type="number" class="form-control ng-pristine ng-untouched ng-empty ng-valid-min ng-invalid ng-invalid-required ng-valid-pattern"
+                                                    data-ng-blur="ctrl.calculateEmi()" name="loanAmount" data-ng-model="ctrl.model.loanAmount"
+                                                    data-ng-pattern="/^\d+$/" data-ng-min="1" required="">
+                                                <div data-validation-messages="" data-model-controller="loanRequestForm.loanAmount" data-required-error="Loan amount is required. "
+                                                    data-min-error="Minimum number should be 1. " data-pattern-error="Please enter valid number. "
+                                                    data-form-submit="loanRequestForm.$submitted" class="ng-isolate-scope">
+                                                    <div>
+                                                        <!-- ngRepeat: message in errorMessages -->
+                                                        <small class="error ng-binding  ng-hide" ng-repeat="message in errorMessages" ng-show="(!modelController.$pristine &amp;&amp; $first) || formSubmit">Loan amount is required. </small>
+                                                        <!-- end ngRepeat: message in errorMessages -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-5 clear-left-padding">Interest Rate</label>
+                                            <div class="col-sm-7">
+                                                <input type="number" data-ng-blur="ctrl.calculateEmi()" class="form-control input-textbox-md ng-pristine ng-untouched ng-valid-min ng-valid-max ng-valid-pattern ng-not-empty ng-valid ng-valid-required"
+                                                    name="rateOfInterest" data-ng-model="ctrl.model.rateOfInterest" data-ng-pattern="/^\d+(?:\.\d{1,3})?$/"
+                                                    data-ng-min="0" data-ng-max="100" required="">
+                                                <span> % Per Annum</span>
+                                                <div data-validation-messages="" data-model-controller="loanRequestForm.rateOfInterest" data-required-error="Rate of interest is required. "
+                                                    data-min-error="Minimum number should be 0. " data-max-error="Maximum number allowed should be 100. "
+                                                    data-pattern-error="Please enter valid number. " data-form-submit="loanRequestForm.$submitted"
+                                                    class="ng-isolate-scope">
+                                                    <div>
+                                                        <!-- ngRepeat: message in errorMessages -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-lg-3 col-md-4 clear-right-padding pull-right">
+                                        <div class="tile emi-tile col-sm-12">
+                                            <h4 class="clear-vertical-margin">EMI</h4>
+                                            <h1 class="clear-vertical-margin ng-binding">
+                                                <small>RS </small> 0 </h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 inline-block pull-left clear-side-padding">Interest Calculation</label>
+                                    <div class="col-sm-8 clear-side-padding">
+                                        <div class="radio-inline clear-left-padding">
+                                            <label>
+                                                <input type="radio" data-ng-change="ctrl.calculateEmi()" data-ng-model="ctrl.model.interestCalculationMethod" name="interestCalculationMethod"
+                                                    data-ng-value="ctrl.InterestCalculationMethod.ReducingRate" required="" class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required"
+                                                    value="2">
+                                                <span class="radio-overlay"></span> Reducing Rate
+                                            </label>
+                                        </div>
+                                        <div class="radio-inline clear-left-margin">
+                                            <label>
+                                                <input type="radio" data-ng-change="ctrl.calculateEmi()" data-ng-model="ctrl.model.interestCalculationMethod" name="interestCalculationMethod"
+                                                    data-ng-value="ctrl.InterestCalculationMethod.FlatRateInterest" required=""
+                                                    class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required"
+                                                    value="1">
+                                                <span class="radio-overlay"></span> Flat Rate
+                                            </label>
+                                        </div>
+                                        <div data-validation-messages="" data-model-controller="loanRequestForm.interestCalculationMethod" data-required-error="Interest calculation is required. "
+                                            data-form-submit="loanRequestForm.$submitted" class="ng-isolate-scope">
+                                            <div>
+                                                <!-- ngRepeat: message in errorMessages -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 clear-left-padding">Repayment Term</label>
+                                    <div class="col-sm-7 clear-side-padding">
+                                        <input type="number" data-ng-blur="ctrl.calculateEmi()" class="form-control input-textbox-md ng-pristine ng-untouched ng-valid-min ng-valid-pattern ng-not-empty ng-valid ng-valid-required"
+                                            name="repaymentTerm" data-ng-model="ctrl.model.repaymentTerm" data-ng-pattern="/^\d+$/"
+                                            data-ng-min="1" required="">
+                                        <span class="horizontal-margin-left"> months</span>
+                                        <div data-validation-messages="" data-model-controller="loanRequestForm.repaymentTerm" data-required-error="Repayment term is required. "
+                                            data-min-error="Minimum number should be 1. " data-pattern-error="Please enter valid number. "
+                                            data-form-submit="loanRequestForm.$submitted" class="ng-isolate-scope">
+                                            <div>
+                                                <!-- ngRepeat: message in errorMessages -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 vertical-margin">
+                        <h4 class="page-heading">Loan Status</h4>
+                        <div class="col-sm-12 clear-left-padding">
+                            <div class="col-sm-12 action-panel">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4">Disbursal Mode</label>
+                                    <div class="col-sm-8">
+                                        <div class="radio-inline clear-left-padding">
+                                            <label>
+                                                <input type="radio" data-ng-model="ctrl.model.disbursalWithInPayroll" data-ng-change="ctrl.setLoanReleasedOnToNull()" name="disbursalWithInPayroll"
+                                                    data-ng-value="true" required="" class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required"
+                                                    value="true">
+                                                <span class="radio-overlay"></span> Keka Payroll
+                                            </label>
+                                        </div>
+                                        <div class="radio-inline clear-left-margin">
+                                            <label>
+                                                <input type="radio" data-ng-model="ctrl.model.disbursalWithInPayroll" data-ng-change="ctrl.setLoanReleasedOnToNull()" name="disbursalWithInPayroll"
+                                                    data-ng-value="false" required="" class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required"
+                                                    value="false">
+                                                <span class="radio-overlay"></span> Outside Payroll
+                                            </label>
+                                        </div>
+                                        <div data-validation-messages="" data-model-controller="loanRequestForm.disbursalWithInPayroll" data-required-error="disbursal mode is required. "
+                                            data-form-submit="loanRequestForm.$submitted" class="ng-isolate-scope">
+                                            <div>
+                                                <!-- ngRepeat: message in errorMessages -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4">Loan Released Date</label>
+                                    <!-- ngIf: !ctrl.model.disbursalWithInPayroll -->
+                                    <!-- ngIf: ctrl.model.disbursalWithInPayroll -->
+                                    <div class="col-sm-6 ">
+                                        <!-- ngIf: ctrl.model.loanReleasedOn && ctrl.employeeLoan.loanReleasedOn && !ctrl.isChangeReleasedOn -->
+                                        <!-- ngIf: !ctrl.model.loanReleasedOn || !ctrl.employeeLoan.loanReleasedOn || ctrl.isChangeReleasedOn -->
+                                        <div class="">
+                                            <select class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" name="loanReleasedOn" data-ng-options="month.to as  month.toSummary() for month in ctrl.payCycleMonthList"
+                                                data-ng-model="ctrl.model.loanReleasedOn" data-ng-change="ctrl.calculateEmi()"
+                                                required="">
+                                                <option value="" class="" selected="selected">Select</option>
+                                                <option label="JUL-2018" value="object:1409">JUL-2018</option>
+                                                <option label="AUG-2018" value="object:1410">AUG-2018</option>
+                                                <option label="SEP-2018" value="object:1411">SEP-2018</option>
+                                                <option label="OCT-2018" value="object:1412">OCT-2018</option>
+                                            </select>
+                                            <div data-validation-messages="" data-model-controller="loanRequestForm.loanReleasedOn" data-required-error="Loan released date is required. "
+                                                data-form-submit="loanRequestForm.$submitted" class="ng-isolate-scope">
+                                                <div>
+                                                    <!-- ngRepeat: message in errorMessages -->
+                                                    <small class="error ng-binding  ng-hide" ng-repeat="message in errorMessages" ng-show="(!modelController.$pristine &amp;&amp; $first) || formSubmit">Loan released date is required. </small>
+                                                    <!-- end ngRepeat: message in errorMessages -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end ngIf: !ctrl.model.loanReleasedOn || !ctrl.employeeLoan.loanReleasedOn || ctrl.isChangeReleasedOn -->
+                                    </div>
+                                    <!-- end ngIf: ctrl.model.disbursalWithInPayroll -->
+                                    <!-- ngIf: ctrl.model.disbursalWithInPayroll && ctrl.isChangeReleasedOn -->
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4">Emi Deducts from</label>
+                                    <div class="col-sm-6">
+                                        <!-- ngIf: ctrl.employeeLoan && ctrl.employeeLoan.emiDeductsFrom && !ctrl.isChangeEmiDeductsFrom -->
+                                        <!-- ngIf: !(ctrl.employeeLoan && ctrl.employeeLoan.emiDeductsFrom) || ctrl.isChangeEmiDeductsFrom -->
+                                        <div class="">
+                                            <select class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" name="emiDeductsFrom" data-ng-options="month.to as  month.toSummary() for month in ctrl.payCycleMonthList"
+                                                data-ng-model="ctrl.model.emiDeductsFrom" data-ng-change="ctrl.calculateEmi()"
+                                                required="">
+                                                <option value="" class="" selected="selected">Select</option>
+                                                <option label="JUL-2018" value="object:1409">JUL-2018</option>
+                                                <option label="AUG-2018" value="object:1410">AUG-2018</option>
+                                                <option label="SEP-2018" value="object:1411">SEP-2018</option>
+                                                <option label="OCT-2018" value="object:1412">OCT-2018</option>
+                                            </select>
+                                            <div data-validation-messages="" data-model-controller="loanRequestForm.emiDeductsFrom" data-required-error="Emi Deducts from month is required."
+                                                data-form-submit="loanRequestForm.$submitted" class="ng-isolate-scope">
+                                                <div>
+                                                    <!-- ngRepeat: message in errorMessages -->
+                                                    <small class="error ng-binding  ng-hide" ng-repeat="message in errorMessages" ng-show="(!modelController.$pristine &amp;&amp; $first) || formSubmit">Emi Deducts from month is required.</small>
+                                                    <!-- end ngRepeat: message in errorMessages -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end ngIf: !(ctrl.employeeLoan && ctrl.employeeLoan.emiDeductsFrom) || ctrl.isChangeEmiDeductsFrom -->
+                                    </div>
+                                    <!-- ngIf: ctrl.isChangeEmiDeductsFrom -->
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4">Notes</label>
+                                    <div class="col-sm-7">
+                                        <textarea class="form-control ng-pristine ng-untouched ng-valid ng-empty" name="notes" data-ng-model="ctrl.model.notes" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 clear-side-padding">
+                                <div class="notification-container col-sm-12">
+                                    <!-- ngRepeat: alert in ctrl.errorMessages -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 text-right vertical-margin">
+                        <!-- ngIf: ctrl.model.loanRequestStatus != ctrl.loanRequestStatus.Approved -->
+                        <button type="submit" class="btn btn-primary vertical-margin " data-ng-click="ctrl.requestLoan();" data-ng-disabled="ctrl.requestedLoan">
+                            Create Loan
+                        </button>
+                        <!-- end ngIf: ctrl.model.loanRequestStatus != ctrl.loanRequestStatus.Approved -->
+                        <!-- ngIf: ctrl.model.loanRequestStatus == ctrl.loanRequestStatus.Approved -->
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

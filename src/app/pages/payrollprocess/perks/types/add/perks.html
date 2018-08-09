@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div class="modal-body content-container">
+    <div class="modal-body">
         <div class="wizard-step-container ">
             <form name="benefit" id="benefit" class="benefit-setting ng-invalid ng-invalid-required ng-dirty ng-valid-parse" data-ng-init="ctrl.form = this"
                 novalidate="">
@@ -145,7 +145,7 @@
                 </div>
                 <div class="col-sm-12">
                     <div class="config-field col-sm-7">
-                        <button type="submit" class="btn btn-submit vertical-margin pull-right" data-ng-click="ctrl.addBenefit()">
+                        <button type="submit" class="btn btn-primary vertical-margin pull-right" data-ng-click="ctrl.addBenefit()">
                             <!-- ngIf: !ctrl.model.id -->
                             <span data-ng-if="!ctrl.model.id" class="ng-scope">Save</span>
                             <!-- end ngIf: !ctrl.model.id -->

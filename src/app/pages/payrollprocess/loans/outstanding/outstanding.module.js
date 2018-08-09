@@ -16,7 +16,7 @@
                 url: '/outstanding',
                 templateUrl: 'app/pages/payrollprocess/loans/outstanding/outstanding.html',
                 title: 'OUTSTANDING',
-                controller: "",
+                controller: "loanOutStandingController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,

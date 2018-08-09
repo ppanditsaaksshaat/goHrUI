@@ -1,1 +1,43 @@
-<child-nav menu="'payrollprocess.loans'"></child-nav> 
+<div class="col-sm-12">
+    <div class="col-sm-12 clear-side-padding payroll-loan-container">
+        <div class="col-sm-12 loan-stats clear-side-padding">
+            <div class="good-loan col-sm-4 clear-side-padding">
+                <div class="content-container col-sm-12">
+                    <div class="col-sm-6 clear-side-padding">
+                        <p class="upper-case clear-bottom">Outstanding Balances</p>
+                        <p class="amount ">&nbsp;5,73,336</p>
+                    </div>
+                    <div class="col-sm-6 clear-side-padding text-right">
+                        <p class="upper-case clear-bottom">Total Loans Issued</p>
+                        <p class="amount ">&nbsp;5,80,000</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bad-loan col-sm-3 clear-right-padding">
+                <div class="content-container col-sm-12">
+                    <p class="upper-case clear-bottom">Bad Loans</p>
+                    <p class="amount ">&nbsp;0</p>
+                </div>
+            </div>
+
+            <div class="loan-action col-sm-4 clear-right-padding">
+                <div class="content-container col-sm-12">
+                    <div class="col-sm-6 clear-side-padding">
+                        <a href class="action-link" ng-click="newLoan()">New Loan</a>
+
+                    </div>
+                    <div class="col-sm-6 clear-side-padding text-right">
+                        <a class="action-link" ui-sref="payrolloverview.loans.import" href="#/payroll/overview/loans/import">Import loans</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-lg-12">
+    <child-nav menu="'payrollprocess.loans'"></child-nav>
+</div>
