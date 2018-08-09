@@ -32,15 +32,15 @@
       return $rootScope.modalInstance;
     }
     this.openFullScreen = function (options) {
-      var size = 'fullscreen';
-  
-      $rootScope.modalInstance = $uibModal.open({
+      var size='fullscreen';
 
+      
+        $rootScope.modalInstance = $uibModal.open({
         animation: false,
         templateUrl: options.url,
         controller: options.controller,
         controllerAs: options.controllerAs,
-        size: size,
+        size:size,
         resolve: {
           param: function () {
             return options.param;
