@@ -9,7 +9,7 @@
         .controller('bankAccountController', bankAccountController);
 
     /** @ngInject */
-    function bankAccountController($scope, dialogModal, editFormService,pageService) {
+    function bankAccountController($scope, dialogModal, editFormService, pageService, $rootScope) {
         //    console.log($state)
         var vm = this;
 
@@ -18,26 +18,23 @@
         $scope.oldEntity = {};
         $scope.entity = {};
 
+        var bankPageId = 494;
+
+        function _childmethod() {
+            $rootScope.$emit("CallParentMethod", {});
+        }
+
+
+
         function _loadController() {
-            pageService.getPagData(497).then(_getPageSuccessResult, _getPageErrorResult)
+            pageService.getPagData(bankPageId).then(_getPageSuccessResult, _getPageErrorResult)
         }
         function _getPageSuccessResult(result) {
             console.log(result)
             $scope.pageInfo = result.pageinfo;
-            var searchLists = [];
-            var searchListData = {
-                field: 'JDEmpId',
-                operand: "=",
-                value: empId
-            }
-            searchLists.push(searchListData)
-            var data = {
-                searchList: searchLists,
-                orderByList: []
-            }
-            pageService.getTableData(jobTableId, jobPageId, '', '', false, data)
-                .then(_getTableDataSuccessResult, _getTableDataErrorResult)
+
         }
+
         function _getPageErrorResult(err) {
             console.log(err)
         }
@@ -57,11 +54,17 @@
         }
 
         function _saveFormSuccess(result) {
-
-            $state.go('configuration.company.locations.location')
+            console.log(result)
+            if (result.success_message == "Added New Record.") {
+                $rootScope.showMsg("success", "Record Save Successfully");
+            }
+            _childmethod();
+            $scope.$close();
+            // $state.go('configuration.company.locations.location')
         }
 
         function _saveFormError(err) {
+            $scope.$close();
             alert('error')
         }
         _loadController()

@@ -22,9 +22,29 @@
 
                         <div class="col-sm-12">
                             <h6 dotranslate class="section-head-text">Authorised Signatory</h6>
-                            <a href ng-click="addNewSignatory()">
-                                <i class="fa fa-plus"></i> Add New Signatory</a>
-                            <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+
+                            <div class="col-sm-12">
+                                <div ng-repeat="emp in employeeList" class="icon-list col-offset-sm-1 col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+                                    <div class="cursor">
+                                        <div ng-click="editSignatoryDetail(emp)" class="cursor">
+                                            <div class="icon-container ">
+                                                <div class="icon">
+                                                    <div class="initials-icon icon-circle" random-Color>{{emp.ASDSignatureName.split(' ')[0].substr(0,2)}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="detail">
+                                                <h4 class="title clear-bottom">{{emp.ASDSignatureName}}</h4>
+                                                <span class="title-description clear-top">{{emp.ASDEmail}}</span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href ng-click="addNewSignatory()">
+                                    <i class="fa fa-plus"></i> Add New Signatory</a>
+                            </div>
+
+                            <!-- <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
                                 <div class="icon-container ">
                                     <div class="icon">
                                         <div class="initials-icon icon-circle" style="background-color: rgb(244, 180, 0);">DJ</div>
@@ -63,7 +83,7 @@
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <hr/>
@@ -71,7 +91,26 @@
 
                         <div class="col-sm-12">
                             <h6 dotranslate class="section-head-text">Bank Accounts</h6>
-                            <a href ng-click="addBankAccount()">
+                            <div class="col-sm-12">
+                                <div ng-repeat="bank in bankList" class="icon-list col-offset-sm-1 col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+                                    <div class="cursor">
+                                        <div class="icon-container ">
+                                            <div class="icon">
+                                                <div class="initials-icon icon-circle" random-Color>{{bank.BankName.split(' ')[0].substr(0,2)}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h4 class="title clear-bottom">{{bank.BankName}}</h4>
+                                            <span class="title-description clear-top">{{bank.BADBranch}}</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href ng-click="addBankAccount()">
+                                    <i class="fa fa-plus"></i> Add New Bank Account</a>
+                            </div>
+
+                            <!-- <a href ng-click="addBankAccount()">
                                 <i class="fa fa-plus"></i> Add New Bank Account</a>
                             <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin">
                                 <div class="icon-container ">
@@ -112,7 +151,7 @@
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <hr/>

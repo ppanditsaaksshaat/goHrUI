@@ -54,21 +54,20 @@
                             <div class="col-sm-4 clear-side-padding">
                                 <div class="form-group">
                                     <label>Pan Card</label>
-                                    <input type="text" class="form-control" data-ng-model="entity.ASDPanCard" name="signatoryFather" id="signatoryFather"
-                                        required />
+                                    <input type="text" class="form-control" data-ng-model="entity.ASDPanCard" name="signatoryFather" id="signatoryFather" required
+                                    />
                                     <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryFather" data-required-error="Father name is required"
                                         data-form-submit="addSignatoryForm.$submitted"></span>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
                             <div class="col-sm-4 clear-left-padding">
                                 <div class="form-group">
                                     <label>Flat/Door/Block No</label>
-                                    <input type="text" class="form-control" data-ng-model="entity.ASDFlat" name="signatoryName" id="signatoryName" required
-                                    />
+                                    <input type="text" class="form-control" data-ng-model="entity.ASDFlat" name="signatoryName" id="signatoryName" required />
                                     <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
                                         data-form-submit="addSignatoryForm.$submitted"></span>
                                 </div>
@@ -76,8 +75,8 @@
                             <div class="col-sm-4 clear-side-padding">
                                 <div class="form-group">
                                     <label>Street/Lane (Optional)</label>
-                                    <input type="text" class="form-control" data-ng-model="entity.ASDStreet" name="signatoryFather" id="signatoryFather"
-                                        required />
+                                    <input type="text" class="form-control" data-ng-model="entity.ASDStreet" name="signatoryFather" id="signatoryFather" required
+                                    />
                                     <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryFather" data-required-error="Father name is required"
                                         data-form-submit="addSignatoryForm.$submitted"></span>
                                 </div>
@@ -106,28 +105,33 @@
                             <div class="col-sm-3 clear-side-padding">
                                 <div class="form-group">
                                     <label>Country</label>
-                                    <input type="text" class="form-control" name="signatoryFather" id="signatoryFather"
+                                    <select class="form-control" data- ng-model="entity.CountryId" ng-options="location.value as location.name for location in pageInfo.selects.CountryId"></select>
+
+                                    <!-- <input type="text" class="form-control" name="signatoryFather" id="signatoryFather"
                                         required />
                                     <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryFather" data-required-error="Father name is required"
-                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                        data-form-submit="addSignatoryForm.$submitted"></span> -->
                                 </div>
                             </div>
                             <div class="col-sm-3 clear-right-padding">
                                 <div class="form-group">
                                     <label>State</label>
-                                    <input type="text" class="form-control"  name="signatoryDesignation" id="signatoryDesignation"
-                                        required />
+                                    <select class="form-control" data- ng-model="entity.StateId" ng-options="location.value as location.name for location in pageInfo.selects.StateId"></select>
+
+                                    <!-- <input type="text" class="form-control" name="signatoryDesignation" id="signatoryDesignation" required />
                                     <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryDesignation" data-required-error="Designation is required"
-                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                        data-form-submit="addSignatoryForm.$submitted"></span> -->
                                 </div>
                             </div>
                             <div class="col-sm-3 clear-right-padding">
                                 <div class="form-group">
                                     <label>City</label>
-                                    <input type="text" class="form-control" data-ng-model="entity.ASDCityId" name="signatoryDesignation" id="signatoryDesignation"
+                                    <select class="form-control" data- ng-model="entity.ASDCityId" ng-options="location.value as location.name for location in pageInfo.selects.ASDCityId"></select>
+
+                                    <!-- <input type="text" class="form-control" data-ng-model="entity.ASDCityId" name="signatoryDesignation" id="signatoryDesignation"
                                         required />
                                     <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryDesignation" data-required-error="Designation is required"
-                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                        data-form-submit="addSignatoryForm.$submitted"></span> -->
                                 </div>
                             </div>
                         </div>

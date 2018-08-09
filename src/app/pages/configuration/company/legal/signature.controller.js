@@ -9,34 +9,28 @@
         .controller('signatureController', signatureController);
 
     /** @ngInject */
-    function signatureController($scope, dialogModal, editFormService) {
+    function signatureController($scope, dialogModal, editFormService, $rootScope, pageService) {
         //    console.log($state)
         var vm = this;
 
         $scope.saveSignatory = _saveForm;
         $scope.companyList = [];
         $scope.oldEntity = {};
+        var signaturePageId = 496;
 
+        function _childmethod() {
+            $rootScope.$emit("CallParentMethod", {});
+        }
+n
         function _loadController() {
-            pageService.getPagData(jobPageId).then(_getPageSuccessResult, _getPageErrorResult)
+            pageService.getPagData(signaturePageId).then(_getPageSuccessResult, _getPageErrorResult)
         }
         function _getPageSuccessResult(result) {
             console.log(result)
             $scope.pageInfo = result.pageinfo;
-            var searchLists = [];
-            var searchListData = {
-                field: 'JDEmpId',
-                operand: "=",
-                value: empId
-            }
-            searchLists.push(searchListData)
-            var data = {
-                searchList: searchLists,
-                orderByList: []
-            }
-            pageService.getTableData(jobTableId, jobPageId, '', '', false, data)
-                .then(_getTableDataSuccessResult, _getTableDataErrorResult)
+
         }
+
         function _getPageErrorResult(err) {
             console.log(err)
         }
@@ -56,13 +50,22 @@
         }
 
         function _saveFormSuccess(result) {
-
-            $state.go('configuration.company.locations.location')
+            console.log(result)
+            if (result.success_message == "Added New Record.") {
+                $rootScope.showMsg("success", "Record Save Successfully");
+            }
+            _childmethod();
+            $scope.$close();
+            // $state.go('configuration.company.locations.location')
         }
 
         function _saveFormError(err) {
-            alert('error')
+            // alert('error')
+            $scope.$close();
+
         }
+
+        _loadController();
     }
 
 })();
