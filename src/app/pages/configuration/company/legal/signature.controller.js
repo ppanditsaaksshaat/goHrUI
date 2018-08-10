@@ -15,6 +15,8 @@
         // $scope.paramiter = parameter;
         // console.log($scope.paramiter,parameter)
 
+        console.log(dialogModal)
+
         $scope.saveSignatory = _saveForm;
         $scope.companyList = [];
         $scope.oldEntity = {};
