@@ -12,16 +12,18 @@
     function signatureController($scope, dialogModal, editFormService, $rootScope, pageService) {
         //    console.log($state)
         var vm = this;
+        // $scope.paramiter = parameter;
+        // console.log($scope.paramiter,parameter)
 
         $scope.saveSignatory = _saveForm;
         $scope.companyList = [];
         $scope.oldEntity = {};
-        var signaturePageId = 496;
+        var signaturePageId = 494;
 
         function _childmethod() {
             $rootScope.$emit("CallParentMethod", {});
         }
-n
+
         function _loadController() {
             pageService.getPagData(signaturePageId).then(_getPageSuccessResult, _getPageErrorResult)
         }

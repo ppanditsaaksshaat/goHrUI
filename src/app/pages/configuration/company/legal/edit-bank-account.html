@@ -11,7 +11,9 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label>Name of Bank </label>
-                            <ui-select data-ng-model="entity.BADBankId" name="bank" id="bank" theme="bootstrap" data-ng-disabled="disabled" class="client-select"
+                            <select class="form-control" data- ng-model="entity.BADBankId" ng-options="location.value as location.name for location in pageInfo.selects.BADBankId"></select>
+
+                            <!-- <ui-select data-ng-model="entity.BADBankId" name="bank" id="bank" theme="bootstrap" data-ng-disabled="disabled" class="client-select"
                                 data-ng-change="ctrl.model.updateBank()" required>
                                 <ui-select-match placeholder="Select a bank">{{$select.selected.name}}</ui-select-match>
                                 <ui-select-choices class="action-button" repeat="bank in ctrl.banks | filter: {name : $select.search}" data-ng-nicescroll=""
@@ -20,7 +22,7 @@
                                 </ui-select-choices>
                             </ui-select>
                             <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.bank" data-required-error="Name is required"
-                                data-form-submit="bankDetails.$submitted"></span>
+                                data-form-submit="bankDetails.$submitted"></span> -->
                         </div>
                     </div>
                 </div>
@@ -28,8 +30,8 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label>Account Number</label>
-                            <input type="text" class="form-control" data-ng-model="entity.BADAccountNumber" name="accountNumber" id="accountNumber"
-                                required />
+                            <input type="text" class="form-control" data-ng-model="entity.BADAccountNumber" name="accountNumber" id="accountNumber" required
+                            />
                             <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.accountNumber" data-required-error="Account number is required"
                                 data-form-submit="bankDetails.$submitted"></span>
                         </div>

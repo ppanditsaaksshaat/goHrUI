@@ -18,7 +18,7 @@
         $scope.oldEntity = {};
         $scope.entity = {};
 
-        var bankPageId = 494;
+        var bankPageId = 496;
 
         function _childmethod() {
             $rootScope.$emit("CallParentMethod", {});
