@@ -5,10 +5,9 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.finances.summary', [
-        //    'BlurAdmin.pages.me.about',
-        // 'BlurAdmin.pages.me.documents',
-        // 'BlurAdmin.pages.me.job'
+    angular.module('BlurAdmin.pages.finances.expenses', [
+        'BlurAdmin.pages.finances.expenses.claimexpenses',
+        'BlurAdmin.pages.finances.expenses.claims'
     ])
 
         .config(routeConfig);
@@ -17,10 +16,10 @@
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('finances.summary', {
-                url: '/summary',
-                templateUrl: 'app/pages/finances/summary/summary.html',
-                title: 'Summary',
+            .state('finances.expenses', {
+                url: '/expenses',
+                templateUrl: 'app/pages/finances/expenses/expenses.html',
+                title: 'Expenses',
                 controller: "",
                 controllerAs: "",
                 sidebarMeta: {
@@ -28,6 +27,5 @@
                     order: 1,
                 },
             })
-        $urlRouterProvider.when('/finances', '/finances/summary');
     }
 })();

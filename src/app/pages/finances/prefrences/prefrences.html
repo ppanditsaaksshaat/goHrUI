@@ -1,0 +1,237 @@
+<div class="row my-finance-summary preferences ">
+    <div class="col-sm-12 clear-side-padding flex-row">
+        <div class="col-sm-6 flex-child flex-row ">
+            <pan-info-view pan-details="ctrl.panDetails" edit-pan-details="ctrl.editPanDetails()" class="flex-row col-sm-12 clear-side-padding ng-isolate-scope">
+                <div class="col-sm-12 clear-side-padding flex-row">
+                    <div class="tile salary-summary clearfix col-sm-12 clear-side-padding">
+                        <div class="tile-header col-sm-12">
+                            <h2 class="col-sm-6 clear-side-padding">PAN Information</h2>
+                            <span class="col-sm-6 clear-side-padding text-right">
+                                <!-- ngIf: 'employee.finances.preferences' | isState -->
+                            </span>
+                        </div>
+                        <div class="col-sm-12 tile-content clear-side-padding">
+                            <!-- ngIf: panDetails.panNotApplicable || !panDetails.validState -->
+                            <!-- ngIf: panDetails.validState && !panDetails.panNotApplicable -->
+                            <div class="col-sm-12 clear-side-padding " >
+                                <div class="detail-container clearfix col-sm-12">
+                                    <div class="col-sm-6 clear-side-padding">
+                                        <div class="col-sm-8 clear-left-padding">
+                                            <label class="title upper-case">Name on Pan Card</label>
+                                            <p class="clear-bottom ng-binding">Alkaraina</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-side-padding">
+                                        <div class="col-sm-8 clear-left-padding">
+                                            <label class="title upper-case">PAN Number</label>
+                                            <p class="clear-bottom ng-binding">UCOBL8815N</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="detail-container clearfix col-sm-12">
+                                    <div class="col-sm-6 clear-side-padding">
+                                        <div class="col-sm-8 clear-left-padding">
+                                            <label class="title upper-case">Date Of Birth</label>
+                                            <p class="clear-bottom ng-binding">17 Mar 1990</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-side-padding">
+                                        <div class="col-sm-8 clear-left-padding">
+                                            <label class="title upper-case">Father Name</label>
+                                            <p class="clear-bottom ng-binding">Adriano</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end ngIf: panDetails.validState && !panDetails.panNotApplicable -->
+                        </div>
+                    </div>
+                </div>
+            </pan-info-view>
+        </div>
+        <div class="col-sm-6 flex-child flex-row ">
+            <bank-details-view bank-details="ctrl.bankDetails" salary-payment-mode="ctrl.salaryPaymentMode" edit-bank-details="ctrl.editBankDetails()"
+                class="flex-row col-sm-12 clear-side-padding ng-isolate-scope">
+                <div class="col-sm-12 clear-side-padding flex-row">
+                    <div class="tile salary-summary clearfix col-sm-12 clear-side-padding">
+                        <div class="tile-header col-sm-12">
+                            <h2 class="col-sm-6 clear-side-padding">Salary Deposit</h2>
+                            <span class="col-sm-6 clear-side-padding text-right">
+                                <!-- ngIf: 'employee.finances.preferences' | isState -->
+                            </span>
+                        </div>
+                        <div class="col-sm-12 tile-content clear-side-padding">
+                            <div class="col-sm-12 clear-side-padding">
+                                <div class="detail-container col-sm-12">
+                                    <label class="title upper-case col-sm-12 clear-side-padding">Salary Payment Mode</label>
+                                    <div class="col-sm-4 clear-side-padding">
+                                        <span class="ng-binding">Bank Transfer</span>
+                                    </div>
+                                </div>
+                                <!-- ngIf: bankDetails.salaryPaymentMode == salaryPaymentMode.BankTransfer.id -->
+                                <div class="col-sm-12 clear-side-padding ">
+                                    <div class="col-sm-12">
+                                        <p class="upper-case text-moderate-bold">Bank Information</p>
+                                    </div>
+                                    <div class="detail-container col-sm-12">
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <div class="col-sm-8 clear-left-padding">
+                                                <label class="title upper-case">Bank</label>
+                                                <p class="clear-bottom ng-binding">Dena Bank</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <div class="col-sm-8 clear-left-padding">
+                                                <label class="title upper-case">Account Number</label>
+                                                <p class="clear-bottom ng-binding">738475013387214</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-container col-sm-12">
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <div class="col-sm-8 clear-left-padding">
+                                                <label class="title upper-case">IFS Code</label>
+                                                <p class="clear-bottom ng-binding">UNGS0040538</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <div class="col-sm-8 clear-left-padding">
+                                                <label class="title upper-case">Name on the Account</label>
+                                                <p class="clear-bottom ng-binding">Alkaraina Pandey</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end ngIf: bankDetails.salaryPaymentMode == salaryPaymentMode.BankTransfer.id -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </bank-details-view>
+        </div>
+    </div>
+    <div class="col-sm-12 clear-side-padding flex-row">
+        <div class="col-sm-6 flex-child flex-row ">
+            <!-- ngIf: ctrl.config.isESIFilingRequired() || ctrl.config.isPFFilingRequired()  -->
+            <pf-and-esi-info-view 
+                pf-details="ctrl.pfDetails" pf-status="ctrl.pfStatus" config="ctrl.config" class="flex-row col-sm-12 clear-side-padding  ng-isolate-scope"
+                edit-pf-and-esi-info="ctrl.editPfAndEsiDetails()">
+                <div class="col-sm-12 clear-side-padding flex-row">
+                    <div class="tile no-scroll salary-summary clearfix col-sm-12 clear-side-padding">
+                        <div class="tile-header col-sm-12">
+                            <h2 class="col-sm-6 clear-side-padding">Provident Fund
+                                <!-- ngIf: esiDetails.isESIEligible && esiDetails.validState -->
+                                <span  class="">&amp; ESI Details</span>
+                                <!-- end ngIf: esiDetails.isESIEligible && esiDetails.validState -->
+                            </h2>
+                            <span class="col-sm-6 clear-side-padding text-right">
+                                <!-- ngIf: 'employee.finances.preferences' | isState -->
+                            </span>
+                        </div>
+                        <div class="col-sm-12 tile-content">
+                            <!-- ngIf: config.isPFFilingRequired() -->
+                            <div  class="">
+                                <div class="detail-container clearfix">
+                                    <div class="col-sm-12 clear-side-padding">
+                                        <label class="title upper-case">PF Status</label>
+                                        <!-- ngIf: pfStatus -->
+                                        <!-- ngIf: !pfStatus -->
+                                        <p class="upper-case disable-status " >Disabled</p>
+                                        <!-- end ngIf: !pfStatus -->
+                                    </div>
+                                </div>
+                                <!-- ngIf: pfDetails.isPFNotAvailable || !pfDetails.validState -->
+                                <!-- ngIf: pfDetails.validState && !pfDetails.isPFNotAvailable -->
+                                <div class="col-sm-12 clear-side-padding ">
+                                    <div class="col-sm-12 clear-side-padding">
+                                        <p class="upper-case text-moderate-bold">PF Account Information</p>
+                                    </div>
+                                    <div class="detail-container clearfix">
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <label class="title upper-case">PF Number</label>
+                                            <p class="clear-bottom ng-binding">QN/QSW/43219852/3043573</p>
+                                        </div>
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <label class="title upper-case">Universal Account Number</label>
+                                            <p class="clear-bottom ng-binding">166211745544</p>
+                                        </div>
+                                    </div>
+                                    <div class="detail-container clearfix">
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <label class="title upper-case">PF Join Date</label>
+                                            <p class="clear-bottom ng-binding">17 Jan 2018</p>
+                                        </div>
+                                        <div class="col-sm-6 clear-side-padding">
+                                            <label class="title upper-case">Name on Account</label>
+                                            <p class="clear-bottom ng-binding">Alkaraina Pandey</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end ngIf: pfDetails.validState && !pfDetails.isPFNotAvailable -->
+                            </div>
+                            <!-- end ngIf: config.isPFFilingRequired() -->
+                            <!-- ngIf: config.isESIFilingRequired() && esiDetails.isESIEligible && esiDetails.validState -->
+                            <div class="col-sm-12 clear-side-padding " >
+                                <div class="col-sm-12 clear-side-padding">
+                                    <p class="upper-case text-moderate-bold">ESI Account Information</p>
+                                </div>
+                                <div class="detail-container clearfix">
+                                    <div class="col-sm-12 clear-side-padding">
+                                        <label class="title upper-case">ESI Number</label>
+                                        <p class="upper-case ng-binding">5049708103</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end ngIf: config.isESIFilingRequired() && esiDetails.isESIEligible && esiDetails.validState -->
+                        </div>
+                    </div>
+                </div>
+            </pf-and-esi-info-view>
+            <!-- end ngIf: ctrl.config.isESIFilingRequired() || ctrl.config.isPFFilingRequired()  -->
+        </div>
+        <div class="col-sm-6 flex-child flex-row ">
+            <aadhaar-details-view aadhaar-details="ctrl.aadhaarDetails" class="flex-row col-sm-12 clear-side-padding ng-isolate-scope"
+                edit-aadhaar-info="ctrl.editAadhaarDetails()">
+                <div class="col-sm-12 clear-side-padding flex-row">
+                    <div class="tile salary-summary clearfix col-sm-12 clear-side-padding">
+                        <div class="tile-header col-sm-12">
+                            <h2 class="col-sm-6 clear-side-padding">Aadhaar Information</h2>
+                            <span class="col-sm-6 clear-side-padding text-right">
+                                <!-- ngIf: 'employee.finances.preferences' | isState -->
+                            </span>
+                        </div>
+                        <div class="col-sm-12 tile-content clear-side-padding">
+                            <!-- ngIf: !(aadhaarDetails.name || aadhaarDetails.aadhaarNumber || aadhaarDetails.enrollmentNumber) -->
+                            <!-- ngIf: aadhaarDetails.name || aadhaarDetails.aadhaarNumber || aadhaarDetails.enrollmentNumber -->
+                            <div class="col-sm-12 clear-side-padding " >
+                                <div class="detail-container clearfix col-sm-12">
+                                    <div class="col-sm-6 clear-side-padding">
+                                        <div class="col-sm-8 clear-left-padding">
+                                            <label class="title upper-case">Name On Aadhaar Card</label>
+                                            <p class="clear-bottom ng-binding">Alkaraina Pandey</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 clear-side-padding">
+                                        <div class="col-sm-8 clear-left-padding">
+                                            <label class="title upper-case">Aadhaar Number</label>
+                                            <p class="clear-bottom ng-binding">102129833191</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="detail-container clearfix col-sm-12">
+                                    <div class="col-sm-8 clear-side-padding">
+                                        <div class="col-sm-8 clear-left-padding">
+                                            <label class="title upper-case">Enrollment Number</label>
+                                            <p class="clear-bottom ng-binding">14092680999181</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end ngIf: aadhaarDetails.name || aadhaarDetails.aadhaarNumber || aadhaarDetails.enrollmentNumber -->
+                        </div>
+                    </div>
+                </div>
+            </aadhaar-details-view>
+        </div>
+    </div>
+</div>

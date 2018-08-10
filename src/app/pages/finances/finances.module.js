@@ -6,7 +6,11 @@
     'use strict';
   
     angular.module('BlurAdmin.pages.finances', [
-        'BlurAdmin.pages.finances.summary'
+        'BlurAdmin.pages.finances.summary',
+        'BlurAdmin.pages.finances.pay',
+        'BlurAdmin.pages.finances.prefrences',
+        'BlurAdmin.pages.finances.expenses',
+        'BlurAdmin.pages.finances.loans'
     ])
         .config(routeConfig);
         

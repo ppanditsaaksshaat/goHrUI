@@ -1,0 +1,208 @@
+<div class="col-lg-12 clear-side-padding">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="col-sm-12 content-container expense-details-container">
+                <!-- ngIf: !ctrl.expensePolicy.id || !ctrl.expensePolicy.configuration || ctrl.expensePolicy.configuration.length == 0 -->
+                <!-- ngIf: ctrl.expensePolicy && ctrl.expensePolicy.configuration.length > 0 -->
+                <div  class="">
+                    <h2>Expenses To Be Claimed</h2>
+
+                    <div class="expense-detail col-sm-12 clear-side-padding">
+                        <div class="col-sm-1 clear-left-padding">
+                            <!-- ngIf: ctrl.expenses.length > 0 -->
+                            <input type="checkbox" class="claims-btn ng-pristine ng-untouched ng-valid ng-empty"
+                                data-ng-model="ctrl.isAllExpensesSelected" name="checkAll"
+                                data-ng-click="ctrl.CheckAllExpenses()">
+                            <!-- end ngIf: ctrl.expenses.length > 0 -->
+                        </div>
+                        <div class="col-sm-3 clear-side-padding">
+                            <!-- ngIf: ctrl.expenses.length > 0 -->
+                            <button class="btn btn-info btn-md claims-btn clear-left-margin" 
+                                data-ng-click="ctrl.addExpenseFilingDetails()" >Claim in Batch</button>
+                            <!-- end ngIf: ctrl.expenses.length > 0 -->
+                        </div>
+                        <div class="col-sm-4 pull-right">
+                            <div class="add-new">
+
+                                <a style="visibility: hidden;" data-ng-click="ctrl.addMultipleExpense()">Add Multiple Expenses</a>
+                                <a href data-ng-click="addExpense()">Add an Expense</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding list-items-view vertical-margin clear-top">
+                        <!-- ngRepeat: expense in ctrl.expenses -->
+                        <!-- ngIf: ctrl.expenses.length > 0 -->
+                        <div class="expense-detail col-lg-12 col-md-12 col-sm-12 clear-side-padding row-item" 
+                          >
+                            <div class="col-sm-12 clear-side-padding">
+                                <div class="col-sm-1 clear-right-padding" data-ng-init="ctrl.setAllExpensesSelected()">
+                                    <input type="checkbox" data-ng-model="expense.selected" data-ng-click="ctrl.setAllExpensesSelected()" 
+                                        class="ng-pristine ng-untouched ng-valid ng-empty">
+                                </div>
+                                <div class="col-sm-1 clear-left-padding">
+                                    <!-- ngIf: !expense.hasReceipt -->
+                                    <span class="fa fa-file information-tooltip tooltip-grey tooltip-width"
+                                       uib-tooltip="No Receipt" tooltip-placement="right"></span>
+                                    <!-- end ngIf: !expense.hasReceipt -->
+                                    <!-- ngIf: expense.hasReceipt -->
+                                    <!-- ngIf: expense.expenseReceipts.length > 1 -->
+                                </div>
+                                <!-- ngIf: expense.title != null -->
+                                <div  class="">
+                                    <div class="col-sm-3">
+                                        <p class="clear-bottom ">Travelling</p>
+                                        <span class="gray-text display-block ">Aug 13, 2018</span>
+                                    </div>
+                                    <div class="col-sm-2 text-moderate-bold">
+                                        <span class="">INR 240.00</span>
+                                    </div>
+                                    <div class="col-sm-2 text-moderate-bold">
+                                        <span class="">Cab &amp; Travel Expenses</span>
+                                    </div>
+                                </div>
+                                <!-- end ngIf: expense.title != null -->
+                                <!-- ngIf: expense.title == null -->
+                                <div class="col-sm-1 text-moderate-bold">
+                                    <span class="">Not Filed</span>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a class="action-block text-center" uib-popover-template="'expenseOptionsTemplate'" popover-placement="left" popover-trigger="outsideClick">
+                                        <span class="icon-xhr-options-3 icon-action"></span>
+                                        <span class="display-block action-text">Options</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end ngIf: ctrl.expenses.length > 0 -->
+                        <!-- end ngRepeat: expense in ctrl.expenses -->
+                        <!-- ngIf: ctrl.expenses.length == 0 -->
+                    </div>
+
+                    <h2 class="vertical-margin col-sm-12 clear-side-padding">Claims to be Paid</h2>
+
+                    <!-- ngIf: ctrl.claims.length == 0 -->
+
+                    <!-- ngIf: ctrl.claims.length > 0 -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding list-items-view" >
+                        <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding">
+                            <div class="col-lg-10 col-md-10 col-sm-10 clear-side-padding upper-case vertical-margin">
+                                <div class="col-sm-2 col-md-2 clear-left-padding text-bold">
+                                    <span>Expense Claim</span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-bold">
+                                    <span>Amount</span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-bold">
+                                    <span>Submitted On</span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-bold">
+                                    <span>No.of Expenses</span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-bold">
+                                    <span>Status</span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-bold">
+                                    <span>Approver</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ngRepeat: claim in ctrl.claims -->
+                        <div class="row-item col-lg-12 col-md-12 col-sm-12 clear-side-padding" >
+                            <div class="col-lg-10 col-md-10 col-sm-10 clear-side-padding">
+                                <div class="col-sm-2 col-md-2 clear-left-padding">
+                                    <p class="clear-bottom ">Badmasshi</p>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-moderate-bold">
+                                    <span class="">INR 100.00</span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-moderate-bold">
+                                    <span class="">Aug 09, 2018</span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-moderate-bold">
+                                    <span class="">1
+                                        <ng-pluralize count="claim.totalExpenses" when="{'1': 'Expense', other: 'Expenses'}">Expense</ng-pluralize>
+                                    </span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-moderate-bold">
+                                    <p class="">Approved</p>
+                                    <!-- ngIf: claim.status == ctrl.expenseClaimStatus.Approved.id -->
+                                    <span class="gray-text display-block" >
+                                        Pay on
+                                        <!-- ngIf: claim.paymentMode == ctrl.expenseClaimPaymentMode.PaidWithPayroll.id -->
+                                        <span 
+                                            class="">Aug 31, 2018</span>
+                                        <!-- end ngIf: claim.paymentMode == ctrl.expenseClaimPaymentMode.PaidWithPayroll.id -->
+                                        <!-- ngIf: claim.paymentMode == ctrl.expenseClaimPaymentMode.PaidOutsidePayroll.id -->
+                                    </span>
+                                    <!-- end ngIf: claim.status == ctrl.expenseClaimStatus.Approved.id -->
+
+                                    <!-- ngIf: claim.status == ctrl.expenseClaimStatus.Rejected.id -->
+                                </div>
+                                <!-- ngIf: claim.status == ctrl.expenseClaimStatus.Rejected.id || claim.status == ctrl.expenseClaimStatus.Approved.id -->
+                                <div class="col-sm-2 col-md-2 text-moderate-bold" >
+                                    <span class="">Deepak Jain</span>
+                                </div>
+                                <!-- end ngIf: claim.status == ctrl.expenseClaimStatus.Rejected.id || claim.status == ctrl.expenseClaimStatus.Approved.id -->
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="action-block text-center" uib-popover-template="'claimsOptionsTemplate'" popover-placement="left" popover-trigger="outsideClick">
+                                    <span class="icon-xhr-options-3 icon-action"></span>
+                                    <span class="display-block action-text">Options</span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- end ngRepeat: claim in ctrl.claims -->
+                        <div class="row-item col-lg-12 col-md-12 col-sm-12 clear-side-padding" >
+                            <div class="col-lg-10 col-md-10 col-sm-10 clear-side-padding">
+                                <div class="col-sm-2 col-md-2 clear-left-padding">
+                                    <p class="clear-bottom ">Food</p>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-moderate-bold">
+                                    <span class="">INR 500.00</span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-moderate-bold">
+                                    <span class="">Aug 10, 2018</span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-moderate-bold">
+                                    <span class="">1
+                                        <ng-pluralize count="claim.totalExpenses" when="{'1': 'Expense', other: 'Expenses'}">Expense</ng-pluralize>
+                                    </span>
+                                </div>
+                                <div class="col-sm-2 col-md-2 text-moderate-bold">
+                                    <p class="">Approved</p>
+                                    <!-- ngIf: claim.status == ctrl.expenseClaimStatus.Approved.id -->
+                                    <span class="gray-text display-block" >
+                                        Pay on
+                                        <!-- ngIf: claim.paymentMode == ctrl.expenseClaimPaymentMode.PaidWithPayroll.id -->
+                                        <span 
+                                            class="">Sep 30, 2018</span>
+                                        <!-- end ngIf: claim.paymentMode == ctrl.expenseClaimPaymentMode.PaidWithPayroll.id -->
+                                        <!-- ngIf: claim.paymentMode == ctrl.expenseClaimPaymentMode.PaidOutsidePayroll.id -->
+                                    </span>
+                                    <!-- end ngIf: claim.status == ctrl.expenseClaimStatus.Approved.id -->
+
+                                    <!-- ngIf: claim.status == ctrl.expenseClaimStatus.Rejected.id -->
+                                </div>
+                                <!-- ngIf: claim.status == ctrl.expenseClaimStatus.Rejected.id || claim.status == ctrl.expenseClaimStatus.Approved.id -->
+                                <div class="col-sm-2 col-md-2 text-moderate-bold" >
+                                    <span class="">Deepak Jain</span>
+                                </div>
+                                <!-- end ngIf: claim.status == ctrl.expenseClaimStatus.Rejected.id || claim.status == ctrl.expenseClaimStatus.Approved.id -->
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="action-block text-center" uib-popover-template="'claimsOptionsTemplate'" popover-placement="left" popover-trigger="outsideClick">
+                                    <span class="icon-xhr-options-3 icon-action"></span>
+                                    <span class="display-block action-text">Options</span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- end ngRepeat: claim in ctrl.claims -->
+                    </div>
+                    <!-- end ngIf: ctrl.claims.length > 0 -->
+                </div>
+                <!-- end ngIf: ctrl.expensePolicy && ctrl.expensePolicy.configuration.length > 0 -->
+            </div>
+        </div>
+    </div>
+</div>

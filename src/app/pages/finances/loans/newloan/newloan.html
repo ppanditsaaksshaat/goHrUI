@@ -1,0 +1,145 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary title-bar">
+        <div class="col-lg-12">
+            <p class="text-center">New Loan</p>
+            <span data-ng-click="$dismiss();" class="pull-right">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal clearfix ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" name="loanRequestForm"
+            id="loanRequestForm" novalidate="novalidate" ng-init="ctrl.form = this;">
+            <div class="col-sm-12 clear-side-padding">
+                <div class="col-sm-6 clear-right-padding">
+                    <div class="form-group">
+                        <label>
+                            Loan Amount
+                            <span data-validation-messages="" class="inline-block horizontal-margin-sm text-moderate-bold capitalize ng-isolate-scope"
+                                data-model-controller="loanRequestForm.loanAmount" data-required-error="Loan Amount is required"
+                                data-min-error="Minimum number should be 1." data-pattern-error="Please enter valid amount."
+                                data-form-submit="loanRequestForm.$submitted">
+                                <div>
+                                    <!-- ngRepeat: message in errorMessages -->
+                                    <small class="error   ng-hide" ng-repeat="message in errorMessages"
+                                        ng-show="(!modelController.$pristine &amp;&amp; $first) || formSubmit">Loan Amount is required</small>
+                                    <!-- end ngRepeat: message in errorMessages -->
+                                </div>
+                            </span>
+                        </label>
+                        <input type="text" name="loanAmount" id="loanAmount" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched"
+                            data-ng-min="1" data-ng-pattern="/^\d+$/" data-ng-model="ctrl.model.loanAmount" required="">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Expected on
+                            <!-- ngIf: !ctrl.model.loanReleasedOn || ctrl.isChangeExpectedOn -->
+                            <span data-validation-messages="" 
+                                class="inline-block horizontal-margin-sm text-moderate-bold capitalize  ng-isolate-scope"
+                                data-model-controller="loanRequestForm.loanReleasedOn" data-required-error="Expected date is required"
+                                data-form-submit="loanRequestForm.$submitted">
+                                <div>
+                                    <!-- ngRepeat: message in errorMessages -->
+                                </div>
+                            </span>
+                            <!-- end ngIf: !ctrl.model.loanReleasedOn || ctrl.isChangeExpectedOn -->
+                        </label>
+                        <div class="col-sm-12 clear-side-padding">
+                            <div class="clear-side-padding col-sm-12" data-ng-class="{'col-sm-12' : !ctrl.isChangeExpectedOn, 'col-sm-10 ': ctrl.isChangeExpectedOn}">
+                                <!-- ngIf: ctrl.model.loanReleasedOn && !ctrl.isChangeExpectedOn -->
+                                <!-- ngIf: !ctrl.model.loanReleasedOn || ctrl.isChangeExpectedOn -->
+                                <div  class="">
+                                    <select class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" name="expectedDate" data-ng-options="month.to as  month.toSummary() for month in ctrl.payCycleMonthList"
+                                        data-ng-model="ctrl.loanReleasedOn" required="">
+                                        <option value="" class="" selected="selected">Select</option>
+                                        <option label="JUL-2018" value="object:1014">JUL-2018</option>
+                                        <option label="AUG-2018" value="object:1015">AUG-2018</option>
+                                        <option label="SEP-2018" value="object:1016">SEP-2018</option>
+                                        <option label="OCT-2018" value="object:1017">OCT-2018</option>
+                                    </select>
+                                </div>
+                                <!-- end ngIf: !ctrl.model.loanReleasedOn || ctrl.isChangeExpectedOn -->
+                            </div>
+                            <!-- ngIf: ctrl.isChangeExpectedOn -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            EMI Starts From
+                            <!-- ngIf: !ctrl.model.emiDeductsFrom || ctrl.isChangeEmiStartsFrom -->
+                            <span data-validation-messages="" 
+                                class="inline-block horizontal-margin-sm text-moderate-bold capitalize  ng-isolate-scope"
+                                data-model-controller="loanRequestForm.emiDeductsFrom" data-required-error="EMI Start date is required"
+                                data-form-submit="loanRequestForm.$submitted">
+                                <div>
+                                    <!-- ngRepeat: message in errorMessages -->
+                                </div>
+                            </span>
+                            <!-- end ngIf: !ctrl.model.emiDeductsFrom || ctrl.isChangeEmiStartsFrom -->
+                        </label>
+                        <div class="col-sm-12 clear-side-padding">
+                            <div class="clear-side-padding col-sm-12" data-ng-class="{'col-sm-12' : !ctrl.isChangeEmiStartsFrom, 'col-sm-10 ': ctrl.isChangeEmiStartsFrom}">
+                                <!-- ngIf: ctrl.model.emiDeductsFrom && !ctrl.isChangeEmiStartsFrom -->
+                                <!-- ngIf: !ctrl.model.emiDeductsFrom || ctrl.isChangeEmiStartsFrom -->
+                                <div  class="">
+                                    <select class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" name="emiStartDate" data-ng-options="month.to as  month.toSummary() for month in ctrl.payCycleMonthList"
+                                        data-ng-model="ctrl.emiDeductsFrom" required="">
+                                        <option value="" class="" selected="selected">Select</option>
+                                        <option label="JUL-2018" value="object:1014">JUL-2018</option>
+                                        <option label="AUG-2018" value="object:1015">AUG-2018</option>
+                                        <option label="SEP-2018" value="object:1016">SEP-2018</option>
+                                        <option label="OCT-2018" value="object:1017">OCT-2018</option>
+                                    </select>
+                                </div>
+                                <!-- end ngIf: !ctrl.model.emiDeductsFrom || ctrl.isChangeEmiStartsFrom -->
+                            </div>
+                            <!-- ngIf: ctrl.isChangeEmiStartsFrom -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Repayment Term (Months)
+                            <span data-validation-messages="" class="inline-block horizontal-margin-sm text-moderate-bold capitalize ng-isolate-scope"
+                                data-model-controller="loanRequestForm.repaymentTerm" data-required-error="Repayment Term is required"
+                                data-min-error="Minimum number should be 1. " data-pattern-error="Please enter valid number."
+                                data-form-submit="loanRequestForm.$submitted">
+                                <div>
+                                    <!-- ngRepeat: message in errorMessages -->
+                                    <small class="error   ng-hide" ng-repeat="message in errorMessages"
+                                        ng-show="(!modelController.$pristine &amp;&amp; $first) || formSubmit">Repayment Term is required</small>
+                                    <!-- end ngRepeat: message in errorMessages -->
+                                </div>
+                            </span>
+                        </label>
+                        <input type="text" name="repaymentTerm" id="repaymentTerm" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-pattern"
+                            data-ng-min="1" data-ng-pattern="/^\d+$/" data-ng-model="ctrl.model.repaymentTerm" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-heading" for="comment">Comment</label>
+                        <textarea class="form-control no-resize ng-pristine ng-untouched ng-valid ng-empty" rows="4" name="comment" data-ng-model="ctrl.model.notes"
+                            placeholder="Please provide the comment for applying loan"></textarea>
+                        <div data-validation-messages="" class="inline-block ng-isolate-scope" data-model-controller="loanRequestForm.comment" data-required-error="Comment is required. "
+                            data-form-submit="loanRequestForm.$submitted">
+                            <div>
+                                <!-- ngRepeat: message in errorMessages -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ngIf: ctrl.loanRestrictions && ctrl.loanRestrictions.length > 0 -->
+            </div>
+            <div class="form-group col-sm-9 col-md-8 text-right clear-side-padding">
+                <button class="btn btn-submit" data-ng-click="!ctrl.requestInProgress &amp;&amp; ctrl.submitLoanRequest();" type="submit">
+                    <!-- ngIf: ctrl.model.id -->
+                    <!-- ngIf: !ctrl.model.id -->
+                    <span  class="">Request</span>
+                    <!-- end ngIf: !ctrl.model.id -->
+                    Loan
+                </button>
+                <button class="btn btn-cancel" data-ng-click="$dismiss('true')" type="submit">
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
