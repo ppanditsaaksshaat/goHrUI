@@ -5,10 +5,8 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.finances.summary', [
-        //    'BlurAdmin.pages.me.about',
-        // 'BlurAdmin.pages.me.documents',
-        // 'BlurAdmin.pages.me.job'
+    angular.module('BlurAdmin.pages.finances.prefrences', [
+
     ])
 
         .config(routeConfig);
@@ -17,10 +15,10 @@
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('finances.summary', {
-                url: '/summary',
-                templateUrl: 'app/pages/finances/summary/summary.html',
-                title: 'Summary',
+            .state('finances.prefrences', {
+                url: '/prefrences',
+                templateUrl: 'app/pages/finances/prefrences/prefrences.html',
+                title: 'Prefrences',
                 controller: "",
                 controllerAs: "",
                 sidebarMeta: {
@@ -28,6 +26,5 @@
                     order: 1,
                 },
             })
-        $urlRouterProvider.when('/finances', '/finances/summary');
     }
 })();
