@@ -22,6 +22,8 @@
         $scope.addPFDetail = _addPFDetail;
         $scope.addESIDetail = _addESIDetail;
 
+        $scope.editSignatoryDetail = _editSignatoryDetail;
+
         var companyPageId = 347;
         var companyTableId = 343;
 
@@ -34,7 +36,17 @@
         var esiPageId = 499;
         var esiTableId = 502;
 
+        var bankTableId = 494;
+        var bankPageId = 494;
+
+        var signatoryTableId = 499;
+        var signatoryPageId = 496;
+
         $scope.companyList.push({ name: 'Saaksshaat Infotech' });
+
+        $rootScope.$on("CallParentMethod", function () {
+            _loadController()
+        });
 
         function _loadController() {
             // pageService.getPagData(347).then(_getPageSuccessResult, _getPageErrorResult)
@@ -55,6 +67,12 @@
                 .then(_getTableDataSuccessResult, _getTableDataErrorResult)
 
             pageService.getTableData(esiTableId, esiPageId, '', '', false, data)
+                .then(_getTableDataSuccessResult, _getTableDataErrorResult)
+
+            pageService.getTableData(signatoryTableId, signatoryPageId, '', '', false, data)
+                .then(_getTableDataSuccessResult, _getTableDataErrorResult)
+
+            pageService.getTableData(bankTableId, bankPageId, '', '', false, data)
                 .then(_getTableDataSuccessResult, _getTableDataErrorResult)
         }
 
@@ -79,13 +97,23 @@
                 if (result[0].ESIId != undefined) {
                     entity.esiDetail = result[0];
                     // $scope.oldEntity.esiDetail = result[0];
+                }
 
+                if (result[0].ASDId != undefined) {
+                    $scope.employeeList = result;
+                    // $scope.oldEntity.esiDetail = result[0];
+                    console.log($scope.employeeList)
+                }
+
+                if (result[0].BADId != undefined) {
+                    $scope.bankList = result;
                 }
                 oldEntity = angular.copy(entity);
 
                 $scope.entity = entity;
                 $scope.oldEntity = oldEntity;
             }
+
         }
 
         function _getTableDataErrorResult(err) {
@@ -161,7 +189,7 @@
         function _saveFormSuccess(result) {
             console.log(result)
             if (result.success_message == "Added New Record.") {
-                $rootScope.showMsg("success", "Record Save SuccessFully");
+                $rootScope.showMsg("success", "Record Save Successfully");
             }
             else {
                 if (result.success_message == "Record Updated.") {
@@ -174,6 +202,10 @@
 
         function _saveFormError(err) {
             alert('error')
+        }
+
+        function _editSignatoryDetail() {
+            console.log('emp upload')
         }
 
         _loadController();
