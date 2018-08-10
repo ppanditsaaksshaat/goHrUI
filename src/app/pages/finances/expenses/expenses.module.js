@@ -6,7 +6,8 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.finances.expenses', [
-
+        'BlurAdmin.pages.finances.expenses.claimexpenses',
+        'BlurAdmin.pages.finances.expenses.claims'
     ])
 
         .config(routeConfig);

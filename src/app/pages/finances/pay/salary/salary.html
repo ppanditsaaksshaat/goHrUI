@@ -1,0 +1,286 @@
+<div class="col-lg-12 clear-side-padding my-finance-container">
+    <div class="panel">
+        <div class="panel-body">
+            <div id="pay-timeline-container" class="col-sm-12 content-container ">
+                <!-- ngIf: !ctrl.payTimeLine.isSalaryAdded -->
+                <!-- ngIf: ctrl.payTimeLine.isSalaryAdded -->
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 salary-hierarchy-container">
+                        <div class="col-sm-8 col-sm-offset-1 clear-side-padding">
+                            <div class="col-sm-6 clear-side-padding">
+
+                            </div>
+                            <!-- ngIf: ('employee.finances.summary' | isState ) || ('employee.finances.pay.salary' | isState ) ||('employee.paytimeline' | isState ) -->
+                        </div>
+                        <!-- ngRepeat: summary in ctrl.payTimeLine.salaries -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding ">
+                            <div class="col-lg-1 col-md-1 col-sm-1 step-container">
+                                <div class="step active" data-ng-class="{'active': summary.isCurrent}">
+                                    <span class="ng-binding">Current</span>
+                                </div>
+                            </div>
+                            <!-- ngIf: !$last -->
+                            <div class="col-lg-8 col-md-10 col-sm-10 clear-side-padding">
+                                <div class="col-sm-12 salary-table clear-side-padding">
+                                    <div class="col-sm-12 table-header tool-tip-arrow" data-ng-click="summary.showSummary = !summary.showSummary">
+                                        <div>
+                                            <div class="metric-container right-margin sum">
+                                                <label class="clear-vertical-margin">ANNUAL</label>
+                                                <p class="clear-vertical-margin amount ng-binding">2,00,000</p>
+                                            </div>
+                                            <div class="metric-container left-margin right-margin sum" data-ng-class="(summary.totalOutsideAmount > 0 || summary.totalPerksAmount > 0) ? 'sum' : 'total'">
+                                                <label class="clear-vertical-margin">BONUS</label>
+                                                <p class="clear-vertical-margin amount ng-binding">10,000</p>
+                                            </div>
+                                            <!-- ngIf: summary.totalOutsideAmount > 0 -->
+                                            <!-- ngIf: summary.totalPerksAmount > 0 -->
+                                            <div class="metric-container left-margin right-margin total " >
+                                                <label class="clear-vertical-margin">Perks</label>
+                                                <p class="clear-vertical-margin amount ng-binding">2,000</p>
+                                            </div>
+                                            <!-- end ngIf: summary.totalPerksAmount > 0 -->
+                                            <div class="metric-container left-margin">
+                                                <label class="clear-vertical-margin">TOTAL</label>
+                                                <p class="clear-vertical-margin amount ng-binding">2,12,000</p>
+                                            </div>
+
+                                            <a class="header-collpase-icon pull-right fa fa-angle-up" data-ng-class="summary.showSummary ? 'fa fa-angle-up' : 'fa fa-angle-down'"></a>
+                                            <!-- ngIf: (('employee.finances.pay.salary' | isState ) ||('employee.finances.summary' | isState ) ||('employee.paytimeline' | isState )) && summary.isModifiable -->
+                                            <!-- ngIf: (('employee.finances.pay.salary' | isState ) || ('employee.finances.summary' | isState ) ||('employee.paytimeline' | isState )) && summary.isModifiable -->
+                                        </div>
+                                    </div>
+                                    <div  class="col-lg-12 col-md-12 col-sm-12 table-content clear-side-padding">
+                                        <div class="col-sm-12 clear-side-padding">
+                                            <div class="summary-heading">
+
+                                                <span>REGULAR SALARY :</span>
+                                                <span class="heading ng-binding"> &nbsp;2,00,000.00</span>
+                                                <!-- ngIf: ctrl.payTimeLine.hasPayrollFeature -->
+                                                <a href data-ng-click="ctrl.openSalaryStructure(summary)"
+                                                    class="">SALARY BREAKUP</a>
+                                                <!-- end ngIf: ctrl.payTimeLine.hasPayrollFeature -->
+                                            </div>
+                                            <div class="salary-summary">
+                                                <div class="summary-details">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 vertical-margin clear-left-padding">
+                                                        <div class="col-sm-3 sub-heading">SALARY / MONTH </div>
+                                                        <div class="col-sm-3 sub-heading">EFFECTIVE</div>
+                                                        <div class="col-sm-3 sub-heading">NOTE</div>
+                                                    </div>
+
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 clear-left-padding">
+                                                        <!-- ngIf: ctrl.payTimeLine.hasPayrollFeature -->
+                                                        <div class="col-sm-3 " >
+                                                            <p class="ng-binding">Rs.&nbsp;16,666.67</p>
+                                                        </div>
+                                                        <!-- end ngIf: ctrl.payTimeLine.hasPayrollFeature -->
+                                                        <!-- ngIf: !ctrl.payTimeLine.hasPayrollFeature -->
+                                                        <div class="col-sm-3">
+                                                            <p class="ng-binding">01-Apr 2018</p>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <p class="ng-binding">Reviewed by </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- ngIf: ctrl.payTimeLine.hasPayrollFeature && summary.benefitItems.length > 0 -->
+                                            </div>
+                                        </div>
+                                        <!-- ngIf: summary.totalExtrasAmount > 0 -->
+                                        <div class="col-sm-12 clear-side-padding " >
+                                            <div class="summary-heading">
+
+                                                <span>BONUS :</span>
+                                                <span class="heading ng-binding"> &nbsp;10,000.00</span>
+                                                <!-- ngIf: (('employee.finances.summary' | isState ) || ('employee.finances.pay.salary' | isState ) ||('employee.paytimeline' | isState )) && ctrl.payTimeLine.hasPayrollFeature -->
+                                            </div>
+                                            <div class="salary-summary">
+                                                <!-- ngRepeat: item in summary.extras -->
+                                                <div class="col-lg-12 clear-side-padding summary-details " data-ng-class="{ 'border-bottom' : !$last }">
+                                                    <!-- ngIf: item.isSalaryComponent -->
+                                                    <!-- ngIf: item.isSalaryComponent -->
+                                                    <!-- ngIf: !item.isSalaryComponent -->
+                                                    <div class="col-sm-12 vertical-margin clear-left-padding " >
+                                                        <div class="col-sm-2 sub-heading upper-case clear-right-padding ng-binding"> Performance Bonus </div>
+                                                        <div class="col-sm-2 sub-heading"> DUE ON </div>
+                                                        <div class="col-sm-2 sub-heading"> STATUS </div>
+                                                        <div class="col-sm-2 sub-heading">NOTES</div>
+                                                        <!-- ngIf: item.partiallyPaidTransactions && item.partiallyPaidTransactions.length > 0 -->
+
+                                                        <!-- ngIf: (('employee.finances.pay.salary' | isState ) || ('employee.finances.summary' | isState ) || ('employee.paytimeline' | isState )) -->
+                                                    </div>
+                                                    <!-- end ngIf: !item.isSalaryComponent -->
+                                                    <!-- ngIf: !item.isSalaryComponent -->
+                                                    <div class="col-sm-12 clear-left-padding " >
+                                                        <div class="col-sm-2 clear-right-padding">
+                                                            <div>
+                                                                <span class="display-inline ng-binding">Rs.&nbsp;10,000.00</span>
+                                                                <!-- ngIf: ctrl.payTimeLine.hasPayrollFeature && (('employee.finances.pay.salary' | isState ) || ('employee.finances.summary' | isState )) && (item.status == ctrl.paymentStatus.PartiallyPaid.title || item.status == ctrl.paymentStatus.PaidOutsideKekaPayroll.title || item.status == ctrl.paymentStatus.Pending.title) -->
+                                                            </div>
+                                                            <!-- ngIf: ctrl.payTimeLine.hasPayrollFeature && item.doesNotAffectInSalary -->
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <p class="ng-binding">30-Apr 2018</p>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <p class="ng-binding">Paid</p>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <p class="ng-binding">
+
+
+                                                            </p>
+                                                        </div>
+                                                        <!-- ngIf: item.partiallyPaidTransactions && item.partiallyPaidTransactions.length > 0 -->
+
+                                                        <!-- ngIf: (('employee.finances.pay.salary' | isState ) || ('employee.finances.summary' | isState ) || ('employee.paytimeline' | isState )) -->
+                                                    </div>
+                                                    <!-- end ngIf: !item.isSalaryComponent -->
+                                                </div>
+                                                <!-- end ngRepeat: item in summary.extras -->
+                                            </div>
+                                        </div>
+                                        <!-- end ngIf: summary.totalExtrasAmount > 0 -->
+                                        <!-- ngIf: ctrl.payTimeLine.hasPayrollFeature && summary.outsideItems.length > 0 -->
+                                        <!-- ngIf: ctrl.payTimeLine.hasPayrollFeature && summary.perks.length > 0 -->
+                                        <div class="col-sm-12 clear-side-padding " >
+                                            <div class="summary-heading">
+                                                <span>PERKS :</span>
+                                                <span class="heading ng-binding"> &nbsp;2,000.00</span>
+                                            </div>
+
+                                            <div class="salary-summary">
+                                                <!-- ngRepeat: item in summary.perks -->
+                                                <div class="col-lg-3 summary-details vertical-margin ">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 clear-left-padding sub-heading upper-case">
+                                                        <p class="ng-binding">Health Insurance</p>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 clear-left-padding">
+                                                        <p class="ng-binding">Rs.&nbsp;2,000.00</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end ngRepeat: item in summary.perks -->
+                                            </div>
+                                        </div>
+                                        <!-- end ngIf: ctrl.payTimeLine.hasPayrollFeature && summary.perks.length > 0 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end ngRepeat: summary in ctrl.payTimeLine.salaries -->
+                    </div>
+
+                    <script type="text/ng-template" id="salary-break-down">
+                <div class="col-sm-12 clear-side-padding add-salary-details-container content-container">
+                    <div class="modal-header">
+                        <h3>SALARY BREAKUP</h3>
+                    </div>
+                    <div class="col-sm-12 salary-structure-container">
+                        <div class="col-sm-12 clear-side-padding">
+                            <table class="xhr-simple-table col-sm-12">
+                                <thead>
+                                    <tr>
+                                        <th class="col-sm-6">Details</th>
+                                        <th class="col-sm-3">Monthly</th>
+                                        <th class="col-sm-3">Annually</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr >
+                                        <td>{{item.componentTitle}}</td>
+                                        <td>{{item.monthlyAmount | currency}}</td>
+                                        <td>{{item.amount | currency}}</td>
+                                    </tr>
+                                    <tr class="border-top text-moderate-bold" >
+                                        <td>SUB TOTAL</td>
+                                        <td>{{vm.salaryTimeLine.totalBreakupAmount / 12 | currency}}</td>
+                                        <td>{{vm.salaryTimeLine.totalBreakupAmount | currency}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{item.componentTitle}}</td>
+                                        <td>{{item.monthlyAmount | currency}}</td>
+                                        <td>{{item.amount | currency}}</td>
+                                    </tr>
+                                    <tr class="text-moderate-bold">
+                                        <td>TOTAL</td>
+                                        <td>{{vm.salaryTimeLine.grossAmount/12 | currency}}</td>
+                                        <td>{{vm.salaryTimeLine.grossAmount | currency}}</td>
+                                    </tr>
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+            
+                        <div class="col-sm-12 vertical-margin clear-side-padding">
+                            <table class="xhr-simple-table vertical-margin col-sm-12" >
+                                <thead>
+                                    <tr>
+                                        <th class="col-sm-6">DEDUCTIONS</th>
+                                        <th class="col-sm-3">MONTHLY</th>
+                                        <th class="col-sm-3">ANNUALLY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr >
+                                        <td>{{item.componentTitle}}</td>
+                                        <td>{{item.monthlyAmount | currency}}</td>
+                                        <td>{{item.amount | currency}}</td>
+                                    </tr>
+                                    <tr class="text-moderate-bold">
+                                        <td>NET PAY</td>
+                                        <td>{{vm.salaryTimeLine.netPayAmount  / 12 | currency}}</td>
+                                        <td>{{vm.salaryTimeLine.netPayAmount | currency}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <p >Note : Net Pay displayed does not include Income Tax, Professional Tax or Other deductions (if any).</p>
+                    </div>
+                    <div class="col-sm-12 vertical-top-margin">
+                        <input type="button" data-ng-click="closeStructure()" class="btn btn-submit pull-right" value="Close">
+                    </div>
+                </div>
+            </script>
+
+                    <script id="partiallyBonusTransactions" type="text/ng-template">
+                <div class="col-sm-12 clear-side-padding">
+                    <table class="transparent-table small-header vertical-margin">
+                        <thead>
+                            <tr class="specular-row">
+                                <th class="col-sm-2">Bonus</th>
+                                <th class="col-sm-2">Amount</th>
+                                <th>Status</th>
+                                <th>Transaction On</th>
+                                <th class="col-sm-2">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>
+                                    {{item.type}}
+                                </td>
+                                <td>{{trans.amount}}</td>
+                                <td>{{trans.status}}</td>
+                                <td>{{trans.transactionOn | date : 'dd-MMM yyyy'}}</td>
+                                <td>{{trans.balanceAmount()}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>{{item.totalPaidAmount()}}</td>
+                                <td colspan="3"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </script>
+                </div>
+                <!-- end ngIf: ctrl.payTimeLine.isSalaryAdded -->
+            </div>
+        </div>
+    </div>
+</div>
