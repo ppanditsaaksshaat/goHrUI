@@ -217,15 +217,18 @@
                                                             <div class="row">
                                                                 <div class="col-sm-3">
                                                                     <label>Country</label>
-                                                                    <input type="text" data-ng-model="" class="form-control" />
+                                                                    <select class="form-control" data- ng-model="entity.company.CountryId" ng-options="location.value as location.name for location in pageInfo.selects.CountryId"></select>
+                                                                    <!-- <input type="text" data-ng-model="" class="form-control" /> -->
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <label>State</label>
-                                                                    <input type="text" data-ng-model="" class="form-control" />
+                                                                    <select class="form-control" data- ng-model="entity.company.StateId" ng-options="location.value as location.name for location in pageInfo.selects.StateId"></select>
+                                                                    <!-- <input type="text" data-ng-model="" class="form-control" /> -->
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <label>City</label>
-                                                                    <input type="text" data-ng-model="entity.company.CCOCityId" class="form-control" />
+                                                                    <select class="form-control" data- ng-model="entity.company.CCOCityId" ng-options="location.value as location.name for location in pageInfo.selects.CCOCityId"></select>
+                                                                    <!-- <input type="text" data-ng-model="entity.company.CCOCityId" class="form-control" /> -->
                                                                 </div>
                                                                 <div class="col-sm-4">
                                                                     <label>PinCode</label>

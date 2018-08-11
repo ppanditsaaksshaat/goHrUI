@@ -9,7 +9,7 @@
         .controller('legalController', legalController);
 
     /** @ngInject */
-    function legalController($scope, dialogModal, editFormService, pageService, $state, $rootScope) {
+    function legalController($scope, dialogModal, editFormService, pageService, $state, $rootScope, $uibModal) {
         //    console.log($state)
         var vm = this;
 
@@ -41,6 +41,8 @@
 
         var signatoryTableId = 499;
         var signatoryPageId = 496;
+
+
 
         $scope.companyList.push({ name: 'Saaksshaat Infotech' });
 
@@ -74,6 +76,8 @@
 
             pageService.getTableData(bankTableId, bankPageId, '', '', false, data)
                 .then(_getTableDataSuccessResult, _getTableDataErrorResult)
+
+            pageService.getPagData(companyPageId).then(_getPageSuccessResult, _getPageErrorResult)
         }
 
         function _getTableDataSuccessResult(result) {
@@ -113,10 +117,22 @@
                 $scope.entity = entity;
                 $scope.oldEntity = oldEntity;
             }
+            // entity.company.CountryId = 1
+            // $scope.entity = entity;
 
         }
 
         function _getTableDataErrorResult(err) {
+            console.log(err)
+        }
+
+        function _getPageSuccessResult(result) {
+            console.log(result)
+            $scope.pageInfo = result.pageinfo;
+
+        }
+
+        function _getPageErrorResult(err) {
             console.log(err)
         }
 
@@ -131,7 +147,7 @@
             console.log('add signature')
             $scope.modalInstance = dialogModal.open({
                 url: 'app/pages/configuration/company/legal/edit-signatory.html',
-                size: 'top-center-600'
+                size: 'top-center-600',
             })
         }
 
@@ -204,8 +220,31 @@
             alert('error')
         }
 
-        function _editSignatoryDetail() {
+        function _editSignatoryDetail(row) {
+            console.log(row)
             console.log('emp upload')
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/pages/configuration/company/legal/edit-signatory.html',
+                size: 'top-center-600',
+                resolve: {
+                    parameter: function () {
+                        return row
+                    }
+                }
+            });
+            return modalInstance;
+            // modalInstance.result.then(function () {
+            // }, function () {
+            // });
+            // $scope.modalInstance = dialogModal.open({
+            //     url: 'app/pages/configuration/company/legal/edit-signatory.html',
+            //     size: 'top-center-600',
+            //     resolve: {
+            //         param: function () {
+            //             return row;
+            //         }
+            //     }
+            // })
         }
 
         _loadController();
