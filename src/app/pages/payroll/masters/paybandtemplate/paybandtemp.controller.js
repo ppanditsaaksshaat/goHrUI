@@ -2048,8 +2048,12 @@
                 for (var r = 0; r < $scope.payTempGridOptions.data.length; r++) {
                     var row = $scope.payTempGridOptions.data[r];
                     var ruleEntity = {};
-
-                    ruleEntity.PBTRId = row.PBTRId;
+                    if ($scope.action == "create") {
+                        ruleEntity.PBTRId = 0;
+                    }
+                    else {
+                        ruleEntity.PBTRId = row.PBTRId;
+                    }
                     ruleEntity.PBTRSHId = row.PBTRSHId;
                     if (ruleEntity.PBTRPBTId == undefined) {
                         ruleEntity.PBTRPBTId = 0;
@@ -2090,7 +2094,12 @@
                                         var ent = row.subGridOptions.data[c];
 
                                         var formulaEntity = {};
-                                        formulaEntity.PFTDId = ent.PFTDId;
+                                        if ($scope.action == "create") {
+                                            formulaEntity.PFTDId = 0;
+                                        }
+                                        else {
+                                            formulaEntity.PFTDId = ent.PFTDId;
+                                        }
                                         formulaEntity.PFTDPBRId = ent.PFTDPBTRId;
 
                                         //converting selected head to comas delimated string
@@ -2127,7 +2136,12 @@
                                         var ent = row.subGridOptions.data[c];
                                         if (ent.PBTSPercentage) {
                                             var slabEntity = {};
-                                            slabEntity.PBTSId = ent.PBTSId;
+                                            if ($scope.action == "create") {
+                                                slabEntity.PBTSId = 0;
+                                            }
+                                            else {
+                                                slabEntity.PBTSId = ent.PBTSId;
+                                            }
                                             slabEntity.PBTSPBRId = ent.PBTSPBRId;
                                             slabEntity.PBTSIsCalcOnPercentage = ent.PBTSIsCalcOnPercentage;
                                             slabEntity.PBTSMinCalcOnAmount = ent.PBTSMinCalcOnAmount;
@@ -2153,7 +2167,7 @@
                 }
 
                 $scope.multiEntity.child.push(child1)
-
+                console.log($scope.multiEntity)
                 var postData = JSON.stringify($scope.multiEntity);
                 var compressed = LZString.compressToEncodedURIComponent(postData);
 
