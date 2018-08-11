@@ -46,7 +46,7 @@
           views: {
             'modal@': {
               templateUrl: 'app/pages/configuration/company/designation/edit-designation.html',
-              controller: 'designationEditController'
+              controller: 'desinationEditController'
             }
           },
           title: 'Edit unit',
@@ -68,7 +68,7 @@
           views: {
             'modal@': {
               templateUrl: 'app/pages/configuration/company/designation/edit-designation.html',
-              controller: 'designationEditController'
+              controller: 'desinationEditController'
             }
           },
           title: 'Edit Location',

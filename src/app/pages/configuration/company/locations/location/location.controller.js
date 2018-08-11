@@ -41,6 +41,9 @@
             showDataOnLoad: true,
             // currentState: 'configuration.company.locations.location'
         }
+        $rootScope.$on("CallParentMethod", function () {
+            $scope.page.refreshData()
+        });
 
         function editRecord(row) {
 

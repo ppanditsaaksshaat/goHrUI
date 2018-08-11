@@ -16,7 +16,10 @@
         $scope.addLocation = addRecord;
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
-        $scope.page.pageId = 110;
+        $scope.page.pageId = 111;
+        $rootScope.$on("CallParentMethod", function () {
+            $scope.page.refreshData()
+        });
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
@@ -46,7 +49,7 @@
 
             $state.go('configuration.company.locations.unit.edit', {
                 param: {
-                    id: row.entity.LocationId,
+                    id: row.entity.SUId,
                     pageid: $scope.page.pageId,
                     entity: row.entity,
                     selects: $scope.page.pageinfo.selects

@@ -1,3 +1,4 @@
+
 /**
  * @author deepak.jain
  * created on 28.07.2018
@@ -17,6 +18,11 @@
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
         $scope.page.pageId = 30;
+        
+        $rootScope.$on("CallParentMethod", function () {
+            $scope.page.refreshData()
+        });
+
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
@@ -44,9 +50,9 @@
 
         function editRecord(row) {
 
-            $state.go('configuration.company.locations.designation.edit', {
+            $state.go('configuration.company.designation.edit', {
                 param: {
-                    id: row.entity.LocationId,
+                    id: row.entity.DesgId,
                     pageid: $scope.page.pageId,
                     entity: row.entity,
                     selects: $scope.page.pageinfo.selects
@@ -60,7 +66,7 @@
 
         function addRecord() {
             console.log('addre')
-            $state.go('configuration.company.locations.designation.add', {
+            $state.go('configuration.company.designation.add', {
                 param: {
                     id: 0,
                     pageid: $scope.page.pageId,
