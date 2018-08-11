@@ -94,15 +94,17 @@
                             <div class="col-sm-12">
                                 <div ng-repeat="bank in bankList" class="icon-list col-offset-sm-1 col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
                                     <div class="cursor">
-                                        <div class="icon-container ">
-                                            <div class="icon">
-                                                <div class="initials-icon icon-circle" random-Color>{{bank.BankName.split(' ')[0].substr(0,2)}}</div>
+                                        <div ng-click="editBankDetail(bank)" class="cursor">
+                                            <div class="icon-container ">
+                                                <div class="icon">
+                                                    <div class="initials-icon icon-circle" random-Color>{{bank.BankName.split(' ')[0].substr(0,2)}}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="detail">
-                                            <h4 class="title clear-bottom">{{bank.BankName}}</h4>
-                                            <span class="title-description clear-top">{{bank.BADBranch}}</span>
+                                            <div class="detail">
+                                                <h4 class="title clear-bottom">{{bank.BankName}}</h4>
+                                                <span class="title-description clear-top">{{bank.BADBranch}}</span>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

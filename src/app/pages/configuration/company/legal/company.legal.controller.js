@@ -23,6 +23,7 @@
         $scope.addESIDetail = _addESIDetail;
 
         $scope.editSignatoryDetail = _editSignatoryDetail;
+        $scope.editBankDetail = _editBankDetail;
 
         var companyPageId = 347;
         var companyTableId = 343;
@@ -148,13 +149,15 @@
             $scope.modalInstance = dialogModal.open({
                 url: 'app/pages/configuration/company/legal/edit-signatory.html',
                 size: 'top-center-600',
+                controller: 'signatureController',
             })
         }
 
         $scope.addBankAccount = function () {
             $scope.modalInstance = dialogModal.open({
                 url: 'app/pages/configuration/company/legal/edit-bank-account.html',
-                size: 'top-center-600'
+                size: 'top-center-600',
+                controller: 'bankAccountController',
             })
         }
 
@@ -223,30 +226,32 @@
         function _editSignatoryDetail(row) {
             console.log(row)
             console.log('emp upload')
-            var modalInstance = $uibModal.open({
-                templateUrl: 'app/pages/configuration/company/legal/edit-signatory.html',
+
+            var modal = dialogModal.open({
+                url: 'app/pages/configuration/company/legal/edit-signatory.html',
                 size: 'top-center-600',
-                resolve: {
-                    parameter: function () {
-                        return row
-                    }
-                }
+                controller: 'signatureController',
+                param: row
             });
-            return modalInstance;
-            // modalInstance.result.then(function () {
-            // }, function () {
-            // });
-            // $scope.modalInstance = dialogModal.open({
-            //     url: 'app/pages/configuration/company/legal/edit-signatory.html',
-            //     size: 'top-center-600',
-            //     resolve: {
-            //         param: function () {
-            //             return row;
-            //         }
+            // modal.result.then(function (data) {
+            //     console.log(data)
+            //     if (data == "success") {
+            //         // _loadController();
+            //         // $scope.showMsg('success', 'Address Detail Updated');
             //     }
             // })
         }
 
+        function _editBankDetail(row) {
+            console.log(row)
+            console.log('emp upload')
+            var modal = dialogModal.open({
+                url: 'app/pages/configuration/company/legal/edit-bank-account.html',
+                size: 'top-center-600',
+                controller: 'bankAccountController',
+                param: row
+            });
+        }
         _loadController();
     }
 
