@@ -6,7 +6,7 @@
                     <!-- ngIf: !vm.financialYear.includes(payrollConfig.payrollSchedule.payCycle.kekaStartsFrom) -->
                     <div class="payroll-month-nav col-sm-12 clear-side-padding">
                         <!-- ngRepeat: cycle in vm.cycles | orderBy:'lastDay'  -->
-                        <div data-ng-repeat="pay in payrollMonth">
+                        <div data-ng-repeat="pay in financialMonths">
                             <div class="month-tab-cell  cell-spacing " data-ng-click="getData(pay.id)" data-ng-class="{'active': pay.active}">
                                 <div class="month-tab" data-ng-class="pay.statusClass">
                                     <div class="month-info">
