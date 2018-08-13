@@ -2005,7 +2005,7 @@
 
 
         function _saveForm(form) {
-            if ($scope.deletedRows != undefined) {
+            if ($scope.deletedRows != undefined && $scope.action!="create") {
                 if ($scope.deletedRows.length > 0) {
                     angular.forEach($scope.deletedRows, function (data) {
                         data.IsDeleted = true;
