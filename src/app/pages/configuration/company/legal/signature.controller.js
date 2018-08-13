@@ -9,18 +9,25 @@
         .controller('signatureController', signatureController);
 
     /** @ngInject */
-    function signatureController($scope, dialogModal, editFormService, $rootScope, pageService) {
+    function signatureController($scope, dialogModal, editFormService, $rootScope, pageService, param) {
         //    console.log($state)
         var vm = this;
         // $scope.paramiter = parameter;
         // console.log($scope.paramiter,parameter)
-
+        $scope.entity = {};
         console.log(dialogModal)
-
+        console.log(param)
         $scope.saveSignatory = _saveForm;
         $scope.companyList = [];
         $scope.oldEntity = {};
         var signaturePageId = 494;
+        $scope.edit = false;
+
+        if (param != undefined) {
+            $scope.edit = true;
+            $scope.entity = param;
+            $scope.oldEntity = angular.copy($scope.entity);
+        }
 
         function _childmethod() {
             $rootScope.$emit("CallParentMethod", {});
@@ -41,12 +48,15 @@
 
         function _saveForm() {
             console.log('save record')
-            // $scope.currentForm = form;
-            // if (_validateForm(form)) {
-            editFormService.saveForm(494, $scope.entity,
-                $scope.oldEntity, 'create', 'Save')
+            // // $scope.currentForm = form;
+            // // if (_validateForm(form)) {
+            // editFormService.saveForm(494, $scope.entity,
+            //     $scope.oldEntity, 'create', 'Save')
+            //     .then(_saveFormSuccess, _saveFormError)
+            // // }
+            editFormService.saveForm(494, $scope.entity, $scope.oldEntity,
+                $scope.entity.ASDId == undefined ? "create" : "edit", 'Save', undefined, true)
                 .then(_saveFormSuccess, _saveFormError)
-            // }
         }
 
         function _validateForm(form) {
@@ -57,6 +67,11 @@
             console.log(result)
             if (result.success_message == "Added New Record.") {
                 $rootScope.showMsg("success", "Record Save Successfully");
+            }
+            else {
+                if (result.success_message == "Record Updated.") {
+                    $rootScope.showMsg("success", "Record Updated");
+                }
             }
             _childmethod();
             $scope.$close();

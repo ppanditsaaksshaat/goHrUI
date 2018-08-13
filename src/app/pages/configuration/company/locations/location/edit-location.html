@@ -1,7 +1,7 @@
 <div class="modal-content">
     <div class="modal-header bg-primary">
-        <h3 class="inline-block clear-vertical-margin" ng-if="!ctrl.edit" dotranslate>Add Location</h3>
-        <h3 class="inline-block clear-vertical-margin" ng-if="ctrl.edit" dotranslate>Edit Location</h3>
+        <h3 class="inline-block clear-vertical-margin" ng-if="!isEdit" dotranslate>Add Location</h3>
+        <h3 class="inline-block clear-vertical-margin" ng-if="isEdit" dotranslate>Edit Location</h3>
     </div>
 
     <div class="modal-body content-container">
@@ -21,8 +21,21 @@
                 <div class="col-sm-12 clear-left-padding">
                     <div class="col-sm-8">
                         <div class="form-group">
+                            <label dotranslate>Company</label>
+                            <select class="form-control" name="LocationCCOId" ng-options="opt.value as opt.name for opt in selects.LocationCCOId" ng-change="changeState()"
+                                ng-model="entity.LocationCCOId"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
                             <label dotranslate>Country</label>
-                            <select class="form-control" name="CountryId" ng-options="opt.value as opt.name for opt in selects.CountryId" ng-change="changeState()" ng-model="entity.CountryId"></select>
+                            <!-- <select class="form-control" id="country" ng-model="countrySrc" ng-options="opt.value as opt.name for opt in selects.CountryId" ng-change="GetSelectedCountry()">
+                                <option value=''>Select</option>
+                            </select> -->
+                            <select class="form-control" name="CountryId" ng-options="opt.value as opt.name for opt in selects.CountryId" ng-model="entity.CountryId"></select>
+                            <!-- ng-change="changeState()" -->
                         </div>
                     </div>
                 </div>
@@ -30,6 +43,9 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label dotranslate>State</label>
+                            <!-- <select class="form-control" id="state" ng-disabled="!countrySrc" ng-model="stateSrc" ng-options="opt.value as opt.name for opt in countrySrc" ng-change="GetSelectedState()">
+                                <option value=''>Select</option>
+                            </select> -->
                             <select class="form-control" name="state" ng-options="opt.value as opt.name for opt in selects.StateList" ng-model="entity.StateId"></select>
                         </div>
                     </div>
@@ -38,7 +54,11 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label dotranslate>City</label>
-                            <select class="form-control" name="state" ng-options="opt.value as opt.name for opt in selects.CityId" ng-model="entity.CityId"></select>
+                            <!-- <select class="form-control" id="city" ng-disabled="!countrySrc || !stateSrc" ng-model="city" ng-options="city for city in stateSrc">
+                                <option value=''>Select</option>
+                            </select> -->
+                            <select class="form-control" name="state" ng-options="opt.value as opt.name for opt in selects.LocationCityId
+                            " ng-model="entity.LocationCityId"></select>
                         </div>
                     </div>
                 </div>

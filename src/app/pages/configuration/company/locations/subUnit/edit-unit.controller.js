@@ -5,11 +5,11 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.configuration.company.locations.location')
-        .controller('locationEditController', locationEditController);
+    angular.module('BlurAdmin.pages.configuration.company.locations.branch')
+        .controller('unitEditController', unitEditController);
 
     /** @ngInject */
-    function locationEditController($scope, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
+    function unitEditController($scope, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
         $scope.selects = $stateParams.param.selects;
         $scope.entity = $stateParams.param.entity;
         $scope.pageid = $stateParams.param.pageid;
@@ -30,6 +30,7 @@
         function _childmethod() {
             $rootScope.$emit("CallParentMethod", {});
         }
+        
         $scope.changeState = function () {
             console.log('changeState')
             $scope.selects.StateList = $scope.selects.StateId;

@@ -17,6 +17,9 @@
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
         $scope.page.pageId = 29;
+        $rootScope.$on("CallParentMethod", function () {
+            $scope.page.refreshData()
+        });
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
@@ -44,12 +47,11 @@
 
         function editRecord(row) {
 
-            $state.go('configuration.company.locations.unit.edit', {
+            $state.go('configuration.company.departments.edit', {
                 param: {
-                    id: row.entity.LocationId,
+                    id: row.entity.DeptId,
                     pageid: $scope.page.pageId,
                     entity: row.entity,
-                    selects: $scope.page.pageinfo.selects
                 }
             });
         }
@@ -60,12 +62,11 @@
 
         function addRecord() {
             console.log('addre')
-            $state.go('configuration.company.locations.unit.add', {
+            $state.go('configuration.company.departments.add', {
                 param: {
                     id: 0,
                     pageid: $scope.page.pageId,
                     entity: {},
-                    selects: $scope.page.pageinfo.selects
                 }
             });
         }

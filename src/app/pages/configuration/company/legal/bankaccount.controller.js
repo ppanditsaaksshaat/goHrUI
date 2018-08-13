@@ -9,7 +9,7 @@
         .controller('bankAccountController', bankAccountController);
 
     /** @ngInject */
-    function bankAccountController($scope, dialogModal, editFormService, pageService, $rootScope) {
+    function bankAccountController($scope, dialogModal, editFormService, pageService, $rootScope, param) {
         //    console.log($state)
         var vm = this;
 
@@ -17,8 +17,14 @@
         $scope.companyList = [];
         $scope.oldEntity = {};
         $scope.entity = {};
+        $scope.edit = false;
 
         var bankPageId = 496;
+        if (param != undefined) {
+            $scope.edit = true;
+            $scope.entity = param;
+            $scope.oldEntity = angular.copy($scope.entity)
+        }
 
         function _childmethod() {
             $rootScope.$emit("CallParentMethod", {});
@@ -43,10 +49,13 @@
             console.log('save record')
             // $scope.currentForm = form;
             // if (_validateForm(form)) {
-            editFormService.saveForm(496, $scope.entity,
-                $scope.oldEntity, 'create', 'Save')
+            // editFormService.saveForm(496, $scope.entity,
+            //     $scope.oldEntity, 'create', 'Save')
+            //     .then(_saveFormSuccess, _saveFormError)
+            // // }
+            editFormService.saveForm(496, $scope.entity, $scope.oldEntity,
+                $scope.entity.BADId == undefined ? "create" : "edit", 'Save', undefined, true)
                 .then(_saveFormSuccess, _saveFormError)
-            // }
         }
 
         function _validateForm(form) {
@@ -57,6 +66,11 @@
             console.log(result)
             if (result.success_message == "Added New Record.") {
                 $rootScope.showMsg("success", "Record Save Successfully");
+            }
+            else {
+                if (result.success_message == "Record Updated.") {
+                    $rootScope.showMsg("success", "Record Updated");
+                }
             }
             _childmethod();
             $scope.$close();

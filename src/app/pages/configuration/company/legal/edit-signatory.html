@@ -1,7 +1,7 @@
-<div class="modal-content" ng-controller="signatureController">
+<div class="modal-content">
     <div class="modal-header bg-primary">
-        <!-- <h3 class="inline-block clear-vertical-margin" data-ng-if="!edit">Add Signatory</h3>
-        <h3 class="inline-block clear-vertical-margin" data-ng-if="edit">Edit Signatory</h3> -->
+        <h3 class="inline-block clear-vertical-margin" data-ng-if="!edit">Add Signatory</h3>
+        <h3 class="inline-block clear-vertical-margin" data-ng-if="edit">Edit Signatory</h3>
     </div>
 
     <div class="modal-body content-container">
@@ -33,10 +33,12 @@
                             <div class="col-sm-4 clear-right-padding">
                                 <div class="form-group">
                                     <label>Signatory Designation</label>
-                                    <input type="text" class="form-control" data-ng-model="entity.ASDDesgId" name="signatoryDesignation" id="signatoryDesignation"
+                                    <select class="form-control" data- ng-model="entity.ASDDesgId" ng-options="location.value as location.name for location in pageInfo.selects.ASDDesgId"></select>
+
+                                    <!-- <input type="text" class="form-control" data-ng-model="entity.ASDDesgId" name="signatoryDesignation" id="signatoryDesignation"
                                         required />
                                     <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryDesignation" data-required-error="Designation is required"
-                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                        data-form-submit="addSignatoryForm.$submitted"></span> -->
                                 </div>
                             </div>
                         </div>
@@ -142,7 +144,8 @@
                     <div class="col-sm-12 vertical-margin">
                         <div class="col-sm-6 pull-right text-right">
                             <button type="submit" data-ng-if="!edit" class="btn btn-submit btn-primary" ng-click="saveSignatory();">Add Signatory</button>
-                            <button type="submit" data-ng-if="edit" class="btn btn-submit" data-ng-click="updateSignatory();">Update Signatory</button>
+                            <!-- <button type="submit" data-ng-if="edit" class="btn btn-submit" data-ng-click="saveSignatory();">Update Signatory</button> -->
+                            <button type="submit" ng-if="edit" class="btn btn-success" ng-click="saveSignatory();" dotranslate>Update Signatory</button>
                             <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
                         </div>
                     </div>

@@ -46,7 +46,7 @@
         views: {
           'modal@': {
             templateUrl: 'app/pages/configuration/company/locations/branch/edit-branch.html',
-            controller: 'locationEditController'
+            controller: 'branchEditController'
           }
         },
         title: 'Edit branch',
@@ -68,10 +68,10 @@
         views: {
           'modal@': {
             templateUrl: 'app/pages/configuration/company/locations/branch/edit-branch.html',
-            controller: 'locationEditController'
+            controller: 'branchEditController'
           }
         },
-        title: 'Edit Location',
+        title: 'Add Branch',
         sidebarMeta: {
           icon: 'ion-android-home',
           order: 1,
