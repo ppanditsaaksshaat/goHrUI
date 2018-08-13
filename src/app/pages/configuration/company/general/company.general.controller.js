@@ -17,6 +17,8 @@
         $scope.entity = {};
         $scope.oldEntity = {};
 
+        
+
         function _loadController() {
             var data = {
                 searchList: [],
@@ -39,17 +41,17 @@
         }
 
         function _saveForm() {
-            var file = $scope.myFile;
+            // var file = $scope.myFile;
 
-            console.log('file is ');
-            console.dir(file);
+            // console.log('file is ');
+            // console.dir(file);
 
             // // var uploadUrl = "/fileUpload";
             // var uploadUrl = "/assets/companydirectory/saaksshaat";
             // console.log(uploadUrl, file.name)
             // fileUpload.uploadFileToUrl(file, 'uploadUrl');
             // // $scope.entity.GSMPath = "abc";
-            $scope.entity.GSMPath = uploadUrl;
+            // $scope.entity.GSMPath = uploadUrl;
             // // $scope.entity.GSMPath = "asdas";
             // console.log($scope.entity.GSMPath)
             // // console.log(fileUpload.uploadFileToUrl(file, uploadUrl))
