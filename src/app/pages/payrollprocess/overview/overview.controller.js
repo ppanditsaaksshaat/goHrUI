@@ -100,16 +100,17 @@
                     data.active = false;
                 }
             })
-            if (month <= c_Month ) {
+            if (month <= c_Month) {
                 _getPayrollData(month, year)
             }
             else {
                 $scope.monthName = monthNames[month - 1]
                 $scope.year = year;
-                // $scope.lastDayNumber = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
-                // $scope.calenderDays = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
-                $scope.totalEmployee =  0;
-                $scope.exitEmployee =0;
+                var daysInMonth = new Date(year, month, 0).getDate();
+                $scope.lastDayNumber = daysInMonth;
+                $scope.calenderDays = daysInMonth;
+                $scope.totalEmployee = 0;
+                $scope.exitEmployee = 0;
                 $scope.newEmployee = 0;
                 $scope.payrollCost = 0;
             }
@@ -120,7 +121,6 @@
             var searchLists = [];
             searchLists.push({ field: 'month', operand: '=', value: month })
             searchLists.push({ field: 'year', operand: '=', value: year })
-            console.log(searchLists)
             var data = {
                 searchList: searchLists,
                 orderByList: []
