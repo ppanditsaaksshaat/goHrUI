@@ -82,6 +82,14 @@
         function _loadController() {
             //_getAppData();
 
+            $scope.key = {
+                url: pageService.keyDataUrl(),
+                vl: true,
+                multi: false,
+                corpo: '400'
+            };
+
+
             pageService.keyValid().then(function (result) {
                 console.log(result)
                 $scope.key = result;
@@ -125,6 +133,11 @@
             var userName = $("#userName").val();
             var userPwd = $("#userPassword").val();
             var userCorpoId = $("#userCorpoId").val();
+
+            if (!$scope.key.multi) {
+                userCorpoId = $scope.key.corp;
+            }
+
 
             if (DJWebStore.IsDev()) {
                 //only for development mode - dj@03.01.2017
