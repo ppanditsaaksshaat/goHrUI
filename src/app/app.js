@@ -8,7 +8,7 @@
     // }
 
     angular.module('BlurAdmin', [
-        'ngMaterial',
+        // 'ngMaterial',
         'ngAnimate',
         'ui.bootstrap',
         'ui.sortable',
