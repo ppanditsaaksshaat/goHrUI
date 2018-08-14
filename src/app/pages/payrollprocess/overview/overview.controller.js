@@ -9,9 +9,10 @@
         .controller('payOverViewController', payOverViewController);
 
     /** @ngInject */
-    function payOverViewController($scope, $rootScope, $filter, pageService) {
+    function payOverViewController($scope,$state, $rootScope, $filter, pageService,dialogModal) {
 
         $scope.getData = _getMonthlyPayrollData;
+        $scope.CheckLeaveAndAttendanceStatus = _CheckLeaveAndAttendanceStatus;
 
 
         var date = new Date();
@@ -140,6 +141,20 @@
             function _getCustomQueryErrorResult(err) {
                 console.log(err);
             }
+        }
+
+        function _CheckLeaveAndAttendanceStatus() {
+            $state.go("team.leave")
+            // var modal = dialogModal.openFullScreen({
+            //     url: 'app/pages/payrollprocess/overview/leaveandattendance/request.html',
+            //     controller: 'leaveAndAttendanceStatusController',
+            // });
+            // modal.result.then(function (data) {
+            //     if (data == "success") {
+            //         _loadController();
+            //         $scope.showMsg('success', 'Primary Detail Updated');
+            //     }
+            // })
         }
 
 
