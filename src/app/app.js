@@ -50,8 +50,12 @@
         // 'angularUtils.directives.dirPagination'
     ]);
     angular.module('BlurAdmin').config(function () {
-        angular.lowercase = angular.$$lowercase;
-        angular.uppercase = angular.$$uppercase; 
+        angular.lowercase = function (text) {
+            return text;
+        }
+        angular.uppercase = function (text) {
+            return text;
+        }
     });
 
     var app = {
