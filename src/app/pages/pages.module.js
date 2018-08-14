@@ -41,7 +41,8 @@
     'BlurAdmin.pages.employee',
     'BlurAdmin.pages.self',
     'BlurAdmin.pages.team',
-    'BlurAdmin.pages.payrollprocess'
+    'BlurAdmin.pages.payrollprocess',
+    'BlurAdmin.pages.finances'
     
 
   ])

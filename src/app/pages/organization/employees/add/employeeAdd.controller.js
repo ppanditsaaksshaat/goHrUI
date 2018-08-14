@@ -12,14 +12,14 @@
 
     /** @ngInject */
     /** @ngInject */
-    function AddEmployeeController($scope,$filter, pageService, $timeout, $state) {
+    function AddEmployeeController($scope, $filter, pageService, $timeout, $state) {
 
 
         //local variable
         var vm = this;
-        var columnIds = ['132', '667', '3841', '192', '668', '743', '744', '665', '4034', '1743', '1744', '1745','112'];
+        var columnIds = ['132', '667', '3841', '192', '668', '743', '744', '665', '4034', '1743', '1744', '1745', '112'];
         vm.pageId = 25;
-        vm.empAdd = {};
+        $scope.entity = {};
         var queryId = 528;
         //end o local variable
 
@@ -34,7 +34,7 @@
         //page load 
         function _loadController() {
             $timeout(function () {
-                vm.empAdd.JDDate = moment();
+                 $scope.entity.JDDate = moment();
                 pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
                 pageService.getFieldSetting(vm.pageId).then(_getFieldSettingSuccessResult, _getFieldSettingErrorResult)
                 var data = {
@@ -48,7 +48,7 @@
             console.log(result)
             if (result != "NoDataFound") {
                 vm.groupList = result;
-                vm.empAdd.JDGroupId = result[0].GMCId;
+                 $scope.entity.JDGroupId = result[0].GMCId;
             }
         }
         function _getCustomQueryErrorResult(err) {
@@ -77,41 +77,41 @@
         function _saveForm(data) {
 
             var basic = {
-                EmpTitleId: vm.empAdd.EmpTitleId,
-                EmpFirstName: vm.empAdd.EmpFirstName,
-                EmpMiddleName: vm.empAdd.EmpMiddleName,
-                EmpLastName: vm.empAdd.EmpLastName,
-                EmpCode: vm.EmpCode,
-                OtherCode: vm.empAdd.OtherCode,
-                EmpPhoto1_64URL: vm.empAdd.EmpPhoto1_64URL,
+                EmpTitleId:  $scope.entity.EmpTitleId,
+                EmpFirstName:  $scope.entity.EmpFirstName,
+                EmpMiddleName:  $scope.entity.EmpMiddleName,
+                EmpLastName:  $scope.entity.EmpLastName,
+                EmpCode: $scope.entity.EmpCode,
+                OtherCode:  $scope.entity.OtherCode,
+                EmpPhoto1_64URL:  $scope.entity.EmpPhoto1_64URL,
             }
             var job = {
-                JDDate: vm.empAdd.JDDate,
-                JDDeptId: vm.empAdd.JDDeptId,
-                JDDesgId: vm.empAdd.JDDesgId,
-                JDEmploymentId: vm.empAdd.JDEmploymentId,
-                JDEmpGradeId: vm.empAdd.JDEmpGradeId,
-                JDEmpLevelId: vm.empAdd.JDEmpLevelId,
-                JDGroupId: vm.empAdd.JDGroupId,
-                JDReporting1: vm.empAdd.JDReporting1,
-                JDReporting2: vm.empAdd.JDReporting2,
-                JDReportingHR: vm.empAdd.JDReportingHR,
-                JDSubUnitID: vm.empAdd.JDSubUnitID,
+                JDDate:  $scope.entity.JDDate,
+                JDDeptId:  $scope.entity.JDDeptId,
+                JDDesgId:  $scope.entity.JDDesgId,
+                JDEmploymentId:  $scope.entity.JDEmploymentId,
+                JDEmpGradeId:  $scope.entity.JDEmpGradeId,
+                JDEmpLevelId:  $scope.entity.JDEmpLevelId,
+                JDGroupId:  $scope.entity.JDGroupId,
+                JDReporting1:  $scope.entity.JDReporting1,
+                JDReporting2:  $scope.entity.JDReporting2,
+                JDReportingHR:  $scope.entity.JDReportingHR,
+                JDSubUnitID:  $scope.entity.JDSubUnitID,
                 DoubleOTRate: 0,
                 JDSingleOTRate: 0,
                 SingleOT: 0,
                 JDDoubleOT: 0
-            }       
+            }
             var personal = {
-                PdGenderId: vm.empAdd.PdGenderId,
-                PdMobileNo: vm.empAdd.PdMobileNo,
-                PDOtherNumber: vm.empAdd.PDOtherNumber,
-                PdEmail: vm.empAdd.PdEmail
+                PdGenderId:  $scope.entity.PdGenderId,
+                PdMobileNo:  $scope.entity.PdMobileNo,
+                PDOtherNumber:  $scope.entity.PDOtherNumber,
+                PdEmail:  $scope.entity.PdEmail
             }
             var userRoleInfo = {
-                RoleId: vm.empAdd.RoleId,               
+                RoleId:  $scope.entity.RoleId,
             }
-            var employeeData = { basic: basic, job: job, personal: personal,userRoleInfo:userRoleInfo };
+            var employeeData = { basic: basic, job: job, personal: personal, userRoleInfo: userRoleInfo };
             pageService.create(JSON.stringify(employeeData)).then(_createSuccessResult, _createErrorResult)
 
         }
@@ -129,7 +129,7 @@
         function _createErrorResult(error) {
         }
         function _locationOnChange(locationId) {
-   
+
             var branches = $filter("findAll")(vm.dropDownList[10], locationId, "LocationId");
             if (branches != null) {
                 vm.Branches = branches;

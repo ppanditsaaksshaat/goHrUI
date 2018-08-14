@@ -1,0 +1,240 @@
+<div class="col-sm-12 clear-side-padding content-container">
+       
+                
+    <div class="col-sm-12">
+        <div class="col-sm-6 clear-left-padding" style="top: 15px;">
+            <p>
+                <span class="icon-keka-incometax header-icon"></span>Perks</p>
+        </div>
+        <div class="pull-right">
+            <div class="add-new">
+                <a ng-click="addPerks()">
+                    <span class="fa fa-plus-circle"></span>Add Perk
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- ngIf: ctrl.benefits.length > 0 -->
+    <div class="col-sm-12 clear-side-padding">
+        <div class="col-sm-12">
+            <div class="col-sm-12">
+                <div class="col-sm-4 clear-left-padding  grayout text-moderate-bold">
+                    PERK NAME
+                </div>
+                <div class="col-sm-2 clear-left-padding  grayout text-moderate-bold">
+                    TAX TREATMENT
+                </div>
+                <div class="col-sm-3 clear-left-padding  grayout text-moderate-bold">
+                    EMPLOYEES ASSIGNED
+                </div>
+            </div>
+            <div class="col-sm-12 clear-side-padding">
+                <hr class="clear-top clear-bottom">
+            </div>
+        </div>
+        <!-- ngRepeat: benefit in ctrl.benefits -->
+        <div class="col-sm-12">
+            <div class="col-sm-12 vertical-margin">
+                <div class="col-sm-4 clear-left-padding ng-binding">
+                    Transportation or Parking Reimbursement
+                </div>
+                <div class="col-sm-2 clear-left-padding">
+                    <!-- ngIf: benefit.taxable -->
+                    <!-- ngIf: !benefit.taxable -->
+                    <span class="ng-scope">Non-Taxable</span>
+                    <!-- end ngIf: !benefit.taxable -->
+                </div>
+                <div class="col-sm-3 clear-left-padding ng-binding">
+                    2 Employees
+                </div>
+                <div class="col-sm-1 clear-left-padding">
+                    <a class="pull-right" data-ui-sref="payrolloverview.perquisites.types.editperk({ benefitId: benefit.id })" href="#/payroll/overview/perquisites/types/editperk/E5KE">
+                        <span class="fa fa-edit link-edit-icon"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-12 clear-side-padding">
+                <hr class="clear-top clear-bottom">
+            </div>
+        </div>
+        <!-- end ngRepeat: benefit in ctrl.benefits -->
+        <div class="col-sm-12">
+            <div class="col-sm-12 vertical-margin">
+                <div class="col-sm-4 clear-left-padding ng-binding">
+                    Health Insurance
+                </div>
+                <div class="col-sm-2 clear-left-padding">
+                    <!-- ngIf: benefit.taxable -->
+                    <!-- ngIf: !benefit.taxable -->
+                    <span class="ng-scope">Non-Taxable</span>
+                    <!-- end ngIf: !benefit.taxable -->
+                </div>
+                <div class="col-sm-3 clear-left-padding ng-binding">
+                    4 Employees
+                </div>
+                <div class="col-sm-1 clear-left-padding">
+                    <a class="pull-right" data-ui-sref="payrolloverview.perquisites.types.editperk({ benefitId: benefit.id })" href="#/payroll/overview/perquisites/types/editperk/JDI4">
+                        <span class="fa fa-edit link-edit-icon"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-12 clear-side-padding">
+                <hr class="clear-top clear-bottom">
+            </div>
+        </div>
+        <!-- end ngRepeat: benefit in ctrl.benefits -->
+        <div class="col-sm-12">
+            <div class="col-sm-12 vertical-margin">
+                <div class="col-sm-4 clear-left-padding ng-binding">
+                    Profit Sharing
+                </div>
+                <div class="col-sm-2 clear-left-padding">
+                    <!-- ngIf: benefit.taxable -->
+                    <span class="ng-scope">Taxable Perk</span>
+                    <!-- end ngIf: benefit.taxable -->
+                    <!-- ngIf: !benefit.taxable -->
+                </div>
+                <div class="col-sm-3 clear-left-padding ng-binding">
+                    2 Employees
+                </div>
+                <div class="col-sm-1 clear-left-padding">
+                    <a class="pull-right" data-ui-sref="payrolloverview.perquisites.types.editperk({ benefitId: benefit.id })" href="#/payroll/overview/perquisites/types/editperk/C7ZK">
+                        <span class="fa fa-edit link-edit-icon"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-12 clear-side-padding">
+                <hr class="clear-top clear-bottom">
+            </div>
+        </div>
+        <!-- end ngRepeat: benefit in ctrl.benefits -->
+        <div class="col-sm-12">
+            <div class="col-sm-12 vertical-margin">
+                <div class="col-sm-4 clear-left-padding ng-binding">
+                    Social Security
+                </div>
+                <div class="col-sm-2 clear-left-padding">
+                    <!-- ngIf: benefit.taxable -->
+                    <span class="ng-scope">Taxable Perk</span>
+                    <!-- end ngIf: benefit.taxable -->
+                    <!-- ngIf: !benefit.taxable -->
+                </div>
+                <div class="col-sm-3 clear-left-padding ng-binding">
+                    1 Employees
+                </div>
+                <div class="col-sm-1 clear-left-padding">
+                    <a class="pull-right" data-ui-sref="payrolloverview.perquisites.types.editperk({ benefitId: benefit.id })" href="#/payroll/overview/perquisites/types/editperk/5UAV">
+                        <span class="fa fa-edit link-edit-icon"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-12 clear-side-padding">
+                <hr class="clear-top clear-bottom">
+            </div>
+        </div>
+        <!-- end ngRepeat: benefit in ctrl.benefits -->
+        <div class="col-sm-12">
+            <div class="col-sm-12 vertical-margin">
+                <div class="col-sm-4 clear-left-padding ng-binding">
+                    Sodexo Coupons
+                </div>
+                <div class="col-sm-2 clear-left-padding">
+                    <!-- ngIf: benefit.taxable -->
+                    <span class="ng-scope">Taxable Perk</span>
+                    <!-- end ngIf: benefit.taxable -->
+                    <!-- ngIf: !benefit.taxable -->
+                </div>
+                <div class="col-sm-3 clear-left-padding ng-binding">
+                    1 Employees
+                </div>
+                <div class="col-sm-1 clear-left-padding">
+                    <a class="pull-right" data-ui-sref="payrolloverview.perquisites.types.editperk({ benefitId: benefit.id })" href="#/payroll/overview/perquisites/types/editperk/061D">
+                        <span class="fa fa-edit link-edit-icon"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-12 clear-side-padding">
+                <hr class="clear-top clear-bottom">
+            </div>
+        </div>
+        <!-- end ngRepeat: benefit in ctrl.benefits -->
+        <div class="col-sm-12">
+            <div class="col-sm-12 vertical-margin">
+                <div class="col-sm-4 clear-left-padding ng-binding">
+                    GYM Memberships
+                </div>
+                <div class="col-sm-2 clear-left-padding">
+                    <!-- ngIf: benefit.taxable -->
+                    <span class="ng-scope">Taxable Perk</span>
+                    <!-- end ngIf: benefit.taxable -->
+                    <!-- ngIf: !benefit.taxable -->
+                </div>
+                <div class="col-sm-3 clear-left-padding ng-binding">
+                    1 Employees
+                </div>
+                <div class="col-sm-1 clear-left-padding">
+                    <a class="pull-right" data-ui-sref="payrolloverview.perquisites.types.editperk({ benefitId: benefit.id })" href="#/payroll/overview/perquisites/types/editperk/6OAT">
+                        <span class="fa fa-edit link-edit-icon"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-12 clear-side-padding">
+                <hr class="clear-top clear-bottom">
+            </div>
+        </div>
+        <!-- end ngRepeat: benefit in ctrl.benefits -->
+        <div class="col-sm-12">
+            <div class="col-sm-12 vertical-margin">
+                <div class="col-sm-4 clear-left-padding ng-binding">
+                    Monthly Needs
+                </div>
+                <div class="col-sm-2 clear-left-padding">
+                    <!-- ngIf: benefit.taxable -->
+                    <span class="ng-scope">Taxable Perk</span>
+                    <!-- end ngIf: benefit.taxable -->
+                    <!-- ngIf: !benefit.taxable -->
+                </div>
+                <div class="col-sm-3 clear-left-padding ng-binding">
+                    2 Employees
+                </div>
+                <div class="col-sm-1 clear-left-padding">
+                    <a class="pull-right" data-ui-sref="payrolloverview.perquisites.types.editperk({ benefitId: benefit.id })" href="#/payroll/overview/perquisites/types/editperk/WKW8">
+                        <span class="fa fa-edit link-edit-icon"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-12 clear-side-padding">
+                <hr class="clear-top clear-bottom">
+            </div>
+        </div>
+        <!-- end ngRepeat: benefit in ctrl.benefits -->
+        <div class="col-sm-12">
+            <div class="col-sm-12 vertical-margin">
+                <div class="col-sm-4 clear-left-padding ng-binding">
+                    Bike petrol
+                </div>
+                <div class="col-sm-2 clear-left-padding">
+                    <!-- ngIf: benefit.taxable -->
+                    <!-- ngIf: !benefit.taxable -->
+                    <span class="ng-scope">Non-Taxable</span>
+                    <!-- end ngIf: !benefit.taxable -->
+                </div>
+                <div class="col-sm-3 clear-left-padding ng-binding">
+                    0 Employees
+                </div>
+                <div class="col-sm-1 clear-left-padding">
+                    <a class="pull-right" data-ui-sref="payrolloverview.perquisites.types.editperk({ benefitId: benefit.id })" href="#/payroll/overview/perquisites/types/editperk/D488">
+                        <span class="fa fa-edit link-edit-icon"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-12 clear-side-padding">
+                <hr class="clear-top clear-bottom">
+            </div>
+        </div>
+        <!-- end ngRepeat: benefit in ctrl.benefits -->
+    </div>
+    <!-- end ngIf: ctrl.benefits.length > 0 -->
+    <!-- ngIf: ctrl.benefits.length == 0 -->
+
+</div>

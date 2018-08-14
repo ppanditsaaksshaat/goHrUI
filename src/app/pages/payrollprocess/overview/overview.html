@@ -6,8 +6,8 @@
                     <!-- ngIf: !vm.financialYear.includes(payrollConfig.payrollSchedule.payCycle.kekaStartsFrom) -->
                     <div class="payroll-month-nav col-sm-12 clear-side-padding">
                         <!-- ngRepeat: cycle in vm.cycles | orderBy:'lastDay'  -->
-                        <div data-ng-repeat="pay in payrollMonth">
-                            <div class="month-tab-cell  cell-spacing " data-ng-click="getData(pay.id)" data-ng-class="{'active': pay.active}">
+                        <div data-ng-repeat="pay in financialMonths">
+                            <div class="month-tab-cell  cell-spacing " data-ng-click="getData(pay.id,pay.year)" data-ng-class="{'active': pay.active}">
                                 <div class="month-tab" data-ng-class="pay.statusClass">
                                     <div class="month-info">
                                         <h3 class="name clear-vertical-margin">{{pay.month}}</h3>
@@ -25,27 +25,27 @@
                 <div class="row col-sm-12">
                     <div class="month-details col-sm-10">
                         <div class="col-sm-3 clear-side-padding dater">
-                            <h3 class="clear-vertical-margin name ">April Payroll</h3>
-                            <p class="clear-bottom date-range ">APR 1 - APR 30 2018</p>
+                            <h3 class="clear-vertical-margin name ">{{monthName}} Payroll</h3>
+                            <p class="clear-bottom date-range ">{{monthName}} 1 - {{monthName}} {{lastDayNumber}} {{year}}</p>
                         </div>
                         <div class="col-sm-3 employees right-vr form-group clear-vertical-margin">
                             <label class="clear-vertical-margin">Total Employees</label>
                             <br>
                             <h1 class="clear-bottom item-count ">
-                                27
-                                <span class="badge v-align-middle success ">+1</span>
-                                <span class="badge v-align-middle failure ">-0</span>
+                                {{totalEmployee}}
+                                <span class="badge v-align-middle success ">+{{newEmployee}}</span>
+                                <span class="badge v-align-middle failure ">-{{exitEmployee}}</span>
                             </h1>
                         </div>
                         <div class="col-sm-3 working-days right-vr form-group clear-vertical-margin">
                             <label class="clear-vertical-margin">Calendar Days</label>
-                            <h1 class="clear-bottom item-count ">30</h1>
+                            <h1 class="clear-bottom item-count ">{{calenderDays}}</h1>
                         </div>
                         <!-- ngIf: !(vm.currentcycle.status == cycleStatus.NoData || vm.currentcycle.status == cycleStatus.Imported) -->
                         <div class="col-sm-3 processed-count form-group clear-vertical-margin ">
                             <label class="clear-vertical-margin">Payroll processed</label>
-                            <h1 class="clear-bottom item-count ">27
-                                <label class=""> 27</label>
+                            <h1 class="clear-bottom item-count ">{{totalEmployee}}
+                                <label class=""> {{totalEmployee}}</label>
                             </h1>
                         </div>
                         <!-- end ngIf: !(vm.currentcycle.status == cycleStatus.NoData || vm.currentcycle.status == cycleStatus.Imported) -->
@@ -72,24 +72,24 @@
                     </div>
                     <div class="metrics-container col-sm-2 clear-side-padding total form-group clear-vertical-margin">
                         <label class="clear-vertical-margin">Total Payroll Cost</label>
-                        <h2 class="clear-vertical-margin amount ng-binding">₹&nbsp;20,01,884</h2>
+                        <h2 class="clear-vertical-margin amount ng-binding">₹&nbsp;{{payrollCost | number}}</h2>
 
                     </div>
                     <div class="metrics-container col-sm-2 clear-side-padding sum form-group clear-vertical-margin">
                         <label class="clear-vertical-margin">Employee Deposit</label>
-                        <h2 class="clear-vertical-margin amount ng-binding">₹&nbsp;17,76,680</h2>
+                        <h2 class="clear-vertical-margin amount ng-binding">₹&nbsp;{{payrollCost  | number}}</h2>
 
                     </div>
                     <div class="metrics-container col-sm-2 clear-side-padding sum form-group clear-vertical-margin" data-popover="Income Tax: 127305, Professional Tax: 5050, Other Deductions: 6500"
                         data-popover-trigger="mouseenter">
                         <label class="clear-vertical-margin">Total Deductions</label>
-                        <h2 class="clear-vertical-margin amount ng-binding">₹&nbsp;1,38,855</h2>
+                        <h2 class="clear-vertical-margin amount ng-binding">₹&nbsp;0</h2>
 
                     </div>
                     <div class="metrics-container col-sm-2 clear-side-padding form-group clear-vertical-margin" data-popover="Total PF: 82207, Total ESI: 4142,Total Other Contributions: 0"
                         data-popover-trigger="mouseenter">
                         <label class="clear-vertical-margin ">Total Contributions</label>
-                        <h2 class="clear-vertical-margin amount ng-binding">₹&nbsp;86,349</h2>
+                        <h2 class="clear-vertical-margin amount ng-binding">₹&nbsp;0</h2>
 
                     </div>
                 </div>

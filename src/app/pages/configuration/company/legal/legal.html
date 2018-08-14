@@ -22,9 +22,29 @@
 
                         <div class="col-sm-12">
                             <h6 dotranslate class="section-head-text">Authorised Signatory</h6>
-                            <a href ng-click="addNewSignatory()">
-                                <i class="fa fa-plus"></i> Add New Signatory</a>
-                            <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+
+                            <div class="col-sm-12">
+                                <div ng-repeat="emp in employeeList" class="icon-list col-offset-sm-1 col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+                                    <div class="cursor">
+                                        <div ng-click="editSignatoryDetail(emp)" class="cursor">
+                                            <div class="icon-container ">
+                                                <div class="icon">
+                                                    <div class="initials-icon icon-circle" random-Color>{{emp.ASDSignatureName.split(' ')[0].substr(0,2)}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="detail">
+                                                <h4 class="title clear-bottom">{{emp.ASDSignatureName}}</h4>
+                                                <span class="title-description clear-top">{{emp.ASDEmail}}</span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href ng-click="addNewSignatory()">
+                                    <i class="fa fa-plus"></i> Add New Signatory</a>
+                            </div>
+
+                            <!-- <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
                                 <div class="icon-container ">
                                     <div class="icon">
                                         <div class="initials-icon icon-circle" style="background-color: rgb(244, 180, 0);">DJ</div>
@@ -63,7 +83,7 @@
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <hr/>
@@ -71,7 +91,28 @@
 
                         <div class="col-sm-12">
                             <h6 dotranslate class="section-head-text">Bank Accounts</h6>
-                            <a href ng-click="addBankAccount()">
+                            <div class="col-sm-12">
+                                <div ng-repeat="bank in bankList" class="icon-list col-offset-sm-1 col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+                                    <div class="cursor">
+                                        <div ng-click="editBankDetail(bank)" class="cursor">
+                                            <div class="icon-container ">
+                                                <div class="icon">
+                                                    <div class="initials-icon icon-circle" random-Color>{{bank.BankName.split(' ')[0].substr(0,2)}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="detail">
+                                                <h4 class="title clear-bottom">{{bank.BankName}}</h4>
+                                                <span class="title-description clear-top">{{bank.BADBranch}}</span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href ng-click="addBankAccount()">
+                                    <i class="fa fa-plus"></i> Add New Bank Account</a>
+                            </div>
+
+                            <!-- <a href ng-click="addBankAccount()">
                                 <i class="fa fa-plus"></i> Add New Bank Account</a>
                             <div class="icon-list col-sm-4 col-lg-3 clear-left-padding vertical-margin">
                                 <div class="icon-container ">
@@ -112,7 +153,7 @@
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <hr/>
@@ -130,13 +171,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>Company Name</label>
-                                                            <input type="text" class="form-control" />
+                                                            <input type="text" data-ng-model="entity.company.CCOName" class="form-control" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>Type Of Business</label>
-                                                            <select class="form-control"></select>
+                                                            <select class="form-control" data-ng-model="entity.company.CCOTypeOfBussinessId"></select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -144,13 +185,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>Date of Registration</label>
-                                                            <input type="date" class="form-control" />
+                                                            <input type="date" data-ng-model="entity.company.CCODateOfRegistration" class="form-control" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>Registered Address</label>
-                                                            <input type="text" class="form-control" />
+                                                            <input type="text" data-ng-model="entity.company.CCOAddress" class="form-control" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -158,13 +199,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>Company Identification Number</label>
-                                                            <input type="text" class="form-control" />
+                                                            <input type="text" data-ng-model="entity.company.CCOIdentificationNumber" class="form-control" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>&nbsp;</label>
-                                                            <input type="text" class="form-control" />
+                                                            <input type="text" data-ng-model="entity.company.CCOAddressLineTwo" class="form-control" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -176,17 +217,24 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <div class="row">
-                                                                <div class="col-sm-4">
-                                                                    <label>CIty</label>
-                                                                    <input type="text" class="form-control" />
+                                                                <div class="col-sm-3">
+                                                                    <label>Country</label>
+                                                                    <select class="form-control" data- ng-model="entity.company.CountryId" ng-options="location.value as location.name for location in pageInfo.selects.CountryId"></select>
+                                                                    <!-- <input type="text" data-ng-model="" class="form-control" /> -->
                                                                 </div>
-                                                                <div class="col-sm-4">
+                                                                <div class="col-sm-3">
                                                                     <label>State</label>
-                                                                    <input type="text" class="form-control" />
+                                                                    <select class="form-control" data- ng-model="entity.company.StateId" ng-options="location.value as location.name for location in pageInfo.selects.StateId"></select>
+                                                                    <!-- <input type="text" data-ng-model="" class="form-control" /> -->
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <label>City</label>
+                                                                    <select class="form-control" data- ng-model="entity.company.CCOCityId" ng-options="location.value as location.name for location in pageInfo.selects.CCOCityId"></select>
+                                                                    <!-- <input type="text" data-ng-model="entity.company.CCOCityId" class="form-control" /> -->
                                                                 </div>
                                                                 <div class="col-sm-4">
-                                                                    <label>Pincode</label>
-                                                                    <input type="text" class="form-control" />
+                                                                    <label>PinCode</label>
+                                                                    <input type="text" data-ng-model="entity.company.CCOPinCode" class="form-control" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -200,7 +248,7 @@
                                                     </div>
                                                     <div class="col-md-6 text-right">
 
-                                                        <button class="btn btn-success">SAVE</button>
+                                                        <button class="btn btn-success" data-ng-click="addCompany()">SAVE</button>
                                                         <button class="btn">Clear</button>
                                                     </div>
 
@@ -219,13 +267,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>PAN</label>
-                                                            <input type="text" class="form-control" />
+                                                            <input type="text" data-ng-model="entity.incomeTax.ITDPanNumber" class="form-control" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>GST</label>
-                                                            <input type="text" class="form-control" />
+                                                            <input type="text" data-ng-model="entity.incomeTax.ITDGST" class="form-control" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -233,13 +281,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>TIN</label>
-                                                            <input type="text" class="form-control" />
+                                                            <input type="text" data-ng-model="entity.incomeTax.ITDTinNumber" class="form-control" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>TAN</label>
-                                                            <input type="text" class="form-control" />
+                                                            <input type="text" data-ng-model="entity.incomeTax.ITDTanNumber" class="form-control" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -247,7 +295,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>Form 16 Signatory</label>
-                                                            <select class="form-control"></select>
+                                                            <select class="form-control" data-ng-model="entity.incomeTax.ITDForm16SignatoryId"></select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -261,7 +309,7 @@
                                                     </div>
                                                     <div class="col-md-6 text-right">
 
-                                                        <button class="btn btn-success">SAVE</button>
+                                                        <button class="btn btn-success" data-ng-click="addIncomeTax()">SAVE</button>
                                                         <button class="btn">Clear</button>
                                                     </div>
 
@@ -280,13 +328,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>PF Number</label>
-                                                            <input type="text" class="form-control" />
+                                                            <input type="text" class="form-control" data-ng-model="entity.pFDetail.PFDPFNumber" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>Registration Date</label>
-                                                            <input type="date" class="form-control" />
+                                                            <input type="date" class="form-control" data-ng-model="entity.pFDetail.PFDRegistrationDate" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -295,7 +343,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>Authorised Signatory</label>
-                                                            <select class="form-control"></select>
+                                                            <select class="form-control" data-ng-model="entity.pFDetail.PFDAuthorisedSignatoryId"></select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -309,7 +357,7 @@
                                                     </div>
                                                     <div class="col-md-6 text-right">
 
-                                                        <button class="btn btn-success">SAVE</button>
+                                                        <button class="btn btn-success" data-ng-click="addPFDetail()">SAVE</button>
                                                         <button class="btn">Clear</button>
                                                     </div>
 
@@ -327,13 +375,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>ESI Number</label>
-                                                            <input type="text" class="form-control" />
+                                                            <input type="text" class="form-control" data-ng-model="entity.esiDetail.ESINumber" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>Registration Date</label>
-                                                            <input type="date" class="form-control" />
+                                                            <input type="date" class="form-control" data-ng-model="entity.esiDetail.ESIRegistrationDate" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -342,7 +390,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label dotranslate>Authorised Signatory</label>
-                                                            <select class="form-control"></select>
+                                                            <select class="form-control" data-ng-model="entity.esiDetail.ESIAuthorisedSignatoryId"></select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -356,7 +404,7 @@
                                                     </div>
                                                     <div class="col-md-6 text-right">
 
-                                                        <button class="btn btn-success">SAVE</button>
+                                                        <button class="btn btn-success" data-ng-click="addESIDetail()">SAVE</button>
                                                         <button class="btn">Clear</button>
                                                     </div>
 
@@ -390,8 +438,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <a href><i class="fa fa-edit"></i></a>
-                                                        <a href><i class="fa fa-trash-o"></i></a>
+                                                        <a href>
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        <a href>
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>

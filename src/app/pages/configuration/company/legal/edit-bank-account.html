@@ -1,7 +1,7 @@
 <div class="modal-content">
     <div class="modal-header bg-primary">
-        <h3 class="inline-block clear-vertical-margin" data-ng-if="!ctrl.edit">Add Bank Account</h3>
-        <h3 class="inline-block clear-vertical-margin" data-ng-if="ctrl.edit">Edit Bank Account</h3>
+        <h3 class="inline-block clear-vertical-margin" data-ng-if="!edit">Add Bank Account</h3>
+        <h3 class="inline-block clear-vertical-margin" data-ng-if="edit">Edit Bank Account</h3>
     </div>
 
     <div class="modal-body content-container">
@@ -11,7 +11,9 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label>Name of Bank </label>
-                            <ui-select data-ng-model="ctrl.model.bank" name="bank" id="bank" theme="bootstrap" data-ng-disabled="disabled" class="client-select"
+                            <select class="form-control" data- ng-model="entity.BADBankId" ng-options="location.value as location.name for location in pageInfo.selects.BADBankId"></select>
+
+                            <!-- <ui-select data-ng-model="entity.BADBankId" name="bank" id="bank" theme="bootstrap" data-ng-disabled="disabled" class="client-select"
                                 data-ng-change="ctrl.model.updateBank()" required>
                                 <ui-select-match placeholder="Select a bank">{{$select.selected.name}}</ui-select-match>
                                 <ui-select-choices class="action-button" repeat="bank in ctrl.banks | filter: {name : $select.search}" data-ng-nicescroll=""
@@ -20,7 +22,7 @@
                                 </ui-select-choices>
                             </ui-select>
                             <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.bank" data-required-error="Name is required"
-                                data-form-submit="bankDetails.$submitted"></span>
+                                data-form-submit="bankDetails.$submitted"></span> -->
                         </div>
                     </div>
                 </div>
@@ -28,8 +30,8 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label>Account Number</label>
-                            <input type="text" class="form-control" data-ng-model="ctrl.model.accountNumber" name="accountNumber" id="accountNumber"
-                                required />
+                            <input type="text" class="form-control" data-ng-model="entity.BADAccountNumber" name="accountNumber" id="accountNumber" required
+                            />
                             <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.accountNumber" data-required-error="Account number is required"
                                 data-form-submit="bankDetails.$submitted"></span>
                         </div>
@@ -39,7 +41,7 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label>IFS Code</label>
-                            <input type="text" class="form-control" data-ng-model="ctrl.model.ifscCode" name="bankIfsc" id="bankIfsc" />
+                            <input type="text" class="form-control" data-ng-model="entity.BADIFSCCode" name="bankIfsc" id="bankIfsc" />
                             <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.bankIfsc" data-required-error="IFSC Code is required"
                                 data-form-submit="bankDetails.$submitted"></span>
                         </div>
@@ -49,7 +51,7 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label>Branch</label>
-                            <input type="text" class="form-control" data-ng-model="ctrl.model.branch" name="branch" id="branch" required />
+                            <input type="text" class="form-control" data-ng-model="entity.BADBranch" name="branch" id="branch" required />
                             <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.branch" data-required-error="Branch is required"
                                 data-form-submit="bankDetails.$submitted"></span>
                         </div>
@@ -59,7 +61,7 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label>Corporate Id</label>
-                            <input type="text" class="form-control" data-ng-model="ctrl.model.corporateId" name="corporateId" id="corporateId" />
+                            <input type="text" class="form-control" data-ng-model="entity.BADCorporateId" name="corporateId" id="corporateId" />
                             <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.corporateId" data-form-submit="bankDetails.$submitted"></span>
                         </div>
                     </div>
@@ -69,8 +71,9 @@
             <div class="row">
                 <div class="col-sm-12 vertical-margin">
                     <div class="col-sm-6 pull-right text-right">
-                        <button type="submit" data-ng-if="!ctrl.edit" class="btn btn-submit btn-success" data-ng-click="ctrl.addBankAccount();">Add Account</button>
-                        <button type="submit" data-ng-if="ctrl.edit" class="btn btn-submit" data-ng-click="ctrl.updateBankAccount();">Update Account</button>
+                        <button type="submit" data-ng-if="!edit" class="btn btn-submit btn-success" data-ng-click="addBankAccount();">Add Account</button>
+                        <!-- <button type="submit" data-ng-if="edit" class="btn btn-submit" data-ng-click="addBankAccount();">Update Account</button> -->
+                        <button type="submit" ng-if="edit" class="btn btn-success" ng-click="addBankAccount();" dotranslate>Update Accoun</button>
                         <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
                     </div>
                 </div>

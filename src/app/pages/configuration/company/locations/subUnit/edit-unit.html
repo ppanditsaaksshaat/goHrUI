@@ -1,1 +1,53 @@
-Edit  Unit
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" ng-if="!isEdit" dotranslate>Add Sub-Unit</h3>
+        <h3 class="inline-block clear-vertical-margin" ng-if="isEdit" dotranslate>Edit Sub-Unit</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <form name="subUnitDetail" id="subUnitDetail" novalidate>
+            <div class="row">
+
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Location</label>
+                            <select class="form-control" name="LocationId" ng-options="opt.value as opt.name for opt in selects.LocationId" ng-model="entity.LocationId"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Branch</label>
+                            <select class="form-control" name="SUBranchId" ng-options="opt.value as opt.name for opt in selects.SUBranchId"
+                                ng-model="entity.SUBranchId"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Name Of SubUnit</label>
+                            <input type="text" class="form-control" ng-model="entity.SUName" name="SUName" id="SUName" required />
+
+                            <span class="validation-msg" validation-messages="" model-controller="bankDetails.bank" required-error="Name is required"
+                                form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <button type="submit" ng-if="!isEdit" class="btn btn-success" ng-click="saveForm(branchDetail);" dotranslate>Add Branch</button>
+                        <button type="submit" ng-if="isEdit" class="btn btn-success" ng-click="saveForm(branchDetail);" dotranslate>Update Branch</button>
+                        <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

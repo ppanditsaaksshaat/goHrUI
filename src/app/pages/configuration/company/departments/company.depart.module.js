@@ -45,7 +45,7 @@
         }],
         views: {
           'modal@': {
-            templateUrl: 'app/pages/configuration/company/departments/depart.html',
+            templateUrl: 'app/pages/configuration/company/departments/edit-departments.html',
             controller: 'departmentsEditController'
           }
         },

@@ -9,33 +9,140 @@
         .controller('payOverViewController', payOverViewController);
 
     /** @ngInject */
-    function payOverViewController($scope, $state) {
+    function payOverViewController($scope, $rootScope, $filter, pageService) {
 
-        $scope.getData = _getData;
-        $scope.payrollMonth = [
-            { "id": "4", "month": "Apr", "year": "2018", "type": "Pending", "statusClass": "pending", "active": false },
-            { "id": "5", "month": "May", "year": "2018", "type": "Pending", "statusClass": "pending", "active": false },
-            { "id": "6", "month": "Jun", "year": "2018", "type": "Pending", "statusClass": "pending", "active": false },
-            { "id": "7", "month": "Jul", "year": "2018", "type": "Completed", "statusClass": "completed", "active": false },
-            { "id": "8", "month": "Aug", "year": "2018", "type": "Current", "statusClass": "current", "active": true },
-            { "id": "9", "month": "Sep", "year": "2018", "type": "Upcoming", "statusClass": "upcoming", "active": false },
-            { "id": "10", "month": "Oct", "year": "2018", "type": "Upcoming", "statusClass": "upcoming", "active": false },
-            { "id": "11", "month": "Nov", "year": "2018", "type": "Upcoming", "statusClass": "upcoming", "active": false },
-            { "id": "12", "month": "Dec", "year": "2018", "type": "Upcoming", "statusClass": "upcoming", "active": false },
-            { "id": "1", "month": "Jan", "year": "2019", "type": "Upcoming", "statusClass": "upcoming", "active": false },
-            { "id": "2", "month": "Feb", "year": "2019", "type": "Upcoming", "statusClass": "upcoming", "active": false },
-            { "id": "3", "month": "Aug", "year": "2019", "type": "Upcoming", "statusClass": "upcoming", "active": false }
-        ]
+        $scope.getData = _getMonthlyPayrollData;
 
-        function _getData(payId) {       
-            angular.forEach($scope.payrollMonth, function (data) {
-                if (payId == data.id) {
+
+        var date = new Date();
+        var c_Month = date.getMonth() + 1;
+        var c_Year = date.getFullYear();
+        var nextYear = date.getFullYear() + 1;
+        var isChnageYear = false;
+        $scope.financialMonths = [];
+        var type = "";
+        var statusClass = "";
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+
+
+        function _loadController() {
+            _getPayrollData(c_Month, c_Year)
+        }
+
+        var IsCalenderYear = $filter("findObj")($rootScope.user.sysparam, "IS_PAYROLL_CALENDER_MONTH", "key");
+        if (IsCalenderYear != null) {
+
+            if (IsCalenderYear.value == "True") {
+                _getPayrollMomth(1);
+            }
+            else {
+                _getPayrollMomth(4);
+
+            }
+        }
+
+
+
+
+        function _getPayrollMomth(monthId) {
+            for (var i = 0; i <= 11; i++) {
+                if (monthId > 12) {
+                    monthId = 1
+                    isChnageYear = true;
+                }
+                if (c_Month == monthId) {
+                    type = "Current";
+                    statusClass = "current";
+                }
+                else if (c_Month < monthId) {
+                    type = "Upcoming";
+                    statusClass = "upcoming";
+                }
+                else if (c_Month > monthId) {
+                    if (isChnageYear == false) {
+                        if (monthId == 5) {
+                            type = "Completed";
+                            statusClass = "completed";
+                        }
+                        else {
+                            type = "Pending";
+                            statusClass = "pending";
+                        }
+                    }
+                    else {
+                        type = "Upcoming";
+                        statusClass = "upcoming";
+                    }
+                }
+                var calMonth =
+                {
+                    "id": monthId,
+                    "month": monthNames[monthId - 1],
+                    "year": isChnageYear == false ? c_Year : nextYear,
+                    "type": type,
+                    "statusClass": statusClass,
+                    "active": c_Month == monthId ? true : false
+                }
+                $scope.financialMonths.push(calMonth);
+                monthId++;
+            }
+        }
+
+        function _getMonthlyPayrollData(month, year) {
+
+            angular.forEach($scope.financialMonths, function (data) {
+                if (month == data.id) {
                     data.active = true;
                 }
-                else{
+                else {
                     data.active = false;
                 }
             })
+            if (month <= c_Month ) {
+                _getPayrollData(month, year)
+            }
+            else {
+                $scope.monthName = monthNames[month - 1]
+                $scope.year = year;
+                // $scope.lastDayNumber = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
+                // $scope.calenderDays = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
+                $scope.totalEmployee =  0;
+                $scope.exitEmployee =0;
+                $scope.newEmployee = 0;
+                $scope.payrollCost = 0;
+            }
         }
+
+
+        function _getPayrollData(month, year) {
+            var searchLists = [];
+            searchLists.push({ field: 'month', operand: '=', value: month })
+            searchLists.push({ field: 'year', operand: '=', value: year })
+            console.log(searchLists)
+            var data = {
+                searchList: searchLists,
+                orderByList: []
+            }
+            pageService.getCustomQuery(data, 660).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
+            function _getCustomQuerySuccessResult(result) {
+
+                $scope.monthName = monthNames[month - 1]
+                $scope.year = year;
+                $scope.lastDayNumber = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
+                $scope.calenderDays = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
+                $scope.totalEmployee = result[0][0].TotalEmployee != null ? result[0][0].TotalEmployee : 0;
+                $scope.exitEmployee = result[0][0].ExistEmployee != null ? result[0][0].ExistEmployee : 0;
+                $scope.newEmployee = result[0][0].NewEmployee != null ? result[0][0].NewEmployee : 0;
+                $scope.payrollCost = result[1][0].TotalPayrollCost != null ? result[1][0].TotalPayrollCost : 0;
+            }
+            function _getCustomQueryErrorResult(err) {
+                console.log(err);
+            }
+        }
+
+
+        _loadController();
     }
 })();

@@ -24,7 +24,6 @@
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
-
                 },
                 order: 4
             })

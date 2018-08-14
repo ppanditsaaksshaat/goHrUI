@@ -46,7 +46,7 @@
         views: {
           'modal@': {
             templateUrl: 'app/pages/configuration/company/locations/subUnit/edit-unit.html',
-            controller: 'locationEditController'
+            controller: 'unitEditController'
           }
         },
         title: 'Edit unit',
@@ -68,7 +68,7 @@
         views: {
           'modal@': {
             templateUrl: 'app/pages/configuration/company/locations/subUnit/edit-unit.html',
-            controller: 'locationEditController'
+            controller: 'unitEditController'
           }
         },
         title: 'Edit Location',

@@ -1,0 +1,122 @@
+<div class="col-sm-12 clear-left-padding my-finance-summary">
+    <div class="row">
+        <!-- ngIf: vm.showMyPay -->
+        <div class="col-lg-6 col-md-12 col-sm-12 clear-right-padding ng-scope" >
+            <pay-slip-wizard get-payslip-summary="vm.financeService.getPayslipSummary(vm.params)" class="ng-isolate-scope">
+                <div class="tile salary-summary">
+                    <div class="tile-header col-sm-12">
+                        <h2 class="pull-left">
+                            <span class="icon-coin icon"></span>
+                            Salary Summary
+                            <!-- ngIf: ctrl.anyPaySlip -->
+                        </h2>
+                        <div class="pull-right salary-shift-icons vertical-margin">
+                            <span class="icon-arrow-left-2 pull-left pointer disabled-icon" data-ng-class="{'disabled-icon': !ctrl.anyPreviousSlip}"
+                                data-ng-click="ctrl.previousPaySlip()"></span>
+                            <span class="icon-arrow-right-2 pull-right pointer disabled-icon" data-ng-class="{'disabled-icon' : !ctrl.anyNextSlip}" data-ng-click="ctrl.nextPaySlip()"></span>
+                        </div>
+                    </div>
+                    <!-- ngIf: !ctrl.anyPaySlip -->
+                    <div class="alert-info text-center vertical-margin col-sm-6 col-sm-offset-3 ng-scope" >
+                        <h4> No Salary Pay Slip </h4>
+                    </div>
+                    <!-- end ngIf: !ctrl.anyPaySlip -->
+                    <!-- ngIf: ctrl.anyPaySlip -->
+                </div>
+            </pay-slip-wizard>
+        </div>
+        <!-- end ngIf: vm.showMyPay -->
+        <div class="col-lg-6 col-md-12 col-sm-12 clear-right-padding">
+            <alert-wizard class="ng-isolate-scope">
+                <div class="tile alert-summary">
+                    <div class="tile-header col-sm-12">
+                        <h2 class="pull-left">
+                            <span class="icon-bell2 icon"></span>
+                            Alerts &amp; Notifications
+                        </h2>
+                    </div>
+                    <div class="col-sm-12 tile-content clear-left-padding">
+                        <div class="clearfix priority detail-container" data-ng-class="{high:ctrl.alertPriority.High.id==alert.priority  ,
+                         low : ctrl.alertPriority.Low.id==alert.priority}">
+                            <div class="col-sm-1">
+                                <span class="icon icon-radio-unchecked"></span>
+                            </div>
+                            <div class="col-sm-11">
+                                <div class="detail">
+                                    If you haven't filed your previous year income taxes, you can now file taxes for free online.
+                                    <a href="https://cleartax.in/s/partner-keka/?utm_source=2017march&amp;utm_medium=email&amp;utm_campaign=keka" target="_blank">Click here</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ngRepeat: alert in ctrl.alerts -->
+                    </div>
+                </div>
+            </alert-wizard>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 clear-right-padding">
+            <expense-claim-wizard get-expense-summary="vm.financeService.getExpenseSummary(vm.params)" class="ng-isolate-scope">
+                <div class="tile expenseClaim-summary">
+                    <div class="tile-header col-sm-12">
+                        <h2 class="pull-left">
+                            Expense Claims
+                        </h2>
+                    </div>
+                    <div class="col-sm-12 tile-content clear-side-padding">
+                        <div class="summary">
+                            <div class="clearfix detail-container">
+                                <div class="col-sm-6 clear-right-padding">
+                                    <div class="title">Outstanding Claims</div>
+                                    <div class="ng-binding">0 Claims</div>
+                                </div>
+                                <div class="col-sm-6 clear-right-padding">
+                                    <div class="title">Approved Claims</div>
+                                    <div class="ng-binding">0 Claims</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <!-- ngIf: 'myfinances' | includedByState -->
+                            <a class="btn btn-lg ng-scope"  ui-sref="myfinances.expenseclaims"
+                                href="#/finances/myexpenseclaims">New Expense Claim</a>
+                            <!-- end ngIf: 'myfinances' | includedByState -->
+                            <!-- ngIf: 'employee.finances' | includedByState -->
+                        </div>
+                    </div>
+                </div>
+            </expense-claim-wizard>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 clear-right-padding">
+            <loan-wizard get-loan-summary="vm.financeService.getLoanSummary(vm.params)" class="ng-isolate-scope">
+                <div class="tile loans-summary">
+                    <div class="tile-header col-sm-12">
+                        <h2 class="pull-left">
+                            <span class="icon-coins icon"></span>
+                            Loans
+                        </h2>
+                    </div>
+                    <div class="col-sm-12 tile-content clear-side-padding">
+                        <div class="summary">
+                            <div class="clearfix detail-container">
+                                <div class="col-sm-6 clear-right-padding">
+                                    <div class="title">Outstanding Loans</div>
+                                    <div class="ng-binding">1 Loan</div>
+                                </div>
+                                <div class="col-sm-6 clear-right-padding">
+                                    <div class="title">Remaining Term</div>
+                                    <div class="ng-binding">1 months</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ngIf: 'myfinances' | includedByState -->
+                        <div class="col-sm-12 info ng-scope" >
+                            <a class="btn btn-lg btn-apply" data-ui-sref=".applyloan" href="#/finances/summary/applyloan">Apply Loan</a>
+                        </div>
+                        <!-- end ngIf: 'myfinances' | includedByState -->
+                        <!-- ngIf: 'employee.finances' | includedByState -->
+                    </div>
+                </div>
+            </loan-wizard>
+        </div>
+    </div>
+   
+</div>

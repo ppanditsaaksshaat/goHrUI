@@ -9,7 +9,7 @@
         .controller('locationEditController', locationEditController);
 
     /** @ngInject */
-    function locationEditController($scope, $rootScope, $state, $stateParams, pageService, editFormService) {
+    function locationEditController($scope, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
         $scope.selects = $stateParams.param.selects;
         $scope.entity = $stateParams.param.entity;
         $scope.pageid = $stateParams.param.pageid;
@@ -18,12 +18,18 @@
         $scope.oldEntity = angular.copy($stateParams.param.entity);
         $scope.saveForm = _saveForm;
         $scope.action = 'create';
+
+        console.log($scope.selects)
+
         if ($stateParams.param.id > 0) {
             $scope.isEdit = true;
             $scope.action = 'edit';
         }
         $scope.selects.StateList = $scope.selects.StateId;
 
+        function _childmethod() {
+            $rootScope.$emit("CallParentMethod", {});
+        }
         $scope.changeState = function () {
             console.log('changeState')
             $scope.selects.StateList = $scope.selects.StateId;
@@ -36,11 +42,18 @@
             console.log($scope.selects.StateList)
         }
 
+        // $scope.GetSelectedCountry = function () {
+        //     $scope.strCountry = $scope.countrySrc;
+        // };
+        // $scope.GetSelectedState = function () {
+        //     $scope.strState = $scope.stateSrc;
+        // };
+
         function _saveForm(form) {
             $scope.currentForm = form;
             if (_validateForm(form)) {
                 editFormService.saveForm($scope.pageid, $scope.entity,
-                        $scope.oldEntity, $scope.action, 'Save')
+                    $scope.oldEntity, $scope.action, 'Save')
                     .then(_saveFormSuccess, _saveFormError)
             }
         }
@@ -50,8 +63,17 @@
         }
 
         function _saveFormSuccess(result) {
-
-            $state.go('configuration.company.locations.location')
+            if (result.success_message == "Added New Record.") {
+                $rootScope.showMsg("success", "Record Save Successfully");
+            }
+            else {
+                if (result.success_message == "Record Updated.") {
+                    $rootScope.showMsg("success", "Record Updated");
+                }
+            }
+            _childmethod()
+            $scope.$close();
+            // $state.go('configuration.company.locations.location')
         }
 
         function _saveFormError(err) {
