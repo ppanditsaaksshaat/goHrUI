@@ -116,18 +116,18 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
                 var rndVal = Math.round((Math.random() * 10) * 10);
                 var url = serviceBase + 'api/values/' + pageCode + "?" + rndVal;
                 $http.get(url).then(function (results) {
-                    var pgList = DJWebStore.GetValue('pageList');
-                    if (pgList == null) {
-                        pgList = {};
-                    }
-                    if (results.pageinfo)
-                        if (results.pageinfo.pageid)
-                            pgList['pg_' + results.pageinfo.pageid] = results;
+                        var pgList = DJWebStore.GetValue('pageList');
+                        if (pgList == null) {
+                            pgList = {};
+                        }
+                        if (results.pageinfo)
+                            if (results.pageinfo.pageid)
+                                pgList['pg_' + results.pageinfo.pageid] = results;
 
-                    DJWebStore.SetValue('pageList', pgList);
-                    console.log(results)
-                    dfd.resolve(results);
-                },
+                        DJWebStore.SetValue('pageList', pgList);
+                        console.log(results)
+                        dfd.resolve(results);
+                    },
                     function (error) {
                         dfd.reject(error);
                     }
@@ -1310,7 +1310,7 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
 
         var _udateMultiTableFields = function (fieldList) {
 
-          
+
             var url = serviceBase + 'api/Data/UpdateMultiTableFields/';
             return $http.post(url, JSON.stringify(JSON.stringify(fieldList)), {
                 headers: {
@@ -1563,6 +1563,18 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
             });
         }
 
+        var _keyValid = function () {
+            var url = serviceBase + 'api/Key/Valid/'
+            return $http.get(url).then(function (results) {
+                return results;
+            });
+        }
+        var _keyDataUrl = function () {
+            var url = serviceBase + 'api/Key/Gen/'
+            return url
+        }
+
+
         pageServiceFactory.serviceBase = serviceBase;
         pageServiceFactory.getPagData = _getPagData;
         pageServiceFactory.deletePageData = _deletePageData;
@@ -1681,6 +1693,9 @@ angular.module('BlurAdmin.common').factory('pageService', ['$http', 'DJWebStore'
         pageServiceFactory.getAttSummaryFile = _getAttSummaryFile;
 
         pageServiceFactory.getAllPageList = _getAllPageList;
+
+        pageServiceFactory.keyValid = _keyValid;
+        pageServiceFactory.keyDataUrl = _keyDataUrl;
 
         return pageServiceFactory;
 

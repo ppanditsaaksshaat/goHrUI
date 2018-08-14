@@ -9,6 +9,7 @@
 
     angular.module('BlurAdmin.pages')
         .controller('authController', authController);
+
     function authController($scope, pageService, DJWebStore, authService) {
 
         DJWebStore.RemoveAll();
@@ -55,19 +56,23 @@
         $scope.languageList = [];
 
         $scope.languageList.push({
-            label: 'English', value: 'en'
+            label: 'English',
+            value: 'en'
         })
 
         $scope.languageList.push({
-            label: 'हिन्दी (Hindi)', value: 'hi'
+            label: 'हिन्दी (Hindi)',
+            value: 'hi'
         })
 
         $scope.languageList.push({
-            label: 'Kiswahili (Swahili)', value: 'sw'
+            label: 'Kiswahili (Swahili)',
+            value: 'sw'
         })
 
         $scope.languageList.push({
-            label: 'français (French)', value: 'fr'
+            label: 'français (French)',
+            value: 'fr'
         })
 
         $scope.selectedLanguage = $scope.languageList[0];
@@ -76,11 +81,30 @@
 
         function _loadController() {
             //_getAppData();
+
+            $scope.key = {
+                url: pageService.keyDataUrl(),
+                vl: true,
+                multi: false,
+                corpo: '400'
+            };
+
+
+            pageService.keyValid().then(function (result) {
+                console.log(result)
+                $scope.key = result;
+                $scope.key.url = pageService.keyDataUrl();
+                $scope.key.vl = true;
+                $scope.key.multi = true;
+                $("#userCorpoId").val($scope.key.corpo);
+            }, function (err) {
+
+            })
         }
 
         function _getAppData() {
             pageService.getOnlyAppData().then(function (result) {
-                var appData = result;// angular.fromJson(response.data);
+                var appData = result; // angular.fromJson(response.data);
                 console.log(appData)
                 DJWebStore.SetAppData(appData);
                 appData = DJWebStore.GetAppData()
@@ -109,6 +133,11 @@
             var userName = $("#userName").val();
             var userPwd = $("#userPassword").val();
             var userCorpoId = $("#userCorpoId").val();
+
+            if (!$scope.key.multi) {
+                userCorpoId = $scope.key.corp;
+            }
+
 
             if (DJWebStore.IsDev()) {
                 //only for development mode - dj@03.01.2017
@@ -159,34 +188,34 @@
 
             authService.login(loginData, userCorpoId, $scope.selectedLanguage.value).then(function (response) {
 
-                console.log(response)
-                $scope.GetBGClass()
-                pageService.getAppUserData().then(function (result) {
+                    console.log(response)
+                    $scope.GetBGClass()
+                    pageService.getAppUserData().then(function (result) {
 
-                    console.log(result)
-                    var profileData = result;//angular.fromJson(response.data);
-                    DJWebStore.SetUserProfile(profileData.user);
-                    DJWebStore.SetSysParam(profileData.sys.param);
-                    DJWebStore.SetCompany(profileData.company);
-                    if (profileData.resource) {
-                        console.log(profileData.resource)
-                        DJWebStore.SetValue('resourceKey', profileData.resource);
-                    }
-                    _loadSideMenu();
-                    // window.location.href = 'index.html'
-                }, function (err) {
+                        console.log(result)
+                        var profileData = result; //angular.fromJson(response.data);
+                        DJWebStore.SetUserProfile(profileData.user);
+                        DJWebStore.SetSysParam(profileData.sys.param);
+                        DJWebStore.SetCompany(profileData.company);
+                        if (profileData.resource) {
+                            console.log(profileData.resource)
+                            DJWebStore.SetValue('resourceKey', profileData.resource);
+                        }
+                        _loadSideMenu();
+                        // window.location.href = 'index.html'
+                    }, function (err) {
 
 
-                    $("#userName").prop("disabled", false);
-                    $("#userPassword").prop("disabled", false);
-                    $("#userLanguage").prop("disabled", false);
-                    $("#btnlogin").prop("disabled", false);
-                    $("#userCorpoId").prop("disabled", false);
-                    $("#btnlogin").text("Sign in");
-                    DJWebStore.RemoveAll();
-                    $scope.showMsg('error', err)
-                });
-            },
+                        $("#userName").prop("disabled", false);
+                        $("#userPassword").prop("disabled", false);
+                        $("#userLanguage").prop("disabled", false);
+                        $("#btnlogin").prop("disabled", false);
+                        $("#userCorpoId").prop("disabled", false);
+                        $("#btnlogin").text("Sign in");
+                        DJWebStore.RemoveAll();
+                        $scope.showMsg('error', err)
+                    });
+                },
                 function (err) {
 
                     console.log(err)
@@ -194,19 +223,15 @@
                         if (err.status == 400) {
                             $scope.showMsg('warning', 'The user name or password is incorrect.')
                             //alert('The user name or password is incorrect.');
-                        }
-                        else if (err.status == 500) {
+                        } else if (err.status == 500) {
                             $scope.showMsg('warning', 'Please check your Customer.Id');
-                        }
-                        else if (err.status == -1) {
+                        } else if (err.status == -1) {
                             $scope.showMsg('error', 'Cross Authentication Failed')
                         }
-                    }
-                    else if (err.error_description !== undefined) {
+                    } else if (err.error_description !== undefined) {
                         //alert(err.error_description);
                         $scope.showMsg('error', err.error_description)
-                    }
-                    else {
+                    } else {
                         $scope.showMsg('error', err)
                     }
 
@@ -232,6 +257,7 @@
             pageService.getNavigation().then(_sideMenuSuccessResult, _sideMenuErrorResult);
 
         }
+
         function _sideMenuSuccessResult(result) {
             console.log(result)
             $scope.sideMenu = result;
@@ -240,6 +266,7 @@
 
             window.location.href = 'index.html'
         }
+
         function _sideMenuErrorResult(err) {
 
         }
