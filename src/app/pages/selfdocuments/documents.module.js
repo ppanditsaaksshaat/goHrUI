@@ -5,7 +5,10 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.selfdocuments', [])
+    angular.module('BlurAdmin.pages.selfdocuments', [
+        'BlurAdmin.pages.selfdocuments.drive',
+        'BlurAdmin.pages.selfdocuments.folder'
+    ])
         .config(routeConfig);
 
     /** @ngInject */
@@ -15,11 +18,19 @@
                 url: '/selfdocuments',
                 title: 'selfdocuments',
                 templateUrl: 'app/pages/selfdocuments/documents.html',
+                onEnter: ['$uibModal', '$state', '$rootScope', 'baSidebarService', function ($uibModal, $state, $rootScope, baSidebarService) {
+
+                    if (!baSidebarService.isMenuCollapsed()) {
+
+                        baSidebarService.setMenuCollapsed(true);
+
+                    }
+                }],
                 controller: 'selfdocumentsPageCtrl',
                 sidebarMeta: {
                     order: 1,
                 },
-            }); 
+            });
     }
 
 })();

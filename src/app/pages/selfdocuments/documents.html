@@ -1,1 +1,161 @@
-<h1>Document</h1>
+<div id="drive_main_page" class="drive-container panel">
+    <div class="panel-heading">
+        <div class="drive-top-bar">
+
+            <div class="drive-header">
+                <a href class="drive-logo">
+                    <img src="data:image/png;base64,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"
+                    />
+                    <span>Documents</span>
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="panel-body row">
+        <div class="drive-side-bar col-md-3">
+            <md-menu>
+                <md-button aria-label="Open phone interactions menu" class="md-raised" ng-click="ctrl.openMenu($mdMenu, $event)">
+                    <md-icon md-menu-origin class="fa fa-upload"></md-icon>Upload
+                </md-button>
+                <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-button ng-click="ctrl.redial($event)">
+                            Redial
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button disabled="disabled" ng-click="ctrl.checkVoicemail()">
+                            Check voicemail
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="ctrl.toggleNotifications()">
+                            {{ctrl.notificationsEnabled ? 'Disable' : 'Enable' }} notifications
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+
+            <!-- Overlay for fixed sidebar -->
+            <div class="sidebar-overlay"></div>
+
+            <!-- Material sidebar -->
+            <aside id="sidebar" class="sidebar sidebar-default open" role="navigation">
+                <!-- Sidebar navigation -->
+                <ul class="nav sidebar-nav">
+                    <li class="dropdown">
+                        <ul id="settings-dropdown" class="dropdown-menu">
+                            <li>
+                                <a ui-sref="selfdocuments.drive.mydocs" tabindex="-1">
+                                    My Docs
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" tabindex="-1">
+                                    Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" tabindex="-1">
+                                    Help
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" tabindex="-1">
+                                    Exit
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a ui-sref="selfdocuments.drive({type:'mydocs'})">
+                            <i class="sidebar-icon fa fa-folder font-folder"></i>
+                            <span dotranslate>My Docs</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="selfdocuments.drive({type:'mystar'})">
+                            <i class="sidebar-icon fa fa-star font-gold"></i>
+                            <span dotranslate>Stared</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="selfdocuments.drive({type:'myshared'})">
+                            <i class="sidebar-icon fa fa-share-alt font-green"></i>
+                            <span dotranslate>Shared With Me</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="selfdocuments.drive({type:'myrecent'})">
+                            <i class="sidebar-icon fa fa-history"></i>
+                            <span dotranslate>Recent</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="selfdocuments.drive({type:'publicdocs'})">
+                            <i class="sidebar-icon fa fa-users font-blue"></i>
+                            <span dotranslate>Public Docs</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="selfdocuments.drive({type:'mytrash'})">
+                            <i class="sidebar-icon fa fa-trash font-red"></i>
+                            <span dotranslate>Trash</span>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <!-- <li class="dropdown">
+                        <a class="ripple-effect dropdown-toggle" href="#" data-toggle="dropdown">
+                            All Mail
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#" tabindex="-1">
+                                    Social
+                                    <span class="sidebar-badge">12</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" tabindex="-1">
+                                    Promo
+                                    <span class="sidebar-badge">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Trash
+                            <span class="sidebar-badge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Spam
+                            <span class="sidebar-badge">456</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Follow Up
+                            <span class="sidebar-badge badge-circle">i</span>
+                        </a>
+                    </li> -->
+                </ul>
+                <!-- Sidebar divider -->
+                <!-- <div class="sidebar-divider"></div> -->
+
+                <!-- Sidebar text -->
+                <!--  <div class="sidebar-text">Text</div> -->
+            </aside>
+
+        </div>
+        <div class="drive-content col-md-9">
+            <div ui-view></div>
+        </div>
+    </div>
+</div>

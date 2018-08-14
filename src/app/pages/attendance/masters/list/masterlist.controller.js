@@ -426,7 +426,7 @@
         // $scope.multiEntity.lz = false;
         pageService.multiSave(data).then(function (result) {
           console.log(result)
-          if (result == "done") {
+          if (result.success_message == "success") {
             $scope.showMsg("success", "Record Saved Successfully");
             $scope.showWeeklyOffList = false;
             $scope.page.refreshData();
