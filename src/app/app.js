@@ -45,7 +45,7 @@
         'BlurAdmin.pages',
         'BlurAdmin.common',
         'ui.knob',
-        'chart.js'
+        'chart.js' 
         // ,
         // 'angularUtils.directives.dirPagination'
     ]);
