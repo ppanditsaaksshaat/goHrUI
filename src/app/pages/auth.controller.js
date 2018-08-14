@@ -95,7 +95,7 @@
                 $scope.key = result;
                 $scope.key.url = pageService.keyDataUrl();
                 $scope.key.vl = true;
-                $scope.key.multi = false;
+                $scope.key.multi = true;
                 $("#userCorpoId").val($scope.key.corpo);
             }, function (err) {
 
