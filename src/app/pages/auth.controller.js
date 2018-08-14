@@ -78,8 +78,6 @@
         $scope.selectedLanguage = $scope.languageList[0];
 
         $scope.doLogin = _doLogin;
-        $scope.uploadLicFile = _uploadLicFile;
-
 
         function _loadController() {
             //_getAppData();
@@ -88,6 +86,9 @@
                 console.log(result)
                 $scope.key = result;
                 $scope.key.url = pageService.keyDataUrl();
+                $scope.key.vl = true;
+                $scope.key.multi = false;
+                $("#userCorpoId").val($scope.key.corpo);
             }, function (err) {
 
             })
@@ -118,16 +119,6 @@
                 vm.isLoadSuccess = false;
             });
         }
-
-        function _uploadLicFile() {
-            console.log($scope.key, $scope.file)
-            console.log($scope.fileinput)
-            pageService.keyUpload($scope.file).then(function (result) {
-                console.log('Uploaded')
-            }, function (err) {
-                console.log(err);
-            })
-        } 
 
         function _doLogin() {
 
