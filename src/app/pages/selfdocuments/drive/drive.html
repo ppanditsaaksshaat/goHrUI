@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-md-12 clear-padding">
+        <div class="drive-content-bar">
+            <h4>{{type|translate}}
+                <div class="pull-right">
+                    <md-button class="md-icon-button md-primary" aria-label="Settings" ng-click="toggleView()">
+                        <md-tooltip ng-if="isShowList" md-direction="bottom" dotranslate>Grid View</md-tooltip>
+                        <md-tooltip ng-if="!isShowList" md-direction="bottom" dotranslate>List View</md-tooltip>
+                        <md-icon class="fa " ng-class="{'fa-th-list':!isShowList, 'fa-th-large': isShowList}"></md-icon>
+                    </md-button>
+                </div>
+            </h4>
+        </div>
+        <div class="divider"></div>
+        <div class="drive-content-body">
+            <div ng-show="isShowList">
+                <div id="CommonViewGrid" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning
+                    ui-grid-edit ui-grid-expandable class="djGrid">
+                    <div class="no-data" ng-if="page.gridOptions.data.length==0 && !page.dataIsLoading">{{page.boxOptions.noResultMessageText}}</div>
+                    <div class="no-data font-black" ng-if="page.dataIsLoading">
+                        <i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i> Please wait data is loading....
+                    </div>
+                </div>
+            </div>
+            <div layout="row" layout-padding layout-wrap layout-fill style="padding-bottom: 32px;" ng-cloak ng-show="!isShowList">
+                <div class="folder-list col-md-12">
+                    <h5>Folders
+                        <a href class="pull-right">
+                            <i class="fa fa-sort-alpha-down"></i>
+                        </a>
+                    </h5>
+                    <md-whiteframe md-whiteframe="{{height}}" class="md-whiteframe-1dp {{file.frameActiveClass}}" flex-sm="45" flex-gt-sm="35"
+                        flex-gt-md="25" layout layout-align="center center" ng-repeat="file in folderList|filter:{fileType:'Folder'}"
+                        ng-init="height = 3" ng-mouseenter="height = 6" ng-mouseleave="height = 3" ng-click="toggleFolderSelect(file);" ng-dblclick="openFolder(file);">
+                        <i class="fa fa-folder font-gold"></i>
+                        <span>{{file.fileName}}</span>
+                        <em>{{file.modifiedDate|date}}</em>
+                    </md-whiteframe>
+                </div>
+                <div class="file-list col-md-12">
+                    <h5>Files</h5>
+                    <md-whiteframe md-whiteframe="{{height}}" class="md-whiteframe-1dp {{file.frameActiveClass}}" flex-sm="45" flex-gt-sm="35"
+                        flex-gt-md="25" layout layout-align="center center" ng-init="height = 3" ng-mouseenter="height = 6" ng-mouseleave="height = 3"
+                        ng-click="toggleFolderSelect(file);" ng-repeat="file in fileList|filter:{fileCategory:'mydocs'}" ng-dblclick="openFile(file);">
+                        <div class="file-preview">
+                            <div class="file-preview-icon" ng-class="{'icon-word':(file.fileType=='doc'), 'icon-excel':(file.fileType=='excel'), 'icon-pdf':(file.fileType=='pdf')}">
+                                
+                            </div>
+                        </div>
+                        <div class="file-tile">
+                            <i class="fa " ng-class="{'fa-file-word font-blue': (file.fileType=='doc'), 'fa-file-pdf font-red': (file.fileType=='pdf')}"></i>
+                            <span>{{file.fileName}} </span>
+                            <em>{{file.fileType}}</em>
+                        </div>
+                    </md-whiteframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="fileCell.html">
+    <div class="ui-grid-cell-contents">
+        <button class="btn" type="button" ng-click="grid.appScope.Main.openAddress(COL_FIELD)">Map Address</button>
+    </div>
+</script>

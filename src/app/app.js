@@ -1,7 +1,14 @@
 (function () {
     'use strict';
+    // angular.uppercase = function (text) {
+    //     return text.toUpperCase();
+    // }
+    // angular.lowercase = function (text) {
+    //     return text.toLowerCase();
+    // }
 
     angular.module('BlurAdmin', [
+        'ngMaterial',
         'ngAnimate',
         'ui.bootstrap',
         'ui.sortable',
@@ -42,7 +49,10 @@
         // ,
         // 'angularUtils.directives.dirPagination'
     ]);
-
+    angular.module('BlurAdmin').config(function () {
+        angular.lowercase = angular.$$lowercase;
+        angular.uppercase = angular.$$uppercase; 
+    });
 
     var app = {
 

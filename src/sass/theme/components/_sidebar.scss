@@ -114,9 +114,11 @@ a.al-sidebar-list-link {
 
 @mixin layout-collapsed() {
   .al-main {
-    margin-left: 50px;
+    margin-left: 0px;
   }
-
+  .al-content {
+    padding: 8px 10px 8px 10px;
+  }
   .al-footer {
     padding-left: 83px
   }
@@ -184,7 +186,7 @@ a.al-sidebar-list-link {
 
 @mixin sidebar-collapsed() {
   .al-sidebar {
-    width: 52px;
+    width: 5px;
 
     .fa-angle-down, .fa-angle-up {
       opacity: 0;
@@ -193,7 +195,7 @@ a.al-sidebar-list-link {
     .al-sidebar-sublist {
       position: absolute;
       top: -1px;
-      left: 52px;
+      left: 5px;
       @include bg-translucent-dark(0.8);
       width: 0;
       display: block;
