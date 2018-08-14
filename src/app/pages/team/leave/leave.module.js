@@ -7,7 +7,7 @@
 
     angular.module('BlurAdmin.pages.team.leave', [
     ])
-     .config(routeConfig);
+        .config(routeConfig);
 
 
     /** @ngInject */
@@ -17,7 +17,7 @@
                 url: '/leave',
                 templateUrl: 'app/pages/team/leave/leave.html',
                 title: 'LEAVE',
-                controller: "",
+                controller: "myTeamLeaveController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
