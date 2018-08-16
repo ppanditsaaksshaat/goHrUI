@@ -12,13 +12,13 @@
     Add Employee
   </div>
   <div class="panel-body">
-    <form name="form" ng-submit="addCtrl.saveForm(entity)">
+    <form name="form" ng-submit="addCtrl.saveForm(addCtrl.empAdd)">
       <div class="row">
 
         <div class="col-sm-1">
           <div class="form-group">
             <label>Title*</label>
-            <select id="inputTitle" required ng-model="entity.EmpTitleId" class="form-control" ng-options="title.value as title.name for title in addCtrl.dropDownList[0]"
+            <select id="inputTitle" required ng-model="addCtrl.empAdd.EmpTitleId" class="form-control" ng-options="title.value as title.name for title in addCtrl.dropDownList[0]"
               data-placeholder="Select Nav Menu">
               <option></option>
             </select>
@@ -27,20 +27,21 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label>First Name*</label>
-            <input text-Only type="text" class="form-control css-form" name="inputFirstName" maxlength="50" ng-model="entity.EmpFirstName"
+            <input text-Only type="text" class="form-control css-form" name="inputFirstName" maxlength="50" ng-model="addCtrl.empAdd.EmpFirstName"
               placeholder="First Name" required>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group">
             <label>Middle Name</label>
-            <input text-Only type="text" class="form-control" id="inputMiddleName" maxlength="50" ng-model="entity.EmpMiddleName" placeholder="Middle Name">
+            <input text-Only type="text" class="form-control" id="inputMiddleName" maxlength="50" ng-model="addCtrl.empAdd.EmpMiddleName"
+              placeholder="Middle Name">
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group">
             <label>Last Name</label>
-            <input text-Only type="text" class="form-control" id="inputLastName" maxlength="50" ng-model="entity.EmpLastName"
+            <input text-Only type="text" class="form-control" id="inputLastName" maxlength="50" ng-model="addCtrl.empAdd.EmpLastName"
               placeholder="Last Name">
           </div>
         </div>
@@ -49,7 +50,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Gender*</label>
-            <select id="inputGender" ng-model="entity.PdGenderId" class="form-control" ng-options="gender.value as gender.name for gender in addCtrl.dropDownList[3]"
+            <select id="inputGender" ng-model="addCtrl.empAdd.PdGenderId" class="form-control" ng-options="gender.value as gender.name for gender in addCtrl.dropDownList[3]"
               data-placeholder="Select Nav Menu" required>
               <option></option>
             </select>
@@ -59,21 +60,21 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Date Of Joining*</label>
-            <div class="input-group" moment-picker="entity.JDDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
+            <div class="input-group" moment-picker="addCtrl.empAdd.JDDate" format="DD-MMM-YYYY" start-view="month" max-date="col.maxDate"
               min-date="col.minDate">
               <span class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </span>
               <input valid-text ng-column="col" name="{{col.name}}" id="{{col.name}}" ng-readonly="true" class="form-control" placeholder="Select a date"
-                ng-model="entity.JDDate" ng-model-options="{ updateOn: 'blur' }">
+                ng-model="addCtrl.empAdd.JDDate" ng-model-options="{ updateOn: 'blur' }">
               <span class="input-group-btn">
-                <button class="btn btn-secondary" ng-click="entity.JDDate=''" type="button">
+                <button class="btn btn-secondary" ng-click="addCtrl.empAdd.JDDate=''" type="button">
                   <i class="fa fa-close"></i>
                 </button>
               </span>
             </div>
             <!--<datepicker date-format="dd/MMMM/yyyy" selector="form-control">           
-            <input ng-model="entity.JDDate" name="doj" type="text" class="form-control"   placeholder="dd-mm-yyyy" required >         
+            <input ng-model="addCtrl.empAdd.JDDate" name="doj" type="text" class="form-control"   placeholder="dd-mm-yyyy" required >         
            
           </datepicker>-->
           </div>
@@ -81,7 +82,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Mobile*</label>
-            <input numeric-Only type="text" class="form-control" minlength="10" maxlength="17" ng-model="entity.PdMobileNo" placeholder="Mobile"
+            <input numeric-Only type="text" class="form-control" minlength="10" maxlength="17" ng-model="addCtrl.empAdd.PdMobileNo" placeholder="Mobile"
               required>
           </div>
         </div>
@@ -90,7 +91,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Location*</label>
-            <select id="inputDepartment" ng-model="entity.LocationId" ng-change="addCtrl.locationOnChange(entity.LocationId)"
+            <select id="inputDepartment" ng-model="addCtrl.empAdd.LocationId" ng-change="addCtrl.locationOnChange(addCtrl.empAdd.LocationId)"
               class="form-control" ng-options="loaction.value as loaction.name for loaction in addCtrl.dropDownList[9]" data-placeholder="Select Nav Menu"
               required>
               <option></option>
@@ -100,7 +101,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Branch*</label>
-            <select id="inputDesignation" ng-model="entity.BRId" ng-change="addCtrl.branchOnChange(entity.BRId)" class="form-control"
+            <select id="inputDesignation" ng-model="addCtrl.empAdd.BRId" ng-change="addCtrl.branchOnChange(addCtrl.empAdd.BRId)" class="form-control"
               ng-options="branch.value as branch.name for branch in addCtrl.Branches" data-placeholder="Select Nav Menu" required>
               <option></option>
             </select>
@@ -109,7 +110,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Sub Unit*</label>
-            <select id="inputEmployeeType" ng-model="entity.JDSubUnitID" class="form-control" ng-options="subUnit.value as subUnit.name for subUnit in addCtrl.SubUnits"
+            <select id="inputEmployeeType" ng-model="addCtrl.empAdd.JDSubUnitID" class="form-control" ng-options="subUnit.value as subUnit.name for subUnit in addCtrl.SubUnits"
               data-placeholder="Select Nav Menu" required>
               <option></option>
             </select>
@@ -120,7 +121,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Department*</label>
-            <select id="inputDepartment" ng-model="entity.JDDeptId" class="form-control" ng-options="department.value as department.name for department in addCtrl.dropDownList[1]"
+            <select id="inputDepartment" ng-model="addCtrl.empAdd.JDDeptId" class="form-control" ng-options="department.value as department.name for department in addCtrl.dropDownList[1]"
               data-placeholder="Select Nav Menu" required>
               <option></option>
             </select>
@@ -129,7 +130,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Designation*</label>
-            <select id="inputDesignation" ng-model="entity.JDDesgId" class="form-control" ng-options="designation.value as designation.name for designation in addCtrl.dropDownList[2]"
+            <select id="inputDesignation" ng-model="addCtrl.empAdd.JDDesgId" class="form-control" ng-options="designation.value as designation.name for designation in addCtrl.dropDownList[2]"
               data-placeholder="Select Nav Menu" required>
               <option></option>
             </select>
@@ -138,7 +139,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Employment Type*</label>
-            <select id="inputEmployeeType" ng-model="entity.JDEmploymentId" class="form-control" ng-options="employeeType.value as employeeType.name for employeeType in addCtrl.dropDownList[4]"
+            <select id="inputEmployeeType" ng-model="addCtrl.empAdd.JDEmploymentId" class="form-control" ng-options="employeeType.value as employeeType.name for employeeType in addCtrl.dropDownList[4]"
               data-placeholder="Select Nav Menu" required>
               <option></option>
             </select>
@@ -149,7 +150,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Grade*</label>
-            <select id="inputGrade" ng-model="entity.JDEmpGradeId" class="form-control" ng-options="grade.value as grade.name for grade in addCtrl.dropDownList[5]"
+            <select id="inputGrade" ng-model="addCtrl.empAdd.JDEmpGradeId" class="form-control" ng-options="grade.value as grade.name for grade in addCtrl.dropDownList[5]"
               required>
               <option></option>
             </select>
@@ -159,7 +160,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Level*</label>
-            <select id="inputLevel" ng-model="entity.JDEmpLevelId" class="form-control" ng-options="level.value as level.name for level in addCtrl.dropDownList[6]"
+            <select id="inputLevel" ng-model="addCtrl.empAdd.JDEmpLevelId" class="form-control" ng-options="level.value as level.name for level in addCtrl.dropDownList[6]"
               ng-change="vm.typeOnChange(vm.section.SecType,'Add')" required>
               <option></option>
             </select>
@@ -169,7 +170,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Employee Code*</label>
-            <input type="text" class="form-control text_type_bold" disabled="disabled" ng-model="entity.EmpCode" placeholder="Employee Code">
+            <input type="text" class="form-control text_type_bold" disabled="disabled" ng-model="addCtrl.EmpCode" placeholder="Employee Code">
           </div>
         </div>
       </div>
@@ -177,7 +178,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Reporting1*</label>
-            <select id="inputLevel" ng-model="entity.JDReporting1" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
+            <select id="inputLevel" ng-model="addCtrl.empAdd.JDReporting1" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
               required>
               <option></option>
             </select>
@@ -186,7 +187,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Reporting2*</label>
-            <select id="inputLevel" ng-model="entity.JDReporting2" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
+            <select id="inputLevel" ng-model="addCtrl.empAdd.JDReporting2" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
               required>
               <option></option>
             </select>
@@ -195,7 +196,7 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Reporting HR*</label>
-            <select id="inputLevel" ng-model="entity.JDReportingHR" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
+            <select id="inputLevel" ng-model="addCtrl.empAdd.JDReportingHR" class="form-control" ng-options="emp.value as emp.name for emp in addCtrl.dropDownList[7]"
               required>
               <option></option>
             </select>
@@ -207,19 +208,19 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label>Email</label>
-            <input type="text" class="form-control" ng-model="entity.PdEmail" placeholder="Email">
+            <input type="text" class="form-control" ng-model="addCtrl.empAdd.PdEmail" placeholder="Email">
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group">
             <label>Other Identity</label>
-            <input type="text" class="form-control" ng-model="entity.PDOtherNumber" placeholder="Other Identity">
+            <input type="text" class="form-control" ng-model="addCtrl.empAdd.PDOtherNumber" placeholder="Other Identity">
           </div>
         </div>
         <div class="col-sm-4">
           <div class="form-group">
             <label>Role</label>
-            <select id="inputEmployeeType" ng-model="entity.RoleId" class="form-control" ng-options="role.value as role.name for role in addCtrl.dropDownList[12]"
+            <select id="inputEmployeeType" ng-model="addCtrl.empAdd.RoleId" class="form-control" ng-options="role.value as role.name for role in addCtrl.dropDownList[12]"
               data-placeholder="Select Nav Menu" required>
               <option></option>
             </select>
@@ -228,7 +229,7 @@
         <div ng-hide="true" class="col-sm-4">
           <div class="form-group">
             <label>Group</label>
-            <select id="inputEmployeeType" ng-model="entity.JDGroupId" class="form-control" ng-options="group.GMCId as group.GMCName for group in addCtrl.groupList"
+            <select id="inputEmployeeType" ng-model="addCtrl.empAdd.JDGroupId" class="form-control" ng-options="group.GMCId as group.GMCName for group in addCtrl.groupList"
               data-placeholder="Select Nav Menu" required>
               <option></option>
             </select>
@@ -242,7 +243,7 @@
       <div class="col-sm-4">
         <div class="form-group">
           <label>Roster Plan*</label>
-          <select id="inputEmployeeType" ng-model="entity.Plan" class="form-control" ng-change="addCtrl.rosterPlanOnChage(entity.Plan)" ng-options="rosterPlan.name for rosterPlan in addCtrl.dropDownList[8]"
+          <select id="inputEmployeeType" ng-model="addCtrl.empAdd.Plan" class="form-control" ng-change="addCtrl.rosterPlanOnChage(addCtrl.empAdd.Plan)" ng-options="rosterPlan.name for rosterPlan in addCtrl.dropDownList[8]"
             data-placeholder="Select Nav Menu" required>
             <option></option>
           </select>
