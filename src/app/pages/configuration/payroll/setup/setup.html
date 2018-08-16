@@ -20,14 +20,15 @@
                 </div>
             </a>
 
-            <a class="setup col-sm-12 complete" data-ng-class="{'complete':ctrl.steps.generalsettings.isCompleted,'not-started no-pointer':!ctrl.steps.generalsettings.isEnabled, 'pending':ctrl.steps.generalsettings.isCurrentstep }"
-                data-ui-sref=".generalpayroll" href="#/settings/payroll/setup/generalpayroll">
+            <a class="setup col-sm-12 complete" data-ng-click="addGeneralPayrollSetting()">
+                <!-- data-ui-sref="configuration.payroll.setup.generalpayrollsetting" -->
+                <!-- data-ng-click="addGeneralPayrollSetting()" href="#/settings/payroll/setup/generalpayroll" -->
+                <!-- data-ng-class="{'complete':ctrl.steps.generalsettings.isCompleted,'not-started no-pointer':!ctrl.steps.generalsettings.isEnabled, 'pending':ctrl.steps.generalsettings.isCurrentstep }" -->
                 <div class="setup-status col-sm-3 clear-left-padding">
                     <span class="number ng-binding">2</span>
                     <br>
                     <span class="ng-binding">Completed</span>
                 </div>
-
                 <div class="information col-sm-9 clear-side-padding">
                     <h5>General Payroll Settings</h5>
                     <p>

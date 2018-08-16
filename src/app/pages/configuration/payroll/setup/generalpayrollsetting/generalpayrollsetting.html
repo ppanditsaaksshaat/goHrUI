@@ -1,0 +1,131 @@
+<!-- <div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" data-ng-if="!edit">General Payroll Setting</h3>
+    </div>
+
+    <div class="modal-body content-container">
+
+        <form name="bankDetails" id="bankDetails" data-ng-init="ctrl.form = this;" novalidate>
+            <h6 dotranslate class="section-head-text">Payroll Cycle Setting</h6>
+            <div class="row bank-account-container">
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label>Pay Frequency </label>
+                            <select class="form-control" data- ng-model="entity.BADBankId" ng-options="location.value as location.name for location in pageInfo.selects.BADBankId"></select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label>Which pay cycle do you want to starting using goHR for payroll</label>
+                            <input type="text" class="form-control" data-ng-model="entity.BADAccountNumber" name="accountNumber" id="accountNumber" required
+                            />
+                            <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.accountNumber" data-required-error="Account number is required"
+                                data-form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label>Which day did the pay last day of month period end in Apr</label>
+                            <input type="text" class="form-control" data-ng-model="entity.BADIFSCCode" name="bankIfsc" id="bankIfsc" />
+                            <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.bankIfsc" data-required-error="IFSC Code is required"
+                                data-form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label>The pay day for the period APR - ARP 30 is</label>
+                            <input type="text" class="form-control" data-ng-model="entity.BADBranch" name="branch" id="branch" required />
+                            <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.branch" data-required-error="Branch is required"
+                                data-form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h6 dotranslate class="section-head-text">Payroll Period Calculation</h6>
+            <div class="row bank-account-container">
+                <div class="col-sm-12  clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label>Pay Days in a month </label>
+                            <select class="form-control" data- ng-model="entity.BADBankId" ng-options="location.value as location.name for location in pageInfo.selects.BADBankId"></select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label>Exclude Weekly Off</label>
+                            <input type="text" class="form-control" data-ng-model="entity.BADAccountNumber" name="accountNumber" id="accountNumber" required
+                            />
+                            <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.accountNumber" data-required-error="Account number is required"
+                                data-form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label>Exclude Holidays</label>
+                            <input type="text" class="form-control" data-ng-model="entity.BADIFSCCode" name="bankIfsc" id="bankIfsc" />
+                            <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.bankIfsc" data-required-error="IFSC Code is required"
+                                data-form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <button type="submit" data-ng-if="!edit" class="btn btn-submit btn-success" data-ng-click="addBankAccount();">Add Account</button>
+                        <button type="submit" ng-if="edit" class="btn btn-success" ng-click="addBankAccount();" dotranslate>Update Accoun</button>
+                        <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div> -->
+
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" data-ng-if="!edit">General Payroll Setting</h3>
+        <!-- <h3 class="inline-block clear-vertical-margin" data-ng-if="edit">Edit Bank Account</h3> -->
+    </div>
+
+    <div class="modal-body content-container">
+        <form name="bankDetails" id="bankDetails" data-ng-init="ctrl.form = this;" novalidate>
+            <h6 dotranslate class="section-head-text">Bank Accounts</h6>
+            <div class="col-sm-12">
+                <div ng-repeat="bank in bankList" class="icon-list col-offset-sm-1 col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+                    <div class="cursor">
+                        <div ng-click="editBankDetail(bank)" class="cursor">
+                            <div class="icon-container ">
+                                <div class="icon">
+                                    <div class="initials-icon icon-circle" random-Color>{{bank.BankName.split(' ')[0].substr(0,2)}}</div>
+                                </div>
+                            </div>
+                            <div class="detail">
+                                <h4 class="title clear-bottom">{{bank.BankName}}</h4>
+                                <span class="title-description clear-top">{{bank.BADBranch}}</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href ng-click="addBankAccount()">
+                    <i class="fa fa-plus"></i> Add New Bank Account</a>
+            </div>
+        </form>
+    </div>
+</div>
