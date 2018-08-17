@@ -1,84 +1,267 @@
-<!-- <div class="modal-content">
+<div class="modal-content">
     <div class="modal-header bg-primary">
         <h3 class="inline-block clear-vertical-margin" data-ng-if="!edit">General Payroll Setting</h3>
     </div>
 
     <div class="modal-body content-container">
+        <form name="editForm" ng-submit="saveForm(editForm) " novalidate>
+            <div class="panel-body " style="padding:5px " ng-scrollbars ng-scrollbars-config="config ">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <!-- <label for="inputPassword3">{{page.pageinfo.fields.LSCSCDId.text}}</label> -->
+                        <!-- <field-box page="page" ng-column="page.pageinfo.fields.LSCSCDId" ng-entity="entity" fb-change="clearEntity()" form="editForm"></field-box> -->
+                        <label >{{pageInfo.fields.LSCSCDId.text}}</label>
+                        <select class="form-control" data- ng-model="entity.LSCSCDId" ng-options="location.value as location.name for location in pageInfo.selects.LSCSCDId"></select>
 
-        <form name="bankDetails" id="bankDetails" data-ng-init="ctrl.form = this;" novalidate>
-            <h6 dotranslate class="section-head-text">Payroll Cycle Setting</h6>
-            <div class="row bank-account-container">
-                <div class="col-sm-12 clear-left-padding">
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label>Pay Frequency </label>
-                            <select class="form-control" data- ng-model="entity.BADBankId" ng-options="location.value as location.name for location in pageInfo.selects.BADBankId"></select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <!-- <label for="inputPassword3">{{page.pageinfo.fields.LocationId.text}}</label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.LocationId" ng-entity="entity" form="editForm"></field-box> -->
+                        <label >{{pageInfo.fields.LocationId.text}}</label>
+                        <select class="form-control" data- ng-model="entity.LocationId" ng-options="location.value as location.name for location in pageInfo.selects.LocationId"></select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <!-- <label for="inputPassword3">{{page.pageinfo.fields.BRId.text}}</label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.BRId" ng-entity="entity" form="editForm"></field-box> -->
+                        <label >{{pageInfo.fields.BRId.text}}</label>
+                        <select class="form-control" data- ng-model="entity.BRId" ng-options="location.value as location.name for location in pageInfo.selects.BRId"></select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <!-- <label for="inputPassword3">{{page.pageinfo.fields.LSCSUId.text}}</label>
+                        <field-box page="page" ng-column="page.pageinfo.fields.LSCSUId" ng-entity="entity" form="editForm"></field-box> -->
+
+                        <label >{{pageInfo.fields.LSCSUId.text}}</label>
+                        <select class="form-control" data- ng-model="entity.LSCSUId" ng-options="location.value as location.name for location in pageInfo.selects.LSCSUId"></select>
+
+                    </div>
+                </div>
+
+                <div class="row" ng-if="entity.LSCSCDId=='1'">
+                    <div class="form-group col-md-12">
+                        <h3 class="">Salary Generated On</h3>
+                        <hr>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="monthType" id="endOfMonth" ng-model="entity.monthType" ng-change="changeMonthType(entity.monthType)"
+                                        value="1">
+                                    <span dotranslate >{{pageInfo.fields.LSCEndOfMonth.text}}</span>
+                                </label>
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="monthType" id="inBitweenMonth" ng-model="entity.monthType" ng-change="changeMonthType(entity.monthType)"
+                                        value="2">
+                                    <span >{{pageInfo.fields.LSInBetMonthId.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3" ng-if="entity.LSInBetMonthId">
+                                <!-- <label for="inputPassword3">{{page.pageinfo.fields.LSCFromDay.text}}</label>
+                                <field-box page="page" ng-column="page.pageinfo.fields.LSCFromDay" ng-entity="entity" form="editForm"></field-box> -->
+                                <label >{{pageInfo.fields.LSCFromDay.text}}</label>
+                                <input type="text" class="form-control" data-ng-model="entity.LSCFromDay" name="accountNumber" id="accountNumber" required/>
+                            </div>
+                            <div class="form-group col-md-3" ng-if="entity.LSInBetMonthId">
+                                <!-- <label for="inputPassword3">{{page.pageinfo.fields.LSCToDay.text}}</label>
+                                <field-box page="page" ng-column="page.pageinfo.fields.LSCToDay" ng-entity="entity" form="editForm"></field-box> -->
+
+                                <label >{{pageInfo.fields.LSCToDay.text}}</label>
+                                <input type="text" class="form-control" data-ng-model="entity.LSCToDay" name="accountNumber" id="accountNumber" required/>
+
+                            </div>
+                        </div>
+                        <h3 class="">Salary Calculated On (For Day Based Salary) </h3>
+                        <hr>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="salaryCalculatedOn" ng-click="fixedDays=false;entity.LSCFixedDays=0;salaryCalculatedOn(entity.salaryCalOn)"
+                                        ng-model="entity.salaryCalOn" value="1">
+                                    <span >{{pageInfo.fields.LSCTotalDayInCycle.text}}</span>
+                                </label>
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="salaryCalculatedOn" ng-click="fixedDays=false;entity.LSCFixedDays=0;salaryCalculatedOn(entity.salaryCalOn)"
+                                        ng-model="entity.salaryCalOn" value="2">
+                                    <span >{{pageInfo.fields.LSCTotalWorkingDay.text}}</span>
+                                </label>
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="salaryCalculatedOn" ng-click="fixedDays=true;entity.LSCFixedDays=0;salaryCalculatedOn(entity.salaryCalOn)"
+                                        ng-model="entity.salaryCalOn" value="3">
+                                    <span>{{pageInfo.fields.LSCFixDay.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3" ng-show="fixedDays">
+                                <label  for="inputPassword3">{{pageInfo.fields.LSCFixedDays.text}}</label>
+                                <!-- <field-box page="page" ng-column="page.pageinfo.fields.LSCFixedDays" ng-entity="entity" form="editForm"></field-box> -->
+                                <input type="text" class="form-control" data-ng-model="entity.LSCFixedDays" name="accountNumber" id="accountNumber" required/>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword3">{{pageInfo.fields.LSCEffectedFrom.text}}</label>
+                                <!-- <field-box page="page" ng-column="page.pageinfo.fields.LSCEffectedFrom" ng-entity="entity" form="editForm"></field-box> -->
+                                <input type="date" class="form-control" data-ng-model="entity.LSCEffectedFrom" name="accountNumber" id="accountNumber" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="entity.LSCSCDId=='2'">
+                    <div class="form-group col-md-12">
+                        <h3 class="">Select Day of Week for Weekly Salary</h3>
+                        <hr>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword3">{{pageInfo.fields.LSCDayId.text}}</label>
+                                <!-- <field-box page="page" ng-column="page.pageinfo.fields.LSCDayId" ng-entity="entity" form="editForm"></field-box> -->
+                                <select class="form-control" data- ng-model="entity.LSCDayId" ng-options="location.value as location.name for location in pageInfo.selects.LSCDayId"></select>
+
+                            </div>
+                        </div>
+                        <h3 class="">Salary Calculated On (For Day Based Salary) </h3>
+                        <hr>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <!-- <label for="inputPassword3" clas>{{pageInfo.fields.LSCTotalDayInCycle.text}}</label>
+                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalDayInCycle"> -->
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalDayInCycle">
+                                    <span >{{pageInfo.fields.LSCTotalDayInCycle.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <!-- <label for="inputPassword3">{{pageInfo.fields.LSCTotalWorkingDay.text}}</label>
+                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalWorkingDay"> -->
+
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalWorkingDay">
+                                    <span >{{pageInfo.fields.LSCTotalWorkingDay.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <!-- <label for="inputPassword3">{{pageInfo.fields.LSCFixDay.text}}</label>
+                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=true" ng-model="entity.LSCFixDay"> -->
+
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=true" ng-model="entity.LSCFixDay">
+                                    <span >{{pageInfo.fields.LSCFixDay.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3" ng-show="fixedDays">
+                                <label for="inputPassword3">{{pageInfo.fields.LSCFixedDays.text}}</label>
+                                <input type="text" class="form-control" data-ng-model="entity.LSCFixedDays" name="accountNumber" id="accountNumber" required/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword3">{{page.pageinfo.fields.LSCEffectedFrom.text}}</label>
+                                <input type="date" class="form-control" data-ng-model="entity.LSCEffectedFrom" name="accountNumber" id="accountNumber" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="entity.LSCSCDId=='3'">
+                    <div class="form-group col-md-12">
+                        <h3 class="">Select Day of Week for Fortnightly Salary</h3>
+                        <hr>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword3">{{pageInfo.fields.LSCDayId.text}}</label>
+                                <select class="form-control" data- ng-model="entity.LSCDayId" ng-options="location.value as location.name for location in pageInfo.selects.LSCDayId"></select>
+                            </div>
+                        </div>
+                        <h3 class="">Salary Calculated On (For Day Based Salary) </h3>
+                        <hr>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <!-- <label for="inputPassword3" clas>{{pageInfo.fields.LSCTotalDayInCycle.text}}</label>
+                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalDayInCycle"> -->
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalDayInCycle">
+                                    <span >{{pageInfo.fields.LSCTotalDayInCycle.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <!-- <label for="inputPassword3">{{pageInfo.fields.LSCTotalWorkingDay.text}}</label>
+                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalWorkingDay"> -->
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalWorkingDay">
+                                    <span >{{pageInfo.fields.LSCTotalWorkingDay.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <!-- <label for="inputPassword3">{{pageInfo.fields.LSCFixDay.text}}</label>
+                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=true" ng-model="entity.LSCFixDay"> -->
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=true" ng-model="entity.LSCFixDay">
+                                    <span >{{pageInfo.fields.LSCFixDay.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3" ng-show="fixedDays">
+                                <label for="inputPassword3">{{pageInfo.fields.LSCFixedDays.text}}</label>
+                                <!-- <field-box page="page" ng-column="page.pageinfo.fields.LSCFixedDays" ng-entity="entity" form="editForm"></field-box> -->
+                                <input type="date" class="form-control" data-ng-model="entity.LSCFixedDays" name="accountNumber" id="accountNumber" required/>
+
+                            </div>
 
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 clear-left-padding">
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label>Which pay cycle do you want to starting using goHR for payroll</label>
-                            <input type="text" class="form-control" data-ng-model="entity.BADAccountNumber" name="accountNumber" id="accountNumber" required
-                            />
-                            <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.accountNumber" data-required-error="Account number is required"
-                                data-form-submit="bankDetails.$submitted"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 clear-left-padding">
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label>Which day did the pay last day of month period end in Apr</label>
-                            <input type="text" class="form-control" data-ng-model="entity.BADIFSCCode" name="bankIfsc" id="bankIfsc" />
-                            <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.bankIfsc" data-required-error="IFSC Code is required"
-                                data-form-submit="bankDetails.$submitted"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 clear-left-padding">
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label>The pay day for the period APR - ARP 30 is</label>
-                            <input type="text" class="form-control" data-ng-model="entity.BADBranch" name="branch" id="branch" required />
-                            <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.branch" data-required-error="Branch is required"
-                                data-form-submit="bankDetails.$submitted"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <h6 dotranslate class="section-head-text">Payroll Period Calculation</h6>
-            <div class="row bank-account-container">
-                <div class="col-sm-12  clear-left-padding">
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label>Pay Days in a month </label>
-                            <select class="form-control" data- ng-model="entity.BADBankId" ng-options="location.value as location.name for location in pageInfo.selects.BADBankId"></select>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword3">{{page.pageinfo.fields.LSCEffectedFrom.text}}</label>
+                                <input type="text" class="form-control" data-ng-model="entity.LSCEffectedFrom" name="accountNumber" id="accountNumber" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="entity.LSCSCDId=='4'">
+                    <div class="form-group col-md-12">
+                        <h3 class="">Salary Calculated On (For Day Based Salary) </h3>
+                        <hr>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <!-- <label for="inputPassword3" clas>{{pageInfo.fields.LSCTotalDayInCycle.text}}</label>
+                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalDayInCycle"> -->
+
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalDayInCycle">
+                                    <span >{{pageInfo.fields.LSCTotalDayInCycle.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <!-- <label for="inputPassword3">{{pageInfo.fields.LSCTotalWorkingDay.text}}</label>
+                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalWorkingDay"> -->
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=false" ng-model="entity.LSCTotalWorkingDay">
+                                    <span >{{pageInfo.fields.LSCTotalWorkingDay.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <!-- <label for="inputPassword3">{{pageInfo.fields.LSCFixDay.text}}</label>
+                                <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=true" ng-model="entity.LSCFixDay"> -->
+
+                                <label class="radio-inline custom-radio nowrap font-bold">
+                                    <input type="radio" name="commonRedioForCompOff" ng-click="fixedDays=true" ng-model="entity.LSCFixDay">
+                                    <span >{{pageInfo.fields.LSCFixDay.text}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-3" ng-show="fixedDays">
+                                <label for="inputPassword3">{{pageInfo.fields.LSCFixedDays.text}}</label>
+                                <!-- <field-box page="page" ng-column="page.pageinfo.fields.LSCFixedDays" ng-entity="entity" form="editForm"></field-box> -->
+                                <input type="text" class="form-control" data-ng-model="entity.LSCFixedDays" name="accountNumber" id="accountNumber" required/>
+
+                            </div>
 
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 clear-left-padding">
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label>Exclude Weekly Off</label>
-                            <input type="text" class="form-control" data-ng-model="entity.BADAccountNumber" name="accountNumber" id="accountNumber" required
-                            />
-                            <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.accountNumber" data-required-error="Account number is required"
-                                data-form-submit="bankDetails.$submitted"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 clear-left-padding">
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label>Exclude Holidays</label>
-                            <input type="text" class="form-control" data-ng-model="entity.BADIFSCCode" name="bankIfsc" id="bankIfsc" />
-                            <span class="validation-msg" data-validation-messages="" data-model-controller="bankDetails.bankIfsc" data-required-error="IFSC Code is required"
-                                data-form-submit="bankDetails.$submitted"></span>
+
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="inputPassword3">{{pageInfo.fields.LSCEffectedFrom.text}}</label>
+                                <input type="date" class="form-control" data-ng-model="entity.LSCEffectedFrom" name="accountNumber" id="accountNumber" required/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,45 +270,50 @@
             <div class="row">
                 <div class="col-sm-12 vertical-margin">
                     <div class="col-sm-6 pull-right text-right">
-                        <button type="submit" data-ng-if="!edit" class="btn btn-submit btn-success" data-ng-click="addBankAccount();">Add Account</button>
-                        <button type="submit" ng-if="edit" class="btn btn-success" ng-click="addBankAccount();" dotranslate>Update Accoun</button>
+                        <button type="submit" data-ng-if="!edit" class="btn btn-submit btn-success" >Add Salary Cycle</button>
+                        <button type="submit" ng-if="edit" class="btn btn-success" ng-click="addBankAccount();" >Update Accoun</button>
                         <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-</div> -->
+</div>
 
-<div class="modal-content">
+<!-- <div class="modal-content">
     <div class="modal-header bg-primary">
         <h3 class="inline-block clear-vertical-margin" data-ng-if="!edit">General Payroll Setting</h3>
-        <!-- <h3 class="inline-block clear-vertical-margin" data-ng-if="edit">Edit Bank Account</h3> -->
     </div>
 
     <div class="modal-body content-container">
-        <form name="bankDetails" id="bankDetails" data-ng-init="ctrl.form = this;" novalidate>
-            <h6 dotranslate class="section-head-text">Bank Accounts</h6>
-            <div class="col-sm-12">
-                <div ng-repeat="bank in bankList" class="icon-list col-offset-sm-1 col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
-                    <div class="cursor">
-                        <div ng-click="editBankDetail(bank)" class="cursor">
-                            <div class="icon-container ">
-                                <div class="icon">
-                                    <div class="initials-icon icon-circle" random-Color>{{bank.BankName.split(' ')[0].substr(0,2)}}</div>
-                                </div>
-                            </div>
-                            <div class="detail">
-                                <h4 class="title clear-bottom">{{bank.BankName}}</h4>
-                                <span class="title-description clear-top">{{bank.BADBranch}}</span>
+        <div class="row vertical-top-margin">
 
+            <div class="col-sm-12">
+                <h6  class="section-head-text">General Payroll Setting</h6>
+
+                <div class="col-sm-12">
+                    <div ng-repeat="emp in cycleList" class="icon-list col-offset-sm-1 col-sm-4 col-lg-3 clear-left-padding vertical-margin signatory">
+                        <div class="cursor">
+                            <div ng-click="editSignatoryDetail(emp)" class="cursor">
+                                <div class="icon-container ">
+                                    <div class="icon">
+                                        <div class="initials-icon icon-circle" random-Color>{{emp.SCName.split(' ')[0].substr(0,2)}}</div>
+                                    </div>
+                                </div>
+                                <div class="detail">
+                                    <h4 class="title clear-bottom">{{emp.SCName}}</h4>
+                                    <span class="title-description clear-top">{{emp.SUName}}</span>
+
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <a href ng-click="addNewSignatory()">
+                        <i class="fa fa-plus"></i> Add New Signatory</a>
                 </div>
-                <a href ng-click="addBankAccount()">
-                    <i class="fa fa-plus"></i> Add New Bank Account</a>
+
             </div>
-        </form>
+        </div>
+        <hr/>
     </div>
-</div>
+</div> -->
