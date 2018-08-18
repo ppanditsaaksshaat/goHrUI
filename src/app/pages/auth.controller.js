@@ -85,7 +85,7 @@
             $scope.key = {
                 url: pageService.keyDataUrl(),
                 vl: true,
-                multi: false,
+                multi: true,
                 corpo: '400'
             };
 

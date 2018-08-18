@@ -6,6 +6,8 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.team.leave', [
+        'BlurAdmin.pages.team.leave.leave',
+        'BlurAdmin.pages.team.leave.compoff'
     ])
         .config(routeConfig);
 
