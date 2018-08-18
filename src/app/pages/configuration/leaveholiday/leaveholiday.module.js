@@ -8,6 +8,8 @@
     angular.module('BlurAdmin.pages.configuration.leaves', [
         'BlurAdmin.pages.configuration.leaves.plan',
         'BlurAdmin.pages.configuration.leaves.initial',
+        'BlurAdmin.pages.configuration.leaves.holiday',
+        'BlurAdmin.pages.configuration.leaves.holidayconfbylocation',
         // 'BlurAdmin.pages.configuration.leaves.holiday'
     ]).config(routeConfig);
         
