@@ -16,7 +16,7 @@
                 url: '/pending',
                 templateUrl: 'app/pages/team/leave/compoff/pending/pending.html',
                 title: 'Pending',
-                controller: "",
+                controller: "myTeamPendingCompOffController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,

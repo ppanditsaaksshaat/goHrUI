@@ -16,7 +16,7 @@
                 url: '/approved',
                 templateUrl: 'app/pages/team/leave/leave/approved/approved.html',
                 title: 'Approved',
-                controller: "",
+                controller: "myTeamApprovedLeaveController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
