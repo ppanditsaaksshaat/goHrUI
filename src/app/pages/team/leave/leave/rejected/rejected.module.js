@@ -13,10 +13,10 @@
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('team.leave.leave.rejected', {
-                url: '/approved',
+                url: '/rejected',
                 templateUrl: 'app/pages/team/leave/leave/rejected/rejected.html',
                 title: 'Rejected',
-                controller: "",
+                controller: "myTeamRejectedLeaveController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,

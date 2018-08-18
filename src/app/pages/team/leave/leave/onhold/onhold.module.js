@@ -13,10 +13,10 @@
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('team.leave.leave.onhold', {
-                url: '/approved',
+                url: '/onhold',
                 templateUrl: 'app/pages/team/leave/leave/onhold/onhold.html',
                 title: 'Onhold',
-                controller: "",
+                controller: "myTeamOnHoldLeaveController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,

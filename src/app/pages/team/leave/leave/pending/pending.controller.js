@@ -31,6 +31,9 @@
         function _loadController() {
             var searchLists = [];
             searchLists.push({ field: 'headEmpId', operand: '=', value: $rootScope.user.profile.empId })
+            searchLists.push({ field: 'statusId', operand: '=', value: 0 })
+            searchLists.push({ field: 'type', operand: '=', value: 'Leave' })
+            
 
             var data = {
                 searchList: searchLists,
