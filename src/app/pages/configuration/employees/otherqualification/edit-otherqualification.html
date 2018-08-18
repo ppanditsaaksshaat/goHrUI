@@ -1,0 +1,46 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" ng-if="!isEdit" dotranslate>Add Other-Qualification</h3>
+        <h3 class="inline-block clear-vertical-margin" ng-if="isEdit" dotranslate>Edit Other-Qualification</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <form name="otherDetail" id="otherDetail" novalidate>
+            <div class="row">
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Other Qualification</label>
+                            <input type="text" class="form-control" ng-model="entity.OtherQualificationName" name="OtherQualificationName" id="OtherQualificationName" required />
+                            <span class="validation-msg" validation-messages="" model-controller="bankDetails.bank" required-error="Name is required"
+                                form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Description</label>
+                            <input type="text" class="form-control" ng-model="entity.OtherQualificationDesc" name="OtherQualificationDesc" id="OtherQualificationDesc" required />
+                            <span class="validation-msg" validation-messages="" model-controller="bankDetails.bank" required-error="Name is required"
+                                form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                    
+                </div>
+             
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <button type="submit" ng-if="!isEdit" class="btn btn-success" ng-click="saveForm(otherDetail);" dotranslate>Add Record</button>
+                        <button type="submit" ng-if="isEdit" class="btn btn-success" ng-click="saveForm(otherDetail);" dotranslate>Update Record</button>
+                        <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
