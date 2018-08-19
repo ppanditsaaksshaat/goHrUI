@@ -122,7 +122,7 @@
                     <form class="form-signin" ng-submit="doLogin()" ng-if="key.vl">
                         <input type="text" class="form-control" placeholder="User" id="userName" required autofocus>
                         <input id="userPassword" type="password" class="form-control" placeholder="Password" required>
-                        <input type="text" name="userName" id="userCorpoId" class="form-control" placeholder="Customer Id">
+                        <input ng-if="key.multi" ng-model="key.corp" type="text" name="userName" id="userCorpoId" class="form-control" placeholder="Customer Id">
                         <select class="form-control" ng-model="selectedLanguage" ng-options="lang.label  for lang in languageList"></select>
                         <input ng-if="showDevAPI" type="text" class="form-control" id="api" placeholder="Dev API URL" ng-model="devAPIUrl">
 

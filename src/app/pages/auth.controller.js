@@ -78,16 +78,25 @@
         $scope.selectedLanguage = $scope.languageList[0];
 
         $scope.doLogin = _doLogin;
-        $scope.uploadLicFile = _uploadLicFile;
-
 
         function _loadController() {
             //_getAppData();
+
+            $scope.key = {
+                url: pageService.keyDataUrl(),
+                vl: true,
+                multi: true,
+                corpo: '400'
+            };
+
 
             pageService.keyValid().then(function (result) {
                 console.log(result)
                 $scope.key = result;
                 $scope.key.url = pageService.keyDataUrl();
+                $scope.key.vl = true;
+                $scope.key.multi = true;
+                $("#userCorpoId").val($scope.key.corpo);
             }, function (err) {
 
             })
@@ -119,21 +128,16 @@
             });
         }
 
-        function _uploadLicFile() {
-            console.log($scope.key, $scope.file)
-            console.log($scope.fileinput)
-            pageService.keyUpload($scope.file).then(function (result) {
-                console.log('Uploaded')
-            }, function (err) {
-                console.log(err);
-            })
-        } 
-
         function _doLogin() {
 
             var userName = $("#userName").val();
             var userPwd = $("#userPassword").val();
             var userCorpoId = $("#userCorpoId").val();
+
+            if (!$scope.key.multi) {
+                userCorpoId = $scope.key.corp;
+            }
+
 
             if (DJWebStore.IsDev()) {
                 //only for development mode - dj@03.01.2017

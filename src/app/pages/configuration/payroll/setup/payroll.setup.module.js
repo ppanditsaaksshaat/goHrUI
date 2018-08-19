@@ -3,15 +3,15 @@
  * created on 28.07.2018
  */
 (function () {
-    'use strict';
-  
-    angular.module('BlurAdmin.pages.configuration.payroll.setup', [
-        
-    ]).config(routeConfig);
-        
-    /** @ngInject */
-    function routeConfig($stateProvider, $urlRouterProvider) {
-      $stateProvider
+  'use strict';
+
+  angular.module('BlurAdmin.pages.configuration.payroll.setup', [
+
+  ]).config(routeConfig);
+
+  /** @ngInject */
+  function routeConfig($stateProvider, $urlRouterProvider) {
+    $stateProvider
       .state('configuration.payroll.setup', {
         url: '/setup',
         templateUrl: "app/pages/configuration/payroll/setup/setup.html",
@@ -22,9 +22,19 @@
           order: 1,
         },
       });
+    // .state('configuration.payroll.setup.generalpayrollsetting', {
+    //   url: '/generalpayrollsetting',
+    //   templateUrl: "app/pages/configuration/payroll/setup/generalpayrollsetting/generalpayrollsetting.html",
+    //   controller: '',
+    //   title: 'General Payroll Setting',
+    //   sidebarMeta: {
+    //     icon: 'ion-android-home',
+    //     order: 1,
+    //   },
+    // });
 
-      $urlRouterProvider.when('/configuration', '/configuration/payroll');
-    }
-  
-  })();
-  
+
+    $urlRouterProvider.when('/configuration', '/configuration/payroll');
+  }
+
+})();

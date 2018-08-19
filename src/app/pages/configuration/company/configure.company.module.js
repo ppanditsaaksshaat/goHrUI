@@ -10,7 +10,9 @@
         'BlurAdmin.pages.configuration.company.legal',
         'BlurAdmin.pages.configuration.company.locations',
         'BlurAdmin.pages.configuration.company.departments',
-        'BlurAdmin.pages.configuration.company.designation'
+        'BlurAdmin.pages.configuration.company.designation',
+        'BlurAdmin.pages.configuration.company.level',
+        'BlurAdmin.pages.configuration.company.grade'
     ]).config(routeConfig);
         
     /** @ngInject */

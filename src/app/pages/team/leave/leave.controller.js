@@ -9,14 +9,8 @@
         .controller('myTeamLeaveController', myTeamLeaveController);
 
     /** @ngInject */
-    function myTeamLeaveController($scope, $state, $rootScope) {
+    function myTeamLeaveController($scope, $rootScope, pageService, editFormService, dialogModal) {
 
-        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-           console.log(ev)
-           console.log(to)
-           console.log(toParams)
-           console.log(from)
-           console.log(fromParams)
-        });
+
     }
 })();

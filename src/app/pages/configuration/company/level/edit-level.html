@@ -1,0 +1,47 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" ng-if="!isEdit" dotranslate>Add Level</h3>
+        <h3 class="inline-block clear-vertical-margin" ng-if="isEdit" dotranslate>Edit Level</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <form name="levelDetail" id="levelDetail" novalidate>
+            <div class="row">
+
+                <div class="col-sm-12 clear-left-padding">
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label dotranslate>Levelt</label>
+                                <input type="text" class="form-control" ng-model="entity.EmpLevelName" name="EmpLevelName" id="EmpLevelName" required />
+    
+                                <span class="validation-msg" validation-messages="" model-controller="bankDetails.bank" required-error="Name is required"
+                                    form-submit="bankDetails.$submitted"></span>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Description</label>
+                            <input type="text" class="form-control" ng-model="entity.EmpLevelDesc" name="EmpLevelDesc" id="EmpLevelDesc" required />
+
+                            <span class="validation-msg" validation-messages="" model-controller="bankDetails.bank" required-error="Name is required"
+                                form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <button type="submit" ng-if="!isEdit" class="btn btn-success" ng-click="saveForm(levelDetail);" dotranslate>Add Level</button>
+                        <button type="submit" ng-if="isEdit" class="btn btn-success" ng-click="saveForm(levelDetail);" dotranslate>Update Level</button>
+                        <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
