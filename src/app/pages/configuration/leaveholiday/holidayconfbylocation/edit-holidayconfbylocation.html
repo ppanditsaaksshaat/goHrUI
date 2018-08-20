@@ -1,0 +1,64 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" ng-if="!isEdit" dotranslate>Add Holiday By Location</h3>
+        <h3 class="inline-block clear-vertical-margin" ng-if="isEdit" dotranslate>Edit Holiday By Location</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <form name="holidaybyLocation" id="holidaybyLocation" novalidate>
+            <div class="row">
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Holiday</label>
+                            <select class="form-control" name="HDCBLHDId" ng-options="opt.value as opt.name for opt in selects.HDCBLHDId" 
+                                ng-model="entity.HDCBLHDId"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Location</label>
+                            <select class="form-control" name="LocationId" ng-options="opt.value as opt.name for opt in selects.LocationId" 
+                                ng-model="entity.LocationId"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Branch</label>
+                            <!-- <select class="form-control" id="country" ng-model="countrySrc" ng-options="opt.value as opt.name for opt in selects.CountryId" ng-change="GetSelectedCountry()">
+                                <option value=''>Select</option>
+                            </select> -->
+                            <select class="form-control" name="BRId" ng-options="opt.value as opt.name for opt in selects.BRId" ng-model="entity.BRId"></select>
+                            <!-- ng-change="changeState()" -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Sub-Unit</label>
+                            <!-- <select class="form-control" id="state" ng-disabled="!countrySrc" ng-model="stateSrc" ng-options="opt.value as opt.name for opt in countrySrc" ng-change="GetSelectedState()">
+                                <option value=''>Select</option>
+                            </select> -->
+                            <select class="form-control" name="HDCBLSubUnitId" ng-options="opt.value as opt.name for opt in selects.HDCBLSubUnitId" ng-model="entity.HDCBLSubUnitId"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <button type="submit" ng-if="!isEdit" class="btn btn-success" ng-click="saveForm(locationDetail);" dotranslate>Add Record</button>
+                        <button type="submit" ng-if="isEdit" class="btn btn-success" ng-click="saveForm(locationDetail);" dotranslate>Update Record</button>
+                        <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

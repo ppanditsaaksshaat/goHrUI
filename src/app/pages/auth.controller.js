@@ -48,7 +48,20 @@
         $scope.logoUrl = 'assets/img/app/go.svg';
 
         function _loadController() {
+<<<<<<< HEAD
             $scope.intervalCount = 0;
+=======
+            //_getAppData();
+
+            $scope.key = {
+                url: pageService.keyDataUrl(),
+                vl: true,
+                multi: true,
+                corpo: '400'
+            };
+
+
+>>>>>>> bea3acd0e56665ddfddecf34d4710399b16db61e
             pageService.keyValid().then(function (result) {
                 console.log(result)
                 $scope.key = result;

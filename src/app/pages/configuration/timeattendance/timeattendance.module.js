@@ -6,6 +6,7 @@
     'use strict';
   
     angular.module('BlurAdmin.pages.configuration.timeattendance', [
+      'BlurAdmin.pages.configuration.timeattendance.shiftset',
       'BlurAdmin.pages.configuration.timeattendance.weekoff',
       'BlurAdmin.pages.configuration.timeattendance.shiftplan'
     ]).config(routeConfig);
