@@ -64,11 +64,154 @@
       }
     }
   </style>
+
+<style type="text/css">
+  .form-signin {
+      max-width: 330px;
+      padding: 15px;
+      margin: 0 auto;
+  }
+
+  .form-signin .form-signin-heading,
+  .form-signin .checkbox {
+      margin-bottom: 10px;
+  }
+
+  .form-signin .checkbox {
+      font-weight: normal;
+  }
+
+  .form-signin .form-control {
+      position: relative;
+      font-size: 16px;
+      height: auto;
+      padding: 10px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+  }
+
+  .form-signin .form-control:focus {
+      z-index: 2;
+  }
+
+  .form-signin input[type="text"] {
+      margin-bottom: -1px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+  }
+
+  .form-signin input[type="password"] {
+      margin-bottom: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+  }
+
+  .account-wall {
+      margin-top: 20px;
+      padding: 40px 0px 20px 0px;
+      background-color: #f7f7f7;
+      -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  .login-title {
+      color: #555;
+      font-size: 18px;
+      font-weight: 400;
+      display: block;
+  }
+
+  .profile-img {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 10px;
+      display: block;
+      -moz-border-radius: 50%;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+  }
+
+  .need-help {
+      margin-top: 10px;
+  }
+
+  .new-account {
+      display: block;
+      margin-top: 10px;
+  }
+
+  .g-div {
+      position: absolute;
+      top: calc(50% - 6px);
+      left: calc(50% - 160px);
+      text-align: center;
+      width: 320px;
+      font-weight: bold;
+  }
+
+  .loader-gmail {
+      padding: 1px;
+      overflow: hidden;
+      border: 1px solid #a4a4a4;
+  }
+
+  .progress {
+      width: 320px;
+      height: 8px;
+      background-image: linear-gradient(135deg, #6187f2 0%, #6187f2 25%, #5679da 25%, #5679da 50%, #6187f2 50%, #6187f2 75%, #5679da 75%, #5679da 100%);
+      background-repeat: repeat;
+      background-position: 0px 0px;
+      background-size: 16px 16px;
+      background-clip: content-box;
+      animation: loading 1s linear infinite;
+      -o-animation: loading 1s linear infinite;
+      -moz-animation: loading 1s linear infinite;
+      -webkit-animation: loading 1s linear infinite;
+  }
+
+  @keyframes loading {
+      from {
+          background-position: 0px 0px;
+      }
+      to {
+          background-position: -16px 0px;
+      }
+  }
+
+  @-webkit-keyframes loading {
+      from {
+          background-position: 0px 0px;
+      }
+      to {
+          background-position: -16px 0px;
+      }
+  }
+
+  @-moz-keyframes loading {
+      from {
+          background-position: 0px 0px;
+      }
+      to {
+          background-position: -16px 0px;
+      }
+  }
+
+  @-o-keyframes loading {
+      from {
+          background-position: 0px 0px;
+      }
+      to {
+          background-position: -16px 0px;
+      }
+  }
+</style>
 </head>
 
 <body>
-  <div class="body-bg"></div>
-  <main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
+  <div class="body-bg" ng-if="$key.vl"></div>
+  <main ng-if="$pageFinishedLoading && $key.vl" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
 
     <ba-sidebar></ba-sidebar>
     <page-top></page-top>
@@ -76,9 +219,13 @@
     <div class="al-main">
       <div class="al-content">
         <!-- <content-top></content-top> -->
-        <div ui-view autoscroll="true" autoscroll-body-top></div>
+        <div  ui-view autoscroll="true" autoscroll-body-top></div>
+        
       </div>
     </div>
+
+    
+   
 <!-- 
     <footer class="al-footer clearfix">
     <div class="al-footer-right">Powered by Saaksshaat <i class="ion-heart"></i></div>
@@ -95,10 +242,32 @@
     <back-top></back-top>
   </main>
 
-  <div id="preloader" ng-show="!$pageFinishedLoading">
+  <div id="preloader" ng-show="!$pageFinishedLoading && $key.vl">
     <div></div>
   </div>
 
+  <div class="container" ng-if="!$key.vl">
+      <div class="row">
+          <div class="col-sm-6 col-md-4 col-md-offset-4">
+              <div class="account-wall">
+                  <img class="profile-img" src="{{$key.logoUrl}}" alt="">
+                  <form class="form-signin">
+                      <div class="row">
+                          <div class="col-md-12" style="padding-left: 40px;">
+
+                              <h3>This copy is not registered, please contact Administrator </h3>
+                              
+                              <p class="small-font">
+                                  <a href="mailto:neeraj@saaksshat.com">neeraj@saaksshat.com</a>
+                              </p>
+                              
+                          </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
 
   <!-- build:js(src) scripts/vendor.js -->
   <!-- bower:js -->

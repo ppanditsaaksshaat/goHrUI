@@ -26,7 +26,6 @@
                 var secondRouteOnlyRegex = new RegExp(routeName + "\.[a-z]+$", "i");
 
                 $scope.localState = defineMenuItemStates();
-
                 // console.log(defineMenuItemStates());
                 // // this uses lodash to filter the states based on the regex
                 // var navLinks = _.filter(states, (s) => {

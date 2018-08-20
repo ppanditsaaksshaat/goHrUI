@@ -13,11 +13,12 @@
     };
 
     /** @ngInject */
-    this.$get = function ($state, layoutSizes) {
+    this.$get = function ($state, $rootScope, layoutSizes) {
       return new _factory();
 
       function _factory() {
         var isMenuCollapsed = shouldMenuBeCollapsed();
+
         this.getMenuItems = function () {
           var states = defineMenuItemStates();
           var menuItems = states.filter(function (item) {
@@ -74,6 +75,12 @@
             });
           }
         };
+
+        this.isValidCopy = function () {
+          if ($rootScope.key)
+            return $rootScope.vl;
+          return true;
+        }
 
         function defineMenuItemStates() {
           //var state = $state.get();

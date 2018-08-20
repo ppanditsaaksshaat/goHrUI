@@ -6,10 +6,10 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.configuration.company.designation')
-        .controller('desinationEditController', desinationEditController);
+        .controller('designationEditController', designationEditController);
 
     /** @ngInject */
-    function desinationEditController($scope, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
+    function designationEditController($scope, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
         $scope.entity = $stateParams.param.entity;
         $scope.pageid = $stateParams.param.pageid;
         $scope.id = $stateParams.param.id;
