@@ -178,7 +178,7 @@
                         if (result.key) {
                             $scope.key = result.key;
                             isValid = result.key.vl
-                        }
+                        } 
 
                         if (isValid) {
                             var profileData = result;
