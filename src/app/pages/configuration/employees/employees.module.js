@@ -37,7 +37,7 @@
           order: 0,
         },
       });
-      // $urlRouterProvider.when('/configuration/employee/', '/configuration/employee/title');
+    $urlRouterProvider.when('/configuration/employee', '/configuration/employee/title');
 
   }
 

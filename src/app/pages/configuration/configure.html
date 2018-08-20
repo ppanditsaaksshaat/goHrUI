@@ -8,7 +8,7 @@
                         <a class="previous-state pull-left" href ng-click="$baSidebarService.setMenuCollapsed(false);$state.go('selfdashboard');">
                             <i class="fa fa-arrow-circle-left"></i>Back
                         </a>
-                    </li> 
+                    </li>
 
                     <li id="generalSettings" ui-sref-active="active" class="active">
                         <a ui-sref="configuration.company" href="#/configuration/company">
@@ -47,6 +47,26 @@
                         </a>
                     </li>
 
+                    <li id="timeAndAttendance" ui-sref-active="active">
+                        <a ui-sref="configuration.timeattendance" href="#/configuration/timeattendance">
+                            <span class="subnav-item-title">Time &amp; Attendance</span>
+                            <br>
+                            <span class="subnav-item-description">Weekly offs, Shifts, Tracking policies, Capture scheme and other settings
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li id="timeAndAttendance" ui-sref-active="active">
+                        <a ui-sref="configuration.loanadvance" href="#/configuration/loanadvance">
+                            <span class="subnav-item-title">Loan &amp; Advance</span>
+                            <br>
+                            <span class="subnav-item-description">Loan Provider,Loan Type,Loan Category Rule,Advance Type, Advance Rule Master
+                                <span class="icon-arrow-right-2"></span>
+                            </span>
+                        </a>
+                    </li>
+
                     <li id="timesheet" ui-sref-active="active" data-xhr-feature-authorize="" data-feature="TIMESHEET" class="ng-scope">
                         <a ui-sref="configuration.timesheet" href="#/configuration/timesheet">
                             <span class="subnav-item-title">Timesheet</span>
@@ -56,6 +76,7 @@
                             </span>
                         </a>
                     </li>
+
                     <li id="expenses" ui-sref-active="active" data-xhr-feature-authorize="" data-feature="PAYROLL" class="ng-scope">
                         <a ui-sref="configuration.expenses" href="#/configuration/expenses">
                             <span class="subnav-item-title">Expenses</span>
@@ -66,15 +87,7 @@
                         </a>
                     </li>
 
-                    <li id="timeAndAttendance" ui-sref-active="active">
-                        <a ui-sref="configuration.timeattendance" href="#/configuration/timeattendance">
-                            <span class="subnav-item-title">Time &amp; Attendance</span>
-                            <br>
-                            <span class="subnav-item-description">Weekly offs, Shifts, Tracking policies, Capture scheme and other settings
-                                <span class="icon-arrow-right-2"></span>
-                            </span>
-                        </a>
-                    </li>
+
                     <li id="onboardingExit" ui-sref-active="active">
                         <a ui-sref="configuration.onboardingexit" href="#/configuration/onboardingexit">
                             <span class="subnav-item-title">Onboarding &amp; Exit</span>
@@ -94,6 +107,7 @@
                             </span>
                         </a>
                     </li>
+
                     <li id="integrations" ui-sref-active="active">
                         <a ui-sref="configuration.integrations" href="#/configuration/integrations">
                             <span class="subnav-item-title">Integrations</span>

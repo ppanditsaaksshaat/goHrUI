@@ -1,44 +1,143 @@
 <div class="modal-content">
     <div class="modal-header bg-primary">
-        <h3 class="inline-block clear-vertical-margin" ng-if="!isEdit" dotranslate>Add Bank-Branch</h3>
-        <h3 class="inline-block clear-vertical-margin" ng-if="isEdit" dotranslate>Edit Bank-Branch</h3>
+        <h3 class="inline-block clear-vertical-margin" data-ng-if="!edit">Add Bank Branch Master</h3>
+        <h3 class="inline-block clear-vertical-margin" data-ng-if="edit">Edit Bank Brach Master</h3>
     </div>
 
     <div class="modal-body content-container">
-        <form name="titleDetail" id="titleDetail" novalidate>
-            <div class="row">
-                <div class="col-sm-12 clear-left-padding">
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label dotranslate>Title</label>
-                            <input type="text" class="form-control" ng-model="entity.TitleName" name="TitleName" id="TitleName" required />
-                            <span class="validation-msg" validation-messages="" model-controller="bankDetails.bank" required-error="Name is required"
-                                form-submit="bankDetails.$submitted"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 clear-left-padding">
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label dotranslate>Description</label>
-                            <input type="text" class="form-control" ng-model="entity.TitleDesc" name="TitleDesc" id="TitleDesc" required />
-
-                            <span class="validation-msg" validation-messages="" model-controller="bankDetails.bank" required-error="Name is required"
-                                form-submit="bankDetails.$submitted"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
+        <div class="row add-signatory-container">
+            <form name="bankBranchDetail" id="bankBranchDetail" novalidate>
                 <div class="col-sm-12 vertical-margin">
-                    <div class="col-sm-6 pull-right text-right">
-                        <button type="submit" ng-if="!isEdit" class="btn btn-success" ng-click="saveForm(titleDetail);" dotranslate>Add Title</button>
-                        <button type="submit" ng-if="isEdit" class="btn btn-success" ng-click="saveForm(titleDetail);" dotranslate>Update Title</button>
-                        <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                    <fieldset>
+                        <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Bank Name</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.BankName" name="BankName" id="BankName" required />
+                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-side-padding">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <select class="form-control" data- ng-model="entity.CountryId" ng-options="location.value as location.name for location in selects.CountryId"></select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-right-padding">
+                                <div class="form-group">
+                                    <label>State</label>
+                                    <select class="form-control" data- ng-model="entity.StateId" ng-options="location.value as location.name for location in selects.StateId"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <select class="form-control" data- ng-model="entity.CityId" ng-options="location.value as location.name for location in selects.CityId"></select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-side-padding">
+                                <div class="form-group">
+                                    <label>Area</label>
+                                    <select class="form-control" data- ng-model="entity.BranchAreaId" ng-options="location.value as location.name for location in selects.BranchAreaId"></select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-right-padding">
+                                <div class="form-group">
+                                    <label>Branch Name</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.BranchName" name="BranchName" id="BranchName" required />
+                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Branch Address</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.BankBranchAddress" name="BankBranchAddress" id="BankBranchAddress"
+                                        required />
+                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-side-padding">
+                                <div class="form-group">
+                                    <label>Postal Zip-Code</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.BankPoatalZipCode" name="BankPostalZipCode" id="BankPostalZipCode"
+                                        required />
+                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-right-padding">
+                                <div class="form-group">
+                                    <label>IFSC Number</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.IFSCCode" name="IFSCCode" id="IFSCCode" required />
+                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
+
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Contact Person Name</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.BankContactPerson" name="BankContactPerson" id="BankContactPerson"
+                                        required />
+                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-side-padding">
+                                <div class="form-group">
+                                    <label>Contact Number</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.BankContactNo" name="BankContactNumber" id="BankContactNumber"
+                                        required />
+                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-right-padding">
+                                <div class="form-group">
+                                    <label>Fax Number</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.BranchFaxNo" name="BranchFaxNumber" id="BranchFaxNumber"
+                                        required />
+                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.BranchEmail" name="BranchEmail" id="BranchEmail" required />
+                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                        data-form-submit="addSignatoryForm.$submitted"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 vertical-margin">
+                        <div class="col-sm-6 pull-right text-right">
+                            <button type="submit" ng-if="!isEdit" class="btn btn-success" ng-click="saveForm(bankBranchDetail);" dotranslate>Add Bank-Branch</button>
+                            <button type="submit" ng-if="isEdit" class="btn btn-success" ng-click="saveForm(bankBranchDetail);" dotranslate>Update Bank-Branch</button>
+                            <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>

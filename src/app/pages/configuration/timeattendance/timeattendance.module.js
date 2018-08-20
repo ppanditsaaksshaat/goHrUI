@@ -24,6 +24,8 @@
           order: 1,
         },
       });
+
+      $urlRouterProvider.when('/configuration/timeattendance', '/configuration/timeattendance/shiftset');
     }
   })();
   
