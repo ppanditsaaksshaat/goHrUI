@@ -10,49 +10,15 @@
     angular.module('BlurAdmin.pages')
         .controller('authController', authController);
 
-    function authController($scope, pageService, DJWebStore, authService) {
+    function authController($scope, $rootScope, $interval, pageService, DJWebStore, authService) {
 
         DJWebStore.RemoveAll();
-        // // Set the original/default language
-        // var lang = "en";
 
-        // google.load("elements", "1", {
-        //     packages: "transliteration"
-        // });
-        // console.log(google)
-        // function onLoad() {
-        //     var options = {
-        //         sourceLanguage:
-        //             google.elements.transliteration.LanguageCode.ENGLISH,
-        //         destinationLanguage:
-        //             [google.elements.transliteration.LanguageCode.HINDI],
-        //         shortcutKey: 'ctrl+g',
-        //         transliterationEnabled: true
-        //     };
-
-        //     // Create an instance on TransliterationControl with the required
-        //     // options.
-        //     var control =
-        //         new google.elements.transliteration.TransliterationControl(options);
-
-        //     // Enable transliteration in the textbox with id
-        //     // 'transliterateTextarea'.
-        //     // control.makeTransliteratable(['transliterateTextarea']);
-
-        //     google.language.transliterate('my name is deepak jain', 'en', 'fr', callback)
-        // }
-        // function callback(result)
-        // {
-        //     console.log(result);
-        // }
-        // google.setOnLoadCallback(onLoad);
         var vm = this;
         //fetching dev api url
         if (DJWebStore.IsDev()) {
             $scope.devAPIUrl = DJWebStore.GetValue('devAPIUrl');
-            // alert($scope.devAPIUrl)
         }
-
         $scope.languageList = [];
 
         $scope.languageList.push({
@@ -78,28 +44,43 @@
         $scope.selectedLanguage = $scope.languageList[0];
 
         $scope.doLogin = _doLogin;
+        $scope.keyValiditing = true;
+        $scope.logoUrl = 'assets/img/app/go.svg';
 
         function _loadController() {
-            //_getAppData();
-
-            $scope.key = {
-                url: pageService.keyDataUrl(),
-                vl: true,
-                multi: false,
-                corpo: '400'
-            };
-
-
+            $scope.intervalCount = 0;
             pageService.keyValid().then(function (result) {
                 console.log(result)
                 $scope.key = result;
                 $scope.key.url = pageService.keyDataUrl();
-                $scope.key.vl = true;
-                $scope.key.multi = true;
+                $scope.keyValiditing = false;
                 $("#userCorpoId").val($scope.key.corpo);
+                $interval.cancel($scope.interval);
+                $rootScope.$key = result;
+                if (!$scope.key.vl) {
+                    $scope.logoUrl = 'assets/img/app/not_registered.png'
+                }
             }, function (err) {
-
+                $scope.keyValiditing = false;
+                $scope.key = {
+                    url: pageService.keyDataUrl(),
+                    vl: true,
+                    multi: false,
+                    lang: true,
+                    corpo: '400' 
+                };
+                $("#userCorpoId").val($scope.key.corpo);
+                $interval.cancel($scope.interval);
+                $rootScope.$key = result;
             })
+            $scope.interval = $interval(function () {
+                $scope.intervalCount++;
+                $(".progress").css("max-width", $scope.intervalCount + "%");
+                $(".progress-view").text($scope.intervalCount + "%");
+                if ($scope.intervalCount >= 100) {
+                    $scope.intervalCount = 99;
+                }
+            }, 200)
         }
 
         function _getAppData() {
@@ -191,18 +172,28 @@
                     console.log(response)
                     $scope.GetBGClass()
                     pageService.getAppUserData().then(function (result) {
-
+                        var isValid = true;
                         console.log(result)
-                        var profileData = result; //angular.fromJson(response.data);
-                        DJWebStore.SetUserProfile(profileData.user);
-                        DJWebStore.SetSysParam(profileData.sys.param);
-                        DJWebStore.SetCompany(profileData.company);
-                        if (profileData.resource) {
-                            console.log(profileData.resource)
-                            DJWebStore.SetValue('resourceKey', profileData.resource);
+                        $rootScope.key = result.key;
+                        if (result.key) {
+                            $scope.key = result.key;
+                            isValid = result.key.vl
                         }
-                        _loadSideMenu();
-                        // window.location.href = 'index.html'
+
+                        if (isValid) {
+                            var profileData = result;
+                            DJWebStore.SetUserProfile(profileData.user);
+                            DJWebStore.SetSysParam(profileData.sys.param);
+                            DJWebStore.SetCompany(profileData.company);
+                            if (profileData.resource) {
+                                console.log(profileData.resource)
+                                DJWebStore.SetValue('resourceKey', profileData.resource);
+                            }
+                            _loadSideMenu();
+                        } else {
+                            $scope.key = result.key;
+                            $scope.logoUrl = 'assets/img/app/not_registered.png'
+                        }
                     }, function (err) {
 
 
