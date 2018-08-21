@@ -9,7 +9,7 @@
         .controller('shiftsetController', shiftsetController);
 
     /** @ngInject */
-    function shiftsetController($scope, $rootScope, $state, $filter, pageService) {
+    function shiftsetController($scope, $rootScope, $state, $filter, pageService, $stateParams) {
         //    console.log($state)
         console.log('Holiday ctrl loaded')
         $scope.location = 'this is Holiday controller'

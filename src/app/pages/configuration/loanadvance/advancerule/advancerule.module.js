@@ -17,10 +17,10 @@
         url: '/advancerule',
         templateUrl: 'app/pages/configuration/loanadvance/advancerule/advancerule.html',
         controller: 'advanceruleController',
-        title: 'Loan Provider',
+        title: 'Advance Rule',
         sidebarMeta: {
           icon: 'ion-android-home',
-          order: 1,
+          order: 5,
         },
       }).state('configuration.loanadvance.advancerule.modal', {
         abstract: true,

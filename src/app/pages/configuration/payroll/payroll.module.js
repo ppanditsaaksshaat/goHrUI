@@ -6,10 +6,11 @@
     'use strict';
   
     angular.module('BlurAdmin.pages.configuration.payroll', [
-        'BlurAdmin.pages.configuration.payroll.setup',
-        'BlurAdmin.pages.configuration.payroll.misc',
-        'BlurAdmin.pages.configuration.payroll.payslip',
-        'BlurAdmin.pages.configuration.payroll.payrollfnf',
+        // 'BlurAdmin.pages.configuration.payroll.setup',
+        // 'BlurAdmin.pages.configuration.payroll.misc',
+        // 'BlurAdmin.pages.configuration.payroll.payslip',
+        // 'BlurAdmin.pages.configuration.payroll.payrollfnf',
+        'BlurAdmin.pages.configuration.payroll.payrollsetting',
         
     ]).config(routeConfig);
         
@@ -27,7 +28,7 @@
         },
       });
 
-      $urlRouterProvider.when('/configuration/payroll', '/configuration/payroll/setup');
+      $urlRouterProvider.when('/configuration/payroll', '/configuration/payroll/payrollsetting');
     }
   
   })();

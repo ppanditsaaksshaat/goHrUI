@@ -16,7 +16,7 @@
         $scope.addLocation = addRecord;
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
-        $scope.page.pageId = 291;
+        $scope.page.pageId = 103;
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
@@ -49,7 +49,7 @@
 
             $state.go('configuration.loanadvance.loanprovider.edit', {
                 param: {
-                    id: row.entity.HDId,
+                    id: row.entity.LPId,
                     pageid: $scope.page.pageId,
                     entity: row.entity,
                     selects: $scope.page.pageinfo.selects

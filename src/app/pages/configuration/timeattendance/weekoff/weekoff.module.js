@@ -1,6 +1,6 @@
 /**
- * @author deepak.jain
- * created on 28.07.2018
+ * @author NKM
+ * created on 21.08.2018
  */
 (function () {
     'use strict';
@@ -14,11 +14,11 @@
       .state('configuration.timeattendance.weekoff', {
         url: '/weekoff',
         templateUrl: 'app/pages/configuration/timeattendance/weekoff/weekoff.html',
-        //controller: 'companyController',
+        controller: 'weekOffController',
         title: 'Weekoff Set',
         sidebarMeta: {
           icon: 'ion-android-home',
-          order: 1,
+          order: 3,
         },
       });
     }

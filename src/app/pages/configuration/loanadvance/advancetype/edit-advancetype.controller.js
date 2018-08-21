@@ -5,11 +5,11 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.configuration.loanadvance.loanprovider')
-        .controller('loanproviderEditController', loanproviderEditController);
+    angular.module('BlurAdmin.pages.configuration.loanadvance.advancetype')
+        .controller('advancetypeEditController', advancetypeEditController);
 
     /** @ngInject */
-    function loanproviderEditController($scope, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
+    function advancetypeEditController($scope, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
         $scope.selects = $stateParams.param.selects;
         $scope.entity = $stateParams.param.entity;
         $scope.pageid = $stateParams.param.pageid;

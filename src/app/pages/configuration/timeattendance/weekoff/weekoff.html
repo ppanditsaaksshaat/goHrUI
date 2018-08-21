@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+<div ng-hide="showWeeklyOffList">
+    <grid-box ng-model="page">
+    </grid-box>
+
+</div>
+
+<div ng-show="showWeeklyOffList">
+
+    <div ba-panel ba-panel-class="x-medium" ba-panel-title="weekOff" class="pnl800">
+        <div class="row">
+            <form ng-submit="weekOffSave(editForm,entity)">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label ng-bind="weekOffSetPage.pageinfo.fields.WOSName.text"></label>
+                            <!-- <input type="textbox" class="form-control" ng-model="entity.WOSName"> -->
+                            <field-box page="weekOffSetPage" ng-column="weekOffSetPage.pageinfo.fields.WOSName" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label ng-bind="weekOffSetPage.pageinfo.fields.WOSGroupId.text"></label>
+                            <ui-select-wrap>
+                                <ui-select multiple class="col-md-12" style="margin-left:-3.5%;" ng-model="entity.WOSGroupId" theme="select2" ng-disabled="disabled"
+                                    search-enabled="true" append-to-body="true">
+                                    <ui-select-match placeholder="Choose..">
+                                        {{$item.GMCName}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in groups | filter: $select.search">
+                                        <span>{{ item.GMCName }}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </ui-select-wrap>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label ng-bind="weekOffSetPage.pageinfo.fields.WOSWEF.text"></label>
+                            <!-- <div class="input-group" moment-picker="entity.WOSWEF" format="DD-MMM-YYYY" start-view="month">
+                                <span class="input-group-addon">
+                                         <i class="fa fa-calendar"></i>
+                                     </span>
+                                <input ng-readonly="true" class="form-control" placeholder="Select a date" ng-model="entity.WOSWEF" ng-change="WEFChange()">
+                                <span class="input-group-btn">
+                                         <button class="btn btn-secondary" ng-click="entity.WOSWEF=''" type="button"><i class="fa fa-close"></i></button>
+                                     </span>
+                            </div> -->
+                            <field-box page="weekOffSetPage" ng-column="weekOffSetPage.pageinfo.fields.WOSWEF" ng-entity="entity" form="editForm" fb-change="WEFChange(entity.WOSWEF)"></field-box>
+                        </div>
+                    </div>
+                    <div class="col-md-6" ng-if="entity.WOSWEF">
+                        <div class="form-group">
+                            <label ng-bind="weekOffSetPage.pageinfo.fields.WOSWET.text"></label>
+                            <div class="input-group" moment-picker="entity.WOSWET" format="DD-MMM-YYYY" start-view="month">
+                                <span class="input-group-addon">
+                                             <i class="fa fa-calendar"></i>
+                                         </span>
+                                <input ng-readonly="true" class="form-control" placeholder="Select a date" ng-model="entity.WOSWET" ng-model-options="{ updateOn: 'blur' }">
+                                <span class="input-group-btn">
+                                             <button class="btn btn-secondary"   type="button"><i class="fa fa-close"></i></button>
+                                         </span>
+                            </div>
+                            <!-- <field-box page="weekOffSetPage" ng-column="weekOffSetPage.pageinfo.fields.WOSWET" ng-entity="entity" form="editForm" fb-change="appliedDays()"></field-box> -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ui-grid="weekGridOptions" ui-grid-edit ui-grid-expandable ui-grid-auto-resize ui-grid-selection class="grid" style="height:270px"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group text-center">
+                        <button type="submit" class="btn btn-info btn-lg">Save</button>
+                        <button type="button" class="btn btn-danger btn-lg" ng-click="closeWeekOffAdd()">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

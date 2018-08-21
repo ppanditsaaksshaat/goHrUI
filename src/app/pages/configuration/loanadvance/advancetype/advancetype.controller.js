@@ -5,18 +5,18 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.configuration.loanadvance.loanprovider')
-        .controller('loanproviderController', loanproviderController);
+    angular.module('BlurAdmin.pages.configuration.loanadvance.advancetype')
+        .controller('advancetypeController', advancetypeController);
 
     /** @ngInject */
-    function loanproviderController($scope, $rootScope, $state, $filter, pageService) {
+    function advancetypeController($scope, $rootScope, $state, $filter, pageService) {
         //    console.log($state)
         console.log('Holiday ctrl loaded')
         $scope.location = 'this is Holiday controller'
         $scope.addLocation = addRecord;
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
-        $scope.page.pageId = 291;
+        $scope.page.pageId = 257;
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
@@ -47,9 +47,9 @@
 
         function editRecord(row) {
 
-            $state.go('configuration.loanadvance.loanprovider.edit', {
+            $state.go('configuration.loanadvance.advancetype.edit', {
                 param: {
-                    id: row.entity.HDId,
+                    id: row.entity.AdTypeId,
                     pageid: $scope.page.pageId,
                     entity: row.entity,
                     selects: $scope.page.pageinfo.selects
@@ -63,7 +63,7 @@
 
         function addRecord() {
             console.log('addre')
-            $state.go('configuration.loanadvance.loanprovider.add', {
+            $state.go('configuration.loanadvance.advancetype.add', {
                 param: {
                     id: 0,
                     pageid: $scope.page.pageId,
