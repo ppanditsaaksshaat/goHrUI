@@ -14,6 +14,7 @@
 
     var vm = this;
     var pageId = $stateParams.pageId;
+    console.log(pageId)
     var tempName = $stateParams.name;
     var currentState = $state.current;
     var shiftWeekOffPageId = 141;

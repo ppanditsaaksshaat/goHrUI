@@ -1,0 +1,114 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" ng-if="!isEdit" dotranslate>Add Loan Category Rule</h3>
+        <h3 class="inline-block clear-vertical-margin" ng-if="isEdit" dotranslate>Edit Loan Category Rule</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <form name="loanCategoryRuleDetail" id="loanCategoryRuleDetail" novalidate>
+            <div class="col-sm-12 vertical-margin">
+                <fieldset>
+                    <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
+                        <div class="col-sm-4 clear-left-padding">
+                            <div class="form-group">
+                                <label>Grade</label>
+                                <select class="form-control" data- ng-model="entity.LTRGradeId" ng-options="location.value as location.name for location in selects.LTRGradeId"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 clear-side-padding">
+                            <div class="form-group">
+                                <label>Level</label>
+                                <select class="form-control" data- ng-model="entity.LTRLevelId" ng-options="location.value as location.name for location in selects.LTRLevelId"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 clear-right-padding">
+                            <div class="form-group">
+                                <label>Location</label>
+                                <select class="form-control" data- ng-model="entity.LocationId" ng-options="location.value as location.name for location in selects.LocationId"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
+                        <div class="col-sm-4 clear-left-padding">
+                            <div class="form-group">
+                                <label>Branch</label>
+                                <select class="form-control" data- ng-model="entity.BRId" ng-options="location.value as location.name for location in selects.BRId"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 clear-side-padding">
+                            <div class="form-group">
+                                <label>Sub-Unit</label>
+                                <select class="form-control" data- ng-model="entity.LTRSubUnitId" ng-options="location.value as location.name for location in selects.LTRSubUnitId"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 clear-right-padding">
+                            <div class="form-group">
+                                <label>Loan Provider</label>
+                                <select class="form-control" data- ng-model="entity.LPId" ng-options="location.value as location.name for location in selects.LPId"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
+                        <div class="col-sm-4 clear-left-padding">
+                            <div class="form-group">
+                                <label>Loan Type</label>
+                                <select class="form-control" data- ng-model="entity.LTRLTId" ng-options="location.value as location.name for location in selects.LTRLTId"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 clear-side-padding">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" data-ng-model="entity.LTRName" name="LTRName" id="LTRName"
+                                    required />
+                                <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                    data-form-submit="addSignatoryForm.$submitted"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 clear-right-padding">
+                            <div class="form-group">
+                                <label>Max Limit</label>
+                                <input type="text" class="form-control" data-ng-model="entity.LTRMaxLimit" name="LTRMaxLimit" id="LTRMaxLimit"
+                                    required />
+                                <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                    data-form-submit="addSignatoryForm.$submitted"></span>
+                            </div>
+                        </div>
+                      
+                    </div>
+
+                    <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
+                        <div class="col-sm-4 clear-left-padding">
+                            <div class="form-group">
+                                <label>Interest Percentage</label>
+                                <input type="text" class="form-control" data-ng-model="entity.LTRInstallmentPercentage" name="LTRInstallmentPercentage" id="LTRInstallmentPercentage" required />
+                                <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                    data-form-submit="addSignatoryForm.$submitted"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 clear-side-padding">
+                            <div class="form-group">
+                                <label>Max Duration</label>
+                                <input type="text" class="form-control" data-ng-model="entity.LTRMaxDuration" name="LTRMaxDuration" id="LTRMaxDuration"
+                                    required />
+                                <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
+                                    data-form-submit="addSignatoryForm.$submitted"></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <button type="submit" ng-if="!isEdit" class="btn btn-success" ng-click="saveForm(loanCategoryRuleDetail);" dotranslate>Add Loan-Category</button>
+                        <button type="submit" ng-if="isEdit" class="btn btn-success" ng-click="saveForm(loanCategoryRuleDetail);" dotranslate>Update Loan-Category</button>
+                        <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

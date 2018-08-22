@@ -11,7 +11,8 @@
     'BlurAdmin.pages.configuration.leaves',
     'BlurAdmin.pages.configuration.employee',
     'BlurAdmin.pages.configuration.timesheet',
-    'BlurAdmin.pages.configuration.timeattendance'
+    'BlurAdmin.pages.configuration.timeattendance',
+    'BlurAdmin.pages.configuration.loanadvance'
   ]).config(routeConfig);
 
   /** @ngInject */

@@ -5,18 +5,18 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.configuration.timeattendance.shiftset')
-        .controller('shiftsetController', shiftsetController);
+    angular.module('BlurAdmin.pages.configuration.loanadvance.advancerule')
+        .controller('advanceruleController', advanceruleController);
 
     /** @ngInject */
-    function shiftsetController($scope, $rootScope, $state, $filter, pageService, $stateParams) {
+    function advanceruleController($scope, $rootScope, $state, $filter, pageService) {
         //    console.log($state)
         console.log('Holiday ctrl loaded')
         $scope.location = 'this is Holiday controller'
         $scope.addLocation = addRecord;
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
-        $scope.page.pageId = 289;
+        $scope.page.pageId = 99;
         $scope.page.boxOptions = {
             selfLoading: true,
             showRefresh: true,
@@ -47,9 +47,9 @@
 
         function editRecord(row) {
 
-            $state.go('configuration.timeattendance.shiftset.edit', {
+            $state.go('configuration.loanadvance.advancerule.edit', {
                 param: {
-                    id: row.entity.SSId,
+                    id: row.entity.ARId,
                     pageid: $scope.page.pageId,
                     entity: row.entity,
                     selects: $scope.page.pageinfo.selects
@@ -63,7 +63,7 @@
 
         function addRecord() {
             console.log('addre')
-            $state.go('configuration.timeattendance.shiftset.add', {
+            $state.go('configuration.loanadvance.advancerule.add', {
                 param: {
                     id: 0,
                     pageid: $scope.page.pageId,

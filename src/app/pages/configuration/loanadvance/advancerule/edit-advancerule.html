@@ -1,0 +1,34 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin" ng-if="!isEdit" dotranslate>Add Advance Rule</h3>
+        <h3 class="inline-block clear-vertical-margin" ng-if="isEdit" dotranslate>Edit Advance Rule</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <form name="advanceRuleDetail" id="advanceRuleDetail" novalidate>
+            <div class="row">
+                <div class="col-sm-12 clear-left-padding">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label dotranslate>Name</label>
+                            <input type="text" class="form-control" ng-model="entity.ARName" name="ARName" id="ARName" required />
+
+                            <span class="validation-msg" validation-messages="" model-controller="bankDetails.bank" required-error="Name is required"
+                                form-submit="bankDetails.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <button type="submit" ng-if="!isEdit" class="btn btn-success" ng-click="saveForm(advanceRuleDetail);" dotranslate>Add Advance-Rule</button>
+                        <button type="submit" ng-if="isEdit" class="btn btn-success" ng-click="saveForm(advanceRuleDetail);" dotranslate>Update Advance-Rule</button>
+                        <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

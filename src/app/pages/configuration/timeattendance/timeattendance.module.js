@@ -8,7 +8,9 @@
     angular.module('BlurAdmin.pages.configuration.timeattendance', [
       'BlurAdmin.pages.configuration.timeattendance.shiftset',
       'BlurAdmin.pages.configuration.timeattendance.weekoff',
-      'BlurAdmin.pages.configuration.timeattendance.shiftplan'
+      'BlurAdmin.pages.configuration.timeattendance.rosterplan',
+      'BlurAdmin.pages.configuration.timeattendance.shiftdetail',
+      
     ]).config(routeConfig);
         
     /** @ngInject */
@@ -24,6 +26,8 @@
           order: 1,
         },
       });
+
+      $urlRouterProvider.when('/configuration/timeattendance', '/configuration/timeattendance/shiftset');
     }
   })();
   
