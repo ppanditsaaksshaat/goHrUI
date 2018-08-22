@@ -5,24 +5,23 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.team.attendance.approvals', [
+    angular.module('BlurAdmin.pages.team.attendance.workfromhome.rejected', [
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('team.attendance.approvals', {
-                url: '/approvals',
-                templateUrl: 'app/pages/team/attendance/approvals/approvals.html',
-                title: 'APPROVALS',
-                controller: "",
+            .state('team.attendance.workfromhome.rejected', {
+                url: '/rejected',
+                templateUrl: 'app/pages/team/attendance/workfromhome/rejected/rejected.html',
+                title: 'Rejected',
+                controller: "myTeamRejectedWFHController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
                 },
             })
-        $urlRouterProvider.when('/team/attendance', '/team/attendance/approvals');
     }
 
 })();

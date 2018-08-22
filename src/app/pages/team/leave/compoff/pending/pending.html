@@ -8,7 +8,7 @@
                         <i ng-class="{'fa fa-angle-down':!collpase, 'fa fa-angle-up' : collpase}" class="collpase-icon fa fa-angle-up"></i>
                     </span>
 
-                    <div class="col-lg-11 col-md-11 col-sm-11  clear-side-padding pending-leave internal-padding" data-ng-init="collpase = true">
+                    <div data-ng-click="collpase = !collpase" class="col-lg-11 col-md-11 col-sm-11  clear-side-padding pending-leave internal-padding" data-ng-init="collpase = true">
                         <div class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
                             <!-- ngIf: request.requestedBy.profileImageUrl -->
                             <!-- ngIf: !request.requestedBy.profileImageUrl -->
@@ -185,7 +185,7 @@
                 </div>
 
             </div>
-            <div data-ng-if="noDataFound" class="alert alert-success" role="alert">Hooray, no pending Leave requests for approval!</div>
+            <div data-ng-if="noDataFound" class="alert alert-success" role="alert">Hooray, No pending comoff requests for approval!</div>
 
 
         </div>

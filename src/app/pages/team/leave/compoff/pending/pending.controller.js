@@ -12,8 +12,7 @@
     function myTeamPendingCompOffController($scope, $rootScope, pageService, editFormService, dialogModal) {
 
 
-        $scope.expand = _expand;
-        $scope.sameDayApplyLeaves = _sameDayApplyLeaves;
+
         $scope.approved = _approved;
         $scope.rejected = _rejected;
         $scope.onhold = _onhold;
@@ -75,90 +74,44 @@
             }
         }
 
-        function _expand(fromDate, toDate, empId, index) {
 
-            if ($scope.allLeaves[index].countLeaveForSameDay == undefined) {
-                var searchLists = [];
-                searchLists.push({ field: 'fromDate', operand: '=', value: fromDate })
-                searchLists.push({ field: 'toDate', operand: '=', value: toDate })
-                searchLists.push({ field: 'empId', operand: '=', value: empId })
-
-                var data = {
-                    searchList: searchLists,
-                    orderByList: []
-                }
-                pageService.getCustomQuery(data, 662).then(_getSameDayLeaveApplySuccessResult, _getSameDayLeaveApplyErrorResult)
-                function _getSameDayLeaveApplySuccessResult(result) {
-
-
-                    if (result != "NoDataFound") {
-                        $scope.allLeaves[index].otherMembers = result[0];
-                    }
-                    $scope.allLeaves[index].countLeaveForSameDay = result == "NoDataFound" ? 0 : result[0].length;
-                    if ($scope.allLeaves[index].countLeaveForSameDay == 0) {
-                        $scope.allLeaves[index].message = 'No other member in your team applied leave ' + (fromDate == toDate ? ' on this day' : ' during this period');
-                    }
-                    else if ($scope.allLeaves[index].countLeaveForSameDay == 1) {
-                        $scope.allLeaves[index].message = $scope.allLeaves[index].countLeaveForSameDay + ' other member in your team applied leave ' + (fromDate == toDate ? ' on this day' : ' during this period');
-                    }
-                    else {
-                        $scope.allLeaves[index].message = $scope.allLeaves[index].countLeaveForSameDay + ' other members in your team applied leave ' + (fromDate == toDate ? ' on this day' : ' during this period');
-                    }
-
-                }
-                function _getSameDayLeaveApplyErrorResult(err) {
-                    console.log(err)
-                }
-            }
-        }
-        function _sameDayApplyLeaves(otherMembers) {
-            var modal = dialogModal.open({
-                url: 'app/pages/team/leave/othermember/othermember.html',
-                size: 'top-center-600',
-                controller: 'leaveOtherMemberController',
-                param: otherMembers
-            });
+        function _approved(compoffDetails, form) {
+            compoffDetails.StatusId = 75;
+            compoffDetails.StatusName = "approved";
+            _submitForm(compoffDetails, form);
 
         }
-        function _approved(leaveDetails, form) {
-            leaveDetails.StatusId = 49;
-            leaveDetails.StatusName = "approved";
-            _submitForm(leaveDetails, form);
-
+        function _rejected(compoffDetails, form) {
+            compoffDetails.StatusId = 74;
+            compoffDetails.StatusName = "rejected";
+            _submitForm(compoffDetails, form);
         }
-        function _rejected(leaveDetails, form) {
-            leaveDetails.StatusId = 48;
-            leaveDetails.StatusName = "rejected";
-            _submitForm(leaveDetails, form);
-        }
-        function _onhold(leaveDetails, form) {
-            leaveDetails.StatusId = 47;
-            leaveDetails.StatusName = "onhold";
-            _submitForm(leaveDetails, form);
+        function _onhold(compoffDetails, form) {
+            compoffDetails.StatusId = 73;
+            compoffDetails.StatusName = "onhold";
+            _submitForm(compoffDetails, form);
         }
 
-        function _submitForm(leave, form) {
+        function _submitForm(compoff, form) {
             var comment = "";
-            if (leave.StatusId == 49) {
-                comment = leave.comment;
+            if (compoff.StatusId == 75) {
+                comment = compoff.comment;
             }
-            else if (leave.StatusId == 48) {
-                comment = leave.rejectReason;
+            else if (compoff.StatusId == 74) {
+                comment = compoff.rejectReason;
             }
             else {
-                comment = leave.onholdReason;
+                comment = compoff.onholdReason;
             }
             var entity = {
-                ELSDELAId: leave.LEADId,
-                ELSDSanctionFromDate: leave.LEADDateFrom,
-                ELSDSanctionToDate: leave.LEADDateTo,
-                ELSDSanctionApplyDate: leave.CreatedOn,
-                StatusId: leave.StatusId,
-                ELSDComment: comment,
-                ELSDSanctionLeaveDate: moment().toDate()
+                ACODCOId: compoff.COId,
+                ACODReson: comment,
+                StatusId: compoff.StatusId,
+                ACODIsApplyHalfDay: compoff.COIsApplyHalfDay,
+                ACODIsApplyFullDay: compoff.COIsApplyFullDay,
             }
 
-            editFormService.saveForm(285, entity, {},
+            editFormService.saveForm(466, entity, {},
                 "create", "", form, false)
                 .then(_successResult, _errorResult)
 
@@ -166,7 +119,7 @@
                 console.log(result);
                 if (result.success_message == "Added New Record.") {
                     _loadController();
-                    $rootScope.showMsg("success", "You have " + leave.StatusName + " leave of " + leave.EmpName)
+                    $rootScope.showMsg("success", "You have " + compoff.StatusName + " compoff leave of " + compoff.EmpName)
 
                 }
             }
@@ -175,6 +128,7 @@
             }
 
         }
+
         _loadController();
     }
 })();

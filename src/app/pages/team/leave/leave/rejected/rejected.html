@@ -1,129 +1,134 @@
 <div class="col-lg-12 clear-side-padding">
-        <div class="panel">
-            <div class="panel-body">
-                <div class="col-lg-12 clear-side-padding">
-    
-                    <div data-ng-if="!noDataFound" ng-repeat="leave in allLeaves">
-                        <div class="col-md-12 col-sm-12 request-form profic-pic-30-30">
-                            <span class="pull-right collpase" data-ng-click="collpase = !collpase">
-                                <i ng-class="{'fa fa-angle-down':!collpase, 'fa fa-angle-up' : collpase}" class="collpase-icon fa fa-angle-up"></i>
-                            </span>
-    
-                            <div class="col-lg-11 col-md-11 col-sm-11  clear-side-padding pending-leave internal-padding" data-ng-init="collpase = true">
-                                <div class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
-                                    <!-- ngIf: request.requestedBy.profileImageUrl -->
-                                    <!-- ngIf: !request.requestedBy.profileImageUrl -->
-                                    <div class="profile-picture  ng-isolate-scope">
-                                        <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}" style="background-color: rgb(158, 105, 175);">
-                                            {{leave.shortName}}
-                                        </div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="col-lg-12 clear-side-padding">
+
+                <div data-ng-if="!noDataFound" ng-repeat="leave in allLeaves">
+                    <div class="col-md-12 col-sm-12 request-form rejected profic-pic-30-30">
+                        <span class="pull-right collpase" data-ng-click="collpase = !collpase">
+                            <i ng-class="{'fa fa-angle-down':!collpase, 'fa fa-angle-up' : collpase}" class="collpase-icon fa fa-angle-up"></i>
+                        </span>
+
+                        <div data-ng-click="collpase = !collpase" class="col-lg-11 col-md-11 col-sm-11  clear-side-padding pending-leave internal-padding" data-ng-init="collpase = true">
+                            <div class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
+                                <!-- ngIf: request.requestedBy.profileImageUrl -->
+                                <!-- ngIf: !request.requestedBy.profileImageUrl -->
+                                <div class="profile-picture  ng-isolate-scope">
+                                    <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}" style="background-color: rgb(158, 105, 175);">
+                                        {{leave.shortName}}
                                     </div>
-                                    <!-- end ngIf: !request.requestedBy.profileImageUrl -->
                                 </div>
-                                <div class="leave-details col-lg-8 col-md-8 col-sm-8 clear-side-padding">
-                                    <p class="leave-requestor">
-                                        <b>
-                                            <a class="aDisplayName " data-ui-sref="employee.summary({empid:leave.EmpId})">{{leave.EmpName}}</a>
-                                        </b>
-                                    </p>
-                                    <!-- ngIf: !request.isCompOffRequest -->
-                                    <span data-ng-if="!request.isCompOffRequest" class=" ">
-                                        <b>Leave Type: </b>{{leave.Type}}</span>
-                                    <!-- end ngIf: !request.isCompOffRequest -->
-    
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 request-calender clear-side-padding">
-                                    <span class="month-view">
-                                        <!-- ngIf: (request.fromDate | date:'MMM') !== (request.toDate | date:'MMM') -->
-                                        <!-- ngIf: (request.fromDate | date:'MMM') == (request.toDate | date:'MMM') -->
-                                        <span data-ng-if="(request.fromDate | date:'MMM') == (request.toDate | date:'MMM')" class="">
-                                            <b class="">
-                                                <span class="dot">.</span> {{leave.monthName}}
-                                                <span class="dot">.</span>
-                                            </b>
-                                        </span>
-                                        <!-- end ngIf: (request.fromDate | date:'MMM') == (request.toDate | date:'MMM') -->
-                                    </span>
-    
-                                    <!-- ngIf: (request.fromDate | date:'ddMMM') !== (request.toDate | date:'ddMMM') -->
-                                    <span ng-if="leave.dayFromName==leave.dayToName" class="date-view ">
-                                        <span class="date-text text-center">
-                                            <ul>
-                                                <li>
-                                                    <span class="day">
-                                                        <b class="">{{leave.dateFrom}}</b>
-                                                    </span>
-                                                </li>
-                                                <li>
-                                                    <span class="week">
-                                                        <b class="">{{leave.dayFromName}}</b>
-                                                    </span>
-                                                </li>
-                                            </ul>
-                                        </span>
-                                    </span>
-                                    <span ng-if="leave.dayFromName!=leave.dayToName" class="date-view ">
-                                        <span class="date-text pull-left">
-                                            <ul>
-                                                <li>
-                                                    <span class="day">
-                                                        <b class="">{{leave.dateFrom}}</b>
-                                                    </span>
-                                                </li>
-                                                <li>
-                                                    <span class="week">
-                                                        <b class="">{{leave.dayFromName}}</b>
-                                                    </span>
-                                                </li>
-                                            </ul>
-                                        </span>
-                                        <span class="date-saperator">-</span>
-                                        <span class="date-text  pull-right">
-                                            <ul class="todate">
-                                                <li>
-                                                    <span class="day">
-                                                        <b class="">{{leave.dateTo}}</b>
-                                                    </span>
-                                                </li>
-                                                <li>
-                                                    <span class="week">
-                                                        <b class="">{{leave.dayToName}}</b>
-                                                    </span>
-                                                </li>
-                                            </ul>
-                                        </span>
-                                    </span>
-                                    <!-- end ngIf: (request.fromDate | date:'ddMMM') !== (request.toDate | date:'ddMMM') -->
-                                    <!-- ngIf: (request.fromDate | date:'ddMMM') == (request.toDate | date:'ddMMM') -->
-                                </div>
-                                <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding">
-                                    <span class="leave-note ">
-                                        <b>Reason: </b>{{leave.LeadComment}}</span>
-                                </div>
-                                <!-- ngIf: request.approvers != null -->
-                                <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver ">
-                                    <a class="approver-name information-tooltip tooltip-grey inline-block " data-uib-tooltip="{{leave.HeadEmpName}}" tooltip-placement="top">
-                                        <b>Approver By: </b> {{leave.ApprovedBy}}</a>
-                                </div>
-                                <!-- end ngIf: request.approvers != null -->
-                                <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
-                                    <span class="">
-                                        <b>Requested On: </b>{{leave.CreatedOn}}</span>
-                                </div>
-                                <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
-                                    <span class="">
-                                        <b>Approved On: </b>{{leave.ModifiedOn}}</span>
-                                </div>
-                                <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
-                                    <span class="">
-                                        <b>Status: </b>{{leave.Status}}</span>
-                                </div>
-                                <!-- ngIf: request.documentProofs.length > 0 -->
+                                <!-- end ngIf: !request.requestedBy.profileImageUrl -->
                             </div>
-                            <!-- ngIf: !collpase -->
-                            <div data-ng-if="!collpase" class="">
-    
-                                <!-- <div class="col-lg-12 col-md-12 col-sm-12 leave-request-comments-section clear-side-padding">
+                            <div class="leave-details col-lg-8 col-md-8 col-sm-8 clear-side-padding">
+                                <p class="leave-requestor">
+                                    <b>
+                                        <a class="aDisplayName " data-ui-sref="employee.summary({empid:leave.EmpId})">{{leave.EmpName}}</a>
+                                    </b>
+                                </p>
+                                <!-- ngIf: !request.isCompOffRequest -->
+                                <span data-ng-if="!request.isCompOffRequest" class=" ">
+                                    <b>Leave Type: </b>{{leave.Type}}</span>
+                                <!-- end ngIf: !request.isCompOffRequest -->
+
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 request-calender clear-side-padding">
+                                <span class="month-view">
+                                    <!-- ngIf: (request.fromDate | date:'MMM') !== (request.toDate | date:'MMM') -->
+                                    <!-- ngIf: (request.fromDate | date:'MMM') == (request.toDate | date:'MMM') -->
+                                    <span data-ng-if="(request.fromDate | date:'MMM') == (request.toDate | date:'MMM')" class="">
+                                        <b class="">
+                                            <span class="dot">.</span> {{leave.monthName}}
+                                            <span class="dot">.</span>
+                                        </b>
+                                    </span>
+                                    <!-- end ngIf: (request.fromDate | date:'MMM') == (request.toDate | date:'MMM') -->
+                                </span>
+
+                                <!-- ngIf: (request.fromDate | date:'ddMMM') !== (request.toDate | date:'ddMMM') -->
+                                <span ng-if="leave.dayFromName==leave.dayToName" class="date-view ">
+                                    <span class="date-text text-center">
+                                        <ul>
+                                            <li>
+                                                <span class="day">
+                                                    <b class="">{{leave.dateFrom}}</b>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="week">
+                                                    <b class="">{{leave.dayFromName}}</b>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </span>
+                                <span ng-if="leave.dayFromName!=leave.dayToName" class="date-view ">
+                                    <span class="date-text pull-left">
+                                        <ul>
+                                            <li>
+                                                <span class="day">
+                                                    <b class="">{{leave.dateFrom}}</b>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="week">
+                                                    <b class="">{{leave.dayFromName}}</b>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </span>
+                                    <span class="date-saperator">-</span>
+                                    <span class="date-text  pull-right">
+                                        <ul class="todate">
+                                            <li>
+                                                <span class="day">
+                                                    <b class="">{{leave.dateTo}}</b>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="week">
+                                                    <b class="">{{leave.dayToName}}</b>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </span>
+                                <!-- end ngIf: (request.fromDate | date:'ddMMM') !== (request.toDate | date:'ddMMM') -->
+                                <!-- ngIf: (request.fromDate | date:'ddMMM') == (request.toDate | date:'ddMMM') -->
+                            </div>
+                            <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding">
+                                <span class="leave-note ">
+                                    <b>Applier Reason: </b>{{leave.LeadComment}}</span>
+                            </div>
+         
+                            <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
+                                <span class="">
+                                    <b>Requested On: </b>{{leave.CreatedOn}}</span>
+                            </div>
+                            <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver ">
+                                <a class="approver-name information-tooltip tooltip-grey inline-block " data-uib-tooltip="{{leave.HeadEmpName}}" tooltip-placement="top">
+                                    <b>Rejected By: </b> {{leave.ApprovedBy}}</a>
+                            </div>
+                            <!-- end ngIf: request.approvers != null -->
+
+                            <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
+                                <span class="">
+                                    <b>Rejected On: </b>{{leave.ModifiedOn}}</span>
+                            </div>
+                            <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
+                                <span class="">
+                                    <b>Approver Comment: </b>{{leave.LEADAdminComment}}</span>
+                            </div>
+                            <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
+                                <span class="">
+                                    <b>Status: </b>{{leave.Status}}</span>
+                            </div>
+                            <!-- ngIf: request.documentProofs.length > 0 -->
+                        </div>
+                        <!-- ngIf: !collpase -->
+                        <div data-ng-if="!collpase" class="">
+
+                            <!-- <div class="col-lg-12 col-md-12 col-sm-12 leave-request-comments-section clear-side-padding">
                                                         <div class="col-lg-8 col-md-8 col-sm-8 comments internal-padding clear-side-padding">
                                                             <div>
                                                                 <div class="simple-comments">
@@ -142,24 +147,24 @@
                                                             </div>
                                                         </div>
                                                     </div> -->
-    
-                                <div class="col-sm-11 button-container clear-side-padding">
-                                    <div class="pull-right" clear-side-padding "=">
-                                        <span class="leave-request-options">
-                                            <!-- <a data-ui-sref="employee.time.leaves({id: request.requestedBy.employeeId})" href="#/employee/6629/time/leaves">Advanced Options</a> -->
-                                        </span>
-                                        <input type="button" class="btn btn-primary btn-raised" value="Approve" uib-popover-template="'approve-reason-template'"
-                                            popover-placement="top-right" popover-is-open="" popover-append-to-body="true" popover-trigger="outsideClick">
-    
-                                       <input type="button" class="btn btn-warning btn-raised" value="Onhold" uib-popover-template="'onhold-reason-template'" popover-placement="top-right"
-                                            popover-is-open="" popover-append-to-body="true" popover-trigger="outsideClick">
-    
-                                    </div>
+
+                            <div class="col-sm-11 button-container clear-side-padding">
+                                <div class="pull-right" clear-side-padding "=">
+                                    <span class="leave-request-options">
+                                        <!-- <a data-ui-sref="employee.time.leaves({id: request.requestedBy.employeeId})" href="#/employee/6629/time/leaves">Advanced Options</a> -->
+                                    </span>
+                                    <input type="button" class="btn btn-primary btn-raised" value="Approve" uib-popover-template="'approve-reason-template'"
+                                        popover-placement="top-right" popover-is-open="" popover-append-to-body="true" popover-trigger="outsideClick">
+
+                                    <input type="button" class="btn btn-warning btn-raised" value="Onhold" uib-popover-template="'onhold-reason-template'" popover-placement="top-right"
+                                        popover-is-open="" popover-append-to-body="true" popover-trigger="outsideClick">
+
                                 </div>
                             </div>
-    
-    
-                            <script type="text/ng-template" id="approve-reason-template">
+                        </div>
+
+
+                        <script type="text/ng-template" id="approve-reason-template">
                                                     <div class="popover-content">
                                                             <form ng-submit="approved(leave,approvedForm)" name="approvedForm">
                                                             <div class="col-md-12 clear-side-padding">
@@ -178,9 +183,9 @@
                                                         </div>
                                                 
                                                   </script>
-    
 
-                            <script type="text/ng-template" id="onhold-reason-template">
+
+                        <script type="text/ng-template" id="onhold-reason-template">
                                                     <div class="popover-content">
                                                         <form ng-submit="onhold(leave,onholdForm)" name="onholdForm">
                                                             <div class="col-md-12 clear-side-padding">
@@ -197,13 +202,13 @@
                                                         </form>
                                                         </div>
                                                   </script>
-    
-                            <!-- end ngIf: !collpase -->
-                        </div>
-    
+
+                        <!-- end ngIf: !collpase -->
                     </div>
-                    <div data-ng-if="noDataFound" class="alert alert-success" role="alert">Hooray, No Rejected Leave requests for approval!</div>
+
                 </div>
+                <div data-ng-if="noDataFound" class="alert alert-success" role="alert">Hooray, No rejected leaves found!</div>
             </div>
         </div>
     </div>
+</div>

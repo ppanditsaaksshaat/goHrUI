@@ -16,7 +16,7 @@
                 url: '/approved',
                 templateUrl: 'app/pages/team/leave/compoff/approved/approved.html',
                 title: 'Approved',
-                controller: "",
+                controller: "myTeamApprovedCompOffController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
