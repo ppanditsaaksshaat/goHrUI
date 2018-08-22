@@ -9,10 +9,10 @@
         .controller('myTeamApprovedLeaveController', myTeamApprovedLeaveController);
 
     /** @ngInject */
-    function myTeamApprovedLeaveController($scope, $rootScope, pageService) {
+    function myTeamApprovedLeaveController($scope, $rootScope, pageService, editFormService, dialogModal) {
 
 
-
+        
         $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
             //    console.log(ev)
             //    console.log(to)
@@ -21,22 +21,7 @@
             //    console.log(fromParams)
         });
 
-        $scope.gridOptions = {
-            enableCellEditOnFocus: false,
-            enableRowSelection: false,
-            enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 0,
-            enableScrollbars: false,
-            columnDefs: [
-                { name: 'EmpName', displayName: 'EmpName', width: 150, enableCellEdit: false },
-                { name: 'LEADDateFrom', displayName: 'From', width: 120, enableCellEdit: false },
-                { name: 'LEADDateTo', displayName: 'To', width: 120, enableCellEdit: false },
-                { name: 'CreatedOn', displayName: 'Requested On', width: 120, enableCellEdit: false },
-                { name: 'ApprovedBy', displayName: 'Approved By', width: 150, enableCellEdit: false },
-                { name: 'ModifiedOn', displayName: 'Approved On', width: 120, enableCellEdit: false },
-                { name: 'Status', displayName: 'Status', width: 150, enableCellEdit: false },
-            ]
-        }
+
 
         function _loadController() {
             var searchLists = [];
@@ -53,14 +38,27 @@
             function _getCustomQuerySuccessResult(result) {
                 console.log(result)
                 if (result != "NoDataFound") {
-                    angular.forEach(result[0], function (data) {
-                        data.LEADDateFrom = moment(data.LEADDateFrom).format("DD-MMM-YYYY");
-                        data.LEADDateTo = moment(data.LEADDateTo).format("DD-MMM-YYYY");
-                        data.CreatedOn = moment(data.CreatedOn).format("DD-MMM-YYYY");
-                        data.ModifiedOn = moment(data.ModifiedOn).format("DD-MMM-YYYY");
+                    $scope.allLeaves = result[0];
+                    angular.forEach($scope.allLeaves, function (data, index) {
+                        data.CreatedOn = moment(data.CreatedOn).format('DD-MMM-YYYY');
+                        data.ModifiedOn = moment(data.ModifiedOn).format('DD-MMM-YYYY');
+                        data.dayFromName = moment(data.LEADDateFrom).format('ddd');
+                        data.dayToName = moment(data.LEADDateTo).format('ddd');
+                        data.monthName = moment(data.LEADDateFrom).format('MMM');
+                        data.dateFrom = moment(data.LEADDateFrom).format('DD');
+                        data.dateTo = moment(data.LEADDateTo).format('DD');
+                        var spiltName = data.EmpName.split(' ');
+                        if (spiltName.length == 3) {
+                            data.shortName = spiltName[0].substr(0, 1) + spiltName[2].substr(0, 1);
+                        }
+                        else if (spiltName.length == 2) {
+                            data.shortName = spiltName[0].substr(0, 1) + spiltName[1].substr(0, 1);
+                        }
+                        else {
+                            data.shortName = spiltName[0].substr(0, 1);
+                        }
                     })
-
-                    $scope.gridOptions.data = result[0];
+                    $scope.noDataFound = false;
                 }
                 else {
                     $scope.noDataFound = true;
@@ -73,6 +71,7 @@
             }
         }
 
+     
         _loadController();
     }
 })();

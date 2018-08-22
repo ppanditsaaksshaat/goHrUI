@@ -550,6 +550,34 @@ td {
   border: 1px solid #b0e0f6;
   max-width: 1280px;
 }
+
+ .onhold{
+  background-color: #ffebcc;
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 13px;
+  border: 1px solid #ffc266;
+  max-width: 1280px;
+}
+.rejected{
+  background-color: #ffd6cc;
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 13px;
+  border: 1px solid#ffc2b3;
+  max-width: 1280px;
+}
+.approved{
+  background-color: #e6ffe6;
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 13px;
+  border: 1px solid #b3ffb3;
+  max-width: 1280px;
+}
+
+
+
 .request-form .collpase {
   padding: 3px;
   cursor: pointer;

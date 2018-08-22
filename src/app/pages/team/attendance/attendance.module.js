@@ -6,8 +6,10 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.team.attendance', [
-        'BlurAdmin.pages.team.attendance.approvals',
-        'BlurAdmin.pages.team.attendance.timeassignments'
+        'BlurAdmin.pages.team.attendance.adjustment',
+        'BlurAdmin.pages.team.attendance.outduty',
+        //'BlurAdmin.pages.team.attendance.remoteclockin',
+        'BlurAdmin.pages.team.attendance.workfromhome'
     ])
         .config(routeConfig);
 

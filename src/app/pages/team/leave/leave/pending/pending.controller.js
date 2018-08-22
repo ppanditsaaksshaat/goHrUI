@@ -10,7 +10,7 @@
 
     /** @ngInject */
     function myTeamPendingLeaveController($scope, $rootScope, pageService, editFormService, dialogModal) {
-       
+
 
         $scope.expand = _expand;
         $scope.sameDayApplyLeaves = _sameDayApplyLeaves;
@@ -33,7 +33,7 @@
             searchLists.push({ field: 'headEmpId', operand: '=', value: $rootScope.user.profile.empId })
             searchLists.push({ field: 'statusId', operand: '=', value: 0 })
             searchLists.push({ field: 'type', operand: '=', value: 'Leave' })
-            
+
 
             var data = {
                 searchList: searchLists,
@@ -90,7 +90,7 @@
                 pageService.getCustomQuery(data, 662).then(_getSameDayLeaveApplySuccessResult, _getSameDayLeaveApplyErrorResult)
                 function _getSameDayLeaveApplySuccessResult(result) {
 
-
+                   
                     if (result != "NoDataFound") {
                         $scope.allLeaves[index].otherMembers = result[0];
                     }
