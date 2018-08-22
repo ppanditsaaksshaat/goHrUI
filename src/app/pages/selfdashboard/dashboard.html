@@ -28,7 +28,7 @@
     <div class="col-md-6">
         <div class="panel panel-medium">
             <div class="panel-heading">
-                Attendance Summary
+                ACQUISITION CHANNELS
             </div>
 
             <div class="panel-body">
@@ -42,7 +42,7 @@
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Team Leave List(90 Day)" ba-panel-class="medium-panel">
 
 
-        <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+        <table ng-if="upComingLeaveListOfTeam.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
             <thead>
                 <tr class="info">
                     <td>
@@ -83,17 +83,17 @@
 
     </div>
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Pending Approval(Self)" ba-panel-class="medium-panel traffic-panel">
-        <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+        <table ng-if="pendingApprovel.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
             <thead>
                 <tr class="info">
-                    <td>
+                    <!-- <td>
                         <label>Sr. No.</label>
+                    </td> -->
+                    <td>
+                        <label>Type</label>
                     </td>
                     <td>
-                        <label>From Date</label>
-                    </td>
-                    <td>
-                        <label>To Date</label>
+                        <label>Date</label>
                     </td>
                     <!-- <td>
                         <label>Sanction From</label>
@@ -107,10 +107,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="leave in leaveList">
-                    <td> {{leave.SNo}}</td>
-                    <td>{{leave.LEADDateFrom}}</td>
-                    <td>{{leave.LEADDateTo}}</td>
+                <tr ng-repeat="leave in pendingApprovel">
+                    <!-- <td> {{leave.SNo}}</td> -->
+                    <td>{{leave.Type}}</td>
+                    <td>{{leave.Date}}</td>
                     <!-- <td>{{leave.SancFromDate}}</td>
                     <td>{{leave.SancToDate}}</td> -->
                     <!-- <td>{{leave.Status}}</td> -->
@@ -118,7 +118,7 @@
         </table>
     </div>
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="UpComing Holiday(90 Day)" ba-panel-class="medium-panel traffic-panel">
-        <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+        <table ng-if="UpComingHolidayList.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
             <thead>
                 <tr class="info">
                     <td>
@@ -144,14 +144,32 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Holidays" ba-panel-class="medium-panel">
-        <!-- <div ui-grid="LeaveNextWeekGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-        </div> -->
+    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Team BirthDay(90 Days)" ba-panel-class="medium-panel">
+        <table ng-if="upComingTeamBirthDay.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+            <thead>
+                <tr class="info">
+                    <td>
+                        <label>Sr. No.</label>
+                    </td>
+                    <td>
+                        <label>Name</label>
+                    </td>
+                    <td>
+                        <label>Date Of Birth</label>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="birth in upComingTeamBirthDay">
+                    <td> {{birth.SNo}}</td>
+                    <td> {{birth.EmpName}}</td>
+                    <td>{{birth.PdDateOfBirth}}</td>
+            </tbody>
 
-
+        </table>
     </div>
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming BirthDay" ba-panel-class="medium-panel traffic-panel">
-        <table class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="BirthDay(Self) " ba-panel-class="medium-panel traffic-panel">
+        <table ng-if="upComingBirthDayList.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
             <thead>
                 <tr class="info">
                     <td>

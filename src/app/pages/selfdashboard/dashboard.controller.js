@@ -140,6 +140,8 @@
             $scope.upComingBirthDayList = result[3];
             $scope.UpComingHolidayList = result[2];
             $scope.upComingLeaveListOfTeam = result[4];
+            $scope.upComingTeamBirthDay = result[6];
+            $scope.pendingApprovel = result[7];
             console.log($scope.upComingLeaveListOfTeam)
 
             console.log($scope.leaveList)
