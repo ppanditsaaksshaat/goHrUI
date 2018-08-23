@@ -16,7 +16,7 @@
                 url: '/pending',
                 templateUrl: 'app/pages/team/attendance/adjustment/pending/pending.html',
                 title: 'Pending',
-                controller: "",
+                controller: "myTeamPendingAdustmentController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
