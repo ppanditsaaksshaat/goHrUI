@@ -352,9 +352,9 @@
           var queryId = 514;
           pageService.getCustomQuery(data, queryId).then(function (result) {
             console.log(result);
-            console.log(result[0][0].ERROR)
-            if (result[0][0].ERROR == 'You can not apply C-Off') {
-              $rootScope.showMsg("warning", result[0][0].ERROR)
+            console.log(result[1][0].ERROR)
+            if (result[1][0].ERROR != 'OK') {
+              $rootScope.showMsg("warning", result[1][0].ERROR)
               $scope.showInOutTime = false;
               $scope.entity = {};
               $scope.entity.COAttnDate = moment();

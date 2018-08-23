@@ -17,6 +17,7 @@
         $scope.applyRequest = _applyRequest;
         $scope.goApplyReguest = _goApplyReguest;
         $scope.applyAttendance = _applyAttendance;
+        $scope.applyWorkFromHome = _applyWorkFromHome;
         $scope.applyOD = _applyOD;
         $scope.applyCOff = _applyCOff;
         var isSearchingData = false;
@@ -264,6 +265,14 @@
                 id: $scope.applyDate,
                 entity: $scope.holeObject
             })
+        }
+
+        function _applyWorkFromHome() {
+            $state.go('selfdir.attendance.miscellaneous.workfromhome', {
+                id: $scope.applyDate,
+                entity: $scope.holeObject
+            })
+            // console.log(moment(monthSummery.DATE).format('dd-MMM-yyyy'))
         }
 
 

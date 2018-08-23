@@ -128,6 +128,29 @@
                     order: 1,
                     show: 0
                 },
+            }).state('selfdir.attendance.miscellaneous.workfromhome', {
+                url: '/workfromhome/:id/{entity:json}',
+                parent: 'selfdir.attendance.miscellaneous.modal',
+                onEnter: ['$state', function ($state) {
+                    console.log($state)
+                }],
+                views: {
+                    'modal@': {
+                        templateUrl: 'app/pages/self/attendance/miscellaneous/workfromhome.html',
+                        controller: 'workFromHomeController',
+                        resolve: {
+                            entity: function ($stateParams) {
+                                return $stateParams.entity;
+                            }
+                        }
+                    }
+                },
+                title: 'Edit Location',
+                sidebarMeta: {
+                    icon: 'ion-android-home',
+                    order: 1,
+                    show: 0
+                },
             });
         $urlRouterProvider.when('/selfdir/attendance', '/selfdir/attendance/miscellaneous');
     }
