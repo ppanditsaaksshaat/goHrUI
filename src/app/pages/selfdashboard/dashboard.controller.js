@@ -22,10 +22,15 @@
         // $scope.datePriod = 'Current Month';
         // $scope.Current Month=Current Month
 
-      
 
-        
-        
+        $scope.viewList = _viewList;
+        $scope.holiday = _holiDay;
+        $scope.birthDay = _birthDay;
+        $scope.teamBirthDay = _teamBirthDay;
+        $scope.teamLeave = _teamLeave;
+
+
+
         console.log('dashboard');
         var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
         var DalaLength = 0;
@@ -188,6 +193,60 @@
             console.log(error);
         }
 
+        function _viewList() {
+            // console.log(row)
+            console.log('emp upload')
+            var modal = dialogModal.open({
+                url: 'app/pages/selfdashboard/list/pendingapprovel/pendingapprovel.html',
+                size: 'top-center-600',
+                controller: 'pendingApprovelController',
+                param: $scope.pendingApprovel
+            });
+        }
+
+        function _teamBirthDay() {
+            // console.log(row)
+            console.log('emp upload')
+            var modal = dialogModal.open({
+                url: 'app/pages/selfdashboard/list/teambirthday/teambirthday.html',
+                size: 'top-center-600',
+                controller: 'teamBirthController',
+                param: $scope.upComingTeamBirthDay
+            });
+        }
+
+        function _birthDay() {
+            // console.log(row)
+            console.log('emp upload')
+            var modal = dialogModal.open({
+                url: 'app/pages/selfdashboard/list/birthday/birthday.html',
+                size: 'top-center-600',
+                controller: 'birthDayController',
+                param: $scope.upComingBirthDayList
+            });
+        }
+
+        function _teamLeave() {
+            // console.log(row)
+            console.log('emp upload')
+            var modal = dialogModal.open({
+                url: 'app/pages/selfdashboard/list/teamleavelist/teamleavelist.html',
+                size: 'top-center-600',
+                controller: 'teamLeaveController',
+                param: $scope.upComingLeaveListOfTeam
+            });
+        }
+
+        function _holiDay() {
+            // console.log(row)
+            console.log('emp upload')
+            var modal = dialogModal.open({
+                url: 'app/pages/selfdashboard/list/upcomingholiday/upcomingholiday.html',
+                size: 'top-center-600',
+                controller: 'holidayController',
+                param: $scope.UpComingHolidayList
+            });
+        }
 
         _loadController();
     }
