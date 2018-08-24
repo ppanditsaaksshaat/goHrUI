@@ -80,7 +80,7 @@
         function _approved(adjustmentApp, form) {
             adjustmentApp.StatusId = 114;
             adjustmentApp.StatusName = "approved";
-            adjustmentApp.IsManual=true;
+            adjustmentApp.IsManual=false;
             _submitForm(adjustmentApp, form);
 
         }

@@ -16,7 +16,7 @@
                 url: '/rejected',
                 templateUrl: 'app/pages/team/attendance/adjustment/rejected/rejected.html',
                 title: 'Rejected',
-                controller: "",
+                controller: "myTeamRejectedAdustmentController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
