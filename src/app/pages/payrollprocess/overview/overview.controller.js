@@ -11,6 +11,8 @@
     /** @ngInject */
     function payOverViewController($scope,$state, $rootScope, $filter, pageService,dialogModal) {
 
+        $scope.collpase=true;
+        $scope.collpase2=true;
         $scope.getData = _getMonthlyPayrollData;
         $scope.CheckLeaveAndAttendanceStatus = _CheckLeaveAndAttendanceStatus;
 

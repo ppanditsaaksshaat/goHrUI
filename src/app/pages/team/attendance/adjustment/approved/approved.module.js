@@ -16,7 +16,7 @@
                 url: '/approved',
                 templateUrl: 'app/pages/team/attendance/adjustment/approved/approved.html',
                 title: 'Approved',
-                controller: "",
+                controller: "myTeamApprovedAdustmentController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,

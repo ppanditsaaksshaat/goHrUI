@@ -16,7 +16,7 @@
                 url: '/onhold',
                 templateUrl: 'app/pages/team/attendance/adjustment/onhold/onhold.html',
                 title: 'Onhold',
-                controller: "",
+                controller: "myTeamOnholdAdustmentController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,

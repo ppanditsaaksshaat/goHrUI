@@ -1,7 +1,135 @@
 <div class="col-lg-12 clear-side-padding">
     <div class="panel">
+
         <div class="panel-body">
-            <h2>Adjustment Approved</h2>
+            <div data-ng-if="!noDataFound" ng-repeat="addustment in allAdustmentApplication">
+                <div class="col-md-12 col-sm-12 request-form approved pending profic-pic-30-30">
+                    <div class="col-lg-11 col-md-11 col-sm-11  clear-side-padding pending-leave internal-padding" data-ng-init="collpase = true">
+                        <div class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
+                            <!-- ngIf: request.requestedBy.profileImageUrl -->
+                            <!-- ngIf: !request.requestedBy.profileImageUrl -->
+                            <div class="profile-picture  ng-isolate-scope">
+                                <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}" style="background-color: rgb(158, 105, 175);">
+                                    {{addustment.shortName}}
+                                </div>
+                            </div>
+                            <!-- end ngIf: !request.requestedBy.profileImageUrl -->
+                        </div>
+                        <div class="leave-details col-lg-8 col-md-8 col-sm-8 clear-side-padding">
+                            <p class="leave-requestor">
+                                <b>
+                                    <a class="aDisplayName " data-ui-sref="employee.summary({empid:leave.EmpId})">{{addustment.EmpName}}</a>
+                                </b>
+                            </p>
+
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 request-calender clear-side-padding">
+                            <span class="month-view">
+                                <!-- ngIf: (request.fromDate | date:'MMM') !== (request.toDate | date:'MMM') -->
+                                <!-- ngIf: (request.fromDate | date:'MMM') == (request.toDate | date:'MMM') -->
+                                <span data-ng-if="(request.fromDate | date:'MMM') == (request.toDate | date:'MMM')" class="">
+                                    <b class="">
+                                        <span class="dot">.</span> {{addustment.monthName}}
+                                        <span class="dot">.</span>
+                                    </b>
+                                </span>
+                                <!-- end ngIf: (request.fromDate | date:'MMM') == (request.toDate | date:'MMM') -->
+                            </span>
+
+                            <!-- ngIf: (request.fromDate | date:'ddMMM') !== (request.toDate | date:'ddMMM') -->
+                            <span ng-if="addustment.FDAFromDate==addustment.FDAToDate" class="date-view ">
+                                <span class="date-text text-center">
+                                    <ul>
+                                        <li>
+                                            <span class="day">
+                                                <b class="">{{addustment.dateFrom}}</b>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="week">
+                                                <b class="">{{addustment.dayFromName}}</b>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </span>
+                            </span>
+                            <span ng-if="addustment.FDAFromDate!=addustment.FDAToDate" class="date-view ">
+                                <span class="date-text pull-left">
+                                    <ul>
+                                        <li>
+                                            <span class="day">
+                                                <b class="">{{addustment.dateFrom}}</b>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="week">
+                                                <b class="">{{addustment.dayFromName}}</b>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </span>
+                                <span class="date-saperator">-</span>
+                                <span class="date-text  pull-right">
+                                    <ul class="todate">
+                                        <li>
+                                            <span class="day">
+                                                <b class="">{{addustment.dateTo}}</b>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="week">
+                                                <b class="">{{addustment.dayToName}}</b>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </span>
+                            </span>
+                            <!-- end ngIf: (request.fromDate | date:'ddMMM') !== (request.toDate | date:'ddMMM') -->
+                            <!-- ngIf: (request.fromDate | date:'ddMMM') == (request.toDate | date:'ddMMM') -->
+                        </div>
+                        <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding">
+                            <span class="leave-note ">
+                                <b>In Time: </b>{{addustment.ARDInTime}}</span>
+                        </div>
+                        <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding">
+                            <span class="leave-note ">
+                                <b>Out Time: </b>{{addustment.ARDOutTime}}</span>
+                        </div>
+                        <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding">
+                            <span class="leave-note ">
+                                <b>Applier Remark: </b>{{addustment.ARDRemark}}</span>
+                        </div>
+                        <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
+                            <span class="">
+                                <b>Requested On: </b>{{addustment.CreatedOn}}</span>
+                        </div>
+                        <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver ">
+                            <a class="approver-name information-tooltip tooltip-grey inline-block " data-uib-tooltip="{{addustment.HeadEmpName}}" tooltip-placement="top">
+                                <b>Approved By: </b> {{addustment.ApprovedBy}}</a>
+                        </div>
+                        <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
+                            <span class="">
+                                <b>Approved On: </b>{{addustment.ModifiedOn}}</span>
+                        </div>
+                        <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
+                            <span class="">
+                                <b>Approver Remark: </b>{{addustment.ARDAdminComment}}</span>
+                        </div>
+                        <div class="col-lg-8 col-md-9 col-sm-9 clear-side-padding leave-approver">
+                            <span class="">
+                                <b>Status: </b>{{addustment.Status}}</span>
+                        </div>
+                        <!-- ngIf: request.documentProofs.length > 0 -->
+                    </div>
+
+
+
+                </div>
+
+            </div>
+            <div data-ng-if="noDataFound" class="alert alert-success" role="alert">Hooray, No approved adustment application found!</div>
+
+
         </div>
     </div>
 </div>

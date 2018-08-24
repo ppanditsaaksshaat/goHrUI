@@ -12,7 +12,7 @@
     function myTeamPendingAdustmentController($scope, $rootScope, pageService, editFormService) {
 
 
-      
+        $scope.manaual = _manaual;
         $scope.approved = _approved;
         $scope.rejected = _rejected;
         $scope.onhold = _onhold;
@@ -50,8 +50,8 @@
                         data.monthName = moment(data.ARDFromDate).format('MMM');
                         data.dateFrom = moment(data.ARDFromDate).format('DD');
                         data.dateTo = moment(data.ARDToDate).format('DD');
-                        data.ARDInTime=moment(data.ARDInTime).format('HH:mm');
-                        data.ARDOutTime=moment(data.ARDOutTime).format('HH:mm');
+                        data.ARDInTime = moment(data.ARDInTime).format('HH:mm');
+                        data.ARDOutTime = moment(data.ARDOutTime).format('HH:mm');
                         var spiltName = data.EmpName.split(' ');
                         if (spiltName.length == 3) {
                             data.shortName = spiltName[0].substr(0, 1) + spiltName[2].substr(0, 1);
@@ -76,24 +76,31 @@
             }
         }
 
-      
+        function _manaual(adjustmentApp, form) {
+            adjustmentApp.StatusId = 114;
+            adjustmentApp.StatusName = "approved";
+            adjustmentApp.IsManual = true;
+            _submitForm(adjustmentApp, form);
+
+        }
+
         function _approved(adjustmentApp, form) {
             adjustmentApp.StatusId = 114;
             adjustmentApp.StatusName = "approved";
-            adjustmentApp.IsManual=true;
+            adjustmentApp.IsManual = false;
             _submitForm(adjustmentApp, form);
 
         }
         function _rejected(adjustmentApp, form) {
             adjustmentApp.StatusId = 116;
             adjustmentApp.StatusName = "rejected";
-            adjustmentApp.IsManual=false;
+            adjustmentApp.IsManual = false;
             _submitForm(adjustmentApp, form);
         }
         function _onhold(adjustmentApp, form) {
             adjustmentApp.StatusId = 115;
             adjustmentApp.StatusName = "onhold";
-            adjustmentApp.IsManual=false;
+            adjustmentApp.IsManual = false;
             _submitForm(adjustmentApp, form);
         }
 
@@ -112,12 +119,12 @@
                 AARDARDId: adjustment.ARDId,
                 AARDFromDate: adjustment.ARDFromDate,
                 AARDToDate: adjustment.ARDToDate,
-                AARDInTime: adjustment.ARDInTime,
-                AARDOutTime: adjustment.ARDOutTime,
+                AARDInTime: adjustment.IsManual ? adjustment.InTime : adjustment.ARDInTime,
+                AARDOutTime: adjustment.IsManual ? adjustment.OutTime : adjustment.ARDOutTime,
                 StatusId: adjustment.StatusId,
-                AARDAdminComment: comment,
-                AARDEmpId:adjustment.EmpId,
-                AARDIsManual:adjustment.IsManual
+                AARDAdminComment: adjustment.IsManual ? adjustment.manaualcomment : comment,
+                AARDEmpId: adjustment.EmpId,
+                AARDIsManual: adjustment.IsManual
             }
 
             editFormService.saveForm(503, entity, {},

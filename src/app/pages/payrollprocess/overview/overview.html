@@ -77,7 +77,7 @@
                     </div>
                     <div class="metrics-container col-sm-2 clear-side-padding sum form-group clear-vertical-margin">
                         <label class="clear-vertical-margin">Employee Deposit</label>
-                        <h2 class="clear-vertical-margin amount ng-binding">₹&nbsp;{{payrollCost  | number}}</h2>
+                        <h2 class="clear-vertical-margin amount ng-binding">₹&nbsp;{{payrollCost | number}}</h2>
 
                     </div>
                     <div class="metrics-container col-sm-2 clear-side-padding sum form-group clear-vertical-margin" data-popover="Income Tax: 127305, Professional Tax: 5050, Other Deductions: 6500"
@@ -98,167 +98,181 @@
     </div>
 </div>
 
+
 <div class="col-lg-12">
-    <div class="col-lg-9 clear-left-padding">
-        <div class="panel">
-            <div class="panel-body payroll-summary">
-                <div class="col-lg-12">
-                    <p>1. Run PayRoll Action</p>
-                </div>
-                <div class="">
-                    <div class="pre-payroll-actions">
-                        <div class="row">
-                            <div class="col-sm-6" style="top:-10px">
-                                <div class="alert alert-info clearfix" data-ng-click="openLeaveAndAttendance();">
-                                    <div class="col-sm-1 alert-icon clear-side-padding">
-                                        <span class="icon-file-check"></span>
-                                    </div>
-                                    <div ng-click="CheckLeaveAndAttendanceStatus()" class="action col-sm-10 text-content clear-side-padding">
-                                        <h4>Leave &amp; Attendance </h4>
-                                        <!-- ngIf: !vm.currentcycle.details.actions.leavesAndAttendance.isReviewed() -->
-                                        <p class="clear-vertical-margin ">No action taken</p>
-                                        <!-- end ngIf: !vm.currentcycle.details.actions.leavesAndAttendance.isReviewed() -->
-                                        <!-- ngIf: vm.currentcycle.details.actions.leavesAndAttendance.isReviewed() -->
-                                    </div>
-                                    <!-- ngIf: vm.currentcycle.details.actions.leavesAndAttendance.completed -->
-                                </div>
-                            </div>
-                            <div class="col-sm-6 " style="top:-10px">
-                                <div class="alert alert-info clearfix" data-ng-click="openNewJoinees();">
-                                    <div class="col-sm-1 alert-icon clear-side-padding">
-                                        <span class="icon-user3"></span>
-                                    </div>
-                                    <div class="action col-sm-10 text-content clear-side-padding">
-                                        <h4>New joinees &amp; Exits</h4>
-                                        <!-- ngIf: !vm.currentcycle.details.actions.newJoineesAndExits.isReviewed() -->
-                                        <p class="clear-vertical-margin ">No action taken</p>
-                                        <!-- end ngIf: !vm.currentcycle.details.actions.newJoineesAndExits.isReviewed() -->
-                                        <!-- ngIf: vm.currentcycle.details.actions.newJoineesAndExits.isReviewed() -->
-                                    </div>
-                                    <!-- ngIf: vm.currentcycle.details.actions.newJoineesAndExits.completed -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6" style="top:-40px">
-                                <div class="alert alert-info clearfix" data-ng-click="openSalaryChanges();">
-                                    <div class="col-sm-1 alert-icon clear-side-padding">
-                                        <span class="icon-medal2"></span>
-                                    </div>
-                                    <div class="action col-sm-10 text-content clear-side-padding">
-                                        <h4>Bonus &amp; Salary revisions</h4>
-                                        <!-- ngIf: !vm.currentcycle.details.actions.bonusAndSalaryRevisions.isReviewed() -->
-                                        <p class="clear-vertical-margin ">No action taken</p>
-                                        <!-- end ngIf: !vm.currentcycle.details.actions.bonusAndSalaryRevisions.isReviewed() -->
-                                        <!-- ngIf: vm.currentcycle.details.actions.bonusAndSalaryRevisions.isReviewed() -->
-                                    </div>
-                                    <!-- ngIf: vm.currentcycle.details.actions.bonusAndSalaryRevisions.completed -->
-                                </div>
-                            </div>
-                            <div class="col-sm-6" style="top:-40px">
-                                <div class="alert alert-info clearfix" data-ng-click="openOnetimePayments()">
-                                    <div class="col-sm-1 alert-icon clear-side-padding">
-                                        <span class="icon-stack2"></span>
-                                    </div>
-                                    <div class="action col-sm-10 text-content clear-side-padding">
-                                        <h4>One-time Payments &amp; Deductions</h4>
-                                        <!-- ngIf: !vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
-                                        <p class="clear-vertical-margin ">No action taken</p>
-                                        <!-- end ngIf: !vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
-                                        <!-- ngIf: vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
-                                    </div>
-                                    <!-- ngIf: vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.completed -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6" style="top:-70px">
-                                <div class="alert alert-info clearfix" data-ng-click="openEmployeesOnHoldAndArrears()">
-                                    <div class="col-sm-1 alert-icon clear-side-padding">
-                                        <span class="icon-stack2"></span>
-                                    </div>
-                                    <div class="action col-sm-10 text-content clear-side-padding">
-                                        <h4>Salaries on Hold &amp; Arrears</h4>
-                                        <!-- ngIf: !vm.currentcycle.details.actions.arrearsAndOnHold.isReviewed() -->
-                                        <p class="clear-vertical-margin ">No action taken</p>
-                                        <!-- end ngIf: !vm.currentcycle.details.actions.arrearsAndOnHold.isReviewed() -->
-                                        <!-- ngIf: vm.currentcycle.details.actions.arrearsAndOnHold.isReviewed() -->
-                                    </div>
-                                    <!-- ngIf: vm.currentcycle.details.actions.arrearsAndOnHold.completed -->
-                                </div>
-                            </div>
-                            <div class="col-sm-6" style="top:-70px">
-                                <div class="alert alert-info clearfix" data-ng-click="openReviewAllEmployees();">
-                                    <div class="col-sm-1 alert-icon clear-side-padding">
-                                        <span class="icon-users"></span>
-                                    </div>
-                                    <div class="action col-sm-10 text-content clear-side-padding">
-                                        <h4>Review All Employees</h4>
-                                        <!-- ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
-                                        <p class="clear-vertical-margin ">No action taken</p>
-                                        <!-- end ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
-                                        <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
-                                    </div>
-                                    <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.completed -->
-                                </div>
-                            </div>
-                        </div>
+    <div class="panel">
+        <div data-ng-click="collpase = !collpase" class="panel-heading col-lg-12">
+            <h3>1. Run PayRoll Action</h3>
+            <span style="margin-top: -38px;" class="pull-right" >
+                <i ng-class="{'fa fa-angle-down':!collpase, 'fa fa-angle-up' : collpase}" class="collpase-icon fa fa-angle-up"></i>
+            </span>
+        </div>
+        <div class="panel-body payroll-summary">
 
-                    </div>
-                    <!-- ngIf: !vm.currentcycle.isFinalize -->
-                    <div class="run row ">
-                        <div class="col-sm-6" style="top:-70px">
-                            <!-- ngIf: vm.currentcycle.details.runHistory.length >0 -->
-                            <!-- ngIf: vm.currentcycle.details.runHistory.length ==0 -->
-                            <div class="btn btn-payroll-run col-sm-12 " data-ng-click="previewRun()">
-                                <div class="col-sm-6 text-left clear-side-padding">
-                                    <div class="title">Preview Run Payroll</div>
+            <div data-ng-if="!collpase" class="">
+                <div class="pre-payroll-actions">
+                    <div class="row">
+                        <div class="col-sm-4" style="top:-10px">
+                            <div class="alert alert-info clearfix" ui-sref="team.leave" data-ng-click="CheckLeaveAndAttendanceStatus();">
+                                <div class="col-sm-1 alert-icon clear-side-padding">
+                                    <span class="icon-file-check"></span>
                                 </div>
-                                <div class="col-sm-6 text-left clear-side-padding">
-                                    <div class="details">
-                                        <span class="ng-binding">Last run on Aug 7 04:38 PM</span>
-                                        <span class="pull-right icon-info2 information-tooltip tooltip-grey" uib-tooltip="Preview Run." tooltip-placement="right"></span>
-                                    </div>
+                                <div ui-sref="team.leave" ng-click="CheckLeaveAndAttendanceStatus()" class="action col-sm-10 text-content clear-side-padding">
+                                    <h4>Leave</h4>
+                                    <!-- ngIf: !vm.currentcycle.details.actions.leavesAndAttendance.isReviewed() -->
+                                    <p class="clear-vertical-margin ">No action taken</p>
+                                    <!-- end ngIf: !vm.currentcycle.details.actions.leavesAndAttendance.isReviewed() -->
+                                    <!-- ngIf: vm.currentcycle.details.actions.leavesAndAttendance.isReviewed() -->
                                 </div>
+                                <!-- ngIf: vm.currentcycle.details.actions.leavesAndAttendance.completed -->
                             </div>
-                            <!-- end ngIf: vm.currentcycle.details.runHistory.length ==0 -->
                         </div>
-                        <div class="col-sm-6" style="top:-70px">
-                            <div class="btn btn-payroll-run col-sm-12 disabled" data-ng-click="OpenfinalizeDialog();" data-ng-class="{'disabled' : (!vm.currentcycle.details.actions.completed || vm.disbalePayrollRun || !vm.currentcycle.arePreActionEnabled)}">
-                                <div class="col-sm-5 text-left clear-side-padding">
-                                    <div class="title">Finalize Payroll</div>
+                        <div class="col-sm-4 " style="top:-10px">
+                            <div class="alert alert-info clearfix" ui-sref="team.attendance" data-ng-click="openNewJoinees();">
+                                <div class="col-sm-1 alert-icon clear-side-padding">
+                                    <span class="icon-user3"></span>
                                 </div>
-                                <div class="col-sm-7 text-left clear-side-padding">
-                                    <div class="row details">
-                                        <div class="progress-details col-sm-4 ">
-                                            <div class="progress">
-                                                <div class="progress-bar clear-vertical-margin" style="width:0%;"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-8 clear-left-padding">
-                                            <span class="pull-right icon-info2 information-tooltip tooltip-grey" uib-tooltip="Finalize Run." tooltip-placement="top"></span>
-                                            <span class="ng-binding"> 0 of 6 steps completed</span>
-                                        </div>
-                                    </div>
+                                <div ui-sref="team.attendance" class="action col-sm-10 text-content clear-side-padding">
+                                    <h4>Attendance</h4>
+                                    <!-- ngIf: !vm.currentcycle.details.actions.newJoineesAndExits.isReviewed() -->
+                                    <p class="clear-vertical-margin ">No action taken</p>
+                                    <!-- end ngIf: !vm.currentcycle.details.actions.newJoineesAndExits.isReviewed() -->
+                                    <!-- ngIf: vm.currentcycle.details.actions.newJoineesAndExits.isReviewed() -->
                                 </div>
+                                <!-- ngIf: vm.currentcycle.details.actions.newJoineesAndExits.completed -->
                             </div>
-                            <!-- ngIf: payrollConfig.payrollSchedule.payCycle.canSkip(vm.currentcycle.details.to) -->
+                        </div>
+                        <div class="col-sm-4" style="top:-10px">
+                            <div class="alert alert-info clearfix" data-ng-click="openSalaryChanges();">
+                                <div class="col-sm-1 alert-icon clear-side-padding">
+                                    <span class="icon-medal2"></span>
+                                </div>
+                                <div class="action col-sm-10 text-content clear-side-padding">
+                                    <h4>New Employees</h4>
+                                    <!-- ngIf: !vm.currentcycle.details.actions.bonusAndSalaryRevisions.isReviewed() -->
+                                    <p class="clear-vertical-margin ">No action taken</p>
+                                    <!-- end ngIf: !vm.currentcycle.details.actions.bonusAndSalaryRevisions.isReviewed() -->
+                                    <!-- ngIf: vm.currentcycle.details.actions.bonusAndSalaryRevisions.isReviewed() -->
+                                </div>
+                                <!-- ngIf: vm.currentcycle.details.actions.bonusAndSalaryRevisions.completed -->
+                            </div>
                         </div>
                     </div>
-                    <!-- end ngIf: !vm.currentcycle.isFinalize -->
-                </div>
-                <div class="col-sm-12">
-                    <p>2. Payroll OutCome Action</p>
-                </div>
+                    <div class="row">
+                        <div class="col-sm-4" style="top:-30px">
+                            <div class="alert alert-info clearfix" data-ng-click="openOnetimePayments()">
+                                <div class="col-sm-1 alert-icon clear-side-padding">
+                                    <span class="icon-stack2"></span>
+                                </div>
+                                <div class="action col-sm-10 text-content clear-side-padding">
+                                    <h4>Exist Employees</h4>
+                                    <!-- ngIf: !vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
+                                    <p class="clear-vertical-margin ">No action taken</p>
+                                    <!-- end ngIf: !vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
+                                    <!-- ngIf: vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
+                                </div>
+                                <!-- ngIf: vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.completed -->
+                            </div>
+                        </div>
+                        <div class="col-sm-4" style="top:-30px">
+                            <div class="alert alert-info clearfix" data-ng-click="openOnetimePayments()">
+                                <div class="col-sm-1 alert-icon clear-side-padding">
+                                    <span class="icon-stack2"></span>
+                                </div>
+                                <div class="action col-sm-10 text-content clear-side-padding">
+                                    <h4>Salaries On Hold</h4>
+                                    <!-- ngIf: !vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
+                                    <p class="clear-vertical-margin ">No action taken</p>
+                                    <!-- end ngIf: !vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
+                                    <!-- ngIf: vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
+                                </div>
+                                <!-- ngIf: vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.completed -->
+                            </div>
+                        </div>
+                        <div class="col-sm-4" style="top:-30px">
+                            <div class="alert alert-info clearfix" data-ng-click="openReviewAllEmployees();">
+                                <div class="col-sm-1 alert-icon clear-side-padding">
+                                    <span class="icon-users"></span>
+                                </div>
+                                <div class="action col-sm-10 text-content clear-side-padding">
+                                    <h4>Review All Employees</h4>
+                                    <!-- ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
+                                    <p class="clear-vertical-margin ">No action taken</p>
+                                    <!-- end ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
+                                    <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
+                                </div>
+                                <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.completed -->
+                            </div>
+                        </div>
+                    </div>
 
+
+                </div>
+                <!-- ngIf: !vm.currentcycle.isFinalize -->
+                <div class="run row ">
+                    <div class="col-sm-4" style="top:-20px">
+                        <!-- ngIf: vm.currentcycle.details.runHistory.length >0 -->
+                        <!-- ngIf: vm.currentcycle.details.runHistory.length ==0 -->
+                        <div class="btn btn-payroll-run col-sm-12 " data-ng-click="previewRun()">
+                            <div class="col-sm-6 text-left clear-side-padding">
+                                <div class="title">Preview Run Payroll</div>
+                            </div>
+                            <div class="col-sm-6 text-left clear-side-padding">
+                                <div class="details">
+                                    <span class="ng-binding">Last run on Aug 7 04:38 PM</span>
+                                    <span class="pull-right icon-info2 information-tooltip tooltip-grey" uib-tooltip="Preview Run." tooltip-placement="right"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end ngIf: vm.currentcycle.details.runHistory.length ==0 -->
+                    </div>
+
+                    <div class="col-sm-4" style="top:-20px">
+                        <div class="btn btn-payroll-run col-sm-12 disabled" data-ng-click="OpenfinalizeDialog();" data-ng-class="{'disabled' : (!vm.currentcycle.details.actions.completed || vm.disbalePayrollRun || !vm.currentcycle.arePreActionEnabled)}">
+                            <div class="col-sm-5 text-left clear-side-padding">
+                                <div class="title">Finalize Payroll</div>
+                            </div>
+                            <div class="col-sm-7 text-left clear-side-padding">
+                                <div class="row details">
+                                    <div class="progress-details col-sm-4 ">
+                                        <div class="progress">
+                                            <div class="progress-bar clear-vertical-margin" style="width:0%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 clear-left-padding">
+                                        <span class="pull-right icon-info2 information-tooltip tooltip-grey" uib-tooltip="Finalize Run." tooltip-placement="top"></span>
+                                        <span class="ng-binding"> 0 of 6 steps completed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ngIf: payrollConfig.payrollSchedule.payCycle.canSkip(vm.currentcycle.details.to) -->
+                    </div>
+                </div>
+                <!-- end ngIf: !vm.currentcycle.isFinalize -->
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="panel">
+        <div data-ng-click="collpase2 = !collpase2" class="panel-heading col-lg-12">
+            <h3>2. Payroll OutCome Action</h3>
+            <span style="margin-top: -38px;" class="pull-right" >
+                <i ng-class="{'fa fa-angle-down':!collpase2, 'fa fa-angle-up' : collpase2}" class="collpase-icon fa fa-angle-up"></i>
+            </span>
+        </div>
+        <div class="panel-body">
+            <div ng-if="!collpase2">
                 <div class="col-sm-12 clear-side-padding vertical-margin">
                     <div class="out-come-header">Review Outcome</div>
                     <a class="preview-btn col-sm-12 clear-side-padding" data-ng-click="openRunRegister()">View Pay Register</a>
 
                     <!-- ngIf: vm.currentcycle.isFinalize -->
                 </div>
-
             </div>
         </div>
     </div>
+</div>
 </div>
