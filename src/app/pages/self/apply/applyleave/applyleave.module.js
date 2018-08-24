@@ -17,7 +17,7 @@
                 templateUrl: 'app/pages/self/apply/applyleave/applyleave.html',
                 title: 'Leave',
                 controller: "applyLeaveController",
-                controllerAs: "",
+                controllerAs: "leaveCtrl",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 2,

@@ -39,8 +39,34 @@
 
 
 <div class="row">
+
+    <!-- <div class="col-md-4">
+        <div class="panel panel-medium">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-8">
+                        Attendance Summary
+
+                    </div>
+                    <div class="col-md-4 pull-right">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+            </div>
+        </div>
+    </div> -->
+
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Team Leave List(90 Day)" ba-panel-class="medium-panel">
 
+        <!-- <div class="col-sm-12 link-item clear-side-padding">
+            <div class="col-sm-12">
+               
+                
+            </div>
+        </div> -->
 
         <table ng-if="upComingLeaveListOfTeam.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
             <thead>
@@ -70,7 +96,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="leave in upComingLeaveListOfTeam">
+                <tr ng-repeat="leave in upComingLeaveListOfTeam | limitTo : 7">
                     <td> {{leave.SNo}}</td>
                     <td>{{leave.EmpName}}</td>
                     <td>{{leave.LEADDateFrom}}</td>
@@ -82,6 +108,7 @@
         </table>
 
     </div>
+
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Pending Approval(Self)" ba-panel-class="medium-panel traffic-panel">
         <table ng-if="pendingApprovel.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
             <thead>
@@ -107,7 +134,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="leave in pendingApprovel">
+                <tr ng-repeat="leave in pendingApprovel | limitTo : 7">
                     <!-- <td> {{leave.SNo}}</td> -->
                     <td>{{leave.Type}}</td>
                     <td>{{leave.Date}}</td>
@@ -133,7 +160,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="holiday in UpComingHolidayList">
+                <tr ng-repeat="holiday in UpComingHolidayList | limitTo : 7">
                     <td> {{holiday.SNo}}</td>
                     <td>{{holiday.HDName}}</td>
                     <td>{{holiday.HDFromDate}}</td>
@@ -160,7 +187,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="birth in upComingTeamBirthDay">
+                <tr ng-repeat="birth in upComingTeamBirthDay | limitTo : 7">
                     <td> {{birth.SNo}}</td>
                     <td> {{birth.EmpName}}</td>
                     <td>{{birth.PdDateOfBirth}}</td>
@@ -188,7 +215,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="birth in upComingBirthDayList">
+                <tr ng-repeat="birth in upComingBirthDayList | limitTo : 7">
                     <td> {{birth.SNo}}</td>
                     <td>{{birth.PdDateOfBirth}}</td>
                     <!-- <td>{{birth.PdMobileNo}}</td>
