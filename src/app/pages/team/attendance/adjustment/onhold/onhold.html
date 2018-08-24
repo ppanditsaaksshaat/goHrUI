@@ -137,13 +137,13 @@
                                     <!-- <a data-ui-sref="employee.time.leaves({id: request.requestedBy.employeeId})" href="#/employee/6629/time/leaves">Advanced Options</a> -->
                                 </span>
                                 <input type="button" class="btn btn-success" value="Manual" uib-popover-template="'manualapprove-reason-template'" popover-placement="top-right"
-                                    popover-is-open="" popover-append-to-body="true" popover-trigger="outsideClick">
+                                    popover-append-to-body="true" >
 
                                 <input type="button" class="btn btn-primary " value="Approve" uib-popover-template="'approve-reason-template'" popover-placement="top-right"
-                                    popover-is-open="" popover-append-to-body="true" popover-trigger="outsideClick">
+                                    popover-append-to-body="true" >
 
                                 <input type="button" class="btn btn-danger " value="Reject" uib-popover-template="'reject-reason-template'" popover-placement="top-right"
-                                    popover-is-open="" popover-append-to-body="true" popover-trigger="outsideClick">
+                                    popover-append-to-body="true" >
                              
                             </div>
                         </div>
@@ -151,7 +151,7 @@
 
                     <script type="text/ng-template" id="manualapprove-reason-template">
                         <div class="popover-content">
-                                <form ng-submit="approved(addustment,approvedForm)" name="approvedForm">
+                                <form ng-submit="manaual(addustment,approvedForm)" name="approvedForm">
                                 <div class="col-md-12 clear-side-padding">
 
                                
@@ -179,7 +179,7 @@
                                        <label>Comment
                                             <span class="font-red">*</span>
                                        </label>
-                                       <textarea placeholder"Reason" data-ng-model="addustment.comment" class="form-control" required></textarea>
+                                       <textarea placeholder"Reason" data-ng-model="addustment.manaualcomment" class="form-control" required></textarea>
                                     </div>
                               
                                 <div class="form-group pull-right">

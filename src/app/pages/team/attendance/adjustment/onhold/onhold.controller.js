@@ -12,7 +12,7 @@
     function myTeamOnholdAdustmentController($scope, $rootScope, pageService, editFormService) {
 
 
-      
+        $scope.manaual = _manaual;
         $scope.approved = _approved;
         $scope.rejected = _rejected;
 
@@ -51,8 +51,8 @@
                         data.monthName = moment(data.ARDFromDate).format('MMM');
                         data.dateFrom = moment(data.ARDFromDate).format('DD');
                         data.dateTo = moment(data.ARDToDate).format('DD');
-                        data.ARDInTime=moment(data.ARDInTime).format('HH:mm');
-                        data.ARDOutTime=moment(data.ARDOutTime).format('HH:mm');
+                        data.ARDInTime = moment(data.ARDInTime).format('HH:mm');
+                        data.ARDOutTime = moment(data.ARDOutTime).format('HH:mm');
                         var spiltName = data.EmpName.split(' ');
                         if (spiltName.length == 3) {
                             data.shortName = spiltName[0].substr(0, 1) + spiltName[2].substr(0, 1);
@@ -77,18 +77,26 @@
             }
         }
 
-      
+        function _manaual(adjustmentApp, form) {
+            adjustmentApp.StatusId = 114;
+
+            adjustmentApp.IsManual = true;
+            adjustmentApp.StatusName = "approved";
+            _FindEntity(adjustmentApp, form);
+
+        }
+
         function _approved(adjustmentApp, form) {
             adjustmentApp.StatusId = 114;
             adjustmentApp.StatusName = "approved";
-            adjustmentApp.IsManual=false;
+            adjustmentApp.IsManual = false;
             _FindEntity(adjustmentApp, form);
 
         }
         function _rejected(adjustmentApp, form) {
             adjustmentApp.StatusId = 116;
             adjustmentApp.StatusName = "rejected";
-            adjustmentApp.IsManual=false;
+            adjustmentApp.IsManual = false;
             _FindEntity(adjustmentApp, form);
         }
         function _FindEntity(oldadustment, form) {
@@ -106,19 +114,22 @@
             function _findEntitySuccessResult(result) {
                 var entity = angular.copy(result);
                 entity.StatusId = oldadustment.StatusId;
+                entity.AARDInTime = oldadustment.IsManual ? oldadustment.InTime : oldadustment.ARDInTime;
+                entity.AARDOutTime = oldadustment.IsManual ? oldadustment.OutTime : oldadustment.ARDOutTime;
+                entity.AARDIsManual = oldadustment.IsManual;
                 if (oldadustment.StatusName == "approved") {
-                    entity.AARDAdminComment = oldadustment.comment;
+                    entity.AARDAdminComment = oldadustment.IsManual ? oldadustment.manaualcomment : oldadustment.comment;
                 }
                 else {
                     entity.AARDAdminComment = oldadustment.rejectReason;
                 }
-                _submitForm(entity, result, form,oldadustment.EmpName,oldadustment.StatusName);
+                _submitForm(entity, result, form, oldadustment.EmpName, oldadustment.StatusName);
             }
             function _findEntityErrorResult(err) {
                 console.log(err)
             }
         }
-        function _submitForm(entity, oldentity, form,empName,statusName) {
+        function _submitForm(entity, oldentity, form, empName, statusName) {
 
             editFormService.saveForm(503, entity, oldentity,
                 "edit", "", form, false)

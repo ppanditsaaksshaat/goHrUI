@@ -12,7 +12,7 @@
     function myTeamRejectedAdustmentController($scope, $rootScope, pageService, editFormService) {
 
 
-
+        $scope.manaual = _manaual;
         $scope.approved = _approved;
         $scope.onhold = _onhold;
 
@@ -76,7 +76,13 @@
             }
         }
 
+        function _manaual(adjustmentApp, form) {
+            adjustmentApp.StatusId = 114;
+            adjustmentApp.IsManual = true;
+            adjustmentApp.StatusName = "approved";
+            _FindEntity(adjustmentApp, form);
 
+        }
         function _approved(adjustmentApp, form) {
             adjustmentApp.StatusId = 114;
             adjustmentApp.StatusName = "approved";
@@ -84,7 +90,7 @@
             _FindEntity(adjustmentApp, form);
 
         }
-    
+
         function _onhold(adjustmentApp, form) {
             adjustmentApp.StatusId = 115;
             adjustmentApp.StatusName = "onhold";
@@ -107,19 +113,22 @@
             function _findEntitySuccessResult(result) {
                 var entity = angular.copy(result);
                 entity.StatusId = oldadustment.StatusId;
+                entity.AARDInTime = oldadustment.IsManual ? oldadustment.InTime : oldadustment.ARDInTime;
+                entity.AARDOutTime = oldadustment.IsManual ? oldadustment.OutTime : oldadustment.ARDOutTime;
+                entity.AARDIsManual = oldadustment.IsManual;
                 if (oldadustment.StatusName == "approved") {
-                    entity.AARDAdminComment = oldadustment.comment;
+                    entity.AARDAdminComment = oldadustment.IsManual ? oldadustment.manaualcomment : oldadustment.comment;
                 }
                 else {
                     entity.AARDAdminComment = oldadustment.onholdReason;
                 }
-                _submitForm(entity, result, form,oldadustment.EmpName,oldadustment.StatusName);
+                _submitForm(entity, result, form, oldadustment.EmpName, oldadustment.StatusName);
             }
             function _findEntityErrorResult(err) {
                 console.log(err)
             }
         }
-        function _submitForm(entity, oldentity, form,empName,statusName) {
+        function _submitForm(entity, oldentity, form, empName, statusName) {
 
             editFormService.saveForm(503, entity, oldentity,
                 "edit", "", form, false)
