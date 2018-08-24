@@ -113,9 +113,9 @@
         <table ng-if="pendingApprovel.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
             <thead>
                 <tr class="info">
-                    <!-- <td>
+                    <td>
                         <label>Sr. No.</label>
-                    </td> -->
+                    </td>
                     <td>
                         <label>Type</label>
                     </td>
@@ -135,7 +135,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="leave in pendingApprovel | limitTo : 7">
-                    <!-- <td> {{leave.SNo}}</td> -->
+                    <td> {{leave.SNo}}</td>
                     <td>{{leave.Type}}</td>
                     <td>{{leave.Date}}</td>
                     <!-- <td>{{leave.SancFromDate}}</td>

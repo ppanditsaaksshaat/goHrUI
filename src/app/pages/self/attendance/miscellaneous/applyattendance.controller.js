@@ -13,7 +13,7 @@
         console.log('apply coff')
         var vm = this;
         vm.oldEntity = {};
-        var pageId = 320;
+        var pageId = 502;
         $scope.page = $scope.createPage();
         // $scope.selects = selects;
         $scope.entity = entity;
@@ -31,12 +31,13 @@
         function _addAttendance() {
             if (!_validateApprovedData()) {
                 var newEntity = {};
-                $scope.newEntity.EmpId = $rootScope.user.profile.empId;
-                $scope.newEntity.AttDate = $scope.entity.DATE;
-                $scope.newEntity.InTime = $scope.entity.InTime;
-                $scope.newEntity.OutTime = $scope.entity.OutTime;
-                $scope.newEntity.ODReason = $scope.entity.ODReason;
-                $scope.newEntity.StatusId = -1;
+                $scope.newEntity.ARDEmpId = $rootScope.user.profile.empId;
+                $scope.newEntity.ARDFromDate = $scope.entity.DATE;
+                $scope.newEntity.ARDToDate = $scope.entity.DATE;
+                $scope.newEntity.ARDInTime = $scope.entity.InTime;
+                $scope.newEntity.ARDOutTime = $scope.entity.OutTime;
+                $scope.newEntity.ARDRemark = $scope.entity.ODReason;
+                
 
                 newEntity = $scope.newEntity;
                 console.log($scope.newEntity)
