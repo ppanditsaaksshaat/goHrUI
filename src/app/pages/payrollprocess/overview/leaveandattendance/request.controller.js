@@ -10,11 +10,20 @@
 
     /** @ngInject */
     function leaveAndAttendanceStatusController($scope, $state) {
-alert("abc")
+
+        $scope.SaveContinue = _saveContinue;
+        $scope.SaveClose = _saveClose;
+
         function _loadController() {
-            $state.go("team.leave")
+
         }
 
+        function _saveContinue() {
+            $scope.value = 2;
+        }
+        function _saveClose() {
+
+        }
         _loadController();
     }
 })();

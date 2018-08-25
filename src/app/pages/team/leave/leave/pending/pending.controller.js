@@ -12,20 +12,17 @@
     function myTeamPendingLeaveController($scope, $rootScope, pageService, editFormService, dialogModal) {
 
 
+        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+            $rootScope.PreviousState = from.name;
+         
+
+        });
+
         $scope.expand = _expand;
         $scope.sameDayApplyLeaves = _sameDayApplyLeaves;
         $scope.approved = _approved;
         $scope.rejected = _rejected;
         $scope.onhold = _onhold;
-
-        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //    console.log(ev)
-            //    console.log(to)
-            //    console.log(toParams)
-            //    console.log(from)
-            //    console.log(fromParams)
-        });
-
 
 
         function _loadController() {
@@ -90,7 +87,7 @@
                 pageService.getCustomQuery(data, 662).then(_getSameDayLeaveApplySuccessResult, _getSameDayLeaveApplyErrorResult)
                 function _getSameDayLeaveApplySuccessResult(result) {
 
-                   
+
                     if (result != "NoDataFound") {
                         $scope.allLeaves[index].otherMembers = result[0];
                     }

@@ -20,7 +20,7 @@
                 url: '/leave',
                 templateUrl: 'app/pages/team/leave/leave/leave.html',
                 title: 'Leave',
-                controller: "",
+                controller: "myTeamSubLeaveController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
