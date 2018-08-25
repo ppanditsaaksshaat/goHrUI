@@ -1,44 +1,23 @@
 <div class="modal-content">
     <div class="modal-header bg-primary title-bar">
         <div class="col-lg-12">
-            <p class="text-center">New Loan- Name Of Employee</p>
+            <!-- <p class="text-center">New Loan- Name Of Employee</p> -->
+            <div id="status-buttons" class="text-center">
+                    <a ng-init="value=1" ng-click="value=1" ng-class="{active:value==1}">
+                        <span>1</span>Leave Applied</a>
+                    <a ng-click="value=2" ng-class="{active:value==2}">
+                        <span>2</span> CompOff Applied</a>
+
+                </div>
             <span data-ng-click="$dismiss();" class="pull-right">
                 <i class="fa fa-times"></i>
             </span>
         </div>
     </div>
     <div class="modal-body">
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
-
-                <div id="form-container">
-
-                    <div class="page-header text-center">
-                        <h2>Let's Be Friends</h2>
-
-                        <!-- the links to our nested states using relative paths -->
-                        <!-- add the active class if the state matches our ui-sref -->
-                        <div id="status-buttons" class="text-center">
-                            <a ui-sref-active="active" ui-sref=".profile">
-                                <span>1</span> Profile</a>
-                            <a ui-sref-active="active" ui-sref=".interests">
-                                <span>2</span> Interests</a>
-                            <a ui-sref-active="active" ui-sref=".payment">
-                                <span>3</span> Payment</a>
-                        </div>
-                    </div>
-
-                    <!-- use ng-submit to catch the form submission and use our Angular function -->
-                    <form id="signup-form" ng-submit="processForm()">
-                        <!-- our nested state views will be injected here -->
-                        <div id="form-views" ></div>
-                    </form>
-
-                </div>
-
-              
-
-            </div>
-        </div>
+       <div class="col-lg-12">
+           <button ng-if="value==1" class="btn btn-success pull-right" ng-click="SaveContinue()">Save & Continue</button>
+           <button ng-if="value==2" class="btn btn-success pull-right" ng-click="SaveClose()">Save & Close</button>
+       </div>
     </div>
 </div>

@@ -146,17 +146,17 @@
         }
 
         function _CheckLeaveAndAttendanceStatus() {
-            $state.go("team.leave")
-            // var modal = dialogModal.openFullScreen({
-            //     url: 'app/pages/payrollprocess/overview/leaveandattendance/request.html',
-            //     controller: 'leaveAndAttendanceStatusController',
-            // });
-            // modal.result.then(function (data) {
-            //     if (data == "success") {
-            //         _loadController();
-            //         $scope.showMsg('success', 'Primary Detail Updated');
-            //     }
-            // })
+           // $state.go("team.leave")
+            var modal = dialogModal.openFullScreen({
+                url: 'app/pages/payrollprocess/overview/leaveandattendance/request.html',
+                controller: 'leaveAndAttendanceStatusController',
+            });
+            modal.result.then(function (data) {
+                if (data == "success") {
+                    _loadController();
+                    $scope.showMsg('success', 'Primary Detail Updated');
+                }
+            })
         }
 
 

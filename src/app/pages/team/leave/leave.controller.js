@@ -11,6 +11,7 @@
     /** @ngInject */
     function myTeamLeaveController($scope, $rootScope, pageService, editFormService, dialogModal) {
 
-
+    
+        
     }
 })();
