@@ -31,11 +31,11 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label dotranslate>Country</label>
-                            <!-- <select class="form-control" id="country" ng-model="countrySrc" ng-options="opt.value as opt.name for opt in selects.CountryId" ng-change="GetSelectedCountry()">
-                                <option value=''>Select</option>
-                            </select> -->
-                            <select class="form-control" name="CountryId" ng-options="opt.value as opt.name for opt in selects.CountryId" ng-model="entity.CountryId"></select>
-                            <!-- ng-change="changeState()" -->
+                            <select id="inputDepartment" ng-model="entity.CountryId" ng-change="countryOnChange(entity.CountryId)" class="form-control"
+                                ng-options="loaction.value as loaction.name for loaction in selects.CountryId" data-placeholder="Select Nav Menu"
+                                required>
+                                <option></option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -43,10 +43,11 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label dotranslate>State</label>
-                            <!-- <select class="form-control" id="state" ng-disabled="!countrySrc" ng-model="stateSrc" ng-options="opt.value as opt.name for opt in countrySrc" ng-change="GetSelectedState()">
-                                <option value=''>Select</option>
-                            </select> -->
-                            <select class="form-control" name="state" ng-options="opt.value as opt.name for opt in selects.StateList" ng-model="entity.StateId"></select>
+                            <select id="inputDesignation" ng-model="entity.StateId" ng-change="stateOnChange(entity.StateId)" class="form-control"
+                                ng-options="branch.value as branch.name for branch in stateList" data-placeholder="Select Nav Menu"
+                                required>
+                                <option></option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -54,11 +55,12 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label dotranslate>City</label>
-                            <!-- <select class="form-control" id="city" ng-disabled="!countrySrc || !stateSrc" ng-model="city" ng-options="city for city in stateSrc">
-                                <option value=''>Select</option>
-                            </select> -->
-                            <select class="form-control" name="state" ng-options="opt.value as opt.name for opt in selects.LocationCityId
-                            " ng-model="entity.LocationCityId"></select>
+                            <select id="inputEmployeeType" ng-model="entity.LocationCityId" class="form-control" ng-options="subUnit.value as subUnit.name for subUnit in cityList"
+                                data-placeholder="Select Nav Menu" required>
+                                <option></option>
+                            </select>
+                            <!-- <select class="form-control" name="state" ng-options="opt.value as opt.name for opt in selects.LocationCityId
+                            " ng-model="entity.LocationCityId"></select> -->
                         </div>
                     </div>
                 </div>

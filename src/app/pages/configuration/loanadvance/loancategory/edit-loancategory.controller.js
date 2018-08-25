@@ -18,12 +18,20 @@
         $scope.oldEntity = angular.copy($stateParams.param.entity);
         $scope.saveForm = _saveForm;
         $scope.action = 'create';
+        $scope.locationOnChange = _locationOnChange;
+        $scope.branchOnChange = _brachOnChange;
+        $scope.onChangeLoanProvider = _onChangeLoanProvider;
+
 
         console.log($scope.selects)
 
         if ($stateParams.param.id > 0) {
             $scope.isEdit = true;
             $scope.action = 'edit';
+            $scope.branchList = $scope.selects.BRId;
+            $scope.subUnitList = $scope.selects.LTRSubUnitId;
+            $scope.loanTypeList = $scope.selects.LTRLTId
+
         }
         $scope.selects.StateList = $scope.selects.StateId;
 
@@ -78,6 +86,31 @@
 
         function _saveFormError(err) {
             alert('error')
+        }
+
+        function _locationOnChange(locationId) {
+            $scope.branchList = [];
+            $scope.subUnitList = [];
+            var branchList = $filter("findAll")($scope.selects.BRId, locationId, "LocationId");
+            if (branchList != null) {
+                $scope.branchList = branchList;
+            }
+        }
+
+        function _brachOnChange(brachId) {
+            $scope.subUnitList = [];
+            var subUnitList = $filter("findAll")($scope.selects.LTRSubUnitId, brachId, 'BRId');
+            if (subUnitList != null) {
+                $scope.subUnitList = subUnitList;
+            }
+        }
+
+        function _onChangeLoanProvider(providerId) {
+            $scope.loanTypeList = [];
+            var loanTypeList = $filter("findAll")($scope.selects.LTRLTId, providerId, 'LPId')
+            if (loanTypeList != null) {
+                $scope.loanTypeList = loanTypeList;
+            }
         }
     }
 })();

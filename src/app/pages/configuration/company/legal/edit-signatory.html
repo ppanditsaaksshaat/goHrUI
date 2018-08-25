@@ -107,37 +107,32 @@
                             <div class="col-sm-3 clear-side-padding">
                                 <div class="form-group">
                                     <label>Country</label>
-                                    <select class="form-control" data- ng-model="entity.CountryId" ng-options="location.value as location.name for location in pageInfo.selects.CountryId"></select>
-
-                                    <!-- <input type="text" class="form-control" name="signatoryFather" id="signatoryFather"
-                                        required />
-                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryFather" data-required-error="Father name is required"
-                                        data-form-submit="addSignatoryForm.$submitted"></span> -->
+                                    <select id="inputDepartment" ng-model="entity.CountryId" ng-change="countryOnChange(entity.CountryId)" class="form-control"
+                                        ng-options="loaction.value as loaction.name for loaction in pageInfo.selects.CountryId"
+                                        data-placeholder="Select Nav Menu" required>
+                                        <option></option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-3 clear-right-padding">
                                 <div class="form-group">
                                     <label>State</label>
-                                    <select class="form-control" data- ng-model="entity.StateId" ng-options="location.value as location.name for location in pageInfo.selects.StateId"></select>
-
-                                    <!-- <input type="text" class="form-control" name="signatoryDesignation" id="signatoryDesignation" required />
-                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryDesignation" data-required-error="Designation is required"
-                                        data-form-submit="addSignatoryForm.$submitted"></span> -->
+                                    <select id="inputDesignation" ng-model="entity.StateId" ng-change="stateOnChange(entity.StateId)" class="form-control" ng-options="branch.value as branch.name for branch in stateList"
+                                        data-placeholder="Select Nav Menu" required>
+                                        <option></option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-3 clear-right-padding">
                                 <div class="form-group">
                                     <label>City</label>
-                                    <select class="form-control" data- ng-model="entity.ASDCityId" ng-options="location.value as location.name for location in pageInfo.selects.ASDCityId"></select>
-
-                                    <!-- <input type="text" class="form-control" data-ng-model="entity.ASDCityId" name="signatoryDesignation" id="signatoryDesignation"
-                                        required />
-                                    <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryDesignation" data-required-error="Designation is required"
-                                        data-form-submit="addSignatoryForm.$submitted"></span> -->
+                                    <select id="inputEmployeeType" ng-model="entity.ASDCityId" class="form-control" ng-options="subUnit.value as subUnit.name for subUnit in cityList"
+                                        data-placeholder="Select Nav Menu" required>
+                                        <option></option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-
                     </fieldset>
                 </div>
                 <div class="row">

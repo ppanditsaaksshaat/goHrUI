@@ -12,7 +12,12 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label dotranslate>Location</label>
-                            <select class="form-control" name="LocationId" ng-options="opt.value as opt.name for opt in selects.LocationId" ng-model="entity.LocationId"></select>
+                            <!-- <select class="form-control" name="LocationId" ng-options="opt.value as opt.name for opt in selects.LocationId" ng-model="entity.LocationId"></select> -->
+                            <select id="inputDepartment" ng-model="entity.LocationId" ng-change="locationOnChange(entity.LocationId)" class="form-control"
+                                ng-options="loaction.value as loaction.name for loaction in selects.LocationId" data-placeholder="Select Nav Menu"
+                                required>
+                                <option></option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -20,7 +25,7 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label dotranslate>Branch</label>
-                            <select class="form-control" name="SUBranchId" ng-options="opt.value as opt.name for opt in selects.SUBranchId"
+                            <select class="form-control" name="SUBranchId" ng-options="opt.value as opt.name for opt in branchList"
                                 ng-model="entity.SUBranchId"></select>
                         </div>
                     </div>

@@ -18,12 +18,18 @@
         $scope.oldEntity = angular.copy($stateParams.param.entity);
         $scope.saveForm = _saveForm;
         $scope.action = 'create';
+        $scope.countryOnChange = _counrtyOnChange;
+        $scope.stateOnChange = _stateOnChange;
+        $scope.cityOnChange = _cityOnChange;
 
         console.log($scope.selects)
 
         if ($stateParams.param.id > 0) {
             $scope.isEdit = true;
             $scope.action = 'edit';
+            $scope.stateList = $scope.selects.StateId;
+            $scope.cityList = $scope.selects.CityId;
+            $scope.areaList = $scope.selects.BranchAreaId;
         }
         $scope.selects.StateList = $scope.selects.StateId;
 
@@ -79,5 +85,33 @@
         function _saveFormError(err) {
             alert('error')
         }
+
+        function _counrtyOnChange(countryId) {
+            $scope.stateList = [];
+            $scope.cityList = [];
+            $scope.areaList = [];
+            var stateList = $filter("findAll")($scope.selects.StateId, countryId, "CountryId");
+            if (stateList != null) {
+                $scope.stateList = stateList;
+            }
+        }
+
+        function _stateOnChange(stateId) {
+            $scope.cityList = [];
+            $scope.areaList = [];
+            var cityList = $filter("findAll")($scope.selects.CityId, stateId, 'StateId');
+            if (cityList != null) {
+                $scope.cityList = cityList;
+            }
+        }
+
+        function _cityOnChange(cityId) {
+            // $scope.cityList = [];
+            var areaList = $filter("findAll")($scope.selects.BranchAreaId, cityId, 'CityId');
+            if (areaList != null) {
+                $scope.areaList = areaList;
+            }
+        }
+
     }
 })();

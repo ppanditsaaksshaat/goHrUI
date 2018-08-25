@@ -24,7 +24,11 @@
                         <div class="col-sm-4 clear-right-padding">
                             <div class="form-group">
                                 <label>Location</label>
-                                <select class="form-control" data- ng-model="entity.LocationId" ng-options="location.value as location.name for location in selects.LocationId"></select>
+                                <select id="inputDepartment" ng-model="entity.LocationId" ng-change="locationOnChange(entity.LocationId)" class="form-control"
+                                    ng-options="loaction.value as loaction.name for loaction in selects.LocationId" data-placeholder="Select Nav Menu"
+                                    required>
+                                    <option></option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -33,19 +37,30 @@
                         <div class="col-sm-4 clear-left-padding">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <select class="form-control" data- ng-model="entity.BRId" ng-options="location.value as location.name for location in selects.BRId"></select>
+                                <select id="inputDesignation" ng-model="entity.BRId" ng-change="branchOnChange(entity.BRId)" class="form-control" ng-options="branch.value as branch.name for branch in branchList"
+                                    data-placeholder="Select Nav Menu" required>
+                                    <option></option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-4 clear-side-padding">
                             <div class="form-group">
                                 <label>Sub-Unit</label>
-                                <select class="form-control" data- ng-model="entity.LTRSubUnitId" ng-options="location.value as location.name for location in selects.LTRSubUnitId"></select>
+                                <select id="inputEmployeeType" ng-model="entity.LTRSubUnitId" class="form-control" ng-options="subUnit.value as subUnit.name for subUnit in subUnitList"
+                                    data-placeholder="Select Nav Menu" required>
+                                    <option></option>
+                                </select>
+                                <!-- <select class="form-control" data- ng-model="entity.LTRSubUnitId" ng-options="location.value as location.name for location in selects.LTRSubUnitId"></select> -->
                             </div>
                         </div>
                         <div class="col-sm-4 clear-right-padding">
                             <div class="form-group">
                                 <label>Loan Provider</label>
-                                <select class="form-control" data- ng-model="entity.LPId" ng-options="location.value as location.name for location in selects.LPId"></select>
+                                <select id="inputEmployeeType" ng-model="entity.LPId" class="form-control" ng-change="onChangeLoanProvider(entity.LPId)"
+                                    ng-options="subUnit.value as subUnit.name for subUnit in selects.LPId" data-placeholder="Select Nav Menu"
+                                    required>
+                                    <option></option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -54,14 +69,13 @@
                         <div class="col-sm-4 clear-left-padding">
                             <div class="form-group">
                                 <label>Loan Type</label>
-                                <select class="form-control" data- ng-model="entity.LTRLTId" ng-options="location.value as location.name for location in selects.LTRLTId"></select>
+                                <select class="form-control" data- ng-model="entity.LTRLTId" ng-options="location.value as location.name for location in loanTypeList"></select>
                             </div>
                         </div>
                         <div class="col-sm-4 clear-side-padding">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" data-ng-model="entity.LTRName" name="LTRName" id="LTRName"
-                                    required />
+                                <input type="text" class="form-control" data-ng-model="entity.LTRName" name="LTRName" id="LTRName" required />
                                 <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
                                     data-form-submit="addSignatoryForm.$submitted"></span>
                             </div>
@@ -69,20 +83,20 @@
                         <div class="col-sm-4 clear-right-padding">
                             <div class="form-group">
                                 <label>Max Limit</label>
-                                <input type="text" class="form-control" data-ng-model="entity.LTRMaxLimit" name="LTRMaxLimit" id="LTRMaxLimit"
-                                    required />
+                                <input type="text" class="form-control" data-ng-model="entity.LTRMaxLimit" name="LTRMaxLimit" id="LTRMaxLimit" required />
                                 <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
                                     data-form-submit="addSignatoryForm.$submitted"></span>
                             </div>
                         </div>
-                      
+
                     </div>
 
                     <div class="col-sm-12 new-person-details" data-ng-class="{'clear-top' : 'edit'}">
                         <div class="col-sm-4 clear-left-padding">
                             <div class="form-group">
                                 <label>Interest Percentage</label>
-                                <input type="text" class="form-control" data-ng-model="entity.LTRInstallmentPercentage" name="LTRInstallmentPercentage" id="LTRInstallmentPercentage" required />
+                                <input type="text" class="form-control" data-ng-model="entity.LTRInstallmentPercentage" name="LTRInstallmentPercentage" id="LTRInstallmentPercentage"
+                                    required />
                                 <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
                                     data-form-submit="addSignatoryForm.$submitted"></span>
                             </div>
@@ -90,8 +104,8 @@
                         <div class="col-sm-4 clear-side-padding">
                             <div class="form-group">
                                 <label>Max Duration</label>
-                                <input type="text" class="form-control" data-ng-model="entity.LTRMaxDuration" name="LTRMaxDuration" id="LTRMaxDuration"
-                                    required />
+                                <input type="text" class="form-control" data-ng-model="entity.LTRMaxDuration" name="LTRMaxDuration" id="LTRMaxDuration" required
+                                />
                                 <span class="validation-msg" data-validation-messages="" data-model-controller="addSignatoryForm.signatoryName" data-required-error="Name is required"
                                     data-form-submit="addSignatoryForm.$submitted"></span>
                             </div>

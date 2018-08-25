@@ -18,12 +18,16 @@
         $scope.oldEntity = angular.copy($stateParams.param.entity);
         $scope.saveForm = _saveForm;
         $scope.action = 'create';
+        $scope.locationOnChange = _locationOnChange;
+        $scope.branchOnChange = _brachOnChange;
 
         console.log($scope.selects)
 
         if ($stateParams.param.id > 0) {
             $scope.isEdit = true;
             $scope.action = 'edit';
+            $scope.branchList = $scope.selects.BRId;
+            $scope.subUnitList = $scope.selects.HDCBLSubUnitId;
         }
         $scope.selects.StateList = $scope.selects.StateId;
 
@@ -78,6 +82,23 @@
 
         function _saveFormError(err) {
             alert('error')
+        }
+
+        function _locationOnChange(locationId) {
+            $scope.branchList = [];
+            $scope.subUnitList = [];
+            var branchList = $filter("findAll")($scope.selects.BRId, locationId, "LocationId");
+            if (branchList != null) {
+                $scope.branchList = branchList;
+            }
+        }
+
+        function _brachOnChange(brachId) {
+            $scope.subUnitList = [];
+            var subUnitList = $filter("findAll")($scope.selects.HDCBLSubUnitId, brachId, 'BRId');
+            if (subUnitList != null) {
+                $scope.subUnitList = subUnitList;
+            }
         }
     }
 })();

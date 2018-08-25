@@ -9,7 +9,7 @@
         .controller('signatureController', signatureController);
 
     /** @ngInject */
-    function signatureController($scope, dialogModal, editFormService, $rootScope, pageService, param) {
+    function signatureController($scope, dialogModal, editFormService, $rootScope, pageService, param, $filter) {
         //    console.log($state)
         var vm = this;
         // $scope.paramiter = parameter;
@@ -19,9 +19,12 @@
         console.log(param)
         $scope.saveSignatory = _saveForm;
         $scope.companyList = [];
+
         $scope.oldEntity = {};
         var signaturePageId = 494;
         $scope.edit = false;
+        $scope.countryOnChange = _counrtyOnChange;
+        $scope.stateOnChange = _stateOnChange;
 
         if (param != undefined) {
             $scope.edit = true;
@@ -36,9 +39,14 @@
         function _loadController() {
             pageService.getPagData(signaturePageId).then(_getPageSuccessResult, _getPageErrorResult)
         }
+        
         function _getPageSuccessResult(result) {
             console.log(result)
             $scope.pageInfo = result.pageinfo;
+            if (param != undefined) {
+                $scope.stateList = $scope.pageInfo.selects.StateId;
+                $scope.cityList = $scope.pageInfo.selects.ASDCityId;
+            }
 
         }
 
@@ -82,6 +90,37 @@
             // alert('error')
             $scope.$close();
 
+        }
+
+        // function _locationOnChange(locationId) {
+
+        //     var branches = $filter("findAll")(vm.dropDownList[10], locationId, "LocationId");
+        //     if (branches != null) {
+        //         vm.Branches = branches;
+        //     }
+        // }
+        // function _branchOnChange(branchId) {
+        //     var subUnits = $filter("findAll")(vm.dropDownList[11], branchId, 'BRId');
+        //     if (subUnits != null) {
+        //         vm.SubUnits = subUnits;
+        //     }
+        // }
+
+        function _counrtyOnChange(countryId) {
+            $scope.stateList = [];
+            $scope.cityList = [];
+            var stateList = $filter("findAll")($scope.pageInfo.selects.StateId, countryId, "CountryId");
+            if (stateList != null) {
+                $scope.stateList = stateList;
+            }
+        }
+
+        function _stateOnChange(stateId) {
+            $scope.cityList = [];
+            var cityList = $filter("findAll")($scope.pageInfo.selects.ASDCityId, stateId, 'StateId');
+            if (cityList != null) {
+                $scope.cityList = cityList;
+            }
         }
 
         _loadController();

@@ -18,19 +18,21 @@
         $scope.oldEntity = angular.copy($stateParams.param.entity);
         $scope.saveForm = _saveForm;
         $scope.action = 'create';
+        $scope.locationOnChange = _locationOnChange;
 
         console.log($scope.selects)
 
         if ($stateParams.param.id > 0) {
             $scope.isEdit = true;
             $scope.action = 'edit';
+            $scope.branchList = $scope.selects.SUBranchId;
         }
         $scope.selects.StateList = $scope.selects.StateId;
 
         function _childmethod() {
             $rootScope.$emit("CallParentMethod", {});
         }
-        
+
         $scope.changeState = function () {
             console.log('changeState')
             $scope.selects.StateList = $scope.selects.StateId;
@@ -79,6 +81,14 @@
 
         function _saveFormError(err) {
             alert('error')
+        }
+
+        function _locationOnChange(locationId) {
+            $scope.branchList = [];
+            var branchList = $filter("findAll")($scope.selects.SUBranchId, locationId, "LocationId");
+            if (branchList != null) {
+                $scope.branchList = branchList;
+            }
         }
     }
 })();

@@ -9,7 +9,7 @@
         .controller('legalController', legalController);
 
     /** @ngInject */
-    function legalController($scope, dialogModal, editFormService, pageService, $state, $rootScope, $uibModal) {
+    function legalController($scope, dialogModal, editFormService, pageService, $state, $filter, $rootScope, $uibModal) {
         //    console.log($state)
         var vm = this;
 
@@ -24,6 +24,9 @@
 
         $scope.editSignatoryDetail = _editSignatoryDetail;
         $scope.editBankDetail = _editBankDetail;
+
+        $scope.countryOnChange = _counrtyOnChange;
+        $scope.stateOnChange = _stateOnChange;
 
         var companyPageId = 347;
         var companyTableId = 343;
@@ -87,12 +90,13 @@
             if (result.length > 0) {
                 if (result[0].CCOId != undefined) {
                     entity.company = result[0]
+                   
                     // $scope.oldEntity.company = result[0];
                 }
                 if (result[0].ITDId != undefined) {
                     entity.incomeTax = result[0]
                     // $scope.oldEntity.editIncomeTax = result[0];
-                    console.log($scope.oldEntity.editIncomeTax)
+                    // console.log($scope.oldEntity.editIncomeTax)
                 }
                 if (result[0].PFDId != undefined) {
                     entity.pFDetail = result[0]
@@ -130,6 +134,9 @@
         function _getPageSuccessResult(result) {
             console.log(result)
             $scope.pageInfo = result.pageinfo;
+            
+            $scope.stateList = $scope.pageInfo.selects.StateId;
+            $scope.cityList = $scope.pageInfo.selects.CCOCityId;
 
         }
 
@@ -252,6 +259,24 @@
                 param: row
             });
         }
+
+        function _counrtyOnChange(countryId) {
+            $scope.stateList = [];
+            $scope.cityList = [];
+            var stateList = $filter("findAll")($scope.pageInfo.selects.StateId, countryId, "CountryId");
+            if (stateList != null) {
+                $scope.stateList = stateList;
+            }
+        }
+
+        function _stateOnChange(stateId) {
+            $scope.cityList = [];
+            var cityList = $filter("findAll")($scope.pageInfo.selects.CCOCityId, stateId, 'StateId');
+            if (cityList != null) {
+                $scope.cityList = cityList;
+            }
+        }
+
         _loadController();
     }
 

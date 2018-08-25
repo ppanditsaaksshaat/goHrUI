@@ -16,7 +16,7 @@
       .state('configuration.leaves.holiday', {
         url: '/holiday',
         templateUrl: 'app/pages/configuration/leaveholiday/holiday/holiday.html',
-        controller: 'holidayController',
+        controller: 'holidayControllerss',
         title: 'Holiday Master',
         sidebarMeta: {
           icon: 'ion-android-home',

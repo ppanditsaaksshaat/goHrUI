@@ -6,10 +6,10 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.configuration.leaves.holiday')
-        .controller('holidayController', holidayController);
+        .controller('holidayControllerss', holidayControllerss);
 
     /** @ngInject */
-    function holidayController($scope, $rootScope, $state, $filter, pageService) {
+    function holidayControllerss($scope, $rootScope, $state, $filter, pageService) {
         //    console.log($state)
         console.log('Holiday ctrl loaded')
         $scope.location = 'this is Holiday controller'
