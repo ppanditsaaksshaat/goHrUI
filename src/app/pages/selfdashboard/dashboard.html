@@ -32,6 +32,8 @@
             </div>
 
             <div class="panel-body">
+                <!-- <button type="submit" class="btn btn-success" ng-click="viewList();" dotranslate>View</button> -->
+
             </div>
         </div>
     </div>
@@ -40,194 +42,222 @@
 
 <div class="row">
 
-    <!-- <div class="col-md-4">
+    <div class="col-md-4">
         <div class="panel panel-medium">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-md-8">
-                        Attendance Summary
-
-                    </div>
-                    <div class="col-md-4 pull-right">
-
-                    </div>
-                </div>
+            <div class="panel-heading header">
+                Upcoming Team Leave List(90 Day)
+                <a class="pull-right" data-ng-click="teamLeave()" href="">View All</a>
             </div>
 
-            <div class="panel-body">
+            <div class="panel-body panel-height" class="djGrid payband">
+                <table ng-if="upComingLeaveListOfTeam.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+                    <thead>
+                        <tr class="info">
+                            <td>
+                                <label>Sr. No.</label>
+                            </td>
+                            <td>
+                                <label>Name</label>
+                            </td>
+                            <td>
+                                <label>From Date</label>
+                            </td>
+                            <td>
+                                <label>To Date</label>
+                            </td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="leave in upComingLeaveListOfTeam | limitTo : 7">
+                            <td style="text-align: left"> {{leave.SNo}}</td>
+                            <td>{{leave.EmpName}}</td>
+                            <td>{{leave.LEADDateFrom}}</td>
+                            <td>{{leave.LEADDateTo}}</td>
+
+                    </tbody>
+                </table>
+
             </div>
         </div>
+    </div>
+
+    <!-- <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Team Leave List(90 Day)" ba-panel-class="medium-panel">
+        
+
     </div> -->
 
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Team Leave List(90 Day)" ba-panel-class="medium-panel">
-
-        <!-- <div class="col-sm-12 link-item clear-side-padding">
-            <div class="col-sm-12">
-               
-                
+    <div class="col-md-4">
+        <div class="panel panel-medium">
+            <div class="panel-heading header">
+                Pending Approval(Self)
+                <a class="pull-right" data-ng-click="viewList()" href="">View All</a>
             </div>
-        </div> -->
 
-        <table ng-if="upComingLeaveListOfTeam.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
-            <thead>
-                <tr class="info">
-                    <td>
-                        <label>Sr. No.</label>
-                    </td>
-                    <td>
-                        <label>Name</label>
-                    </td>
-                    <td>
-                        <label>From Date</label>
-                    </td>
-                    <td>
-                        <label>To Date</label>
-                    </td>
+            <div class="panel-body panel-height">
+                <table ng-if="pendingApprovel.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+                    <thead>
+                        <tr class="info">
+                            <td>
+                                <label>Sr. No.</label>
+                            </td>
+                            <td>
+                                <label>Type</label>
+                            </td>
+                            <td>
+                                <label>Date</label>
+                            </td>
+                            <!-- <td>
+                                            <label>Sanction From</label>
+                                        </td>
+                                        <td>
+                                            <label>Sanction To</label>
+                                        </td> -->
+                            <!-- <td>
+                                            <label>Status</label>
+                                        </td> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="leave in pendingApprovel | limitTo : 7">
+                            <td style="text-align: left"> {{leave.SNo}}</td>
+                            <td>{{leave.Type}}</td>
+                            <td>{{leave.Date}}</td>
+                            <!-- <td>{{leave.SancFromDate}}</td>
+                                        <td>{{leave.SancToDate}}</td> -->
+                            <!-- <td>{{leave.Status}}</td> -->
+                    </tbody>
+                </table>
 
-                    <!-- <td>
-                        <label>Sanction From</label>
-                    </td>
-                    <td>
-                        <label>Sanction To</label>
-                    </td> -->
-                    <!-- <td>
-                        <label>Status</label>
-                    </td> -->
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="leave in upComingLeaveListOfTeam | limitTo : 7">
-                    <td> {{leave.SNo}}</td>
-                    <td>{{leave.EmpName}}</td>
-                    <td>{{leave.LEADDateFrom}}</td>
-                    <td>{{leave.LEADDateTo}}</td>
-                    <!-- <td>{{leave.SancFromDate}}</td>
-                    <td>{{leave.SancToDate}}</td> -->
-                    <!-- <td>{{leave.Status}}</td> -->
-            </tbody>
-        </table>
-
+            </div>
+        </div>
     </div>
 
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Pending Approval(Self)" ba-panel-class="medium-panel traffic-panel">
-        <table ng-if="pendingApprovel.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
-            <thead>
-                <tr class="info">
-                    <td>
-                        <label>Sr. No.</label>
-                    </td>
-                    <td>
-                        <label>Type</label>
-                    </td>
-                    <td>
-                        <label>Date</label>
-                    </td>
-                    <!-- <td>
-                        <label>Sanction From</label>
-                    </td>
-                    <td>
-                        <label>Sanction To</label>
-                    </td> -->
-                    <!-- <td>
-                        <label>Status</label>
-                    </td> -->
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="leave in pendingApprovel | limitTo : 7">
-                    <td> {{leave.SNo}}</td>
-                    <td>{{leave.Type}}</td>
-                    <td>{{leave.Date}}</td>
-                    <!-- <td>{{leave.SancFromDate}}</td>
-                    <td>{{leave.SancToDate}}</td> -->
-                    <!-- <td>{{leave.Status}}</td> -->
-            </tbody>
-        </table>
-    </div>
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="UpComing Holiday(90 Day)" ba-panel-class="medium-panel traffic-panel">
-        <table ng-if="UpComingHolidayList.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
-            <thead>
-                <tr class="info">
-                    <td>
-                        <label>Sr. No.</label>
-                    </td>
-                    <td>
-                        <label>Holiday Name</label>
-                    </td>
-                    <td>
-                        <label>Holiday Date</label>
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="holiday in UpComingHolidayList | limitTo : 7">
-                    <td> {{holiday.SNo}}</td>
-                    <td>{{holiday.HDName}}</td>
-                    <td>{{holiday.HDFromDate}}</td>
-            </tbody>
+    <!-- <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Pending Approval(Self)" ba-panel-class="medium-panel traffic-panel">
 
-        </table>
+        
+    </div> -->
+
+    <div class="col-md-4">
+        <div class="panel panel-medium">
+            <div class="panel-heading header">
+                UpComing Holiday(90 Day)
+                <a class="pull-right" data-ng-click="holiday()" href="">View All</a>
+            </div>
+
+            <div class="panel-body panel-height">
+                <table ng-if="UpComingHolidayList.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+                    <thead>
+                        <tr class="info">
+                            <td>
+                                <label>Sr. No.</label>
+                            </td>
+                            <td>
+                                <label>Holiday Name</label>
+                            </td>
+                            <td>
+                                <label>Holiday Date</label>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="holiday in UpComingHolidayList | limitTo : 7">
+                            <td style="text-align: left"> {{holiday.SNo}}</td>
+                            <td>{{holiday.HDName}}</td>
+                            <td>{{holiday.HDFromDate}}</td>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
     </div>
+    <!-- <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="UpComing Holiday(90 Day)" ba-panel-class="medium-panel traffic-panel">
+    </div> -->
 </div>
 
 <div class="row">
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Team BirthDay(90 Days)" ba-panel-class="medium-panel">
-        <table ng-if="upComingTeamBirthDay.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
-            <thead>
-                <tr class="info">
-                    <td>
-                        <label>Sr. No.</label>
-                    </td>
-                    <td>
-                        <label>Name</label>
-                    </td>
-                    <td>
-                        <label>Date Of Birth</label>
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="birth in upComingTeamBirthDay | limitTo : 7">
-                    <td> {{birth.SNo}}</td>
-                    <td> {{birth.EmpName}}</td>
-                    <td>{{birth.PdDateOfBirth}}</td>
-            </tbody>
+    <div class="col-md-4">
+        <div class="panel panel-medium">
+            <div class="panel-heading header">
+                Upcoming Team BirthDay(90 Days)
+                <a class="pull-right" data-ng-click="teamBirthDay()" href="">View All</a>
+            </div>
 
-        </table>
+            <div class="panel-body panel-height">
+                <table ng-if="upComingTeamBirthDay.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+                    <thead>
+                        <tr class="info">
+                            <td>
+                                <label>Sr. No.</label>
+                            </td>
+                            <td>
+                                <label>Name</label>
+                            </td>
+                            <td>
+                                <label>Date Of Birth</label>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="birth in upComingTeamBirthDay | limitTo : 7">
+                            <td style="text-align: left"> {{birth.SNo}}</td>
+                            <td> {{birth.EmpName}}</td>
+                            <td>{{birth.PdDateOfBirth}}</td>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
     </div>
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="BirthDay(Self) " ba-panel-class="medium-panel traffic-panel">
-        <table ng-if="upComingBirthDayList.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
-            <thead>
-                <tr class="info">
-                    <td>
-                        <label>Sr. No.</label>
-                    </td>
-                    <td>
-                        <label>Date Of Birth</label>
-                    </td>
-                    <!-- <td>
-                        <label>Mobile Number</label>
-                    </td>
-                    <td>
-                        <label>Email</label>
-                    </td> -->
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="birth in upComingBirthDayList | limitTo : 7">
-                    <td> {{birth.SNo}}</td>
-                    <td>{{birth.PdDateOfBirth}}</td>
-                    <!-- <td>{{birth.PdMobileNo}}</td>
-                    <td>{{birth.PdEmail}}</td> -->
+    <!-- <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Upcoming Team BirthDay(90 Days)" ba-panel-class="medium-panel">
 
-            </tbody>
+    </div> -->
 
-        </table>
-        <!-- <div ui-grid="LeaveTodayGridOpt" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning class="joinGridCss">
-        </div> -->
+    <div class="col-md-4">
+        <div class="panel panel-medium">
+            <div class="panel-heading header">
+                BirthDay(Self)
+                <a class="pull-right" data-ng-click="birthDay()" href="">View</a>
+            </div>
 
+            <div class="panel-body panel-height">
+                <table ng-if="upComingBirthDayList.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+                    <thead>
+                        <tr class="info">
+                            <td>
+                                <label>Sr. No.</label>
+                            </td>
+                            <td>
+                                <label>Date Of Birth</label>
+                            </td>
+                            <!-- <td>
+                                            <label>Mobile Number</label>
+                                        </td>
+                                        <td>
+                                            <label>Email</label>
+                                        </td> -->
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="birth in upComingBirthDayList | limitTo : 7">
+                            <td style="text-align: left"> {{birth.SNo}}</td>
+                            <td>{{birth.PdDateOfBirth}}</td>
+
+                            <!-- <td>{{birth.PdMobileNo}}</td>
+                                        <td>{{birth.PdEmail}}</td> -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
     </div>
+
     <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Acquisition Channels" ba-panel-class="medium-panel traffic-panel">
     </div>
 </div>
