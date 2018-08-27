@@ -17,8 +17,9 @@
         $scope.gridOptions = {
             paginationPageSizes: [10, 50, 75],
             paginationPageSize: 10,
+            enableScrollbars: false,
             columnDefs: [
-                { name: 'SNo', displayName: 'SNo', width: 80, enableCellEdit: false },
+                { name: 'SNo', displayName: 'SNo', width: 70, enableCellEdit: false },
                 { name: 'Date', displayName: 'Application Date', width: 300, enableCellEdit: false },
                 { name: 'Type', displayName: 'Application Type', width: 300, enableCellEdit: false },
             ],

@@ -1,15 +1,15 @@
 /**
  * @author NKM
- * created on 24.08.2018
+ * created on 27.08.2018
  */
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.selfdashboard')
-        .controller('holidayController', holidayController);
+    angular.module('BlurAdmin.pages.directory.empdashboard')
+        .controller('newJoinsController', newJoinsController);
 
     /** @ngInject */
-    function holidayController($scope, param, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
+    function newJoinsController($scope, param, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
         console.log('list controller.')
         console.log(param)
 
@@ -20,8 +20,8 @@
             enableScrollbars: false,
             columnDefs: [
                 { name: 'SNo', displayName: 'SNo', width: 70, enableCellEdit: false },
-                { name: 'HDName', displayName: 'Holiday Name', width: 300, enableCellEdit: false },
-                { name: 'HDFromDate', displayName: 'Holiday Date', width: 300, enableCellEdit: false },
+                { name: 'EmpName', displayName: 'Name Of Employee', width: 300, enableCellEdit: false },
+                { name: 'JDDate', displayName: 'Date Of Joining', width: 300, enableCellEdit: false },
             ],
         }
         $scope.gridOptions.data = param;

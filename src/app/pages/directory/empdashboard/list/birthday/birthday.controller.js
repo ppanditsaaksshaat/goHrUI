@@ -1,15 +1,15 @@
 /**
  * @author NKM
- * created on 24.08.2018
+ * created on 27.08.2018
  */
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.selfdashboard')
-        .controller('teamBirthController', teamBirthController);
+    angular.module('BlurAdmin.pages.directory.empdashboard')
+        .controller('birthDayController', birthDayController);
 
     /** @ngInject */
-    function teamBirthController($scope, param, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
+    function birthDayController($scope, param, $rootScope, $state, $stateParams, pageService, editFormService, $filter) {
         console.log('list controller.')
         console.log(param)
 
@@ -19,8 +19,8 @@
             paginationPageSize: 10,
             enableScrollbars: false,
             columnDefs: [
-                { name: 'SNo', displayName: 'SNo', width: 70, enableCellEdit: false },
-                { name: 'EmpName', displayName: 'Employee Name', width: 300, enableCellEdit: false },
+                { name: 'EmpName', displayName: 'EmpName', width: 80, enableCellEdit: false },
+                { name: 'EmpName', displayName: 'Name Of Employee', width: 300, enableCellEdit: false },
                 { name: 'PdDateOfBirth', displayName: 'Date Of Birth', width: 300, enableCellEdit: false },
             ],
         }

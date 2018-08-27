@@ -28,14 +28,27 @@
                 { name: 'DesgName', displayName: 'Designation', width: 150, enableCellEdit: false },
                 { name: 'DeptName', displayName: 'Department', width: 150, enableCellEdit: false },
                 { name: 'LocationName', displayName: 'Location', width: 150, enableCellEdit: false },
-                { name: 'BRName', displayName: 'Branch', width: 100, enableCellEdit: false},
-                { name: 'SUName', displayName: 'SubUnit', width: 100, enableCellEdit: false}
+                { name: 'BRName', displayName: 'Branch', width: 100, enableCellEdit: false },
+                { name: 'SUName', displayName: 'SubUnit', width: 100, enableCellEdit: false }
             ],
         }
 
+
+        console.log($rootScope.user.profile.empId)
+        console.log($rootScope.user)
+
+        // isAdmin
+        // isManager
+
         function _loadController() {
             var searchLists = [];
-            searchLists.push({ field: 'Type', operand: '=', value: 'allemployee' })
+            if ($rootScope.user.profile.isAdmin && $rootScope.user.profile.isManager) {
+                searchLists.push({ field: 'Type', operand: '=', value: 'allemployee' })
+            }
+            else {
+                searchLists.push({ field: 'EmpId', operand: '=', value: $rootScope.user.profile.empId })
+                searchLists.push({ field: 'Type', operand: '=', value: 'team' })
+            }
             var data = {
                 searchList: searchLists,
                 orderByList: []
