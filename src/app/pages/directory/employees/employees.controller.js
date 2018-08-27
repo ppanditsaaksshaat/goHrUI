@@ -18,6 +18,8 @@
             enableVerticalScrollbar: 0,
             enableScrollbars: false,
             enableRowHeaderSelection: false,
+            paginationPageSizes: [10, 50, 75],
+            paginationPageSize: 10,
             columnDefs: [
                 { name: 'EmpCode', displayName: 'EmpCode', width: 80, enableCellEdit: false },
                 { name: 'EmpName', displayName: 'Name', width: 150, enableCellEdit: false },
