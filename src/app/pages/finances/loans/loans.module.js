@@ -8,7 +8,8 @@
     angular.module('BlurAdmin.pages.finances.loans', [
         'BlurAdmin.pages.finances.loans.outstanding',
         'BlurAdmin.pages.finances.loans.cleared',
-        'BlurAdmin.pages.finances.loans.requests'
+        'BlurAdmin.pages.finances.loans.requests',
+        // 'BlurAdmin.pages.finances.loans.newloan'
     ])
 
         .config(routeConfig);

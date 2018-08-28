@@ -12,24 +12,21 @@
     function finLoanOutSandingOController($scope) {
 
         $scope.gridOptions = {
-            enableCellEditOnFocus: false,
-            enableRowSelection: false,
-            enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 0,
+            paginationPageSizes: [10, 50, 75],
+            paginationPageSize: 10,
             enableScrollbars: false,
-            enableRowHeaderSelection: false,
             columnDefs: [
-                { name: 'EmpCode', displayName: 'EmpCode', enableCellEdit: false },
-                { name: 'EmpName', displayName: 'EmpName', enableCellEdit: false },
-                { name: 'LoanAmount', displayName: 'Loan Amount', enableCellEdit: false },
-                { name: 'DisbursalMode', displayName: 'Disbursal Mode', enableCellEdit: false },
-                { name: 'EMIAmount', displayName: 'EMI Amount', enableCellEdit: false },
-                { name: 'OutstandingAmount', displayName: 'Outstanding Amount', enableCellEdit: false },
-                { name: 'ActualRepaymentTerm', displayName: 'Actual Repayment Term', enableCellEdit: false },
-                { name: 'BalancePeriod', displayName: 'Balance Period', enableCellEdit: false },
-                { name: 'Status', displayName: 'Status', enableCellEdit: false },
-                { name: 'EMIDeductFrom', displayName: 'EMI Deduct From', enableCellEdit: false },
-                { name: 'ProcessStatus', displayName: 'Process Status', enableCellEdit: false },
+                { name: 'EmpCode', displayName: 'EmpCode', width: 70, enableCellEdit: false },
+                { name: 'EmpName', displayName: 'EmpName', width: 110, enableCellEdit: false },
+                { name: 'LoanAmount', displayName: 'Loan Amount', width: 80, enableCellEdit: false },
+                { name: 'DisbursalMode', displayName: 'Disbursal Mode', width: 120, enableCellEdit: false },
+                { name: 'EMIAmount', displayName: 'EMI Amount', width: 80, enableCellEdit: false },
+                { name: 'OutstandingAmount', displayName: 'Outstanding Amount', width: 120, enableCellEdit: false },
+                { name: 'ActualRepaymentTerm', displayName: 'Actual Repayment Term', width: 120, enableCellEdit: false },
+                { name: 'BalancePeriod', displayName: 'Balance Period', width: 100, enableCellEdit: false },
+                { name: 'Status', displayName: 'Status', width: 80, enableCellEdit: false },
+                { name: 'EMIDeductFrom', displayName: 'EMI Deduct From', width: 110, enableCellEdit: false },
+                { name: 'ProcessStatus', displayName: 'Process Status', width: 110, enableCellEdit: false },
                 {
                     name: 'Action',
                     cellEditableCondition: false,
@@ -40,10 +37,17 @@
 
         function _loadController() {
             $scope.gridOptions.data = [{
-                "EmpCode": "Emp0001", "EmpName": "Neeraj Tandon", "LoanAmount": "INR 25000",
-                "DisbursalMode": "Reliable PayRoll", "EMIAmount": "INR 2500", "OutstandingAmount": "25000",
-                "ActualRepaymentTerm": "10", "BalancePeriod": "4", "Status": "Not Started",
-                "EMIDeductFrom": "01-Sep-2018", "ProcessStatus": "Not Started"
+                "EmpCode": "Emp0001",
+                "EmpName": "Neeraj Tandon",
+                "LoanAmount": "INR 25000",
+                "DisbursalMode": "Reliable PayRoll",
+                "EMIAmount": "INR 2500",
+                "OutstandingAmount": "25000",
+                "ActualRepaymentTerm": "10",
+                "BalancePeriod": "4",
+                "Status": "Not Started",
+                "EMIDeductFrom": "01-Sep-2018",
+                "ProcessStatus": "Not Started"
             },
             {
                 "EmpCode": "Emp0002", "EmpName": "Deepak Jain", "LoanAmount": "INR 25000",
