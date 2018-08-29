@@ -19,7 +19,7 @@
                 url: '/prefrences',
                 templateUrl: 'app/pages/finances/prefrences/prefrences.html',
                 title: 'Prefrences',
-                controller: "",
+                controller: "prefrencesController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

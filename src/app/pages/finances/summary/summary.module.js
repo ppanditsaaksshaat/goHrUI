@@ -21,7 +21,7 @@
                 url: '/summary',
                 templateUrl: 'app/pages/finances/summary/summary.html',
                 title: 'Summary',
-                controller: "",
+                controller: "summaryController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',

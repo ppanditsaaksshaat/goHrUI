@@ -1,68 +1,44 @@
 <div class="pay-slip-wrapper ">
     <!-- ngIf: ctrl.isPaySlipAvailable -->
-    <div class="clearfix pay-slip-container content-container " >
+    <div class="clearfix pay-slip-container content-container ">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <h4 class="page-heading">Payslips</h4>
-            <p>Here you can manage all keka generated payslips for applicable financial years.</p>
+            <p>Here you can manage all generated payslips for applicable financial years.</p>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="col-sm-3 col-md-3 col-lg-2 clear-side-padding">
                 <div class="form-group col-md-12 vertical-margin  clear-side-padding pay-slip-year">
-                    <label class="control-label col-sm-4 col-md-4 clear-right-padding" for="year">YEAR</label>
-                    <div class="input-group col-sm-8 col-md-8">
-                        <button name="year" data-toggle="dropdown" class="col-sm-12 col-lg-12 col-md-12 btn btn-default dropdown-toggle">
-                            <span class="">2018</span>
-                            <i class="fa fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <!-- ngRepeat: year in ctrl.paySlipYearList -->
-                            <li data-ng-click="ctrl.getPayslips(year.id);"
-                                class="">
-                                <a class="clear-side-padding">
-                                    <span class="subnav-item-title ">2018</span>
-                                </a>
-                            </li>
-                            <!-- end ngRepeat: year in ctrl.paySlipYearList -->
-                        </ul>
+                    <div class="control-label col-sm-3 col-md-3 clear-left-padding">
+                        <label for="year">Month</label>
+                    </div>
+                    <div class="col-md-9">
+                        <select class="form-control input-sm" ng-change="onChangePaySlip()" ng-model="month" ng-options="monthL.Id as monthL.Name for monthL in monthList"></select>
                     </div>
                 </div>
-                <div class="col-sm-12 col-lg-12 col-md-12 clear-side-padding pay-slip-months-container">
-                    <ul class="nav">
-                        <li>
-                            <a class="sidenav-header no-pointer">
-                                <span class="subnav-item-title ">Pay-slips for 2018</span>
-                            </a>
-                        </li>
-                        <!-- ngRepeat: month in ctrl.paySlipMonthList -->
-                        <li  class="">
-                            <a class="clear-side-padding active" data-ng-class="{'active': month.id == ctrl.currentMonth}" data-ng-click="ctrl.selectPayslip(month.id);">
-                                <span class="subnav-item-title ">June</span>
-                            </a>
-                        </li>
-                        <!-- end ngRepeat: month in ctrl.paySlipMonthList -->
-                        <li  class="">
-                            <a class="clear-side-padding" data-ng-class="{'active': month.id == ctrl.currentMonth}" data-ng-click="ctrl.selectPayslip(month.id);">
-                                <span class="subnav-item-title ">May</span>
-                            </a>
-                        </li>
-                        <!-- end ngRepeat: month in ctrl.paySlipMonthList -->
-                    </ul>
+                <div class="form-group col-md-12 vertical-margin  clear-side-padding pay-slip-year">
+                    <div class="control-label col-sm-3 col-md-3 clear-left-padding">
+                        <label for="year">Year</label>
+                    </div>
+                    <div class="col-md-9">
+                        <select class="form-control input-sm" ng-change="onChangePaySlip()" ng-model="years" ng-options="monthL.Id as monthL.Name for monthL in yearList"></select>
+                    </div>
                 </div>
+
             </div>
             <!-- ngIf: ctrl.currentPaySlip != null -->
             <div class="">
-                <div class="pay-slip-designer clear-side-padding clearfix col-sm-9 col-lg-10" data-ng-nicescroll="" data-nice-option="vm.scrollOptions"
-                    tabindex="31" style="overflow: hidden; outline: none;">
+                <div ng-hide="isNoSalarySlip" class="pay-slip-designer clear-side-padding clearfix col-sm-9 col-lg-10" data-ng-nicescroll=""
+                    data-nice-option="vm.scrollOptions" tabindex="31" style="overflow: hidden; outline: none;">
                     <div class="pay-slip-designer-container clearfix col-sm-12">
                         <div class="col-sm-12 company-details clear-left-padding">
                             <div class="col-sm-8">
                                 <h2 class="">
-                                    <b>PaySlip</b> June 2018</h2>
+                                    <b>PaySlip</b> {{monthName | date : 'MMMM'}} {{years}}</h2>
                                 <div class="title ">
-                                    Keka Technologies
+                                    {{companyDetail.CCOName}}
                                 </div>
                                 <address class="">
-                                    Kavuri Hills Madhapur Hyderabad Telangana 500033
+                                    {{companyDetail.CCOAddress}}
                                 </address>
                             </div>
                             <div class="col-sm-4">
@@ -70,85 +46,81 @@
                             </div>
                         </div>
                         <div class="col-sm-12 personal-details ">
-                            <h4 class="title ">Deepak Jain</h4>
+                            <h4 class="title ">{{amount.EmpName}}</h4>
                             <div class="col-sm-12 detail-wrapper clear-side-padding">
                                 <!-- ngIf: ctrl.currentPaySlip.paySlipFields.length > 0 -->
-                                <div class="col-sm-12 clear-side-padding " >
+                                <div class="col-sm-12 clear-side-padding ">
                                     <!-- ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
-                                    <div class="col-sm-3 clear-side-padding detail-container " data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="1">
-                                        <div class="title ">Employee Number</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">1</div>
+                                    <div class="col-sm-3 detail-container " data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
+                                        title="1">
+                                        <div class="title ">Employee Code</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{amount.EmpCode}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
                                     <div class="col-sm-3 clear-side-padding detail-container " data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="26 Feb 2012">
+                                        title="26 Feb 2012">
                                         <div class="title ">Date Joined</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">26 Feb 2012</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{amount.JDdate}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
                                     <div class="col-sm-3 clear-side-padding detail-container " data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="Legal">
+                                        title="Legal">
                                         <div class="title ">Department</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">Legal</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{amount.DeptName}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
                                     <div class="col-sm-3 clear-side-padding detail-container " data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="Editor">
+                                        title="Editor">
                                         <div class="title ">Designation</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">Editor</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{amount.DesgName}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
                                     <div class="col-sm-3 clear-side-padding detail-container " data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="Bank Transfer">
+                                        title="Bank Transfer">
                                         <div class="title ">Payment Mode</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">Bank Transfer</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding "></div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
                                     <div class="col-sm-3 clear-side-padding detail-container " data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="Dena Bank">
+                                        title="Dena Bank">
                                         <div class="title ">Bank</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">Dena Bank</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{amount.BankName}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
                                     <div class="col-sm-3 clear-side-padding detail-container " data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="UNGS0040538">
+                                        title="UNGS0040538">
                                         <div class="title ">Bank IFSC</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">UNGS0040538</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{amount.ADIFSCCode}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
                                     <div class="col-sm-3 clear-side-padding detail-container " data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="738475013387214">
+                                        title="738475013387214">
                                         <div class="title ">Bank Account</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">738475013387214</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{amount.BankAccountNo}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
-                                    <div class="col-sm-3 clear-side-padding detail-container  pay-field-noborder"
-                                        data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="UCOBL8815N">
+                                    <div class="col-sm-3 clear-side-padding detail-container  pay-field-noborder" data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
+                                        title="UCOBL8815N">
                                         <div class="title ">PAN</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">UCOBL8815N</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
-                                    <div class="col-sm-3 clear-side-padding detail-container  pay-field-noborder"
-                                        data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="166211745544">
+                                    <div class="col-sm-3 clear-side-padding detail-container  pay-field-noborder" data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
+                                        title="166211745544">
                                         <div class="title ">UAN</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">166211745544</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
-                                    <div class="col-sm-3 clear-side-padding detail-container  pay-field-noborder"
-                                        data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="QN/QSW/43219852/3043573">
+                                    <div class="col-sm-3 clear-side-padding detail-container  pay-field-noborder" data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
+                                        title="QN/QSW/43219852/3043573">
                                         <div class="title ">PF Number</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">QN/QSW/43219852/3043573</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{amount.PFPPFAccountNo}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
-                                    <div class="col-sm-3 clear-side-padding detail-container  pay-field-noborder"
-                                        data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
-                                       title="5049708103">
+                                    <div class="col-sm-3 clear-side-padding detail-container  pay-field-noborder" data-ng-class="{'pay-field-noborder' : $index > ctrl.currentPaySlip.fieldBorderCount}"
+                                        title="5049708103">
                                         <div class="title ">ESI Number</div>
-                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">5049708103</div>
+                                        <div class="detail text-ellipsis col-sm-11 clear-side-padding ">{{amount.ESIMemeberNo}}</div>
                                     </div>
                                     <!-- end ngRepeat: field in ctrl.currentPaySlip.paySlipFields -->
                                 </div>
@@ -160,20 +132,20 @@
                             <div class="col-sm-12 detail-wrapper  clear-side-padding">
                                 <div class="col-sm-12 detail-container  clear-side-padding">
                                     <div class="col-sm-3 clear-side-padding">
-                                        <div class="title">Actual Payable days</div>
-                                        <div class="detail ">30</div>
+                                        <div class="title">Employee Name</div>
+                                        <div class="detail ">{{amount.EmpName}}</div>
                                     </div>
                                     <div class="col-sm-3 clear-side-padding">
                                         <div class="title">Total Working Days</div>
-                                        <div class="detail ">30</div>
+                                        <div class="detail ">{{amount.SADPresentDays | number:2}}</div>
                                     </div>
                                     <div class="col-sm-3 clear-side-padding">
                                         <div class="title">Loss of Pay Days</div>
-                                        <div class="detail ">2</div>
+                                        <div class="detail ">{{amount.SADLwpDays | number:2}}</div>
                                     </div>
                                     <div class="col-sm-3 clear-side-padding">
                                         <div class="title">Days Payable</div>
-                                        <div class="detail ">28</div>
+                                        <div class="detail ">{{amount.SADSalaryDays | number:2}}</div>
                                     </div>
                                 </div>
                                 <!-- ngIf: !ctrl.currentPaySlip.includeYTDValues -->
@@ -186,163 +158,140 @@
                                                     <div class="col-sm-6 ">
                                                         <h6 class="title">Earnings</h6>
                                                     </div>
-                                                    <div class="col-sm-3 text-right  amount">
+                                                    <div class="col-sm-6 text-right amount">
                                                         <h6 class="title">Amount</h6>
                                                     </div>
-                                                    <div class="col-sm-3 text-right amount">
-                                                        <h6 class="title">YTD</h6>
-                                                    </div>
                                                 </div>
-                                                <!-- ngRepeat: c in ctrl.currentPaySlip.earnings -->
-                                                <div class="row " >
+
+                                                <div class="row ">
                                                     <div class="col-sm-6 capitalize includeYTDColumn ">
-                                                        Basic
+                                                        {{earningHead.SHC0001}}
                                                     </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        6,222.22
-                                                    </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        12,888.89
+                                                    <div class="col-sm-6 text-right includeYTDColumn amount ">
+                                                        {{amount.SHC0001 | number:2}}
                                                     </div>
                                                 </div>
-                                                <!-- end ngRepeat: c in ctrl.currentPaySlip.earnings -->
-                                                <div class="row " >
+
+                                                <div class="row ">
                                                     <div class="col-sm-6 capitalize includeYTDColumn ">
-                                                        Special Allowance
+                                                        {{earningHead.SHC0002}}
                                                     </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        9,333.33
-                                                    </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        19,333.33
+                                                    <div class="col-sm-6 text-right includeYTDColumn amount ">
+                                                        {{amount.SHC0002 | number:2}}
                                                     </div>
                                                 </div>
-                                                <!-- end ngRepeat: c in ctrl.currentPaySlip.earnings -->
+
+                                                <div class="row ">
+                                                    <div class="col-sm-6 capitalize includeYTDColumn ">
+                                                        {{earningHead.SHC0003}}
+                                                    </div>
+                                                    <div class="col-sm-6 text-right includeYTDColumn amount ">
+                                                        {{amount.SHC0003 | number:2}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row ">
+                                                    <div class="col-sm-6 capitalize includeYTDColumn ">
+                                                        {{earningHead.SHC0004}}
+                                                    </div>
+                                                    <div class="col-sm-6 text-right includeYTDColumn amount ">
+                                                        {{amount.SHC0004 | number:2}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row ">
+                                                    <div class="col-sm-6 capitalize includeYTDColumn ">
+                                                        {{earningHead.SHC0005}}
+                                                    </div>
+                                                    <div class="col-sm-6 text-right includeYTDColumn amount ">
+                                                        {{amount.SHC0005 | number:2}}
+                                                    </div>
+                                                </div>
+
                                                 <div class="row">
                                                     <div class="col-sm-6 text-moderate-bold includeYTDColumn ">
-                                                        Total Earnings (A)
+                                                        {{earningHead.totalEarning}} (A)
                                                     </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        15,555.55
-                                                    </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        32,222.22
+                                                    <div class="col-sm-6 text-right includeYTDColumn amount ">
+                                                        {{amount.SHC0038 | number:2}}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- ngIf: ctrl.currentPaySlip.contributions.length >0 || ctrl.currentPaySlip.deductions.length  > 0 || ctrl.currentPaySlip.reimbursements.length > 0 -->
-                                    <div class="col-sm-6 salary-tile " >
+                                    <div class="col-sm-6 salary-tile ">
                                         <!-- ngIf: ctrl.currentPaySlip.contributions.length >0 -->
-                                        <div class="row " >
+                                        <div class="row ">
                                             <div class="col-sm-12">
                                                 <div class="row">
                                                     <div class="col-sm-6 ">
                                                         <h6 class=" title">
-                                                            Contribution
+                                                            Deductions
                                                         </h6>
                                                     </div>
-                                                    <div class="col-sm-3 text-right amount  ">
+                                                    <div class="col-sm-3 text-right amount">
                                                         <h6 class="title">Amount</h6>
                                                     </div>
-                                                    <div class="col-sm-3 text-right amount">
-                                                        <h6 class="title">YTD</h6>
-                                                    </div>
                                                 </div>
-                                                <!-- ngRepeat: c in ctrl.currentPaySlip.contributions -->
-                                                <div class="row " >
+
+                                                <div class="row ">
                                                     <div class="col-sm-6 capitalize includeYTDColumn ">
-                                                        ESI
-                                                    </div>
-                                                    <div class="col-sm-3 amount text-right includeYTDColumn ">
-                                                        273.00
+                                                        {{deductionHead.SHC0021}}
                                                     </div>
                                                     <div class="col-sm-3 amount text-right amount includeYTDColumn ">
-                                                        565.00
+                                                        {{amount.SHC0021 | number:2}}
                                                     </div>
                                                 </div>
-                                                <!-- end ngRepeat: c in ctrl.currentPaySlip.contributions -->
-                                                <div class="row " >
+
+                                                <div class="row ">
                                                     <div class="col-sm-6 capitalize includeYTDColumn ">
-                                                        ESI Employer
-                                                    </div>
-                                                    <div class="col-sm-3 amount text-right includeYTDColumn ">
-                                                        739.00
+                                                        {{deductionHead.SHC0022}}
                                                     </div>
                                                     <div class="col-sm-3 amount text-right amount includeYTDColumn ">
-                                                        1,531.00
+                                                        {{amount.SHC0022 | number:2}}
                                                     </div>
                                                 </div>
-                                                <!-- end ngRepeat: c in ctrl.currentPaySlip.contributions -->
+
+                                                <div class="row ">
+                                                    <div class="col-sm-6 capitalize includeYTDColumn ">
+                                                        {{deductionHead.SHC0023}}
+                                                    </div>
+                                                    <div class="col-sm-3 amount text-right amount includeYTDColumn ">
+                                                        {{amount.SHC0023 | number:2}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row ">
+                                                    <div class="col-sm-6 capitalize includeYTDColumn ">
+                                                        {{deductionHead.SHC0024}}
+                                                    </div>
+                                                    <div class="col-sm-3 amount text-right amount includeYTDColumn ">
+                                                        {{amount.SHC0024 | number:2}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row ">
+                                                    <div class="col-sm-6 capitalize includeYTDColumn ">
+                                                        {{deductionHead.SHC0025}}
+                                                    </div>
+                                                    <div class="col-sm-3 amount text-right amount includeYTDColumn ">
+                                                        {{amount.SHC0025 | number:2}}
+                                                    </div>
+                                                </div>
+
                                                 <div class="row">
                                                     <div class="col-sm-6 text-moderate-bold includeYTDColumn ">
-                                                        Total Contributions (B)
+                                                        {{deductionHead.totalDeduction}} (B)
                                                     </div>
                                                     <div class="col-sm-3 text-right amount includeYTDColumn ">
-                                                        1,012.00
-                                                    </div>
-                                                    <div class="col-sm-3 text-right amount includeYTDColumn ">
-                                                        2,096.00
+                                                        {{amount.SHC0039 | number:2}}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- end ngIf: ctrl.currentPaySlip.contributions.length >0 -->
-                                        <!-- ngIf: ctrl.currentPaySlip.deductions.length >0 -->
-                                        <div class="row " >
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-6 ">
-                                                        <h6 class="title">Taxes &amp; Deductions</h6>
-                                                    </div>
-                                                    <div class="col-sm-3 text-right  amount">
-                                                        <h6 class="title">Amount</h6>
-                                                    </div>
-                                                    <div class="col-sm-3 text-right amount">
-                                                        <h6 class="title">YTD</h6>
-                                                    </div>
-                                                </div>
-                                                <!-- ngRepeat: c in ctrl.currentPaySlip.deductions -->
-                                                <div class="row ">
-                                                    <div class="col-sm-6 capitalize includeYTDColumn ">
-                                                        Professional Tax
-                                                    </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        150.00
-                                                    </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        300.00
-                                                    </div>
-                                                </div>
-                                                <!-- end ngRepeat: c in ctrl.currentPaySlip.deductions -->
-                                                <div class="row ">
-                                                    <div class="col-sm-6 capitalize includeYTDColumn ">
-                                                        Loan EMI
-                                                    </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        3,339.00
-                                                    </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        6,678.00
-                                                    </div>
-                                                </div>
-                                                <!-- end ngRepeat: c in ctrl.currentPaySlip.deductions -->
-                                                <div class="row">
-                                                    <div class="col-sm-6 text-moderate-bold includeYTDColumn ">
-                                                        Total Deductions (C)
-                                                    </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        3,489.00
-                                                    </div>
-                                                    <div class="col-sm-3 text-right includeYTDColumn amount ">
-                                                        6,978.00
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end ngIf: ctrl.currentPaySlip.deductions.length >0 -->
-                                        <!-- ngIf: ctrl.currentPaySlip.reimbursements.length >0 -->
+
+
                                     </div>
                                     <!-- end ngIf: ctrl.currentPaySlip.contributions.length >0 || ctrl.currentPaySlip.deductions.length  > 0 || ctrl.currentPaySlip.reimbursements.length > 0 -->
                                 </div>
@@ -352,42 +301,55 @@
                                 <div class="col-sm-7 vertical-margin clear-left-padding">
                                     <div class="row">
                                         <div class="col-sm-8 text-moderate-bold">
-                                            Net Salary Payable ( A
+                                            {{netPay}} ( A
                                             <!-- ngIf: ctrl.currentPaySlip.contributions.length >0 -->
-                                            <span  class="">
-                                            - B</span>
+                                            <span class="">
+                                                - B</span>
                                             <!-- end ngIf: ctrl.currentPaySlip.contributions.length >0 -->
                                             <!-- ngIf: ctrl.currentPaySlip.deductions.length >0 -->
-                                            <span  class="">
-                                            - C</span>
-                                            <!-- end ngIf: ctrl.currentPaySlip.deductions.length >0 -->
-                                            <!-- ngIf: ctrl.currentPaySlip.reimbursements.length >0 -->
+
                                             )
                                         </div>
                                         <div class="col-sm-4 text-right ">
-                                            11,055
+                                            {{amount.SHC0040 | number:2}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-12 clear-side-padding">
-                                <div class="row">
-                                    <div class="col-sm-4 text-moderate-bold">
-                                        Net Salary in words
-                                    </div>
-                                    <div class="col-sm-8 clear-side-padding text-bold capitalize ">
-                                        eleven thousand and fifty-five Rupees only
+                                <div class="col-sm-7 vertical-margin clear-left-padding">
+                                    <div class="row">
+                                        <div class="col-sm-8 text-moderate-bold">
+                                            {{roundOff}}
+                                        </div>
+                                        <div class="col-sm-4 text-right ">
+                                            {{amount.SHC0042 | number:2}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- <div class="col-sm-12 clear-side-padding">
+                                    <div class="row">
+                                        <div class="col-sm-4 text-moderate-bold">
+                                            Net Salary in words
+                                        </div>
+                                        <div class="col-sm-8 clear-side-padding text-bold capitalize ">
+                                            eleven thousand and fifty-five Rupees only
+                                        </div>
+                                    </div>
+                                </div> -->
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 clear-side-padding col-sm-12 vertical-margin">
+                <div ng-hide="isNoSalarySlip" class="col-md-12 clear-side-padding col-sm-12 vertical-margin">
                     <div class="pull-right">
 
                         <input type="button" class="btn btn-success" data-ng-click="ctrl.downloadPdf();" value="DOWNLOAD">
                     </div>
+                </div>
+
+                <div ng-show="isNoSalarySlip" class="alert-info text-center vertical-margin col-sm-6 col-sm-offset-3 ng-scope">
+                    <h4> No Salary Pay Slip </h4>
                 </div>
             </div>
             <!-- end ngIf: ctrl.currentPaySlip != null -->

@@ -6,7 +6,7 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.finances.pay', [
-        'BlurAdmin.pages.finances.pay.salary',
+        // 'BlurAdmin.pages.finances.pay.salary',
         'BlurAdmin.pages.finances.pay.payslips'
     ])
 

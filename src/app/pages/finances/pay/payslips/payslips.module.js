@@ -18,12 +18,13 @@
                 url: '/payslips',
                 templateUrl: 'app/pages/finances/pay/payslips/payslips.html',
                 title: 'Pay Slips',
-                controller: "",
+                controller: "paySlilsController",
                 controllerAs: "",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,
                 },
             })
+            $urlRouterProvider.when('/finances/pay', '/finances/pay/payslips');
     }
 })();
