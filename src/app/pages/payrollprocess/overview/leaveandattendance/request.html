@@ -3,21 +3,89 @@
         <div class="col-lg-12">
             <!-- <p class="text-center">New Loan- Name Of Employee</p> -->
             <div id="status-buttons" class="text-center">
-                    <a ng-init="value=1" ng-click="value=1" ng-class="{active:value==1}">
-                        <span>1</span>Leave Applied</a>
-                    <a ng-click="value=2" ng-class="{active:value==2}">
-                        <span>2</span> CompOff Applied</a>
+                <a ng-init="value=1" ng-click="value=1" ng-class="{active:value==1}">
+                    <span>1</span>Leave Applied</a>
+                <a ng-click="value=2" ng-class="{active:value==2}">
+                    <span>2</span> CompOff Applied</a>
 
-                </div>
+            </div>
             <span data-ng-click="$dismiss();" class="pull-right">
                 <i class="fa fa-times"></i>
             </span>
         </div>
     </div>
     <div class="modal-body">
-       <div class="col-lg-12">
-           <button ng-if="value==1" class="btn btn-success pull-right" ng-click="SaveContinue()">Save & Continue</button>
-           <button ng-if="value==2" class="btn btn-success pull-right" ng-click="SaveClose()">Save & Close</button>
-       </div>
+        <div class="col-lg-12">
+            <button ng-if="value==1" class="btn btn-success pull-right" ng-click="SaveContinue()">Save & Continue</button>
+            <button ng-if="value==2" class="btn btn-success pull-right" ng-click="SaveClose()">Save & Close</button>
+        </div>
+        <div ng-if="value==1" class="col-lg-12">
+            <div ui-grid="gridLeaveOptions" class="">
+            </div>
+            <div data-ng-if="noDataFoundForLeave" class="alert alert-success" role="alert">Hooray, No Pending leave requests for approval!</div>
+        </div>
+        <div ng-if="value==2" class="col-lg-12">
+            <div ui-grid="gridCompOffOptions" class="">
+            </div>
+            <div data-ng-if="noDataFoundForCompOff" class="alert alert-success" role="alert">Hooray, No Pending comoff requests for approval!</div>
+        </div>
     </div>
 </div>
+
+
+<script type="text/ng-template" id="approve-reason-template">
+    <div class="popover-content">
+            <form ng-submit="approved(leave,approvedForm)" name="approvedForm">
+            <div class="col-md-12 clear-side-padding">
+
+                <div class="form-group">
+                   <label>Comment
+                        <span class="font-red">*</span>
+                   </label>
+                   <textarea placeholder"Reason" data-ng-model="leave.comment" class="form-control" required></textarea>
+                </div>
+            </div>
+            <div class="form-group pull-right">
+                <button style="padding:0px 8px;font-size: 15px;" class="btn btn-primary" >Approve</button>
+            </div>
+        </form>
+        </div>
+
+  </script>
+
+<script type="text/ng-template" id="reject-reason-template">
+    <div class="popover-content">
+            <form ng-submit="rejected(leave,rejectForm)" name="rejectForm">
+            <div class="col-md-12 clear-side-padding">
+
+                <div class="form-group">
+                   <label>Reason
+                        <span class="font-red">*</span>
+                   </label>
+                   <textarea placeholder"Reason" data-ng-model="leave.rejectReason" class="form-control" required></textarea>
+                </div>
+            </div>
+            <div class="form-group pull-right">
+                <button style="padding:0px 8px;font-size: 15px;" class="btn btn-danger" >Reject</button>
+            </div>
+        </form>
+        </div>
+
+  </script>
+<script type="text/ng-template" id="onhold-reason-template">
+    <div class="popover-content">
+        <form ng-submit="onhold(leave,onholdForm)" name="onholdForm">
+            <div class="col-md-12 clear-side-padding">
+                <div class="form-group">
+                    <label>Reason
+                      <span class="font-red">*</span>
+                    </label>
+                    <textarea placeholder"Reason" data-ng-model="leave.onholdReason"class="form-control" required></textarea>
+                </div>
+            </div>
+            <div class="form-group pull-right">
+                <button style="padding:0px 8px;font-size: 15px;" class="btn btn-warning" >Onhold</button>
+            </div>
+        </form>
+        </div>
+  </script>

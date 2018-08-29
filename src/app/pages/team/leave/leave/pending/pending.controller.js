@@ -9,14 +9,10 @@
         .controller('myTeamPendingLeaveController', myTeamPendingLeaveController);
 
     /** @ngInject */
-    function myTeamPendingLeaveController($scope, $rootScope, pageService, editFormService, dialogModal) {
+    function myTeamPendingLeaveController($scope, $rootScope, $stateParams, pageService, editFormService, dialogModal) {
 
 
-        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            $rootScope.PreviousState = from.name;
-         
-
-        });
+        var curentDate = new Date();
 
         $scope.expand = _expand;
         $scope.sameDayApplyLeaves = _sameDayApplyLeaves;
@@ -26,11 +22,15 @@
 
 
         function _loadController() {
+            var month = $stateParams.month != null ? $stateParams.month : curentDate.getMonth() + 1;
+            var year = $stateParams.year != null ? $stateParams.year : curentDate.getFullYear();
             var searchLists = [];
             searchLists.push({ field: 'headEmpId', operand: '=', value: $rootScope.user.profile.empId })
             searchLists.push({ field: 'statusId', operand: '=', value: 0 })
             searchLists.push({ field: 'type', operand: '=', value: 'Leave' })
-
+            searchLists.push({ field: 'month', operand: '=', value: month })
+            searchLists.push({ field: 'year', operand: '=', value: year })
+            console.log(searchLists)
 
             var data = {
                 searchList: searchLists,
@@ -79,6 +79,7 @@
                 searchLists.push({ field: 'fromDate', operand: '=', value: fromDate })
                 searchLists.push({ field: 'toDate', operand: '=', value: toDate })
                 searchLists.push({ field: 'empId', operand: '=', value: empId })
+
 
                 var data = {
                     searchList: searchLists,

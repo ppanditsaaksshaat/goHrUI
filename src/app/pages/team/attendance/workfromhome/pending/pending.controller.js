@@ -9,30 +9,28 @@
         .controller('myTeamPendingWFHController', myTeamPendingWFHController);
 
     /** @ngInject */
-    function myTeamPendingWFHController($scope, $rootScope, pageService, editFormService) {
+    function myTeamPendingWFHController($scope, $rootScope, $stateParams, pageService, editFormService) {
 
+        console.log($stateParams)
 
-      
+        var curentDate = new Date();
+
         $scope.approved = _approved;
         $scope.rejected = _rejected;
         $scope.onhold = _onhold;
 
-        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //    console.log(ev)
-            //    console.log(to)
-            //    console.log(toParams)
-            //    console.log(from)
-            //    console.log(fromParams)
-        });
-
 
 
         function _loadController() {
+            var month = $stateParams.month != null ? $stateParams.month : curentDate.getMonth() + 1;
+            var year = $stateParams.year != null ? $stateParams.year : curentDate.getFullYear();
             var searchLists = [];
             searchLists.push({ field: 'headEmpId', operand: '=', value: $rootScope.user.profile.empId })
             searchLists.push({ field: 'statusId', operand: '=', value: 0 })
             searchLists.push({ field: 'type', operand: '=', value: 'WFH' })
-
+            searchLists.push({ field: 'month', operand: '=', value: month })
+            searchLists.push({ field: 'year', operand: '=', value: year })
+            console.log(searchLists)
 
             var data = {
                 searchList: searchLists,
@@ -50,8 +48,8 @@
                         data.monthName = moment(data.WFHFromDate).format('MMM');
                         data.dateFrom = moment(data.WFHFromDate).format('DD');
                         data.dateTo = moment(data.WFHToDate).format('DD');
-                        data.WFHInTime=moment(data.WFHInTime).format('HH:mm');
-                        data.WFHOutTime=moment(data.WFHOutTime).format('HH:mm');
+                        data.WFHInTime = moment(data.WFHInTime).format('HH:mm');
+                        data.WFHOutTime = moment(data.WFHOutTime).format('HH:mm');
                         var spiltName = data.EmpName.split(' ');
                         if (spiltName.length == 3) {
                             data.shortName = spiltName[0].substr(0, 1) + spiltName[2].substr(0, 1);
@@ -76,7 +74,7 @@
             }
         }
 
-      
+
         function _approved(wfhApp, form) {
             wfhApp.StatusId = 108;
             wfhApp.StatusName = "approved";

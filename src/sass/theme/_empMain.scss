@@ -1037,6 +1037,9 @@ textarea.form-control {
   padding: 5px 3px;
   font-size: .8vw;
 }
+.custom .btn{
+  padding: 3px 12px;
+}
 
 
 // admin payroll
@@ -1817,9 +1820,9 @@ p {
   border-radius:50%; }
 
 /* active buttons */
-#status-buttons a.active span {
-   background:#52b8e9; 
-  }
+// #status-buttons a.active span {
+//    background:#52b8e9; 
+//   }
 #status-buttons a.active span   { background:#00BC8C; }
 
 .panel-height {

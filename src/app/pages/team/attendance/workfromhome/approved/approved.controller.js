@@ -12,16 +12,7 @@
     function myApprovedWFHController($scope, $rootScope, pageService, editFormService) {
 
 
-
-
-        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //    console.log(ev)
-            //    console.log(to)
-            //    console.log(toParams)
-            //    console.log(from)
-            //    console.log(fromParams)
-        });
-
+        var curentDate = new Date();
 
 
         function _loadController() {
@@ -29,6 +20,8 @@
             searchLists.push({ field: 'headEmpId', operand: '=', value: $rootScope.user.profile.empId })
             searchLists.push({ field: 'statusId', operand: '=', value: 105 })
             searchLists.push({ field: 'type', operand: '=', value: 'WFH' })
+            searchLists.push({ field: 'month', operand: '=', value: curentDate.getMonth() + 1 })
+            searchLists.push({ field: 'year', operand: '=', value: curentDate.getFullYear() })
 
 
             var data = {
