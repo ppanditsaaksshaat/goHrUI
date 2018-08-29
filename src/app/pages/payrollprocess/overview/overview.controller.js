@@ -9,10 +9,10 @@
         .controller('payOverViewController', payOverViewController);
 
     /** @ngInject */
-    function payOverViewController($scope,$state, $rootScope, $filter, pageService,dialogModal) {
+    function payOverViewController($scope, $state, $rootScope, $filter, pageService, dialogModal) {
 
-        $scope.collpase=true;
-        $scope.collpase2=true;
+        $scope.collpase = true;
+        $scope.collpase2 = true;
         $scope.getData = _getMonthlyPayrollData;
         $scope.CheckLeaveAndAttendanceStatus = _CheckLeaveAndAttendanceStatus;
 
@@ -94,7 +94,8 @@
         }
 
         function _getMonthlyPayrollData(month, year) {
-
+            $scope.monthId = month;
+            $scope.yearId = year;
             angular.forEach($scope.financialMonths, function (data) {
                 if (month == data.id) {
                     data.active = true;
@@ -146,10 +147,15 @@
         }
 
         function _CheckLeaveAndAttendanceStatus() {
-           // $state.go("team.leave")
+            var param = {
+                month: $scope.monthId == undefined ? c_Month : $scope.monthId,
+                year: $scope.yearId == undefined ? c_Year : $scope.yearId
+            }
+            // $state.go("team.leave")
             var modal = dialogModal.openFullScreen({
                 url: 'app/pages/payrollprocess/overview/leaveandattendance/request.html',
                 controller: 'leaveAndAttendanceStatusController',
+                param: param
             });
             modal.result.then(function (data) {
                 if (data == "success") {

@@ -9,29 +9,27 @@
         .controller('myTeamPendingOutDutyController', myTeamPendingOutDutyController);
 
     /** @ngInject */
-    function myTeamPendingOutDutyController($scope, $rootScope, pageService, editFormService) {
+    function myTeamPendingOutDutyController($scope, $rootScope,$stateParams, pageService, editFormService) {
 
 
       
+        var curentDate = new Date();
+
         $scope.approved = _approved;
         $scope.rejected = _rejected;
         $scope.onhold = _onhold;
 
-        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //    console.log(ev)
-            //    console.log(to)
-            //    console.log(toParams)
-            //    console.log(from)
-            //    console.log(fromParams)
-        });
-
 
 
         function _loadController() {
+            var month = $stateParams.month != null ? $stateParams.month : curentDate.getMonth() + 1;
+            var year = $stateParams.year != null ? $stateParams.year : curentDate.getFullYear();
             var searchLists = [];
             searchLists.push({ field: 'headEmpId', operand: '=', value: $rootScope.user.profile.empId })
             searchLists.push({ field: 'statusId', operand: '=', value: 0 })
             searchLists.push({ field: 'type', operand: '=', value: 'outduty' })
+            searchLists.push({ field: 'month', operand: '=', value: month })
+            searchLists.push({ field: 'year', operand: '=', value: year })
 
 
             var data = {

@@ -21,6 +21,10 @@
                     icon: 'ion-pound',
                     order: 1,
                 },
+                params: {
+                    month: null,   // can initialise to default value
+                    year: null, // can initialise to default value                    
+                }
             })
         $urlRouterProvider.when('/team/attendance/adjustment', '/team/attendance/adjustment/pending');
     }

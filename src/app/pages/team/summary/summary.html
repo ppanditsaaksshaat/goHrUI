@@ -1,4 +1,76 @@
 <div class="col-lg-12 clear-left-padding">
+    <div class="col-lg-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="col-sm-2 clear-left-padding  menu-tile vertical-margin clear-bottom" data-xhr-feature-authorize="" data-feature="TIMESHEET">
+                    <a href="" data-ui-sref="team.leave.leave.pending({month:month,year:year})">
+
+                        <div class="col-sm-12 menu clear-side-padding">
+                            <span class="heading pull-left">Leave Approvals</span>
+                            <div class="link-count">
+                                <span class="link pull-left">
+                                    <b>SEE ALL</b>
+                                </span>
+                                <span class="count pull-right ">{{approvalsCount.LeaveCount}}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-2 clear-left-padding menu-tile vertical-margin clear-bottom " data-xhr-feature-authorize="" data-feature="TIMESHEET">
+                    <a href="" data-ui-sref="team.leave.compoff.pending({month:month,year:year})">
+                        <div class="col-sm-12 menu clear-side-padding">
+                            <span class="heading pull-left">CompOff Approvals</span>
+                            <div class="link-count">
+                                <span class="link pull-left">
+                                    <b>SEE ALL</b>
+                                </span>
+                                <span class="count pull-right ">{{approvalsCount.CompoffCount}}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-2 clear-left-padding menu-tile vertical-margin clear-bottom" data-xhr-feature-authorize="" data-feature="TIMESHEET">
+                    <a href="" data-ui-sref="team.attendance.adjustment.pending({month:month,year:year})">
+                        <div class="col-sm-12 menu clear-side-padding">
+                            <span class="heading pull-left">Attendance Adustment</span>
+                            <div class="link-count">
+                                <span class="link pull-left">
+                                    <b>SEE ALL</b>
+                                </span>
+                                <span class="count pull-right ">{{approvalsCount.AdjustmentCount}}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-2 clear-left-padding menu-tile vertical-margin clear-bottom" data-xhr-feature-authorize="" data-feature="TIMESHEET">
+                    <a href="" data-ui-sref="team.attendance.outduty.pending({month:month,year:year})">
+                        <div class="col-sm-12 menu clear-side-padding">
+                            <span class="heading pull-left">OutDuty Approvals</span>
+                            <div class="link-count">
+                                <span class="link pull-left">
+                                    <b>SEE ALL</b>
+                                </span>
+                                <span class="count pull-right ">{{approvalsCount.OutDutyCount}}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-2 clear-left-padding menu-tile vertical-margin clear-bottom" data-xhr-feature-authorize="" data-feature="TIMESHEET">
+                    <a href="" data-ui-sref="team.attendance.workfromhome.pending({month:month,year:year})">
+                        <div class="col-sm-12 menu clear-side-padding">
+                            <span class="heading pull-left">WFH Approvals</span>
+                            <div class="link-count">
+                                <span class="link pull-left">
+                                    <b>SEE ALL</b>
+                                </span>
+                                <span class="count pull-right ">{{approvalsCount.WFHCount}}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-lg-9 ">
         <div class="row">
             <div class="col-lg-12">
@@ -12,592 +84,63 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4 clear-side-padding leaves-summary-calender">
                                     <span class="col-lg-1 col-md-1 col-sm-1 clear-side-padding">
                                         <a data-ng-click="getPreviousMonthLeaveSummary()">
-                                            <span class="arrow-icon"><i class="fa fa-chevron-left"></i></span>
+                                            <span class="arrow-icon">
+                                                <i class="fa fa-chevron-left"></i>
+                                            </span>
                                         </a>
                                     </span>
                                     <span class="col-lg-5 col-md-8 col-sm-10 clear-side-padding">
-                                        <span class="month ng-binding">August 2018</span>
+                                        <span class="month ">{{monthYear}}</span>
                                     </span>
                                     <span class="col-lg-1 col-md-1 col-sm-1 clear-side-padding">
                                         <a data-ng-click="getNextMonthLeaveSummary()">
-                                            <span class="arrow-icon"><i class="fa fa-chevron-right"></i></span>
+                                            <span class="arrow-icon">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </span>
                                         </a>
                                     </span>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding leaves-summary-days">
                                     <ul class="col-lg-12 col-md-12 col-sm-12 clear-side-padding">
-                                        <!-- ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin" >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">W</span>
+
+                                        <li data-ng-repeat="dayName in calDaysName" class="day month-days clear-left-margin clear-right-margin">
+                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}" class="">{{dayName.day}}</span>
                                         </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">T</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">F</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding current-date">S</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">S</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">M</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">T</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">W</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">T</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">F</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">S</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">S</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">M</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">T</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">W</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">T</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">F</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">S</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">S</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">M</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">T</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">W</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">T</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">F</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">S</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">S</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">M</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">T</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">W</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">T</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li class="day month-days clear-left-margin clear-right-margin " >
-                                            <span ng-class="{'current-date': day.toDateString() == vm.today.toDateString()}"
-                                                class="ng-binding">F</span>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
+
                                     </ul>
                                     <ul class="col-lg-12 col-md-12 col-sm-12 date">
-                                        <!-- ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="low-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">1</span>
+
+                                        <li data-ng-repeat="day in calDays" class="">
+                                            <div ng-class="{'no-priority' :day.noPriority, 'off': day.isHoliday, 'low-priority': day.isLeave }">
+                                                <span style="vertical-align: -webkit-baseline-middle;" class="">{{day.date}}</span>
                                             </div>
                                         </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="low-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">2</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="low-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">3</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">4</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">5</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="low-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">6</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="off">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">7</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">8</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">9</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">10</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">11</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">12</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">13</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">14</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="off">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">15</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">16</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">17</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">18</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">19</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">20</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">21</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">22</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">23</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">24</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="off">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">25</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">26</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">27</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">28</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">29</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">30</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
-                                        <li  class="">
-                                            <div ng-class="{'off': day.isHoliday, 'no-priority': day.leaveCount == 0 &amp;&amp; !day.isHoliday,'low-priority': day.leaveCount >= 1 &amp;&amp; day.leaveCount < 2 &amp;&amp; !day.isHoliday,'medium-priority':day.leaveCount >= 2 &amp;&amp; day.leaveCount < 4 &amp;&amp; !day.isHoliday,'high-priority':day.leaveCount >= 4 &amp;&amp; !day.isHoliday}"
-                                                class="no-priority">
-                                                <span style="vertical-align: -webkit-baseline-middle;" class="ng-binding">31</span>
-                                            </div>
-                                        </li>
-                                        <!-- end ngRepeat: day in vm.calender -->
+
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding leave-summary-details">
                                 <!-- ngRepeat: leaveDetail in vm.calender -->
                                 <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding repeat-details "
-                                    data-ng-if="">
+
+                                <div ng-if="!noDataFound" data-ng-repeat="landh in leavesAndHoliday | orderBy:'from'" class="col-lg-12 col-md-12 col-sm-12 clear-side-padding repeat-details ">
                                     <div class="details col-lg-12 col-md-12 col-sm-12 clear-side-padding">
-                                        <span class="heat-map low-priority" data-ng-class="{'off': leaveDetail.isHoliday, 'low-priority': leaveDetail.leaveCount >= 1 &amp;&amp; leaveDetail.leaveCount < 2 &amp;&amp; !leaveDetail.isHoliday,'medium-priority':leaveDetail.leaveCount >= 2 &amp;&amp; leaveDetail.leaveCount < 4 &amp;&amp; !leaveDetail.isHoliday,'high-priority':leaveDetail.leaveCount >= 4 &amp;&amp; !leaveDetail.isHoliday}">&nbsp;</span>
-                                        <span class="heat-map-date ng-binding">Aug 01 Wed</span>
+                                        <span class="heat-map" data-ng-class="{'off': landh.isHoliday, 'low-priority': landh.isLeave }">&nbsp;</span>
+                                        <span class="heat-map-date ">{{landh.from | date:'MMM dd EEE'}}</span>
                                         <span class="heat-map-seperator"> : &nbsp;</span>
                                         <!-- ngIf: leaveDetail.isHoliday -->
                                         <!-- ngIf: leaveDetail.leaveCount != 0 && (leaveDetail.isHoliday || leaveDetail.isHoliday.isFloater) -->
                                         <!-- ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span data-ng-if="" class="heat-map-leaveCount ng-binding ">1
+                                        <!-- <span class="heat-map-leaveCount  ">1
                                             <ng-pluralize count="leaveDetail.leaveCount" when="{'1': ' Leave ', other: ' Leaves '}">
-                                            Leave </ng-pluralize> - </span>
+                                                Leave </ng-pluralize> - </span> -->
                                         <!-- end ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span data-ng-hide="leaveDetail.leaveCount == 0" class="ng-binding">Anjali Ghawate</span>
+                                        <span>{{landh.name}}</span>
                                     </div>
                                 </div>
-                                <!-- end ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding repeat-details ">
-                                    <div class="details col-lg-12 col-md-12 col-sm-12 clear-side-padding">
-                                        <span class="heat-map low-priority" data-ng-class="{'off': leaveDetail.isHoliday, 'low-priority': leaveDetail.leaveCount >= 1 &amp;&amp; leaveDetail.leaveCount < 2 &amp;&amp; !leaveDetail.isHoliday,'medium-priority':leaveDetail.leaveCount >= 2 &amp;&amp; leaveDetail.leaveCount < 4 &amp;&amp; !leaveDetail.isHoliday,'high-priority':leaveDetail.leaveCount >= 4 &amp;&amp; !leaveDetail.isHoliday}">&nbsp;</span>
-                                        <span class="heat-map-date ng-binding">Aug 02 Thu</span>
-                                        <span class="heat-map-seperator"> : &nbsp;</span>
-                                        <!-- ngIf: leaveDetail.isHoliday -->
-                                        <!-- ngIf: leaveDetail.leaveCount != 0 && (leaveDetail.isHoliday || leaveDetail.isHoliday.isFloater) -->
-                                        <!-- ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span  class="heat-map-leaveCount ng-binding ">1
-                                            <ng-pluralize count="leaveDetail.leaveCount" when="{'1': ' Leave ', other: ' Leaves '}">
-                                            Leave </ng-pluralize> - </span>
-                                        <!-- end ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span data-ng-hide="leaveDetail.leaveCount == 0" class="ng-binding">Anjali Ghawate</span>
-                                    </div>
+                                <div>
+                                    <div data-ng-if="noDataFound" class="alert alert-success" role="alert">Hooray, No leave and holiday found!</div>
                                 </div>
-                                <!-- end ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding repeat-details "
->
-                                    <div class="details col-lg-12 col-md-12 col-sm-12 clear-side-padding">
-                                        <span class="heat-map low-priority" data-ng-class="{'off': leaveDetail.isHoliday, 'low-priority': leaveDetail.leaveCount >= 1 &amp;&amp; leaveDetail.leaveCount < 2 &amp;&amp; !leaveDetail.isHoliday,'medium-priority':leaveDetail.leaveCount >= 2 &amp;&amp; leaveDetail.leaveCount < 4 &amp;&amp; !leaveDetail.isHoliday,'high-priority':leaveDetail.leaveCount >= 4 &amp;&amp; !leaveDetail.isHoliday}">&nbsp;</span>
-                                        <span class="heat-map-date ng-binding">Aug 03 Fri</span>
-                                        <span class="heat-map-seperator"> : &nbsp;</span>
-                                        <!-- ngIf: leaveDetail.isHoliday -->
-                                        <!-- ngIf: leaveDetail.leaveCount != 0 && (leaveDetail.isHoliday || leaveDetail.isHoliday.isFloater) -->
-                                        <!-- ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span  class="heat-map-leaveCount ng-binding ">1
-                                            <ng-pluralize count="leaveDetail.leaveCount" when="{'1': ' Leave ', other: ' Leaves '}">
-                                            Leave </ng-pluralize> - </span>
-                                        <!-- end ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span data-ng-hide="leaveDetail.leaveCount == 0" class="ng-binding">Anjali Ghawate</span>
-                                    </div>
-                                </div>
-                                <!-- end ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding repeat-details "
->
-                                    <div class="details col-lg-12 col-md-12 col-sm-12 clear-side-padding">
-                                        <span class="heat-map low-priority" data-ng-class="{'off': leaveDetail.isHoliday, 'low-priority': leaveDetail.leaveCount >= 1 &amp;&amp; leaveDetail.leaveCount < 2 &amp;&amp; !leaveDetail.isHoliday,'medium-priority':leaveDetail.leaveCount >= 2 &amp;&amp; leaveDetail.leaveCount < 4 &amp;&amp; !leaveDetail.isHoliday,'high-priority':leaveDetail.leaveCount >= 4 &amp;&amp; !leaveDetail.isHoliday}">&nbsp;</span>
-                                        <span class="heat-map-date ng-binding">Aug 06 Mon</span>
-                                        <span class="heat-map-seperator"> : &nbsp;</span>
-                                        <!-- ngIf: leaveDetail.isHoliday -->
-                                        <!-- ngIf: leaveDetail.leaveCount != 0 && (leaveDetail.isHoliday || leaveDetail.isHoliday.isFloater) -->
-                                        <!-- ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span  class="heat-map-leaveCount ng-binding ">1
-                                            <ng-pluralize count="leaveDetail.leaveCount" when="{'1': ' Leave ', other: ' Leaves '}">
-                                            Leave </ng-pluralize> - </span>
-                                        <!-- end ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span data-ng-hide="leaveDetail.leaveCount == 0" class="ng-binding">Anjali Ghawate</span>
-                                    </div>
-                                </div>
-                                <!-- end ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding repeat-details "
->
-                                    <div class="details col-lg-12 col-md-12 col-sm-12 clear-side-padding">
-                                        <span class="heat-map off" data-ng-class="{'off': leaveDetail.isHoliday, 'low-priority': leaveDetail.leaveCount >= 1 &amp;&amp; leaveDetail.leaveCount < 2 &amp;&amp; !leaveDetail.isHoliday,'medium-priority':leaveDetail.leaveCount >= 2 &amp;&amp; leaveDetail.leaveCount < 4 &amp;&amp; !leaveDetail.isHoliday,'high-priority':leaveDetail.leaveCount >= 4 &amp;&amp; !leaveDetail.isHoliday}">&nbsp;</span>
-                                        <span class="heat-map-date ng-binding">Aug 07 Tue</span>
-                                        <span class="heat-map-seperator"> : &nbsp;</span>
-                                        <!-- ngIf: leaveDetail.isHoliday -->
-                                        <span  class="ng-binding ">Raksha Bandhan (Rakhi)
-                                            <!-- ngIf: leaveDetail.isHoliday.isFloater -->
-                                            <span  class=""> - Floating Holiday</span>
-                                            <!-- end ngIf: leaveDetail.isHoliday.isFloater -->
-                                        </span>
-                                        <!-- end ngIf: leaveDetail.isHoliday -->
-                                        <!-- ngIf: leaveDetail.leaveCount != 0 && (leaveDetail.isHoliday || leaveDetail.isHoliday.isFloater) -->
-                                        <span 
-                                            class="">, </span>
-                                        <!-- end ngIf: leaveDetail.leaveCount != 0 && (leaveDetail.isHoliday || leaveDetail.isHoliday.isFloater) -->
-                                        <!-- ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span  class="heat-map-leaveCount ng-binding ">1
-                                            <ng-pluralize count="leaveDetail.leaveCount" when="{'1': ' Leave ', other: ' Leaves '}">
-                                            Leave </ng-pluralize> - </span>
-                                        <!-- end ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span data-ng-hide="leaveDetail.leaveCount == 0" class="ng-binding">Anjali Ghawate</span>
-                                    </div>
-                                </div>
-                                <!-- end ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding repeat-details "
->
-                                    <div class="details col-lg-12 col-md-12 col-sm-12 clear-side-padding">
-                                        <span class="heat-map off" data-ng-class="{'off': leaveDetail.isHoliday, 'low-priority': leaveDetail.leaveCount >= 1 &amp;&amp; leaveDetail.leaveCount < 2 &amp;&amp; !leaveDetail.isHoliday,'medium-priority':leaveDetail.leaveCount >= 2 &amp;&amp; leaveDetail.leaveCount < 4 &amp;&amp; !leaveDetail.isHoliday,'high-priority':leaveDetail.leaveCount >= 4 &amp;&amp; !leaveDetail.isHoliday}">&nbsp;</span>
-                                        <span class="heat-map-date ng-binding">Aug 15 Wed</span>
-                                        <span class="heat-map-seperator"> : &nbsp;</span>
-                                        <!-- ngIf: leaveDetail.isHoliday -->
-                                        <span  class="ng-binding ">Independence Day
-                                            <!-- ngIf: leaveDetail.isHoliday.isFloater -->
-                                            <span  class=""> - Floating Holiday</span>
-                                            <!-- end ngIf: leaveDetail.isHoliday.isFloater -->
-                                        </span>
-                                        <!-- end ngIf: leaveDetail.isHoliday -->
-                                        <!-- ngIf: leaveDetail.leaveCount != 0 && (leaveDetail.isHoliday || leaveDetail.isHoliday.isFloater) -->
-                                        <!-- ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span data-ng-hide="leaveDetail.leaveCount == 0" class="ng-binding ng-hide"></span>
-                                    </div>
-                                </div>
-                                <!-- end ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <div class="col-lg-12 col-md-12 col-sm-12 clear-side-padding repeat-details "
->
-                                    <div class="details col-lg-12 col-md-12 col-sm-12 clear-side-padding">
-                                        <span class="heat-map off" data-ng-class="{'off': leaveDetail.isHoliday, 'low-priority': leaveDetail.leaveCount >= 1 &amp;&amp; leaveDetail.leaveCount < 2 &amp;&amp; !leaveDetail.isHoliday,'medium-priority':leaveDetail.leaveCount >= 2 &amp;&amp; leaveDetail.leaveCount < 4 &amp;&amp; !leaveDetail.isHoliday,'high-priority':leaveDetail.leaveCount >= 4 &amp;&amp; !leaveDetail.isHoliday}">&nbsp;</span>
-                                        <span class="heat-map-date ng-binding">Aug 25 Sat</span>
-                                        <span class="heat-map-seperator"> : &nbsp;</span>
-                                        <!-- ngIf: leaveDetail.isHoliday -->
-                                        <span  class="ng-binding ">Ganesh Chaturthi/Vinayaka Chaturthi
-                                            <!-- ngIf: leaveDetail.isHoliday.isFloater -->
-                                        </span>
-                                        <!-- end ngIf: leaveDetail.isHoliday -->
-                                        <!-- ngIf: leaveDetail.leaveCount != 0 && (leaveDetail.isHoliday || leaveDetail.isHoliday.isFloater) -->
-                                        <!-- ngIf: leaveDetail.leaveCount !== 0 -->
-                                        <span data-ng-hide="leaveDetail.leaveCount == 0" class="ng-binding ng-hide"></span>
-                                    </div>
-                                </div>
-                                <!-- end ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
-                                <!-- ngIf: leaveDetail.leaveCount > 0 || leaveDetail.isHoliday -->
-                                <!-- end ngRepeat: leaveDetail in vm.calender -->
                             </div>
                         </div>
                     </div>
@@ -605,115 +148,26 @@
             </div>
             <div class="col-lg-12">
                 <div class="panel">
+                    <div class="panel-heading">
+                        My Reportees
+                    </div>
                     <div class="panel-body">
-                        <div class="col-sm-4 clear-left-padding  menu-tile vertical-margin clear-bottom" data-xhr-feature-authorize="" data-feature="TIMESHEET">
-                            <a href="#/team/timesheet/timesheetapprovals">
-                                <div class="col-sm-12 menu clear-side-padding">
-                                    <span class="heading pull-left">Timesheet Approvals</span>
-                                    <div class="link-count">
-                                        <span class="link pull-left">
-                                            <b>SEE ALL</b>
-                                        </span>
-                                        <span class="count pull-right ng-binding">0</span>
+                        <div data-ng-repeat="reportees in myReportees" class="icon-list col-lg-4 clear-left-padding vertical-margin signatory">
+                            <div data-ui-sref="employee.summary({empid:reportees.EmpId})" style="cursor: pointer;">
+                                <div class="icon-container ">
+                                    <div class="icon">
+                                        <div class="initials-icon icon-circle" random-Color>{{reportees.shortName}}</div>
                                     </div>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="col-sm-4 clear-left-padding menu-tile vertical-margin clear-bottom " data-xhr-feature-authorize="" data-feature="TIMESHEET">
-                            <a href="#/team/timesheet/timesheetapprovals">
-                                <div class="col-sm-12 menu clear-side-padding">
-                                    <span class="heading pull-left">Leave Approvals</span>
-                                    <div class="link-count">
-                                        <span class="link pull-left">
-                                            <b>SEE ALL</b>
-                                        </span>
-                                        <span class="count pull-right ng-binding">0</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm-4 clear-left-padding menu-tile vertical-margin clear-bottom" data-xhr-feature-authorize="" data-feature="TIMESHEET">
-                            <a href="#/team/timesheet/timesheetapprovals">
-                                <div class="col-sm-12 menu clear-side-padding">
-                                    <span class="heading pull-left">Approvals Approvals</span>
-                                    <div class="link-count">
-                                        <span class="link pull-left">
-                                            <b>SEE ALL</b>
-                                        </span>
-                                        <span class="count pull-right ng-binding">0</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <br>
-                        <div class="icon-list col-lg-12 clear-left-padding vertical-margin signatory">
-                            <h3 style="margin-top: 25px;">My Reportees</h3>
-                        </div>
-                        <div class="icon-list col-lg-4 clear-left-padding vertical-margin signatory">
-                            <div class="icon-container ">
-                                <div class="icon">
-                                    <div class="initials-icon icon-circle" random-Color>DJ</div>
+                                <div class="detail">
+                                    <h4 class="title clear-bottom">{{reportees.EmpName}}</h4>
+                                    <span class="title-description clear-top">{{reportees.DesgName}}</span>
+                                    <br>
+                                    <span class="title-description clear-top">{{reportees.PdMobileNo}}</span>
                                 </div>
                             </div>
-                            <div class="detail">
-                                <h4 class="title clear-bottom">Deepak Jain</h4>
-                                <span class="title-description clear-top">Senior Software Developer</span>
-                                <br>
-                                <span class="title-description clear-top">9896656523</span>
-                            </div>
                         </div>
-                        <div class="icon-list col-lg-4 clear-left-padding vertical-margin signatory">
-                            <div class="icon-container ">
-                                <div class="icon">
-                                    <div class="initials-icon icon-circle" random-Color>PP</div>
-                                </div>
-                            </div>
-                            <div class="detail">
-                                <h4 class="title clear-bottom">Pardeep Pandit</h4>
-                                <span class="title-description clear-top">Software Developer</span>
-                                <br>
-                                <span class="title-description clear-top">896532140</span>
-                            </div>
-                        </div>
-                        <div class="icon-list col-lg-4 clear-left-padding vertical-margin signatory">
-                            <div class="icon-container ">
-                                <div class="icon">
-                                    <div class="initials-icon icon-circle" random-Color>NM</div>
-                                </div>
-                            </div>
-                            <div class="detail">
-                                <h4 class="title clear-bottom">Nitesh Mishra</h4>
-                                <span class="title-description clear-top">Software Developer</span>
-                                <br>
-                                <span class="title-description clear-top">8952325600</span>
-                            </div>
-                        </div>
-                        <div class="icon-list col-lg-4 clear-left-padding vertical-margin signatory">
-                            <div class="icon-container ">
-                                <div class="icon">
-                                    <div class="initials-icon icon-circle" random-Color>SP</div>
-                                </div>
-                            </div>
-                            <div class="detail">
-                                <h4 class="title clear-bottom">Satyendra Prasher</h4>
-                                <span class="title-description clear-top">Automation Tester</span>
-                                <br>
-                                <span class="title-description clear-top">9996623022</span>
-                            </div>
-                        </div>
-                        <div class="icon-list col-lg-4 clear-left-padding vertical-margin signatory">
-                            <div class="icon-container ">
-                                <div class="icon">
-                                    <div class="initials-icon icon-circle" random-Color>RJ</div>
-                                </div>
-                            </div>
-                            <div class="detail">
-                                <h4 class="title clear-bottom">Ritesh Jain</h4>
-                                <span class="title-description clear-top">Manual Tester</span>
-                                <br>
-                                <span class="title-description clear-top">7899562230</span>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -725,17 +179,19 @@
                 <div class="panel">
                     <div class="panel-body">
                         <p>I Report To</p>
-                        <div class="icon-list  col-lg-12 clear-left-padding vertical-margin signatory">
-                            <div class="icon-container ">
-                                <div class="icon">
-                                    <div class="initials-icon icon-circle" random-Color>SP</div>
+                        <div data-ng-repeat="headEmp in upperHeadEmp" class="icon-list  col-lg-12 clear-left-padding vertical-margin signatory">
+                            <div data-ui-sref="employee.summary({empid:headEmp.EmpId})" style="cursor: pointer;">
+                                <div class="icon-container ">
+                                    <div class="icon">
+                                        <div class="initials-icon icon-circle" random-Color>{{headEmp.shortName}}</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="detail">
-                                <h4 class="title clear-bottom">Sanjay Pathak</h4>
-                                <span class="title-description clear-top">MD</span>
-                                <br>
-                                <span class="title-description clear-top">9655562220</span>
+                                <div class="detail">
+                                    <h4 class="title clear-bottom">{{headEmp.EmpName}}</h4>
+                                    <span class="title-description clear-top">{{headEmp.DesgName}}</span>
+                                    <br>
+                                    <span class="title-description clear-top">{{headEmp.PdMobileNo}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -744,34 +200,22 @@
             <div class="col-lg-12">
                 <div class="panel">
                     <div class="panel-body">
-                        <p>Sanjay Pathak's Team</p>
-                        <div class="icon-list col-lg-12 clear-left-padding vertical-margin signatory">
-                            <div class="icon-container ">
-                                <div class="icon">
-                                    <div class="initials-icon icon-circle" random-Color>AM</div>
+                        <p>{{upperHeadName}}'s Team</p>
+                        <div data-ng-repeat="team in upperHeadTeam" class="icon-list col-lg-12 clear-left-padding vertical-margin signatory">
+                            <div data-ui-sref="employee.summary({empid:team.EmpId})" style="cursor: pointer;">
+                                <div class="icon-container ">
+                                    <div class="icon">
+                                        <div class="initials-icon icon-circle" random-Color>{{team.shortName}}</div>
+                                    </div>
+                                </div>
+                                <div class="detail">
+                                    <h4 class="title clear-bottom">{{team.EmpName}}</h4>
+                                    <span class="title-description clear-top">{{team.DesgName}}</span>
+                                    <br>
+                                    <span class="title-description clear-top">{{team.PdMobileNo}}</span>
                                 </div>
                             </div>
-                            <div class="detail">
-                                <h4 class="title clear-bottom">Anish Mishra</h4>
-                                <span class="title-description clear-top">HR</span>
-                                <br>
-                                <span class="title-description clear-top">56235869362</span>
-                            </div>
                         </div>
-                        <div class="icon-list col-lg-12 clear-left-padding vertical-margin signatory">
-                            <div class="icon-container ">
-                                <div class="icon">
-                                    <div class="initials-icon icon-circle" random-Color>DJ</div>
-                                </div>
-                            </div>
-                            <div class="detail">
-                                <h4 class="title clear-bottom">Neeraj Tondon</h4>
-                                <span class="title-description clear-top">Team Head</span>
-                                <br>
-                                <span class="title-description clear-top">9896656523</span>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>

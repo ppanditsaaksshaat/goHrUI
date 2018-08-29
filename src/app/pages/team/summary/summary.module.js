@@ -21,8 +21,7 @@
                 url: '/summary',
                 templateUrl: 'app/pages/team/summary/summary.html',
                 title: 'Summary',
-                controller: "",
-                controllerAs: "",
+                controller: "myTeamSummaryController",
                 sidebarMeta: {
                     icon: 'ion-pound',
                     order: 1,

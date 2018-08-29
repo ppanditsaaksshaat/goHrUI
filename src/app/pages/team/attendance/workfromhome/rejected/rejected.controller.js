@@ -12,18 +12,10 @@
     function myTeamRejectedWFHController($scope, $rootScope, pageService, editFormService) {
 
 
-
+        var curentDate = new Date();
+        
         $scope.approved = _approved;
         $scope.onhold = _onhold;
-
-        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //    console.log(ev)
-            //    console.log(to)
-            //    console.log(toParams)
-            //    console.log(from)
-            //    console.log(fromParams)
-        });
-
 
 
         function _loadController() {
@@ -31,6 +23,8 @@
             searchLists.push({ field: 'headEmpId', operand: '=', value: $rootScope.user.profile.empId })
             searchLists.push({ field: 'statusId', operand: '=', value: 107 })
             searchLists.push({ field: 'type', operand: '=', value: 'WFH' })
+            searchLists.push({ field: 'month', operand: '=', value: curentDate.getMonth() + 1 })
+            searchLists.push({ field: 'year', operand: '=', value: curentDate.getFullYear() })
 
 
             var data = {

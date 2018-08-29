@@ -11,18 +11,10 @@
     /** @ngInject */
     function myTeamRejectedOutDutyController($scope, $rootScope, pageService, editFormService) {
 
+        var curentDate = new Date();
 
-      
         $scope.approved = _approved;
         $scope.onhold = _onhold;
-
-        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //    console.log(ev)
-            //    console.log(to)
-            //    console.log(toParams)
-            //    console.log(from)
-            //    console.log(fromParams)
-        });
 
 
 
@@ -31,6 +23,8 @@
             searchLists.push({ field: 'headEmpId', operand: '=', value: $rootScope.user.profile.empId })
             searchLists.push({ field: 'statusId', operand: '=', value: 39 })
             searchLists.push({ field: 'type', operand: '=', value: 'outduty' })
+            searchLists.push({ field: 'month', operand: '=', value: curentDate.getMonth() + 1 })
+            searchLists.push({ field: 'year', operand: '=', value: curentDate.getFullYear() })
 
 
             var data = {
@@ -50,8 +44,8 @@
                         data.monthName = moment(data.FDAFromDate).format('MMM');
                         data.dateFrom = moment(data.FDAFromDate).format('DD');
                         data.dateTo = moment(data.FDAToDate).format('DD');
-                        data.FADInTime=moment(data.FDAToDate).format('HH:mm');
-                        data.FDAOutTime=moment(data.FDAToDate).format('HH:mm');
+                        data.FADInTime = moment(data.FADInTime).format('HH:mm');
+                        data.FDAOutTime = moment(data.FDAOutTime).format('HH:mm');
                         var spiltName = data.EmpName.split(' ');
                         if (spiltName.length == 3) {
                             data.shortName = spiltName[0].substr(0, 1) + spiltName[2].substr(0, 1);
@@ -76,7 +70,7 @@
             }
         }
 
-      
+
         function _approved(outDutyAppDetails, form) {
             outDutyAppDetails.StatusId = 87;
             outDutyAppDetails.StatusName = "approved";
@@ -110,13 +104,13 @@
                 else {
                     entity.AFDADRemark = oldOutduty.onholdReason;
                 }
-                _submitForm(entity, result, form,oldOutduty.EmpName,oldOutduty.StatusName);
+                _submitForm(entity, result, form, oldOutduty.EmpName, oldOutduty.StatusName);
             }
             function _findEntityErrorResult(err) {
                 console.log(err)
             }
         }
-        function _submitForm(entity, oldentity, form,empName,statusName) {
+        function _submitForm(entity, oldentity, form, empName, statusName) {
 
             editFormService.saveForm(468, entity, oldentity,
                 "edit", "", form, false)

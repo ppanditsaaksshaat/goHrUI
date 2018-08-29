@@ -11,25 +11,15 @@
     /** @ngInject */
     function myTeamApprovedOutDutyController($scope, $rootScope, pageService, editFormService) {
 
-
-      
-    
-
-        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //    console.log(ev)
-            //    console.log(to)
-            //    console.log(toParams)
-            //    console.log(from)
-            //    console.log(fromParams)
-        });
-
-
+        var curentDate = new Date();
 
         function _loadController() {
             var searchLists = [];
             searchLists.push({ field: 'headEmpId', operand: '=', value: $rootScope.user.profile.empId })
             searchLists.push({ field: 'statusId', operand: '=', value: 40 })
             searchLists.push({ field: 'type', operand: '=', value: 'outduty' })
+            searchLists.push({ field: 'month', operand: '=', value: curentDate.getMonth() + 1 })
+            searchLists.push({ field: 'year', operand: '=', value: curentDate.getFullYear() })
 
 
             var data = {
@@ -49,8 +39,8 @@
                         data.monthName = moment(data.FDAFromDate).format('MMM');
                         data.dateFrom = moment(data.FDAFromDate).format('DD');
                         data.dateTo = moment(data.FDAToDate).format('DD');
-                        data.FADInTime=moment(data.FDAToDate).format('HH:mm');
-                        data.FDAOutTime=moment(data.FDAToDate).format('HH:mm');
+                        data.FADInTime = moment(data.FADInTime).format('HH:mm');
+                        data.FDAOutTime = moment(data.FDAOutTime).format('HH:mm');
                         var spiltName = data.EmpName.split(' ');
                         if (spiltName.length == 3) {
                             data.shortName = spiltName[0].substr(0, 1) + spiltName[2].substr(0, 1);
@@ -75,7 +65,7 @@
             }
         }
 
-      
+
         _loadController();
     }
 })();

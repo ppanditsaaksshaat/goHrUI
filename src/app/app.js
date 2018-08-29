@@ -16,7 +16,7 @@
         'ui.grid', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.pagination',
         'ui.grid.edit', 'ui.grid.moveColumns', 'ui.grid.saveState', 'ui.grid.resizeColumns',
         'ui.grid.cellNav', 'ui.grid.pinning',
-        'ui.grid.expandable', 'ui.grid.cellNav', 'ui.grid.autoResize',
+        'ui.grid.expandable', 'ui.grid.cellNav', 'ui.grid.autoResize','ui.grid.validate',
         'ui.indeterminate',
         'ui.mask',
         'teljs',
