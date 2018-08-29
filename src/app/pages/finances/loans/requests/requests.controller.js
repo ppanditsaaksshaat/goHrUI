@@ -5,30 +5,29 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.payrollprocess.loans.outstanding')
+    angular.module('BlurAdmin.pages.payrollprocess.loans.requests')
         .controller('loanRequestController', loanRequestController);
 
     /** @ngInject */
     function loanRequestController($scope) {
-
+        console.log('requested')
+      
         $scope.gridOptions = {
-            enableCellEditOnFocus: false,
-            enableRowSelection: false,
-            enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 0,
+            paginationPageSizes: [10, 50, 75],
+            paginationPageSize: 10,
             enableScrollbars: false,
-            enableRowHeaderSelection: false,
+
             columnDefs: [
-                { name: 'EmpCode', displayName: 'EmpCode', enableCellEdit: false },
-                { name: 'EmpName', displayName: 'EmpName', enableCellEdit: false },
-                { name: 'LoanAmount', displayName: 'Loan Amount', enableCellEdit: false },
-                { name: 'ExpectedOn', displayName: 'Expected On', enableCellEdit: false },
-                { name: 'EMIStartFrom', displayName: 'EMI Start From', enableCellEdit: false },
-                { name: 'ActualRepaymentTerm', displayName: 'Actual Repayment Term', enableCellEdit: false },
-                { name: 'Comment', displayName: 'Comment', enableCellEdit: false },
-                { name: 'Status', displayName: 'Status', enableCellEdit: false },
-                { name: 'RequestedOn', displayName: 'Requested On', enableCellEdit: false },
-                { name: 'RequestedBy', displayName: 'Requested By', enableCellEdit: false },
+                { name: 'EmpCode', displayName: 'EmpCode', width: 70, enableCellEdit: false },
+                { name: 'EmpName', displayName: 'EmpName',width: 110, enableCellEdit: false },
+                { name: 'LoanAmount', displayName: 'Loan Amount',width: 100, enableCellEdit: false },
+                { name: 'ExpectedOn', displayName: 'Expected On',width: 80, enableCellEdit: false },
+                { name: 'EMIStartFrom', displayName: 'EMI Start From',width: 100, enableCellEdit: false },
+                { name: 'ActualRepaymentTerm', displayName: 'Actual Repayment Term',width: 100, enableCellEdit: false },
+                { name: 'Comment', displayName: 'Comment',width: 100, enableCellEdit: false },
+                { name: 'Status', displayName: 'Status',width: 80, enableCellEdit: false },
+                { name: 'RequestedOn', displayName: 'Requested On',width: 100, enableCellEdit: false },
+                { name: 'RequestedBy', displayName: 'Requested By',width: 100, enableCellEdit: false },
                 {
                     name: 'Action',
                     cellEditableCondition: false,
@@ -39,16 +38,28 @@
 
         function _loadController() {
             $scope.gridOptions.data = [{
-                "EmpCode": "Emp0001", "EmpName": "Neeraj Tandon", "LoanAmount": "INR 25000",
-                "ExpectedOn": "31-Aug-2018", "EMIStartFrom": "31-Sep-2018", 
-                "ActualRepaymentTerm": "10", "Comment": "Please approved my loand", "Status": "Not Started",
-                "RequestedOn": "30-Aug-2018", "RequestedBy": "Neeraj Tandon"
+                "EmpCode": "Emp0001", 
+                "EmpName": "Neeraj Tandon", 
+                "LoanAmount": "INR 25000",
+                "ExpectedOn": "31-Aug-2018", 
+                "EMIStartFrom": "31-Sep-2018", 
+                "ActualRepaymentTerm": "10", 
+                "Comment": "Please approved my loand", 
+                "Status": "Not Started",
+                "RequestedOn": "30-Aug-2018", 
+                "RequestedBy": "Neeraj Tandon"
             },
             {
-                "EmpCode": "Emp0002", "EmpName": "Deepak Jain", "LoanAmount": "INR 25000",
-                "ExpectedOn": "31-Aug-2018", "EMIStartFrom": "31-Sep-2018", 
-                "ActualRepaymentTerm": "10", "Comment": "Please approved my loand", "Status": "Not Started",
-                "RequestedOn": "30-Aug-2018", "RequestedBy": "Deepak Jain"
+                "EmpCode": "Emp0002", 
+                "EmpName": "Deepak Jain", 
+                "LoanAmount": "INR 25000",
+                "ExpectedOn": "31-Aug-2018", 
+                "EMIStartFrom": "31-Sep-2018", 
+                "ActualRepaymentTerm": "10", 
+                "Comment": "Please approved my loand", 
+                "Status": "Not Started",
+                "RequestedOn": "30-Aug-2018", 
+                "RequestedBy": "Deepak Jain"
             },
           ]
         }

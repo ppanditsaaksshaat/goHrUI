@@ -16,8 +16,10 @@
         $scope.searchEmployee = _searchEmployee;
         $scope.employeedetail = _employeedetail;
         // $scope.getRandomColor = _getRandomColor;
-        $scope.employeeList = {};
+        // $scope.employeeList = {};
         console.log($scope.employeeList)
+
+        $scope.isNoDataFound = false;
 
         function _searchEmployee(firstAlpha) {
             firstAlpha = firstAlpha.toUpperCase()
@@ -58,14 +60,21 @@
                 pageService.getCustomQuery(data, 650).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
 
                 function _getCustomQuerySuccessResult(result) {
+                    $scope.resultNoData = '';
                     if (result != 'NoDataFound') {
                         $scope.employeeList = result[0];
+                        $scope.isNoDataFound = false;
+
                     }
 
                     else {
+                        // $scope.employeeList = {};
                         $scope.employeeList = {};
+                        console.log($scope.employeeList)
+                        $scope.resultNoData = result;
+                        $scope.isNoDataFound = true;
                     }
-                    console.log($scope.employeeList.length)
+                    // console.log($scope.employeeList.length)
 
                 }
                 function _getCustomQueryErrorResult(err) {

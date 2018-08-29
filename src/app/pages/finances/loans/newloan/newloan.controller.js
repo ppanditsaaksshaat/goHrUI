@@ -11,7 +11,9 @@
         .controller('finNewLoanController', finNewLoanController);
 
     /** @ngInject */
-    function finNewLoanController($scope, dialogModal) {
+    function finNewLoanController($scope, $state, $stateParams,
+        pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, toastr, $filter, $rootScope) {
 
+       
     }
 })();

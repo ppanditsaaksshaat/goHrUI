@@ -22,7 +22,7 @@
                     order: 3,
                 },
             })
-     
+            $urlRouterProvider.when('/finances/loans', '/finances/loans/requests');
     }
 
 })();

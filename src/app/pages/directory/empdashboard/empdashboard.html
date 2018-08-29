@@ -24,19 +24,18 @@
                                 <span class="text-head">Directory</span>
                             </div>
                         </a>
-                        <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory.organizationchart"
-                            href="#/employees/employeedirectory/organizationchart">
+                        <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="directory.searchlist">
                             <div>
                                 <span>
                                     <i class="fa fa-user-plus"></i>
                                 </span>
                             </div>
                             <div>
-                                <span class="text-head">Org Chart</span>
+                                <span class="text-head">Search</span>
                             </div>
                         </a>
                     </div>
-                    <div class="icon-size col-sm-12">
+                    <!-- <div class="icon-size col-sm-12">
                         <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory.organizationchart"
                             href="#/employees/employeedirectory/organizationchart">
                             <div>
@@ -58,8 +57,19 @@
                                 <span class="text-head">ORG TREE</span>
                             </div>
                         </a>
+                        <a class="col-sm-4 text-center tile-icon clear-side-padding anchor-sm" data-ui-sref="employees.employeedirectory.organizationchart"
+                            href="#/employees/employeedirectory/organizationchart">
+                            <div>
+                                <span>
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-head">Org Chart</span>
+                            </div>
+                        </a>
 
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -78,14 +88,14 @@
                             </a>
                         </div>
                         <!-- xhrFeatureAuthorize: -->
-                        <div class="col-sm-6 ng-scope" data-xhr-feature-authorize="" data-feature="ENGAGE">
+                        <!-- <div class="col-sm-6 ng-scope" data-xhr-feature-authorize="" data-feature="ENGAGE">
                             <a class="anchor-sm" data-ui-sref="^.engage.newpoll">
                                 <span>
                                     <i class="fa fa-user-plus"></i>
                                 </span>
                                 New Poll
                             </a>
-                        </div>
+                        </div> -->
                         <!-- end ngIf: function(){return a()} -->
                     </div>
                     <div class="col-sm-12 link-item clear-side-padding">
@@ -98,17 +108,17 @@
                             </a>
                         </div>
                         <!-- xhrFeatureAuthorize: -->
-                        <div class="col-sm-6 ng-scope" data-xhr-feature-authorize="" data-feature="ENGAGE">
+                        <!-- <div class="col-sm-6 ng-scope" data-xhr-feature-authorize="" data-feature="ENGAGE">
                             <a class="anchor-sm" data-ui-sref="^.engage.newannouncement" href="#/employees/engage/reachout/dashboard/newannouncement">
                                 <span>
                                     <i class="fa fa-bullhorn"></i>
                                 </span>
                                 New Announcement
                             </a>
-                        </div>
+                        </div> -->
                         <!-- end ngIf: function(){return a()} -->
                     </div>
-                    <div class="col-sm-12 link-item">
+                    <!-- <div class="col-sm-12 link-item">
                         <div class="col-sm-6 clear-side-padding">
                             <a class="anchor-sm" data-ng-click="inviteAll();">
                                 <span>
@@ -127,8 +137,8 @@
                             </a>
                         </div>
 
-                    </div>
-                    <div class="col-sm-12 link-item">
+                    </div> -->
+                    <!-- <div class="col-sm-12 link-item">
                         <div class="col-sm-6 clear-side-padding">
                             <a class="anchor-sm" data-ui-sref="importjobdetails" href="#/employees/importjobdetails">
                                 <span>
@@ -156,7 +166,7 @@
                             </a>
                         </div>
 
-                    </div>
+                    </div> -->
 
 
 
@@ -167,51 +177,104 @@
 
     <div class="row">
         <div class="col-lg-4">
-            <div class="panel">
+            <div class="panel panel-medium"">
                 <div class="panel-heading header">
                     NEW JOINEES
-                    <a class="pull-right" data-ng-click="viewallemployee()" href="">View All</a>
+                    <a class="pull-right" data-ng-click="newListJoins()" href="">View All</a>
                 </div>
-                <div class="row">
-                    <table class="col-lg-12 custom-table">
-                        <tr ng-repeat="new in newJoins">
-                            <td>{{new.EmpName}}</td>
-                            <td>{{new.JDDate | date:'MMM, dd'}}</td>
-                        </tr>
+                <div class="panel-body">
+                    <table class="col-lg-12 custom-table table table-condensed">
+                        <thead>
+                            <tr class="info">
+                                <td style="text-align: left">
+                                    <label>Sr. No.</label>
+                                </td>
+                                <td>
+                                    <label>Name</label>
+                                </td>
+                                <td>
+                                    <label>Joining Date</label>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="new in newJoins">
+                                <td>{{new.SNo}}</td>
+                                <td>{{new.EmpName}}</td>
+                                <td>{{new.JDDate}}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
         <div class="col-lg-4">
             <div class="panel">
                 <div class="panel-heading header">
                     BIRTHDAYS / ANNIVERSARIES
-                    <a class="pull-right" data-ng-click="" href="">View All</a>
+                    <a class="pull-right" data-ng-click="birthDay()" href="">View All</a>
                 </div>
-                <div class="row">
-                    <table class="col-lg-12 custom-table">
-                        <tr ng-repeat="birthAnn in birthAnnList">
-                            <td>{{birthAnn.EmpName}}</td>
-                            <td>{{birthAnn.PdDateOfBirth | date:'MMM, dd'}}</td>
-                        </tr>
+                <div class="panel-body">
+                    <table class="col-lg-12 custom-table table table-condensed">
+                        <thead>
+                            <tr class="info">
+                                <td style="text-align: left">
+                                    <label>Sr. No.</label>
+                                </td>
+                                <td>
+                                    <label>Name</label>
+                                </td>
+                                <td>
+                                    <label>Date Of Birth</label>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="birthAnn in birthAnnList">
+                                <td>{{birthAnn.SNo}}</td>
+                                <td>{{birthAnn.EmpName}}</td>
+                                <td>{{birthAnn.PdDateOfBirth}}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
         <div class="col-lg-4">
             <div class="panel">
                 <div class="panel-heading header">
                     LEAVING EMPLOYEES
-                    <a class="pull-right" data-ng-click="" href="">View All</a>
+                    <a class="pull-right" data-ng-click="hasLeft()" href="">View All</a>
                 </div>
-                <div class="row">
-                    <table class="col-lg-12 custom-table">
-                        <tr ng-repeat="emp in leavingEmps">
-                            <td>{{emp.EmpName}}</td>
-                            <td>{{emp.RDRelievingDate | date:'MMM, dd'}}</td>
-                        </tr>
+                <div class="panel-body">
+                    <table class="col-lg-12 custom-table table table-condensed">
+                        <thead>
+                            <tr class="info">
+                                <td style="text-align: left">
+                                    <label>Sr. No.</label>
+                                </td>
+                                <td>
+                                    <label>Name</label>
+                                </td>
+                                <td>
+                                    <label>Left Date</label>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="emp in leavingEmps">
+                                <td>{{emp.SNo}}</td>
+                                <td>{{emp.EmpName}}</td>
+                                <td>{{emp.RDRelievingDate}}</td>
+                            </tr>
+                        </tbody>
+
                     </table>
                 </div>
+
+
             </div>
         </div>
     </div>

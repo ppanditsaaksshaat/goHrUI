@@ -10,6 +10,7 @@
 
   /** @ngInject */
   function loanOutStandingController($scope) {
+    console.log($scope)
     $scope.page = { reportId: 49 }
     // $scope.page = { reportId: 50 }
   }

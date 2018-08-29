@@ -9,9 +9,12 @@
         .controller('dirDashboardController', dirDashboardController);
 
     /** @ngInject */
-    function dirDashboardController($scope, $state, pageService) {
+    function dirDashboardController($scope, $state, pageService, dialogModal) {
 
         $scope.viewallemployee = _viewallemployee;
+        $scope.newListJoins = _newJoins;
+        $scope.hasLeft = _hasLeft;
+        $scope.birthDay = _birthDay;
 
 
 
@@ -79,6 +82,36 @@
 
         function _viewallemployee() {
             $state.go("directory.employees", { param: 'all' });
+        }
+
+        function _birthDay() {
+            console.log('emp upload')
+            var modal = dialogModal.open({
+                url: 'app/pages/directory/empdashboard/list/birthday/birthday.html',
+                size: 'top-center-600',
+                controller: 'birthDayController',
+                param: $scope.birthAnnList
+            });
+        }
+
+        function _hasLeft() {
+            console.log('emp upload')
+            var modal = dialogModal.open({
+                url: 'app/pages/directory/empdashboard/list/hasleft/hasleft.html',
+                size: 'top-center-600',
+                controller: 'hasLeftController',
+                param: $scope.leavingEmps
+            });
+        }
+
+        function _newJoins() {
+            console.log('emp upload')
+            var modal = dialogModal.open({
+                url: 'app/pages/directory/empdashboard/list/newjoins/newjoins.html',
+                size: 'top-center-600',
+                controller: 'newJoinsController',
+                param: $scope.newJoins
+            });
         }
 
         _loadController();
