@@ -158,16 +158,26 @@
 
 @media (max-width: 1465px) and (min-width: 1199px){
   .channels-info{
-    display: none;
+    width: 180px;
+    display: inline-block;
+    margin-top: -15px;
+    margin-left:9px;
   }
   .traffic-chart{
     position: inherit;
-    float: none;
     margin: 0 auto;
   }
-  .chart-bg{
-    left: calc(50% - 90px);
-  }
+  .canvas-holder {
+    display: inline-block;
+    width: 250px;
+    height: 250px;
+    position: relative;
+    float: left;
+    top:30px;
+}
+  // .chart-bg{
+  //   left: calc(50% - 90px);
+  // }
 }
 
 @media (max-width: 380px){
