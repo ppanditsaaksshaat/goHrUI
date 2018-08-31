@@ -26,7 +26,7 @@
     </div>
 
     <div class="col-md-6">
-        <div class="panel panel-medium">
+        <div class="panel pnl350">
             <div class="panel-heading">
                 ACQUISITION CHANNELS
             </div>
@@ -43,16 +43,16 @@
 <div class="row">
 
     <div class="col-md-4">
-        <div class="panel panel-medium">
+        <div class="panel panel-medium pnl300">
             <div class="panel-heading header">
                 Upcoming Team Leave List(90 Day)
-                <a class="pull-right" data-ng-click="teamLeave()" href="">View All</a>
+                <a ng-if="upComingLeaveListOfTeam.length > 0" class="pull-right" data-ng-click="teamLeave()" href="">View All</a>
             </div>
 
-            <div class="panel-body panel-height" class="djGrid payband">
-                <table ng-if="upComingLeaveListOfTeam.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+            <div class="panel-body panel-height ">
+                <table ng-if="upComingLeaveListOfTeam.length > 0" class="table table-condensed table-responsive">
                     <thead>
-                        <tr class="info">
+                        <tr class="">
                             <td>
                                 <label>Sr. No.</label>
                             </td>
@@ -70,9 +70,9 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="leave in upComingLeaveListOfTeam | limitTo : 7">
-                            <td style="text-align: left"> {{leave.SNo}}</td>
-                            <td>{{leave.EmpName}}</td>
-                            <td>{{leave.LEADDateFrom}}</td>
+                            <td style="text-align: left"> {{$index+1}}</td>
+                            <td>{{leave.EmpName| cut:true:6:' ...'}} </td>
+                            <td>{{leave.LEADDateFrom| cut:true:6:' ...'}} </td>
                             <td>{{leave.LEADDateTo}}</td>
 
                     </tbody>
@@ -88,16 +88,16 @@
     </div> -->
 
     <div class="col-md-4">
-        <div class="panel panel-medium">
+        <div class="panel pnl300">
             <div class="panel-heading header">
                 Pending Approval(Self)
-                <a class="pull-right" data-ng-click="viewList()" href="">View All</a>
+                <a ng-if="pendingApprovel.length > 0" class="pull-right" data-ng-click="viewList()" href="">View All</a>
             </div>
 
             <div class="panel-body panel-height">
-                <table ng-if="pendingApprovel.length > 0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+                <table ng-if="pendingApprovel.length > 0" class="table table-condensed table-responsive">
                     <thead>
-                        <tr class="info">
+                        <tr class="">
                             <td>
                                 <label>Sr. No.</label>
                             </td>
@@ -120,8 +120,8 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="leave in pendingApprovel | limitTo : 7">
-                            <td style="text-align: left"> {{leave.SNo}}</td>
-                            <td>{{leave.Type}}</td>
+                            <td style="text-align: left"> {{$index+1}}</td>
+                            <td>{{leave.Type| cut:true:16:' ...'}} </td>
                             <td>{{leave.Date}}</td>
                             <!-- <td>{{leave.SancFromDate}}</td>
                                         <td>{{leave.SancToDate}}</td> -->
@@ -139,16 +139,16 @@
     </div> -->
 
     <div class="col-md-4">
-        <div class="panel panel-medium">
+        <div class="panel pnl300">
             <div class="panel-heading header">
                 UpComing Holiday(90 Day)
-                <a class="pull-right" data-ng-click="holiday()" href="">View All</a>
+                <a ng-if="UpComingHolidayList.length>0" class="pull-right" data-ng-click="holiday()" href="">View All</a>
             </div>
 
             <div class="panel-body panel-height">
-                <table ng-if="UpComingHolidayList.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+                <table ng-if="UpComingHolidayList.length>0" class="table table-condensed table-responsive">
                     <thead>
-                        <tr class="info">
+                        <tr class="">
                             <td>
                                 <label>Sr. No.</label>
                             </td>
@@ -162,8 +162,8 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="holiday in UpComingHolidayList | limitTo : 7">
-                            <td style="text-align: left"> {{holiday.SNo}}</td>
-                            <td>{{holiday.HDName}}</td>
+                            <td style="text-align: left"> {{$index+1}}</td>
+                            <td>{{holiday.HDName| cut:true:16:' ...'}} </td>
                             <td>{{holiday.HDFromDate}}</td>
                     </tbody>
 
@@ -178,16 +178,16 @@
 
 <div class="row">
     <div class="col-md-4">
-        <div class="panel panel-medium">
+        <div class="panel pnl300">
             <div class="panel-heading header">
                 Upcoming Team BirthDay(90 Days)
-                <a class="pull-right" data-ng-click="teamBirthDay()" href="">View All</a>
+                <a ng-if="upComingTeamBirthDay.length>0" class="pull-right" data-ng-click="teamBirthDay()" href="">View All</a>
             </div>
 
             <div class="panel-body panel-height">
-                <table ng-if="upComingTeamBirthDay.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+                <table ng-if="upComingTeamBirthDay.length>0" class="table table-condensed table-responsive">
                     <thead>
-                        <tr class="info">
+                        <tr class="">
                             <td>
                                 <label>Sr. No.</label>
                             </td>
@@ -201,8 +201,8 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="birth in upComingTeamBirthDay | limitTo : 7">
-                            <td style="text-align: left"> {{birth.SNo}}</td>
-                            <td> {{birth.EmpName}}</td>
+                            <td style="text-align: left"> {{$index+1}}</td>
+                            <td> {{birth.EmpName| cut:true:16:' ...'}} </td>
                             <td>{{birth.PdDateOfBirth}}</td>
                     </tbody>
 
@@ -217,16 +217,16 @@
     </div> -->
 
     <div class="col-md-4">
-        <div class="panel panel-medium">
+        <div class="panel pnl300">
             <div class="panel-heading header">
                 BirthDay(Self)
-                <a class="pull-right" data-ng-click="birthDay()" href="">View</a>
+                <a ng-if="upComingBirthDayList.length>0" class="pull-right" data-ng-click="birthDay()" href="">View</a>
             </div>
 
-            <div class="panel-body panel-height">
-                <table ng-if="upComingBirthDayList.length>0" class="table table-bordered table-condensed " ng-init="empSalaryHead.totals = {}">
+            <div class="panel-body">
+                <table ng-if="upComingBirthDayList.length>0" class="table table-condensed table-responsive">
                     <thead>
-                        <tr class="info">
+                        <tr class="">
                             <td>
                                 <label>Sr. No.</label>
                             </td>
@@ -244,7 +244,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="birth in upComingBirthDayList | limitTo : 7">
-                            <td style="text-align: left"> {{birth.SNo}}</td>
+                            <td style="text-align: left"> {{$index+1}}</td>
                             <td>{{birth.PdDateOfBirth}}</td>
 
                             <!-- <td>{{birth.PdMobileNo}}</td>
@@ -258,6 +258,19 @@
         </div>
     </div>
 
-    <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Acquisition Channels" ba-panel-class="medium-panel traffic-panel">
+    <div class="col-md-4">
+        <div class="panel pnl300">
+            <div class="panel-heading header">
+                Acquisition Channels
+            </div>
+
+            <div class="panel-body">
+
+
+            </div>
+        </div>
     </div>
+
+    <!-- <div class="col-lg-4 col-md-12 col-sm-12" ba-panel ba-panel-title="Acquisition Channels" ba-panel-class="medium-panel traffic-panel">
+    </div> -->
 </div>

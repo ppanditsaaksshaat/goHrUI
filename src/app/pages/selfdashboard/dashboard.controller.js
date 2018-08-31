@@ -149,6 +149,7 @@
             $scope.pendingApprovel = result[7];
             console.log($scope.upComingLeaveListOfTeam)
 
+            console.log($scope.upComingBirthDayList)
             console.log($scope.leaveList)
             if (result != undefined) {
                 DalaLength = 10;
