@@ -26,16 +26,21 @@
     </div>
 
     <div class="col-md-6">
-        <div class="panel pnl350">
+        <div ba-panel ba-panel-title="Line Map" class="viewport100">
+            <div id="map-lines"></div>
+        </div>
+
+
+
+        <!-- <div class="panel pnl350">
             <div class="panel-heading">
                 ACQUISITION CHANNELS
             </div>
 
             <div class="panel-body">
-                <!-- <button type="submit" class="btn btn-success" ng-click="viewList();" dotranslate>View</button> -->
-
+                <div id="amchart"></div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -47,14 +52,14 @@
             <div class="panel-heading header">
                 Upcoming Team Leave List(90 Day)
                 <a ng-if="upComingLeaveListOfTeam.length > 0" class="pull-right" data-ng-click="teamLeave()" href="">View All</a>
+
             </div>
 
             <div class="panel-body panel-height ">
                 <table ng-if="upComingLeaveListOfTeam.length > 0" class="table table-condensed table-responsive">
-                    <thead>
+                    <!-- <thead>
                         <tr class="">
                             <td>
-                                <label>Sr. No.</label>
                             </td>
                             <td>
                                 <label>Name</label>
@@ -67,10 +72,13 @@
                             </td>
 
                         </tr>
-                    </thead>
+                    </thead> -->
                     <tbody>
-                        <tr ng-repeat="leave in upComingLeaveListOfTeam | limitTo : 7">
-                            <td style="text-align: left"> {{$index+1}}</td>
+                        <tr ng-repeat="leave in upComingLeaveListOfTeam | limitTo : 6">
+                            <!-- <td style="text-align: left"> {{$index+1}}</td> -->
+                            <td>
+                                <i class="fa fa-star-half-o iconsize"></i>
+                            </td>
                             <td>{{leave.EmpName| cut:true:6:' ...'}} </td>
                             <td>{{leave.LEADDateFrom| cut:true:6:' ...'}} </td>
                             <td>{{leave.LEADDateTo}}</td>
@@ -96,10 +104,9 @@
 
             <div class="panel-body panel-height">
                 <table ng-if="pendingApprovel.length > 0" class="table table-condensed table-responsive">
-                    <thead>
+                    <!-- <thead>
                         <tr class="">
                             <td>
-                                <label>Sr. No.</label>
                             </td>
                             <td>
                                 <label>Type</label>
@@ -107,20 +114,14 @@
                             <td>
                                 <label>Date</label>
                             </td>
-                            <!-- <td>
-                                            <label>Sanction From</label>
-                                        </td>
-                                        <td>
-                                            <label>Sanction To</label>
-                                        </td> -->
-                            <!-- <td>
-                                            <label>Status</label>
-                                        </td> -->
                         </tr>
-                    </thead>
+                    </thead> -->
                     <tbody>
-                        <tr ng-repeat="leave in pendingApprovel | limitTo : 7">
-                            <td style="text-align: left"> {{$index+1}}</td>
+                        <tr ng-repeat="leave in pendingApprovel | limitTo : 6">
+                            <!-- <td style="text-align: left"> {{$index+1}}</td> -->
+                            <td>
+                                <i class="fa fa-star-half-o iconsize" ></i>
+                            </td>
                             <td>{{leave.Type| cut:true:16:' ...'}} </td>
                             <td>{{leave.Date}}</td>
                             <!-- <td>{{leave.SancFromDate}}</td>
@@ -147,10 +148,9 @@
 
             <div class="panel-body panel-height">
                 <table ng-if="UpComingHolidayList.length>0" class="table table-condensed table-responsive">
-                    <thead>
+                    <!-- <thead>
                         <tr class="">
                             <td>
-                                <label>Sr. No.</label>
                             </td>
                             <td>
                                 <label>Holiday Name</label>
@@ -159,10 +159,14 @@
                                 <label>Holiday Date</label>
                             </td>
                         </tr>
-                    </thead>
+                    </thead> -->
                     <tbody>
-                        <tr ng-repeat="holiday in UpComingHolidayList | limitTo : 7">
-                            <td style="text-align: left"> {{$index+1}}</td>
+                        <tr ng-repeat="holiday in UpComingHolidayList | limitTo : 6">
+                            <!-- <td style="text-align: left"> {{$index+1}}</td> -->
+                            <td>
+                                <i class="fa fa-photo iconsize"></i>
+                            </td>
+
                             <td>{{holiday.HDName| cut:true:16:' ...'}} </td>
                             <td>{{holiday.HDFromDate}}</td>
                     </tbody>
@@ -186,10 +190,9 @@
 
             <div class="panel-body panel-height">
                 <table ng-if="upComingTeamBirthDay.length>0" class="table table-condensed table-responsive">
-                    <thead>
+                    <!-- <thead>
                         <tr class="">
                             <td>
-                                <label>Sr. No.</label>
                             </td>
                             <td>
                                 <label>Name</label>
@@ -198,10 +201,13 @@
                                 <label>Date Of Birth</label>
                             </td>
                         </tr>
-                    </thead>
+                    </thead> -->
                     <tbody>
-                        <tr ng-repeat="birth in upComingTeamBirthDay | limitTo : 7">
-                            <td style="text-align: left"> {{$index+1}}</td>
+                        <tr ng-repeat="birth in upComingTeamBirthDay | limitTo : 6">
+                            <!-- <td style="text-align: left"> {{$index+1}}</td> -->
+                            <td>
+                                <i class="fa fa-birthday-cake iconsize" ></i>
+                            </td>
                             <td> {{birth.EmpName| cut:true:16:' ...'}} </td>
                             <td>{{birth.PdDateOfBirth}}</td>
                     </tbody>
@@ -219,33 +225,35 @@
     <div class="col-md-4">
         <div class="panel pnl300">
             <div class="panel-heading header">
-                BirthDay(Self)
-                <a ng-if="upComingBirthDayList.length>0" class="pull-right" data-ng-click="birthDay()" href="">View</a>
+                Team Member
+                <a ng-if="teamEmpList.length>0" class="pull-right" data-ng-click="birthDay()" href="">View</a>
             </div>
 
             <div class="panel-body">
-                <table ng-if="upComingBirthDayList.length>0" class="table table-condensed table-responsive">
-                    <thead>
+                <table ng-if="teamEmpList.length>0" class="table table-condensed table-responsive">
+                    <!-- <thead>
                         <tr class="">
                             <td>
-                                <label>Sr. No.</label>
                             </td>
                             <td>
-                                <label>Date Of Birth</label>
+                                <label>Name</label>
                             </td>
-                            <!-- <td>
-                                            <label>Mobile Number</label>
-                                        </td>
-                                        <td>
-                                            <label>Email</label>
-                                        </td> -->
+                            <td>
+                                <label>Mobile</label>
+                            </td>
+                           
 
                         </tr>
-                    </thead>
+                    </thead> -->
                     <tbody>
-                        <tr ng-repeat="birth in upComingBirthDayList | limitTo : 7">
-                            <td style="text-align: left"> {{$index+1}}</td>
-                            <td>{{birth.PdDateOfBirth}}</td>
+                        <tr ng-repeat="birth in teamEmpList | limitTo : 6">
+                            <!-- <td style="text-align: left"> {{$index+1}}</td> -->
+                            <td>
+                                <i class="fa fa-user iconsize"></i>
+
+                            </td>
+                            <td>{{birth.EmpName| cut:true:16:' ...'}}</td>
+                            <td>{{birth.PdMobileNo}}</td>
 
                             <!-- <td>{{birth.PdMobileNo}}</td>
                                         <td>{{birth.PdEmail}}</td> -->
@@ -258,11 +266,11 @@
         </div>
     </div>
 
-    <div class="col-md-4 pnl300">
+    <div class="col-md-4 ">
 
-            <div class="pnl300" ba-panel ba-panel-title="To Do List" ba-panel-class="medium-panel feed-comply-panel with-scroll todo-panel">
-                <dashboard-todo></dashboard-todo>
-            </div>
+        <div  ba-panel ba-panel-title="To Do List" ba-panel-class="pnl300 medium-panel feed-comply-panel with-scroll todo-panel">
+            <dashboard-todo></dashboard-todo>
+        </div>
 
 
 

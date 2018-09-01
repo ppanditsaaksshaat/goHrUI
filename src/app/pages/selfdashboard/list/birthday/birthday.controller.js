@@ -20,11 +20,14 @@
             enableScrollbars: false,
             columnDefs: [
                 { name: 'SNo', displayName: 'SNo', width: 80, enableCellEdit: false },
-                { name: 'PdDateOfBirth', displayName: 'Date Of Birth', width: 300, enableCellEdit: false },
+                { name: 'EmpName', displayName: 'Name Of Employee', width: 300, enableCellEdit: false },
+                { name: 'PdMobileNo', displayName: 'Mobile Number', width: 300, enableCellEdit: false },
+           
             ],
         }
         $scope.gridOptions.data = param;
     }
+    
 
 
 })();

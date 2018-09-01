@@ -46,7 +46,11 @@
 
     function _loadController() {
       var data = {
-        searchList: [],
+        searchList: [{
+          field: 'StatusId',
+          operand: "<>",
+          value: 117
+        }],
         orderByList: []
       }
       pageService.getTableData(507, 504, '', '', false, data)
@@ -99,7 +103,7 @@
         searchLists.push({
           field: 'Type',
           operand: "=",
-          value: 'Create'
+          value: 'Save'
         })
 
         var data = {
@@ -126,9 +130,45 @@
 
     }
 
-    function _doneToDoList(row){
+    function _doneToDoList(row) {
+      var searchLists = [];
+      searchLists.push({
+        field: 'EmpId',
+        operand: "=",
+        value: '0'
+      })
+      searchLists.push({
+        field: 'TDLRemark',
+        operand: "=",
+        value: '0'
+      })
+      searchLists.push({
+        field: 'TDLId',
+        operand: "=",
+        value: row.TDLId
+      })
+      searchLists.push({
+        field: 'Type',
+        operand: "=",
+        value: 'Done'
+      })
+
+      var data = {
+        searchList: searchLists,
+        orderByList: []
+      }
+      pageService.getCustomQuery(data, 666).then(_doneSuccessToDoList, _errorToDoList)
+    }
+
+    function _doneSuccessToDoList(result) {
 
     }
+
+    function _errorToDoList(error) {
+
+    }
+
+
 
     _loadController();
   }

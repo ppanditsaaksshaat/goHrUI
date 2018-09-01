@@ -1,4 +1,4 @@
-<div class="task-todo-container" ng-class="{'transparent': transparent}">
+<div class="task-todo-container pnl300" ng-class="{'transparent': transparent}">
   <input type="text" value="" class="form-control task-todo" placeholder="Task to do.." ng-keyup="addToDoItem($event)" ng-model="entity.TDLRemark"
   />
   <i ng-click="addToDoItem('',true)" class="add-item-icon ion-plus-round"></i>
@@ -14,7 +14,7 @@
         <input type="checkbox" ng-model="isChecked">
         <span class="cut-with-dots">{{ item.TDLRemark }}</span>
       </label>
-      <i class="remove-todo ion-ios-close-empty" ng-click="item.deleted = true;addToDoItem(item)"></i>
+      <i class="remove-todo ion-ios-close-empty" ng-click="item.deleted = true;doneToDOList(item)"></i>
     </li>
   </ul>
 </div>
