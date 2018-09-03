@@ -1,17 +1,18 @@
 <div class="modal-content">
     <div class="modal-header bg-primary">
-        <h3 class="inline-block clear-vertical-margin" dotranslate>BirthDay(Self)</h3>
+        <h3 class="inline-block clear-vertical-margin" dotranslate>Team Member List</h3>
     </div>
     <div class="modal-body content-container">
-        <div ui-grid="gridOptions" ui-grid-pagination class="djGrid payband">
-        </div>
-        <div class="row">
-            <div class="col-sm-12 vertical-margin">
-                <div class="col-sm-6 pull-right text-right">
-                    <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+        <fieldset>
+            <div ui-grid="gridOptions" ui-grid-pagination class="djGrid payband">
+            </div>
+            <div class="row">
+                <div class="col-sm-12 vertical-margin">
+                    <div class="col-sm-6 pull-right text-right">
+                        <a class="btn btn-cancel" ng-click="$dismiss();">Cancel</a>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        </fieldset>
     </div>
 </div>

@@ -10,7 +10,7 @@
                     <fieldset>
                         <div class="col-sm-12 new-person-details">
 
-                            <div class="col-sm-6 clear-left-padding">
+                            <div class="col-sm-4 clear-left-padding">
                                 <div class="form-group">
                                     <label>First Name
                                         <span class="font-red">*</span>
@@ -18,14 +18,14 @@
                                     <input type="text" class="form-control" data-ng-model="entity.EmpFirstName" name="FirstName" id="FirstName" required/>
                                 </div>
                             </div>
-                            <div class="col-sm-6 clear-left-padding">
+                            <div class="col-sm-4 clear-left-padding">
                                 <div class="form-group">
                                     <label>Middle Name</label>
                                     <input type="text" class="form-control" data-ng-model="entity.EmpMiddleName" name="MiddleName" id="MiddleName" required />
 
                                 </div>
                             </div>
-                            <div class="col-sm-6 clear-left-padding">
+                            <div class="col-sm-4 clear-left-padding">
                                 <div class="form-group">
                                     <label>Last Name
                                         <span class="font-red">*</span>
@@ -41,7 +41,7 @@
                                 </div>
                             </div> -->
 
-                            <div class="col-sm-6 clear-left-padding">
+                            <div class="col-sm-4 clear-left-padding">
                                 <div class="form-group">
                                     <label>DOB
                                         <span class="font-red">*</span>
@@ -63,7 +63,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-sm-6 clear-left-padding">
+                            <div class="col-sm-4 clear-left-padding">
                                 <div class="form-group">
                                     <label>Gender
                                         <span class="font-red">*</span>
@@ -72,7 +72,7 @@
                                     <!-- <input type="text" class="form-control" data-ng-model="entity.GenderName" name="LastName" id="LastName" required /> -->
                                 </div>
                             </div>
-                            <div class="col-sm-6 clear-left-padding">
+                            <div class="col-sm-4 clear-left-padding">
                                 <div class="form-group">
                                     <label>Marital Status </label>
                                     <select class="form-control" data-ng-model="entity.PdMaritalId" ng-options="marital.value as marital.name for marital in dropDownLists[1]"></select>
@@ -80,7 +80,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-sm-6 clear-left-padding">
+                            <div class="col-sm-4 clear-left-padding">
                                 <div class="form-group">
                                     <label>Religion</label>
                                     <select class="form-control" data-ng-model="entity.PDReligionId" ng-options="religion.value as religion.name for religion in dropDownLists[2]"></select>
@@ -88,12 +88,57 @@
 
                                 </div>
                             </div>
-                            <div class="col-sm-6 clear-left-padding">
+                            <div class="col-sm-4 clear-left-padding">
                                 <div class="form-group">
                                     <label>Blood Group</label>
                                     <select class="form-control" data-ng-model="entity.PdBloodGroupId" ng-options="blood.value as blood.name for blood in dropDownLists[3]"></select>
                                     <!-- <input type="text" class="form-control" data-ng-model="entity.BGMName" name="LastName" id="LastName" required /> -->
 
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Name On Pan Card</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.PdNameOnPanCard" name="FirstName" id="PdNameOnPanCard" required/> </div>
+                            </div>
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Pan Number</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.PDPanCard" name="PDPanCard" id="PDPanCard" required/>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Name On Adhar Card</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.PdNameOnAdharCard" name="PdNameOnAdharCard" id="PdNameOnAdharCard"
+                                        required/> </div>
+                            </div>
+
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Adhar Number</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.PDAdhar" name="PDAdhar" id="PDAdhar" required/>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Adhar Enrollment Number</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.PdAdharEnrollmentNumber" name="PdAdharEnrollmentNumber" id="PdAdharEnrollmentNumber"
+                                        required/>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>Facebook</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.PDFacebook" name="PDFacebook" id="PDFacebook" required/>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 clear-left-padding">
+                                <div class="form-group">
+                                    <label>LinkedIn</label>
+                                    <input type="text" class="form-control" data-ng-model="entity.PDLinkedIn" name="PDLinkedIn" id="PDLinkedIn" required/>
                                 </div>
                             </div>
                         </div>

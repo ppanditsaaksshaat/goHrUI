@@ -34,10 +34,11 @@
 
             var searchLists = [];
             var searchListData = {
-                field: 'LinkUserEmpId',
+                field: 'EmpId',
                 operand: "=",
                 value: empId
             }
+            
             searchLists.push(searchListData)
             var data = {
                 searchList: searchLists,
