@@ -1832,3 +1832,37 @@ p {
 .gridsetheight {
   width: 600px;
 }
+
+
+.pre-payroll-actions .icon span{
+color: green;
+font-size: 24px;
+margin-right: -235px;
+float: right;
+margin-top: -5px;
+
+}
+
+.pre-payroll-actions span img{
+  height: 60px;
+  width: 60px;
+}
+.pre-payroll-actions .action{
+  margin-right: -15px;
+  float: right;
+  }
+  .run .progress .progress-bar{
+    float: left;
+    width: 0;
+    height: 100%;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    text-align: center;
+    background-color: green;
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    -webkit-transition: width .6s ease;
+    -o-transition: width .6s ease;
+    transition: width .6s ease;
+  }
