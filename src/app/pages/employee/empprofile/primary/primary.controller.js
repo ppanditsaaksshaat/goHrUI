@@ -16,7 +16,7 @@
 
         var basicTableId = 30;
         var perTableId = 43;
-        $scope.opened=true;
+        $scope.opened = true;
 
         $scope.update = _update;
 
@@ -25,7 +25,7 @@
             pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
             function _getAllSelectSuccessResult(result) {
                 $scope.dropDownLists = result;
-                param.PdDateOfBirth=moment(param.PdDateOfBirth).format("DD-MMM-YYYY");
+                param.PdDateOfBirth = moment(param.PdDateOfBirth).format("DD-MMM-YYYY");
                 $scope.entity = angular.copy(param);
             }
             function _getAllSelectErrorResult(err) {
@@ -47,14 +47,21 @@
                 tableId: perTableId,
                 pkId: $scope.entity.PdId,
                 pkColName: 'PdId',
-                PdDateOfBirth:$scope.entity.PdDateOfBirth,
+                PdDateOfBirth: $scope.entity.PdDateOfBirth,
                 PdGenderId: $scope.entity.PdGenderId,
                 PdMaritalId: $scope.entity.PdMaritalId,
                 PDReligionId: $scope.entity.PDReligionId,
-                PdBloodGroupId: $scope.entity.PdBloodGroupId
+                PdBloodGroupId: $scope.entity.PdBloodGroupId,
+                PdNameOnPanCard: $scope.entity.PdNameOnPanCard,
+                PDPanCard: $scope.entity.PDPanCard,
+                PdNameOnAdharCard: $scope.entity.PdNameOnAdharCard,
+                PDAdhar: $scope.entity.PDAdhar,
+                PdAdharEnrollmentNumber: $scope.entity.PdAdharEnrollmentNumber,
+                PDFacebook: $scope.entity.PDFacebook,
+                PDLinkedIn: $scope.entity.PDLinkedIn
             }
             entities.push(per);
-          
+
             pageService.udateMultiTableFields(entities).then(function (result) {
                 if (result.success_message = "Updated") {
                     $scope.modalInstance.close("success");

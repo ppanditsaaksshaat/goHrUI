@@ -106,26 +106,7 @@
                         </div>
                         <!-- end ngIf: function(){return a()} -->
                     </div>
-                    <div class="col-sm-12 link-item clear-side-padding">
-                        <!-- <div class="col-sm-6">
-                            <a class="anchor-sm" data-ui-sref="organization.employees.upload">
-                                <span>
-                                    <i class="fa fa-cloud-upload"></i>
-                                </span>
-                                Bulk Add Employees
-                            </a>
-                        </div> -->
-                        <!-- xhrFeatureAuthorize: -->
-                        <div class="col-sm-6 ng-scope" data-xhr-feature-authorize="" data-feature="ENGAGE">
-                            <a class="anchor-sm" data-ui-sref="selfdir.apply.applyloan">
-                                <span>
-                                    <i class="fa fa-user-plus"></i>
-                                </span>
-                                Apply Loan
-                            </a>
-                        </div>
-                        <!-- end ngIf: function(){return a()} -->
-                    </div>
+
                     <div class="col-sm-12 link-item">
                         <div class="col-sm-6 clear-side-padding">
                             <a class="anchor-sm" data-ui-sref="selfdir.apply.applyod">
@@ -147,12 +128,12 @@
 
                     </div>
                     <div class="col-sm-12 link-item">
-                        <div class="col-sm-6 clear-side-padding">
-                            <a class="anchor-sm" data-ui-sref="payroll.transaction.CustomPayrollSetting">
+                        <div class="col-sm-6 clear-side-padding" data-xhr-feature-authorize="" data-feature="ENGAGE">
+                            <a class="anchor-sm" data-ui-sref="selfdir.apply.applyloan">
                                 <span>
-                                    <i class="fa fa-money"></i>
+                                    <i class="fa fa-user-plus"></i>
                                 </span>
-                                Salary Generate
+                                Apply Loan
                             </a>
                         </div>
 
@@ -168,6 +149,15 @@
                     </div>
                     <div class="col-sm-12 link-item">
                         <div class="col-sm-6 clear-side-padding">
+                            <a class="anchor-sm" data-ui-sref="payroll.transaction.CustomPayrollSetting">
+                                <span>
+                                    <i class="fa fa-money"></i>
+                                </span>
+                                Salary Generate
+                            </a>
+                        </div>
+
+                        <div class="col-sm-6">
                             <a class="anchor-sm" data-ui-sref="selfdir.selfreport">
                                 <span>
                                     <i class="	fa fa-edit"></i>
