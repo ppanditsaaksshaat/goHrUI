@@ -10,11 +10,17 @@
 
     /** @ngInject */
     function payOverViewController($scope, $state, $rootScope, $filter, pageService, dialogModal) {
-
+        $scope.isReviewed = false;
+        $scope.reviewCount = 0;
         $scope.collpase = true;
         $scope.collpase2 = true;
+
+
         $scope.getData = _getMonthlyPayrollData;
         $scope.CheckLeaveAndAttendanceStatus = _CheckLeaveAndAttendanceStatus;
+        $scope.skipAll = _skipAll;
+        $scope.unSkip = _unSkip;
+        $scope.openReviewAllEmployees = _openReviewAllEmployees;
 
 
         var date = new Date();
@@ -165,6 +171,37 @@
             })
         }
 
+        function _skipAll() {
+            $scope.isReviewed = true;
+            $scope.reviewedBy = $rootScope.user.profile.empName;
+            $scope.actionTaken = moment().format("DD-MMM-YYYY");
+            $scope.progessWidth = "83.33%";
+            $scope.reviewCount = 5;
+        }
+        function _unSkip() {
+            $scope.isReviewed = false;
+            $scope.reviewedBy = "";
+            $scope.actionTaken = "";
+            $scope.progessWidth = "0";
+            $scope.reviewCount = 0;
+        }
+
+        function _openReviewAllEmployees() {
+            var param = {
+                subUnitId:$rootScope.user.profile.suId
+            }
+            var modal = dialogModal.openFullScreen({
+                url: 'app/pages/payrollprocess/overview/reviewallemp/review.html',
+                controller: 'reviewAllEmpController',
+                param: param
+            });
+            modal.result.then(function (data) {
+                if (data == "success") {
+                    _loadController();
+                    $scope.showMsg('success', 'Primary Detail Updated');
+                }
+            })
+        }
 
         _loadController();
     }
