@@ -6,19 +6,17 @@
         <form name="leaveDetail" id="leaveDetail" novalidate>
             <div class="row">
                 <div class="col-sm-12">
-
-
                     <div class="col-sm-12">
-
                         <div class="col-sm-3">
-                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.SubUnitId.text"></label>
-                            <select class="form-control input-sm" ng-model="month" ng-options="subUnit.value as subUnit.name for subUnit in selectedDropDown.pageinfo.selects.SubUnitId"></select>
+                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.SubUnitId.text">
+                                <span>*</span>
+                            </label>
+                            <select class="form-control input-sm" ng-model="entity.SubUnitId" ng-options="subUnit.value as subUnit.name for subUnit in selectedDropDown.pageinfo.selects.SubUnitId"></select>
                         </div>
                         <div class="col-sm-3">
                             <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.EmpId.text"></label>
-                            <select class="form-control input-sm" ng-change="employeeSalary()" ng-model="years" ng-options="subUnit.value as subUnit.name for subUnit in selectedDropDown.pageinfo.selects.EmpId"></select>
+                            <select class="form-control input-sm" ng-model="entity.EmpId" ng-options="empId.value as empId.name for empId in selectedDropDown.pageinfo.selects.EmpId"></select>
                         </div>
-
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label dotranslate>From Date</label>
@@ -42,11 +40,7 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-
-
                 </div>
 
                 <!-- <div class="col-sm-4">
