@@ -2,10 +2,16 @@
     <div class="panel">
         <div class="payroll-summary panel-body">
             <div class="clearfix content-container">
+                <div class="col-lg-3">
+                    <label>Sub Unit</label>
+                    <select ng-model="entity.subUnitId" ng-change="subUnitOnChange(entity.subUnitId)" class="form-control" ng-options="subUnit.value as subUnit.name for subUnit in subUnits"></select>
+                </div>
                 <div class="payroll-nav-bar col-sm-12">
                     <!-- ngIf: !vm.financialYear.includes(payrollConfig.payrollSchedule.payCycle.kekaStartsFrom) -->
+
                     <div class="payroll-month-nav col-sm-12 clear-side-padding">
                         <!-- ngRepeat: cycle in vm.cycles | orderBy:'lastDay'  -->
+
                         <div data-ng-repeat="pay in financialMonths">
                             <div class="month-tab-cell  cell-spacing " data-ng-click="getData(pay.id,pay.year)" data-ng-class="{'active': pay.active}">
                                 <div class="month-tab" data-ng-class="pay.statusClass">
@@ -122,7 +128,7 @@
                                 <div class="col-sm-1 alert-icon clear-side-padding">
                                     <!-- <span class="fa fa-angle-down"></span> -->
                                     <span>
-                                        <img src="assets/payroll-image/Holiday.jpg" alt="">
+                                        <img src="assets/payroll-image/Holiday.png" alt="">
                                     </span>
                                 </div>
                                 <div data-ng-click="CheckLeaveAndAttendanceStatus()" class="action col-sm-10 text-content clear-side-padding">
@@ -206,7 +212,7 @@
                                 </div>
                                 <div class="action col-sm-10 text-content clear-side-padding">
                                     <h4>Salaries On Hold</h4>
-                                    
+
                                     <!-- ngIf: !vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
                                     <p ng-if="!isReviewed" class="clear-vertical-margin ">No action taken</p>
                                     <p ng-if="isReviewed" class="clear-vertical-margin ">{{reviewedBy}} On {{actionTaken}}</p>
@@ -221,7 +227,7 @@
                                 <div class="col-sm-1 alert-icon clear-side-padding">
                                     <!-- <span class="icon-users"></span> -->
                                     <span>
-                                        <img src="assets/payroll-image/review.jpg" alt="">
+                                        <img src="assets/payroll-image/review.png" alt="">
                                     </span>
                                 </div>
                                 <div class="action col-sm-10 text-content clear-side-padding">
