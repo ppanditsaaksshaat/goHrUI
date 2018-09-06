@@ -10,10 +10,13 @@
 
     /** @ngInject */
     function payOverViewController($scope, $state, $rootScope, $filter, pageService, dialogModal) {
+        //   console.log(moment("01-Jan-2018").format("M"))
         $scope.isReviewed = false;
         $scope.reviewCount = 0;
         $scope.collpase = true;
         $scope.collpase2 = true;
+        $scope.entity = {};
+
 
 
         $scope.getData = _getMonthlyPayrollData;
@@ -21,13 +24,13 @@
         $scope.skipAll = _skipAll;
         $scope.unSkip = _unSkip;
         $scope.openReviewAllEmployees = _openReviewAllEmployees;
+        $scope.subUnitOnChange = _subUnitOnChange;
 
-
+        var columnIds = ['3669'];
         var date = new Date();
         var c_Month = date.getMonth() + 1;
         var c_Year = date.getFullYear();
         var nextYear = date.getFullYear() + 1;
-        var isChnageYear = false;
         $scope.financialMonths = [];
         var type = "";
         var statusClass = "";
@@ -37,25 +40,41 @@
 
 
         function _loadController() {
-            _getPayrollData(c_Month, c_Year)
-        }
-
-        var IsCalenderYear = $filter("findObj")($rootScope.user.sysparam, "IS_PAYROLL_CALENDER_MONTH", "key");
-        if (IsCalenderYear != null) {
-
-            if (IsCalenderYear.value == "True") {
-                _getPayrollMomth(1);
+            pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
+            function _getAllSelectSuccessResult(result) {
+                console.log(result)
+                $scope.subUnits = result[0];
+                $scope.entity.subUnitId = parseInt($rootScope.user.profile.suId);
+                _getFinancialMonthStartFrom($scope.entity.subUnitId)
+                _getPayrollData(c_Month, c_Year, $scope.entity.subUnitId)
             }
-            else {
-                _getPayrollMomth(4);
+            function _getAllSelectErrorResult(err) {
 
             }
         }
 
+        function _getFinancialMonthStartFrom(subUnitId) {
 
+            var searchList = [];
+            var searchFields = {
+                field: "LSCSUId",
+                operand: '=',
+                value: subUnitId
+            }
+            searchList.push(searchFields);
 
+            pageService.findEntity(335, undefined, searchList).then(
+                _findEntitySuccessResult, _findEntityErrorResult);
+            function _findEntitySuccessResult(result) {
+                _getPayrollCycle(moment(result.LSCEffectedFrom).format("M"));
+            }
+            function _findEntityErrorResult(err) {
 
-        function _getPayrollMomth(monthId) {
+            }
+        }
+
+        function _getPayrollCycle(monthId) {
+            var isChnageYear = false;
             for (var i = 0; i <= 11; i++) {
                 if (monthId > 12) {
                     monthId = 1
@@ -71,14 +90,8 @@
                 }
                 else if (c_Month > monthId) {
                     if (isChnageYear == false) {
-                        if (monthId == 5) {
-                            type = "Completed";
-                            statusClass = "completed";
-                        }
-                        else {
-                            type = "Pending";
-                            statusClass = "pending";
-                        }
+                        type = "Pending";
+                        statusClass = "pending";
                     }
                     else {
                         type = "Upcoming";
@@ -111,7 +124,7 @@
                 }
             })
             if (month <= c_Month) {
-                _getPayrollData(month, year)
+                _getPayrollData(month, year, $scope.entity.subUnitId)
             }
             else {
                 $scope.monthName = monthNames[month - 1]
@@ -127,10 +140,12 @@
         }
 
 
-        function _getPayrollData(month, year) {
+        function _getPayrollData(month, year, subUnitId) {
             var searchLists = [];
             searchLists.push({ field: 'month', operand: '=', value: month })
             searchLists.push({ field: 'year', operand: '=', value: year })
+            searchLists.push({ field: 'subUnit', operand: '=', value: subUnitId })
+
             var data = {
                 searchList: searchLists,
                 orderByList: []
@@ -187,8 +202,13 @@
         }
 
         function _openReviewAllEmployees() {
+            var month = $scope.monthId == undefined ? c_Month : $scope.monthId;
+            var year = $scope.yearId == undefined ? c_Year : $scope.yearId;
             var param = {
-                subUnitId:$rootScope.user.profile.suId
+                month: month,
+                year: year,
+                subUnitId: $scope.entity.subUnitId,
+                modalTitle: "Salary Verification Of " + monthNames[month - 1] + " " + year
             }
             var modal = dialogModal.openFullScreen({
                 url: 'app/pages/payrollprocess/overview/reviewallemp/review.html',
@@ -203,6 +223,11 @@
             })
         }
 
+        function _subUnitOnChange(subUnitId) {
+            $scope.financialMonths = [];
+            _getFinancialMonthStartFrom(subUnitId)
+            _getPayrollData(c_Month, c_Year, $scope.entity.subUnitId)
+        }
         _loadController();
     }
 })();
