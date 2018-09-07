@@ -12,10 +12,10 @@
             $scope.entity = {};
             $scope.downLoadPdf = _downLoadPdf;
             function _validateApprovedData() {
-                // if ($scope.entity.SubUnitId == undefined || $scope.entity.SubUnitId == null || $scope.entity.SubUnitId == '') {
-                //     $scope.showMsg("warning", "Please Select SubUnit");
-                //     return true;
-                // }
+                if ($scope.entity.SubUnitId == undefined || $scope.entity.SubUnitId == null || $scope.entity.SubUnitId == '') {
+                    $scope.showMsg("warning", "Please Select SubUnit");
+                    return true;
+                }
                 return false;
             }
     
@@ -129,7 +129,7 @@
                     data: $scope.pdfRowsData,
                     companyName: $scope.companyName,
                     address: $scope.address,
-                    reportType: 'Employee Detail',
+                    reportType: 'Reporting Manager',
                     pageOrientationType: 'landscape',
                     pageSize: 'A4'
                 }

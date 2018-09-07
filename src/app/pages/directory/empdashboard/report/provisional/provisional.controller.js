@@ -45,7 +45,7 @@
                 searchLists.push({
                     field: 'IsProvisional',
                     operand: "=",
-                    value: '0'
+                    value: '1'
                 })
                 searchLists.push({
                     field: 'FromDate',
@@ -87,6 +87,7 @@
                 })
                 console.log($scope.columnList)
                 if (result[1].length > 0) {
+                    console.log(result[1].length)
                     $scope.companyName = result[1][0].CCOName;
                     $scope.address = result[1][0].CCOAddress;
                     pdfRows.push([{
