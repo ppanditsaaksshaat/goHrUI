@@ -418,40 +418,40 @@
             <div ba-panel ba-panel-title=" REPORTS: EMPLOYEE STATUS" ba-panel-class=" medium-panel feed-comply-panel with-scroll todo-panel">
                 <ul class="report-info-list">
                     <li>
-                        <a data-ui-sref="directory.dashboard.fulldetail" >All Employees</a>
+                        <a data-ui-sref="directory.dashboard.fulldetail">All Employees</a>
                     </li>
 
                     <li>
-                        <a data-ui-sref="directory.dashboard.department" >Department-Wise</a>
+                        <a data-ui-sref="directory.dashboard.department">Department-Wise</a>
                     </li>
                     <li>
-                        <a data-ui-sref="directory.dashboard.gradeandlevel" >Grade And Level-Wise</a>
+                        <a data-ui-sref="directory.dashboard.gradeandlevel">Grade And Level-Wise</a>
                     </li>
                     <li>
-                        <a data-ui-sref="directory.dashboard.hasleft" >Exit Employee</a>
+                        <a data-ui-sref="directory.dashboard.hasleft">Exit Employee</a>
                     </li>
                     <li>
-                        <a data-ui-sref="directory.dashboard.job" >Jod Description</a>
+                        <a data-ui-sref="directory.dashboard.job">Jod Description</a>
                     </li>
                     <li>
-                        <a data-ui-sref="directory.dashboard.provisional" >Provisional</a>
+                        <a data-ui-sref="directory.dashboard.provisional">Provisional</a>
                     </li>
                     <li>
-                        <a data-ui-sref="directory.dashboard.reportingmanager" >Reporting Manager</a>
+                        <a data-ui-sref="directory.dashboard.reportingmanager">Reporting Manager</a>
                     </li>
                     <li>
                         <a data-ui-sref="directory.dashboard.role">Employee Roles</a>
                     </li>
                     <li>
-                        <a data-ui-sref="directory.dashboard.shift" >Shift Detail</a>
+                        <a data-ui-sref="directory.dashboard.shift">Shift Detail</a>
                     </li>
                     <li>
-                        <a data-ui-sref="directory.dashboard.withoutreportingmanager" >With Out Reporting Manager</a>
+                        <a data-ui-sref="directory.dashboard.withoutreportingmanager">With Out Reporting Manager</a>
                     </li>
                     <li>
-                        <a data-ui-sref="directory.dashboard.worktype" >Work Type</a>
+                        <a data-ui-sref="directory.dashboard.worktype">Work Type</a>
                     </li>
-                    
+
 
                     <li>
                         <a data-ui-sref="employees.reports.registered">Registered Employees</a>
@@ -460,7 +460,7 @@
                         <a data-ui-sref="employees.reports.invitations">Invited Employees</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.pendingregistrations" >Pending Registrations</a>
+                        <a data-ui-sref="employees.reports.pendingregistrations">Pending Registrations</a>
                     </li>
                     <li>
                         <a data-ui-sref="directory.dashboard.hasleft" href="#/employees/reports/uninvitedemployees">Uninvited Employees</a>
@@ -578,20 +578,19 @@
             <div ba-panel ba-panel-title=" Reports: Employee Demography" ba-panel-class=" medium-panel feed-comply-panel with-scroll todo-panel">
                 <ul class="report-info-list">
                     <li>
-                        <a data-ui-sref="employees.reports.familyinfo" href="#/employees/reports/familyinfo">Family Info</a>
+                        <a href="" data-ng-click="familyDetail('family')">Family Info</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.contactinfo" href="#/employees/reports/contactinfo">Contact Info</a>
+                        <a href="" data-ng-click="familyDetail('contact')">Contact Info</a>
+                    </li>
+                    <li>
+                        <a href="" data-ng-click="familyDetail('education')">Education Details</a>
+                    </li>
+                    <li>
+                        <a href="" data-ng-click="familyDetail('experience')">Past Experience Details</a>
                     </li>
                     <li>
                         <a data-ui-sref="employees.reports.bloodgroupinfo" href="#/employees/reports/bloodgroupinfo">Blood Group Info</a>
-                    </li>
-
-                    <li>
-                        <a data-ui-sref="employees.reports.education" href="#/employees/reports/education">Education Details</a>
-                    </li>
-                    <li>
-                        <a data-ui-sref="employees.reports.experience" href="#/employees/reports/experience">Past Experience Details</a>
                     </li>
                     <li>
                         <a data-ui-sref="employees.reports.birthdayreport" href="#/employees/reports/birthdayreport">Birthday Report</a>
@@ -645,25 +644,25 @@
             <div ba-panel ba-panel-title="  Reports: Employee Aggregates" ba-panel-class=" medium-panel feed-comply-panel with-scroll todo-panel">
                 <ul class="report-info-list">
                     <li>
+                        <a href="" data-ng-click="familyDetail('leave')">Leave Plans</a>
+                    </li>
+                    <li>
+                        <a href="" data-ng-click="familyDetail('location')">Org Locations</a>
+                    </li>
+                    <li>
+                        <a data-ui-sref="directory.dashboard.weekoff">Weekly-offs</a>
+                    </li>
+                    <li>
+                        <a data-ui-sref="directory.dashboard.attshift">Shifts</a>
+                    </li>
+                    <li>
                         <a data-ui-sref="employees.reports.jobtitles" href="#/employees/reports/jobtitles">Job Titles</a>
                     </li>
                     <li>
                         <a data-ui-sref="employees.reports.departments" href="#/employees/reports/departments">Departments</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.leaveplans" href="#/employees/reports/leaveplans">Leave Plans</a>
-                    </li>
-                    <li>
-                        <a data-ui-sref="employees.reports.orglocations" href="#/employees/reports/orglocations">Org Locations</a>
-                    </li>
-                    <li>
-                        <a data-ui-sref="employees.reports.weekoffs" href="#/employees/reports/weekoffs">Weekly-offs</a>
-                    </li>
-                    <li>
                         <a data-ui-sref="employees.reports.trackingpolicies" href="#/employees/reports/trackingpolicies">Attendance Tracking Policies</a>
-                    </li>
-                    <li>
-                        <a data-ui-sref="employees.reports.shifts" href="#/employees/reports/shifts">Shifts</a>
                     </li>
                     <li>
                         <a data-ui-sref="employees.reports.expensepolicies" href="#/employees/reports/expensepolicies">Expense Policies</a>

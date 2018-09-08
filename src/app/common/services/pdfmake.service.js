@@ -64,12 +64,13 @@
                     //     rowObjList.push("{},")
                     // }
                     console.log(columnList)
-                    if (options.isRowHeader) {
-                        if (result[1].length > 0) {
-                            companyName = result[1][0].CCOName;
-                            address = result[1][0].CCOAddress;
+
+                    if (result[1].length > 0) {
+                        companyName = result[1][0].CCOName;
+                        address = result[1][0].CCOAddress;
+                        if (options.isRowHeader) {
                             pdfRows.push([{
-                                text: result[0][0].EmpName + ',  ' + 'Department -' + result[0][0].DeptName + ',  ' + 'Designation -' + result[0][0].DesgName,
+                                text: 'Code - ' + result[2][0].EmpCode + '    ' + 'Name - ' + result[2][0].EmpName + '    ' + 'Department - ' + result[2][0].DeptName + '    ' + 'Designation - ' + result[2][0].DesgName,
                                 style: 'tableHeader', colSpan: 10
                             }, {}, {}, {}, {}, {}, {}, {}, {}, {}])
                             // pdfRows.push([{
