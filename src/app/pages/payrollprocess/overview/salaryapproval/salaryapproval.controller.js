@@ -6,10 +6,10 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.payrollprocess.overview')
-        .controller('reviewAllEmpController', reviewAllEmpController);
+        .controller('salaryApprovalController', salaryApprovalController);
 
     /** @ngInject */
-    function reviewAllEmpController($scope, $rootScope, pageService, param) {
+    function salaryApprovalController($scope, $rootScope, pageService, param) {
 
         var queryId = 520;
         $scope.pendingVerification = true;
@@ -44,29 +44,29 @@
                 {
                     name: 'EmpName', displayName: 'Name', width: 150, enableCellEdit: false, visible: true,
                 },
-                { name: 'TotalDays', displayName: 'Total Days', width: 60, enableCellEdit: false, visible: true },
-                { name: 'TotalSalaryDays', displayName: 'Salary Days', width: 60, enableCellEdit: false, visible: true },
-                { name: 'TotalPresentDays', displayName: 'Present Days', width: 60, enableCellEdit: false },
-                { name: 'TotalWeekoff', displayName: 'Total WeekOffs', width: 60, enableCellEdit: false },
-                { name: 'TotalHolidays', displayName: 'Total Holidays', width: 60, enableCellEdit: false },
-                { name: 'AbsentDays', displayName: 'Absent Days', width: 60, enableCellEdit: false },
-                { name: 'TotalLeaves', displayName: 'Total Leaves', width: 80, enableCellEdit: false },
-                { name: 'TotalDays', displayName: 'Total Days', width: 60, enableCellEdit: false },
-                { name: 'WeekOffPresent', displayName: 'WeekOffDay Present', width: 60, enableCellEdit: false },
-                { name: 'HolidayPresent', displayName: 'HolidayDay Present', width: 60, enableCellEdit: false },
-                { name: 'TotalLateCount', displayName: 'Late Count', width: 60, enableCellEdit: false },
-                { name: 'DeductableLateDays', displayName: 'Late Days', width: 60, enableCellEdit: false },
-                { name: 'TotalDeductableDays', displayName: 'Deduct Days', width: 60, enableCellEdit: false },
-                { name: 'DeductableLateCount', displayName: 'Deduct Late Days', width: 60, enableCellEdit: false },
-                { name: 'TotalLWP', displayName: 'LWP', width: 60, enableCellEdit: false },
-                { name: 'IncentiveDays', displayName: 'Incentive Days', width: 60, enableCellEdit: false },
-                { name: 'SingleOvertimeMin', displayName: 'Single OT Minute', width: 60, enableCellEdit: false },
-                { name: 'SingleOvertimeHours', displayName: 'Single OT Hours', width: 60, enableCellEdit: false },
-                { name: 'DoubleOvertimeMin', displayName: 'Double OT Minute', width: 60, enableCellEdit: false },
-                { name: 'DoubleOvertimeHours', displayName: 'Double OT Hours', width: 60, enableCellEdit: false },
-                { name: 'TotalWeekOffComp', displayName: 'Total WeekOffComp', width: 60, enableCellEdit: false },
-                { name: 'TotalHolidayComp', displayName: 'Total HolidayComp', width: 60, enableCellEdit: false },
-                { name: 'IncompleteDays', displayName: 'Incompleted Days', width: 60, enableCellEdit: false },
+                { name: 'Org_TotalDays', displayName: 'Total Days', width: 60, enableCellEdit: false, visible: true },
+                { name: 'Org_TotalSalaryDays', displayName: 'Salary Days', width: 60, enableCellEdit: false, visible: true },
+                { name: 'Org_TotalPresentDays', displayName: 'Present Days', width: 60, enableCellEdit: false },
+                { name: 'Org_TotalWeekoff', displayName: 'Total WeekOffs', width: 60, enableCellEdit: false },
+                { name: 'Org_TotalHolidays', displayName: 'Total Holidays', width: 60, enableCellEdit: false },
+                { name: 'Org_AbsentDays', displayName: 'Absent Days', width: 60, enableCellEdit: false },
+                { name: 'Org_TotalLeaves', displayName: 'Total Leaves', width: 80, enableCellEdit: false },
+                { name: 'Org_TotalDays', displayName: 'Total Days', width: 60, enableCellEdit: false },
+                { name: 'Org_AMSWeekOffPresent', displayName: 'WeekOffDay Present', width: 60, enableCellEdit: false },
+                { name: 'Org_AMSHolidayPresent', displayName: 'HolidayDay Present', width: 60, enableCellEdit: false },
+                { name: 'Org_TotalLateCount', displayName: 'Late Count', width: 60, enableCellEdit: false },
+                { name: 'Org_DeductableLateDays', displayName: 'Late Days', width: 60, enableCellEdit: false },
+                { name: 'Org_TotalDeductableDays', displayName: 'Deduct Days', width: 60, enableCellEdit: false },
+                { name: 'Org_DeductableLateCount', displayName: 'Deduct Late Days', width: 60, enableCellEdit: false },
+                { name: 'Org_TotalLWP', displayName: 'LWP', width: 60, enableCellEdit: false },
+                { name: 'Org_AMSIncentiveDays', displayName: 'Incentive Days', width: 60, enableCellEdit: false },
+                { name: 'Org_AMSSingleOTMinutes', displayName: 'Single OT Minute', width: 60, enableCellEdit: false },
+                { name: 'Org_AMSSingleOTHours', displayName: 'Single OT Hours', width: 60, enableCellEdit: false },
+                { name: 'Org_AMSDoubleOTMinutes', displayName: 'Double OT Minute', width: 60, enableCellEdit: false },
+                { name: 'Org_AMSDoubleOTHours', displayName: 'Double OT Hours', width: 60, enableCellEdit: false },
+                { name: 'Org_AMSTotalWeekOffComp', displayName: 'Total WeekOffComp', width: 60, enableCellEdit: false },
+                { name: 'Org_AMSTotalHolidayComp', displayName: 'Total HolidayComp', width: 60, enableCellEdit: false },
+                { name: 'Org_AMSIncompleteDays', displayName: 'Incompleted Days', width: 60, enableCellEdit: false },
 
             ],
         }
@@ -107,29 +107,30 @@
                     {
                         name: 'EmpName', displayName: 'Name', width: 150, enableCellEdit: false, visible: true,
                     },
-                    { name: 'Org_TotalDays', displayName: 'Total Days', width: 60, enableCellEdit: false, visible: true },
-                    { name: 'Org_TotalSalaryDays', displayName: 'Salary Days', width: 60, enableCellEdit: false, visible: true },
-                    { name: 'Org_TotalPresentDays', displayName: 'Present Days', width: 60, enableCellEdit: false },
-                    { name: 'Org_TotalWeekoff', displayName: 'Total WeekOffs', width: 60, enableCellEdit: false },
-                    { name: 'Org_TotalHolidays', displayName: 'Total Holidays', width: 60, enableCellEdit: false },
-                    { name: 'Org_AbsentDays', displayName: 'Absent Days', width: 60, enableCellEdit: false },
-                    { name: 'Org_TotalLeaves', displayName: 'Total Leaves', width: 80, enableCellEdit: false },
-                    { name: 'Org_TotalDays', displayName: 'Total Days', width: 60, enableCellEdit: false },
-                    { name: 'Org_AMSWeekOffPresent', displayName: 'WeekOffDay Present', width: 60, enableCellEdit: false },
-                    { name: 'Org_AMSHolidayPresent', displayName: 'HolidayDay Present', width: 60, enableCellEdit: false },
-                    { name: 'Org_TotalLateCount', displayName: 'Late Count', width: 60, enableCellEdit: false },
-                    { name: 'Org_DeductableLateDays', displayName: 'Late Days', width: 60, enableCellEdit: false },
-                    { name: 'Org_TotalDeductableDays', displayName: 'Deduct Days', width: 60, enableCellEdit: false },
-                    { name: 'Org_DeductableLateCount', displayName: 'Deduct Late Days', width: 60, enableCellEdit: false },
-                    { name: 'Org_TotalLWP', displayName: 'LWP', width: 60, enableCellEdit: false },
-                    { name: 'Org_AMSIncentiveDays', displayName: 'Incentive Days', width: 60, enableCellEdit: false },
-                    { name: 'Org_AMSSingleOTMinutes', displayName: 'Single OT Minute', width: 60, enableCellEdit: false },
-                    { name: 'Org_AMSSingleOTHours', displayName: 'Single OT Hours', width: 60, enableCellEdit: false },
-                    { name: 'Org_AMSDoubleOTMinutes', displayName: 'Double OT Minute', width: 60, enableCellEdit: false },
-                    { name: 'Org_AMSDoubleOTHours', displayName: 'Double OT Hours', width: 60, enableCellEdit: false },
-                    { name: 'Org_AMSTotalWeekOffComp', displayName: 'Total WeekOffComp', width: 60, enableCellEdit: false },
-                    { name: 'Org_AMSTotalHolidayComp', displayName: 'Total HolidayComp', width: 60, enableCellEdit: false },
-                    { name: 'Org_AMSIncompleteDays', displayName: 'Incompleted Days', width: 60, enableCellEdit: false },];
+                    { name: 'TotalDays', displayName: 'Total Days', width: 60, enableCellEdit: false, visible: true },
+                    { name: 'TotalSalaryDays', displayName: 'Salary Days', width: 60, enableCellEdit: false, visible: true },
+                    { name: 'TotalPresentDays', displayName: 'Present Days', width: 60, enableCellEdit: false },
+                    { name: 'TotalWeekoff', displayName: 'Total WeekOffs', width: 60, enableCellEdit: false },
+                    { name: 'TotalHolidays', displayName: 'Total Holidays', width: 60, enableCellEdit: false },
+                    { name: 'AbsentDays', displayName: 'Absent Days', width: 60, enableCellEdit: false },
+                    { name: 'TotalLeaves', displayName: 'Total Leaves', width: 80, enableCellEdit: false },
+                    { name: 'TotalDays', displayName: 'Total Days', width: 60, enableCellEdit: false },
+                    { name: 'WeekOffPresent', displayName: 'WeekOffDay Present', width: 60, enableCellEdit: false },
+                    { name: 'HolidayPresent', displayName: 'HolidayDay Present', width: 60, enableCellEdit: false },
+                    { name: 'TotalLateCount', displayName: 'Late Count', width: 60, enableCellEdit: false },
+                    { name: 'DeductableLateDays', displayName: 'Late Days', width: 60, enableCellEdit: false },
+                    { name: 'TotalDeductableDays', displayName: 'Deduct Days', width: 60, enableCellEdit: false },
+                    { name: 'DeductableLateCount', displayName: 'Deduct Late Days', width: 60, enableCellEdit: false },
+                    { name: 'TotalLWP', displayName: 'LWP', width: 60, enableCellEdit: false },
+                    { name: 'IncentiveDays', displayName: 'Incentive Days', width: 60, enableCellEdit: false },
+                    { name: 'SingleOvertimeMin', displayName: 'Single OT Minute', width: 60, enableCellEdit: false },
+                    { name: 'SingleOvertimeHours', displayName: 'Single OT Hours', width: 60, enableCellEdit: false },
+                    { name: 'DoubleOvertimeMin', displayName: 'Double OT Minute', width: 60, enableCellEdit: false },
+                    { name: 'DoubleOvertimeHours', displayName: 'Double OT Hours', width: 60, enableCellEdit: false },
+                    { name: 'TotalWeekOffComp', displayName: 'Total WeekOffComp', width: 60, enableCellEdit: false },
+                    { name: 'TotalHolidayComp', displayName: 'Total HolidayComp', width: 60, enableCellEdit: false },
+                    { name: 'IncompleteDays', displayName: 'Incompleted Days', width: 60, enableCellEdit: false }
+                    ];
                     row.entity.subGridOptions.data = [];
                     // var subGridColumns = angular.copy($scope.gridReviewAllEmpOptions.columnDefs)
                     angular.forEach(row.entity.subGridOptions.columnDefs, function (data) {
@@ -180,7 +181,7 @@
                     else {
                         data.ShortName = spiltName[0].substr(0, 1);
                     }
-                    if (data.FailedRemark != "Verified") {
+                    if (data.FailedRemark == "Verified") {
                         pendingSalary.push(data);
                     }
 

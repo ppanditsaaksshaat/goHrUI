@@ -240,35 +240,50 @@
                                 <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.completed -->
                             </div>
                         </div>
-                    </div>
-
-
-                </div>
-                <!-- ngIf: !vm.currentcycle.isFinalize -->
-                <div class="run row ">
-                    <div class="col-sm-4" style="top:-20px">
-                        <div class="btn btn-payroll-run col-sm-12 disabled" data-ng-click="OpenfinalizeDialog();" data-ng-class="{'disabled' : (!vm.currentcycle.details.actions.completed || vm.disbalePayrollRun || !vm.currentcycle.arePreActionEnabled)}">
-                            <div class="col-sm-4 text-left clear-side-padding">
-                                <div class="title">Finalize Payroll</div>
+                        <div class="col-sm-4" style="top:-48px">
+                            <div class="alert alert-info clearfix" data-ng-click="openSalaryApprovalModal();">
+                                <div class="col-sm-1 alert-icon clear-side-padding">
+                                    <!-- <span class="icon-users"></span> -->
+                                    <span>
+                                        <img src="assets/payroll-image/salary.png" alt="">
+                                    </span>
+                                </div>
+                                <div class="action col-sm-10 text-content clear-side-padding">
+                                    <h4>Salary Approvals</h4>
+                                    <!-- ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
+                                    <p class="clear-vertical-margin ">No action taken</p>
+                                    <!-- end ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
+                                    <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
+                                </div>
+                                <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.completed -->
                             </div>
-                            <div class="col-sm-8 text-left clear-side-padding">
-                                <div class="row details">
-                                    <div class="progress-details col-sm-6 ">
-                                        <div class="progress">
-                                            <div class="progress-bar clear-vertical-margin" data-ng-style="{'width':progessWidth}"></div>
+                        </div>
+                        <div class="col-sm-4 run" style="top:-20px">
+                            <div class="btn btn-payroll-run col-sm-12 disabled" data-ng-click="OpenfinalizeDialog();" data-ng-class="{'disabled' : (!vm.currentcycle.details.actions.completed || vm.disbalePayrollRun || !vm.currentcycle.arePreActionEnabled)}">
+                                <div class="col-sm-4 text-left clear-side-padding">
+                                    <div class="title">Finalize Payroll</div>
+                                </div>
+                                <div class="col-sm-8 text-left clear-side-padding">
+                                    <div class="row details">
+                                        <div class="progress-details col-sm-6 ">
+                                            <div class="progress">
+                                                <div class="progress-bar clear-vertical-margin" data-ng-style="{'width':progessWidth}"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6 clear-left-padding">
-                                        <span class="pull-right icon-info2 information-tooltip tooltip-grey" uib-tooltip="Finalize Run." tooltip-placement="top"></span>
-                                        <span class="ng-binding"> {{reviewCount}} of 6 steps completed</span>
+                                        <div class="col-sm-6 clear-left-padding">
+                                            <span class="pull-right icon-info2 information-tooltip tooltip-grey" uib-tooltip="Finalize Run." tooltip-placement="top"></span>
+                                            <span class="ng-binding"> {{reviewCount}} of 6 steps completed</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- ngIf: payrollConfig.payrollSchedule.payCycle.canSkip(vm.currentcycle.details.to) -->
                         </div>
-                        <!-- ngIf: payrollConfig.payrollSchedule.payCycle.canSkip(vm.currentcycle.details.to) -->
                     </div>
+
+
                 </div>
-                <!-- end ngIf: !vm.currentcycle.isFinalize -->
+              
             </div>
 
         </div>

@@ -977,7 +977,8 @@
           finalVerifyData = angular.copy($scope.page.selectedRows)
           alert("you are not allowed to verify this attendance");
           return;
-        } else {
+        }
+        else {
           if ($scope.gridDataCount == $scope.page.selectedRows.length) {
             if ($scope.page.selectedRows[0].SMAllowedNegitiveVerify) {
               finalVerifyData = angular.copy($scope.page.selectedRows)
@@ -1825,7 +1826,7 @@
       console.log(error)
     }
 
-    function _print() {   
+    function _print() {
       window.print();
     }
 

@@ -25,6 +25,7 @@
         $scope.unSkip = _unSkip;
         $scope.openReviewAllEmployees = _openReviewAllEmployees;
         $scope.subUnitOnChange = _subUnitOnChange;
+        $scope.openSalaryApprovalModal = _openSalaryApprovalModal
 
         var columnIds = ['3669'];
         var date = new Date();
@@ -222,6 +223,28 @@
                 }
             })
         }
+        function _openSalaryApprovalModal() {
+            var month = $scope.monthId == undefined ? c_Month : $scope.monthId;
+            var year = $scope.yearId == undefined ? c_Year : $scope.yearId;
+            var param = {
+                month: month,
+                year: year,
+                subUnitId: $scope.entity.subUnitId,
+                modalTitle: "Salary Approval Of " + monthNames[month - 1] + " " + year
+            }
+            var modal = dialogModal.openFullScreen({
+                url: 'app/pages/payrollprocess/overview/salaryapproval/salaryapproval.html',
+                controller: 'salaryApprovalController',
+                param: param
+            });
+            modal.result.then(function (data) {
+                if (data == "success") {
+                    _loadController();
+                    $scope.showMsg('success', 'Primary Detail Updated');
+                }
+            })
+        }
+
 
         function _subUnitOnChange(subUnitId) {
             $scope.financialMonths = [];
