@@ -1,20 +1,24 @@
 /**
  * @author NKM
- * created on 05.09.2018
+ * created on 08.09.2018
  */
 (function () {
     'use strict';
 
     angular.module('BlurAdmin.pages.directory.empdashboard')
-        .controller('workTypeController', workTypeController);
-    function workTypeController($scope, $rootScope, $state, $filter, pageService, createPdfReport) {
+        .controller('weekOffController', weekOffController);
+    function weekOffController($scope, $rootScope, $state, $filter, pageService, createPdfReport) {
         var vm = this;
         $scope.entity = {};
         // $scope.downLoadPdf = _downLoadPdf;
         $scope.downLoadPdf = _getSearchData;
         function _validateApprovedData() {
-            if ($scope.entity.EmpTypeId == undefined || $scope.entity.EmpTypeId == null || $scope.entity.EmpTypeId == '') {
-                $scope.showMsg("warning", "Please Select Employment Type");
+            if ($scope.entity.FromDate == undefined || $scope.entity.FromDate == null || $scope.entity.FromDate == '') {
+                $scope.showMsg("warning", "Please Select From Date.");
+                return true;
+            }
+            if ($scope.entity.ToDate == undefined || $scope.entity.ToDate == null || $scope.entity.ToDate == '') {
+                $scope.showMsg("warning", "Please Select To Date.");
                 return true;
             }
             return false;
@@ -43,12 +47,7 @@
                 searchLists.push({
                     field: 'ReportType',
                     operand: "=",
-                    value: 'WorkType'
-                })
-                searchLists.push({
-                    field: 'EmpTypeId',
-                    operand: "=",
-                    value: $scope.entity.EmpTypeId
+                    value: 'Weekoff'
                 })
                 searchLists.push({
                     field: 'FromDate',
@@ -59,6 +58,16 @@
                     field: 'ToDate',
                     operand: "=",
                     value: $scope.entity.ToDate
+                })
+                searchLists.push({
+                    field: 'EmpId',
+                    operand: "=",
+                    value: $rootScope.user.profile.empId
+                })
+                searchLists.push({
+                    field: 'LoginEmpId',
+                    operand: "=",
+                    value: $rootScope.user.profile.empId
                 })
                 console.log(searchLists)
                 var data = {
@@ -72,7 +81,7 @@
                     reportType: 'Reporting Manager',
                     pageOrientationType: 'landscape',
                     pageSize: 'A4',
-                    isRowHeader: true,
+                    isRowHeader: false,
                     searchData: data,
                     queryId: 667,
                     header: $scope.selectedDropDown.pageinfo.fields,

@@ -9,12 +9,13 @@
         .controller('dirDashboardController', dirDashboardController);
 
     /** @ngInject */
-    function dirDashboardController($scope, $state, pageService, dialogModal) {
+    function dirDashboardController($scope, $state, pageService, dialogModal, $rootScope, createPdfReport) {
 
         $scope.viewallemployee = _viewallemployee;
         $scope.newListJoins = _newJoins;
         $scope.hasLeft = _hasLeft;
         $scope.birthDay = _birthDay;
+        $scope.familyDetail = _familyDetail;
 
 
 
@@ -56,7 +57,11 @@
             ],
         }
         function _loadController() {
-
+            pageService.getPagData(505).then(function (result) {
+                console.log(result)
+                $scope.selectedDropDown = result;
+                console.log($scope.selectedDropDown)
+            })
             //  $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");    
             var searchLists = [];
 
@@ -113,6 +118,90 @@
                 param: $scope.newJoins
             });
         }
+
+        function _validateApprovedData() {
+            // if ($scope.entity.EmpTypeId == undefined || $scope.entity.EmpTypeId == null || $scope.entity.EmpTypeId == '') {
+            //     $scope.showMsg("warning", "Please Select Employment Type");
+            //     return true;
+            // }
+            return false;
+        }
+
+        function _familyDetail(reportType) {
+            console.log('family detail')
+            if (!_validateApprovedData()) {
+                var searchLists = [];
+                var rptType = '';
+                var isHeader = true;
+                var pageOrientation = 'landscape'
+                var reportName = ''
+                if (reportType == 'family') {
+                    rptType = 'Family';
+                    reportName = 'Family Detail';
+                }
+                else if (reportType == 'contact') {
+                    rptType = 'Contact';
+                    reportName = 'Contact Detail';
+                }
+                else if (reportType == 'education') {
+                    rptType = 'Education';
+                    reportName = 'Education Detail'
+                }
+                else if (reportType == 'experience') {
+                    rptType = 'Experience';
+                    reportName = 'Past Exeperience Detail'
+                }
+                else if (reportType == 'leave') {
+                    rptType = 'Leave';
+                    reportName = 'Leave Detail'
+                    // isHeader = false;
+                }
+                else if (reportType == 'location') {
+                    rptType = 'Location';
+                    isHeader = false;
+                    pageOrientation = 'portrait'
+                }
+                searchLists.push({
+                    field: 'ReportType',
+                    operand: "=",
+                    value: rptType
+                })
+                searchLists.push({
+                    field: 'LoginEmpId',
+                    operand: "=",
+                    value: $rootScope.user.profile.empId
+                })
+                if (reportType != 'education') {
+                    searchLists.push({
+                        field: 'EmpId',
+                        operand: "=",
+                        value: $rootScope.user.profile.empId
+                    })
+                }
+
+                console.log(searchLists)
+                var data = {
+                    searchList: searchLists,
+                    orderByList: []
+                }
+                var data = {
+                    data: $scope.pdfRowsData,
+                    companyName: $scope.companyName,
+                    address: $scope.address,
+                    reportType: reportName,
+                    pageOrientationType: pageOrientation,
+                    pageSize: 'A4',
+                    isRowHeader: isHeader,
+                    searchData: data,
+                    queryId: 667,
+                    header: $scope.selectedDropDown.pageinfo.fields,
+                    isQuery: 'true'
+                }
+                createPdfReport.createPdf(data)
+            }
+        }
+
+
 
         _loadController();
     }

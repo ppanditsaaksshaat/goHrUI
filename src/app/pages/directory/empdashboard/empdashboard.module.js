@@ -290,6 +290,52 @@
                     order: 1,
                     show: 0
                 },
+            }).state('directory.dashboard.weekoff', {
+                url: '/weekoff',
+                parent: 'directory.dashboard.modal',
+                onEnter: ['$state', function ($state) {
+                    console.log($state)
+                }],
+                views: {
+                    'modal@': {
+                        templateUrl: 'app/pages/directory/empdashboard/report/weekoff/weekoff.html',
+                        controller: 'weekOffController',
+                        resolve: {
+                            entity: function ($stateParams) {
+                                return $stateParams.entity;
+                            }
+                        }
+                    }
+                },
+                title: 'Edit Location',
+                sidebarMeta: {
+                    icon: 'ion-android-home',
+                    order: 1,
+                    show: 0
+                },
+            }).state('directory.dashboard.attshift', {
+                url: '/attshift',
+                parent: 'directory.dashboard.modal',
+                onEnter: ['$state', function ($state) {
+                    console.log($state)
+                }],
+                views: {
+                    'modal@': {
+                        templateUrl: 'app/pages/directory/empdashboard/report/attshift/attshift.html',
+                        controller: 'shiftSelfController',
+                        resolve: {
+                            entity: function ($stateParams) {
+                                return $stateParams.entity;
+                            }
+                        }
+                    }
+                },
+                title: 'Edit Location',
+                sidebarMeta: {
+                    icon: 'ion-android-home',
+                    order: 1,
+                    show: 0
+                },
             })
 
         $urlRouterProvider.when('/directory', '/directory/dashboard');

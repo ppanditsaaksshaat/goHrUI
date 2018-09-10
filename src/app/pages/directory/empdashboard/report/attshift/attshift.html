@@ -1,23 +1,13 @@
 <div class="modal-content">
     <div class="modal-header bg-primary">
-        <h3 class="inline-block clear-vertical-margin" dotranslate>Employee Department-Wise Report</h3>
+        <h3 class="inline-block clear-vertical-margin" dotranslate>Employee Shift Detail</h3>
     </div>
     <div class="modal-body content-container">
         <form name="leaveDetail" id="leaveDetail" novalidate>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="col-sm-12">
-                        <div class="col-sm-3">
-                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.SubUnitId.text">
-                                <span>*</span>
-                            </label>
-                            <select class="form-control input-sm" ng-model="entity.SubUnitId" ng-options="subUnit.value as subUnit.name for subUnit in selectedDropDown.pageinfo.selects.SubUnitId"></select>
-                        </div>
-                        <div class="col-sm-3">
-                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.DeptId.text"></label>
-                            <select class="form-control input-sm" ng-model="entity.DeptId" ng-options="empId.value as empId.name for empId in selectedDropDown.pageinfo.selects.DeptId"></select>
-                        </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-5">
                             <div class="form-group">
                                 <label dotranslate>From Date</label>
                                 <div class="input-group" moment-picker="entity.FromDate" format="DD-MMM-YYYY">
@@ -29,7 +19,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-5">
                             <div class="form-group">
                                 <label dotranslate>To Time</label>
                                 <div class="input-group" moment-picker="entity.ToDate" format="DD-MMM-YYYY">
