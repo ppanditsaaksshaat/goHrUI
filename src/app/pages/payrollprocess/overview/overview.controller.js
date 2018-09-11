@@ -47,7 +47,7 @@
                 $scope.subUnits = result[0];
                 $scope.entity.subUnitId = parseInt($rootScope.user.profile.suId);
                 _getFinancialMonthStartFrom($scope.entity.subUnitId)
-                _getPayrollData(c_Month, c_Year, $scope.entity.subUnitId)
+               
             }
             function _getAllSelectErrorResult(err) {
 
@@ -67,6 +67,10 @@
             pageService.findEntity(335, undefined, searchList).then(
                 _findEntitySuccessResult, _findEntityErrorResult);
             function _findEntitySuccessResult(result) {
+                $scope.isEndOfMonth = result.LSCEndOfMonth;
+                $scope.fromDay = result.LSCFromDay;
+                $scope.endDay = result.LSCToDay;
+                _getPayrollData(c_Month, c_Year, $scope.entity.subUnitId)
                 _getPayrollCycle(moment(result.LSCEffectedFrom).format("M"));
             }
             function _findEntityErrorResult(err) {
@@ -153,7 +157,18 @@
             }
             pageService.getCustomQuery(data, 660).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
             function _getCustomQuerySuccessResult(result) {
-
+                if ($scope.isEndOfMonth) {
+                    $scope.monthStartName = monthNames[month - 1];
+                    $scope.monthEndName= monthNames[month - 1];
+                    $scope.firstDayNumber = 1;
+                    $scope.lastDayNumber = new Date(year, month, 0).getDate();
+                }
+                else {
+                    $scope.monthStartName = monthNames[month - 1];
+                    $scope.monthEndName= monthNames[month - 1];
+                    $scope.firstDayNumber =  $scope.fromDay;
+                    $scope.lastDayNumber =  $scope.endDay;
+                }
                 $scope.monthName = monthNames[month - 1]
                 $scope.year = year;
                 $scope.lastDayNumber = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
