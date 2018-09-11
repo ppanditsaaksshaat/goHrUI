@@ -47,7 +47,7 @@
                 $scope.subUnits = result[0];
                 $scope.entity.subUnitId = parseInt($rootScope.user.profile.suId);
                 _getFinancialMonthStartFrom($scope.entity.subUnitId)
-               
+
             }
             function _getAllSelectErrorResult(err) {
 
@@ -70,7 +70,7 @@
                 $scope.isEndOfMonth = result.LSCEndOfMonth;
                 $scope.fromDay = result.LSCFromDay;
                 $scope.endDay = result.LSCToDay;
-                _getPayrollData(c_Month, c_Year, $scope.entity.subUnitId)
+                _getPayrollData(c_Month, c_Year, subUnitId)
                 _getPayrollCycle(moment(result.LSCEffectedFrom).format("M"));
             }
             function _findEntityErrorResult(err) {
@@ -159,20 +159,23 @@
             function _getCustomQuerySuccessResult(result) {
                 if ($scope.isEndOfMonth) {
                     $scope.monthStartName = monthNames[month - 1];
-                    $scope.monthEndName= monthNames[month - 1];
+                    $scope.monthEndName = monthNames[month - 1];
                     $scope.firstDayNumber = 1;
                     $scope.lastDayNumber = new Date(year, month, 0).getDate();
+                    $scope.calenderDays = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
                 }
                 else {
                     $scope.monthStartName = monthNames[month - 1];
-                    $scope.monthEndName= monthNames[month - 1];
-                    $scope.firstDayNumber =  $scope.fromDay;
-                    $scope.lastDayNumber =  $scope.endDay;
+                    $scope.monthEndName = monthNames[month];
+                    $scope.firstDayNumber = $scope.fromDay;
+                    $scope.lastDayNumber = $scope.endDay;
+                    var betweenFromDate = $scope.fromDay + "-" + $scope.monthStartName + "-" + year;
+                    var betweentoDate = $scope.endDay + "-" + $scope.monthEndName + "-" + year;
+                    betweentoDate.diff(betweenFromDate, 'days');
+                    $scope.calenderDays = betweentoDate.diff(betweenFromDate, 'days');
                 }
-                $scope.monthName = monthNames[month - 1]
+
                 $scope.year = year;
-                $scope.lastDayNumber = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
-                $scope.calenderDays = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
                 $scope.totalEmployee = result[0][0].TotalEmployee != null ? result[0][0].TotalEmployee : 0;
                 $scope.exitEmployee = result[0][0].ExistEmployee != null ? result[0][0].ExistEmployee : 0;
                 $scope.newEmployee = result[0][0].NewEmployee != null ? result[0][0].NewEmployee : 0;
@@ -264,7 +267,7 @@
         function _subUnitOnChange(subUnitId) {
             $scope.financialMonths = [];
             _getFinancialMonthStartFrom(subUnitId)
-            _getPayrollData(c_Month, c_Year, $scope.entity.subUnitId)
+            // _getPayrollData(c_Month, c_Year, $scope.entity.subUnitId)
         }
         _loadController();
     }

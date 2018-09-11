@@ -6,7 +6,6 @@
  */
 (function () {
     'use strict';
-
     angular.module('BlurAdmin.pages')
         .controller('authController', authController);
 
