@@ -13,7 +13,7 @@
     function authController($scope, $rootScope, $interval, pageService, DJWebStore, authService) {
 
         DJWebStore.RemoveAll();
-
+        console.log('pp');
         var vm = this;
         //fetching dev api url
         if (DJWebStore.IsDev()) {
@@ -67,7 +67,7 @@
                     vl: true,
                     multi: false,
                     lang: true,
-                    corpo: '400' 
+                    corpo: '400'
                 };
                 $("#userCorpoId").val($scope.key.corpo);
                 $interval.cancel($scope.interval);
@@ -169,44 +169,44 @@
 
             authService.login(loginData, userCorpoId, $scope.selectedLanguage.value).then(function (response) {
 
-                    console.log(response)
-                    $scope.GetBGClass()
-                    pageService.getAppUserData().then(function (result) {
-                        var isValid = true;
-                        console.log(result)
-                        $rootScope.key = result.key;
-                        if (result.key) {
-                            $scope.key = result.key;
-                            isValid = result.key.vl
-                        } 
+                console.log(response)
+                $scope.GetBGClass()
+                pageService.getAppUserData().then(function (result) {
+                    var isValid = true;
+                    console.log(result)
+                    $rootScope.key = result.key;
+                    if (result.key) {
+                        $scope.key = result.key;
+                        isValid = result.key.vl
+                    }
 
-                        if (isValid) {
-                            var profileData = result;
-                            DJWebStore.SetUserProfile(profileData.user);
-                            DJWebStore.SetSysParam(profileData.sys.param);
-                            DJWebStore.SetCompany(profileData.company);
-                            if (profileData.resource) {
-                                console.log(profileData.resource)
-                                DJWebStore.SetValue('resourceKey', profileData.resource);
-                            }
-                            _loadSideMenu();
-                        } else {
-                            $scope.key = result.key;
-                            $scope.logoUrl = 'assets/img/app/not_registered.png'
+                    if (isValid) {
+                        var profileData = result;
+                        DJWebStore.SetUserProfile(profileData.user);
+                        DJWebStore.SetSysParam(profileData.sys.param);
+                        DJWebStore.SetCompany(profileData.company);
+                        if (profileData.resource) {
+                            console.log(profileData.resource)
+                            DJWebStore.SetValue('resourceKey', profileData.resource);
                         }
-                    }, function (err) {
+                        _loadSideMenu();
+                    } else {
+                        $scope.key = result.key;
+                        $scope.logoUrl = 'assets/img/app/not_registered.png'
+                    }
+                }, function (err) {
 
 
-                        $("#userName").prop("disabled", false);
-                        $("#userPassword").prop("disabled", false);
-                        $("#userLanguage").prop("disabled", false);
-                        $("#btnlogin").prop("disabled", false);
-                        $("#userCorpoId").prop("disabled", false);
-                        $("#btnlogin").text("Sign in");
-                        DJWebStore.RemoveAll();
-                        $scope.showMsg('error', err)
-                    });
-                },
+                    $("#userName").prop("disabled", false);
+                    $("#userPassword").prop("disabled", false);
+                    $("#userLanguage").prop("disabled", false);
+                    $("#btnlogin").prop("disabled", false);
+                    $("#userCorpoId").prop("disabled", false);
+                    $("#btnlogin").text("Sign in");
+                    DJWebStore.RemoveAll();
+                    $scope.showMsg('error', err)
+                });
+            },
                 function (err) {
 
                     console.log(err)
@@ -235,7 +235,7 @@
                 });
         }
 
-        
+
         function _loadSideMenu() {
 
             // $scope.sideMenu = DJWebStore.GetValue('sidemenu');
