@@ -235,6 +235,7 @@
                 });
         }
 
+        
         function _loadSideMenu() {
 
             // $scope.sideMenu = DJWebStore.GetValue('sidemenu');
