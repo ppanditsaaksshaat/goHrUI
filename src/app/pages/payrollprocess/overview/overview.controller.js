@@ -9,9 +9,12 @@
         .controller('payOverViewController', payOverViewController);
 
     /** @ngInject */
-    function payOverViewController($scope, $state, $rootScope, $filter, pageService, dialogModal) {
+    function payOverViewController($scope, $state, $rootScope, editFormService, pageService, dialogModal) {
         //   console.log(moment("01-Jan-2018").format("M"))
         $scope.isReviewed = false;
+        $scope.isVerifyEmpReviewed = false;
+        $scope.isDisabled = false;
+        $scope.isSkipAll = false;
         $scope.reviewCount = 0;
         $scope.collpase = true;
         $scope.collpase2 = true;
@@ -19,10 +22,10 @@
 
 
 
+
         $scope.getData = _getMonthlyPayrollData;
         $scope.CheckLeaveAndAttendanceStatus = _CheckLeaveAndAttendanceStatus;
         $scope.skipAll = _skipAll;
-        $scope.unSkip = _unSkip;
         $scope.openReviewAllEmployees = _openReviewAllEmployees;
         $scope.subUnitOnChange = _subUnitOnChange;
         $scope.openSalaryApprovalModal = _openSalaryApprovalModal
@@ -43,17 +46,76 @@
         function _loadController() {
             pageService.getAllSelect(columnIds).then(_getAllSelectSuccessResult, _getAllSelectErrorResult)
             function _getAllSelectSuccessResult(result) {
-                console.log(result)
                 $scope.subUnits = result[0];
                 $scope.entity.subUnitId = parseInt($rootScope.user.profile.suId);
                 _getFinancialMonthStartFrom($scope.entity.subUnitId)
+                _getAlreadyVerfiedAction($rootScope.user.profile.suId, c_Month, c_Year)
 
             }
             function _getAllSelectErrorResult(err) {
 
             }
-        }
 
+        }
+        function _getAlreadyVerfiedAction(subUnit, month, year) {
+            var searchList = [];
+            var searchFields = {
+                field: "ACSubUnitId",
+                operand: '=',
+                value: subUnit
+            }
+            searchList.push(searchFields);
+            var searchFields = {
+                field: "ACMonth",
+                operand: '=',
+                value: month
+            }
+            searchList.push(searchFields);
+            var searchFields = {
+                field: "ACYear",
+                operand: '=',
+                value: year
+            }
+            searchList.push(searchFields);
+
+            pageService.findEntity(196, undefined, searchList).then(
+                _successResult, _errorResult);
+            function _successResult(result) {
+                if (angular.equals({}, result)) {
+                    $scope.action = "create";
+                    $scope.isReviewed = false;
+                    $scope.isDisabled = false;
+                    $scope.reviewedBy = '';
+                    $scope.actionTaken = '';
+                    $scope.progessWidth = "0%";
+                    $scope.reviewCount = 0;
+                    $scope.isVerifyEmpReviewed = false;
+                }
+                else {
+                    $scope.ACId = result.ACId;
+                    $scope.action = "edit";
+                    $scope.isReviewed = true;
+                    $scope.isDisabled = true;
+                    $scope.reviewedBy = $rootScope.user.profile.empName;
+                    $scope.actionTaken = moment().format("DD-MMM-YYYY");
+                    if ($scope.isSkipAll) {
+                        $scope.reviewCount = $scope.reviewCount + 5;
+                    }
+                    else {
+                        $scope.reviewCount = $scope.reviewCount + 1;
+                    }
+                    $scope.progessWidth = (14.28 * parseInt($scope.reviewCount)) + "%";
+                    if (result.ACIsSalaryVerified) {
+                        $scope.isVerifyEmpReviewed = true;
+                        $scope.progessWidth = "85.70%";
+                        $scope.reviewCount = 6;
+                    }
+                }
+            }
+            function _errorResult(err) {
+
+            }
+        }
         function _getFinancialMonthStartFrom(subUnitId) {
 
             var searchList = [];
@@ -118,6 +180,7 @@
         }
 
         function _getMonthlyPayrollData(month, year) {
+            _getAlreadyVerfiedAction($scope.entity.subUnitId, month, year)
             $scope.monthId = month;
             $scope.yearId = year;
             angular.forEach($scope.financialMonths, function (data) {
@@ -162,6 +225,8 @@
                     $scope.monthEndName = monthNames[month - 1];
                     $scope.firstDayNumber = 1;
                     $scope.lastDayNumber = new Date(year, month, 0).getDate();
+                    $scope.fromDate = moment(1 + "-" + $scope.monthStartName + "-" + year);
+                    $scope.toDate = moment($scope.lastDayNumber + "-" + $scope.monthEndName + "-" + year);
                     $scope.calenderDays = result[0][0].CalendarDay != null ? result[0][0].CalendarDay : 0;
                 }
                 else {
@@ -169,10 +234,10 @@
                     $scope.monthEndName = monthNames[month];
                     $scope.firstDayNumber = $scope.fromDay;
                     $scope.lastDayNumber = $scope.endDay;
-                    var betweenFromDate = $scope.fromDay + "-" + $scope.monthStartName + "-" + year;
-                    var betweentoDate = $scope.endDay + "-" + $scope.monthEndName + "-" + year;
-                    betweentoDate.diff(betweenFromDate, 'days');
-                    $scope.calenderDays = betweentoDate.diff(betweenFromDate, 'days');
+                    $scope.fromDate = moment($scope.fromDay + "-" + $scope.monthStartName + "-" + year);
+                    $scope.toDate = moment($scope.endDay + "-" + $scope.monthEndName + "-" + year);
+                    toDate.diff(fromDate, 'days');
+                    $scope.calenderDays = toDate.diff(fromDate, 'days') + 1;
                 }
 
                 $scope.year = year;
@@ -205,19 +270,25 @@
             })
         }
 
-        function _skipAll() {
-            $scope.isReviewed = true;
-            $scope.reviewedBy = $rootScope.user.profile.empName;
-            $scope.actionTaken = moment().format("DD-MMM-YYYY");
-            $scope.progessWidth = "83.33%";
-            $scope.reviewCount = 5;
-        }
-        function _unSkip() {
-            $scope.isReviewed = false;
-            $scope.reviewedBy = "";
-            $scope.actionTaken = "";
-            $scope.progessWidth = "0";
-            $scope.reviewCount = 0;
+        function _skipAll(form) {
+            $scope.isSkipAll = true;
+            var entity = {
+                ACSubUnitId: parseInt($scope.entity.subUnitId),
+                ACLSCId: parseInt($scope.entity.subUnitId),
+                ACYear: $scope.yearId == undefined ? c_Year : $scope.yearId,
+                ACMonth: $scope.monthId == undefined ? c_Month : $scope.monthId,
+                ACDateFrom: moment($scope.fromDate).format("YYYY-MM-DD"),
+                ACDateTo: moment($scope.toDate).format("YYYY-MM-DD"),
+                ACCycleDays: parseInt($scope.calenderDays),
+                ACIsLeave: true,
+                ACIsAttendance: true,
+                ACIsNewEmployee: true,
+                ACIsExitEmployee: true,
+                ACIsSalaryOnHold: true,
+                // ACIsSalaryVerified:true
+                // ACIsSalaryApproved
+            }
+            _saveEntity(entity, form)
         }
 
         function _openReviewAllEmployees() {
@@ -234,10 +305,19 @@
                 controller: 'reviewAllEmpController',
                 param: param
             });
+
             modal.result.then(function (data) {
-                if (data == "success") {
-                    _loadController();
-                    $scope.showMsg('success', 'Primary Detail Updated');
+                var verified = false;
+                if (data == 0) {
+                    if (!verified) {
+                        $scope.isVerifyEmpReviewed = true;
+                        var entity = {
+                            ACId: $scope.ACId,
+                            ACIsSalaryVerified: true
+                        }
+                        _saveEntity(entity, form)
+                        verified = true;
+                    }
                 }
             })
         }
@@ -266,8 +346,29 @@
 
         function _subUnitOnChange(subUnitId) {
             $scope.financialMonths = [];
+            $scope.entity.subUnitId = subUnitId;
+            var year = c_Year;
+            var month = c_Month;
+            $scope.monthId = c_Month;
+            $scope.yearId = c_Year;
+            _getAlreadyVerfiedAction(subUnitId, month, year)
             _getFinancialMonthStartFrom(subUnitId)
-            // _getPayrollData(c_Month, c_Year, $scope.entity.subUnitId)
+        }
+
+        function _saveEntity(entity, form) {
+            editFormService.saveForm(506, entity, {},
+                $scope.action, "", form, false)
+                .then(_saveEntitySuccessResult, _errorEntitySuccessResult)
+        }
+        function _saveEntitySuccessResult(result) {
+            if (result.success_message == "Added New Record." || result.success_message == "Record Updated.") {
+                var month = $scope.monthId == undefined ? c_Month : $scope.monthId;
+                var year = $scope.yearId == undefined ? c_Year : $scope.yearId;
+                _getAlreadyVerfiedAction($scope.entity.subUnitId, month, year)
+            }
+        }
+        function _errorEntitySuccessResult(err) {
+
         }
         _loadController();
     }

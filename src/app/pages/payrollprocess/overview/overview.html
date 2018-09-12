@@ -113,8 +113,9 @@
                 <span data-ng-click="collpase = !collpase">
                     <i ng-class="{'fa fa-angle-down':!collpase, 'fa fa-angle-up' : collpase}" class="pull-right collpase-icon fa fa-angle-up"></i>
                 </span>
-                <a ng-click="skipAll()" style="margin-right: 20px;" class="pull-right" ng-if="!collpase && !isReviewed" href>Skip All</a>
-                <a ng-click="unSkip()" style="margin-right: 20px;" class="pull-right" ng-if="!collpase && isReviewed" href>Un Skip</a>
+                <form name="form" ng-submit="">
+                    <button ng-disabled="isDisabled" ng-click="skipAll(form)" style="margin-right: 20px;" class="pull-right btn-primary" ng-if="!collpase">Skip All</button>
+                </form>
             </div>
 
         </div>
@@ -233,11 +234,12 @@
                                 <div class="action col-sm-10 text-content clear-side-padding">
                                     <h4>Review All Employees</h4>
                                     <!-- ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
-                                    <p class="clear-vertical-margin ">No action taken</p>
-                                    <!-- end ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
-                                    <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
+                                    <p ng-if="!isVerifyEmpReviewed" class="clear-vertical-margin ">No action taken</p>
+                                    <p ng-if="isVerifyEmpReviewed" class="clear-vertical-margin ">{{reviewedBy}} On {{actionTaken}}</p>
                                 </div>
-                                <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.completed -->
+                                <div ng-if="isVerifyEmpReviewed" class="icon">
+                                    <span class="fa fa-check"></span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-4" style="top:-48px">
@@ -272,7 +274,7 @@
                                         </div>
                                         <div class="col-sm-6 clear-left-padding">
                                             <span class="pull-right icon-info2 information-tooltip tooltip-grey" uib-tooltip="Finalize Run." tooltip-placement="top"></span>
-                                            <span class="ng-binding"> {{reviewCount}} of 6 steps completed</span>
+                                            <span class="ng-binding"> {{reviewCount}} of 7 steps completed</span>
                                         </div>
                                     </div>
                                 </div>
@@ -283,7 +285,7 @@
 
 
                 </div>
-              
+
             </div>
 
         </div>

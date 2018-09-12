@@ -16,6 +16,7 @@
         $scope.height = "430px";
 
         $scope.verifyAttendance = _verifyAttendance;
+        $scope.closeModal = _closeModal;
 
         $scope.gridReviewAllEmpOptions = {
             expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" ui-grid-expandable ui-grid-auto-resize ui-grid-pinning ui-grid-edit class="paybandgrid payband"></div>',
@@ -167,7 +168,7 @@
                 console.log(result)
 
 
-                var pendingSalary = [];
+                $scope.pendingSalary = [];
                 angular.forEach(result[0], function (data) {
 
                     var spiltName = data.EmpName.split(' ');
@@ -181,13 +182,13 @@
                         data.ShortName = spiltName[0].substr(0, 1);
                     }
                     if (data.FailedRemark != "Verified") {
-                        pendingSalary.push(data);
+                        $scope.pendingSalary.push(data);
                     }
 
                 })
-                $scope.gridDataCount = pendingSalary.length;
-                $scope.gridReviewAllEmpOptions.data = pendingSalary;
-                if (pendingSalary.length == 0) {
+                $scope.gridDataCount = $scope.pendingSalary.length;
+                $scope.gridReviewAllEmpOptions.data = $scope.pendingSalary;
+                if ($scope.pendingSalary.length == 0) {
                     $scope.noDataFound = true;
                 }
                 else {
@@ -316,6 +317,9 @@
 
         function _getCustomQueryErrorResult(err) {
 
+        }
+        function _closeModal() { 
+            $scope.modalInstance.close($scope.pendingSalary.length);
         }
 
         _loadController();
