@@ -46,7 +46,8 @@
                 var leaveStatementData = result[0];
                 if (leaveStatementData.length > 0) {
                     angular.forEach(options.header, function (columns) {
-                        var output = Object.entries(result[0][0]).map(([key, value]) => ({ key, value }));
+                        // var output = Object.entries(result[0][0]).map(([key, value]) => ({ key, value }));
+                        var output = [];
                         console.log(output)
                         var col = $filter("findObj")(output, columns.name, "key");
                         if (col != null) {
