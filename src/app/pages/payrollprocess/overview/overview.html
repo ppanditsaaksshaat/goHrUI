@@ -2,9 +2,9 @@
     <div class="panel">
         <div class="payroll-summary panel-body">
             <div class="clearfix content-container">
-                <div class="col-lg-3">
+                <div class="col-lg-3" >
                     <label>Sub Unit</label>
-                    <select ng-model="entity.subUnitId" ng-change="subUnitOnChange(entity.subUnitId)" class="form-control" ng-options="subUnit.value as subUnit.name for subUnit in subUnits"></select>
+                    <select style="float: left; " ng-model="entity.subUnitId" ng-change="subUnitOnChange(entity.subUnitId)" class="form-control" ng-options="subUnit.value as subUnit.name for subUnit in subUnits"></select>
                 </div>
                 <div class="payroll-nav-bar col-sm-12">
                     <!-- ngIf: !vm.financialYear.includes(payrollConfig.payrollSchedule.payCycle.kekaStartsFrom) -->
@@ -253,15 +253,17 @@
                                 <div class="action col-sm-10 text-content clear-side-padding">
                                     <h4>Salary Approvals</h4>
                                     <!-- ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
-                                    <p class="clear-vertical-margin ">No action taken</p>
-                                    <!-- end ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
-                                    <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
+                                    
+                                    <p ng-if="!isApprovedEmpReviewed" class="clear-vertical-margin ">No action taken</p>
+                                    <p ng-if="isApprovedEmpReviewed" class="clear-vertical-margin ">{{reviewedBy}} On {{actionTaken}}</p>
                                 </div>
-                                <!-- ngIf: vm.currentcycle.details.actions.reviewAllEmployees.completed -->
+                                <div ng-if="isApprovedEmpReviewed" class="icon">
+                                    <span class="fa fa-check"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 run" style="top:-20px">
-                            <div class="btn btn-payroll-run col-sm-12 disabled" data-ng-click="OpenfinalizeDialog();" data-ng-class="{'disabled' : (!vm.currentcycle.details.actions.completed || vm.disbalePayrollRun || !vm.currentcycle.arePreActionEnabled)}">
+                        <div ui-sref="payroll.transaction.CustomPayrollSetting" class="col-sm-4 run" style="top:-20px">
+                            <div class="btn btn-payroll-run col-sm-12" data-ng-click="OpenfinalizeDialog();" data-ng-class="{'disabled' : isFinalRun==false}">
                                 <div class="col-sm-4 text-left clear-side-padding">
                                     <div class="title">Finalize Payroll</div>
                                 </div>

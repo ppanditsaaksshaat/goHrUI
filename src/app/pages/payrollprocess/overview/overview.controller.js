@@ -13,6 +13,8 @@
         //   console.log(moment("01-Jan-2018").format("M"))
         $scope.isReviewed = false;
         $scope.isVerifyEmpReviewed = false;
+        $scope.isApprovedEmpReviewed = false;
+        $scope.isFinalRun = false;
         $scope.isDisabled = false;
         $scope.isSkipAll = false;
         $scope.reviewCount = 0;
@@ -90,6 +92,8 @@
                     $scope.progessWidth = "0%";
                     $scope.reviewCount = 0;
                     $scope.isVerifyEmpReviewed = false;
+                    $scope.isApprovedEmpReviewed = false;
+                    $scope.isFinalRun = false;
                 }
                 else {
                     $scope.ACId = result.ACId;
@@ -109,6 +113,12 @@
                         $scope.isVerifyEmpReviewed = true;
                         $scope.progessWidth = "85.70%";
                         $scope.reviewCount = 6;
+                    }
+                    if (result.ACIsSalaryApproved) {
+                        $scope.isApprovedEmpReviewed = true;
+                        $scope.progessWidth = "100%";
+                        $scope.reviewCount = 7;
+                        $scope.isFinalRun = true;
                     }
                 }
             }
@@ -336,9 +346,17 @@
                 param: param
             });
             modal.result.then(function (data) {
-                if (data == "success") {
-                    _loadController();
-                    $scope.showMsg('success', 'Primary Detail Updated');
+                var approved = false;
+                if (data == 0) {
+                    if (!approved) {
+                        $scope.isApprovedEmpReviewed = true;
+                        var entity = {
+                            ACId: $scope.ACId,
+                            ACIsSalaryApproved: true
+                        }
+                        _saveEntity(entity, form)
+                        approved = true;
+                    }
                 }
             })
         }

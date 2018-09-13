@@ -17,6 +17,7 @@
 
 
         $scope.aprroveAttendance = _approveAttendance;
+        $scope.closeModal = _closeModal;
 
 
         $scope.gridReviewAllEmpOptions = {
@@ -183,7 +184,7 @@
                     else {
                         data.ShortName = spiltName[0].substr(0, 1);
                     }
-                    if (data.FailedRemark == "Verified") {
+                    if (!data.IsApproved) {
                         pendingSalary.push(data);
                     }
 
@@ -223,9 +224,11 @@
                                 if (data.StatusBGClass == "") {
                                     if (data.subGridOptions != undefined) {
                                         data = data.subGridOptions.data[0];
+                                        data.StatusId = statusId;
                                         finalVerifyData.push(data);
                                     }
                                     else {
+                                        data.StatusId = statusId;
                                         finalVerifyData.push(data);
                                     }
                                 } else {
@@ -245,9 +248,11 @@
                                 // data = data.subGridOptions.data;
                                 if (data.subGridOptions != undefined) {
                                     data = data.subGridOptions.data[0];
+                                    data.StatusId = statusId;
                                     finalVerifyData.push(data);
                                 }
                                 else {
+                                    data.StatusId = statusId;
                                     finalVerifyData.push(data);
                                 }
                             } else {
@@ -264,7 +269,7 @@
                 }
 
                 console.log(finalVerifyData)
-                finalVerifyData.StatusId = statusId;
+
 
                 var searchLists = [];
                 var startDate = "";
@@ -320,6 +325,9 @@
 
         function _getCustomQueryErrorResult(err) {
 
+        }
+        function _closeModal() { 
+            $scope.modalInstance.close($scope.gridDataCount);
         }
 
         _loadController();
