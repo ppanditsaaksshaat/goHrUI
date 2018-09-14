@@ -97,6 +97,7 @@
                 JDReporting2: vm.empAdd.JDReporting2,
                 JDReportingHR: vm.empAdd.JDReportingHR,
                 JDSubUnitID: vm.empAdd.JDSubUnitID,
+                JDSUId: vm.empAdd.JDSubUnitID,
                 DoubleOTRate: 0,
                 JDSingleOTRate: 0,
                 SingleOT: 0,

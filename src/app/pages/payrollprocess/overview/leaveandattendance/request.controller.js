@@ -12,18 +12,27 @@
     function leaveAndAttendanceStatusController($scope, $rootScope, pageService, param) {
 
 
+        $scope.pendingLeave = true;
+        $scope.pendingCompOff = true;
 
-
-        $scope.SaveContinue = _saveContinue;
         $scope.SaveClose = _saveClose;
+        $scope.next = _next;
+        $scope.leavePending = _leavePending
+        $scope.leaveOnhold = _leaveOnhold;
 
+        function _leaveVerify() {
+
+        }
+        function _leavePending() {
+            _loadController(0)
+        }
+        function _leaveOnhold() {
+            _loadController(53)
+        }
         $scope.gridLeaveOptions = {
-            enableCellEditOnFocus: false,
-            enableRowSelection: false,
-            enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 0,
-            enableScrollbars: false,
-            enableRowHeaderSelection: false,
+            enableSelectAll: true,
+            rowHeight: 40,
+            onRegisterApi: _onGridRegisterApi,
             columnDefs: [
                 { name: 'EmpCode', displayName: 'EmpCode', width: 80, enableCellEdit: false },
                 { name: 'EmpName', displayName: 'Name', width: 150, enableCellEdit: false },
@@ -34,37 +43,19 @@
                 {
                     name: 'Status', displayName: 'Status', width: 100, enableCellEdit: false
 
-                },
-                {
-                    name: 'Approve',
-                    displayName: '-',
-                    width: 100,
-                    cellEditableCondition: false,
-                    cellTemplate: "<button type='button' ng-disabled=\"row.entity.Status=='Sanctioned'\" class='cusotm btn btn-primary' uib-popover-template=\"'approve-reason-template'\" popover-placement='bottom-right' popover-is-open='' popover-trigger='outsideClick'  popover-append-to-body='true'>Approve</button>"
-
-                },
-                {
-                    name: 'Rject',
-                    displayName: '-',
-                    width: 100,
-                    cellEditableCondition: false,
-                    cellTemplate: "<button type='button' ng-disabled=\"row.entity.Status=='Sanctioned'\" class='btn btn-danger'  uib-popover-template=\"'reject-reason-template'\" popover-placement='bottom-right' popover-is-open='' popover-trigger='outsideClick' popover-append-to-body='true'>Reject</button>"
-                },
-                {
-                    name: 'Onhold',
-                    displayName: '-',
-                    width: 100,
-                    cellEditableCondition: false,
-                    cellTemplate: "<button type='button' ng-disabled=\"row.entity.Status=='Sanctioned'\" class='btn btn-warning' uib-popover-template=\"'onhold-reason-template'\" popover-placement='bottom-right'  popover-is-open='' popover-trigger='outsideClick'  popover-append-to-body='true'>Onhold</button>"
-                },
+                }
             ],
         }
 
 
-        function _loadController() {
+        function _loadController(statusId) {
+            if (statusId == undefined) {
+                statusId = 0;
+            }
+
             var searchLists = [];
             searchLists.push({ field: 'headEmpId', operand: '=', value: $rootScope.user.profile.empId })
-            searchLists.push({ field: 'statusId', operand: '=', value: 0 })
+            searchLists.push({ field: 'statusId', operand: '=', value: statusId })
             searchLists.push({ field: 'month', operand: '=', value: param.month })
             searchLists.push({ field: 'year', operand: '=', value: param.year })
             searchLists.push({ field: 'type', operand: '=', value: 'Leave' })
@@ -91,6 +82,7 @@
                 }
                 else {
                     $scope.noDataFoundForLeave = true;
+                    $scope.gridLeaveOptions.data = [];
                 }
 
 
@@ -100,49 +92,49 @@
             }
         }
 
-        function _saveContinue() {
-            $scope.value = 2;
+        function _onGridRegisterApi(gridApi) {
+            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                if (row.isSelected) {
+                    $scope.isRowSelected = true;
+                    $scope.selectedRows = gridApi.selection.getSelectedRows();
+                }
+                else {
+                    $scope.isRowSelected = false;
+                }
 
+            });
+            gridApi.selection.on.rowSelectionChangedBatch($scope, function (row) {
+                $scope.selectedRows = gridApi.selection.getSelectedRows();
+                if ($scope.selectedRows.length > 0) {
+                    $scope.isRowSelected = true;
+                }
+                else {
+                    $scope.isRowSelected = false;
+                }
+            });
+
+
+
+        }
+
+        function _next() {
+            $scope.value = 2;
+            $scope.isCompOffRowSelected = false;
             $scope.gridCompOffOptions = {
-                enableCellEditOnFocus: false,
-                enableRowSelection: false,
-                enableHorizontalScrollbar: 0,
-                enableVerticalScrollbar: 0,
-                enableScrollbars: false,
-                enableRowHeaderSelection: false,
+                enableSelectAll: true,
+                rowHeight: 40,
+                onRegisterApi: _onGridRegisterApiCompOff,
                 columnDefs: [
                     { name: 'EmpCode', displayName: 'EmpCode', width: 80, enableCellEdit: false },
                     { name: 'EmpName', displayName: 'Name', width: 150, enableCellEdit: false },
-                    { name: 'COAttnDate', displayName: 'ApplyDate', width: 120, enableCellEdit: false },
+                    { name: 'COAttnDate', displayName: 'CompDate', width: 120, enableCellEdit: false },
                     { name: 'COTimeIn', displayName: 'InTime', width: 120, enableCellEdit: false },
                     { name: 'COTimeOut', displayName: 'OutTime', width: 120, enableCellEdit: false },
                     { name: 'CreatedOn', displayName: 'Request On', width: 120, enableCellEdit: false },
                     { name: 'HeadEmpName', displayName: 'Apporver', width: 120, enableCellEdit: false },
                     {
                         name: 'Status', displayName: 'Status', width: 100, enableCellEdit: false
-                    },
-                    {
-                        name: 'Approve',
-                        displayName: '-',
-                        width: 100,
-                        cellEditableCondition: false,
-                        cellTemplate: "<button type='button' ng-disabled=\"row.entity.Status=='Sanctioned'\" class='cusotm btn btn-primary' uib-popover-template=\"'approve-reason-template'\" popover-placement='bottom-right' popover-is-open='' popover-trigger='outsideClick'  popover-append-to-body='true'>Approve</button>"
-
-                    },
-                    {
-                        name: 'Rject',
-                        displayName: '-',
-                        width: 100,
-                        cellEditableCondition: false,
-                        cellTemplate: "<button type='button' ng-disabled=\"row.entity.Status=='Sanctioned'\" class='btn btn-danger'  uib-popover-template=\"'reject-reason-template'\" popover-placement='bottom-right' popover-is-open='' popover-trigger='outsideClick' popover-append-to-body='true'>Reject</button>"
-                    },
-                    {
-                        name: 'Onhold',
-                        displayName: '-',
-                        width: 100,
-                        cellEditableCondition: false,
-                        cellTemplate: "<button type='button' ng-disabled=\"row.entity.Status=='Sanctioned'\" class='btn btn-warning' uib-popover-template=\"'onhold-reason-template'\" popover-placement='bottom-right'  popover-is-open='' popover-trigger='outsideClick'  popover-append-to-body='true'>Onhold</button>"
-                    },
+                    }
                 ],
             }
             var searchLists = [];
@@ -163,6 +155,7 @@
                 if (result != "NoDataFound") {
                     $scope.allCompOffs = result[0];
                     angular.forEach($scope.allCompOffs, function (data) {
+                        data.COAttnDate = moment(data.COAttnDate).format('DD-MMM-YYYY');
                         data.CreatedOn = moment(data.CreatedOn).format('DD-MMM-YYYY');
                         data.COTimeIn = moment(data.COTimeIn).format('HH:mm');
                         data.COTimeOut = moment(data.COTimeOut).format('HH:mm');
@@ -181,8 +174,30 @@
             }
 
         }
+
+        function _onGridRegisterApiCompOff(gridApi) {
+            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                if (row.isSelected) {
+                    $scope.isCompOffRowSelected = true;
+                    $scope.selectedRows = gridApi.selection.getSelectedRows();
+                }
+                else {
+                    $scope.isCompOffRowSelected = false;
+                }
+
+            });
+            gridApi.selection.on.rowSelectionChangedBatch($scope, function (row) {
+                $scope.selectedRows = gridApi.selection.getSelectedRows();
+                if ($scope.selectedRows.length > 0) {
+                    $scope.isCompOffRowSelected = true;
+                }
+                else {
+                    $scope.isCompOffRowSelected = false;
+                }
+            });
+        }
         function _saveClose() {
-            
+
             $scope.value = 2;
             $scope.$dismiss();
         }

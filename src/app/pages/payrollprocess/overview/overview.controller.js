@@ -282,11 +282,13 @@
 
         function _skipAll(form) {
             $scope.isSkipAll = true;
+            var year = $scope.yearId == undefined ? c_Year : $scope.yearId;
+            var month = $scope.monthId == undefined ? c_Month : $scope.monthId;
             var entity = {
                 ACSubUnitId: parseInt($scope.entity.subUnitId),
                 ACLSCId: parseInt($scope.entity.subUnitId),
-                ACYear: $scope.yearId == undefined ? c_Year : $scope.yearId,
-                ACMonth: $scope.monthId == undefined ? c_Month : $scope.monthId,
+                ACYear: parseInt(year),
+                ACMonth: parseInt(month),
                 ACDateFrom: moment($scope.fromDate).format("YYYY-MM-DD"),
                 ACDateTo: moment($scope.toDate).format("YYYY-MM-DD"),
                 ACCycleDays: parseInt($scope.calenderDays),
@@ -379,6 +381,7 @@
                 .then(_saveEntitySuccessResult, _errorEntitySuccessResult)
         }
         function _saveEntitySuccessResult(result) {
+            console.log(result)
             if (result.success_message == "Added New Record." || result.success_message == "Record Updated.") {
                 var month = $scope.monthId == undefined ? c_Month : $scope.monthId;
                 var year = $scope.yearId == undefined ? c_Year : $scope.yearId;
@@ -386,7 +389,7 @@
             }
         }
         function _errorEntitySuccessResult(err) {
-
+            console.log(err);
         }
         _loadController();
     }
