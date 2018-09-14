@@ -6,10 +6,10 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.configuration.timeattendance.weekoff')
-        .controller('weekOffController', weekOffController);
+        .controller('weekOffsController', weekOffsController);
 
     /** @ngInject */
-    function weekOffController($scope, $state, $stateParams, $rootScope,
+    function weekOffsController($scope, $state, $stateParams, $rootScope,
         pageService, editableOptions, editableThemes, DJWebStore, dialogModal, editFormService, $filter) {
         console.log('weekoff');
         var vm = this;

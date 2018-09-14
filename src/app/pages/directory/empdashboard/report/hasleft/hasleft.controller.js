@@ -13,16 +13,13 @@
             // $scope.downLoadPdf = _downLoadPdf;
             $scope.downLoadPdf = _getSearchData;
             function _validateApprovedData() {
-                if ($scope.entity.FromDate == undefined || $scope.entity.FromDate == null || $scope.entity.FromDate == '') {
-                    $scope.showMsg("warning", "Please Select From Date.");
-                    return true;
-                }
-                if ($scope.entity.ToDate == undefined || $scope.entity.ToDate == null || $scope.entity.ToDate == '') {
-                    $scope.showMsg("warning", "Please Select To Date.");
-                    return true;
-                }
+                // if ($scope.entity.IsHasLeft == undefined || $scope.entity.IsHasLeft == null || $scope.entity.IsHasLeft == '' || $scope.entity.IsHasLeft < 0) {
+                //     $scope.showMsg("warning", "Please Select Status");
+                //     return true;
+                // }
                 return false;
             }
+    
     
             function _loadController() {
                 pageService.getPagData(505).then(function (result) {
@@ -47,7 +44,12 @@
                     searchLists.push({
                         field: 'ReportType',
                         operand: "=",
-                        value: 'SelfShift'
+                        value: 'HasLeft'
+                    })
+                    searchLists.push({
+                        field: 'IsHasLeft',
+                        operand: "=",
+                        value: $scope.entity.IsHasLeft
                     })
                     searchLists.push({
                         field: 'FromDate',
@@ -59,16 +61,6 @@
                         operand: "=",
                         value: $scope.entity.ToDate
                     })
-                    searchLists.push({
-                        field: 'EmpId',
-                        operand: "=",
-                        value: $rootScope.user.profile.empId
-                    })
-                    searchLists.push({
-                        field: 'LoginEmpId',
-                        operand: "=",
-                        value: $rootScope.user.profile.empId
-                    })
                     console.log(searchLists)
                     var data = {
                         searchList: searchLists,
@@ -78,7 +70,7 @@
                         data: $scope.pdfRowsData,
                         companyName: $scope.companyName,
                         address: $scope.address,
-                        reportType: 'Reporting Manager',
+                        reportType: 'Exit Employee',
                         pageOrientationType: 'landscape',
                         pageSize: 'A4',
                         isRowHeader: false,

@@ -13,12 +13,12 @@
         // $scope.downLoadPdf = _downLoadPdf;
         $scope.downLoadPdf = _getSearchData;
         function _validateApprovedData() {
-            if ($scope.entity.FromDate == undefined || $scope.entity.FromDate == null || $scope.entity.FromDate == '') {
-                $scope.showMsg("warning", "Please Select From Date.");
+            if ($scope.entity.GradeId == undefined || $scope.entity.GradeId == null || $scope.entity.GradeId == '') {
+                $scope.showMsg("warning", "Please Select Grade");
                 return true;
             }
-            if ($scope.entity.ToDate == undefined || $scope.entity.ToDate == null || $scope.entity.ToDate == '') {
-                $scope.showMsg("warning", "Please Select To Date.");
+            if ($scope.entity.LevelId == undefined || $scope.entity.LevelId == null || $scope.entity.LevelId == '') {
+                $scope.showMsg("warning", "Please Select Level");
                 return true;
             }
             return false;
@@ -47,7 +47,17 @@
                 searchLists.push({
                     field: 'ReportType',
                     operand: "=",
-                    value: 'SelfShift'
+                    value: 'GradeAndLevel'
+                })
+                searchLists.push({
+                    field: 'GradeId',
+                    operand: "=",
+                    value: $scope.entity.GradeId
+                })
+                searchLists.push({
+                    field: 'LevelId',
+                    operand: "=",
+                    value: $scope.entity.LevelId
                 })
                 searchLists.push({
                     field: 'FromDate',
@@ -59,16 +69,6 @@
                     operand: "=",
                     value: $scope.entity.ToDate
                 })
-                searchLists.push({
-                    field: 'EmpId',
-                    operand: "=",
-                    value: $rootScope.user.profile.empId
-                })
-                searchLists.push({
-                    field: 'LoginEmpId',
-                    operand: "=",
-                    value: $rootScope.user.profile.empId
-                })
                 console.log(searchLists)
                 var data = {
                     searchList: searchLists,
@@ -78,7 +78,7 @@
                     data: $scope.pdfRowsData,
                     companyName: $scope.companyName,
                     address: $scope.address,
-                    reportType: 'Reporting Manager',
+                    reportType: 'Grade And Level',
                     pageOrientationType: 'landscape',
                     pageSize: 'A4',
                     isRowHeader: false,

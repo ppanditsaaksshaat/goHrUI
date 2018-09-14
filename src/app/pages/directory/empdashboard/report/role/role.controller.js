@@ -13,12 +13,8 @@
             // $scope.downLoadPdf = _downLoadPdf;
             $scope.downLoadPdf = _getSearchData;
             function _validateApprovedData() {
-                if ($scope.entity.FromDate == undefined || $scope.entity.FromDate == null || $scope.entity.FromDate == '') {
-                    $scope.showMsg("warning", "Please Select From Date.");
-                    return true;
-                }
-                if ($scope.entity.ToDate == undefined || $scope.entity.ToDate == null || $scope.entity.ToDate == '') {
-                    $scope.showMsg("warning", "Please Select To Date.");
+                if ($scope.entity.RoleId == undefined || $scope.entity.RoleId == null || $scope.entity.RoleId == '') {
+                    $scope.showMsg("warning", "Please Select Role");
                     return true;
                 }
                 return false;
@@ -47,7 +43,12 @@
                     searchLists.push({
                         field: 'ReportType',
                         operand: "=",
-                        value: 'SelfShift'
+                        value: 'Role'
+                    })
+                    searchLists.push({
+                        field: 'RoleId',
+                        operand: "=",
+                        value: $scope.entity.RoleId
                     })
                     searchLists.push({
                         field: 'FromDate',
@@ -59,16 +60,6 @@
                         operand: "=",
                         value: $scope.entity.ToDate
                     })
-                    searchLists.push({
-                        field: 'EmpId',
-                        operand: "=",
-                        value: $rootScope.user.profile.empId
-                    })
-                    searchLists.push({
-                        field: 'LoginEmpId',
-                        operand: "=",
-                        value: $rootScope.user.profile.empId
-                    })
                     console.log(searchLists)
                     var data = {
                         searchList: searchLists,
@@ -78,7 +69,7 @@
                         data: $scope.pdfRowsData,
                         companyName: $scope.companyName,
                         address: $scope.address,
-                        reportType: 'Reporting Manager',
+                        reportType: 'Employee Role',
                         pageOrientationType: 'landscape',
                         pageSize: 'A4',
                         isRowHeader: false,

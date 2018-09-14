@@ -13,12 +13,8 @@
             // $scope.downLoadPdf = _downLoadPdf;
             $scope.downLoadPdf = _getSearchData;
             function _validateApprovedData() {
-                if ($scope.entity.FromDate == undefined || $scope.entity.FromDate == null || $scope.entity.FromDate == '') {
-                    $scope.showMsg("warning", "Please Select From Date.");
-                    return true;
-                }
-                if ($scope.entity.ToDate == undefined || $scope.entity.ToDate == null || $scope.entity.ToDate == '') {
-                    $scope.showMsg("warning", "Please Select To Date.");
+                if ($scope.entity.SubUnitId == undefined || $scope.entity.SubUnitId == null || $scope.entity.SubUnitId == '') {
+                    $scope.showMsg("warning", "Please Select SubUnit");
                     return true;
                 }
                 return false;
@@ -47,7 +43,12 @@
                     searchLists.push({
                         field: 'ReportType',
                         operand: "=",
-                        value: 'SelfShift'
+                        value: 'WithOutReportingManager'
+                    })
+                    searchLists.push({
+                        field: 'SubUnitId',
+                        operand: "=",
+                        value: $scope.entity.SubUnitId
                     })
                     searchLists.push({
                         field: 'FromDate',
@@ -59,16 +60,6 @@
                         operand: "=",
                         value: $scope.entity.ToDate
                     })
-                    searchLists.push({
-                        field: 'EmpId',
-                        operand: "=",
-                        value: $rootScope.user.profile.empId
-                    })
-                    searchLists.push({
-                        field: 'LoginEmpId',
-                        operand: "=",
-                        value: $rootScope.user.profile.empId
-                    })
                     console.log(searchLists)
                     var data = {
                         searchList: searchLists,
@@ -78,7 +69,7 @@
                         data: $scope.pdfRowsData,
                         companyName: $scope.companyName,
                         address: $scope.address,
-                        reportType: 'Reporting Manager',
+                        reportType: 'WithOut Reporting Employee',
                         pageOrientationType: 'landscape',
                         pageSize: 'A4',
                         isRowHeader: false,
