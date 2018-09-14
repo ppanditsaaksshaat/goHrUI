@@ -46,9 +46,21 @@
                 var leaveStatementData = result[0];
                 if (leaveStatementData.length > 0) {
                     angular.forEach(options.header, function (columns) {
-                        var output = Object.entries(result[0][0]).map(([key, value]) => ({ key, value }));
-                        console.log(output)
-                        var col = $filter("findObj")(output, columns.name, "key");
+                        // var output = Object.entries(result[0][0]).map(([key, value]) => ({ key, value }));
+                        var objValue = '';
+                        var kayValueList = [];
+                        for (let key of Object.keys(result[0][0])) {
+                            for (let value of Object.values(result[0][0])) {
+                                objValue = value
+                            }
+                            kayValueList.push({
+                                key: key,
+                                value: objValue
+                            })
+                        }
+                        console.log(kayValueList)
+                        // console.log(output)
+                        var col = $filter("findObj")(kayValueList, columns.name, "key");
                         if (col != null) {
                             var colValue = {
                                 name: columns.name,

@@ -1,7 +1,7 @@
 <div class="grid-view">
     <div class="row">
         <div class="col-md-6">
-            <button class="btn btn-default" ng-click="addRecord({})">
+            <button ng-show="page.boxOptions.showAdd" class="btn btn-default" ng-click="addRecord({})">
                 <i class="fa fa-plus"></i>
                 <span dotranslate>create</span>
             </button>
@@ -24,8 +24,8 @@
     <div class="clear-fix"></div>
 
     <div style="height: 450px;" ng-if="showGrid">
-        <div id="CommonViewGrid" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning
-            ui-grid-edit ui-grid-expandable class="djGrid">
+        <div id="CommonViewGrid" ui-grid="page.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-selection
+            ui-grid-pinning ui-grid-edit ui-grid-expandable class="djGrid">
             <div class="no-data" ng-if="page.gridOptions.data.length==0 && !page.dataIsLoading">{{page.boxOptions.noResultMessageText}}</div>
             <div class="no-data font-black" ng-if="page.dataIsLoading">
                 <i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i> Please wait data is loading....

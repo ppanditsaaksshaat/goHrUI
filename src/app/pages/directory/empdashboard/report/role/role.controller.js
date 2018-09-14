@@ -9,136 +9,79 @@
         .controller('roleController', roleController);
     function roleController($scope, $rootScope, $state, $filter, pageService, createPdfReport) {
         var vm = this;
-        $scope.entity = {};
-        $scope.downLoadPdf = _downLoadPdf;
-        function _validateApprovedData() {
-            if ($scope.entity.RoleId == undefined || $scope.entity.RoleId == null || $scope.entity.RoleId == '') {
-                $scope.showMsg("warning", "Please Select Role");
-                return true;
+            $scope.entity = {};
+            // $scope.downLoadPdf = _downLoadPdf;
+            $scope.downLoadPdf = _getSearchData;
+            function _validateApprovedData() {
+                if ($scope.entity.RoleId == undefined || $scope.entity.RoleId == null || $scope.entity.RoleId == '') {
+                    $scope.showMsg("warning", "Please Select Role");
+                    return true;
+                }
+                return false;
             }
-            return false;
-        }
-
-        function _loadController() {
-            pageService.getPagData(505).then(function (result) {
-                console.log(result)
-                $scope.selectedDropDown = result;
-                console.log($scope.selectedDropDown)
-            })
-        }
-
-        function _downLoadPdf() {
-            if (!_validateApprovedData()) {
-                if ($scope.entity.FromDate == undefined) {
-                    $scope.entity.FromDate = '';
-                }
-                if ($scope.entity.ToDate == undefined) {
-                    $scope.entity.ToDate = '';
-                }
-                var searchLists = [];
-                $scope.columnList = [];
-                searchLists.push({
-                    field: 'ReportType',
-                    operand: "=",
-                    value: 'Role'
+    
+            function _loadController() {
+                pageService.getPagData(505).then(function (result) {
+                    console.log(result)
+                    $scope.selectedDropDown = result;
+                    console.log($scope.selectedDropDown)
                 })
-                searchLists.push({
-                    field: 'RoleId',
-                    operand: "=",
-                    value: $scope.entity.RoleId
-                })
-                searchLists.push({
-                    field: 'FromDate',
-                    operand: "=",
-                    value: $scope.entity.FromDate
-                })
-                searchLists.push({
-                    field: 'ToDate',
-                    operand: "=",
-                    value: $scope.entity.ToDate
-                })
-                console.log(searchLists)
-                var data = {
-                    searchList: searchLists,
-                    orderByList: []
-                }
-                pageService.getCustomQuery(data, 667).then(_getCustomQuerySuccessResult, _getCustomQueryErrorResult)
             }
-        }
-
-        function _getCustomQuerySuccessResult(result) {
-            var pdfRows = [];
-            var pdfHeader = [];
-            console.log(result)
-            console.log(result[0])
-            var leaveStatementData = result[0];
-            if (leaveStatementData.length > 0) {
-                angular.forEach($scope.selectedDropDown.pageinfo.fields, function (columns) {
-                    var output = Object.entries(result[0][0]).map(([key, value]) => ({ key, value }));
-                    console.log(output)
-                    var col = $filter("findObj")(output, columns.name, "key");
-                    if (col != null) {
-                        var colValue = {
-                            name: columns.name,
-                            displayName: columns.text
-                        }
-                        $scope.columnList.push(colValue)
+    
+    
+    
+            function _getSearchData() {
+                if (!_validateApprovedData()) {
+                    if ($scope.entity.FromDate == undefined) {
+                        $scope.entity.FromDate = '';
                     }
-                })
-                console.log($scope.columnList)
-                if (result[1].length > 0) {
-                    $scope.companyName = result[1][0].CCOName;
-                    $scope.address = result[1][0].CCOAddress;
-                    pdfRows.push([{
-                        text: result[0][0].EmpName + ',  ' + 'Department -' + result[0][0].DeptName + ',  ' + 'Designation -' + result[0][0].DesgName,
-                        style: 'tableHeader', colSpan: 10
-                    }, {}, {}, {}, {}, {}, {}, {}, {}, {}])
-                }
-                angular.forEach($scope.columnList, function (col) {
-                    var pdfCell = {};
-                    pdfCell.text = col.displayName;
-                    pdfCell.style = 'filledHeader';
-                    pdfHeader.push(pdfCell);
-                })
-                pdfRows.push(pdfHeader);
-
-                angular.forEach(leaveStatementData, function (row) {
-                    console.log(row)
-                    var pdfRow = [];
-                    angular.forEach($scope.columnList, function (col) {
-                        var pdfCell = {};
-                        // if(row.)
-                        pdfCell.text = row[col.name];
-                        pdfCell.style = 'tableLabel';
-                        pdfRow.push(pdfCell);
+                    if ($scope.entity.ToDate == undefined) {
+                        $scope.entity.ToDate = '';
+                    }
+                    var searchLists = [];
+                    $scope.columnList = [];
+                    searchLists.push({
+                        field: 'ReportType',
+                        operand: "=",
+                        value: 'Role'
                     })
-                    pdfRows.push(pdfRow);
-                });
-                console.log(pdfRows)
-                $scope.pdfRowsData = pdfRows;
-                _getSearchData()
+                    searchLists.push({
+                        field: 'RoleId',
+                        operand: "=",
+                        value: $scope.entity.RoleId
+                    })
+                    searchLists.push({
+                        field: 'FromDate',
+                        operand: "=",
+                        value: $scope.entity.FromDate
+                    })
+                    searchLists.push({
+                        field: 'ToDate',
+                        operand: "=",
+                        value: $scope.entity.ToDate
+                    })
+                    console.log(searchLists)
+                    var data = {
+                        searchList: searchLists,
+                        orderByList: []
+                    }
+                    var data = {
+                        data: $scope.pdfRowsData,
+                        companyName: $scope.companyName,
+                        address: $scope.address,
+                        reportType: 'Employee Role',
+                        pageOrientationType: 'landscape',
+                        pageSize: 'A4',
+                        isRowHeader: false,
+                        searchData: data,
+                        queryId: 667,
+                        header: $scope.selectedDropDown.pageinfo.fields,
+                        isQuery: 'true'
+                    }
+                    createPdfReport.createPdf(data)
+                }
             }
-            else {
-                $scope.showMsg("warning", "Data Not found");
-            }
-
-        }
-
-        function _getSearchData() {
-            var data = {
-                data: $scope.pdfRowsData,
-                companyName: $scope.companyName,
-                address: $scope.address,
-                reportType: 'Reporting Manager',
-                pageOrientationType: 'landscape',
-                pageSize: 'A4'
-            }
-            createPdfReport.createPdf(data)
-        }
-
-        function _getCustomQueryErrorResult(error) {
-            console.log(error);
-        }
-        _loadController()
+    
+            _loadController()
     }
 })();
