@@ -12,7 +12,7 @@
         console.log('location ctrl loaded')
         $scope.entity = {}
         $scope.page = $rootScope.createPage();
-        $scope.page.pageId = 481;
+        $scope.page.pageId = 508;
         // $scope.page = $rootScope.createPage(); 0
         console.log($scope.page)
 

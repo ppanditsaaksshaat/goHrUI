@@ -2,9 +2,10 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 employee-profile-container">
         <div type="file" class="profile-picture-container">
             <div class="profile-picture" width="200px" height="200px">
-                    <input id="file-input" type="file"/>
+                <input id="file-input" type="file" />
             </div>
-            <div class="img-circle img-initials" random-Color>{{empBaicDetail.EmpName.split(' ')[0].substr(0,1)}}{{empBaicDetail.EmpName.split(' ')[1].substr(0,1)}}</div>
+            <div class="img-circle img-initials" random-Color>{{empBaicDetail.EmpName.split('
+                ')[0].substr(0,1)}}{{empBaicDetail.EmpName.split(' ')[1].substr(0,1)}}</div>
             <span class="upload-image-icon icon-plus-sign ng-scope" data-ng-click="ctrl.updateProfilePicture()"></span>
         </div>
         <div class="row employee-header">
@@ -30,13 +31,13 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li>
-                                <a ng-click="userPassword()" href>Password</a>
+                                <a ng-click="userPassword()" href="">Password</a>
                             </li>
                             <li>
-                                <a ng-click="userRole()" href>Role</a>
+                                <a ng-click="userRole()" href="">Role</a>
                             </li>
                             <li>
-                                <a href>Login Disabled</a>
+                                <a >Login Disabled</a>
                             </li>
                         </ul>
                     </div>
