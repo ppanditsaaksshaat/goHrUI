@@ -14,7 +14,7 @@
       .state('configuration.timeattendance.weekoff', {
         url: '/weekoff',
         templateUrl: 'app/pages/configuration/timeattendance/weekoff/weekoff.html',
-        controller: 'weekOffController',
+        controller: 'weekOffsController',
         title: 'Weekoff Set',
         sidebarMeta: {
           icon: 'ion-android-home',

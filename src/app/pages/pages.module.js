@@ -50,7 +50,7 @@
 
   /** @ngInject */
   function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/selfdashboard');
 
     // baSidebarServiceProvider.addStaticItem({
     //   title: 'Pages',
