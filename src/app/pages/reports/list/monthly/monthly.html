@@ -6,45 +6,43 @@
         <form name="leaveDetail" id="leaveDetail" novalidate>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="col-sm-12">
-                        <div class="col-sm-3">
-                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.SubUnitId.text">
-                                <span>*</span>
-                            </label>
-                            <select class="form-control input-sm" ng-model="entity.SubUnitId" ng-options="subUnit.value as subUnit.name for subUnit in selectedDropDown.pageinfo.selects.SubUnitId"></select>
-                        </div>
-                        <div class="col-sm-3">
-                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.DeptId.text"></label>
-                            <select class="form-control input-sm" ng-model="entity.DeptId" ng-options="empId.value as empId.name for empId in selectedDropDown.pageinfo.selects.DeptId"></select>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label dotranslate>From Date</label>
-                                <div class="input-group" moment-picker="entity.FromDate" format="DD-MMM-YYYY">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
-                                    </span>
-                                    <input class="form-control" placeholder="Pick any Date" ng-model="entity.FromDate" ng-model-options="{ updateOn: 'blur' }">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label dotranslate>To Time</label>
-                                <div class="input-group" moment-picker="entity.ToDate" format="DD-MMM-YYYY">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
-                                    </span>
-                                    <input class="form-control" placeholder="Pick any Date" ng-model="entity.ToDate" ng-model-options="{ updateOn: 'blur' }">
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-sm-4">
+                        <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.SubUnitId.text">
+                            *
+                        </label>
+                        <select class="form-control input-sm" ng-model="entity.SubUnitId" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.SubUnitId"></select>
                     </div>
+                    <div class="col-sm-4">
+                        <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.DeptId.text">
+                            *
+                        </label>
+                        <select class="form-control input-sm" ng-model="entity.DeptId" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.DeptId"></select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.EmpId.text">
+                            *
+                        </label>
+                        <select class="form-control input-sm" ng-model="entity.EmpId" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.EmpId"></select>
+                    </div>
+
                 </div>
 
-                <!-- <div class="col-sm-4">
-                </div> -->
+
+                <div class="col-sm-12">
+                    
+                    <div class="col-sm-4">
+                        <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.Year.text">
+                            *
+                        </label>
+                        <select class="form-control input-sm" ng-model="entity.Year" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.Year"></select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.Month.text">
+                            *
+                        </label>
+                        <select class="form-control input-sm" ng-model="entity.Month" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.Month"></select>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-sm-12 vertical-margin">

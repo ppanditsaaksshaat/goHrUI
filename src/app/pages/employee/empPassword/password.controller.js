@@ -21,6 +21,10 @@
             empId = $rootScope.user.profile.empId;
         }
 
+        function _childmethod() {
+            $rootScope.$emit("CallParentMethod", {});
+        }
+
         $scope.entity = {};
         $scope.newRegister = true;
         var regx = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$');
@@ -94,6 +98,7 @@
             $scope.newRegister = false;
             $scope.showMsg("success", "User Registered Successfully");
             $scope.entity.ConfirmPassword = undefined;
+            _childmethod();
         }
         function _userRegisterError(err) {
             console.log(err)
@@ -127,6 +132,7 @@
                 $scope.showMsg("success", "New Password Set Successfully");
                 $scope.entity.NewPassword = undefined;
                 $scope.entity.ConfirmPassword = undefined;
+                _childmethod();
             }
 
         }

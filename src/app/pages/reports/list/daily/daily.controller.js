@@ -22,7 +22,7 @@
     
     
             function _loadController() {
-                pageService.getPagData(505).then(function (result) {
+                pageService.getPagData(509).then(function (result) {
                     console.log(result)
                     $scope.selectedDropDown = result;
                     console.log($scope.selectedDropDown)

@@ -7,34 +7,48 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="col-sm-12">
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <label dotranslate>From Date</label>
-                                <div class="input-group" moment-picker="entity.FromDate" format="DD-MMM-YYYY">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
-                                    </span>
-                                    <input class="form-control" placeholder="Pick any Date" ng-model="entity.FromDate" ng-model-options="{ updateOn: 'blur' }">
-                                </div>
-                            </div>
+                        <div class="col-sm-4">
+                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.SubUnitId.text">
+                                *
+                            </label>
+                            <select class="form-control input-sm" ng-model="entity.SubUnitId" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.SubUnitId"></select>
                         </div>
-
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
+                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.DeptId.text">
+                                *
+                            </label>
+                            <select class="form-control input-sm" ng-model="entity.DeptId" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.DeptId"></select>
+                        </div>
+                        <div class="col-sm-4">
                             <div class="form-group">
-                                <label dotranslate>To Time</label>
-                                <div class="input-group" moment-picker="entity.ToDate" format="DD-MMM-YYYY">
+                                <label dotranslate>Attendance Date</label>
+                                <div class="input-group" moment-picker="entity.AttDate" format="DD-MMM-YYYY">
                                     <span class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
                                     </span>
-                                    <input class="form-control" placeholder="Pick any Date" ng-model="entity.ToDate" ng-model-options="{ updateOn: 'blur' }">
+                                    <input class="form-control" placeholder="Pick any Date" ng-model="entity.AttDate"
+                                        ng-model-options="{ updateOn: 'blur' }">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-4">
+                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.Status.text">
+                                *
+                            </label>
+                            <select class="form-control input-sm" ng-model="entity.Status" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.Status"></select>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.EmpId.text">
+                                *
+                            </label>
+                            <select class="form-control input-sm" ng-model="entity.EmpId" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.EmpId"></select>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- <div class="col-sm-4">
-                </div> -->
 
                 <div class="row">
                     <div class="col-sm-12 vertical-margin">

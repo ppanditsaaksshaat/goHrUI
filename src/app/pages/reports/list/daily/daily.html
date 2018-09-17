@@ -5,42 +5,64 @@
     <div class="modal-body content-container">
         <form name="leaveDetail" id="leaveDetail" novalidate>
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="col-sm-12">
-                        <div class="col-sm-3">
-                            <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.IsHasLeft.text">
-                                *
-                            </label>
-                            <select class="form-control input-sm" ng-model="entity.IsHasLeft" ng-options="hasleft.value as hasleft.name for hasleft in selectedDropDown.pageinfo.selects.IsHasLeft"></select>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label dotranslate>From Date</label>
-                                <div class="input-group" moment-picker="entity.FromDate" format="DD-MMM-YYYY">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
-                                    </span>
-                                    <input class="form-control" placeholder="Pick any Date" ng-model="entity.FromDate" ng-model-options="{ updateOn: 'blur' }">
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label dotranslate>To Time</label>
-                                <div class="input-group" moment-picker="entity.ToDate" format="DD-MMM-YYYY">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
-                                    </span>
-                                    <input class="form-control" placeholder="Pick any Date" ng-model="entity.ToDate" ng-model-options="{ updateOn: 'blur' }">
-                                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-4">
+                        <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.SubUnitId.text">
+                            *
+                        </label>
+                        <select class="form-control input-sm" ng-model="entity.SubUnitId" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.SubUnitId"></select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.DeptId.text">
+                            *
+                        </label>
+                        <select class="form-control input-sm" ng-model="entity.DeptId" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.DeptId"></select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.GapStatusId.text">
+                            *
+                        </label>
+                        <select class="form-control input-sm" ng-model="entity.GapStatusId" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.GapStatusId"></select>
+                    </div>
+
+                </div>
+
+
+                <div class="col-sm-12">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label dotranslate>From Date</label>
+                            <div class="input-group" moment-picker="entity.AttDate" format="DD-MMM-YYYY">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                                <input class="form-control" placeholder="Pick any Date" ng-model="entity.AttDate"
+                                    ng-model-options="{ updateOn: 'blur' }">
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label dotranslate>To Date</label>
+                            <div class="input-group" moment-picker="entity.AttDate" format="DD-MMM-YYYY">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                                <input class="form-control" placeholder="Pick any Date" ng-model="entity.AttDate"
+                                    ng-model-options="{ updateOn: 'blur' }">
+                            </div>
+                        </div>
+                    </div>
 
-                <!-- <div class="col-sm-4">
-                </div> -->
+
+                    <div class="col-sm-4">
+                        <label dotranslate ng-bind="selectedDropDown.pageinfo.fields.EmpId.text">
+                            *
+                        </label>
+                        <select class="form-control input-sm" ng-model="entity.EmpId" ng-options="subunit.value as subunit.name for subunit in selectedDropDown.pageinfo.selects.SubUnitId"></select>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-sm-12 vertical-margin">
@@ -50,6 +72,7 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </form>
     </div>
