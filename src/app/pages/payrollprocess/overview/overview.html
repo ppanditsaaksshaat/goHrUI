@@ -2,9 +2,10 @@
     <div class="panel">
         <div class="payroll-summary panel-body">
             <div class="clearfix content-container">
-                <div class="col-lg-3" >
+                <div class="col-lg-3">
                     <label>Sub Unit</label>
-                    <select style="float: left; " ng-model="entity.subUnitId" ng-change="subUnitOnChange(entity.subUnitId)" class="form-control" ng-options="subUnit.value as subUnit.name for subUnit in subUnits"></select>
+                    <select style="float: left; " ng-model="entity.subUnitId" ng-change="subUnitOnChange(entity.subUnitId)" class="form-control"
+                        ng-options="subUnit.value as subUnit.name for subUnit in subUnits"></select>
                 </div>
                 <div class="payroll-nav-bar col-sm-12">
                     <!-- ngIf: !vm.financialYear.includes(payrollConfig.payrollSchedule.payCycle.kekaStartsFrom) -->
@@ -125,7 +126,7 @@
                 <div class="pre-payroll-actions">
                     <div class="row">
                         <div class="col-sm-4" style="top:-10px">
-                            <div class="alert alert-info clearfix" data-ng-click="CheckLeaveAndAttendanceStatus()">
+                            <div class="alert alert-info clearfix" data-ng-click="openLeaveModal()">
                                 <div class="col-sm-1 alert-icon clear-side-padding">
                                     <!-- <span class="fa fa-angle-down"></span> -->
                                     <span>
@@ -135,36 +136,36 @@
                                 <div data-ng-click="CheckLeaveAndAttendanceStatus()" class="action col-sm-10 text-content clear-side-padding">
                                     <h4>Leave</h4>
                                     <!-- ngIf: !vm.currentcycle.details.actions.leavesAndAttendance.isReviewed() -->
-                                    <p ng-if="!isReviewed" class="clear-vertical-margin ">No action taken</p>
-                                    <p ng-if="isReviewed" class="clear-vertical-margin ">{{reviewedBy}} On {{actionTaken}}</p>
+                                    <p ng-if="!isLeaveReviewed" class="clear-vertical-margin ">No action taken</p>
+                                    <p ng-if="isLeaveReviewed" class="clear-vertical-margin ">{{leavereviewedBy}} On {{leaveactionTaken}}</p>
                                 </div>
-                                <div ng-if="isReviewed" class="icon">
+                                <div ng-if="isLeaveReviewed" class="icon">
                                     <span class="fa fa-check"></span>
                                 </div>
 
                             </div>
                         </div>
                         <div class="col-sm-4 " style="top:-10px">
-                            <div class="alert alert-info clearfix" ui-sref="team.attendance" data-ng-click="openNewJoinees();">
+                            <div class="alert alert-info clearfix" data-ng-click="openAttendanceModal();">
                                 <div class="col-sm-1 alert-icon clear-side-padding">
                                     <!-- <span class="icon-user3"></span> -->
                                     <span>
                                         <img src="assets/payroll-image/attendance.png" alt="">
                                     </span>
                                 </div>
-                                <div ui-sref="team.attendance" class="action col-sm-10 text-content clear-side-padding">
+                                <div class="action col-sm-10 text-content clear-side-padding">
                                     <h4>Attendance</h4>
                                     <!-- ngIf: !vm.currentcycle.details.actions.newJoineesAndExits.isReviewed() -->
-                                    <p ng-if="!isReviewed" class="clear-vertical-margin ">No action taken</p>
-                                    <p ng-if="isReviewed" class="clear-vertical-margin ">{{reviewedBy}} On {{actionTaken}}</p>
+                                    <p ng-if="!isAttendanceReviewed" class="clear-vertical-margin ">No action taken</p>
+                                    <p ng-if="isAttendanceReviewed" class="clear-vertical-margin ">{{attendanceReviewedBy}} On {{attendanceActionTaken}}</p>
                                 </div>
-                                <div ng-if="isReviewed" class="icon">
+                                <div ng-if="isAttendanceReviewed" class="icon">
                                     <span class="fa fa-check"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-4" style="top:-10px">
-                            <div class="alert alert-info clearfix" data-ng-click="openSalaryChanges();">
+                            <div class="alert alert-info clearfix" data-ng-click="openNewEmployeeModal();">
                                 <div class="col-sm-1 alert-icon clear-side-padding">
                                     <!-- <span class="icon-medal2"></span> -->
                                     <span>
@@ -174,10 +175,10 @@
                                 <div class="action col-sm-10 text-content clear-side-padding">
                                     <h4>New Employees</h4>
                                     <!-- ngIf: !vm.currentcycle.details.actions.bonusAndSalaryRevisions.isReviewed() -->
-                                    <p ng-if="!isReviewed" class="clear-vertical-margin ">No action taken</p>
-                                    <p ng-if="isReviewed" class="clear-vertical-margin ">{{reviewedBy}} On {{actionTaken}}</p>
+                                    <p ng-if="!isNewEmpReviewed" class="clear-vertical-margin ">No action taken</p>
+                                    <p ng-if="isNewEmpReviewed" class="clear-vertical-margin ">{{newEmpReviewedBy}} On {{newEmpActionTaken}}</p>
                                 </div>
-                                <div ng-if="isReviewed" class="icon">
+                                <div ng-if="isNewEmpReviewed" class="icon">
                                     <span class="fa fa-check"></span>
                                 </div>
                             </div>
@@ -185,7 +186,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4" style="top:-30px">
-                            <div class="alert alert-info clearfix" data-ng-click="openOnetimePayments()">
+                            <div class="alert alert-info clearfix" data-ng-click="openExitEmployeeModal()">
                                 <div class="col-sm-1 alert-icon clear-side-padding">
                                     <!-- <span class="icon-stack2"></span> -->
                                     <span>
@@ -195,16 +196,16 @@
                                 <div class="action col-sm-10 text-content clear-side-padding">
                                     <h4>Exist Employees</h4>
                                     <!-- ngIf: !vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
-                                    <p ng-if="!isReviewed" class="clear-vertical-margin ">No action taken</p>
-                                    <p ng-if="isReviewed" class="clear-vertical-margin ">{{reviewedBy}} On {{actionTaken}}</p>
+                                    <p ng-if="!isExitEmpReviewed" class="clear-vertical-margin ">No action taken</p>
+                                    <p ng-if="isExitEmpReviewed" class="clear-vertical-margin ">{{exitEmpReviewedBy}} On {{exitEmpActionTaken}}</p>
                                 </div>
-                                <div ng-if="isReviewed" class="icon">
+                                <div ng-if="isExitEmpReviewed" class="icon">
                                     <span class="fa fa-check"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-4" style="top:-30px">
-                            <div class="alert alert-info clearfix" data-ng-click="openOnetimePayments()">
+                            <div class="alert alert-info clearfix" data-ng-click="openSalaryOnHoldModal()">
                                 <div class="col-sm-1 alert-icon clear-side-padding">
                                     <!-- <span class="icon-stack2"></span> -->
                                     <span>
@@ -215,16 +216,16 @@
                                     <h4>Salaries On Hold</h4>
 
                                     <!-- ngIf: !vm.currentcycle.details.actions.oneTimePaymentsAndDeductions.isReviewed() -->
-                                    <p ng-if="!isReviewed" class="clear-vertical-margin ">No action taken</p>
-                                    <p ng-if="isReviewed" class="clear-vertical-margin ">{{reviewedBy}} On {{actionTaken}}</p>
+                                    <p ng-if="!isOnholdSalaryReviewed" class="clear-vertical-margin ">No action taken</p>
+                                    <p ng-if="isOnholdSalaryReviewed" class="clear-vertical-margin ">{{salOnholdReviewedBy}} On {{salOnholdActionTaken}}</p>
                                 </div>
-                                <div ng-if="isReviewed" class="icon">
+                                <div ng-if="isOnholdSalaryReviewed" class="icon">
                                     <span class="fa fa-check"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-4" style="top:-30px">
-                            <div class="alert alert-info clearfix" data-ng-click="openReviewAllEmployees();">
+                            <div class="alert alert-info clearfix" data-ng-click="isVerifyEmp || openReviewAllEmployees();"  data-ng-class="{'disabled' : isVerifyEmp==true}">
                                 <div class="col-sm-1 alert-icon clear-side-padding">
                                     <!-- <span class="icon-users"></span> -->
                                     <span>
@@ -235,7 +236,7 @@
                                     <h4>Review All Employees</h4>
                                     <!-- ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
                                     <p ng-if="!isVerifyEmpReviewed" class="clear-vertical-margin ">No action taken</p>
-                                    <p ng-if="isVerifyEmpReviewed" class="clear-vertical-margin ">{{reviewedBy}} On {{actionTaken}}</p>
+                                    <p ng-if="isVerifyEmpReviewed" class="clear-vertical-margin ">{{allEmpReviewedBy}} On {{allEmpReviewActionTaken}}</p>
                                 </div>
                                 <div ng-if="isVerifyEmpReviewed" class="icon">
                                     <span class="fa fa-check"></span>
@@ -243,7 +244,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4" style="top:-48px">
-                            <div class="alert alert-info clearfix" data-ng-click="openSalaryApprovalModal();">
+                            <div class="alert alert-info clearfix" data-ng-click="isApproveEmp || openSalaryApprovalModal();" data-ng-class="{'disabled' : isApproveEmp==true}">
                                 <div class="col-sm-1 alert-icon clear-side-padding">
                                     <!-- <span class="icon-users"></span> -->
                                     <span>
@@ -253,17 +254,17 @@
                                 <div class="action col-sm-10 text-content clear-side-padding">
                                     <h4>Salary Approvals</h4>
                                     <!-- ngIf: !vm.currentcycle.details.actions.reviewAllEmployees.isReviewed() -->
-                                    
+
                                     <p ng-if="!isApprovedEmpReviewed" class="clear-vertical-margin ">No action taken</p>
-                                    <p ng-if="isApprovedEmpReviewed" class="clear-vertical-margin ">{{reviewedBy}} On {{actionTaken}}</p>
+                                    <p ng-if="isApprovedEmpReviewed" class="clear-vertical-margin ">{{salaryApprovalReviewedBy}} On {{salaryApprovalActionTaken}}</p>
                                 </div>
                                 <div ng-if="isApprovedEmpReviewed" class="icon">
                                     <span class="fa fa-check"></span>
                                 </div>
                             </div>
                         </div>
-                        <div ui-sref="payroll.transaction.CustomPayrollSetting" class="col-sm-4 run" style="top:-20px">
-                            <div class="btn btn-payroll-run col-sm-12" data-ng-click="OpenfinalizeDialog();" data-ng-class="{'disabled' : isFinalRun==false}">
+                        <div  class="col-sm-4 run" style="top:-20px">
+                            <div class="btn btn-payroll-run col-sm-12" data-ng-click="isFinalRun || finalRun()" data-ng-class="{'disabled' : isFinalRun==true}">
                                 <div class="col-sm-4 text-left clear-side-padding">
                                     <div class="title">Finalize Payroll</div>
                                 </div>

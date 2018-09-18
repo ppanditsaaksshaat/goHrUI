@@ -1,0 +1,86 @@
+<div id="myModal" class="modal-content">
+        <div class="modal-header bg-primary title-bar">
+            <div class="col-lg-12">
+              
+                <div id="status-buttons" class="text-center">
+                    <a ng-init="value=1" ng-click="leavePending()" ng-class="{active:value==1}">
+                        <span>1</span>Leave Applied</a>
+                    <a ng-click="next(0)" ng-class="{active:value==2}">
+                        <span>2</span> CompOff Applied</a>
+    
+                </div>
+                <span data-ng-click="saveClose()" class="pull-right">
+                    <i class="fa fa-times"></i>
+                </span>
+            </div>
+        </div>
+        <div class="modal-body">
+    
+            <h1 class="text-center">Exit Employee Verification Work In Process............</h1>
+            <!-- <div ng-if="value==1">
+                <div class="col-lg-12">
+                    <div class="modal-sub-page-navigation">
+                        <ul>
+                            <li ng-click="leavePending();pendingLeave=true;onholdLeave=false;" ng-class="{active:pendingLeave}">
+                                <a class="anchor-sm">Pending</a>
+                            </li>
+                            <li ng-click="leaveOnhold();pendingLeave=false;onholdLeave=true;" ng-class="{active:onholdLeave}">
+                                <a class="anchor-sm">Onhold</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clear-fix"></div>
+                    <br/>
+    
+                </div>
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <button ng-if="isRowSelected" type="button" ng-click="pedingLeaveVerify()" class="btn btn-primary">Verify</button>
+                        <button ng-if="isRowSelected" type="button" ng-click="onholdLeaveVerify()" class="btn btn-warning">Onhold</button>
+                        <button type="button" ng-click="next(0)" class="btn btn-success">Skip & Next</button>
+                    </div>
+                </div>
+    
+                <div data-ng-if="!noDataFoundForLeave" class="col-lg-12">
+                    <div ui-grid="gridLeaveOptions" ui-grid-selection ui-grid-edit class="paybandgrid payband" ng-style="{height:height}"></div>
+                </div>
+                <div data-ng-if="noDataFoundForLeave" class="col-lg-6">
+                    <div class="alert alert-success" role="alert">No Data Found!</div>
+                </div>
+    
+            </div>
+            <div ng-if="value==2">
+                <div class="col-lg-12">
+                    <div class="modal-sub-page-navigation">
+                        <ul>
+                            <li ng-click="next(0);pendingCompOff=true;onholdCompOff=false;" ng-class="{active:pendingCompOff}">
+                                <a class="anchor-sm">Pending</a>
+                            </li>
+                            <li ng-click="next(80);pendingCompOff=false;onholdCompOff=true;" ng-class="{active:onholdCompOff}">
+                                <a class="anchor-sm">Onhold</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clear-fix"></div>
+                    <br/>
+    
+                </div>
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <button ng-if="isCompOffRowSelected" type="button" ng-click="verifyAttendance()" class="btn btn-primary">Verify</button>
+                        <button ng-if="isCompOffRowSelected" type="button" class="btn btn-warning">Onhold</button>
+                        <button type="button" ng-click="saveClose()" class="btn btn-success">Skip & Save</button>
+                    </div>
+                </div>
+    
+                <div ng-if="!noDataFoundForCompOff" class="col-lg-12">
+                    <div ui-grid="gridCompOffOptions" ui-grid-selection ui-grid-edit class="paybandgrid payband" ng-style="{height:height}"></div>
+                </div>
+                <div data-ng-if="noDataFoundForCompOff" class="col-lg-6">
+                    <div class="alert alert-success" role="alert">This Month Salary Alerady Verified!</div>
+                </div>
+    
+               
+            </div> -->
+        </div>
+    </div>
