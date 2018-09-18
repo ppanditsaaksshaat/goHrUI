@@ -31,6 +31,13 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li>
+                                <a ng-click="userPassword()" href="">Password</a>
+                            </li>
+                            <li ng-if="userResultData!='NoDataFound'">
+                                <a ng-click="userRole()" href="">Role</a>
+                            </li>
+                            <!-- <li>
+                                <a >Login Disabled</a>
                                 <a ng-click="userPassword()" data-ui-sref="">Password</a>
                             </li>
                             <li>
@@ -38,7 +45,7 @@
                             </li>
                             <li>
                                 <a href  data-ui-sref="">Login Disabled</a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
 

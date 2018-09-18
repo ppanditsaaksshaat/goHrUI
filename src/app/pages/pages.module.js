@@ -42,7 +42,8 @@
     'BlurAdmin.pages.self',
     'BlurAdmin.pages.team',
     'BlurAdmin.pages.payrollprocess',
-    'BlurAdmin.pages.finances'
+    'BlurAdmin.pages.finances',
+    'BlurAdmin.pages.reports'
     
 
   ])
@@ -50,7 +51,7 @@
 
   /** @ngInject */
   function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/selfdashboard');
 
     // baSidebarServiceProvider.addStaticItem({
     //   title: 'Pages',

@@ -16,13 +16,27 @@
             $scope.myProfile = true;
             empId = $rootScope.user.profile.empId;
         }
-        else{
+        else {
             $scope.myProfile = false;
         }
         $scope.userPassword = _userPassword;
         $scope.userRole = _userRole;
 
+        $rootScope.$on("CallParentMethod", function () {
+            _loadController()
+        });
+
+
         function _loadController() {
+            var userData = {
+                searchList: [{ field: 'UserEmpId', operand: '=', value: empId }],
+                orderByList: []
+            }
+            pageService.getTableData(24, 19, '', '', false, userData)
+                .then(function (result) {
+                    console.log(result)
+                    $scope.userResultData = result;
+                })
 
             //  $scope.empBaicDetail = localStorageService.get("empBasicDetailKey");    
             var searchLists = [];
@@ -38,7 +52,7 @@
             function _getCustomQuerySuccessResult(result) {
                 console.log(result);
                 $scope.empBaicDetail = result[0][0];
-             //   $state.go("employee.summary")
+                //   $state.go("employee.summary")
 
             }
             function _getCustomQueryErrorResult(err) {

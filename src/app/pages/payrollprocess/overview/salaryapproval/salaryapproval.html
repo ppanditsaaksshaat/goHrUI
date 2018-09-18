@@ -11,27 +11,27 @@
                         <span>2</span> CompOff Applied</a>
     
                 </div> -->
-                <span data-ng-click="closeModal()" class="pull-right">
+            <span data-ng-click="closeModal()" class="pull-right">
                 <i class="fa fa-times"></i>
             </span>
         </div>
     </div>
     <div class="modal-body">
-        
+
         <div ng-if="isRowSelected && !noDataFound" class="col-lg-12">
             <div class="pull-right">
                 <button type="button" ng-click="aprroveAttendance(101)" class="btn btn-primary">Approve</button>
-                <button class="btn btn-danger" ng-click="aprroveAttendance(102)" >Reject</button>
+                <button class="btn btn-danger" ng-click="aprroveAttendance(102)">Reject</button>
             </div>
         </div>
 
         <div ng-if="!noDataFound" class="col-lg-12">
-            <div ui-grid="gridReviewAllEmpOptions" ui-grid-expandable ui-grid-auto-resize ui-grid-pagination ui-grid-selection ui-grid-pinning
-                ui-grid-edit class="paybandgrid payband" ng-style="{height:height}"></div>
+            <div ui-grid="gridReviewAllEmpOptions" ui-grid-expandable ui-grid-auto-resize ui-grid-pagination
+                ui-grid-selection ui-grid-pinning ui-grid-edit class="paybandgrid payband" ng-style="{height:height}"></div>
         </div>
         <div data-ng-if="noDataFound" class="col-lg-6">
             <div class="alert alert-success" role="alert">Hooray, No data found !</div>
         </div>
-       
+
     </div>
 </div>

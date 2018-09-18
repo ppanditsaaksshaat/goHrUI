@@ -172,7 +172,6 @@
                                 }
                             }
                         ]
-
                     ],
                     pageSize: options.pageSize,
                     pageOrientation: options.pageOrientationType,
@@ -214,11 +213,8 @@
                 pdfMake.createPdf(docDefinition).open();
                 // return docDefinition;
             }
-
         }
-
     }
-
 })();
 
 
