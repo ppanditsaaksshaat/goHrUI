@@ -17,6 +17,14 @@
                     $scope.showMsg("warning", "Please Select SubUnit");
                     return true;
                 }
+                if ($scope.entity.FromDate == undefined || $scope.entity.FromDate == null || $scope.entity.FromDate == '') {
+                    $scope.showMsg("warning", "Please Select From Date");
+                    return true;
+                }
+                if ($scope.entity.ToDate == undefined || $scope.entity.ToDate == null || $scope.entity.ToDate == '') {
+                    $scope.showMsg("warning", "Please Select To Date");
+                    return true;
+                }
                 return false;
             }
             function _loadController() {
@@ -31,21 +39,31 @@
     
             function _getSearchData() {
                 if (!_validateApprovedData()) {
+                    if ($scope.entity.DeptId == undefined) {
+                        $scope.entity.DeptId = 0;
+                    }
                     if ($scope.entity.EmpId == undefined) {
                         $scope.entity.EmpId = 0;
                     }
-                    if ($scope.entity.FromDate == undefined) {
-                        $scope.entity.FromDate = '';
-                    }
-                    if ($scope.entity.ToDate == undefined) {
-                        $scope.entity.ToDate = '';
+                    if ($scope.entity.FDStatusId == undefined) {
+                        $scope.entity.FDStatusId = 0;
                     }
                     var searchLists = [];
                     $scope.columnList = [];
                     searchLists.push({
                         field: 'ReportType',
                         operand: "=",
-                        value: 'Full'
+                        value: 'FieldDuty'
+                    })
+                    searchLists.push({
+                        field: 'SubUnitId',
+                        operand: "=",
+                        value: $scope.entity.SubUnitId
+                    })
+                    searchLists.push({
+                        field: 'DeptId',
+                        operand: "=",
+                        value: $scope.entity.DeptId
                     })
                     searchLists.push({
                         field: 'EmpId',
@@ -53,9 +71,9 @@
                         value: $scope.entity.EmpId
                     })
                     searchLists.push({
-                        field: 'SubUnitId',
+                        field: 'FDStatusId',
                         operand: "=",
-                        value: $scope.entity.SubUnitId
+                        value: $scope.entity.FDStatusId
                     })
                     searchLists.push({
                         field: 'FromDate',
@@ -81,7 +99,7 @@
                         pageSize: 'A4',
                         isRowHeader: false,
                         searchData: data,
-                        queryId: 667,
+                        queryId: 670,
                         header: $scope.selectedDropDown.pageinfo.fields,
                         isQuery: 'true'
                     }

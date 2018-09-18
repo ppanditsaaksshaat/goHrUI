@@ -17,8 +17,12 @@
                 $scope.showMsg("warning", "Please Select SubUnit");
                 return true;
             }
-            if ($scope.entity.DeptId == undefined || $scope.entity.DeptId == null || $scope.entity.DeptId == '') {
-                $scope.showMsg("warning", "Please Select Department");
+            if ($scope.entity.Year == undefined || $scope.entity.Year == null || $scope.entity.Year == '') {
+                $scope.showMsg("warning", "Please Select Year");
+                return true;
+            }
+            if ($scope.entity.Month == undefined || $scope.entity.Month == null || $scope.entity.Month == '') {
+                $scope.showMsg("warning", "Please Select Month");
                 return true;
             }
             return false;
@@ -36,21 +40,19 @@
 
         function _getSearchData() {
             if (!_validateApprovedData()) {
+                if ($scope.entity.DeptId == undefined) {
+                    $scope.entity.DeptId = 0;
+                }
                 if ($scope.entity.EmpId == undefined) {
                     $scope.entity.EmpId = 0;
                 }
-                if ($scope.entity.FromDate == undefined) {
-                    $scope.entity.FromDate = '';
-                }
-                if ($scope.entity.ToDate == undefined) {
-                    $scope.entity.ToDate = '';
-                }
+                
                 var searchLists = [];
                 $scope.columnList = [];
                 searchLists.push({
                     field: 'ReportType',
                     operand: "=",
-                    value: 'Department'
+                    value: 'VerifiedAttendance'
                 })
                 searchLists.push({
                     field: 'SubUnitId',
@@ -63,14 +65,19 @@
                     value: $scope.entity.DeptId
                 })
                 searchLists.push({
-                    field: 'FromDate',
+                    field: 'Year',
                     operand: "=",
-                    value: $scope.entity.FromDate
+                    value: $scope.entity.Year
                 })
                 searchLists.push({
-                    field: 'ToDate',
+                    field: 'Month',
                     operand: "=",
-                    value: $scope.entity.ToDate
+                    value: $scope.entity.Month
+                })
+                searchLists.push({
+                    field: 'EmpId',
+                    operand: "=",
+                    value: $scope.entity.EmpId
                 })
                 console.log(searchLists)
                 var data = {
@@ -81,12 +88,12 @@
                     data: $scope.pdfRowsData,
                     companyName: $scope.companyName,
                     address: $scope.address,
-                    reportType: 'Department',
+                    reportType: 'Monthly Verified Attendance',
                     pageOrientationType: 'landscape',
                     pageSize: 'A4',
                     isRowHeader: false,
                     searchData: data,
-                    queryId: 667,
+                    queryId: 670,
                     header: $scope.selectedDropDown.pageinfo.fields,
                     isQuery: 'true'
                 }
