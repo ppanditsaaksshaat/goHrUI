@@ -999,6 +999,13 @@ textarea.form-control {
   cursor: pointer;
   min-height: 75px;
 }
+.pre-payroll-actions .disabled{
+  cursor: not-allowed !important;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: .65;
+}
 .payroll-summary .run .btn-payroll-run {
   background-color: #4db3ed;
   color: #fff;

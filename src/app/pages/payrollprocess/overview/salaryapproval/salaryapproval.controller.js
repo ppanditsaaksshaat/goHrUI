@@ -184,7 +184,7 @@
                     else {
                         data.ShortName = spiltName[0].substr(0, 1);
                     }
-                    if (!data.IsApproved) {
+                    if (!data.IsApproved && data.FailedRemark == "Verified") {
                         pendingSalary.push(data);
                     }
 
