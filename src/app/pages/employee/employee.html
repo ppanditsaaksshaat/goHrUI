@@ -30,11 +30,14 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
+                            <!-- <li>
+                                <a ng-click="userPassword()">Password</a>
+                            </li> -->
                             <li>
-                                <a ng-click="userPassword()" href="">Password</a>
+                                <a ng-click="setPassword()">Password</a>
                             </li>
                             <li ng-if="userResultData!='NoDataFound'">
-                                <a ng-click="userRole()" href="">Role</a>
+                                <a ng-click="userRole()">Role</a>
                             </li>
                             <!-- <li>
                                 <a >Login Disabled</a>

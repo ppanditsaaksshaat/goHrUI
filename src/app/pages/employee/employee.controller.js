@@ -21,6 +21,7 @@
         }
         $scope.userPassword = _userPassword;
         $scope.userRole = _userRole;
+        $scope.setPassword = _setPassword;
 
         $rootScope.$on("CallParentMethod", function () {
             _loadController()
@@ -73,6 +74,14 @@
                 url: 'app/pages/employee/emprole/role.html',
                 size: 'top-center-600',
                 controller: 'empRoleController',
+            })
+        }
+
+        function _setPassword() {
+            var modal = dialogModal.open({
+                url: 'app/pages/employee/empoyeepas/empoyeepas.html',
+                size: 'top-center-600',
+                controller: 'employeePasContoller',
             })
         }
         _loadController();
