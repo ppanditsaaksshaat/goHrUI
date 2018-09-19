@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="BlurAdmin">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -187,7 +188,9 @@
             <div class="col-sm-6 col-md-4 col-md-offset-4">
                 <h1 ng-if="key.vl" class="text-center login-title">Sign in to goHr</h1>
                 <div class="account-wall">
-                    <img class="profile-img" src="{{logoUrl}}" alt="">
+
+                    <!-- <img class="profile-img" src="{{logoUrl}}" alt=""> -->
+                    <img  src="assets/productdirectory/logo.png" style="margin: 0px 32px;" alt="">
                     <form class="form-signin" ng-submit="doLogin()" ng-if="key.vl">
                         <input type="text" class="form-control" placeholder="User" id="userName" required autofocus>
                         <input id="userPassword" type="password" class="form-control" placeholder="Password" required>
@@ -212,7 +215,7 @@
                                 <p class="small-font">
                                     <a href="mailto:neeraj@saaksshaat.com">neeraj@saaksshat.com</a>
                                 </p>
-                                
+
                             </div>
                         </div>
                     </form>
