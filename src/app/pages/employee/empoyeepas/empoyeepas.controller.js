@@ -7,15 +7,11 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.employee')
-        .controller('empPasswordController', empPasswordController);
+    angular.module('BlurAdmin.pages.employee.empprofile')
+        .controller('employeePasContoller', employeePasContoller);
 
     /** @ngInject */
-    function empPasswordController($scope, $state, $rootScope, $stateParams, pageService) {
-
-
-        // global variable declaration
-
+    function employeePasContoller($scope, $timeout, $stateParams, pageService, editFormService, param) {
         var empId = $stateParams.empid;
         if (empId == undefined) {
             empId = $rootScope.user.profile.empId;
@@ -30,7 +26,7 @@
         var regx = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$');
 
 
-        $scope.goToList = _goToList;
+        // $scope.goToList = _goToList;
         $scope.register = _register;
         $scope.change = _change;
 
@@ -56,9 +52,9 @@
             //console.log(err)
         }
 
-        function _goToList() {
-            $state.go("organization.employees.list");
-        }
+        // function _goToList() {
+        //     $state.go("organization.employees.list");
+        // }
 
         function _register(entity) {
             if (entity.UserName == undefined) {
@@ -96,9 +92,10 @@
         }
         function _userRegisteSuccess(result) {
             $scope.newRegister = false;
+            _childmethod();
             $scope.showMsg("success", "User Registered Successfully");
             $scope.entity.ConfirmPassword = undefined;
-            _childmethod();
+
         }
         function _userRegisterError(err) {
             console.log(err)
@@ -129,10 +126,11 @@
         function _setNewPasswordSuccess(result) {
             console.log(result)
             if (result.status == 200) {
+                _childmethod();
                 $scope.showMsg("success", "New Password Set Successfully");
                 $scope.entity.NewPassword = undefined;
                 $scope.entity.ConfirmPassword = undefined;
-                _childmethod();
+
             }
 
         }
@@ -144,4 +142,5 @@
 
         _loadController();
     }
+
 })();

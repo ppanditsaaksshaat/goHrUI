@@ -1,0 +1,120 @@
+<div class="modal-content">
+    <div class="modal-header bg-primary">
+        <h3 class="inline-block clear-vertical-margin">User Register/Change Password</h3>
+    </div>
+
+    <div class="modal-body content-container">
+        <div class="row add-signatory-container">
+                <form ng-show="newRegister" ng-submit="register(entity)">
+                        <div class="col-sm-12 vertical-margin">
+                            <fieldset>
+                                <div class="col-sm-12 new-person-details">
+        
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label>UserName
+                                                    <span class="font-red">*</span>
+                                                </label>
+                                                <input type="textbox" class="form-control" ng-model="entity.UserName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label>Password
+                                                    <span class="font-red">*</span>
+                                                </label>
+                                                <input type="password" class="form-control" ng-model="entity.Password">
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label>Confirm Password
+                                                    <span class="font-red">*</span>
+                                                </label>
+                                                <input type="password" class="form-control" ng-model="entity.ConfirmPassword">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <button class="btn btn-primary">Register</button>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 vertical-margin">
+                                <div class="col-sm-6 pull-right text-right">
+                                    <button class="btn btn-submit btn-primary">Register</button>
+                                    <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form ng-hide="newRegister" ng-submit="change(entity)">
+                        <div class="col-sm-12 vertical-margin">
+                            <fieldset>
+                                <div class="col-sm-12 new-person-details">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label>UserName
+                                                    <span class="font-red">*</span>
+                                                </label>
+                                                <input disabled="disabled" type="textbox" class="form-control" ng-model="entity.UserName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label>New Password
+                                                    <span class="font-red">*</span>
+                                                </label>
+                                                <input type="password" class="form-control" ng-model="entity.NewPassword">
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label>Confirm Password
+                                                    <span class="font-red">*</span>
+                                                </label>
+                                                <input type="password" class="form-control" ng-model="entity.ConfirmPassword">
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <!-- <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <button class="btn btn-primary">Change</button>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </fieldset>
+                            <div class="row">
+                                <div class="col-sm-12 vertical-margin">
+                                    <div class="col-sm-6 pull-right text-right">
+                                        <button class="btn btn-submit btn-primary">Change</button>
+                                        <a class="btn btn-cancel" data-ng-click="$dismiss();">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+        </div>
+    </div>
+</div>

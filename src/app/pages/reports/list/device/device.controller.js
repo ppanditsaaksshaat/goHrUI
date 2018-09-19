@@ -13,12 +13,16 @@
         // $scope.downLoadPdf = _downLoadPdf;
         $scope.downLoadPdf = _getSearchData;
         function _validateApprovedData() {
-            if ($scope.entity.GradeId == undefined || $scope.entity.GradeId == null || $scope.entity.GradeId == '') {
-                $scope.showMsg("warning", "Please Select Grade");
+            if ($scope.entity.SubUnitId == undefined || $scope.entity.SubUnitId == null || $scope.entity.SubUnitId == '') {
+                $scope.showMsg("warning", "Please Select SubUnit");
                 return true;
             }
-            if ($scope.entity.LevelId == undefined || $scope.entity.LevelId == null || $scope.entity.LevelId == '') {
-                $scope.showMsg("warning", "Please Select Level");
+            if ($scope.entity.FromDate == undefined || $scope.entity.FromDate == null || $scope.entity.FromDate == '') {
+                $scope.showMsg("warning", "Please Select From Date");
+                return true;
+            }
+            if ($scope.entity.ToDate == undefined || $scope.entity.ToDate == null || $scope.entity.ToDate == '') {
+                $scope.showMsg("warning", "Please Select To Date");
                 return true;
             }
             return false;
@@ -36,28 +40,39 @@
 
         function _getSearchData() {
             if (!_validateApprovedData()) {
-                if ($scope.entity.FromDate == undefined) {
-                    $scope.entity.FromDate = '';
+
+                if ($scope.entity.EmpId == undefined) {
+                    $scope.entity.EmpId = 0;
                 }
-                if ($scope.entity.ToDate == undefined) {
-                    $scope.entity.ToDate = '';
+                if ($scope.entity.DeptId == undefined) {
+                    $scope.entity.DeptId = 0;
                 }
                 var searchLists = [];
                 $scope.columnList = [];
                 searchLists.push({
                     field: 'ReportType',
                     operand: "=",
-                    value: 'GradeAndLevel'
+                    value: 'DeviceWise'
                 })
                 searchLists.push({
-                    field: 'GradeId',
+                    field: 'SubUnitId',
                     operand: "=",
-                    value: $scope.entity.GradeId
+                    value: $scope.entity.SubUnitId
                 })
                 searchLists.push({
-                    field: 'LevelId',
+                    field: 'DeptId',
                     operand: "=",
-                    value: $scope.entity.LevelId
+                    value: $scope.entity.DeptId
+                })
+                searchLists.push({
+                    field: 'EmpId',
+                    operand: "=",
+                    value: $scope.entity.EmpId
+                })
+                searchLists.push({
+                    field: 'UserEmpId',
+                    operand: "=",
+                    value: $rootScope.user.profile.empId
                 })
                 searchLists.push({
                     field: 'FromDate',
@@ -78,12 +93,12 @@
                     data: $scope.pdfRowsData,
                     companyName: $scope.companyName,
                     address: $scope.address,
-                    reportType: 'Grade And Level',
+                    reportType: 'Device-Wise Attendance',
                     pageOrientationType: 'landscape',
                     pageSize: 'A4',
                     isRowHeader: false,
                     searchData: data,
-                    queryId: 667,
+                    queryId: 670,
                     header: $scope.selectedDropDown.pageinfo.fields,
                     isQuery: 'true'
                 }

@@ -7,7 +7,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.employee.empprofile')
+    angular.module('BlurAdmin.pages.employee')
         .controller('empRoleController', empRoleController);
 
     /** @ngInject */
