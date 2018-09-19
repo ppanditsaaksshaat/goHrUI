@@ -149,7 +149,7 @@
                     </div>
                     <div class="col-sm-12 link-item">
                         <div class="col-sm-6 clear-side-padding">
-                            <a class="anchor-sm" data-ui-sref="payroll.transaction.CustomPayrollSetting">
+                            <a class="anchor-sm" data-ui-sref="payrollprocess">
                                 <span>
                                     <i class="fa fa-money"></i>
                                 </span>
@@ -207,12 +207,14 @@
         <div class="col-lg-4">
             <div class="panel pnl300">
                 <div class="panel-heading header">
+                    <i class="fa fa-user-plus iconsize"></i>
+                    &nbsp; &nbsp;&nbsp; &nbsp;
                     NEW JOINEES
                     <a ng-if="newJoins.length>0" class="pull-right" data-ng-click="newListJoins()" href="">View All</a>
                 </div>
                 <div class="panel-body">
-                    <table ng-if="newJoins.length>0" class="col-lg-12  table table-condensed">
-                        <!-- <thead>
+                    <!-- <table ng-if="newJoins.length>0" class="col-lg-12  table table-condensed"> -->
+                    <!-- <thead>
                             <tr>
                                 <td style="text-align: left">
                                     <label>Sr. No.</label>
@@ -225,17 +227,61 @@
                                 </td>
                             </tr>
                         </thead> -->
-                        <tbody>
-                            <tr ng-repeat="new in newJoins | limitTo : 6">
-                                <!-- <td>{{$index+1}}</td> -->
+                    <!-- <tbody> -->
+                    <!-- <tr ng-repeat="team in newJoins | limitTo : 6">
+                                <td> -->
+                    <!-- <div  class="icon-list clear-left-padding vertical-margin signatory">
+                                        <div data-ui-sref="employee.summary({empid:team.EmpId})" style="cursor: pointer;">
+                                            <div class="icon-container ">
+                                                <div class="icon">
+                                                    <div class="initials-icon icon-circle" random-Color>{{team.EmpName.split('
+                                                        ')[0].substr(0,1)}}{{team.EmpName.split(' ')[1].substr(0,1)}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                    <div data-ng-if="newJoins.length > 0" class="row" ng-repeat="team in newJoins | limitTo : 6">
+                        <div class="col-md-2">
+                            <div style="cursor: pointer;" data-ui-sref="employee.summary({empid:team.EmpId})" href=""
+                                class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
+                                <div class="profile-picture  ng-isolate-scope">
+                                    <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}"
+                                        style="background-color: rgb(158, 105, 175);">
+                                        {{team.EmpName.split(' ')[0].substr(0,1)}}{{team.EmpName.split('')[1].substr(0,1)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5" data-ui-sref="employee.summary({empid:team.EmpId})" style="cursor: pointer;">
+                            {{team.EmpName| cut:true:16:' ...'}}
+                        </div>
+                        <div class="col-md-5">
+                            {{team.JDDate}}
+                        </div>
+                    </div>
+                    <div ng-if="newJoins.length <= 0" class="alert alert-success" role="alert">
+                        Hooray, no new employee list found!
+                    </div>
+
+
+                    <!-- </td> -->
+
+
+
+                    <!-- <td>{{team.EmpName| cut:true:16:' ...'}} </td>
+                                <td>{{team.JDDate}}</td> -->
+                    <!-- </tr> -->
+
+
+                    <!-- <tr ng-repeat="new in newJoins | limitTo : 6">
                                 <td>
                                     <i class="fa fa-user-plus iconsize"></i>
                                 </td>
                                 <td>{{new.EmpName| cut:true:16:' ...'}} </td>
                                 <td>{{new.JDDate}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            </tr> -->
+                    <!-- </tbody>
+                    </table> -->
                 </div>
 
             </div>
@@ -243,36 +289,47 @@
         <div class="col-lg-4">
             <div class="panel pnl300">
                 <div class="panel-heading header">
-                    BIRTHDAYS / ANNIVERSARIES
+                    <i class="fa fa-birthday-cake iconsize"></i>
+                    &nbsp; &nbsp;&nbsp; &nbsp; BIRTHDAYS
                     <a ng-if="birthAnnList.length>0" class="pull-right" data-ng-click="birthDay()" href="">View All</a>
                 </div>
                 <div class="panel-body">
-                    <table ng-if="birthAnnList.length>0" class="col-lg-12  table table-condensed">
-                        <!-- <thead>
-                            <tr>
-                                <td style="text-align: left">
-                                    <label>Sr. No.</label>
-                                </td>
-                                <td>
-                                    <label>Name</label>
-                                </td>
-                                <td>
-                                    <label>Date Of Birth</label>
-                                </td>
-                            </tr>
-                        </thead> -->
+                    <!-- <table ng-if="birthAnnList.length>0" class="col-lg-12  table table-condensed">
+                       
                         <tbody>
                             <tr ng-repeat="birthAnn in birthAnnList | limitTo : 6">
-                                <!-- <td>{{$index}}</td> -->
                                 <td>
-                                    <i class="fa fa-birthday-cake iconsize"></i>
+                                    
                                 </td>
                                 <td>{{birthAnn.EmpName| cut:true:10:' ...'}} </td>
                                 </td>
                                 <td>{{birthAnn.PdDateOfBirth}}</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table> -->
+
+                    <div data-ng-if="birthAnnList.length > 0" class="row" ng-repeat="team in birthAnnList | limitTo : 6">
+                        <div class="col-md-2">
+                            <div style="cursor: pointer;" data-ui-sref="employee.summary({empid:team.EmpId})" href=""
+                                class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
+                                <div class="profile-picture  ng-isolate-scope">
+                                    <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}"
+                                        style="background-color: rgb(158, 105, 175);">
+                                        {{team.EmpName.split(' ')[0].substr(0,1)}}{{team.EmpName.split('')[1].substr(0,1)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5" data-ui-sref="employee.summary({empid:team.EmpId})" style="cursor: pointer;">
+                            {{team.EmpName| cut:true:16:' ...'}}
+                        </div>
+                        <div class="col-md-5">
+                            {{team.PdDateOfBirth}}
+                        </div>
+                    </div>
+                    <div ng-if="birthAnnList.length <= 0" class="alert alert-success" role="alert">
+                        Hooray, no birth-day employee list found!
+                    </div>
                 </div>
 
             </div>
@@ -280,30 +337,15 @@
         <div class="col-lg-4">
             <div class="panel pnl300">
                 <div class="panel-heading header">
+                    <i class="fa fa-user-times iconsize"></i>
+                    &nbsp; &nbsp;&nbsp; &nbsp;
                     LEAVING EMPLOYEES
-                    <a ng-if="newJoins.length>0" class="pull-right" data-ng-click="hasLeft()" href="">View All</a>
+                    <a ng-if="leavingEmps.length>0" class="pull-right" data-ng-click="hasLeft()" href="">View All</a>
                 </div>
                 <div class="panel-body">
-                    <table class="col-lg-12  table table-condensed">
-                        <!-- <thead>
-                            <tr class="">
-                                <td style="text-align: left">
-                                    <label>Sr. No.</label>
-                                </td>
-                                <td>
-                                    <label>Name</label>
-                                </td>
-                                <td>
-                                    <label>Left Date</label>
-                                </td>
-                            </tr>
-                        </thead> -->
+                    <!-- <table ng-if="leavingEmps.length>0" class="col-lg-12  table table-condensed">
                         <tbody>
                             <tr ng-repeat="emp in leavingEmps | limitTo : 6">
-                                <!-- <td> {{$index+1}}</td> -->
-                                <!-- <td>{{emp.EmpName | limitTo : 10}}
-                                    <span ng-if="emp.EmpName.length > 10">...</span>
-                                </td> -->
                                 <td>
                                     <i class="fa fa-user-times iconsize"></i>
                                 </td>
@@ -311,8 +353,29 @@
                                 <td>{{emp.RDRelievingDate}}</td>
                             </tr>
                         </tbody>
-
-                    </table>
+                    </table> -->
+                    <div data-ng-if="leavingEmps.length > 0" class="row" ng-repeat="team in leavingEmps | limitTo : 6">
+                        <div class="col-md-2">
+                            <div style="cursor: pointer;" data-ui-sref="employee.summary({empid:team.EmpId})" href=""
+                                class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
+                                <div class="profile-picture  ng-isolate-scope">
+                                    <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}"
+                                        style="background-color: rgb(158, 105, 175);">
+                                        {{team.EmpName.split(' ')[0].substr(0,1)}}{{team.EmpName.split('')[1].substr(0,1)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5" data-ui-sref="employee.summary({empid:team.EmpId})" style="cursor: pointer;">
+                            {{team.EmpName| cut:true:16:' ...'}}
+                        </div>
+                        <div class="col-md-5">
+                            {{team.RDRelievingDate}}
+                        </div>
+                    </div>
+                    <div ng-if="leavingEmps.length <= 0" class="alert alert-success" role="alert">
+                        Hooray, no exit employee list found!
+                    </div>
                 </div>
 
 
@@ -463,76 +526,99 @@
                         <a data-ui-sref="employees.reports.pendingregistrations">Pending Registrations</a>
                     </li>
                     <li>
-                        <a data-ui-sref="directory.dashboard.hasleft" href="#/employees/reports/uninvitedemployees">Uninvited Employees</a>
+                        <a data-ui-sref="directory.dashboard.hasleft" href="#/employees/reports/uninvitedemployees">Uninvited
+                            Employees</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.neverloggedin" href="#/employees/reports/neverloggedin">Never Logged in</a>
+                        <a data-ui-sref="employees.reports.neverloggedin" href="#/employees/reports/neverloggedin">Never
+                            Logged in</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.employeetype" href="#/employees/reports/employeetype">Employee Work Type</a>
+                        <a data-ui-sref="employees.reports.employeetype" href="#/employees/reports/employeetype">Employee
+                            Work Type</a>
                     </li>
                     <li>
                         <a data-ui-sref="employees.reports.roles" href="#/employees/reports/roles">Employee Roles</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.incomplete" href="#/employees/reports/incomplete">Incomplete Profiles</a>
+                        <a data-ui-sref="employees.reports.incomplete" href="#/employees/reports/incomplete">Incomplete
+                            Profiles</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.inprobation" href="#/employees/reports/inprobation">Employees In Probation</a>
+                        <a data-ui-sref="employees.reports.inprobation" href="#/employees/reports/inprobation">Employees
+                            In Probation</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.completedprobation" href="#/employees/reports/completedprobation">Probation Completed Employees</a>
+                        <a data-ui-sref="employees.reports.completedprobation" href="#/employees/reports/completedprobation">Probation
+                            Completed Employees</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.innoticeperiod" href="#/employees/reports/innoticeperiod">Employees In Notice Period</a>
+                        <a data-ui-sref="employees.reports.innoticeperiod" href="#/employees/reports/innoticeperiod">Employees
+                            In Notice Period</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.relieved" href="#/employees/reports/relieved">Relieved Employees</a>
+                        <a data-ui-sref="employees.reports.relieved" href="#/employees/reports/relieved">Relieved
+                            Employees</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.withoutreportingmanager" href="#/employees/reports/withoutreportingmanager">Without Reporting Manager</a>
+                        <a data-ui-sref="employees.reports.withoutreportingmanager" href="#/employees/reports/withoutreportingmanager">Without
+                            Reporting Manager</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.loginhistory" href="#/employees/reports/loginhistory">Login History</a>
+                        <a data-ui-sref="employees.reports.loginhistory" href="#/employees/reports/loginhistory">Login
+                            History</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.loginfailures" href="#/employees/reports/loginfailures">Login Failures</a>
+                        <a data-ui-sref="employees.reports.loginfailures" href="#/employees/reports/loginfailures">Login
+                            Failures</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.employeesmasterdata" href="#/employees/reports/allemployeesmasterdata">Employee Master Details</a>
+                        <a data-ui-sref="employees.reports.employeesmasterdata" href="#/employees/reports/allemployeesmasterdata">Employee
+                            Master Details</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.leaveplandetails" href="#/employees/reports/leaveplandetails">Employee Leave Plan Details</a>
+                        <a data-ui-sref="employees.reports.leaveplandetails" href="#/employees/reports/leaveplandetails">Employee
+                            Leave Plan Details</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.shiftdetails" href="#/employees/reports/shiftdetails">Employee Shift Details</a>
+                        <a data-ui-sref="employees.reports.shiftdetails" href="#/employees/reports/shiftdetails">Employee
+                            Shift Details</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.weekoffdetails" href="#/employees/reports/weekoffdetails">Employee Weekly-off Details</a>
+                        <a data-ui-sref="employees.reports.weekoffdetails" href="#/employees/reports/weekoffdetails">Employee
+                            Weekly-off Details</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.trackingpolicydetails" href="#/employees/reports/trackingpolicydetails">Employee Attendance Tracking Policy Details</a>
+                        <a data-ui-sref="employees.reports.trackingpolicydetails" href="#/employees/reports/trackingpolicydetails">Employee
+                            Attendance Tracking Policy Details</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.jobdetails" href="#/employees/reports/jobdetails">Employee Job Details</a>
+                        <a data-ui-sref="employees.reports.jobdetails" href="#/employees/reports/jobdetails">Employee
+                            Job Details</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.customfielddetails" href="#/employees/reports/customfielddetails">Custom Field Details</a>
+                        <a data-ui-sref="employees.reports.customfielddetails" href="#/employees/reports/customfielddetails">Custom
+                            Field Details</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.importlogs" href="#/employees/reports/importlogs">Import Logs</a>
+                        <a data-ui-sref="employees.reports.importlogs" href="#/employees/reports/importlogs">Import
+                            Logs</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.reportingmanager" href="#/employees/reports/reportingmanager">Reporting Managers Report</a>
+                        <a data-ui-sref="employees.reports.reportingmanager" href="#/employees/reports/reportingmanager">Reporting
+                            Managers Report</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.attrition" href="#/employees/reports/attrition">Attrition Employees Report</a>
+                        <a data-ui-sref="employees.reports.attrition" href="#/employees/reports/attrition">Attrition
+                            Employees Report</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.documents" href="#/employees/reports/documents">Employee Documents Report</a>
+                        <a data-ui-sref="employees.reports.documents" href="#/employees/reports/documents">Employee
+                            Documents Report</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.logindisabled" href="#/employees/reports/logindisabled">Login Disabled Employees Report</a>
+                        <a data-ui-sref="employees.reports.logindisabled" href="#/employees/reports/logindisabled">Login
+                            Disabled Employees Report</a>
                     </li>
                 </ul>
             </div>
@@ -590,16 +676,20 @@
                         <a href="" data-ng-click="familyDetail('experience')">Past Experience Details</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.bloodgroupinfo" href="#/employees/reports/bloodgroupinfo">Blood Group Info</a>
+                        <a data-ui-sref="employees.reports.bloodgroupinfo" href="#/employees/reports/bloodgroupinfo">Blood
+                            Group Info</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.birthdayreport" href="#/employees/reports/birthdayreport">Birthday Report</a>
+                        <a data-ui-sref="employees.reports.birthdayreport" href="#/employees/reports/birthdayreport">Birthday
+                            Report</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.workanniversaryreport" href="#/employees/reports/workanniversaryreport">Work Anniversary Report</a>
+                        <a data-ui-sref="employees.reports.workanniversaryreport" href="#/employees/reports/workanniversaryreport">Work
+                            Anniversary Report</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.marriageanniversaryreport" href="#/employees/reports/marriageanniversaryreport">Marriage Anniversary Report</a>
+                        <a data-ui-sref="employees.reports.marriageanniversaryreport" href="#/employees/reports/marriageanniversaryreport">Marriage
+                            Anniversary Report</a>
                     </li>
                 </ul>
             </div>
@@ -662,10 +752,12 @@
                         <a data-ui-sref="employees.reports.departments" href="#/employees/reports/departments">Departments</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.trackingpolicies" href="#/employees/reports/trackingpolicies">Attendance Tracking Policies</a>
+                        <a data-ui-sref="employees.reports.trackingpolicies" href="#/employees/reports/trackingpolicies">Attendance
+                            Tracking Policies</a>
                     </li>
                     <li>
-                        <a data-ui-sref="employees.reports.expensepolicies" href="#/employees/reports/expensepolicies">Expense Policies</a>
+                        <a data-ui-sref="employees.reports.expensepolicies" href="#/employees/reports/expensepolicies">Expense
+                            Policies</a>
                     </li>
                 </ul>
             </div>

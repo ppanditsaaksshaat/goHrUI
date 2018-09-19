@@ -8,7 +8,8 @@
                     </div>
                     <div class="panel-body">
                         <span ng-if="empProfessional.length==0">Please ask
-                            <span style="font-weight: bold">{{empTeam[0].EmpName}} </span> to complete his Professional Detail</span>
+                            <span style="font-weight: bold">{{empTeam[0].EmpName}} </span> to complete his Professional
+                            Detail</span>
                         <p ng-if="empProfessional.length>0">{{empProfessional[0].PSDescription}}</p>
 
                     </div>
@@ -21,14 +22,16 @@
                     </div>
                     <div class="panel-body">
                         <span ng-if="empExperience.length==0">Please ask
-                            <span style="font-weight: bold">{{empTeam[0].EmpName}} </span> to complete his Experience Detail</span>
+                            <span style="font-weight: bold">{{empTeam[0].EmpName}} </span> to complete his Experience
+                            Detail</span>
                         <div ng-if="empExperience.length>0" ng-repeat-start="exp in empExperience">
                             <p class="text-moderate-bold">{{exp.WEOrganizName}}</p>
-                            <span class="">{{exp.WEFrom | date:'MMM y'}} - {{exp.WETo | date:'MMM y'}} | {{exp.WECompanyAddress}}</span>
+                            <span class="">{{exp.WEFrom | date:'MMM y'}} - {{exp.WETo | date:'MMM y'}} |
+                                {{exp.WECompanyAddress}}</span>
                             <br>
                             <span>{{exp.WERemark}}</span>
                         </div>
-                        <hr ng-repeat-end/>
+                        <hr ng-repeat-end />
                     </div>
                 </div>
             </div>
@@ -39,14 +42,15 @@
                     </div>
                     <div class="panel-body">
                         <span ng-if="empEducation.length==0">Please ask
-                            <span style="font-weight: bold">{{empTeam[0].EmpName}} </span> to complete his Education Detail</span>
+                            <span style="font-weight: bold">{{empTeam[0].EmpName}} </span> to complete his Education
+                            Detail</span>
                         <div ng-if="empEducation.length>0" ng-repeat-start="edu in empEducation">
                             <p class="text-moderate-bold">{{edu.QualificationName}}, {{edu.QualMajorSpecialization}}</p>
                             <span class="">{{edu.QualInstititeName}}</span>
                             <br>
                             <span class="">{{edu.QualStartDate | date:'MMM y'}} - {{edu.QualEndDate | date:'MMM y'}}</span>
                         </div>
-                        <hr ng-repeat-end/>
+                        <hr ng-repeat-end />
 
                     </div>
                 </div>
@@ -64,20 +68,21 @@
                     <div class="vertical-top-margin">
                         <div class="col-sm-12">
                             <div ng-repeat="team in empTeam" ng-if="!$first" class="icon-list col-lg-6 clear-left-padding vertical-margin signatory">
-
-                                <div class="icon-container ">
-                                    <div class="icon">
-                                        <div class="initials-icon icon-circle" random-Color>{{team.EmpName.split(' ')[0].substr(0,1)}}{{team.EmpName.split(' ')[1].substr(0,1)}}</div>
+                                <div data-ui-sref="employee.summary({empid:team.EmpId})" style="cursor: pointer;">
+                                    <div class="icon-container ">
+                                        <div class="icon">
+                                            <div class="initials-icon icon-circle" random-Color>{{team.EmpName.split('
+                                                ')[0].substr(0,1)}}{{team.EmpName.split(' ')[1].substr(0,1)}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail">
+                                        <h4 class="title clear-bottom">{{team.EmpName}}</h4>
+                                        <span class="title-description clear-top">{{team.DesgName}}</span>
+                                        <br>
+                                        <span class="title-description clear-top">{{team.PdMobileNo}}</span>
                                     </div>
                                 </div>
-                                <div class="detail">
-                                    <h4 class="title clear-bottom">{{team.EmpName}}</h4>
-                                    <span class="title-description clear-top">{{team.DesgName}}</span>
-                                    <br>
-                                    <span class="title-description clear-top">{{team.PdMobileNo}}</span>
-                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
