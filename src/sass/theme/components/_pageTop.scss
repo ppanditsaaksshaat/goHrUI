@@ -1,5 +1,6 @@
 .page-top {
-  background-color: $topBar;
+  // background-color: $topBar;
+  background-color:#e7e7e7;
   position: fixed;
   z-index: 904;
   box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.5);
@@ -105,7 +106,7 @@ a.collapse-menu-link {
   text-decoration: none;
   line-height: 40px;
   color: $topBar-text;
-  padding: 0;
+  padding: 0 5px;
   float: left;
   margin: 0 10 0 0px;
 
@@ -166,6 +167,9 @@ a.collapse-menu-link {
     margin: 0 0 0 -3px;
     height: 27px;
   }
+}
+a img{
+ float: left; width:219px; height: 40px;margin-left: -19px;
 }
 
 @media screen and (max-width: $resS) {
