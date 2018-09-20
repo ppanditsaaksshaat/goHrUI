@@ -10,6 +10,7 @@
 
     /** @ngInject */
     function payrollProcessController($scope, $state) {      
+
         
     }
 })();
