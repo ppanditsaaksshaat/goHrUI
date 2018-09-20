@@ -51,34 +51,32 @@
         <div class="panel panel-medium pnl300">
             <div class="panel-heading header">
                 <i class="fa fa-star-half-o iconsize"></i>
-                &nbsp; 
-                Upcoming Team Leave(90 Day)
-                <a ng-if="upComingLeaveListOfTeam.length > 0" class="pull-right" data-ng-click="teamLeave()" href="">View
-                    All</a>
+                &nbsp; Upcoming Team Leave(90 Day)
+                <a ng-if="upComingLeaveListOfTeam.length > 0" class="pull-right" data-ng-click="teamLeave()" href="">View All
+                </a>
 
             </div>
 
             <div class="panel-body panel-height ">
                 <div data-ng-if="upComingLeaveListOfTeam.length > 0" class="row" ng-repeat="team in upComingLeaveListOfTeam | limitTo : 6">
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div style="cursor: pointer;" data-ui-sref="employee.summary({empid:team.EmpId})" href="" class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
                             <div class="profile-picture  ng-isolate-scope">
-                                <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}"
-                                    style="background-color: rgb(158, 105, 175);">
+                                <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}" style="background-color: rgb(158, 105, 175);">
                                     {{team.EmpName.split(' ')[0].substr(0,1)}}{{team.EmpName.split(' ')[1].substr(0,1)}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3" data-ui-sref="employee.summary({empid:team.EmpId})" style="cursor: pointer;">
+                    <div class="col-md-5" data-ui-sref="employee.summary({empid:team.EmpId})" style="cursor: pointer;">
                         {{team.EmpName| cut:true:6:' ...'}}
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         {{team.LEADDateFrom}}
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         {{team.LEADDateTo}}
-                    </div>
+                    </div> -->
                 </div>
                 <div ng-if="upComingLeaveListOfTeam.length <= 0" class="alert alert-success" role="alert">
                     Hooray, no Upcoming team leave list found!
@@ -110,34 +108,32 @@
         <div class="panel pnl300">
             <div class="panel-heading header">
                 <i class="fa fa-star-half-o iconsize"></i>
-                &nbsp; 
-                Pending Approval(Self)
+                &nbsp; Pending Approval(Self)
                 <a ng-if="pendingApprovel.length > 0" class="pull-right" data-ng-click="viewList()" href="">View All</a>
             </div>
 
             <div class="panel-body panel-height">
-                <!-- <div data-ng-if="pendingApprovel.length > 0" class="row" ng-repeat="team in pendingApprovel | limitTo : 6">
+                <div data-ng-if="pendingApprovel.length > 0" class="row" ng-repeat="team in pendingApprovel | limitTo : 6">
                     <div class="col-md-2">
-                        <div style="cursor: pointer;" data-ui-sref="employee.summary({empid:team.EmpId})" href="" class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
+                        <div class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
                             <div class="profile-picture  ng-isolate-scope">
-                                <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}"
-                                    style="background-color: rgb(158, 105, 175);">
-                                    {{team.EmpName.split(' ')[0].substr(0,1)}}{{team.EmpName.split('')[1].substr(0,1)}}
+                                <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}" style="background-color: rgb(158, 105, 175);">
+                                    {{team.Type.split(' ')[0].substr(0,1)}}{{team.Type.split('-')[1].substr(0,1)}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5" data-ui-sref="employee.summary({empid:team.EmpId})" style="cursor: pointer;">
-                        {{team.EmpName| cut:true:6:' ...'}}
+                    <div class="col-md-5">
+                        {{team.Type}}
                     </div>
                     <div class="col-md-5">
                         {{team.Date}}
                     </div>
                 </div>
                 <div ng-if="pendingApprovel.length <= 0" class="alert alert-success" role="alert">
-                    Hooray, no Upcoming team leave list found!
-                </div> -->
-                <table ng-if="pendingApprovel.length > 0" class="table table-condensed table-responsive">
+                    Hooray, no pending list found!
+                </div>
+                <!-- <table ng-if="pendingApprovel.length > 0" class="table table-condensed table-responsive">
                     <tbody>
                         <tr ng-repeat="leave in pendingApprovel | limitTo : 6">
                             <td>
@@ -149,7 +145,7 @@
                 </table>
                 <div ng-if="pendingApprovel.length <= 0" class="alert alert-success" role="alert">
                     Hooray, no Upcoming team leave list found!
-                </div>
+                </div> -->
 
             </div>
         </div>
@@ -164,37 +160,41 @@
         <div class="panel pnl300">
             <div class="panel-heading header">
                 <i class="fa fa-photo iconsize"></i>
-                &nbsp;
-                UpComing Holiday(90 Day)
+                &nbsp; UpComing Holiday(90 Day)
                 <a ng-if="UpComingHolidayList.length>0" class="pull-right" data-ng-click="holiday()" href="">View All</a>
             </div>
 
             <div class="panel-body panel-height">
-                <table ng-if="UpComingHolidayList.length>0" class="table table-condensed table-responsive">
-                    <!-- <thead>
-                        <tr class="">
-                            <td>
-                            </td>
-                            <td>
-                                <label>Holiday Name</label>
-                            </td>
-                            <td>
-                                <label>Holiday Date</label>
-                            </td>
-                        </tr>
-                    </thead> -->
+                <div data-ng-if="UpComingHolidayList.length > 0" class="row" ng-repeat="team in UpComingHolidayList | limitTo : 6">
+                    <div class="col-md-2">
+                        <div class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
+                            <div class="profile-picture  ng-isolate-scope">
+                                <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}" style="background-color: rgb(158, 105, 175);">
+                                    {{team.HDName.split(' ')[0].substr(0,2)}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        {{team.HDName| cut:true:16:' ...'}}
+                    </div>
+                    <div class="col-md-5">
+                        {{team.HDFromDate}}
+                    </div>
+                </div>
+                <div ng-if="UpComingHolidayList.length <= 0" class="alert alert-success" role="alert">
+                    Hooray, no holiday list found!
+                </div>
+                <!-- <table ng-if="UpComingHolidayList.length>0" class="table table-condensed table-responsive">
                     <tbody>
                         <tr ng-repeat="holiday in UpComingHolidayList | limitTo : 6">
-                            <!-- <td style="text-align: left"> {{$index+1}}</td> -->
                             <td>
                                 <i class="fa fa-photo iconsize"></i>
                             </td>
-
                             <td>{{holiday.HDName| cut:true:16:' ...'}} </td>
                             <td>{{holiday.HDFromDate}}</td>
                     </tbody>
-
-                </table>
+                </table> -->
 
             </div>
         </div>
@@ -208,10 +208,9 @@
         <div class="panel pnl300">
             <div class="panel-heading header">
                 <i class="fa fa-birthday-cake iconsize"></i>
-                &nbsp;
-                Upcoming BirthDay(90 Days)
-                <a ng-if="upComingTeamBirthDay.length>0" class="pull-right" data-ng-click="teamBirthDay()" href="">View
-                    All</a>
+                &nbsp; Upcoming BirthDay(90 Days)
+                <a ng-if="upComingTeamBirthDay.length>0" class="pull-right" data-ng-click="teamBirthDay()" href="">View All
+                </a>
             </div>
 
             <div class="panel-body panel-height">
@@ -219,9 +218,8 @@
                     <div class="col-md-2">
                         <div style="cursor: pointer;" data-ui-sref="employee.summary({empid:team.EmpId})" href="" class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
                             <div class="profile-picture  ng-isolate-scope">
-                                <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}"
-                                    style="background-color: rgb(158, 105, 175);">
-                                    {{team.EmpName.split(' ')[0].substr(0,1)}}{{team.EmpName.split('')[1].substr(0,1)}}
+                                <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}" style="background-color: rgb(158, 105, 175);">
+                                    {{team.EmpName.split(' ')[0].substr(0,1)}}{{team.EmpName.split(' ')[1].substr(0,1)}}
                                 </div>
                             </div>
                         </div>
@@ -258,8 +256,7 @@
         <div class="panel pnl300">
             <div class="panel-heading header">
                 <i class="fa fa-user iconsize"></i>
-                &nbsp;
-                Team Member
+                &nbsp; Team Member
                 <a ng-if="teamEmpList.length>0" class="pull-right" data-ng-click="birthDay()" href="">View</a>
             </div>
 
@@ -268,9 +265,8 @@
                     <div class="col-md-2">
                         <div style="cursor: pointer;" data-ui-sref="employee.summary({empid:team.EmpId})" href="" class="member-profile-picture-container profile-picture-container col-lg-1 clear-side-padding col-md-2">
                             <div class="profile-picture  ng-isolate-scope">
-                                <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}"
-                                    style="background-color: rgb(158, 105, 175);">
-                                    {{team.EmpName.split(' ')[0].substr(0,1)}}{{team.EmpName.split('')[1].substr(0,1)}}
+                                <div random-Color class="img-circle img-initials " data-ng-style="{'background-color':getRandomColor(index)}" style="background-color: rgb(158, 105, 175);">
+                                    {{team.EmpName.split(' ')[0].substr(0,1)}}{{team.EmpName.split(' ')[1].substr(0,1)}}
                                 </div>
                             </div>
                         </div>
