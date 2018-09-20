@@ -9,6 +9,7 @@
         .controller('payrollProcessController', payrollProcessController);
 
     /** @ngInject */
-    function payrollProcessController($scope, $state) {      
+    function payrollProcessController($scope, $state) {     
+         
     }
 })();
