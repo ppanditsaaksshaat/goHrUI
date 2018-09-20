@@ -12,6 +12,7 @@
    // 'BlurAdmin.pages.advance.transaction',
     //'BlurAdmin.pages.advance.reports'
 
+    
  
   ])
       .config(routeConfig);
