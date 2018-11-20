@@ -1,0 +1,36 @@
+<div class="panel panel-default bootstrap-panel xmedium-panel">
+    <div class="panel-heading panHead" style="vertical-align: super">
+       Report Menu Permission
+    </div>
+
+    <div class="panel-body" style="overflow: scroll">
+
+        <uib-tabset class="tabs-left">
+            <uib-tab heading="Report">
+                <div class="row">
+                    <div class="col-md-5">
+                        <!-- <select name="Report" id="Report" ng-model="selectedRoleId" class="form-control" ng-options="opt.RoleId as opt.RoleName for opt in roleList"
+                            ng-change="callMenu(selectedRoleId)"></select> -->
+
+                        <!-- <div ng-scrollbars ng-scrollbars-config="config" style="max-height: 350px">
+                            <tree-view checkbox click="myClick(node)" model="nodes" ng-show="isPermissionLoaded"></tree-view>
+                        </div> -->
+
+                        <tree-view checkbox click="myClick(node)" model="nodes"></tree-view>
+
+                        <button ng-hide="isShowActivity" ng-click="savePermission()" class="btn btn-info btn-lg" ng-disabled="isApplyingChanges">
+                            <i ng-show="isApplyingChanges" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                            <span ng-hide="isApplyingChanges">Apply Changes</span>
+                            <span ng-show="isApplyingChanges">Applying..</span>
+                        </button>
+
+                        <button ng-hide="isShowActivity" type="button" class="btn btn-danger btn-lg" ng-click="reset()">Reset</button>
+                    </div>
+                    
+                </div>
+
+            </uib-tab>
+            
+        </uib-tabset>
+    </div>
+</div>

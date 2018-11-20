@@ -43,7 +43,9 @@
     'BlurAdmin.pages.team',
     'BlurAdmin.pages.payrollprocess',
     'BlurAdmin.pages.finances',
-    'BlurAdmin.pages.reports'
+    'BlurAdmin.pages.reports',
+    'BlurAdmin.pages.reporturm'
+    
     
 
   ])
